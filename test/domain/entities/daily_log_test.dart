@@ -68,11 +68,13 @@ void main() {
         id: 'log1',
         userId: 'user1',
         date: now,
-        entries: [LogEntry(
-          supplementId: 'sup1',
-          takenAt: now,
-          taken: true,
-        )],
+        entries: [
+          LogEntry(
+            supplementId: 'sup1',
+            takenAt: now,
+            taken: true,
+          )
+        ],
         symptomRatings: {'focus': 3},
         notes: 'Original notes',
         createdAt: now,
@@ -113,7 +115,7 @@ void main() {
       expect(json['id'], 'log1');
       expect(json['userId'], 'user1');
       expect(json['date'], now.toIso8601String());
-      expect(json['entries'], isA<List>());
+      expect(json['entries'], isA<List<dynamic>>());
       expect(json['entries'].length, 1);
       expect(json['symptomRatings'], {'focus': 4});
       expect(json['notes'], 'Test notes');
@@ -158,7 +160,7 @@ void main() {
         'id': 'log1',
         'userId': 'user1',
         'date': now.toIso8601String(),
-        'entries': [],
+        'entries': <Map<String, dynamic>>[],
         'createdAt': now.toIso8601String(),
       };
 
@@ -193,9 +195,11 @@ void main() {
       expect(restored.id, original.id);
       expect(restored.userId, original.userId);
       expect(restored.entries.length, original.entries.length);
-      expect(restored.entries.first.supplementId, original.entries.first.supplementId);
+      expect(restored.entries.first.supplementId,
+          original.entries.first.supplementId);
       expect(restored.entries.first.taken, original.entries.first.taken);
-      expect(restored.entries.first.skippedReason, original.entries.first.skippedReason);
+      expect(restored.entries.first.skippedReason,
+          original.entries.first.skippedReason);
       expect(restored.symptomRatings, original.symptomRatings);
       expect(restored.notes, original.notes);
     });

@@ -218,7 +218,7 @@ void main() {
       expect(json['id'], 'stack1');
       expect(json['userId'], 'user1');
       expect(json['name'], 'Morning Stack');
-      expect(json['items'], isA<List>());
+      expect(json['items'], isA<List<dynamic>>());
       expect((json['items'] as List).length, 1);
       expect(json['timeOfDay'], 'morning');
       expect(json['createdAt'], now.toIso8601String());
@@ -282,11 +282,11 @@ void main() {
       expect(restored.userId, original.userId);
       expect(restored.name, original.name);
       expect(restored.items.length, original.items.length);
-      expect(restored.items.first.supplementId, original.items.first.supplementId);
+      expect(
+          restored.items.first.supplementId, original.items.first.supplementId);
       expect(restored.timeOfDay, original.timeOfDay);
       expect(restored.createdAt.year, original.createdAt.year);
       expect(restored.updatedAt.year, original.updatedAt.year);
     });
   });
 }
-

@@ -9,14 +9,15 @@ class MockSupplementRepository implements SupplementRepository {
   List<Supplement> _supplements = [];
 
   void setShouldThrow(bool value) => _shouldThrow = value;
-  void setSupplements(List<Supplement> supplements) => _supplements = supplements;
+  void setSupplements(List<Supplement> supplements) =>
+      _supplements = supplements;
 
   @override
   Future<List<Supplement>> getAllSupplements() async {
     if (_shouldThrow) {
       throw Exception('Repository error');
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     return _supplements;
   }
 
@@ -27,10 +28,12 @@ class MockSupplementRepository implements SupplementRepository {
 
   @override
   Future<List<Supplement>> searchSupplements(String query) async {
-    return _supplements.where((s) => 
-      s.name.toLowerCase().contains(query.toLowerCase()) ||
-      s.benefits.any((b) => b.toLowerCase().contains(query.toLowerCase()))
-    ).toList();
+    return _supplements
+        .where((s) =>
+            s.name.toLowerCase().contains(query.toLowerCase()) ||
+            s.benefits
+                .any((b) => b.toLowerCase().contains(query.toLowerCase())))
+        .toList();
   }
 
   @override
@@ -49,7 +52,7 @@ class MockSupplementRepository implements SupplementRepository {
 
   @override
   Future<void> trackReferralClick(String supplementId) async {
-    await Future.delayed(const Duration(milliseconds: 50));
+    await Future<void>.delayed(const Duration(milliseconds: 50));
   }
 }
 
@@ -65,7 +68,7 @@ class MockUrlService extends UrlService {
       throw Exception('Could not launch $url');
     }
     lastLaunchedUrl = url;
-    await Future.delayed(const Duration(milliseconds: 50));
+    await Future<void>.delayed(const Duration(milliseconds: 50));
   }
 }
 
@@ -90,13 +93,13 @@ void main() {
 
     test('should load supplements on initialization', () async {
       final supplements = [
-        Supplement(
+        const Supplement(
           id: 'sup1',
           name: 'Magnesium',
           category: 'Minerals',
           benefits: ['Sleep', 'Focus'],
         ),
-        Supplement(
+        const Supplement(
           id: 'sup2',
           name: 'Omega-3',
           category: 'Fats',
@@ -106,7 +109,7 @@ void main() {
       mockRepository.setSupplements(supplements);
 
       // Wait for async initialization
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future<void>.delayed(const Duration(milliseconds: 200));
 
       expect(viewModel.supplements.length, 2);
       expect(viewModel.supplements.first.id, 'sup1');
@@ -116,58 +119,58 @@ void main() {
 
     test('should set loading state during fetch', () async {
       mockRepository.setSupplements([]);
-      
+
       // Create new view model to trigger fetch
       final newViewModel = SupplementViewModel(mockRepository, mockUrlService);
-      
+
       // Immediately check loading state (before async completes)
       expect(newViewModel.isLoading, true);
-      
-      await Future.delayed(const Duration(milliseconds: 200));
-      
+
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+
       expect(newViewModel.isLoading, false);
     });
 
     test('should handle repository errors', () async {
       mockRepository.setShouldThrow(true);
-      
+
       final newViewModel = SupplementViewModel(mockRepository, mockUrlService);
-      
-      await Future.delayed(const Duration(milliseconds: 200));
-      
+
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+
       expect(newViewModel.error, 'Failed to load supplements');
       expect(newViewModel.supplements, isEmpty);
       expect(newViewModel.isLoading, false);
     });
 
     test('onReferralClicked should track click and launch URL', () async {
-      final supplement = Supplement(
+      const supplement = Supplement(
         id: 'sup1',
         name: 'Magnesium',
         category: 'Minerals',
         referralUrl: 'https://example.com/magnesium',
       );
       mockRepository.setSupplements([supplement]);
-      
-      await Future.delayed(const Duration(milliseconds: 200));
-      
+
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+
       await viewModel.onReferralClicked(supplement);
-      
+
       expect(mockUrlService.lastLaunchedUrl, 'https://example.com/magnesium');
     });
 
     test('onReferralClicked should handle URL launch errors', () async {
       mockUrlService.setShouldThrow(true);
-      final supplement = Supplement(
+      const supplement = Supplement(
         id: 'sup1',
         name: 'Magnesium',
         category: 'Minerals',
         referralUrl: 'https://example.com/magnesium',
       );
       mockRepository.setSupplements([supplement]);
-      
-      await Future.delayed(const Duration(milliseconds: 200));
-      
+
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+
       // Should not throw, but error handling depends on implementation
       expect(() => viewModel.onReferralClicked(supplement), returnsNormally);
     });

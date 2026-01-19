@@ -5,7 +5,6 @@ import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
 import 'package:adhd_supplement_app/domain/entities/user.dart';
 import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
-import 'package:get_it/get_it.dart';
 
 class MockAuthRepository implements AuthRepository {
   bool _shouldThrow = false;
@@ -17,7 +16,7 @@ class MockAuthRepository implements AuthRepository {
     if (_shouldThrow) {
       throw Exception('Delete failed');
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
   }
 
   @override
@@ -29,7 +28,8 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<User> signUpWithEmail(String email, String password, String displayName) async {
+  Future<User> signUpWithEmail(
+      String email, String password, String displayName) async {
     throw UnimplementedError();
   }
 
@@ -136,12 +136,12 @@ void main() {
 
     test('downloadData should handle errors', () async {
       final viewModel = PrivacyViewModel();
-      
+
       // Mock an error by making the delay throw
       // Since downloadData doesn't actually throw in current implementation,
       // we test the error handling path exists
       await viewModel.downloadData();
-      
+
       expect(viewModel.isLoading, false);
     });
 

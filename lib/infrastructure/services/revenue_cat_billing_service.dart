@@ -1,0 +1,90 @@
+import 'package:flutter/foundation.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+import 'dart:io' show Platform;
+import '../../domain/services/billing_service.dart';
+
+class RevenueCatBillingService implements BillingService {
+  // TODO: Replace with your actual RevenueCat API keys
+  static const _androidApiKey = 'goog_placeholder_api_key';
+  static const _iosApiKey = 'appl_placeholder_api_key';
+
+  bool _isInitialized = false;
+
+  @override
+  Future<bool> initialize() async {
+    if (_isInitialized) return true;
+
+    try {
+      if (Platform.isAndroid) {
+        await Purchases.configure(PurchasesConfiguration(_androidApiKey));
+      } else if (Platform.isIOS) {
+        await Purchases.configure(PurchasesConfiguration(_iosApiKey));
+      }
+
+      _isInitialized = true;
+      debugPrint('RevenueCat initialized successfully');
+      return true;
+    } catch (e) {
+      debugPrint('Failed to initialize RevenueCat: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> get isSubscribed async {
+    if (!_isInitialized) await initialize();
+    try {
+      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+      // "pro" is the entitlement identifier in RevenueCat
+      return customerInfo.entitlements.all['pro']?.isActive ?? false;
+    } catch (e) {
+      debugPrint('Error checking entitlement: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> restorePurchases() async {
+    try {
+      await Purchases.restorePurchases();
+      return true;
+    } catch (e) {
+      debugPrint('Error restoring purchases: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> purchaseSubscription({required String planId}) async {
+    try {
+      Offerings offerings = await Purchases.getOfferings();
+
+      Package? packageToPurchase;
+      if (offerings.current != null) {
+        // Try to find package by ID if provided, otherwise fallback to first available
+        try {
+          packageToPurchase = offerings.current!.availablePackages.firstWhere(
+            (p) =>
+                p.identifier == planId || p.storeProduct.identifier == planId,
+          );
+        } catch (_) {
+          // If explicitly looking for a plan and not found, we could fail or use first
+          // For now, let's use the first available as a fallback if planId is "default" or similar
+          if (offerings.current!.availablePackages.isNotEmpty) {
+            packageToPurchase = offerings.current!.availablePackages.first;
+          }
+        }
+      }
+
+      if (packageToPurchase != null) {
+        await Purchases.purchasePackage(packageToPurchase);
+        return true;
+      } else {
+        throw Exception('No offerings available for plan: $planId');
+      }
+    } catch (e) {
+      debugPrint('Purchase failed: $e');
+      return false;
+    }
+  }
+}

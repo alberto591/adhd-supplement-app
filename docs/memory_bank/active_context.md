@@ -67,3 +67,4 @@ flutter build appbundle
 - `lib/presentation/navigation/app_router.dart` - All routes
 - `docs/features/README.md` - Feature documentation index
 - `docs/adrs/` - Architectural Decision Records
+- `docs/developer_summary.md` - Technical "Source of Truth"

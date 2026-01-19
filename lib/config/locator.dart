@@ -16,7 +16,7 @@ import 'package:adhd_supplement_app/infrastructure/services/perplexity_service.d
 import 'package:adhd_supplement_app/infrastructure/repositories/perplexity_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 import 'package:adhd_supplement_app/domain/services/billing_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/mock_billing_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/revenue_cat_billing_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
 import 'package:adhd_supplement_app/presentation/view_models/history_log_view_model.dart';
@@ -44,7 +44,8 @@ final locator = GetIt.instance;
 
 void setupLocator() {
   // Services
-  locator.registerLazySingleton<BillingService>(() => MockBillingService());
+  locator
+      .registerLazySingleton<BillingService>(() => RevenueCatBillingService());
   locator.registerLazySingleton<UrlService>(() => UrlService());
   locator
       .registerLazySingleton<NotificationService>(() => NotificationService());

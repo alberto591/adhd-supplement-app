@@ -78,7 +78,7 @@ void main() {
   late FakeSupplementRepository fakeSupplementRepo;
   const String userId = 'test-user';
 
-  final testSupplement = Supplement(
+  const testSupplement = Supplement(
     id: 'supp1',
     name: 'Magnesium',
     category: 'Mineral',
@@ -97,8 +97,8 @@ void main() {
     userId: userId,
     name: 'Evening Routine',
     items: [
-      StackItem(supplementId: 'supp1', order: 1, scheduledTime: '20:00'),
-      StackItem(supplementId: 'supp2', order: 2, scheduledTime: '08:00'),
+      const StackItem(supplementId: 'supp1', order: 1, scheduledTime: '20:00'),
+      const StackItem(supplementId: 'supp2', order: 2, scheduledTime: '08:00'),
     ],
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),

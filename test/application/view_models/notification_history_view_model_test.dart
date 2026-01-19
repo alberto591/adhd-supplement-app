@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:adhd_supplement_app/application/view_models/notification_history_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/notification_log_item.dart';
 
 void main() {
   late NotificationHistoryViewModel viewModel;
@@ -18,14 +17,14 @@ void main() {
 
   test('loadHistory populates notifications', () async {
     // Wait for the async constructor simulation
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
 
     expect(viewModel.notifications, isNotEmpty);
     expect(viewModel.notifications.length, 4); // Based on mock data
   });
 
   test('markAsRead updates item status', () async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
 
     final id = viewModel.notifications.first.id;
     viewModel.markAsRead(id);
@@ -34,7 +33,7 @@ void main() {
   });
 
   test('deleteNotification removes item', () async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
     final initialLength = viewModel.notifications.length;
     final id = viewModel.notifications.first.id;
 
@@ -45,7 +44,7 @@ void main() {
   });
 
   test('clearAll removes all items', () async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
     expect(viewModel.notifications, isNotEmpty);
 
     viewModel.clearAll();

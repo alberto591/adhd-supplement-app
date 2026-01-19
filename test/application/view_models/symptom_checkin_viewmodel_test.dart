@@ -17,7 +17,7 @@ class MockSymptomRepository implements SymptomRepository {
     if (_shouldThrow) {
       throw Exception('Repository error');
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     _checkIns.add(checkIn);
     _hasCheckedInToday = true;
   }
@@ -36,11 +36,12 @@ class MockSymptomRepository implements SymptomRepository {
     if (_shouldThrow) {
       throw Exception('Repository error');
     }
-    return _checkIns.where((c) =>
-      c.userId == userId &&
-      c.timestamp.isAfter(startDate.subtract(const Duration(days: 1))) &&
-      c.timestamp.isBefore(endDate.add(const Duration(days: 1)))
-    ).toList();
+    return _checkIns
+        .where((c) =>
+            c.userId == userId &&
+            c.timestamp.isAfter(startDate.subtract(const Duration(days: 1))) &&
+            c.timestamp.isBefore(endDate.add(const Duration(days: 1))))
+        .toList();
   }
 
   @override
@@ -57,7 +58,7 @@ class MockSymptomRepository implements SymptomRepository {
     if (_shouldThrow) {
       throw Exception('Repository error');
     }
-    await Future.delayed(const Duration(milliseconds: 50));
+    await Future<void>.delayed(const Duration(milliseconds: 50));
     return _hasCheckedInToday;
   }
 

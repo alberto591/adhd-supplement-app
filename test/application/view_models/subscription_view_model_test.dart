@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:adhd_supplement_app/application/view_models/subscription_view_model.dart';
 import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
-import 'package:get_it/get_it.dart';
 
 class MockBillingServiceForTest implements BillingService {
   bool _isSubscribed = false;
@@ -75,19 +74,20 @@ void main() {
       final viewModel = SubscriptionViewModel();
 
       // Wait for async initialization
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       expect(viewModel.isSubscribed, false);
       expect(viewModel.isLoading, false);
       expect(viewModel.error, null);
     });
 
-    test('should initialize with subscribed state when user is subscribed', () async {
+    test('should initialize with subscribed state when user is subscribed',
+        () async {
       mockBillingService.setSubscribed(true);
       final viewModel = SubscriptionViewModel();
 
       // Wait for async initialization
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       expect(viewModel.isSubscribed, true);
       expect(viewModel.isLoading, false);
@@ -97,23 +97,24 @@ void main() {
     test('purchaseSubscription should set loading state', () async {
       mockBillingService.setSubscribed(false);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       final purchaseFuture = viewModel.purchaseSubscription('plan1');
-      
+
       // Check loading state immediately
       expect(viewModel.isLoading, true);
-      
+
       await purchaseFuture;
-      
+
       expect(viewModel.isLoading, false);
     });
 
-    test('purchaseSubscription should update isSubscribed on success', () async {
+    test('purchaseSubscription should update isSubscribed on success',
+        () async {
       mockBillingService.setSubscribed(false);
       mockBillingService.setShouldFailPurchase(false);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       await viewModel.purchaseSubscription('plan1');
 
@@ -126,7 +127,7 @@ void main() {
       mockBillingService.setSubscribed(false);
       mockBillingService.setShouldFailPurchase(true);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       await viewModel.purchaseSubscription('plan1');
 
@@ -139,7 +140,7 @@ void main() {
       mockBillingService.setSubscribed(false);
       mockBillingService.setShouldThrowOnPurchase(true);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       await viewModel.purchaseSubscription('plan1');
 
@@ -151,15 +152,15 @@ void main() {
     test('restorePurchases should set loading state', () async {
       mockBillingService.setSubscribed(false);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       final restoreFuture = viewModel.restorePurchases();
-      
+
       // Check loading state immediately
       expect(viewModel.isLoading, true);
-      
+
       await restoreFuture;
-      
+
       expect(viewModel.isLoading, false);
     });
 
@@ -167,7 +168,7 @@ void main() {
       mockBillingService.setSubscribed(false);
       mockBillingService.setShouldFailRestore(false);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       await viewModel.restorePurchases();
 
@@ -180,7 +181,7 @@ void main() {
       mockBillingService.setSubscribed(false);
       mockBillingService.setShouldFailRestore(true);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       await viewModel.restorePurchases();
 
@@ -193,7 +194,7 @@ void main() {
       mockBillingService.setSubscribed(false);
       mockBillingService.setShouldThrowOnRestore(true);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       await viewModel.restorePurchases();
 
@@ -206,7 +207,7 @@ void main() {
       mockBillingService.setSubscribed(false);
       mockBillingService.setShouldFailPurchase(true);
       final viewModel = SubscriptionViewModel();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       // First purchase fails
       await viewModel.purchaseSubscription('plan1');

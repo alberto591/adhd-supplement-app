@@ -71,3 +71,6 @@ lib/
 | Firebase Auth | User accounts | ✅ Configured |
 | Firebase Firestore | Data persistence | ✅ Configured |
 | Amazon Associates | Affiliate revenue | 🔧 Placeholder tags |
+
+## Documentation Roadmap
+- **[Developer Handoff Summary](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/developer_summary.md)**: Technical "Source of Truth" for backend and logic implementation.

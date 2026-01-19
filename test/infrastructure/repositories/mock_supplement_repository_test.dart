@@ -6,7 +6,7 @@ void main() {
   late MockSupplementRepository repository;
 
   setUp(() {
-    repository = MockSupplementRepository();
+    repository = const MockSupplementRepository();
   });
 
   group('MockSupplementRepository', () {
