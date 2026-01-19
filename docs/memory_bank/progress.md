@@ -41,15 +41,22 @@
 
 ## 🔧 In Progress
 
-### Phase 8: Logic Implementation (2/13 done)
+### Phase 8: Logic Implementation (8/13 done)
+**Priority 1 - Core Functionality:**
 - [x] LibraryScreen: Add to Stack
 - [x] DoctorExportScreen: Email/Share
-- [ ] SystemHealthScreen: Deep links
-- [ ] NotificationReliabilitySetupScreen: Deep links
-- [ ] LateDoseTriageScreen: Logging
-- [ ] OfflineErrorScreen: Retry logic
-- [ ] SafetyInteractionDetailScreen: Override nav
-- [ ] NightlyReflectionScreen: Evening Stack
+
+**Priority 2 - System Integration:**
+- [x] SystemHealthScreen: Deep links
+- [x] NotificationReliabilitySetupScreen: Deep links
+
+**Priority 3 - Logic Implementation:**
+- [x] LateDoseTriageScreen: Logging
+- [x] OfflineErrorScreen: Retry logic
+- [x] SafetyInteractionDetailScreen: Override nav
+- [x] NightlyReflectionScreen: Evening Stack
+
+**Priority 4 - Polish (5 remaining):**
 - [ ] HistoryLogScreen: Resolve All
 - [ ] HomeWidgetsPreviewScreen: Add Widget
 - [ ] WeeklyReviewScreen: Dead buttons
