@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import 'package:provider/provider.dart';
+import '../../application/providers/auth_provider.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -160,8 +162,8 @@ class UserProfileScreen extends StatelessWidget {
                   iconColor: AppColors.primary,
                   title: 'Medical Disclaimer',
                   subtitle: 'Important health information',
-                  trailing: Icon(Icons.open_in_new,
-                      color: Colors.grey, size: 20),
+                  trailing:
+                      Icon(Icons.open_in_new, color: Colors.grey, size: 20),
                 ),
                 const SizedBox(height: 2),
                 _SettingsTile(
@@ -241,16 +243,21 @@ class UserProfileScreen extends StatelessWidget {
                     );
 
                     if (confirm == true) {
+                      if (!context.mounted) return;
                       try {
                         await Provider.of<AuthProvider>(context, listen: false)
                             .signOut();
                         // Navigation handled by AuthWrapper, but ensuring cleanup
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, AppRouter.login, (route) => false);
+                        if (context.mounted) {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, AppRouter.login, (route) => false);
+                        }
                       } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Logout failed: $e')),
-                        );
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Logout failed: $e')),
+                          );
+                        }
                       }
                     }
                   },
@@ -434,8 +441,8 @@ class _ProfileHeader extends StatelessWidget {
                     ? const Color(0xFFF20D93).withValues(alpha: 0.1)
                     : const Color(0xFFF20D93).withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(20),
-                border:
-                    Border.all(color: const Color(0xFFF20D93).withValues(alpha: 0.3)),
+                border: Border.all(
+                    color: const Color(0xFFF20D93).withValues(alpha: 0.3)),
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,

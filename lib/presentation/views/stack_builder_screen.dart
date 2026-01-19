@@ -59,11 +59,11 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'Error loading supplements: $e\n\n(This is expected in demo mode without real Firebase config)';
+          _errorMessage =
+              'Error loading supplements: $e\n\n(This is expected in demo mode without real Firebase config)';
           _isLoading = false;
         });
       }
-    }
     }
   }
 
@@ -188,196 +188,204 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                 ),
                               )
                             : SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Safety Alert Banner (Dynamic)
-                              if (safetyViewModel
-                                  .currentInteractions.isNotEmpty)
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: SafetyAlertBanner(
-                                    interaction: safetyViewModel
-                                        .currentInteractions.first,
-                                    onLearnMore: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        AppRouter.safetyInteractionDetail,
-                                        arguments: safetyViewModel
-                                            .currentInteractions.first,
-                                      );
-                                    },
-                                  ),
-                                ),
-
-                              // Library Section
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'Library',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: isDark
-                                                ? Colors.white
-                                                : Colors.black,
-                                          ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pushNamed(
-                                          context, AppRouter.library),
-                                      child: const Text(
-                                        'View All',
-                                        style: TextStyle(
-                                          color: AppColors.primary,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
+                                    // Safety Alert Banner (Dynamic)
+                                    if (safetyViewModel
+                                        .currentInteractions.isNotEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: SafetyAlertBanner(
+                                          interaction: safetyViewModel
+                                              .currentInteractions.first,
+                                          onLearnMore: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              AppRouter.safetyInteractionDetail,
+                                              arguments: safetyViewModel
+                                                  .currentInteractions.first,
+                                            );
+                                          },
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
 
-                              // Horizontal Library List
-                              SizedBox(
-                                height: 120,
-                                child: ListView.separated(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: _libraryItems.length,
-                                  separatorBuilder: (context, index) =>
-                                      const SizedBox(width: 12),
-                                  itemBuilder: (context, index) {
-                                    final item = _libraryItems[index];
-                                    return LibraryItem(
-                                      name: item.name,
-                                      dosage: item.dosage,
-                                      icon: item.icon,
-                                      iconColor: item.iconColor,
-                                      iconBgColor: item.iconBgColor,
-                                    );
-                                  },
-                                ),
-                              ),
-
-                              // Drop Zone Section Header
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Morning Focus Stack',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                color: isDark
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                                fontSize: 22,
+                                    // Library Section
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Library',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: isDark
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                                ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pushNamed(
+                                                    context, AppRouter.library),
+                                            child: const Text(
+                                              'View All',
+                                              style: TextStyle(
+                                                color: AppColors.primary,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
                                               ),
-                                        ),
-                                        const SizedBox(height: 2),
-                                        const Text(
-                                          'Routine for 08:00 AM',
-                                          style: TextStyle(
-                                            color: AppColors.textSecondaryBlue,
-                                            fontSize: 12,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.edit,
-                                          color: AppColors.textSecondaryBlue,
-                                          size: 18),
-                                      onPressed: () {},
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              // Drop Zone
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: StackDropZone(
-                                  currentItems: _currentStack,
-                                  onItemDropped: _handleItemDropped,
-                                  onItemRemoved: _handleItemRemoved,
-                                ),
-                              ),
-
-                              // Footer Stats
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 16),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Total Items: ${_currentStack.length}',
-                                      style: const TextStyle(
-                                        color: AppColors.textSecondaryBlue,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
+                                        ],
                                       ),
                                     ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          'Safety Status: ',
-                                          style: TextStyle(
-                                            color: AppColors.textSecondaryBlue,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          safetyViewModel.isLoading
-                                              ? 'Checking...'
-                                              : (safetyViewModel
-                                                      .currentInteractions
-                                                      .isEmpty
-                                                  ? 'All Clear'
-                                                  : 'Alert'),
-                                          style: TextStyle(
-                                            color: safetyViewModel
-                                                    .currentInteractions.isEmpty
-                                                ? Colors.green
-                                                : Colors.amber,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
+
+                                    // Horizontal Library List
+                                    SizedBox(
+                                      height: 120,
+                                      child: ListView.separated(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: _libraryItems.length,
+                                        separatorBuilder: (context, index) =>
+                                            const SizedBox(width: 12),
+                                        itemBuilder: (context, index) {
+                                          final item = _libraryItems[index];
+                                          return LibraryItem(
+                                            name: item.name,
+                                            dosage: item.dosage,
+                                            icon: item.icon,
+                                            iconColor: item.iconColor,
+                                            iconBgColor: item.iconBgColor,
+                                          );
+                                        },
+                                      ),
                                     ),
+
+                                    // Drop Zone Section Header
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          16, 16, 16, 12),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Morning Focus Stack',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineSmall
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: isDark
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                      fontSize: 22,
+                                                    ),
+                                              ),
+                                              const SizedBox(height: 2),
+                                              const Text(
+                                                'Routine for 08:00 AM',
+                                                style: TextStyle(
+                                                  color: AppColors
+                                                      .textSecondaryBlue,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.edit,
+                                                color:
+                                                    AppColors.textSecondaryBlue,
+                                                size: 18),
+                                            onPressed: () {},
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    // Drop Zone
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: StackDropZone(
+                                        currentItems: _currentStack,
+                                        onItemDropped: _handleItemDropped,
+                                        onItemRemoved: _handleItemRemoved,
+                                      ),
+                                    ),
+
+                                    // Footer Stats
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 16),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Total Items: ${_currentStack.length}',
+                                            style: const TextStyle(
+                                              color:
+                                                  AppColors.textSecondaryBlue,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Safety Status: ',
+                                                style: TextStyle(
+                                                  color: AppColors
+                                                      .textSecondaryBlue,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                safetyViewModel.isLoading
+                                                    ? 'Checking...'
+                                                    : (safetyViewModel
+                                                            .currentInteractions
+                                                            .isEmpty
+                                                        ? 'All Clear'
+                                                        : 'Alert'),
+                                                style: TextStyle(
+                                                  color: safetyViewModel
+                                                          .currentInteractions
+                                                          .isEmpty
+                                                      ? Colors.green
+                                                      : Colors.amber,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    const SizedBox(
+                                        height: 100), // Bottom padding
                                   ],
                                 ),
                               ),
-
-                              const SizedBox(height: 100), // Bottom padding
-                            ],
-                          ),
-                        ),
                       ),
                     ],
                   ),

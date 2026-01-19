@@ -48,17 +48,23 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               return TextButton(
                 onPressed: viewModel.isLoading
                     ? null
-                    : () {
-                        viewModel.restorePurchases().then((_) {
-                          if (viewModel.isSubscribed && mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Purchases Restored!')));
-                            Future.delayed(const Duration(seconds: 1), () {
-                              if (mounted) Navigator.pop(context);
-                            });
-                          }
-                        });
+                    : () async {
+                        await viewModel.restorePurchases();
+                        if (!mounted) return;
+
+                        if (viewModel.isSubscribed) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Purchases Restored!')));
+
+                          if (!mounted) return;
+                          Future.delayed(const Duration(seconds: 1), () {
+                            if (mounted) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context);
+                            }
+                          });
+                        }
                       },
                 child: const Text(
                   'Restore',
@@ -76,7 +82,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       body:
           Consumer<SubscriptionViewModel>(builder: (context, viewModel, child) {
         if (viewModel.isLoading) {
-          return const Center(child: CircularProgressIndicator(color: primaryGold));
+          return const Center(
+              child: CircularProgressIndicator(color: primaryGold));
         }
 
         if (viewModel.error != null) {
@@ -139,8 +146,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           decoration: BoxDecoration(
                             color: primaryGold.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(999),
-                            border:
-                                Border.all(color: primaryGold.withValues(alpha: 0.2)),
+                            border: Border.all(
+                                color: primaryGold.withValues(alpha: 0.2)),
                           ),
                           child: const Text(
                             'Joined by 10,000+ Focus Masters',
@@ -293,23 +300,27 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         child: ElevatedButton(
                           onPressed: viewModel.isLoading
                               ? null
-                              : () {
-                                  viewModel
-                                      .purchaseSubscription(_isYearly
-                                          ? 'annual_pro'
-                                          : 'monthly_pro')
-                                      .then((_) {
-                                    if (viewModel.isSubscribed && mounted) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  'Welcome to FocusStack Pro!')));
-                                      Future.delayed(const Duration(seconds: 1),
-                                          () {
-                                        if (mounted) Navigator.pop(context);
-                                      });
-                                    }
-                                  });
+                              : () async {
+                                  await viewModel.purchaseSubscription(
+                                      _isYearly ? 'annual_pro' : 'monthly_pro');
+
+                                  if (!mounted) return;
+
+                                  if (viewModel.isSubscribed) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Welcome to FocusStack Pro!')));
+
+                                    if (!mounted) return;
+                                    Future.delayed(const Duration(seconds: 1),
+                                        () {
+                                      if (mounted) {
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pop(context);
+                                      }
+                                    });
+                                  }
                                 },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryGold,
@@ -475,7 +486,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       letterSpacing: 0.5,
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

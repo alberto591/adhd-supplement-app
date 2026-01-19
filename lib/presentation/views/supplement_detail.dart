@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
-import 'package:adhd_supplement_app/domain/models/supplement.dart';
+import '../../domain/entities/supplement.dart';
 
 /// ADHD-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
@@ -139,12 +139,15 @@ class SupplementDetail extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   // Dosage Section
-                  if (supplement.dosageInstruction.isNotEmpty)
+                  if ((supplement.dosage ?? supplement.defaultDosage)
+                          ?.isNotEmpty ==
+                      true)
                     _InfoCard(
                       title: 'Recommended Dosage',
                       icon: Icons.schedule,
                       color: const Color(0xFF448AFF),
-                      content: supplement.dosageInstruction,
+                      content:
+                          supplement.dosage ?? supplement.defaultDosage ?? '',
                     ),
                   const SizedBox(height: 16),
 
@@ -323,33 +326,33 @@ class _SectionCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ...items.map((item) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 6),
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: color,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    item,
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 15,
-                      height: 1.4,
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 6),
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 15,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )),
+              )),
         ],
       ),
     );
