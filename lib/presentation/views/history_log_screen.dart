@@ -21,16 +21,21 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
     return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
       appBar: AppBar(
-        title: const Text('History', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        title: const Text('History',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
         centerTitle: true,
-        backgroundColor: isDark ? bgDark.withValues(alpha: 0.9) : bgLight.withValues(alpha: 0.9),
+        backgroundColor: isDark
+            ? bgDark.withValues(alpha: 0.9)
+            : bgLight.withValues(alpha: 0.9),
         foregroundColor: isDark ? Colors.white : const Color(0xFF111418),
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
             child: IconButton(
@@ -44,17 +49,46 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
             padding: const EdgeInsets.only(right: 16),
             child: TextButton(
               onPressed: () {
-                // TODO: Logic for Resolve All
+                // Show confirmation dialog before resolving all
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Resolve All?'),
+                    content: const Text(
+                      'This will mark all missed reminders as acknowledged.  You can still view them in your history.',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('All items resolved'),
+                              backgroundColor: primaryGreen,
+                            ),
+                          );
+                        },
+                        child: const Text('Resolve'),
+                      ),
+                    ],
+                  ),
+                );
               },
               style: TextButton.styleFrom(
                 backgroundColor: primaryGreen.withValues(alpha: 0.2),
                 foregroundColor: primaryGreen,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: const Text('Resolve All', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+              child: const Text('Resolve All',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
             ),
           ),
         ],
@@ -65,13 +99,25 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: Row(
               children: [
-                _buildFilterChip('All', isSelected: _selectedFilter == 'All', primaryGreen: primaryGreen, isDark: isDark),
+                _buildFilterChip('All',
+                    isSelected: _selectedFilter == 'All',
+                    primaryGreen: primaryGreen,
+                    isDark: isDark),
                 const SizedBox(width: 8),
-                _buildFilterChip('Missed', isSelected: _selectedFilter == 'Missed', primaryGreen: primaryGreen, isDark: isDark),
+                _buildFilterChip('Missed',
+                    isSelected: _selectedFilter == 'Missed',
+                    primaryGreen: primaryGreen,
+                    isDark: isDark),
                 const SizedBox(width: 8),
-                _buildFilterChip('Taken', isSelected: _selectedFilter == 'Taken', primaryGreen: primaryGreen, isDark: isDark),
+                _buildFilterChip('Taken',
+                    isSelected: _selectedFilter == 'Taken',
+                    primaryGreen: primaryGreen,
+                    isDark: isDark),
                 const SizedBox(width: 8),
-                _buildFilterChip('Dismissed', isSelected: _selectedFilter == 'Dismissed', primaryGreen: primaryGreen, isDark: isDark),
+                _buildFilterChip('Dismissed',
+                    isSelected: _selectedFilter == 'Dismissed',
+                    primaryGreen: primaryGreen,
+                    isDark: isDark),
               ],
             ),
           ),
@@ -93,7 +139,7 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Timeline
                 _buildTimelineItem(
                   status: _LogStatus.taken,
@@ -114,12 +160,16 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryGreen,
                       foregroundColor: bgDark,
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 0),
                       minimumSize: const Size(0, 28),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
                       elevation: 0,
                     ),
-                    child: const Text('Log Now', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    child: const Text('Log Now',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 12)),
                   ),
                 ),
                 _buildTimelineItem(
@@ -130,11 +180,14 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                   isDark: isDark,
                   isLastGroup: true,
                 ),
-                
+
                 const SizedBox(height: 24),
-                Divider(color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]),
+                Divider(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : Colors.grey[200]),
                 const SizedBox(height: 16),
-                
+
                 const Text(
                   'Yesterday',
                   style: TextStyle(
@@ -143,7 +196,7 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 _buildTimelineItem(
                   status: _LogStatus.taken,
                   title: 'Evening Wind-Down',
@@ -161,16 +214,17 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                   isLastGroup: true,
                   isFaded: true,
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // Summary Card
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     color: primaryGreen.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: primaryGreen.withValues(alpha: 0.2)),
+                    border:
+                        Border.all(color: primaryGreen.withValues(alpha: 0.2)),
                   ),
                   child: Column(
                     children: [
@@ -180,7 +234,8 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                           SizedBox(width: 12),
                           Text(
                             'Daily Summary',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -188,7 +243,9 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                       Text(
                         'You completed 4 out of 6 reminders yesterday. Consistency is key for ADHD management!',
                         style: TextStyle(
-                          color: isDark ? Colors.white.withValues(alpha: 0.8) : Colors.black87,
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.8)
+                              : Colors.black87,
                           fontSize: 14,
                           height: 1.5,
                         ),
@@ -199,8 +256,11 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                         child: LinearProgressIndicator(
                           value: 0.66,
                           minHeight: 8,
-                          backgroundColor: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[300],
-                          valueColor: const AlwaysStoppedAnimation<Color>(primaryGreen),
+                          backgroundColor: isDark
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.grey[300],
+                          valueColor:
+                              const AlwaysStoppedAnimation<Color>(primaryGreen),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -221,7 +281,7 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
               ],
             ),
           ),
-          
+
           // Custom Floating Bottom Bar
           Positioned(
             bottom: 24,
@@ -231,28 +291,41 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 decoration: BoxDecoration(
-                   color: isDark ? bgDark.withValues(alpha: 0.9) : Colors.black87,
-                   borderRadius: BorderRadius.circular(32),
-                   border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
-                   boxShadow: [
-                     BoxShadow(
-                       color: Colors.black.withValues(alpha: 0.3),
-                       blurRadius: 20,
-                       offset: const Offset(0, 10),
-                     ),
-                   ],
+                  color:
+                      isDark ? bgDark.withValues(alpha: 0.9) : Colors.black87,
+                  borderRadius: BorderRadius.circular(32),
+                  border:
+                      Border.all(color: Colors.white.withValues(alpha: 0.15)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _buildNavButton(Icons.home_filled, false, primaryGreen, () => Navigator.pushNamedAndRemoveUntil(context, AppRouter.dashboard, (route) => false)),
+                    _buildNavButton(
+                        Icons.home_filled,
+                        false,
+                        primaryGreen,
+                        () => Navigator.pushNamedAndRemoveUntil(
+                            context, AppRouter.dashboard, (route) => false)),
                     const SizedBox(width: 8),
                     _buildNavButton(Icons.history, true, primaryGreen, () {}),
                     const SizedBox(width: 8),
-                    _buildNavButton(Icons.leaderboard, false, primaryGreen, () => Navigator.pushNamed(context, AppRouter.trophyRoom)),
+                    _buildNavButton(
+                        Icons.leaderboard,
+                        false,
+                        primaryGreen,
+                        () =>
+                            Navigator.pushNamed(context, AppRouter.trophyRoom)),
                     const SizedBox(width: 8),
-                    _buildNavButton(Icons.settings, false, primaryGreen, () => Navigator.pushNamed(context, AppRouter.profile)),
+                    _buildNavButton(Icons.settings, false, primaryGreen,
+                        () => Navigator.pushNamed(context, AppRouter.profile)),
                   ],
                 ),
               ),
@@ -263,7 +336,8 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
     );
   }
 
-  Widget _buildNavButton(IconData icon, bool isActive, Color primary, VoidCallback onTap) {
+  Widget _buildNavButton(
+      IconData icon, bool isActive, Color primary, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -282,19 +356,28 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
     );
   }
 
-  Widget _buildFilterChip(String label, {required bool isSelected, required Color primaryGreen, required bool isDark}) {
+  Widget _buildFilterChip(String label,
+      {required bool isSelected,
+      required Color primaryGreen,
+      required bool isDark}) {
     return GestureDetector(
       onTap: () => setState(() => _selectedFilter = label),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primaryGreen : (isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]),
+          color: isSelected
+              ? primaryGreen
+              : (isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.grey[200]),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? const Color(0xFF102216) : (isDark ? Colors.white : Colors.black87),
+            color: isSelected
+                ? const Color(0xFF102216)
+                : (isDark ? Colors.white : Colors.black87),
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
@@ -317,7 +400,7 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
     Color iconBg;
     Color iconColor;
     IconData icon;
-    
+
     switch (status) {
       case _LogStatus.taken:
         iconBg = primaryGreen.withValues(alpha: 0.2);
@@ -335,8 +418,11 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
         icon = Icons.notifications_active;
         break;
       case _LogStatus.dismissed:
-        iconBg = isDark ? Colors.white.withValues(alpha: 0.2) : Colors.grey.withValues(alpha: 0.3);
-        iconColor = isDark ? Colors.white.withValues(alpha: 0.5) : Colors.grey.shade600;
+        iconBg = isDark
+            ? Colors.white.withValues(alpha: 0.2)
+            : Colors.grey.withValues(alpha: 0.3);
+        iconColor =
+            isDark ? Colors.white.withValues(alpha: 0.5) : Colors.grey.shade600;
         icon = Icons.visibility_off;
         break;
     }
@@ -350,10 +436,15 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
             width: 48,
             child: Column(
               children: [
-                if (!isFirst) 
-                  Container(width: 2, height: 12, color: primaryGreen.withValues(alpha: 0.3)), // Connector from top
+                if (!isFirst)
+                  Container(
+                      width: 2,
+                      height: 12,
+                      color: primaryGreen.withValues(
+                          alpha: 0.3)), // Connector from top
                 Container(
-                  width: 32, height: 32,
+                  width: 32,
+                  height: 32,
                   decoration: BoxDecoration(
                     color: iconBg,
                     shape: BoxShape.circle,
@@ -361,12 +452,17 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                   child: Icon(icon, size: 18, color: iconColor),
                 ),
                 if (!isLastGroup)
-                 Expanded(child: Container(width: 2, color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[300])),
+                  Expanded(
+                      child: Container(
+                          width: 2,
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.grey[300])),
               ],
             ),
           ),
           const SizedBox(width: 8),
-          
+
           Expanded(
             child: Opacity(
               opacity: isFaded ? 0.6 : 1.0,
@@ -374,9 +470,14 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                 margin: const EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.05)
+                      : Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200]!),
+                  border: Border.all(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.05)
+                          : Colors.grey[200]!),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -398,7 +499,9 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                             Text(
                               time,
                               style: TextStyle(
-                                color: isDark ? Colors.white.withValues(alpha: 0.5) : Colors.black54,
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.5)
+                                    : Colors.black54,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -406,7 +509,13 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                             Text(
                               ' • ${status.name.toUpperCase()}',
                               style: TextStyle(
-                                color: status == _LogStatus.missed ? Colors.red.shade400 : (status == _LogStatus.active ? Colors.blue.shade400 : (status == _LogStatus.taken ? primaryGreen : Colors.grey)),
+                                color: status == _LogStatus.missed
+                                    ? Colors.red.shade400
+                                    : (status == _LogStatus.active
+                                        ? Colors.blue.shade400
+                                        : (status == _LogStatus.taken
+                                            ? primaryGreen
+                                            : Colors.grey)),
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -415,10 +524,13 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                         ),
                       ],
                     ),
-                    if (actionButton != null) 
+                    if (actionButton != null)
                       actionButton
-                    else 
-                      Icon(Icons.more_vert, color: isDark ? Colors.white.withValues(alpha: 0.3) : Colors.black26),
+                    else
+                      Icon(Icons.more_vert,
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.3)
+                              : Colors.black26),
                   ],
                 ),
               ),

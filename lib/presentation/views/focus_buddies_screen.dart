@@ -94,7 +94,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
             ),
             child: Icon(Icons.settings, color: primary, size: 28),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, AppRouter.profile);
+          },
         ),
       ],
     );
@@ -155,8 +157,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                 Container(
                   height: 12,
                   width: double.infinity,
-                  color:
-                      isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200],
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.1)
+                      : Colors.grey[200],
                 ),
                 Container(
                   height: 12,
@@ -255,7 +258,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
         color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!,
         ),
       ),
       child: Column(
@@ -335,7 +339,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           Text(
             'STREAK',
             style: TextStyle(
-              color: isDark ? Colors.white.withValues(alpha: 0.4) : Colors.grey[400],
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.4)
+                  : Colors.grey[400],
               fontSize: 10,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.5,
@@ -380,7 +386,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
         color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!,
         ),
       ),
       child: Column(
@@ -389,7 +396,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           Text(
             label.toUpperCase(),
             style: TextStyle(
-              color: isDark ? Colors.white.withValues(alpha: 0.6) : Colors.grey[500],
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.6)
+                  : Colors.grey[500],
               fontSize: 10,
               fontWeight: FontWeight.bold,
               letterSpacing: 1,
@@ -469,7 +478,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isNotification
-              ? (isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!)
+              ? (isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.grey[200]!)
               : iconColor.withValues(alpha: 0.2),
         ),
       ),
@@ -553,7 +564,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
         Text(
           'Sends "Don\'t forget your stack!" alert',
           style: TextStyle(
-            color: isDark ? Colors.white.withValues(alpha: 0.4) : Colors.grey[500],
+            color:
+                isDark ? Colors.white.withValues(alpha: 0.4) : Colors.grey[500],
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
@@ -619,8 +631,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
             : const Color(0xFFF7F5F8).withValues(alpha: 0.9),
         border: Border(
           top: BorderSide(
-              color:
-                  isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!),
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.grey[200]!),
         ),
       ),
       child: Row(

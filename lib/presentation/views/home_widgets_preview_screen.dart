@@ -4,7 +4,8 @@ class HomeWidgetsPreviewScreen extends StatefulWidget {
   const HomeWidgetsPreviewScreen({super.key});
 
   @override
-  State<HomeWidgetsPreviewScreen> createState() => _HomeWidgetsPreviewScreenState();
+  State<HomeWidgetsPreviewScreen> createState() =>
+      _HomeWidgetsPreviewScreenState();
 }
 
 class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
@@ -19,11 +20,12 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
     const bgDark = Color(0xFF121212);
     const primaryGold = Color(0xFFF4C025);
     const cardBg = Color(0xFF27272A); // zinc-800 approx
-    
+
     return Scaffold(
       backgroundColor: bgDark,
       appBar: AppBar(
-        title: const Text('Customize Widget', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Customize Widget',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: bgDark.withValues(alpha: 0.8),
         foregroundColor: Colors.white,
         elevation: 0,
@@ -69,7 +71,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Widget Carousel
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -83,9 +85,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     // Features Section
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -112,33 +114,40 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                             title: 'Show Next Stack',
                             subtitle: 'Display upcoming supplement info',
                             value: _showNextStack,
-                            onChanged: (v) => setState(() => _showNextStack = v),
+                            onChanged: (v) =>
+                                setState(() => _showNextStack = v),
                             primaryGold: primaryGold,
                           ),
-                          Divider(height: 1, color: Colors.white.withValues(alpha: 0.05)),
+                          Divider(
+                              height: 1,
+                              color: Colors.white.withValues(alpha: 0.05)),
                           _buildToggleRow(
                             icon: Icons.cached,
                             title: 'Show Progress Ring',
                             subtitle: 'Visualize daily completion',
                             value: _showProgressRing,
-                            onChanged: (v) => setState(() => _showProgressRing = v),
+                            onChanged: (v) =>
+                                setState(() => _showProgressRing = v),
                             primaryGold: primaryGold,
                           ),
-                          Divider(height: 1, color: Colors.white.withValues(alpha: 0.05)),
+                          Divider(
+                              height: 1,
+                              color: Colors.white.withValues(alpha: 0.05)),
                           _buildToggleRow(
                             icon: Icons.add_circle_outline,
                             title: 'Quick Log Button',
                             subtitle: 'Log intake directly from home screen',
                             value: _quickLogButton,
-                            onChanged: (v) => setState(() => _quickLogButton = v),
+                            onChanged: (v) =>
+                                setState(() => _quickLogButton = v),
                             primaryGold: primaryGold,
                           ),
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     // Theme Selector
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -171,7 +180,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                                 Container(
                                   decoration: const BoxDecoration(
                                     image: DecorationImage(
-                                      image: NetworkImage('https://lh3.googleusercontent.com/aida-public/AB6AXuCAZKCVASRPep6HK8h-8b-3MiOxBYw4HZ6dIqouISEOOCIrfpgpsgJR6qMBMMTWlnMV8fE_GF_hM-t9L-NiZcJF5p6NLScE4VG_FO0IioP-sHRImbT6Q0QfjsoVBism-_yQ-z0vZoC5ig8u3IoV8K77c16rL6Hvk7Y46u4UhyHIcZobcZ2nPaVEmR7LyFyyjKYU7bs8DgI-wO1USCN1wwQTJAfb1knwjDo3i71OQl1DwCryGt3NfVt854NrkQMD9OsxYgQXR8K0J3w'),
+                                      image: NetworkImage(
+                                          'https://lh3.googleusercontent.com/aida-public/AB6AXuCAZKCVASRPep6HK8h-8b-3MiOxBYw4HZ6dIqouISEOOCIrfpgpsgJR6qMBMMTWlnMV8fE_GF_hM-t9L-NiZcJF5p6NLScE4VG_FO0IioP-sHRImbT6Q0QfjsoVBism-_yQ-z0vZoC5ig8u3IoV8K77c16rL6Hvk7Y46u4UhyHIcZobcZ2nPaVEmR7LyFyyjKYU7bs8DgI-wO1USCN1wwQTJAfb1knwjDo3i71OQl1DwCryGt3NfVt854NrkQMD9OsxYgQXR8K0J3w'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -179,7 +189,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                                 Container(
                                   decoration: BoxDecoration(
                                     color: Colors.black.withValues(alpha: 0.2),
-                                    border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+                                    border: Border.all(
+                                        color: Colors.white
+                                            .withValues(alpha: 0.2)),
                                   ),
                                   margin: const EdgeInsets.all(8),
                                 ),
@@ -194,7 +206,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                               color: const Color(0xFF09090B), // Zinc 950
                               alignment: Alignment.center,
                               child: Container(
-                                width: 50, height: 30,
+                                width: 50,
+                                height: 30,
                                 decoration: BoxDecoration(
                                   color: const Color(0xFF27272A),
                                   borderRadius: BorderRadius.circular(4),
@@ -210,7 +223,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                               color: const Color(0xFFF8FAFC), // Slate 50
                               alignment: Alignment.center,
                               child: Container(
-                                width: 50, height: 30,
+                                width: 50,
+                                height: 30,
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFE2E8F0),
                                   borderRadius: BorderRadius.circular(4),
@@ -232,7 +246,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                               ),
                               alignment: Alignment.center,
                               child: Container(
-                                width: 50, height: 30,
+                                width: 50,
+                                height: 30,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withValues(alpha: 0.3),
                                   borderRadius: BorderRadius.circular(4),
@@ -243,16 +258,17 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     // Instructions
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: primaryGold.withValues(alpha: 0.1),
-                        border: Border.all(color: primaryGold.withValues(alpha: 0.2)),
+                        border: Border.all(
+                            color: primaryGold.withValues(alpha: 0.2)),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Row(
@@ -289,8 +305,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                 ),
               ),
             ),
-            
-           // Footer
+
+            // Footer
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -306,7 +322,44 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Actually add widget or show tutorial
+                        // Show tutorial dialog with platform-specific instructions
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Add Widget Tutorial'),
+                            content: const SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'iOS Instructions:',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                      '1. Long press on your home screen\n2. Tap the "+" button in the top left\n3. Search for "FocusStack"\n4. Select your preferred widget size\n5. Tap "Add Widget"'),
+                                  SizedBox(height: 16),
+                                  Text(
+                                    'Android Instructions:',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                      '1. Long press on your home screen\n2. Tap "Widgets"\n3. Find "FocusStack"\n4. Drag your preferred widget to the home screen'),
+                                ],
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Got It'),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryGold,
@@ -323,7 +376,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                           SizedBox(width: 8),
                           Text(
                             'Add to Home Screen',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ],
                       ),
@@ -376,7 +430,10 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [primary.withValues(alpha: 0.1), Colors.transparent],
+                      colors: [
+                        primary.withValues(alpha: 0.1),
+                        Colors.transparent
+                      ],
                     ),
                   ),
                 ),
@@ -390,14 +447,17 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                     children: [
                       Icon(Icons.medication, color: primary, size: 20),
                       Container(
-                        width: 30, height: 30,
+                        width: 30,
+                        height: 30,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: primary.withValues(alpha: 0.3), width: 2),
+                          border: Border.all(
+                              color: primary.withValues(alpha: 0.3), width: 2),
                         ),
                         alignment: Alignment.center,
                         child: Container(
-                          width: 14, height: 14,
+                          width: 14,
+                          height: 14,
                           decoration: BoxDecoration(
                             color: primary,
                             shape: BoxShape.circle,
@@ -501,7 +561,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                         const SizedBox(width: 4),
                         Text(
                           '12:30 PM',
-                          style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                          style:
+                              TextStyle(color: Colors.grey[400], fontSize: 12),
                         ),
                       ],
                     ),
@@ -524,9 +585,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                     const Text(
                       '75%',
                       style: TextStyle(
-                         color: Colors.white,
-                         fontWeight: FontWeight.bold,
-                         fontSize: 14,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -604,7 +665,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
     );
   }
 
-  Widget _buildThemeOption(String name, Color primary, {required Widget child, required bool isSelected}) {
+  Widget _buildThemeOption(String name, Color primary,
+      {required Widget child, required bool isSelected}) {
     return GestureDetector(
       onTap: () => setState(() => _selectedTheme = name),
       child: Container(
@@ -624,8 +686,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: SizedBox(
-                   width: double.infinity,
-                   child: child,
+                  width: double.infinity,
+                  child: child,
                 ),
               ),
             ),

@@ -6,26 +6,30 @@ class PersistentRemindersScreen extends StatefulWidget {
   const PersistentRemindersScreen({super.key});
 
   @override
-  State<PersistentRemindersScreen> createState() => _PersistentRemindersScreenState();
+  State<PersistentRemindersScreen> createState() =>
+      _PersistentRemindersScreenState();
 }
 
 class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
   bool _nudgeModeEnabled = true;
-  String _warningNudgeOption = '15m'; // '15m' or 'followup' (radio group logic simulation)
+  String _warningNudgeOption =
+      '15m'; // '15m' or 'followup' (radio group logic simulation)
   bool _extendedRemindersEnabled = true;
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.primary, size: 20),
-          onPressed: () {},
+          icon: const Icon(Icons.arrow_back_ios_new,
+              color: AppColors.primary, size: 20),
+          onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Settings',
@@ -39,7 +43,23 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.info, color: AppColors.primary),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Persistent Reminders'),
+                  content: const Text(
+                    'These reminders will continue to nudge you until you take action. Perfect for ADHD time blindness!',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Got It'),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -68,7 +88,7 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
               ),
             ),
             const SizedBox(height: 32),
-            
+
             // Nudge Mode Toggle Card
             Container(
               padding: const EdgeInsets.all(20),
@@ -94,12 +114,15 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.notifications_active, color: AppColors.primary, size: 24),
+                            const Icon(Icons.notifications_active,
+                                color: AppColors.primary, size: 24),
                             const SizedBox(width: 8),
                             Text(
                               'Nudge Mode',
                               style: TextStyle(
-                                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                                color: isDark
+                                    ? Colors.white
+                                    : const Color(0xFF0F172A),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -121,12 +144,13 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
                   Switch(
                     value: _nudgeModeEnabled,
                     activeThumbColor: AppColors.primary,
-                    onChanged: (value) => setState(() => _nudgeModeEnabled = value),
+                    onChanged: (value) =>
+                        setState(() => _nudgeModeEnabled = value),
                   ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 32),
             Text(
               'Time Blindness Support',
@@ -137,7 +161,7 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Options
             _buildOptionTile(
               title: '15m Warning Nudge',
@@ -147,22 +171,24 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
               isRadio: true,
             ),
             const SizedBox(height: 12),
-             _buildOptionTile(
+            _buildOptionTile(
               title: 'Follow-up Nudges',
-              subtitle: 'Keep nudging every 5, 10, and 15 mins after', // This seems redundant with Nudge Mode description in wireframe, but implementing as separate radio option per design.
+              subtitle:
+                  'Keep nudging every 5, 10, and 15 mins after', // This seems redundant with Nudge Mode description in wireframe, but implementing as separate radio option per design.
               isSelected: _warningNudgeOption == 'followup',
               onTap: () => setState(() => _warningNudgeOption = 'followup'),
               isRadio: true,
             ),
             const SizedBox(height: 12),
-             _buildOptionTile(
+            _buildOptionTile(
               title: 'Extended Reminders',
               subtitle: 'Continue for up to 1 hour',
               isSelected: _extendedRemindersEnabled,
-              onTap: () => setState(() => _extendedRemindersEnabled = !_extendedRemindersEnabled),
+              onTap: () => setState(
+                  () => _extendedRemindersEnabled = !_extendedRemindersEnabled),
               isRadio: false, // Checkbox behavior
             ),
-            
+
             const SizedBox(height: 32),
             Text(
               'Visual Nudge Timeline',
@@ -173,12 +199,12 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Timeline Widget
             const NudgeTimelineWidget(),
-            
+
             const SizedBox(height: 40),
-            
+
             // Test Button
             SizedBox(
               width: double.infinity,
@@ -215,7 +241,9 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
               'This will trigger a sample persistent notification to help you get used to the sound and haptics.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: isDark ? Colors.grey[500] : Colors.grey[500], // Darker grey for helper text
+                color: isDark
+                    ? Colors.grey[500]
+                    : Colors.grey[500], // Darker grey for helper text
                 fontSize: 12,
               ),
             ),
@@ -234,7 +262,7 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
     required bool isRadio,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
@@ -279,11 +307,13 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isSelected ? AppColors.primary : (isDark ? Colors.grey[600]! : Colors.grey[400]!),
+                    color: isSelected
+                        ? AppColors.primary
+                        : (isDark ? Colors.grey[600]! : Colors.grey[400]!),
                     width: 2,
                   ),
                 ),
-                child: isSelected 
+                child: isSelected
                     ? Center(
                         child: Container(
                           width: 10,
@@ -304,11 +334,13 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
                   borderRadius: BorderRadius.circular(4),
                   color: isSelected ? AppColors.primary : Colors.transparent,
                   border: Border.all(
-                    color: isSelected ? AppColors.primary : (isDark ? Colors.grey[600]! : Colors.grey[400]!),
+                    color: isSelected
+                        ? AppColors.primary
+                        : (isDark ? Colors.grey[600]! : Colors.grey[400]!),
                     width: 2,
                   ),
                 ),
-                child: isSelected 
+                child: isSelected
                     ? const Icon(Icons.check, color: Colors.white, size: 14)
                     : null,
               ),
