@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:app_settings/app_settings.dart';
 
 class SystemHealthScreen extends StatelessWidget {
   const SystemHealthScreen({super.key});
@@ -86,7 +87,8 @@ class SystemHealthScreen extends StatelessWidget {
                       actionLabel: 'Fix Now',
                       iconData: Icons.battery_alert_rounded,
                       onTap: () {
-                        // TODO: Implement battery optimization settings link
+                        // Opens general app settings where users can manage battery optimization
+                        AppSettings.openAppSettings();
                       },
                     ),
 
@@ -200,7 +202,9 @@ class SystemHealthScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200],
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.grey[200],
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -285,7 +289,9 @@ class SystemHealthScreen extends StatelessWidget {
         color: surfaceColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-            color: isDark ? dangerColor.withValues(alpha: 0.3) : Colors.red.shade100),
+            color: isDark
+                ? dangerColor.withValues(alpha: 0.3)
+                : Colors.red.shade100),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),

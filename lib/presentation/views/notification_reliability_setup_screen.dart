@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app_settings/app_settings.dart';
 
 class NotificationReliabilitySetupScreen extends StatefulWidget {
   const NotificationReliabilitySetupScreen({super.key});
@@ -108,7 +109,8 @@ class _NotificationReliabilitySetupScreenState
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.1),
+                                      color:
+                                          Colors.black.withValues(alpha: 0.1),
                                       blurRadius: 20,
                                       offset: const Offset(0, 10),
                                     ),
@@ -142,7 +144,8 @@ class _NotificationReliabilitySetupScreenState
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: primaryColor.withValues(alpha: 0.3),
+                                          color: primaryColor.withValues(
+                                              alpha: 0.3),
                                           blurRadius: 10,
                                           offset: const Offset(0, 4),
                                         ),
@@ -263,7 +266,8 @@ class _NotificationReliabilitySetupScreenState
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Implement open settings logic
+                        AppSettings.openAppSettings(
+                            type: AppSettingsType.notification);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
