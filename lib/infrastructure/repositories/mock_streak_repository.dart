@@ -6,13 +6,13 @@ class MockStreakRepository implements StreakRepository {
 
   @override
   Future<Streak?> getStreak(String userId) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     return _streaks[userId];
   }
 
   @override
   Future<void> saveStreak(Streak streak) async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     _streaks[streak.userId] = streak;
   }
 

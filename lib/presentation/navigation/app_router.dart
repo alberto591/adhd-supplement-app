@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../config/locator.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../application/view_models/symptom_checkin_viewmodel.dart';
+import '../../application/view_models/safety_view_model.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/signup_screen.dart';
 import '../views/daily_stack_screen.dart';
@@ -35,6 +36,7 @@ import '../views/app_appearance_screen.dart';
 import '../views/refer_friend_screen.dart';
 import '../views/success_stats_screen.dart';
 import '../views/subscription_screen.dart';
+
 import '../views/daily_symptom_checkin_screen.dart';
 import '../views/quick_setup_wizard_screen.dart';
 import '../views/notification_reliability_setup_screen.dart';
@@ -45,6 +47,7 @@ import '../views/system_health_screen.dart';
 import '../views/science_library_update_screen.dart';
 import '../views/developer_handoff_logic_triggers_screen.dart';
 import '../views/help_and_support_screen.dart';
+import '../views/ai_search_screen.dart';
 import '../views/article_detail_screen.dart';
 import '../views/milestone_success_screen.dart';
 import '../views/notification_history_screen.dart';
@@ -98,6 +101,7 @@ class AppRouter {
   static const String systemHealth = '/system-health';
   static const String scienceUpdate = '/science-update';
   static const String developerHandoff = '/developer-handoff';
+  static const String aiSearch = '/ai-search';
   static const String articleDetail = '/article-detail';
   static const String emergencyContact = '/emergency-contact';
   static const String milestoneSuccess = '/milestone-success';
@@ -152,7 +156,17 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LibraryScreen());
 
       case stackBuilder:
-        return MaterialPageRoute(builder: (_) => const StackBuilderScreen());
+        return MaterialPageRoute(
+          builder: (context) {
+            final authProvider =
+                Provider.of<AuthProvider>(context, listen: false);
+            final userId = authProvider.user?.id ?? '';
+            return ChangeNotifierProvider(
+              create: (_) => locator<SafetyViewModel>(param1: userId),
+              child: const StackBuilderScreen(),
+            );
+          },
+        );
 
       case pillMatcher:
         return MaterialPageRoute(
@@ -263,8 +277,12 @@ class AppRouter {
 
       case developerHandoff:
         return MaterialPageRoute(
-            builder: (_) => const DeveloperHandoffLogicTriggersScreen());
-
+          builder: (_) => const DeveloperHandoffLogicTriggersScreen(),
+        );
+      case aiSearch:
+        return MaterialPageRoute(
+          builder: (_) => const AiSearchScreen(),
+        );
       case helpAndSupport:
         return MaterialPageRoute(builder: (_) => const HelpAndSupportScreen());
 

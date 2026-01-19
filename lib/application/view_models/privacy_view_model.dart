@@ -19,7 +19,7 @@ class PrivacyViewModel extends ChangeNotifier {
     _error = null;
     try {
       // Simulate data generation time
-      await Future.delayed(const Duration(seconds: 2));
+      await Future<void>.delayed(const Duration(seconds: 2));
       // In a real app, this would generate a CSV/PDF and share it
     } catch (e) {
       _error = 'Failed to generate data export.';

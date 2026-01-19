@@ -86,7 +86,8 @@ class FirebaseSupplementRepository implements SupplementRepository {
       });
     } catch (e) {
       // Log error but don't block user
-      print('Error tracking referral click: $e');
+      // Log error but don't block user
+      // print('Error tracking referral click: $e');
     }
   }
 }

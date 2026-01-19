@@ -3,10 +3,13 @@ import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/supplement_repository.dart';
 
 class MockSupplementRepository implements SupplementRepository {
+  const MockSupplementRepository(); // Added const constructor
+
   @override
   Future<List<Supplement>> getAllSupplements() async {
-    await Future.delayed(const Duration(milliseconds: 500)); // Simulate net lag
-    return [
+    await Future<void>.delayed(
+        const Duration(milliseconds: 500)); // Simulate net lag
+    return const [
       Supplement(
         id: '1',
         name: 'Omega-3 (EPA/DHA)',

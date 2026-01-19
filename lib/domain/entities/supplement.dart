@@ -10,6 +10,9 @@ class Supplement {
   final String? notes;
   final String? imageUrl;
   final bool isPrescription;
+  final String? form; // e.g., "Tablet", "Capsule", "Liquid"
+  final String? iconType; // e.g., "pill", "bottle", "sun"
+  final String? iconColor; // Hex string e.g., "#FF0000"
 
   // From models/supplement.dart
   final String description;
@@ -30,6 +33,9 @@ class Supplement {
     this.notes,
     this.imageUrl,
     this.isPrescription = false,
+    this.form,
+    this.iconType,
+    this.iconColor,
     this.description = '',
     this.referralUrl = '',
     this.sideEffects = const [],
@@ -49,6 +55,9 @@ class Supplement {
     String? notes,
     String? imageUrl,
     bool? isPrescription,
+    String? form,
+    String? iconType,
+    String? iconColor,
     String? description,
     String? referralUrl,
     List<String>? sideEffects,
@@ -67,6 +76,9 @@ class Supplement {
       notes: notes ?? this.notes,
       imageUrl: imageUrl ?? this.imageUrl,
       isPrescription: isPrescription ?? this.isPrescription,
+      form: form ?? this.form,
+      iconType: iconType ?? this.iconType,
+      iconColor: iconColor ?? this.iconColor,
       description: description ?? this.description,
       referralUrl: referralUrl ?? this.referralUrl,
       sideEffects: sideEffects ?? this.sideEffects,
@@ -88,6 +100,9 @@ class Supplement {
       'notes': notes,
       'imageUrl': imageUrl,
       'isPrescription': isPrescription,
+      'form': form,
+      'iconType': iconType,
+      'iconColor': iconColor,
       'description': description,
       'referralUrl': referralUrl,
       'sideEffects': sideEffects,
@@ -113,6 +128,9 @@ class Supplement {
       notes: json['notes'] as String?,
       imageUrl: json['imageUrl'] as String?,
       isPrescription: json['isPrescription'] as bool? ?? false,
+      form: json['form'] as String?,
+      iconType: json['iconType'] as String?,
+      iconColor: json['iconColor'] as String?,
       description: json['description'] as String? ?? '',
       referralUrl: json['referralUrl'] as String? ?? '',
       sideEffects: (json['sideEffects'] as List<dynamic>?)

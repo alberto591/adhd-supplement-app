@@ -19,9 +19,34 @@ class DefaultFirebaseOptions {
     if (kIsWeb) {
       return web;
     }
-    throw UnsupportedError(
-      'DefaultFirebaseOptions are not supported for this platform.',
-    );
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.macOS:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
+    }
   }
 
   static const FirebaseOptions web = FirebaseOptions(
@@ -31,5 +56,13 @@ class DefaultFirebaseOptions {
     projectId: 'adhd-supplement-app',
     authDomain: 'adhd-supplement-app.firebaseapp.com',
     storageBucket: 'adhd-supplement-app.appspot.com',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBo9QF3oAS-F4GbBEkEIOY6o230_jZRBlg',
+    appId: '1:93466359350:android:624499d319cae893f20a97',
+    messagingSenderId: '93466359350',
+    projectId: 'adhd-supplement-app',
+    storageBucket: 'adhd-supplement-app.firebasestorage.app',
   );
 }

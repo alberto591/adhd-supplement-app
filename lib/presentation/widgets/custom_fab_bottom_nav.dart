@@ -3,7 +3,7 @@ import '../theme/app_theme.dart';
 
 class CustomFabBottomNav extends StatelessWidget {
   final int selectedIndex;
-  final Function(int) onTap;
+  final void Function(int) onTap;
   final VoidCallback? onFabTap;
 
   const CustomFabBottomNav({
@@ -23,8 +23,9 @@ class CustomFabBottomNav extends StatelessWidget {
         Container(
           height: 80,
           decoration: BoxDecoration(
-             color: AppColors.forestGreen,
-             border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.1))),
+            color: AppColors.forestGreen,
+            border: Border(
+                top: BorderSide(color: Colors.white.withValues(alpha: 0.1))),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -37,7 +38,7 @@ class CustomFabBottomNav extends StatelessWidget {
             ],
           ),
         ),
-        
+
         // FAB
         Positioned(
           top: -28,
@@ -69,7 +70,7 @@ class CustomFabBottomNav extends StatelessWidget {
   Widget _buildNavItem(IconData icon, String label, int index) {
     final isSelected = selectedIndex == index;
     final color = isSelected ? AppColors.brightGreen : const Color(0xFF9DB9A8);
-    
+
     return InkWell(
       onTap: () => onTap(index),
       child: Column(

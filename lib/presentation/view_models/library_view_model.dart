@@ -55,7 +55,7 @@ class LibraryViewModel extends ChangeNotifier {
   /// Search supplements by query
   Future<void> search(String query) async {
     _searchQuery = query;
-    
+
     if (query.isEmpty) {
       _applyFilters();
       return;
@@ -63,8 +63,9 @@ class LibraryViewModel extends ChangeNotifier {
 
     _setLoading(true);
     try {
-      _filteredSupplements = await _supplementRepository.searchSupplements(query);
-      
+      _filteredSupplements =
+          await _supplementRepository.searchSupplements(query);
+
       // Also filter by category if selected
       if (_selectedCategory != null) {
         _filteredSupplements = _filteredSupplements
@@ -109,20 +110,20 @@ class LibraryViewModel extends ChangeNotifier {
       if (_selectedCategory != null && s.category != _selectedCategory) {
         return false;
       }
-      
+
       // Search filter (local)
       if (_searchQuery.isNotEmpty) {
         final query = _searchQuery.toLowerCase();
         final nameMatch = s.name.toLowerCase().contains(query);
         final benefitsMatch = s.benefits.any(
           (b) => b.toLowerCase().contains(query),
-        ) ?? false;
+        );
         if (!nameMatch && !benefitsMatch) return false;
       }
-      
+
       return true;
     }).toList();
-    
+
     notifyListeners();
   }
 

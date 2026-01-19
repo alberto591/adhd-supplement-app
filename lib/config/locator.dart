@@ -7,9 +7,13 @@ import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
 
-import 'package:adhd_supplement_app/infrastructure/repositories/mock_auth_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_stack_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_log_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_auth_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_safety_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/perplexity_service.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/perplexity_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/mock_billing_service.dart';
@@ -19,13 +23,11 @@ import 'package:adhd_supplement_app/presentation/view_models/history_log_view_mo
 import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
 
-import 'package:adhd_supplement_app/infrastructure/repositories/mock_symptom_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/mock_supplement_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/mock_streak_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_supplement_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_streak_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/safety_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/streak_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_safety_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_streak_repository.dart';
 import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
 import 'package:adhd_supplement_app/application/view_models/symptom_checkin_viewmodel.dart';
 import 'package:adhd_supplement_app/application/view_models/subscription_view_model.dart';
@@ -50,14 +52,19 @@ void setupLocator() {
 
   // Repositories
   locator.registerLazySingleton<SupplementRepository>(
-      () => MockSupplementRepository());
-  locator.registerLazySingleton<AuthRepository>(() => MockAuthRepository());
-  locator.registerLazySingleton<StreakRepository>(() => MockStreakRepository());
+      () => FirebaseSupplementRepository());
+  locator.registerLazySingleton<PerplexityService>(() => PerplexityService());
+  locator.registerLazySingleton<PerplexityRepository>(
+      () => PerplexityRepositoryImpl(locator<PerplexityService>()));
   locator
       .registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
+  locator.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository());
+  locator.registerLazySingleton<StreakRepository>(
+      () => FirebaseStreakRepository());
+
   locator.registerLazySingleton<LogRepository>(() => FirebaseLogRepository());
-  locator
-      .registerLazySingleton<SymptomRepository>(() => MockSymptomRepository());
+  locator.registerLazySingleton<SymptomRepository>(
+      () => FirebaseSymptomRepository());
   locator.registerLazySingleton<SafetyRepository>(
       () => FirebaseSafetyRepository());
   locator.registerLazySingleton<SettingsRepository>(
@@ -118,4 +125,5 @@ void setupLocator() {
       userId: userId,
     ),
   );
+  locator.registerLazySingleton<SeedingService>(() => SeedingService());
 }

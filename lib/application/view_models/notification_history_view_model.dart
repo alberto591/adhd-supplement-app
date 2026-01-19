@@ -17,7 +17,7 @@ class NotificationHistoryViewModel extends ChangeNotifier {
     notifyListeners();
 
     // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future<void>.delayed(const Duration(milliseconds: 800));
 
     // Mock Data
     _notifications = [

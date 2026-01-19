@@ -32,13 +32,13 @@ class MockSymptomRepository implements SymptomRepository {
   @override
   Future<void> logCheckIn(SymptomCheckIn checkIn) async {
     // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     _checkIns.add(checkIn);
   }
 
   @override
   Future<List<SymptomCheckIn>> getCheckIns(String userId) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return _checkIns.where((c) => c.userId == userId).toList()
       ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
   }
@@ -49,7 +49,7 @@ class MockSymptomRepository implements SymptomRepository {
     DateTime startDate,
     DateTime endDate,
   ) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return _checkIns.where((c) {
       return c.userId == userId &&
           c.timestamp.isAfter(startDate) &&
@@ -60,7 +60,7 @@ class MockSymptomRepository implements SymptomRepository {
 
   @override
   Future<SymptomCheckIn?> getLatestCheckIn(String userId) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     final userCheckIns = _checkIns.where((c) => c.userId == userId).toList()
       ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
@@ -83,7 +83,7 @@ class MockSymptomRepository implements SymptomRepository {
 
   @override
   Future<void> deleteCheckIn(String id) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     _checkIns.removeWhere((c) => c.id == id);
   }
 }

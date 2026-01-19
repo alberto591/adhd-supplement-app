@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../config/locator.dart';
+
 import '../../application/view_models/persistent_reminders_view_model.dart';
 import '../theme/app_theme.dart';
 import '../widgets/nudge_timeline_widget.dart';
@@ -10,10 +10,7 @@ class PersistentRemindersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => locator<PersistentRemindersViewModel>(),
-      child: const _PersistentRemindersContent(),
-    );
+    return const _PersistentRemindersContent();
   }
 }
 

@@ -60,6 +60,7 @@ class PersistentRemindersViewModel extends ChangeNotifier {
 
   Future<void> _scheduleOrCancelNotifications() async {
     // 1000 is the ID for the daily reminder
+    // 1001 is the ID for the warning/follow-up nudge
     if (_nudgeModeEnabled) {
       await _notificationService.scheduleRecurringNotification(
         id: 1000,
@@ -68,8 +69,31 @@ class PersistentRemindersViewModel extends ChangeNotifier {
         hour: _nudgeTime.hour,
         minute: _nudgeTime.minute,
       );
+
+      // Schedule warning/follow-up if enabled
+      if (_warningNudgeOption == '15m') {
+        // Calculate 15 minutes after
+        int warningHour = _nudgeTime.hour;
+        int warningMinute = _nudgeTime.minute + 15;
+
+        if (warningMinute >= 60) {
+          warningHour = (warningHour + 1) % 24;
+          warningMinute = warningMinute - 60;
+        }
+
+        await _notificationService.scheduleRecurringNotification(
+          id: 1001,
+          title: 'Missed your stack?',
+          body: 'Just a friendly nudge to log your supplements!',
+          hour: warningHour,
+          minute: warningMinute,
+        );
+      } else {
+        await _notificationService.cancelNotification(1001);
+      }
     } else {
       await _notificationService.cancelNotification(1000);
+      await _notificationService.cancelNotification(1001);
     }
   }
 

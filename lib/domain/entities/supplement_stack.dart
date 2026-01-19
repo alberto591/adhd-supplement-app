@@ -1,4 +1,3 @@
-
 class SupplementStack {
   final String id;
   final String userId;
@@ -69,12 +68,14 @@ class StackItem {
   final String supplementId;
   final String? customDosage;
   final String? customNotes;
+  final String? scheduledTime;
   final int order;
 
   const StackItem({
     required this.supplementId,
     this.customDosage,
     this.customNotes,
+    this.scheduledTime,
     required this.order,
   });
 
@@ -82,12 +83,14 @@ class StackItem {
     String? supplementId,
     String? customDosage,
     String? customNotes,
+    String? scheduledTime,
     int? order,
   }) {
     return StackItem(
       supplementId: supplementId ?? this.supplementId,
       customDosage: customDosage ?? this.customDosage,
       customNotes: customNotes ?? this.customNotes,
+      scheduledTime: scheduledTime ?? this.scheduledTime,
       order: order ?? this.order,
     );
   }
@@ -97,6 +100,7 @@ class StackItem {
       'supplementId': supplementId,
       'customDosage': customDosage,
       'customNotes': customNotes,
+      'scheduledTime': scheduledTime,
       'order': order,
     };
   }
@@ -106,6 +110,7 @@ class StackItem {
       supplementId: json['supplementId'] as String,
       customDosage: json['customDosage'] as String?,
       customNotes: json['customNotes'] as String?,
+      scheduledTime: json['scheduledTime'] as String?,
       order: json['order'] as int,
     );
   }

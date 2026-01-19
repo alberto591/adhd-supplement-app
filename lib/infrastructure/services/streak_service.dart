@@ -29,18 +29,6 @@ class StreakService {
 
     final completedToday = _isLogComplete(todayLog);
 
-    // Check if user completed yesterday
-    final yesterdayLog = sortedLogs.firstWhere(
-      (log) => _isSameDay(log.date, yesterday),
-      orElse: () => DailyLog(
-        id: '',
-        userId: currentStreak.userId,
-        date: yesterday,
-        entries: [],
-        createdAt: yesterday,
-      ),
-    );
-
     // final completedYesterday = _isLogComplete(yesterdayLog);
 
     // Calculate new streak

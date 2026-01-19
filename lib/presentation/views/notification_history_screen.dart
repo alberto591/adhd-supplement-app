@@ -124,7 +124,6 @@ class _NotificationTile extends StatelessWidget {
         case NotificationType.achievement:
           return Icons.emoji_events;
         case NotificationType.system:
-        default:
           return Icons.info_outline;
       }
     }
@@ -138,7 +137,6 @@ class _NotificationTile extends StatelessWidget {
         case NotificationType.achievement:
           return Colors.amber;
         case NotificationType.system:
-        default:
           return Colors.grey;
       }
     }

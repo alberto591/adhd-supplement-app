@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:adhd_supplement_app/presentation/navigation/app_router.dart';
+import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
+import '../../config/locator.dart';
 import '../theme/app_theme.dart';
 import 'package:app_settings/app_settings.dart';
 
@@ -40,6 +43,53 @@ class SystemHealthScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 16),
+
+                    // Seed Data Button (Debug)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          try {
+                            await locator<SeedingService>().seedSupplements();
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Seeding Success!')),
+                              );
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Seeding Error: $e')),
+                              );
+                            }
+                          }
+                        },
+                        icon: const Icon(Icons.cloud_upload),
+                        label: const Text('Seed Sample Data (Firestore)'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Test AI Agent Button (Debug)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AppRouter.aiSearch),
+                        icon: const Icon(Icons.psychology),
+                        label: const Text('Test AI Agent (Perplexity)'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple,
+                          foregroundColor: Colors.white,
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 16),
 
                     // Headline

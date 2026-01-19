@@ -10,6 +10,10 @@ import '../../domain/repositories/supplement_repository.dart';
 import '../../config/locator.dart';
 import '../navigation/app_router.dart';
 
+import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
+import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
+import '../../application/providers/auth_provider.dart';
+
 class StackBuilderScreen extends StatefulWidget {
   const StackBuilderScreen({super.key});
 
@@ -19,6 +23,7 @@ class StackBuilderScreen extends StatefulWidget {
 
 class _StackBuilderScreenState extends State<StackBuilderScreen> {
   late final SupplementRepository _supplementRepository;
+  late final StackRepository _stackRepository; // Add repository
   List<LibraryItemData> _libraryItems = [];
   final List<LibraryItemData> _currentStack = [];
   bool _isLoading = true;
@@ -28,6 +33,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
   void initState() {
     super.initState();
     _supplementRepository = locator<SupplementRepository>();
+    _stackRepository = locator<StackRepository>(); // Init repository
     _loadSupplements();
   }
 
@@ -47,11 +53,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                 ))
             .toList();
 
-        // Mock some initial items for wireframe feel
-        if (_libraryItems.isNotEmpty) {
-          _currentStack.add(_libraryItems[0]);
-          if (_libraryItems.length > 3) _currentStack.add(_libraryItems[3]);
-        }
+        // Removed mock data initialization
         _isLoading = false;
       });
       _checkInteractions();
@@ -62,6 +64,59 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
               'Error loading supplements: $e\n\n(This is expected in demo mode without real Firebase config)';
           _isLoading = false;
         });
+      }
+    }
+  }
+
+  // ... (keep _checkInteractions, _handleItemDropped, etc.)
+
+  Future<void> _saveStack() async {
+    setState(() => _isLoading = true);
+    try {
+      final authProvider = context.read<AuthProvider>();
+      final userId = authProvider.user?.id;
+
+      if (userId == null) {
+        throw Exception('User not logged in');
+      }
+
+      final stackItems = _currentStack.asMap().entries.map((entry) {
+        return StackItem(
+          supplementId: entry.value.id,
+          customDosage: entry.value.dosage,
+          order: entry.key,
+        );
+      }).toList();
+
+      final stack = SupplementStack(
+        id: 'daily_stack',
+        userId: userId,
+        name: 'Morning Focus Stack',
+        items: stackItems,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+
+      await _stackRepository.saveStack(userId, stack);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Stack saved successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context); // Go back to dashboard/previous screen
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error saving stack: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     }
   }
@@ -158,17 +213,22 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                   ),
                             ),
                             TextButton(
-                              onPressed: () {
-                                // Save stack logic
-                              },
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
+                              onPressed: _isLoading ? null : _saveStack,
+                              child: _isLoading
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                          strokeWidth: 2),
+                                    )
+                                  : const Text(
+                                      'Save',
+                                      style: TextStyle(
+                                        color: AppColors.primary,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
@@ -403,6 +463,15 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                               AppRouter.safetyInteractionDetail,
                               arguments:
                                   safetyViewModel.currentInteractions.first,
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Analysis Complete: No interactions found.'),
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 2),
+                              ),
                             );
                           }
                         },

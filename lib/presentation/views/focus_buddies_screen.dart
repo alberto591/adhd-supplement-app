@@ -536,7 +536,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           child: ElevatedButton(
             onPressed: () {
               // Show confirmation dialog before sending nudge
-              showDialog(
+              showDialog<void>(
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Send Nudge?'),

@@ -7,10 +7,12 @@ class OnboardingGoalSelectionScreen extends StatefulWidget {
   const OnboardingGoalSelectionScreen({super.key});
 
   @override
-  State<OnboardingGoalSelectionScreen> createState() => _OnboardingGoalSelectionScreenState();
+  State<OnboardingGoalSelectionScreen> createState() =>
+      _OnboardingGoalSelectionScreenState();
 }
 
-class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionScreen> {
+class _OnboardingGoalSelectionScreenState
+    extends State<OnboardingGoalSelectionScreen> {
   // Using a Set to allow multiple selections
   final Set<String> _selectedGoals = {'Better Sleep'};
 
@@ -50,9 +52,10 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF112117) : const Color(0xFFF6F8F6),
+      backgroundColor:
+          isDark ? const Color(0xFF112117) : const Color(0xFFF6F8F6),
       body: SafeArea(
         child: Stack(
           children: [
@@ -87,7 +90,7 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                     ],
                   ),
                 ),
-                
+
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -98,7 +101,8 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                         Text(
                           'What\'s your focus today?',
                           style: TextStyle(
-                            color: isDark ? Colors.white : const Color(0xFF111713),
+                            color:
+                                isDark ? Colors.white : const Color(0xFF111713),
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                             height: 1.1,
@@ -114,18 +118,20 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                             height: 1.5,
                           ),
                         ),
-                        
+
                         const SizedBox(height: 32),
-                        
+
                         // Grid layout
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 16,
                             mainAxisSpacing: 16,
-                            childAspectRatio: 0.85, 
+                            childAspectRatio:
+                                0.75, // Adjusted to prevent overflow
                           ),
                           itemCount: _goals.length,
                           itemBuilder: (context, index) {
@@ -140,7 +146,7 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                             );
                           },
                         ),
-                        
+
                         const SizedBox(height: 100), // Spacing for bottom bar
                       ],
                     ),
@@ -148,7 +154,7 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                 ),
               ],
             ),
-            
+
             // Fixed Bottom Bar
             Positioned(
               left: 0,
@@ -161,8 +167,13 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      isDark ? const Color(0xFF112117) : const Color(0xFFF6F8F6),
-                      (isDark ? const Color(0xFF112117) : const Color(0xFFF6F8F6)).withValues(alpha: 0.9),
+                      isDark
+                          ? const Color(0xFF112117)
+                          : const Color(0xFFF6F8F6),
+                      (isDark
+                              ? const Color(0xFF112117)
+                              : const Color(0xFFF6F8F6))
+                          .withValues(alpha: 0.9),
                       Colors.transparent,
                     ],
                     stops: const [0.0, 0.7, 1.0],
@@ -174,10 +185,12 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                       width: double.infinity,
                       height: 56,
                       child: ElevatedButton(
-                        onPressed: () => Navigator.pushNamed(context, '/onboarding/medication-safety'),
+                        onPressed: () => Navigator.pushNamed(
+                            context, '/onboarding/medication-safety'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.freshGreen,
-                          foregroundColor: const Color(0xFF112117), // Dark text on green button
+                          foregroundColor: const Color(
+                              0xFF112117), // Dark text on green button
                           elevation: 4,
                           shadowColor: Colors.black.withValues(alpha: 0.2),
                           shape: RoundedRectangleBorder(
@@ -195,9 +208,11 @@ class _OnboardingGoalSelectionScreenState extends State<OnboardingGoalSelectionS
                     ),
                     const SizedBox(height: 16),
                     TextButton(
-                      onPressed: () => Navigator.pushNamed(context, AppRouter.onboardingMedicationSafety),
+                      onPressed: () => Navigator.pushNamed(
+                          context, AppRouter.onboardingMedicationSafety),
                       style: TextButton.styleFrom(
-                        foregroundColor: isDark ? Colors.grey[400] : Colors.grey[500],
+                        foregroundColor:
+                            isDark ? Colors.grey[400] : Colors.grey[500],
                       ),
                       child: const Text(
                         'I\'ll choose later',

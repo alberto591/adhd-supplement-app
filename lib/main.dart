@@ -7,6 +7,7 @@ import 'presentation/navigation/app_router.dart';
 import 'application/providers/auth_provider.dart';
 import 'application/view_models/supplement_view_model.dart';
 import 'application/view_models/safety_view_model.dart';
+import 'application/view_models/persistent_reminders_view_model.dart';
 import 'presentation/navigation/auth_wrapper.dart';
 import 'firebase_options.dart';
 import 'domain/repositories/settings_repository.dart';
@@ -55,6 +56,8 @@ class AdhdSupplementApp extends StatelessWidget {
           update: (_, auth, previous) =>
               locator<SafetyViewModel>(param1: auth.user?.id ?? ''),
         ),
+        ChangeNotifierProvider(
+            create: (_) => locator<PersistentRemindersViewModel>()),
       ],
       child: MaterialApp(
         title: 'Daily Stack',

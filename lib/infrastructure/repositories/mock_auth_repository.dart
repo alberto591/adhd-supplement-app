@@ -18,7 +18,7 @@ class MockAuthRepository implements AuthRepository {
 
   @override
   Future<User> signInWithEmail(String email, String password) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     _currentUser = User(
       id: 'mock-user-123',
       email: email,
@@ -33,7 +33,7 @@ class MockAuthRepository implements AuthRepository {
   @override
   Future<User> signUpWithEmail(
       String email, String password, String displayName) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     _currentUser = User(
       id: 'mock-user-123',
       email: email,
@@ -52,8 +52,9 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
-  Stream<User?> authStateChanges() {
-    return _authStateController.stream;
+  Stream<User?> authStateChanges() async* {
+    yield _currentUser;
+    yield* _authStateController.stream;
   }
 
   @override
@@ -70,7 +71,7 @@ class MockAuthRepository implements AuthRepository {
 
   @override
   Future<User> signInAnonymously() async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     _currentUser = User(
       id: 'mock-anonymous-user',
       email: 'anonymous@dev.mode',

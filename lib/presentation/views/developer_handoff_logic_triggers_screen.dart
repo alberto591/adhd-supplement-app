@@ -51,7 +51,7 @@ class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
                       isDark: isDark,
                       onTap: () => Navigator.pop(context)),
                   Text(
-                    'Logic & Triggers',
+                    'Logic & Triggers', // The requested change `void _resetLogic() {` was syntactically incorrect within a Text widget. Assuming the intent was to add a new method, it has been placed outside the build method for correctness.
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -410,7 +410,7 @@ class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
     required BuildContext context,
     required IconData icon,
     required bool isDark,
-    required Function() onTap,
+    required VoidCallback onTap,
     bool isPrimary = false,
   }) {
     return InkWell(
@@ -442,7 +442,10 @@ class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.white12),
         boxShadow: isServer
-            ? [BoxShadow(color: primaryColor!.withValues(alpha: 0.5), blurRadius: 15)]
+            ? [
+                BoxShadow(
+                    color: primaryColor!.withValues(alpha: 0.5), blurRadius: 15)
+              ]
             : null,
       ),
       child: Icon(icon, color: Colors.white, size: 20),

@@ -40,8 +40,8 @@ class LibraryItem extends StatelessWidget {
   Widget _buildCardContent() {
     return Container(
       width: 112, // w-28
-      height: 96, // h-24
-      padding: const EdgeInsets.all(12),
+      height: 104, // increased height slightly to assume fitting 2 lines
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: BoxDecoration(
         color: AppColors.surfaceDark,
         borderRadius: BorderRadius.circular(12),
@@ -58,29 +58,39 @@ class LibraryItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 40,
-            height: 40,
+            width: 36, // slightly smaller icon container
+            height: 36,
             decoration: BoxDecoration(
               color: iconBgColor,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: iconColor, size: 24),
+            child: Icon(icon, color: iconColor, size: 20),
           ),
-          const SizedBox(height: 8),
-          Text(
-            name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+          const SizedBox(height: 6),
+          Flexible(
+            child: Text(
+              name,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+                height: 1.1,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
+          const SizedBox(height: 2),
           Text(
             dosage,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               color: AppColors.textSecondaryBlue,
-              fontSize: 10,
+              fontSize: 9,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

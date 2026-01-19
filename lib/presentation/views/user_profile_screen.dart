@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../application/view_models/persistent_reminders_view_model.dart';
 
+import 'package:intl/intl.dart';
+import '../../domain/entities/user.dart';
+
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
 
@@ -38,7 +41,9 @@ class UserProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             // Profile Header
-            const _ProfileHeader(),
+            Consumer<AuthProvider>(
+              builder: (context, auth, _) => _ProfileHeader(user: auth.user),
+            ),
 
             const SizedBox(height: 4), // Divider spacing
 
@@ -313,7 +318,8 @@ class UserProfileScreen extends StatelessWidget {
 }
 
 class _ProfileHeader extends StatelessWidget {
-  const _ProfileHeader();
+  final User? user;
+  const _ProfileHeader({this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +357,7 @@ class _ProfileHeader extends StatelessWidget {
 
           // Name
           Text(
-            'Alex Johnson',
+            _getInitials(user),
             style: TextStyle(
               color: isDark ? Colors.white : const Color(0xFF111418),
               fontSize: 22,
@@ -414,7 +420,7 @@ class _ProfileHeader extends StatelessWidget {
           // Member Since
           const SizedBox(height: 4),
           Text(
-            'Member since Jan 2024',
+            'Member since ${_formatDate(user?.createdAt)}',
             style: TextStyle(
               color: isDark ? Colors.grey[500] : const Color(0xFF94A3B8),
               fontSize: 14,
@@ -423,6 +429,24 @@ class _ProfileHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) return 'Unknown';
+    return DateFormat('MMM yyyy').format(date);
+  }
+
+  String _getInitials(User? user) {
+    if (user == null) return 'G';
+    final name = user.displayName;
+    if (name != null && name.isNotEmpty) {
+      return name[0].toUpperCase();
+    }
+    final email = user.email;
+    if (email.isNotEmpty) {
+      return email[0].toUpperCase();
+    }
+    return 'G';
   }
 }
 
