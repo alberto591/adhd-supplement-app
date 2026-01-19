@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../navigation/app_router.dart';
 import '../view_models/library_view_model.dart';
 import '../../config/locator.dart';
+import '../../domain/entities/supplement.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -20,7 +21,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     super.initState();
     _viewModel = locator.get<LibraryViewModel>();
     _viewModel.initialize();
-    
+
     _searchController.addListener(() {
       _viewModel.search(_searchController.text);
     });
@@ -55,7 +56,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 children: [
                   // Header
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     child: Row(
                       children: [
                         InkWell(
@@ -63,7 +65,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           child: Container(
                             width: 40,
                             alignment: Alignment.centerLeft,
-                            child: Icon(Icons.arrow_back_ios, size: 20, color: isDark ? Colors.white : const Color(0xFF0F172A)),
+                            child: Icon(Icons.arrow_back_ios,
+                                size: 20,
+                                color: isDark
+                                    ? Colors.white
+                                    : const Color(0xFF0F172A)),
                           ),
                         ),
                         Expanded(
@@ -74,7 +80,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               fontFamily: 'Lexend',
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xFF0F172A),
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -82,7 +90,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         Container(
                           width: 40,
                           alignment: Alignment.centerRight,
-                          child: Icon(Icons.bookmark_outline, size: 28, color: isDark ? Colors.white : const Color(0xFF0F172A)),
+                          child: Icon(Icons.bookmark_outline,
+                              size: 28,
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xFF0F172A)),
                         ),
                       ],
                     ),
@@ -102,11 +114,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             // Filter Chips: Categories
                             if (viewModel.categories.isNotEmpty) ...[
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 4),
                                 child: Text(
                                   'CATEGORIES',
                                   style: TextStyle(
-                                    color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                                    color: isDark
+                                        ? const Color(0xFF64748B)
+                                        : const Color(0xFF94A3B8),
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 1.5,
@@ -115,7 +130,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               ),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
                                 child: Row(
                                   children: [
                                     _buildFilterChip(
@@ -129,14 +145,17 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                     const SizedBox(width: 8),
                                     ...viewModel.categories.map((category) {
                                       return Padding(
-                                        padding: const EdgeInsets.only(right: 8),
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
                                         child: _buildFilterChip(
                                           context,
                                           _getIconForCategory(category),
                                           category,
-                                          viewModel.selectedCategory == category,
+                                          viewModel.selectedCategory ==
+                                              category,
                                           primaryBlue,
-                                          () => viewModel.filterByCategory(category),
+                                          () => viewModel
+                                              .filterByCategory(category),
                                         ),
                                       );
                                     }),
@@ -147,40 +166,53 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
                             // Search Bar
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Container(
                                       height: 48,
                                       decoration: BoxDecoration(
-                                        color: isDark ? cardBgDark : Colors.white,
+                                        color:
+                                            isDark ? cardBgDark : Colors.white,
                                         borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: isDark ? borderColorDark : borderColorLight),
+                                        border: Border.all(
+                                            color: isDark
+                                                ? borderColorDark
+                                                : borderColorLight),
                                       ),
                                       child: Row(
                                         children: [
                                           const Padding(
-                                            padding: EdgeInsets.only(left: 16, right: 8),
-                                            child: Icon(Icons.search, color: Color(0xFF9DA8B9)),
+                                            padding: EdgeInsets.only(
+                                                left: 16, right: 8),
+                                            child: Icon(Icons.search,
+                                                color: Color(0xFF9DA8B9)),
                                           ),
                                           Expanded(
                                             child: TextField(
                                               controller: _searchController,
                                               decoration: const InputDecoration(
-                                                hintText: 'Search supplements...',
-                                                hintStyle: TextStyle(color: Color(0xFF9DA8B9), fontSize: 14),
+                                                hintText:
+                                                    'Search supplements...',
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xFF9DA8B9),
+                                                    fontSize: 14),
                                                 border: InputBorder.none,
                                                 isDense: true,
                                               ),
                                               style: TextStyle(
-                                                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                                                color: isDark
+                                                    ? Colors.white
+                                                    : const Color(0xFF0F172A),
                                               ),
                                             ),
                                           ),
                                           if (_searchController.text.isNotEmpty)
                                             IconButton(
-                                              icon: const Icon(Icons.clear, color: Color(0xFF9DA8B9)),
+                                              icon: const Icon(Icons.clear,
+                                                  color: Color(0xFF9DA8B9)),
                                               onPressed: () {
                                                 _searchController.clear();
                                                 viewModel.clearFilters();
@@ -198,21 +230,27 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    viewModel.selectedCategory ?? 'All Supplements',
+                                    viewModel.selectedCategory ??
+                                        'All Supplements',
                                     style: TextStyle(
                                       fontFamily: 'Lexend',
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
-                                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                                      color: isDark
+                                          ? Colors.white
+                                          : const Color(0xFF0F172A),
                                     ),
                                   ),
                                   Text(
                                     'Showing ${viewModel.supplements.length} items',
                                     style: TextStyle(
-                                      color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                                      color: isDark
+                                          ? const Color(0xFF64748B)
+                                          : const Color(0xFF94A3B8),
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -228,11 +266,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 child: Center(
                                   child: Column(
                                     children: [
-                                      Icon(Icons.search_off, size: 48, color: Colors.grey),
+                                      Icon(Icons.search_off,
+                                          size: 48, color: Colors.grey),
                                       SizedBox(height: 16),
                                       Text(
                                         'No supplements found',
-                                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -240,11 +280,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               )
                             else
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 child: Column(
-                                  children: viewModel.supplements.map((supplement) {
+                                  children:
+                                      viewModel.supplements.map((supplement) {
                                     return Padding(
-                                      padding: const EdgeInsets.only(bottom: 16),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16),
                                       child: _buildSupplementCard(
                                         context,
                                         supplement: supplement,
@@ -272,7 +315,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1C2633) : Colors.white,
-            border: Border(top: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0))),
+            border: Border(
+                top: BorderSide(
+                    color: isDark
+                        ? const Color(0xFF334155)
+                        : const Color(0xFFE2E8F0))),
           ),
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: SafeArea(
@@ -280,11 +327,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildBottomNavItem(context, Icons.home, 'Routine', false, () {
-                  Navigator.pushNamedAndRemoveUntil(context, AppRouter.dashboard, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, AppRouter.dashboard, (route) => false);
                 }),
-                _buildBottomNavItem(context, Icons.explore, 'Discover', true, () {}),
-                _buildBottomNavItem(context, Icons.analytics, 'Stats', false, () {}),
-                _buildBottomNavItem(context, Icons.settings, 'Settings', false, () {
+                _buildBottomNavItem(
+                    context, Icons.explore, 'Discover', true, () {}),
+                _buildBottomNavItem(
+                    context, Icons.analytics, 'Stats', false, () {}),
+                _buildBottomNavItem(context, Icons.settings, 'Settings', false,
+                    () {
                   Navigator.pushNamed(context, AppRouter.profile);
                 }),
               ],
@@ -295,7 +346,141 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  Widget _buildFilterChip(
+void _showAddToStackSheet(BuildContext context, Supplement supplement) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.transparent,
+    builder: (context) => Container(
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1C2633) : Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Add to Stack',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : const Color(0xFF0F172A),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Select which stack to add ${supplement.name}',
+            style: TextStyle(
+              fontSize: 14,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 24),
+          _buildStackOption(
+            context,
+            '🌅 Morning Stack',
+            'Best for focus and energy',
+            () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Added ${supplement.name} to Morning Stack'),
+                  action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 12),
+          _buildStackOption(
+            context,
+            '🌇 Evening Stack',
+            'For relaxation and recovery',
+            () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Added ${supplement.name} to Evening Stack'),
+                  action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 12),
+          _buildStackOption(
+            context,
+            '🌙 Night Stack',
+            'Sleep support',
+            () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Added ${supplement.name} to Night Stack'),
+                  action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 24),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildStackOption(
+  BuildContext context,
+  String title,
+  String description,
+  VoidCallback onTap,
+) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+  return InkWell(
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(12),
+    child: Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: isDark ? Colors.white : const Color(0xFF0F172A),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Icon(Icons.arrow_forward_ios, size: 16),
+        ],
+      ),
+    ),
+  );
+}
+
+
+    Widget _buildFilterChip(
     BuildContext context,
     IconData icon,
     String label,
@@ -307,8 +492,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
     final bgSelected = primary;
     final bgUnselected = isDark ? const Color(0xFF1C2633) : Colors.white;
     const textSelected = Colors.white;
-    final textUnselected = isDark ? const Color(0xFFcbd5e1) : const Color(0xFF475569);
-    final borderUnselected = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+    final textUnselected =
+        isDark ? const Color(0xFFcbd5e1) : const Color(0xFF475569);
+    final borderUnselected =
+        isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
 
     return GestureDetector(
       onTap: onTap,
@@ -320,13 +507,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
           borderRadius: BorderRadius.circular(999),
           border: isSelected ? null : Border.all(color: borderUnselected),
           boxShadow: isSelected
-              ? [BoxShadow(color: primary.withValues(alpha: 0.3), blurRadius: 4, offset: const Offset(0, 2))]
+              ? [
+                  BoxShadow(
+                      color: primary.withValues(alpha: 0.3),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2))
+                ]
               : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 18, color: isSelected ? textSelected : textUnselected),
+            Icon(icon,
+                size: 18, color: isSelected ? textSelected : textUnselected),
             const SizedBox(width: 8),
             Text(
               label,
@@ -344,7 +537,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   Widget _buildSupplementCard(
     BuildContext context, {
-    required supplement,
+    required Supplement supplement,
     required bool isDark,
     required Color cardBgLight,
     required Color cardBgDark,
@@ -373,7 +566,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                          color: isDark ? Colors.white : const Color(0xFF0F172A),
+                          color:
+                              isDark ? Colors.white : const Color(0xFF0F172A),
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -381,7 +575,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         supplement.description ?? 'No description',
                         style: TextStyle(
                           fontSize: 13,
-                          color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                          color: isDark
+                              ? const Color(0xFF94A3B8)
+                              : const Color(0xFF64748B),
                           height: 1.4,
                         ),
                         maxLines: 2,
@@ -397,7 +593,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
               children: [
                 if (supplement.category != null)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: const Color(0xFF136DEC).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(6),
@@ -414,16 +611,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 const Spacer(),
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: Add to stack functionality
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Added ${supplement.name} to stack')),
-                    );
+                    _showAddToStackSheet(context, supplement);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF136DEC),
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
                   ),
                   child: const Text('Add', style: TextStyle(fontSize: 12)),
                 ),
@@ -443,7 +639,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
     VoidCallback onTap,
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final color = isSelected ? const Color(0xFF136DEC) : (isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8));
+    final color = isSelected
+        ? const Color(0xFF136DEC)
+        : (isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8));
 
     return InkWell(
       onTap: onTap,
