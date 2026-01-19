@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/supplement_repository.dart';
 

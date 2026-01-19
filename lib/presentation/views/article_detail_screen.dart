@@ -67,7 +67,7 @@ class ArticleDetailScreen extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   Image.network(
-                    articleData['image'],
+                    articleData['image'] as String,
                     fit: BoxFit.cover,
                   ),
                   Container(
@@ -90,192 +90,185 @@ class ArticleDetailScreen extends StatelessWidget {
 
           SliverPadding(
             padding: const EdgeInsets.all(24),
-            slivers: [
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  // Meta Info
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: primaryColor.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Text(
-                          'SCIENCE',
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                // Meta Info
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: primaryColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        'SCIENCE',
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Text(
-                        articleData['readTime'],
-                        style: TextStyle(color: secondaryText, fontSize: 13),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Oct 24, 2023',
-                        style: TextStyle(color: secondaryText, fontSize: 13),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Title
-                  Text(
-                    articleData['title'],
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w900,
-                      color: textColor,
-                      height: 1.1,
-                      fontFamily: 'Serif', // Fallback
                     ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Author Profile
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 16,
-                        backgroundImage: NetworkImage(
-                            'https://i.pravatar.cc/100?img=5'), // Dummy avatar
-                      ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            articleData['author'] as String,
-                            style: TextStyle(
-                              color: textColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            'Neuroscience Researcher',
-                            style:
-                                TextStyle(color: secondaryText, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
-
-                  // TL;DR Summary Box
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? const Color(0xFF1E293B)
-                          : const Color(0xFFF1F5F9),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
-                        width: 1,
-                      ),
+                    const SizedBox(width: 12),
+                    Text(
+                      articleData['readTime'] as String,
+                      style: TextStyle(color: secondaryText, fontSize: 13),
                     ),
-                    child: Column(
+                    const Spacer(),
+                    Text(
+                      'Oct 24, 2023',
+                      style: TextStyle(color: secondaryText, fontSize: 13),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Title
+                Text(
+                  articleData['title'] as String,
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w900,
+                    color: textColor,
+                    height: 1.1,
+                    fontFamily: 'Serif', // Fallback
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Author Profile
+                Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 16,
+                      backgroundImage: NetworkImage(
+                          'https://i.pravatar.cc/100?img=5'), // Dummy avatar
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
-                          children: [
-                            Icon(Icons.bolt, color: primaryColor, size: 20),
-                            SizedBox(width: 8),
-                            Text(
-                              'TL;DR Summary',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: primaryColor,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
                         Text(
-                          articleData['tldr'] as String,
+                          articleData['author'] as String,
                           style: TextStyle(
-                            fontSize: 16,
-                            height: 1.5,
-                            color: textColor.withValues(alpha: 0.9),
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.italic,
+                            color: textColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
                           ),
+                        ),
+                        Text(
+                          'Neuroscience Researcher',
+                          style: TextStyle(color: secondaryText, fontSize: 12),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 32),
+                  ],
+                ),
+                const SizedBox(height: 32),
 
-                  // Article Content
-                  Text(
-                    'Magnesium is often called the "relaxation mineral" for a reason. In our modern, high-stress environment, magnesium depletion is rampant, especially among those with ADHD who may have higher metabolic demands due to stimulant medication or chronic stress.',
-                    style:
-                        TextStyle(fontSize: 18, height: 1.6, color: textColor),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'The Mechanism of Action',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: textColor,
+                // TL;DR Summary Box
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? const Color(0xFF1E293B)
+                        : const Color(0xFFF1F5F9),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
+                      width: 1,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Magnesium plays a crucial role in regulating neurotransmitters, which send messages throughout the brain and nervous system. It is also involved in the regulation of the hormone melatonin, which guides sleep-wake cycles in your body.',
-                    style:
-                        TextStyle(fontSize: 18, height: 1.6, color: textColor),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(Icons.bolt, color: primaryColor, size: 20),
+                          SizedBox(width: 8),
+                          Text(
+                            'TL;DR Summary',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: primaryColor,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        articleData['tldr'] as String,
+                        style: TextStyle(
+                          fontSize: 16,
+                          height: 1.5,
+                          color: textColor.withValues(alpha: 0.9),
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Why Glycinate?',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: textColor,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Not all magnesium is created equal. Magnesium Glycinate is formed by combining elemental magnesium with the amino acid glycine. This form is highly bioavailable and less likely to cause laxative effects compared to Citrate or Oxide.',
-                    style:
-                        TextStyle(fontSize: 18, height: 1.6, color: textColor),
-                  ),
+                ),
+                const SizedBox(height: 32),
 
-                  const SizedBox(height: 48),
-
-                  // Related Articles (Simple list)
-                  Text(
-                    'Related Reading',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: textColor,
-                    ),
+                // Article Content
+                Text(
+                  'Magnesium is often called the "relaxation mineral" for a reason. In our modern, high-stress environment, magnesium depletion is rampant, especially among those with ADHD who may have higher metabolic demands due to stimulant medication or chronic stress.',
+                  style: TextStyle(fontSize: 18, height: 1.6, color: textColor),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'The Mechanism of Action',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
                   ),
-                  const SizedBox(height: 16),
-                  _buildRelatedArticle(isDark, 'Vitamin D3 & Focus Regulation'),
-                  const SizedBox(height: 12),
-                  _buildRelatedArticle(
-                      isDark, 'L-Theanine: The Caffeine Tamer'),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Magnesium plays a crucial role in regulating neurotransmitters, which send messages throughout the brain and nervous system. It is also involved in the regulation of the hormone melatonin, which guides sleep-wake cycles in your body.',
+                  style: TextStyle(fontSize: 18, height: 1.6, color: textColor),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'Why Glycinate?',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Not all magnesium is created equal. Magnesium Glycinate is formed by combining elemental magnesium with the amino acid glycine. This form is highly bioavailable and less likely to cause laxative effects compared to Citrate or Oxide.',
+                  style: TextStyle(fontSize: 18, height: 1.6, color: textColor),
+                ),
 
-                  const SizedBox(height: 48),
-                ]),
-              ),
-            ],
+                const SizedBox(height: 48),
+
+                // Related Articles (Simple list)
+                Text(
+                  'Related Reading',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                _buildRelatedArticle(isDark, 'Vitamin D3 & Focus Regulation'),
+                const SizedBox(height: 12),
+                _buildRelatedArticle(isDark, 'L-Theanine: The Caffeine Tamer'),
+
+                const SizedBox(height: 48),
+              ]),
+            ),
           ),
         ],
       ),
