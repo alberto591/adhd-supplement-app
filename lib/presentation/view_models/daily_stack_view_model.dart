@@ -134,6 +134,9 @@ class DailyStackViewModel extends ChangeNotifier {
     );
 
     await _updateTodayLog(entry);
+
+    // Cancel any active nudges for this supplement
+    await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
   }
 
   /// Mark a supplement as skipped
@@ -148,6 +151,9 @@ class DailyStackViewModel extends ChangeNotifier {
     );
 
     await _updateTodayLog(entry);
+
+    // Cancel any active nudges for this supplement
+    await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
   }
 
   /// Toggle a supplement's taken status
