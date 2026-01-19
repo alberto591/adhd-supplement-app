@@ -15,19 +15,22 @@ class User {
     this.hasCompletedOnboarding = false,
   });
 
+  static const Object _unset = Object();
+
   User copyWith({
     String? id,
     String? email,
-    String? displayName,
-    String? photoUrl,
+    Object? displayName = _unset,
+    Object? photoUrl = _unset,
     DateTime? createdAt,
     bool? hasCompletedOnboarding,
   }) {
     return User(
       id: id ?? this.id,
       email: email ?? this.email,
-      displayName: displayName ?? this.displayName,
-      photoUrl: photoUrl ?? this.photoUrl,
+      displayName:
+          identical(displayName, _unset) ? this.displayName : displayName as String?,
+      photoUrl: identical(photoUrl, _unset) ? this.photoUrl : photoUrl as String?,
       createdAt: createdAt ?? this.createdAt,
       hasCompletedOnboarding: hasCompletedOnboarding ?? this.hasCompletedOnboarding,
     );

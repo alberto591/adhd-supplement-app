@@ -16,6 +16,7 @@ class PrivacyViewModel extends ChangeNotifier {
 
   Future<void> downloadData() async {
     _setLoading(true);
+    _error = null;
     try {
       // Simulate data generation time
       await Future.delayed(const Duration(seconds: 2));
@@ -29,6 +30,7 @@ class PrivacyViewModel extends ChangeNotifier {
 
   Future<void> deleteAccount() async {
     _setLoading(true);
+    _error = null;
     try {
       await _authRepository.deleteUser();
       // App should navigate to login/onboarding after this

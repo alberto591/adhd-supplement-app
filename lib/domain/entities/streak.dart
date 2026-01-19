@@ -17,11 +17,15 @@ class Streak {
     required this.updatedAt,
   });
 
+  static const Object _unset = Object();
+
+  /// Note: [lastCompletedDate] supports explicitly setting null by passing
+  /// `lastCompletedDate: null`.
   Streak copyWith({
     String? userId,
     int? currentStreak,
     int? longestStreak,
-    DateTime? lastCompletedDate,
+    Object? lastCompletedDate = _unset,
     int? graceDaysRemaining,
     int? graceDaysUsed,
     DateTime? updatedAt,
@@ -30,7 +34,9 @@ class Streak {
       userId: userId ?? this.userId,
       currentStreak: currentStreak ?? this.currentStreak,
       longestStreak: longestStreak ?? this.longestStreak,
-      lastCompletedDate: lastCompletedDate ?? this.lastCompletedDate,
+      lastCompletedDate: identical(lastCompletedDate, _unset)
+          ? this.lastCompletedDate
+          : lastCompletedDate as DateTime?,
       graceDaysRemaining: graceDaysRemaining ?? this.graceDaysRemaining,
       graceDaysUsed: graceDaysUsed ?? this.graceDaysUsed,
       updatedAt: updatedAt ?? this.updatedAt,

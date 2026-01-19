@@ -34,6 +34,9 @@ import 'package:adhd_supplement_app/application/view_models/notification_history
 import 'package:adhd_supplement_app/application/view_models/streak_view_model.dart';
 import 'package:adhd_supplement_app/infrastructure/services/streak_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
+import 'package:adhd_supplement_app/application/view_models/persistent_reminders_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -57,6 +60,8 @@ void setupLocator() {
       .registerLazySingleton<SymptomRepository>(() => MockSymptomRepository());
   locator.registerLazySingleton<SafetyRepository>(
       () => FirebaseSafetyRepository());
+  locator.registerLazySingleton<SettingsRepository>(
+      () => SharedPrefsSettingsRepository());
 
   // Providers
   locator.registerLazySingleton(() => AuthProvider(locator<AuthRepository>()));
@@ -65,6 +70,11 @@ void setupLocator() {
   locator.registerFactory(() => SupplementViewModel(
         locator<SupplementRepository>(),
         locator<UrlService>(),
+      ));
+
+  locator.registerFactory(() => PersistentRemindersViewModel(
+        locator<SettingsRepository>(),
+        locator<NotificationService>(),
       ));
 
   // New ViewModels - require userId from AuthProvider at runtime

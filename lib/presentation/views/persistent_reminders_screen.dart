@@ -1,24 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../config/locator.dart';
+import '../../application/view_models/persistent_reminders_view_model.dart';
 import '../theme/app_theme.dart';
 import '../widgets/nudge_timeline_widget.dart';
 
-class PersistentRemindersScreen extends StatefulWidget {
+class PersistentRemindersScreen extends StatelessWidget {
   const PersistentRemindersScreen({super.key});
 
   @override
-  State<PersistentRemindersScreen> createState() =>
-      _PersistentRemindersScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => locator<PersistentRemindersViewModel>(),
+      child: const _PersistentRemindersContent(),
+    );
+  }
 }
 
-class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
-  bool _nudgeModeEnabled = true;
-  String _warningNudgeOption =
-      '15m'; // '15m' or 'followup' (radio group logic simulation)
-  bool _extendedRemindersEnabled = true;
+class _PersistentRemindersContent extends StatelessWidget {
+  const _PersistentRemindersContent();
+
+  Future<void> _selectTime(
+      BuildContext context, PersistentRemindersViewModel viewModel) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: viewModel.nudgeTime,
+      builder: (context, child) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return Theme(
+          data: isDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      await viewModel.setNudgeTime(picked);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final viewModel = Provider.of<PersistentRemindersViewModel>(context);
 
     return Scaffold(
       backgroundColor:
@@ -106,46 +129,99 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
                   ),
                 ],
               ),
-              child: Row(
+              child: Column(
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.notifications_active,
-                                color: AppColors.primary, size: 24),
-                            const SizedBox(width: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.notifications_active,
+                                    color: AppColors.primary, size: 24),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Nudge Mode',
+                                  style: TextStyle(
+                                    color: isDark
+                                        ? Colors.white
+                                        : const Color(0xFF0F172A),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
                             Text(
-                              'Nudge Mode',
+                              'Repeat notifications every 5 minutes until marked as taken.',
+                              style: TextStyle(
+                                color: isDark
+                                    ? Colors.grey[400]
+                                    : Colors.grey[500],
+                                fontSize: 14,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Switch(
+                        value: viewModel.nudgeModeEnabled,
+                        activeThumbColor: AppColors.primary,
+                        onChanged: (value) =>
+                            viewModel.setNudgeModeEnabled(value),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const SizedBox(height: 16),
+                  InkWell(
+                    onTap: () => _selectTime(context, viewModel),
+                    borderRadius: BorderRadius.circular(12),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 4),
+                      child: Row(
+                        children: [
+                          Icon(Icons.access_time,
+                              color: isDark ? Colors.white : Colors.black54,
+                              size: 20),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Reminder Time',
                               style: TextStyle(
                                 color: isDark
                                     ? Colors.white
                                     : const Color(0xFF0F172A),
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Repeat notifications every 5 minutes until marked as taken.',
-                          style: TextStyle(
-                            color: isDark ? Colors.grey[400] : Colors.grey[500],
-                            fontSize: 14,
-                            height: 1.4,
                           ),
-                        ),
-                      ],
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              viewModel.nudgeTime.format(context),
+                              style: const TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Switch(
-                    value: _nudgeModeEnabled,
-                    activeThumbColor: AppColors.primary,
-                    onChanged: (value) =>
-                        setState(() => _nudgeModeEnabled = value),
                   ),
                 ],
               ),
@@ -164,28 +240,30 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
 
             // Options
             _buildOptionTile(
+              context,
               title: '15m Warning Nudge',
               subtitle: 'Alert before scheduled dose',
-              isSelected: _warningNudgeOption == '15m',
-              onTap: () => setState(() => _warningNudgeOption = '15m'),
+              isSelected: viewModel.warningNudgeOption == '15m',
+              onTap: () => viewModel.setWarningNudgeOption('15m'),
               isRadio: true,
             ),
             const SizedBox(height: 12),
             _buildOptionTile(
+              context,
               title: 'Follow-up Nudges',
-              subtitle:
-                  'Keep nudging every 5, 10, and 15 mins after', // This seems redundant with Nudge Mode description in wireframe, but implementing as separate radio option per design.
-              isSelected: _warningNudgeOption == 'followup',
-              onTap: () => setState(() => _warningNudgeOption = 'followup'),
+              subtitle: 'Keep nudging every 5, 10, and 15 mins after',
+              isSelected: viewModel.warningNudgeOption == 'followup',
+              onTap: () => viewModel.setWarningNudgeOption('followup'),
               isRadio: true,
             ),
             const SizedBox(height: 12),
             _buildOptionTile(
+              context,
               title: 'Extended Reminders',
               subtitle: 'Continue for up to 1 hour',
-              isSelected: _extendedRemindersEnabled,
-              onTap: () => setState(
-                  () => _extendedRemindersEnabled = !_extendedRemindersEnabled),
+              isSelected: viewModel.extendedRemindersEnabled,
+              onTap: () => viewModel.setExtendedRemindersEnabled(
+                  !viewModel.extendedRemindersEnabled),
               isRadio: false, // Checkbox behavior
             ),
 
@@ -210,7 +288,7 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => viewModel.testNotification(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
@@ -241,9 +319,7 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
               'This will trigger a sample persistent notification to help you get used to the sound and haptics.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: isDark
-                    ? Colors.grey[500]
-                    : Colors.grey[500], // Darker grey for helper text
+                color: isDark ? Colors.grey[500] : Colors.grey[500],
                 fontSize: 12,
               ),
             ),
@@ -254,7 +330,8 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
     );
   }
 
-  Widget _buildOptionTile({
+  Widget _buildOptionTile(
+    BuildContext context, {
     required String title,
     required String subtitle,
     required bool isSelected,

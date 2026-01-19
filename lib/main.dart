@@ -9,6 +9,8 @@ import 'application/view_models/supplement_view_model.dart';
 import 'application/view_models/safety_view_model.dart';
 import 'presentation/navigation/auth_wrapper.dart';
 import 'firebase_options.dart';
+import 'domain/repositories/settings_repository.dart';
+import 'infrastructure/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +30,12 @@ void main() async {
   // Setup Dependency Injection
   try {
     setupLocator();
+    // Initialize Settings
+    await locator<SettingsRepository>().init();
+    // Initialize Notifications
+    await locator<NotificationService>().init();
   } catch (e) {
-    debugPrint('Locator setup error: $e');
+    debugPrint('Locator/Init setup error: $e');
   }
 
   runApp(const AdhdSupplementApp());

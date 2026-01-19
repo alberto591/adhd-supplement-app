@@ -41,7 +41,7 @@ void main() {
         moodLevel: 30,
       );
 
-      expect(checkIn.focusEmoji, '😫');
+      expect(checkIn.focusEmoji, '😔');
       expect(checkIn.energyEmoji, '🥱');
       expect(checkIn.moodEmoji, '😔');
     });

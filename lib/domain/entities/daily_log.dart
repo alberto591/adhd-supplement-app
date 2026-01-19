@@ -79,17 +79,21 @@ class LogEntry {
     this.skippedReason,
   });
 
+  static const Object _unset = Object();
+
   LogEntry copyWith({
     String? supplementId,
     DateTime? takenAt,
     bool? taken,
-    String? skippedReason,
+    Object? skippedReason = _unset,
   }) {
     return LogEntry(
       supplementId: supplementId ?? this.supplementId,
       takenAt: takenAt ?? this.takenAt,
       taken: taken ?? this.taken,
-      skippedReason: skippedReason ?? this.skippedReason,
+      skippedReason: identical(skippedReason, _unset)
+          ? this.skippedReason
+          : skippedReason as String?,
     );
   }
 

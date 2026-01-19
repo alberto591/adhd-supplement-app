@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
+import '../../application/view_models/persistent_reminders_view_model.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -97,14 +98,24 @@ class UserProfileScreen extends StatelessWidget {
             const _SectionHeader(title: 'Nudge Mode'),
             _SettingsGroup(
               children: [
-                _SettingsTile(
-                  icon: Icons.notifications_active,
-                  iconColor: AppColors.primary,
-                  title: 'Daily Reminders',
-                  subtitle: 'Gentle nudge at 8:00 AM',
-                  trailing: const _SwitchMock(value: true),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.reminders),
+                Consumer<PersistentRemindersViewModel>(
+                  builder: (context, viewModel, child) {
+                    return _SettingsTile(
+                      icon: Icons.notifications_active,
+                      iconColor: AppColors.primary,
+                      title: 'Daily Reminders',
+                      subtitle:
+                          'Gentle nudge at ${viewModel.nudgeTime.format(context)}',
+                      trailing: Switch(
+                        value: viewModel.nudgeModeEnabled,
+                        activeThumbColor: AppColors.primary,
+                        onChanged: (value) =>
+                            viewModel.setNudgeModeEnabled(value),
+                      ),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRouter.reminders),
+                    );
+                  },
                 ),
                 const SizedBox(height: 2),
                 const _SettingsTile(
@@ -525,34 +536,6 @@ class _SettingsTile extends StatelessWidget {
               trailing!,
             ],
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SwitchMock extends StatelessWidget {
-  final bool value;
-
-  const _SwitchMock({required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 44,
-      height: 24,
-      padding: const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        color: value ? AppColors.primary : Colors.grey[300],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        width: 20,
-        height: 20,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
         ),
       ),
     );
