@@ -1,0 +1,564 @@
+import 'package:flutter/material.dart';
+
+class TrophyRoomScreen extends StatelessWidget {
+  const TrophyRoomScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    const primaryPink = Color(0xFFEC1380);
+    const bgDark = Color(0xFF221019);
+    const bgLight = Color(0xFFF8F6F7);
+
+    return Scaffold(
+      backgroundColor: isDark ? bgDark : bgLight,
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              _buildAppBar(context, isDark, primaryPink),
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildProgressHeader(isDark, primaryPink),
+                    const SizedBox(height: 24),
+                    _buildRecentWins(isDark, primaryPink),
+                    const SizedBox(height: 32),
+                    _buildTrophyGrid(isDark, primaryPink),
+                    const SizedBox(
+                        height: 120), // Bottom padding for fixed button
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            left: 24,
+            right: 24,
+            bottom: 32,
+            child: _buildContinueButton(primaryPink),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAppBar(BuildContext context, bool isDark, Color primary) {
+    return SliverAppBar(
+      backgroundColor: isDark
+          ? const Color(0xFF221019).withValues(alpha: 0.9)
+          : const Color(0xFFF8F6F7).withValues(alpha: 0.9),
+      pinned: true,
+      elevation: 0,
+      leading: IconButton(
+        icon: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.black.withValues(alpha: 0.05),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.arrow_back_ios_new,
+              size: 18, color: isDark ? Colors.white : Colors.black),
+        ),
+        onPressed: () => Navigator.pop(context),
+      ),
+      title: Text(
+        'Trophy Room',
+        style: TextStyle(
+          color: isDark ? Colors.white : Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      centerTitle: true,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.05),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.share,
+                size: 20, color: isDark ? Colors.white : Colors.black),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProgressHeader(bool isDark, Color primary) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Your Legend',
+                    style: TextStyle(
+                      color: isDark ? Colors.white : Colors.black,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Level 12 Supplement Master',
+                    style: TextStyle(
+                      color: isDark
+                          ? const Color(0xFF94A3B8)
+                          : const Color(0xFF64748B),
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '12/30',
+                    style: TextStyle(
+                      color: primary,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'BADGES',
+                    style: TextStyle(
+                      color: isDark
+                          ? const Color(0xFF94A3B8)
+                          : const Color(0xFF64748B),
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Stack(
+              children: [
+                Container(
+                  height: 12,
+                  width: double.infinity,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.1)
+                      : Colors.black.withValues(alpha: 0.05),
+                ),
+                Container(
+                  height: 12,
+                  width: 150, // 40% roughly
+                  decoration: BoxDecoration(
+                    color: primary,
+                    boxShadow: [
+                      BoxShadow(
+                        color: primary.withValues(alpha: 0.5),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '18 more to Level 13',
+                style: TextStyle(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.7)
+                      : Colors.black.withValues(alpha: 0.7),
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                '40% Mastery',
+                style: TextStyle(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.7)
+                      : Colors.black.withValues(alpha: 0.7),
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecentWins(bool isDark, Color primary) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            'LATEST WINS',
+            style: TextStyle(
+              color: primary,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.5,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(
+            children: [
+              _buildWinBadge(
+                isDark,
+                icon: Icons.light_mode,
+                color: Colors.amber,
+                label: 'Early Bird',
+                glow: true,
+              ),
+              const SizedBox(width: 24),
+              _buildWinBadge(
+                isDark,
+                icon: Icons.local_fire_department,
+                color: primary,
+                label: 'Streak\nMaster',
+                glow: true,
+              ),
+              const SizedBox(width: 24),
+              _buildWinBadge(
+                isDark,
+                icon: Icons.verified_user,
+                color: Colors.blue,
+                label: 'Safety First',
+                glow: true,
+              ),
+              const SizedBox(width: 24),
+              _buildWinBadge(
+                isDark,
+                icon: Icons.psychology,
+                color: Colors.green,
+                label: 'Focus Legend',
+                glow: true,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWinBadge(bool isDark,
+      {required IconData icon,
+      required Color color,
+      required String label,
+      bool glow = false}) {
+    return Column(
+      children: [
+        Container(
+          width: 80,
+          height: 80,
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [color, color.withValues(alpha: 0.6)],
+            ),
+            boxShadow: glow
+                ? [
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.4),
+                      blurRadius: 15,
+                    ),
+                  ]
+                : [],
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF221019) : const Color(0xFFF8F6F7),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.2)
+                    : Colors.black.withValues(alpha: 0.1),
+                width: 2,
+              ),
+            ),
+            child: Icon(
+              icon,
+              color: color,
+              size: 32,
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: isDark ? Colors.white : Colors.black,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            height: 1.1,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTrophyGrid(bool isDark, Color primary) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Trophy Case',
+            style: TextStyle(
+              color: isDark ? Colors.white : Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 24),
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 0.85,
+            children: [
+              _buildTrophyCard(
+                isDark,
+                title: 'Focus Legend',
+                subtitle: 'EARNED 2D AGO',
+                icon: Icons.military_tech,
+                color: primary,
+                isLocked: false,
+              ),
+              _buildTrophyCard(
+                isDark,
+                title: '14-Day Rush',
+                subtitle: 'EARNED OCT 12',
+                icon: Icons.bolt,
+                color: Colors.orange,
+                isLocked: false,
+              ),
+              _buildTrophyCard(
+                isDark,
+                title: 'Omega Master',
+                subtitle: 'Take Omega-3 for 7 days',
+                icon: Icons.set_meal,
+                color: Colors.blue,
+                isLocked: true,
+              ),
+              _buildTrophyCard(
+                isDark,
+                title: 'Night Owl',
+                subtitle: 'Log night stack before 10 PM',
+                icon: Icons.dark_mode,
+                color: Colors.indigo,
+                isLocked: true,
+              ),
+              _buildTrophyCard(
+                isDark,
+                title: 'Safety First II',
+                subtitle: 'Check 5 interactions',
+                icon: Icons.medical_services,
+                color: Colors.red,
+                isLocked: true,
+              ),
+              _buildTrophyCard(
+                isDark,
+                title: 'Routine Pro',
+                subtitle: 'Set up 3 custom stacks',
+                icon: Icons.calendar_month,
+                color: Colors.teal,
+                isLocked: true,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTrophyCard(
+    bool isDark, {
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color color,
+    required bool isLocked,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: isLocked
+            ? (isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.black.withValues(alpha: 0.03))
+            : (isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.1)
+              : Colors.black.withValues(alpha: 0.05),
+        ),
+      ),
+      child: Opacity(
+        opacity: isLocked ? 0.7 : 1.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: isLocked
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : color.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                    border: isLocked
+                        ? null
+                        : Border.all(
+                            color: color,
+                            width: 2,
+                          ),
+                    boxShadow: !isLocked
+                        ? [
+                            BoxShadow(
+                              color: color.withValues(alpha: 0.4),
+                              blurRadius: 10,
+                            ),
+                          ]
+                        : null,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: isLocked
+                        ? (isDark
+                            ? Colors.white.withValues(alpha: 0.4)
+                            : Colors.black.withValues(alpha: 0.4))
+                        : color,
+                    size: 32,
+                  ),
+                ),
+                if (isLocked)
+                  Positioned(
+                    bottom: -4,
+                    right: -4,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? const Color(0xFF221019)
+                            : const Color(0xFFF8F6F7),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.2)
+                              : Colors.black.withValues(alpha: 0.1),
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.lock,
+                        size: 14,
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.6)
+                            : Colors.black.withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isDark ? Colors.white : Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              !isLocked ? subtitle.toUpperCase() : subtitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isLocked
+                    ? (isDark
+                        ? Colors.white.withValues(alpha: 0.5)
+                        : Colors.black.withValues(alpha: 0.5))
+                    : color,
+                fontSize: 10,
+                fontWeight: isLocked ? FontWeight.normal : FontWeight.bold,
+                fontStyle: isLocked ? FontStyle.italic : FontStyle.normal,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContinueButton(Color primary) {
+    return Container(
+      height: 64,
+      decoration: BoxDecoration(
+        color: primary,
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: primary.withValues(alpha: 0.3),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.rocket_launch, color: Colors.white),
+          SizedBox(width: 8),
+          Text(
+            'Continue Progress',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
