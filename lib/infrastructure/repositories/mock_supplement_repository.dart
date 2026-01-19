@@ -18,6 +18,7 @@ class MockSupplementRepository implements SupplementRepository {
           'Supports brain health',
           'Reduces inflammation'
         ],
+        category: 'Essentials',
         dosage: '1000mg daily with food',
         sideEffects: ['Fishy aftertaste', 'Mild stomach upset'],
         focusLevel: 4,
@@ -29,6 +30,7 @@ class MockSupplementRepository implements SupplementRepository {
             'Helps with relaxation, sleep quality, and calming restlessness.',
         referralUrl: 'https://example.com/magnesium',
         benefits: ['Reduces hyperactivity', 'Improves sleep', 'Calms anxiety'],
+        category: 'Sleep',
         dosage: '200mg before bed',
         sideEffects: ['Drowsiness'],
         focusLevel: 3,
@@ -44,6 +46,7 @@ class MockSupplementRepository implements SupplementRepository {
           'Reduces stress',
           'Pairs well with caffeine'
         ],
+        category: 'Calm',
         dosage: '100-200mg as needed',
         sideEffects: [],
         focusLevel: 5,
