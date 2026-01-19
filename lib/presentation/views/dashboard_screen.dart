@@ -20,80 +20,74 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // In real app, this would come from a provider
     const bool hasStack = false;
 
-    if (!hasStack) {
-      return _buildEmptyState(isDark);
-    }
-
     return Scaffold(
-      backgroundColor:
-          isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
-      body: Stack(
-        children: [
-          // Content
-          CustomScrollView(
-            slivers: [
-              _buildAppBar(isDark),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    children: [
-                      _buildMoodLogSection(isDark),
-                      const SizedBox(height: 16),
-                      _buildXPSection(isDark),
-                      const SizedBox(height: 32),
-                      _buildMorningQuestSection(isDark),
-                      const SizedBox(height: 32),
-                      _buildNightRaidSection(isDark),
-                      const SizedBox(height: 100), // Space for bottom nav
-                    ],
+      backgroundColor: isDark
+          ? const Color(0xFF221D10)
+          : const Color(0xFFF8F8F6), // Using bgDark from empty state
+      body: !hasStack
+          ? SafeArea(child: _buildEmptyState(isDark))
+          : CustomScrollView(
+              slivers: [
+                _buildAppBar(isDark),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      children: [
+                        _buildMoodLogSection(isDark),
+                        const SizedBox(height: 16),
+                        _buildXPSection(isDark),
+                        const SizedBox(height: 32),
+                        _buildMorningQuestSection(isDark),
+                        const SizedBox(height: 32),
+                        _buildNightRaidSection(isDark),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-
-          // Bottom Navigation
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: _buildBottomNav(isDark),
-          ),
-        ],
-      ),
+              ],
+            ),
+      bottomNavigationBar: _buildBottomNav(isDark),
     );
   }
 
   Widget _buildEmptyState(bool isDark) {
-    // Colors from design
     const primaryColor = Color(0xFFD4A411);
-    const bgDark = Color(0xFF221D10);
 
-    return Container(
-      color: isDark ? bgDark : const Color(0xFFF8F8F6),
-      child: SafeArea(
-        child: Column(
-          children: [
-            // Header
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
+    return Column(
+      children: [
+        // Header
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () => Navigator.pushNamed(context, AppRouter.profile),
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: primaryColor.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.account_circle, color: primaryColor),
+                    child:
+                        const Icon(Icons.account_circle, color: primaryColor),
                   ),
-                  const Text(
-                    'Today',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Container(
+                ),
+              ),
+              const Text(
+                'Today',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () => Navigator.pushNamed(context, AppRouter.profile),
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: isDark
@@ -103,171 +97,129 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     child: const Icon(Icons.settings, size: 20),
                   ),
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Abstract Shelf Illustration (Simplified)
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: 280,
-                          height: 280,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                primaryColor.withValues(alpha: 0.1),
-                                Colors.transparent
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(32),
-                            border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.05)),
-                          ),
-                        ),
-                        // Floating Icon
-                        Container(
-                          padding: const EdgeInsets.all(24),
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: primaryColor.withValues(alpha: 0.2),
-                                blurRadius: 20,
-                                offset: const Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: const Icon(Icons.psychology,
-                              size: 48, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
-
-                    const Text(
-                      'Your ritual starts here.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        height: 1.2,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Organize your mind and body with a personalized supplement stack designed for focus.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: isDark ? Colors.grey[400] : Colors.grey[600],
-                        fontSize: 16,
-                        height: 1.5,
-                      ),
-                    ),
-
-                    const SizedBox(height: 40),
-
-                    // CTA Buttons
-                    SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: ElevatedButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, AppRouter.stackBuilder),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28),
-                          ),
-                          elevation: 8,
-                          shadowColor: primaryColor.withValues(alpha: 0.2),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Build Your First Stack',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(width: 8),
-                            Icon(Icons.add_circle, size: 20),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, AppRouter.library),
-                      child: const Text(
-                        'Not sure where to start? Browse the Library',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
 
-            // Utility Nav for Empty State
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                border: Border(
-                    top: BorderSide(
-                        color: isDark ? Colors.white10 : Colors.grey[200]!)),
-                color: isDark ? bgDark.withValues(alpha: 0.95) : Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildUtilityNavItem(
-                      Icons.calendar_today, 'Today', true, primaryColor),
-                  _buildUtilityNavItem(
-                      Icons.layers, 'Stacks', false, Colors.grey),
-                  _buildUtilityNavItem(
-                      Icons.auto_stories, 'Library', false, Colors.grey),
-                  _buildUtilityNavItem(
-                      Icons.edit_note, 'Journal', false, Colors.grey),
+                  // Abstract Shelf Illustration (Simplified)
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 280,
+                        height: 280,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              primaryColor.withValues(alpha: 0.1),
+                              Colors.transparent
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(32),
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.05)),
+                        ),
+                      ),
+                      // Floating Icon
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryColor.withValues(alpha: 0.2),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(Icons.psychology,
+                            size: 48, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+
+                  const Text(
+                    'Your ritual starts here.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      height: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Organize your mind and body with a personalized supplement stack designed for focus.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      fontSize: 16,
+                      height: 1.5,
+                    ),
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // CTA Buttons
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, AppRouter.stackBuilder),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        elevation: 8,
+                        shadowColor: primaryColor.withValues(alpha: 0.2),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Build Your First Stack',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(width: 8),
+                          Icon(Icons.add_circle, size: 20),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRouter.library),
+                    child: const Text(
+                      'Not sure where to start? Browse the Library',
+                      style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUtilityNavItem(
-      IconData icon, String label, bool isActive, Color color) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(height: 4),
-        Text(
-          label.toUpperCase(),
-          style: TextStyle(
-            color: color,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 0.5,
           ),
         ),
       ],
@@ -1034,9 +986,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        color: isDark
-            ? const Color(0xFF0F172A).withValues(alpha: 0.9)
-            : Colors.white.withValues(alpha: 0.9),
+        color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, -4),
+          ),
+        ],
         border: Border(
           top: BorderSide(
             color: isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0),
@@ -1079,7 +1036,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Stack(
             clipBehavior: Clip.none,
             children: [
-              Icon(icon, color: color, size: 28),
+              Icon(icon, color: color, size: 30),
               if (isActive)
                 Positioned(
                   top: -2,

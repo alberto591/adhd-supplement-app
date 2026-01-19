@@ -335,7 +335,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
   }
 
   void _showCheckInModal() {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,

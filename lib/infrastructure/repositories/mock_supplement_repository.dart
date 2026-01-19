@@ -60,12 +60,43 @@ class MockSupplementRepository implements SupplementRepository {
         dosage: '15-30mg daily with food',
         sideEffects: ['Nausea if taken on empty stomach'],
         focusLevel: 3,
+        category: 'Essentials',
       ),
     ];
   }
 
   @override
-  Future<Supplement?> getSupplementById(String id) async => null;
+  Future<Supplement?> getSupplement(String id) async {
+    final supplements = await getAllSupplements();
+    try {
+      return supplements.firstWhere((s) => s.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<Supplement>> getSupplementsByCategory(String category) async {
+    final supplements = await getAllSupplements();
+    return supplements.where((s) => s.category == category).toList();
+  }
+
+  @override
+  Future<List<Supplement>> searchSupplements(String query) async {
+    final supplements = await getAllSupplements();
+    final lowerQuery = query.toLowerCase();
+    return supplements.where((s) {
+      return s.name.toLowerCase().contains(lowerQuery) ||
+          s.description.toLowerCase().contains(lowerQuery) ||
+          s.benefits.any((b) => b.toLowerCase().contains(lowerQuery));
+    }).toList();
+  }
+
+  @override
+  Stream<List<Supplement>> watchSupplements() async* {
+    final supplements = await getAllSupplements();
+    yield supplements;
+  }
 
   @override
   Future<void> trackReferralClick(String supplementId) async {

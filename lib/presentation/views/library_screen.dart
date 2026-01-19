@@ -346,141 +346,144 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-void _showAddToStackSheet(BuildContext context, Supplement supplement) {
-  final isDark = Theme.of(context).brightness == Brightness.dark;
-  showModalBottomSheet(
-    context: context,
-    backgroundColor: Colors.transparent,
-    builder: (context) => Container(
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1C2633) : Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Add to Stack',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Select which stack to add ${supplement.name}',
-            style: TextStyle(
-              fontSize: 14,
-              color: isDark ? Colors.grey[400] : Colors.grey[600],
-            ),
-          ),
-          const SizedBox(height: 24),
-          _buildStackOption(
-            context,
-            '🌅 Morning Stack',
-            'Best for focus and energy',
-            () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Added ${supplement.name} to Morning Stack'),
-                  action: SnackBarAction(label: 'UNDO', onPressed: () {}),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 12),
-          _buildStackOption(
-            context,
-            '🌇 Evening Stack',
-            'For relaxation and recovery',
-            () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Added ${supplement.name} to Evening Stack'),
-                  action: SnackBarAction(label: 'UNDO', onPressed: () {}),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 12),
-          _buildStackOption(
-            context,
-            '🌙 Night Stack',
-            'Sleep support',
-            () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Added ${supplement.name} to Night Stack'),
-                  action: SnackBarAction(label: 'UNDO', onPressed: () {}),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 24),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget _buildStackOption(
-  BuildContext context,
-  String title,
-  String description,
-  VoidCallback onTap,
-) {
-  final isDark = Theme.of(context).brightness == Brightness.dark;
-  return InkWell(
-    onTap: onTap,
-    borderRadius: BorderRadius.circular(12),
-    child: Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+  void _showAddToStackSheet(BuildContext context, Supplement supplement) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1C2633) : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: isDark ? Colors.white : const Color(0xFF0F172A),
-                  ),
+        padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Add to Stack',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : const Color(0xFF0F172A),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
-                  ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Select which stack to add ${supplement.name}',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: isDark ? Colors.grey[400] : Colors.grey[600],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 24),
+              _buildStackOption(
+                context,
+                '🌅 Morning Stack',
+                'Best for focus and energy',
+                () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('Added ${supplement.name} to Morning Stack'),
+                      action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+              _buildStackOption(
+                context,
+                '🌇 Evening Stack',
+                'For relaxation and recovery',
+                () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('Added ${supplement.name} to Evening Stack'),
+                      action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+              _buildStackOption(
+                context,
+                '🌙 Night Stack',
+                'Sleep support',
+                () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Added ${supplement.name} to Night Stack'),
+                      action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+            ],
           ),
-          const Icon(Icons.arrow_forward_ios, size: 16),
-        ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
+  Widget _buildStackOption(
+    BuildContext context,
+    String title,
+    String description,
+    VoidCallback onTap,
+  ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, size: 16),
+          ],
+        ),
+      ),
+    );
+  }
 
-    Widget _buildFilterChip(
+  Widget _buildFilterChip(
     BuildContext context,
     IconData icon,
     String label,
@@ -572,7 +575,7 @@ Widget _buildStackOption(
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        supplement.description ?? 'No description',
+                        supplement.description,
                         style: TextStyle(
                           fontSize: 13,
                           color: isDark
@@ -591,7 +594,7 @@ Widget _buildStackOption(
             const SizedBox(height: 12),
             Row(
               children: [
-                if (supplement.category != null)
+                if (true) // Kept structure but removed null check logic if cleaner, or just remove if
                   Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -600,7 +603,7 @@ Widget _buildStackOption(
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      supplement.category!,
+                      supplement.category,
                       style: const TextStyle(
                         color: Color(0xFF136DEC),
                         fontSize: 11,

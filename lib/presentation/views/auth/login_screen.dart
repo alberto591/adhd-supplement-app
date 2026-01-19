@@ -27,16 +27,14 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final authProvider = context.read<AuthProvider>();
-    
+
     try {
       await authProvider.signIn(
         _emailController.text.trim(),
         _passwordController.text,
       );
-      
-      if (mounted) {
-        AppRouter.navigateToHome(context);
-      }
+
+      // AuthWrapper will handle redirection
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -54,7 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 60),
-                
+
                 // Logo/Title
                 const Text(
                   'Daily Stack',
@@ -84,9 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: isDark ? Colors.grey[400] : Colors.grey[600],
                   ),
                 ),
-                
+
                 const SizedBox(height: 60),
-                
+
                 // Email Field
                 TextFormField(
                   controller: _emailController,
@@ -108,9 +107,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Password Field
                 TextFormField(
                   controller: _passwordController,
@@ -132,14 +131,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Login Button
                 Consumer<AuthProvider>(
                   builder: (context, authProvider, _) {
                     final isLoading = authProvider.status == AuthStatus.initial;
-                    
+
                     return SizedBox(
                       height: 56,
                       child: ElevatedButton(
@@ -155,30 +154,34 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? const SizedBox(
                                 height: 24,
                                 width: 24,
-                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                    color: Colors.white, strokeWidth: 2),
                               )
                             : const Text(
                                 'Login',
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                       ),
                     );
                   },
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Signup Link
                 TextButton(
-                  onPressed: () => AppRouter.navigateTo(context, AppRouter.signup),
+                  onPressed: () =>
+                      AppRouter.navigateTo(context, AppRouter.signup),
                   child: const Text('Don\'t have an account? Sign up'),
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // Dev bypass
                 OutlinedButton(
-                  onPressed: () => AppRouter.navigateToHome(context),
+                  onPressed: () =>
+                      context.read<AuthProvider>().signInAnonymously(),
                   child: const Text('Skip Login (Dev Mode)'),
                 ),
               ],

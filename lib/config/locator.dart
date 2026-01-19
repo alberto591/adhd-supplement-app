@@ -6,26 +6,34 @@ import 'package:adhd_supplement_app/domain/repositories/supplement_repository.da
 import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_supplement_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_auth_repository.dart';
+
+import 'package:adhd_supplement_app/infrastructure/repositories/mock_auth_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_stack_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_log_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
+import 'package:adhd_supplement_app/domain/services/billing_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/mock_billing_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
-import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
-import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
+
 import 'package:adhd_supplement_app/presentation/view_models/history_log_view_model.dart';
+import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart';
+
 import 'package:adhd_supplement_app/infrastructure/repositories/mock_symptom_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/mock_supplement_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/mock_streak_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/safety_repository.dart';
+import 'package:adhd_supplement_app/domain/repositories/streak_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_safety_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_streak_repository.dart';
 import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
 import 'package:adhd_supplement_app/application/view_models/symptom_checkin_viewmodel.dart';
 import 'package:adhd_supplement_app/application/view_models/subscription_view_model.dart';
 import 'package:adhd_supplement_app/application/view_models/privacy_view_model.dart';
 import 'package:adhd_supplement_app/application/view_models/notification_history_view_model.dart';
+import 'package:adhd_supplement_app/application/view_models/streak_view_model.dart';
+import 'package:adhd_supplement_app/infrastructure/services/streak_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 
 final locator = GetIt.instance;
 
@@ -33,11 +41,15 @@ void setupLocator() {
   // Services
   locator.registerLazySingleton<BillingService>(() => MockBillingService());
   locator.registerLazySingleton<UrlService>(() => UrlService());
+  locator
+      .registerLazySingleton<NotificationService>(() => NotificationService());
+  locator.registerLazySingleton<StreakService>(() => StreakService());
 
   // Repositories
   locator.registerLazySingleton<SupplementRepository>(
       () => MockSupplementRepository());
-  locator.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository());
+  locator.registerLazySingleton<AuthRepository>(() => MockAuthRepository());
+  locator.registerLazySingleton<StreakRepository>(() => MockStreakRepository());
   locator
       .registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
   locator.registerLazySingleton<LogRepository>(() => FirebaseLogRepository());
@@ -73,6 +85,8 @@ void setupLocator() {
   locator.registerFactory(() => SubscriptionViewModel());
   locator.registerFactory(() => PrivacyViewModel());
   locator.registerFactory(() => NotificationHistoryViewModel());
+  locator.registerFactory(() =>
+      StreakViewModel(locator<StreakService>(), locator<StreakRepository>()));
 
   locator.registerFactoryParam<HistoryLogViewModel, String, void>(
     (userId, _) => HistoryLogViewModel(

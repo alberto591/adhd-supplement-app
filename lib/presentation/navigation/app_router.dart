@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../config/locator.dart';
+import '../../application/providers/auth_provider.dart';
+import '../../application/view_models/symptom_checkin_viewmodel.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/signup_screen.dart';
 import '../views/daily_stack_screen.dart';
@@ -42,7 +46,6 @@ import '../views/science_library_update_screen.dart';
 import '../views/developer_handoff_logic_triggers_screen.dart';
 import '../views/help_and_support_screen.dart';
 import '../views/article_detail_screen.dart';
-import '../views/milestone_success_screen.dart';
 import '../views/milestone_success_screen.dart';
 import '../views/notification_history_screen.dart';
 import '../views/emergency_contact_screen.dart';
@@ -211,7 +214,15 @@ class AppRouter {
 
       case symptomCheckin:
         return MaterialPageRoute(
-          builder: (_) => const DailySymptomCheckinScreen(),
+          builder: (context) {
+            final authProvider =
+                Provider.of<AuthProvider>(context, listen: false);
+            final userId = authProvider.user?.id ?? '';
+            return ChangeNotifierProvider(
+              create: (_) => locator<SymptomCheckInViewModel>(param1: userId),
+              child: const DailySymptomCheckinScreen(),
+            );
+          },
           fullscreenDialog: true,
         );
 

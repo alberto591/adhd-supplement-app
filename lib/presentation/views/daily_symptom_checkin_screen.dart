@@ -38,7 +38,7 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
       _celebrationController.forward();
 
       // Show success feedback
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future<void>.delayed(const Duration(milliseconds: 500));
 
       if (mounted) {
         // ignore: use_build_context_synchronously
@@ -59,238 +59,249 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.4),
-      ),
-      child: GestureDetector(
-        onTap: () => Navigator.of(context).pop(),
-        child: Stack(
-          children: [
-            // Bottom Sheet
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: GestureDetector(
-                onTap: () {}, // Prevent dismissal when tapping sheet
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? const Color(0xFF101822)
-                        : const Color(0xFFF6F7F8),
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(24)),
-                  ),
-                  child: SafeArea(
-                    top: false,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Handle
-                        Container(
-                          margin: const EdgeInsets.only(top: 12),
-                          width: 48,
-                          height: 6,
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? const Color(0xFF3b4554)
-                                : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                        ),
-
-                        // Header
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+    return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.4),
+          ),
+          child: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: GestureDetector(
+                    onTap: () {}, // Prevent dismissal when tapping sheet
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? const Color(0xFF101822)
+                            : const Color(0xFFF6F7F8),
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(24)),
+                      ),
+                      child: SafeArea(
+                        top: false,
+                        child: SingleChildScrollView(
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                'How are you feeling?',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
+                              // Handle
+                              Container(
+                                margin: const EdgeInsets.only(top: 12),
+                                width: 48,
+                                height: 6,
+                                decoration: BoxDecoration(
                                   color: isDark
-                                      ? Colors.white
-                                      : const Color(0xFF101822),
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.1,
+                                      ? const Color(0xFF3b4554)
+                                      : Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(3),
                                 ),
                               ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Checking in helps track your progress',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: isDark
-                                      ? Colors.grey[400]
-                                      : Colors.grey[500],
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
 
-                        // Progress Indicator
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              for (int i = 0; i < 3; i++) ...[
-                                Container(
-                                  width: 48,
-                                  height: 6,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF136dec),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
-                                if (i < 2) const SizedBox(width: 8),
-                              ],
-                            ],
-                          ),
-                        ),
-
-                        // Sliders
-                        Consumer<SymptomCheckInViewModel>(
-                          builder: (context, viewModel, child) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Column(
-                                children: [
-                                  _buildSlider(
-                                    context,
-                                    label: 'Focus: 😫 to 🤩',
-                                    value: viewModel.focusLevel,
-                                    onChanged: viewModel.setFocusLevel,
-                                    isDark: isDark,
-                                  ),
-                                  _buildSlider(
-                                    context,
-                                    label: 'Energy: 🥱 to ⚡️',
-                                    value: viewModel.energyLevel,
-                                    onChanged: viewModel.setEnergyLevel,
-                                    isDark: isDark,
-                                  ),
-                                  _buildSlider(
-                                    context,
-                                    label: 'Mood: 😔 to 😊',
-                                    value: viewModel.moodLevel,
-                                    onChanged: viewModel.setMoodLevel,
-                                    isDark: isDark,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-
-                        // Action Buttons
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 16, 24, 40),
-                          child: Consumer<SymptomCheckInViewModel>(
-                            builder: (context, viewModel, child) {
-                              return Column(
-                                children: [
-                                  SizedBox(
-                                    width: double.infinity,
-                                    height: 56,
-                                    child: ElevatedButton(
-                                      onPressed: viewModel.isLoading
-                                          ? null
-                                          : () => _submitCheckIn(context),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color(0xFF136dec),
-                                        foregroundColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        elevation: 4,
+                              // Header
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(24, 24, 24, 8),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'How are you feeling?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: isDark
+                                            ? Colors.white
+                                            : const Color(0xFF101822),
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1.1,
                                       ),
-                                      child: viewModel.isLoading
-                                          ? const SizedBox(
-                                              width: 24,
-                                              height: 24,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.white),
-                                              ),
-                                            )
-                                          : const Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Done',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                SizedBox(width: 8),
-                                                Icon(Icons.celebration,
-                                                    size: 20),
-                                              ],
-                                            ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    child: Text(
-                                      'Skip for now',
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Checking in helps track your progress',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: isDark
                                             ? Colors.grey[400]
                                             : Colors.grey[500],
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+                                  ],
+                                ),
+                              ),
 
-            // Celebration overlay
-            if (_celebrationController.isAnimating)
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: Center(
-                    child: FadeTransition(
-                      opacity: _celebrationController,
-                      child: ScaleTransition(
-                        scale: Tween<double>(begin: 0.0, end: 5.0)
-                            .animate(_celebrationController),
-                        child: Icon(
-                          Icons.task_alt,
-                          size: 100,
-                          color: const Color(0xFF136dec).withValues(alpha: 0.2),
+                              // Progress Indicator
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    for (int i = 0; i < 3; i++) ...[
+                                      Container(
+                                        width: 48,
+                                        height: 6,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF136dec),
+                                          borderRadius:
+                                              BorderRadius.circular(3),
+                                        ),
+                                      ),
+                                      if (i < 2) const SizedBox(width: 8),
+                                    ],
+                                  ],
+                                ),
+                              ),
+
+                              // Sliders
+                              Consumer<SymptomCheckInViewModel>(
+                                builder: (context, viewModel, child) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: Column(
+                                      children: [
+                                        _buildSlider(
+                                          context,
+                                          label: 'Focus: 😫 to 🤩',
+                                          value: viewModel.focusLevel,
+                                          onChanged: viewModel.setFocusLevel,
+                                          isDark: isDark,
+                                        ),
+                                        _buildSlider(
+                                          context,
+                                          label: 'Energy: 🥱 to ⚡️',
+                                          value: viewModel.energyLevel,
+                                          onChanged: viewModel.setEnergyLevel,
+                                          isDark: isDark,
+                                        ),
+                                        _buildSlider(
+                                          context,
+                                          label: 'Mood: 😔 to 😊',
+                                          value: viewModel.moodLevel,
+                                          onChanged: viewModel.setMoodLevel,
+                                          isDark: isDark,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+
+                              // Action Buttons
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(24, 16, 24, 40),
+                                child: Consumer<SymptomCheckInViewModel>(
+                                  builder: (context, viewModel, child) {
+                                    return Column(
+                                      children: [
+                                        SizedBox(
+                                          width: double.infinity,
+                                          height: 56,
+                                          child: ElevatedButton(
+                                            onPressed: viewModel.isLoading
+                                                ? null
+                                                : () => _submitCheckIn(context),
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  const Color(0xFF136dec),
+                                              foregroundColor: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                              ),
+                                              elevation: 4,
+                                            ),
+                                            child: viewModel.isLoading
+                                                ? const SizedBox(
+                                                    width: 24,
+                                                    height: 24,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                                  Color>(
+                                                              Colors.white),
+                                                    ),
+                                                  )
+                                                : const Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        'Done',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 8),
+                                                      Icon(Icons.celebration,
+                                                          size: 20),
+                                                    ],
+                                                  ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: Text(
+                                            'Skip for now',
+                                            style: TextStyle(
+                                              color: isDark
+                                                  ? Colors.grey[400]
+                                                  : Colors.grey[500],
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-          ],
-        ),
-      ),
-    );
+
+                // Celebration overlay
+                if (_celebrationController.isAnimating)
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: Center(
+                        child: FadeTransition(
+                          opacity: _celebrationController,
+                          child: ScaleTransition(
+                            scale: Tween<double>(begin: 0.0, end: 5.0)
+                                .animate(_celebrationController),
+                            child: Icon(
+                              Icons.task_alt,
+                              size: 100,
+                              color: const Color(0xFF136dec)
+                                  .withValues(alpha: 0.2),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _buildSlider(

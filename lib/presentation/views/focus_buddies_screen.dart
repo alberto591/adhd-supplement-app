@@ -534,7 +534,36 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           width: double.infinity,
           height: 56,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              // Show confirmation dialog before sending nudge
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Send Nudge?'),
+                  content: const Text(
+                    'This will send "Don\'t forget your stack!" notification to Alex.',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('Nudge sent to Alex! ⚡'),
+                            backgroundColor: primary,
+                          ),
+                        );
+                      },
+                      child: const Text('Send'),
+                    ),
+                  ],
+                ),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: primary,
               shape: RoundedRectangleBorder(
@@ -578,17 +607,36 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     return Row(
       children: [
         Expanded(
-          child: _buildSecondaryButton(isDark, Icons.share, 'Share Stats'),
+          child: _buildSecondaryButton(
+            isDark,
+            Icons.share,
+            'Share Stats',
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Sharing team stats...'),
+                ),
+              );
+            },
+          ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: _buildSecondaryButton(isDark, Icons.history, 'Log History'),
+          child: _buildSecondaryButton(
+            isDark,
+            Icons.history,
+            'Log History',
+            onTap: () {
+              Navigator.pushNamed(context, AppRouter.historyLog);
+            },
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildSecondaryButton(bool isDark, IconData icon, String label) {
+  Widget _buildSecondaryButton(bool isDark, IconData icon, String label,
+      {required VoidCallback onTap}) {
     return Container(
       height: 48,
       decoration: BoxDecoration(
@@ -599,7 +647,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(24),
-          onTap: () {},
+          onTap: onTap,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

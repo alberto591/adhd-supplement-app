@@ -170,10 +170,31 @@ class WeeklyReviewScreen extends StatelessWidget {
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Share weekly progress
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Sharing weekly progress...'),
+                        // Show share options dialog
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Share Weekly Progress'),
+                            content: const Text(
+                              'Share your weekly supplement progress with your doctor, accountability partner, or social media.',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Progress shared!'),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Share'),
+                              ),
+                            ],
                           ),
                         );
                       },

@@ -135,6 +135,40 @@ class FirebaseAuthRepository implements AuthRepository {
     await user.delete();
   }
 
+  @override
+  Future<User> signInAnonymously() async {
+    try {
+      final credential = await _firebaseAuth.signInAnonymously();
+
+      if (credential.user == null) {
+        throw Exception('Anonymous sign in failed');
+      }
+
+      // Check if user already exists in Firestore
+      final doc =
+          await _firestore.collection('users').doc(credential.user!.uid).get();
+      if (doc.exists) {
+        return User.fromJson(doc.data()!);
+      }
+
+      // Create a temporary user profile
+      final user = User(
+        id: credential.user!.uid,
+        email: 'anonymous@dev.mode',
+        displayName: 'Guest Hero',
+        createdAt: DateTime.now(),
+        hasCompletedOnboarding: true,
+      );
+
+      // Save to Firestore so other repositories can find it
+      await _firestore.collection('users').doc(user.id).set(user.toJson());
+
+      return user;
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw _mapAuthException(e);
+    }
+  }
+
   User _mapFirebaseUser(firebase_auth.User firebaseUser) {
     return User(
       id: firebaseUser.uid,

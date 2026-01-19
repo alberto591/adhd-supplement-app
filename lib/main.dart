@@ -7,8 +7,8 @@ import 'presentation/navigation/app_router.dart';
 import 'presentation/views/auth/login_screen.dart';
 import 'application/providers/auth_provider.dart';
 import 'application/view_models/supplement_view_model.dart';
-
 import 'application/view_models/safety_view_model.dart';
+import 'presentation/navigation/auth_wrapper.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -59,7 +59,7 @@ class AdhdSupplementApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         // Start with login screen for now
         // TODO: Check auth state and redirect accordingly
-        home: const LoginScreen(),
+        home: const AuthWrapper(),
         onGenerateRoute: AppRouter.generateRoute,
       ),
     );

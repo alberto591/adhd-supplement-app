@@ -23,7 +23,8 @@ class AuthProvider extends ChangeNotifier {
   void _initialize() {
     _authRepository.authStateChanges().listen((user) {
       _user = user;
-      _status = user != null ? AuthStatus.authenticated : AuthStatus.unauthenticated;
+      _status =
+          user != null ? AuthStatus.authenticated : AuthStatus.unauthenticated;
       notifyListeners();
     });
   }
@@ -49,7 +50,24 @@ class AuthProvider extends ChangeNotifier {
       _errorMessage = null;
       notifyListeners();
 
-      _user = await _authRepository.signUpWithEmail(email, password, displayName);
+      _user =
+          await _authRepository.signUpWithEmail(email, password, displayName);
+      _status = AuthStatus.authenticated;
+      notifyListeners();
+    } catch (e) {
+      _errorMessage = e.toString();
+      _status = AuthStatus.unauthenticated;
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<void> signInAnonymously() async {
+    try {
+      _errorMessage = null;
+      notifyListeners();
+
+      _user = await _authRepository.signInAnonymously();
       _status = AuthStatus.authenticated;
       notifyListeners();
     } catch (e) {
