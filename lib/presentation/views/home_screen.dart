@@ -143,7 +143,7 @@ class _SupplementCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<void>(
                 builder: (context) => SupplementDetail(supplement: supplement),
               ),
             );

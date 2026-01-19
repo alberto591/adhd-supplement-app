@@ -29,7 +29,7 @@ class NotificationHistoryScreen extends StatelessWidget {
               icon: const Icon(Icons.delete_sweep),
               tooltip: 'Clear All',
               onPressed: () {
-                showDialog(
+                showDialog<void>(
                   context: context,
                   builder: (ctx) => AlertDialog(
                     title: const Text('Clear All History?'),

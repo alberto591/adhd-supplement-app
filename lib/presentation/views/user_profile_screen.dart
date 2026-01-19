@@ -299,68 +299,6 @@ class UserProfileScreen extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildBottomNav(BuildContext context, bool isDark) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF101822) : Colors.white,
-        border: Border(
-          top: BorderSide(
-            color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(context, 0, Icons.home, 'Home', false, isDark),
-          _buildNavItem(
-              context, 1, Icons.library_books, 'Library', false, isDark),
-          _buildNavItem(
-              context, 2, Icons.medication, 'My Stack', false, isDark),
-          _buildNavItem(context, 3, Icons.person, 'Profile', true, isDark),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(BuildContext context, int index, IconData icon,
-      String label, bool isActive, bool isDark) {
-    // Using Science Hub style (Primary Blue)
-    const primary = Color(0xFF136DEC);
-    final color = isActive
-        ? primary
-        : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF94A3B8));
-
-    return GestureDetector(
-      onTap: () {
-        if (index == 0) {
-          Navigator.of(context)
-              .popUntil((route) => route.settings.name == AppRouter.dashboard);
-        } else if (index == 1) {
-          Navigator.pushReplacementNamed(context, AppRouter.scienceHub);
-        } else if (index == 2) {
-          Navigator.pushNamed(context, AppRouter.stackBuilder);
-        }
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 28),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: color,
-              fontSize: 10,
-              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class _ProfileHeader extends StatelessWidget {

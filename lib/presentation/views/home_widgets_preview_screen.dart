@@ -323,7 +323,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Show tutorial dialog with platform-specific instructions
-                        showDialog(
+                        showDialog<void>(
                           context: context,
                           builder: (context) => AlertDialog(
                             title: const Text('Add Widget Tutorial'),

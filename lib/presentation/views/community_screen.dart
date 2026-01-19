@@ -9,7 +9,7 @@ class CommunityScreen extends StatefulWidget {
 }
 
 class _CommunityScreenState extends State<CommunityScreen> {
-  final int _selectedIndex = 1; // Community tab
+  // final int _selectedIndex = 1; // Community tab
   String _selectedFilter = '#All';
 
   final List<String> _filters = [
@@ -418,8 +418,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             height: 200,
             decoration: const BoxDecoration(
               color: Color(0xFFE0DDD8),
-              borderRadius:
-                  BorderRadius.vertical(top: Radius.circular(15)),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
             ),
             child: const Center(
               child: Icon(Icons.image, size: 48, color: Colors.grey),

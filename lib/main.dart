@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'config/locator.dart';
 import 'presentation/theme/app_theme.dart';
 import 'presentation/navigation/app_router.dart';
-import 'presentation/views/auth/login_screen.dart';
 import 'application/providers/auth_provider.dart';
 import 'application/view_models/supplement_view_model.dart';
 import 'application/view_models/safety_view_model.dart';
@@ -20,9 +19,9 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    print('Firebase initialized successfully');
+    debugPrint('Firebase initialized successfully');
   } catch (e) {
-    print('Firebase initialization error: $e');
+    debugPrint('Firebase initialization error: $e');
     // We continue so the app can at least show the UI in dev mode
   }
 
@@ -30,7 +29,7 @@ void main() async {
   try {
     setupLocator();
   } catch (e) {
-    print('Locator setup error: $e');
+    debugPrint('Locator setup error: $e');
   }
 
   runApp(const AdhdSupplementApp());

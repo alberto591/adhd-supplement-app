@@ -9,7 +9,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<SupplementViewModel>();
+    // final viewModel = context.watch<SupplementViewModel>();
 
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +39,7 @@ class HomeView extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      MaterialPageRoute<void>(
                         builder: (context) =>
                             SupplementDetail(supplement: supplement),
                       ),

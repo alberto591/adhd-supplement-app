@@ -5,7 +5,7 @@ class MockBillingService implements BillingService {
 
   @override
   Future<bool> initialize() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed<void>(const Duration(seconds: 1));
     return true;
   }
 
@@ -16,14 +16,14 @@ class MockBillingService implements BillingService {
 
   @override
   Future<bool> purchaseSubscription({required String planId}) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed<void>(const Duration(seconds: 2));
     _isSubscribed = true;
     return true;
   }
 
   @override
   Future<bool> restorePurchases() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed<void>(const Duration(seconds: 2));
     _isSubscribed = true;
     return true;
   }

@@ -9,7 +9,7 @@ class ScienceHubScreen extends StatefulWidget {
 }
 
 class _ScienceHubScreenState extends State<ScienceHubScreen> {
-  final int _selectedIndex = 1;
+  // final int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +55,22 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
 
   Widget _buildAppBar(BuildContext context, bool isDark) {
     return SliverAppBar(
-      backgroundColor: isDark ? const Color(0xFF101822).withValues(alpha: 0.9) : Colors.white.withValues(alpha: 0.9),
+      backgroundColor: isDark
+          ? const Color(0xFF101822).withValues(alpha: 0.9)
+          : Colors.white.withValues(alpha: 0.9),
       pinned: true,
       elevation: 0,
       leading: IconButton(
         icon: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.black.withValues(alpha: 0.05),
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.arrow_back_ios_new, size: 18, color: isDark ? Colors.white : const Color(0xFF111418)),
+          child: Icon(Icons.arrow_back_ios_new,
+              size: 18, color: isDark ? Colors.white : const Color(0xFF111418)),
         ),
         onPressed: () => Navigator.pop(context),
       ),
@@ -86,10 +91,14 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.search, size: 20, color: isDark ? Colors.white : const Color(0xFF111418)),
+            child: Icon(Icons.search,
+                size: 20,
+                color: isDark ? Colors.white : const Color(0xFF111418)),
           ),
         ),
       ],
@@ -104,7 +113,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           image: const DecorationImage(
-            image: NetworkImage('https://lh3.googleusercontent.com/aida-public/AB6AXuC-Mo0FP3KsqIDUdVS9d0Nxs-dTiPcnT5WIrtBXKPcMRXD8weLqbGrFa75a-nRFYk_Gul-c883Vvi49HCOJKXFg9fKH3jzu_hCf2kEz4Iq9YDMlj0JKC4QMFBSGVwdp6ETo3qN1hRQRyOPit6o0Lm85cByokXZFeevqjj0b4b7A0p5yC4SyiZnAlYHybwJzxuiRV4kZzIO1dBZ_PJjKg1CIUNX1yZGPDBoVnjeZq8I3Hq-SxovI6ViwIR_7GvevvPvTCmoQSk-PF7M'),
+            image: NetworkImage(
+                'https://lh3.googleusercontent.com/aida-public/AB6AXuC-Mo0FP3KsqIDUdVS9d0Nxs-dTiPcnT5WIrtBXKPcMRXD8weLqbGrFa75a-nRFYk_Gul-c883Vvi49HCOJKXFg9fKH3jzu_hCf2kEz4Iq9YDMlj0JKC4QMFBSGVwdp6ETo3qN1hRQRyOPit6o0Lm85cByokXZFeevqjj0b4b7A0p5yC4SyiZnAlYHybwJzxuiRV4kZzIO1dBZ_PJjKg1CIUNX1yZGPDBoVnjeZq8I3Hq-SxovI6ViwIR_7GvevvPvTCmoQSk-PF7M'),
             fit: BoxFit.cover,
           ),
           boxShadow: [
@@ -212,7 +222,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                 border: isActive
                     ? null
                     : Border.all(
-                        color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                        color: isDark
+                            ? const Color(0xFF334155)
+                            : const Color(0xFFE2E8F0),
                       ),
               ),
               child: Row(
@@ -223,7 +235,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                       size: 18,
                       color: isActive
                           ? Colors.white
-                          : (isDark ? const Color(0xFFCBD5E1) : const Color(0xFF111418)),
+                          : (isDark
+                              ? const Color(0xFFCBD5E1)
+                              : const Color(0xFF111418)),
                     ),
                     const SizedBox(width: 8),
                   ],
@@ -232,7 +246,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                     style: TextStyle(
                       color: isActive
                           ? Colors.white
-                          : (isDark ? const Color(0xFFCBD5E1) : const Color(0xFF111418)),
+                          : (isDark
+                              ? const Color(0xFFCBD5E1)
+                              : const Color(0xFF111418)),
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -335,10 +351,13 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
                         color: isEmerging
-                            ? (isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9))
+                            ? (isDark
+                                ? const Color(0xFF334155)
+                                : const Color(0xFFF1F5F9))
                             : primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
@@ -346,7 +365,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                         badge,
                         style: TextStyle(
                           color: isEmerging
-                              ? (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B))
+                              ? (isDark
+                                  ? const Color(0xFF94A3B8)
+                                  : const Color(0xFF64748B))
                               : primary,
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -357,7 +378,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                     Text(
                       time,
                       style: TextStyle(
-                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                        color: isDark
+                            ? const Color(0xFF94A3B8)
+                            : const Color(0xFF64748B),
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                       ),
@@ -381,7 +404,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                    color: isDark
+                        ? const Color(0xFF94A3B8)
+                        : const Color(0xFF64748B),
                     fontSize: 12,
                     height: 1.4,
                   ),
@@ -465,7 +490,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
     );
   }
 
-  Widget _buildGuideCard(bool isDark, IconData icon, Color iconColor, String title, String description) {
+  Widget _buildGuideCard(bool isDark, IconData icon, Color iconColor,
+      String title, String description) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -560,7 +586,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                         Text(
                           'Sarah J., Architect',
                           style: TextStyle(
-                            color: isDark ? Colors.white : const Color(0xFF111418),
+                            color:
+                                isDark ? Colors.white : const Color(0xFF111418),
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -568,7 +595,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                         Text(
                           'Verified User • Stack: Omega-3 + Mg',
                           style: TextStyle(
-                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                            color: isDark
+                                ? const Color(0xFF94A3B8)
+                                : const Color(0xFF64748B),
                             fontSize: 10,
                           ),
                         ),
@@ -599,23 +628,27 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(0, Icons.home, 'Home', false, isDark, primary),
-          _buildNavItem(1, Icons.library_books, 'Library', true, isDark, primary),
-          _buildNavItem(2, Icons.medication, 'My Stack', false, isDark, primary),
+          _buildNavItem(
+              1, Icons.library_books, 'Library', true, isDark, primary),
+          _buildNavItem(
+              2, Icons.medication, 'My Stack', false, isDark, primary),
           _buildNavItem(3, Icons.person, 'Profile', false, isDark, primary),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(int index, IconData icon, String label, bool isActive, bool isDark, Color primary) {
+  Widget _buildNavItem(int index, IconData icon, String label, bool isActive,
+      bool isDark, Color primary) {
     final color = isActive
         ? primary
         : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF94A3B8));
-    
+
     return GestureDetector(
       onTap: () {
         if (index == 0) {
-          Navigator.of(context).popUntil((route) => route.settings.name == AppRouter.dashboard);
+          Navigator.of(context)
+              .popUntil((route) => route.settings.name == AppRouter.dashboard);
         } else if (index == 2) {
           Navigator.pushNamed(context, AppRouter.stackBuilder);
         } else if (index == 3) {

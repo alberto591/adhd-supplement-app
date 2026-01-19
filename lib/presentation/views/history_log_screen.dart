@@ -50,7 +50,7 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
             child: TextButton(
               onPressed: () {
                 // Show confirmation dialog before resolving all
-                showDialog(
+                showDialog<void>(
                   context: context,
                   builder: (context) => AlertDialog(
                     title: const Text('Resolve All?'),

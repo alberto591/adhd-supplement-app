@@ -5,7 +5,6 @@ import 'cloud_sync_screen.dart';
 import '../widgets/stack_drop_zone.dart';
 import '../widgets/library_item.dart';
 import '../widgets/safety_alert_banner.dart';
-import '../../application/providers/auth_provider.dart';
 import '../../application/view_models/safety_view_model.dart';
 import '../../domain/repositories/supplement_repository.dart';
 import '../../config/locator.dart';

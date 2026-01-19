@@ -149,7 +149,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                       width: double.infinity,
                       child: TextButton.icon(
                         onPressed: () {
-                          showDialog(
+                          showDialog<void>(
                               context: context,
                               builder: (ctx) => AlertDialog(
                                     title: const Text('Delete Everything?'),

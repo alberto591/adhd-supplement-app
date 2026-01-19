@@ -41,7 +41,7 @@ class StreakService {
       ),
     );
 
-    final completedYesterday = _isLogComplete(yesterdayLog);
+    // final completedYesterday = _isLogComplete(yesterdayLog);
 
     // Calculate new streak
     int newStreak = currentStreak.currentStreak;

@@ -171,7 +171,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         // Show share options dialog
-                        showDialog(
+                        showDialog<void>(
                           context: context,
                           builder: (context) => AlertDialog(
                             title: const Text('Share Weekly Progress'),

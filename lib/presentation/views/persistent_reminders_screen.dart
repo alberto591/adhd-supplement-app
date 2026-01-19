@@ -44,7 +44,7 @@ class _PersistentRemindersScreenState extends State<PersistentRemindersScreen> {
           IconButton(
             icon: const Icon(Icons.info, color: AppColors.primary),
             onPressed: () {
-              showDialog(
+              showDialog<void>(
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Persistent Reminders'),

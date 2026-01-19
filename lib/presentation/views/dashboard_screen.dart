@@ -9,7 +9,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final int _selectedIndex = 0;
+  // final int _selectedIndex = 0;
   bool _moodLogged = false;
 
   @override
@@ -18,7 +18,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     // Temporary flag for testing empty state
     // In real app, this would come from a provider
-    const bool hasStack = false;
+    // ignore: prefer_const_declarations
+    final bool hasStack = false;
 
     return Scaffold(
       backgroundColor: isDark

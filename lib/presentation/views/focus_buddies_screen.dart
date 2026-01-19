@@ -469,7 +469,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
       bool isDark, IconData icon, Color iconColor, Color bgColor, String text,
       {bool isNotification = false}) {
     // rudimentary parsing for bolding
-    final parts = text.split(' ');
+    // final parts = text.split(' ');
 
     return Container(
       padding: const EdgeInsets.all(12),
