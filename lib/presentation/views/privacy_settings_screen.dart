@@ -59,7 +59,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
       ),
       body: Consumer<PrivacyViewModel>(builder: (context, viewModel, child) {
         if (viewModel.isLoading) {
-          return const Center(child: CircularProgressIndicator(color: primaryBlue));
+          return const Center(
+              child: CircularProgressIndicator(color: primaryBlue));
         }
         return SingleChildScrollView(
           child: Column(
@@ -87,12 +88,10 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                     subtitle: 'Export history as CSV or PDF',
                     onTap: () async {
                       await viewModel.downloadData();
-                      if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    'Data export generated (Simulation)')));
-                      }
+                      if (!context.mounted) return;
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Data export generated (Simulation)')));
                     },
                   ),
                 ],
@@ -165,12 +164,11 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                                         onPressed: () async {
                                           Navigator.pop(ctx);
                                           await viewModel.deleteAccount();
-                                          if (mounted) {
-                                            Navigator.pushNamedAndRemoveUntil(
-                                                context,
-                                                '/login',
-                                                (route) => false);
-                                          }
+                                          if (!context.mounted) return;
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              '/login',
+                                              (route) => false);
                                         },
                                         child: const Text('DELETE',
                                             style:
@@ -315,8 +313,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color:
-                    iconColor?.withValues(alpha: 0.1) ?? Colors.grey.withValues(alpha: 0.1),
+                color: iconColor?.withValues(alpha: 0.1) ??
+                    Colors.grey.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(icon, color: iconColor ?? Colors.grey, size: 24),

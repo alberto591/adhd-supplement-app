@@ -36,8 +36,9 @@ class ArticleDetailScreen extends StatelessWidget {
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundColor:
-                    isDark ? Colors.black54 : Colors.white.withValues(alpha: 0.9),
+                backgroundColor: isDark
+                    ? Colors.black54
+                    : Colors.white.withValues(alpha: 0.9),
                 child: BackButton(color: isDark ? Colors.white : Colors.black),
               ),
             ),
@@ -45,8 +46,9 @@ class ArticleDetailScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 16, 8),
                 child: CircleAvatar(
-                  backgroundColor:
-                      isDark ? Colors.black54 : Colors.white.withValues(alpha: 0.9),
+                  backgroundColor: isDark
+                      ? Colors.black54
+                      : Colors.white.withValues(alpha: 0.9),
                   child: IconButton(
                     icon: const Icon(Icons.share, size: 20),
                     color: isDark ? Colors.white : Colors.black,
@@ -150,7 +152,7 @@ class ArticleDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            articleData['author'],
+                            articleData['author'] as String,
                             style: TextStyle(
                               color: textColor,
                               fontWeight: FontWeight.bold,
@@ -202,7 +204,7 @@ class ArticleDetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          articleData['tldr'],
+                          articleData['tldr'] as String,
                           style: TextStyle(
                             fontSize: 16,
                             height: 1.5,

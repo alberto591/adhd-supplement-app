@@ -3,7 +3,14 @@ import 'dart:math';
 import '../theme/app_theme.dart';
 
 class ParticlesBackground extends StatelessWidget {
-  const ParticlesBackground({super.key});
+  final Color? color;
+  final int? particleCount;
+
+  const ParticlesBackground({
+    super.key,
+    this.color,
+    this.particleCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +105,7 @@ class ParticlesBackground extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.6),
+        color: (color ?? Colors.white).withValues(alpha: 0.6),
         shape: BoxShape.circle,
       ),
     );

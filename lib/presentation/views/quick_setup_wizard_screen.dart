@@ -214,7 +214,8 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: InkWell(
-                    onTap: () => setState(() => _selectedGoal = goal['title']),
+                    onTap: () => setState(
+                        () => _selectedGoal = goal['title'] as String?),
                     borderRadius: BorderRadius.circular(16),
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -243,14 +244,14 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
-                              goal['icon'],
+                              goal['icon'] as IconData,
                               color: AppColors.freshGreen,
                             ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
                             child: Text(
-                              goal['title'],
+                              goal['title'] as String,
                               style: TextStyle(
                                 color: isDark ? Colors.white : Colors.black,
                                 fontSize: 18,
@@ -308,8 +309,8 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: InkWell(
-                    onTap: () =>
-                        setState(() => _selectedStack = stack['title']),
+                    onTap: () => setState(
+                        () => _selectedStack = stack['title'] as String?),
                     borderRadius: BorderRadius.circular(16),
                     child: Container(
                       padding: const EdgeInsets.all(20),
