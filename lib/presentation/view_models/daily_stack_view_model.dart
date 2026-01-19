@@ -5,6 +5,7 @@ import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/stack_repository.dart';
 import '../../domain/repositories/log_repository.dart';
 import '../../domain/repositories/supplement_repository.dart';
+import '../../infrastructure/services/notification_service.dart';
 
 /// View model for the Daily Stack screen
 /// Manages today's stacks, intake status, and progress tracking

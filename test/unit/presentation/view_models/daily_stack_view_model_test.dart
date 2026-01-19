@@ -6,6 +6,8 @@ import 'package:adhd_supplement_app/domain/repositories/supplement_repository.da
 import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
 import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
+import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // Fakes for cleaner manual testing without mockito's "when" null-safety issues
 class FakeStackRepository implements StackRepository {
@@ -71,6 +73,50 @@ class FakeSupplementRepository implements SupplementRepository {
   Future<void> trackReferralClick(String supplementId) async {}
 }
 
+class FakeNotificationService implements NotificationService {
+  @override
+  Future<void> init() async {}
+  @override
+  Future<void> showNotification(
+      {required int id, required String title, required String body}) async {}
+  @override
+  Future<void> scheduleNotification(
+      {required int id,
+      required String title,
+      required String body,
+      required DateTime scheduledDate}) async {}
+  @override
+  Future<void> scheduleRecurringNotification(
+      {required int id,
+      required String title,
+      required String body,
+      required int hour,
+      required int minute,
+      int second = 0}) async {}
+  @override
+  Future<void> cancelNotification(int id) async {}
+  @override
+  Future<void> cancelAllNotifications() async {}
+  @override
+  Future<List<PendingNotificationRequest>> getPendingNotifications() async =>
+      [];
+  @override
+  Future<void> schedulePersistentNudge(
+      {required int baseId,
+      required String title,
+      required String body,
+      required DateTime initialTime,
+      int maxNudges = 12}) async {}
+  @override
+  Future<void> snoozePersistentNudge(
+      {required int baseId,
+      required String title,
+      required String body,
+      int maxNudges = 12}) async {}
+  @override
+  Future<void> cancelNudgeSequence(int baseId, int count) async {}
+}
+
 void main() {
   late DailyStackViewModel viewModel;
   late FakeStackRepository fakeStackRepo;
@@ -112,6 +158,7 @@ void main() {
       stackRepository: fakeStackRepo,
       logRepository: fakeLogRepo,
       supplementRepository: fakeSupplementRepo,
+      notificationService: FakeNotificationService(),
       userId: userId,
     );
   });
@@ -140,7 +187,10 @@ void main() {
         userId: userId,
         date: DateTime.now(),
         entries: [
-          LogEntry(supplementId: 'supp1', takenAt: DateTime.now(), taken: true),
+          LogEntry(
+              supplementId: 'supp1',
+              takenAt: DateTime.now(),
+              status: LogStatus.taken),
         ],
         createdAt: DateTime.now(),
       );
@@ -164,8 +214,8 @@ void main() {
       expect(viewModel.isSupplementTaken('supp1'), true);
       expect(fakeLogRepo.lastSavedLog, isNotNull);
       expect(
-          fakeLogRepo.lastSavedLog!.entries
-              .any((e) => e.supplementId == 'supp1' && e.taken),
+          fakeLogRepo.lastSavedLog!.entries.any(
+              (e) => e.supplementId == 'supp1' && e.status == LogStatus.taken),
           true);
     });
 

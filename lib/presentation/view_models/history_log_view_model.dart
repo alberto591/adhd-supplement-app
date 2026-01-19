@@ -25,12 +25,12 @@ class HistoryLogViewModel extends ChangeNotifier {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = today.subtract(const Duration(days: 1));
-    
+
     final groups = <String, List<DailyLog>>{};
-    
+
     for (final log in _logs) {
       final logDate = DateTime(log.date.year, log.date.month, log.date.day);
-      
+
       String groupKey;
       if (logDate == today) {
         groupKey = 'Earlier Today';
@@ -41,11 +41,11 @@ class HistoryLogViewModel extends ChangeNotifier {
       } else {
         groupKey = 'Earlier';
       }
-      
+
       groups.putIfAbsent(groupKey, () => []);
       groups[groupKey]!.add(log);
     }
-    
+
     return groups;
   }
 
@@ -54,22 +54,21 @@ class HistoryLogViewModel extends ChangeNotifier {
     int totalEntries = 0;
     int takenCount = 0;
     int missedCount = 0;
-    
+
     for (final log in _logs) {
       for (final entry in log.entries) {
         totalEntries++;
-        if (entry.taken) {
+        if (entry.status == LogStatus.taken) {
           takenCount++;
         } else {
           missedCount++;
         }
       }
     }
-    
-    final completionRate = totalEntries > 0 
-        ? (takenCount / totalEntries * 100).round() 
-        : 0;
-    
+
+    final completionRate =
+        totalEntries > 0 ? (takenCount / totalEntries * 100).round() : 0;
+
     return {
       'total': totalEntries,
       'taken': takenCount,
@@ -126,15 +125,17 @@ class HistoryLogViewModel extends ChangeNotifier {
     if (_selectedFilter == 'All') {
       return log.entries;
     }
-    
+
     return log.entries.where((entry) {
       switch (_selectedFilter) {
         case 'Taken':
-          return entry.taken;
+          return entry.status == LogStatus.taken;
         case 'Missed':
-          return !entry.taken && entry.skippedReason == null;
+          return entry.status == LogStatus.skipped &&
+              entry.skippedReason == null;
         case 'Dismissed':
-          return !entry.taken && entry.skippedReason != null;
+          return entry.status == LogStatus.skipped &&
+              entry.skippedReason != null;
         default:
           return true;
       }

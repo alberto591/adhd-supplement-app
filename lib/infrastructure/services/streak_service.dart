@@ -114,7 +114,7 @@ class StreakService {
       return false;
     }
 
-    return log.entries.any((entry) => entry.taken);
+    return log.entries.any((entry) => entry.status == LogStatus.taken);
   }
 
   /// Check if two dates are the same day

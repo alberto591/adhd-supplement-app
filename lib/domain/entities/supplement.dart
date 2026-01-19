@@ -15,6 +15,10 @@ class Supplement {
   final String? shapeIcon; // e.g., "pill", "capsule"
   final String? colorHex; // e.g., "#135BEC"
 
+  // Backward compatibility
+  String? get iconType => shapeIcon;
+  String? get iconColor => colorHex;
+
   // From models/supplement.dart
   final String description;
   final String referralUrl;

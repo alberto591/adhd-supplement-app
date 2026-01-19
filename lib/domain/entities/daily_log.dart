@@ -17,6 +17,8 @@ class DailyLog {
     required this.date,
     required this.entries,
     this.symptomRatings,
+    this.moodScore,
+    this.focusScore,
     this.notes,
     required this.createdAt,
   });
@@ -84,10 +86,13 @@ class LogEntry {
   final LogStatus status;
   final String? skippedReason;
 
+  // Backward compatibility
+  bool get taken => status == LogStatus.taken;
+
   const LogEntry({
     required this.supplementId,
     required this.takenAt,
-    required this.taken,
+    required this.status,
     this.skippedReason,
   });
 
@@ -119,11 +124,15 @@ class LogEntry {
   }
 
   factory LogEntry.fromJson(Map<String, dynamic> json) {
+    final statusStr = json['status'] as String?;
+    final takenBool = json['taken'] as bool?;
+
     return LogEntry(
       supplementId: json['supplementId'] as String,
       takenAt: DateTime.parse(json['takenAt'] as String),
       status: LogStatus.values.firstWhere(
-        (e) => e.name == (json['status'] as String? ?? (json['taken'] as bool? == true ? 'taken' : 'skipped')),
+        (e) =>
+            e.name == (statusStr ?? (takenBool == true ? 'taken' : 'skipped')),
         orElse: () => LogStatus.skipped,
       ),
       skippedReason: json['skippedReason'] as String?,

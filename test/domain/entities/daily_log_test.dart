@@ -72,7 +72,7 @@ void main() {
           LogEntry(
             supplementId: 'sup1',
             takenAt: now,
-            taken: true,
+            status: LogStatus.taken,
           )
         ],
         symptomRatings: {'focus': 3},
@@ -101,7 +101,7 @@ void main() {
           LogEntry(
             supplementId: 'sup1',
             takenAt: now,
-            taken: true,
+            status: LogStatus.taken,
             skippedReason: null,
           ),
         ],
@@ -132,7 +132,7 @@ void main() {
           {
             'supplementId': 'sup1',
             'takenAt': now.toIso8601String(),
-            'taken': true,
+            'status': 'taken',
             'skippedReason': null,
           }
         ],
@@ -180,7 +180,7 @@ void main() {
           LogEntry(
             supplementId: 'sup1',
             takenAt: now,
-            taken: true,
+            status: LogStatus.taken,
             skippedReason: 'Forgot',
           ),
         ],
@@ -211,7 +211,7 @@ void main() {
       final entry = LogEntry(
         supplementId: 'sup1',
         takenAt: now,
-        taken: true,
+        status: LogStatus.taken,
         skippedReason: null,
       );
 
@@ -226,7 +226,7 @@ void main() {
       final entry = LogEntry(
         supplementId: 'sup1',
         takenAt: now,
-        taken: false,
+        status: LogStatus.skipped,
         skippedReason: 'Forgot to take',
       );
 
@@ -239,12 +239,12 @@ void main() {
       final original = LogEntry(
         supplementId: 'sup1',
         takenAt: now,
-        taken: false,
+        status: LogStatus.skipped,
         skippedReason: 'Forgot',
       );
 
       final updated = original.copyWith(
-        taken: true,
+        status: LogStatus.taken,
         skippedReason: null,
       );
 
@@ -259,7 +259,7 @@ void main() {
       final original = LogEntry(
         supplementId: 'sup1',
         takenAt: now,
-        taken: true,
+        status: LogStatus.taken,
         skippedReason: 'Original reason',
       );
 
@@ -276,7 +276,7 @@ void main() {
       final entry = LogEntry(
         supplementId: 'sup1',
         takenAt: now,
-        taken: true,
+        status: LogStatus.taken,
         skippedReason: 'Forgot',
       );
 
@@ -284,7 +284,7 @@ void main() {
 
       expect(json['supplementId'], 'sup1');
       expect(json['takenAt'], now.toIso8601String());
-      expect(json['taken'], true);
+      expect(json['status'], 'taken');
       expect(json['skippedReason'], 'Forgot');
     });
 
@@ -293,7 +293,7 @@ void main() {
       final entry = LogEntry(
         supplementId: 'sup1',
         takenAt: now,
-        taken: true,
+        status: LogStatus.taken,
         skippedReason: null,
       );
 
@@ -340,7 +340,7 @@ void main() {
       final original = LogEntry(
         supplementId: 'sup1',
         takenAt: now,
-        taken: false,
+        status: LogStatus.skipped,
         skippedReason: 'Forgot to take',
       );
 

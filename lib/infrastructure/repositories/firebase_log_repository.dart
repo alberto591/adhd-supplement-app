@@ -40,7 +40,8 @@ class FirebaseLogRepository implements LogRepository {
           .get();
 
       if (snapshot.docs.isEmpty) return null;
-      return DailyLog.fromJson({...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
+      return DailyLog.fromJson(
+          {...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
     } catch (e) {
       throw Exception('Failed to fetch log for date: $e');
     }
@@ -66,7 +67,7 @@ class FirebaseLogRepository implements LogRepository {
     try {
       // Get recent logs ordered by date descending
       final logs = await getRecentLogs(userId, 90); // Check last 90 days
-      
+
       if (logs.isEmpty) return 0;
 
       int streak = 0;
@@ -79,7 +80,8 @@ class FirebaseLogRepository implements LogRepository {
         // Check if this log is for yesterday or the current streak date
         if (daysDiff == streak || (streak == 0 && daysDiff == 0)) {
           // Check if at least one supplement was taken
-          final hasTaken = log.entries.any((entry) => entry.taken);
+          final hasTaken =
+              log.entries.any((entry) => entry.status == LogStatus.taken);
           if (hasTaken) {
             streak++;
             checkDate = logDate.subtract(const Duration(days: 1));
@@ -110,7 +112,7 @@ class FirebaseLogRepository implements LogRepository {
   @override
   Stream<DailyLog?> watchTodayLog(String userId) {
     final today = _dateOnlyString(DateTime.now());
-    
+
     return _firestore
         .collection('logs')
         .where('userId', isEqualTo: userId)
@@ -118,12 +120,16 @@ class FirebaseLogRepository implements LogRepository {
         .limit(1)
         .snapshots()
         .map((snapshot) {
-          if (snapshot.docs.isEmpty) return null;
-          return DailyLog.fromJson({...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
-        });
+      if (snapshot.docs.isEmpty) return null;
+      return DailyLog.fromJson(
+          {...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
+    });
   }
 
   String _dateOnlyString(DateTime date) {
-    return DateTime(date.year, date.month, date.day).toIso8601String().split('T').first;
+    return DateTime(date.year, date.month, date.day)
+        .toIso8601String()
+        .split('T')
+        .first;
   }
 }

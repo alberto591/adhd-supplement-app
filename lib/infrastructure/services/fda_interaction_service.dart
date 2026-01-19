@@ -26,10 +26,11 @@ class FDAInteractionService implements InteractionService {
           warnings.add(InteractionWarning(
             supplementName: supplement.name,
             medicationName: med.name,
-            severity: _mapRiskToSeverity(interaction['risk']),
-            title: interaction['warning'] ?? 'Interaction Detected',
-            description: interaction['message'],
-            recommendation: interaction['recommendation'],
+            severity: _mapRiskToSeverity(interaction['risk'] as String),
+            title:
+                (interaction['warning'] as String?) ?? 'Interaction Detected',
+            description: interaction['message'] as String,
+            recommendation: interaction['recommendation'] as String,
           ));
         }
       }

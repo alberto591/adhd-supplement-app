@@ -34,7 +34,7 @@ void main() {
             LogEntry(
               supplementId: 'sup1',
               takenAt: today,
-              taken: true,
+              status: LogStatus.taken,
             ),
           ],
           createdAt: today,
@@ -71,7 +71,7 @@ void main() {
             LogEntry(
               supplementId: 'sup1',
               takenAt: today,
-              taken: true,
+              status: LogStatus.taken,
             ),
           ],
           createdAt: today,
@@ -159,7 +159,7 @@ void main() {
             LogEntry(
               supplementId: 'sup1',
               takenAt: today,
-              taken: true,
+              status: LogStatus.taken,
             ),
           ],
           createdAt: today,
@@ -195,7 +195,7 @@ void main() {
             LogEntry(
               supplementId: 'sup1',
               takenAt: today,
-              taken: true,
+              status: LogStatus.taken,
             ),
           ],
           createdAt: today,
