@@ -8,7 +8,8 @@ abstract class AuthRepository {
   Future<User> signInWithEmail(String email, String password);
 
   /// Sign up with email and password
-  Future<User> signUpWithEmail(String email, String password, String displayName);
+  Future<User> signUpWithEmail(
+      String email, String password, String displayName);
 
   /// Sign out
   Future<void> signOut();
@@ -18,4 +19,7 @@ abstract class AuthRepository {
 
   /// Update user profile
   Future<void> updateUserProfile(User user);
+
+  /// Delete user account
+  Future<void> deleteUser();
 }

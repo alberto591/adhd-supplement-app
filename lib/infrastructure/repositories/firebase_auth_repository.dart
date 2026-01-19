@@ -20,7 +20,8 @@ class FirebaseAuthRepository implements AuthRepository {
 
     // Try to get user data from Firestore
     try {
-      final doc = await _firestore.collection('users').doc(firebaseUser.uid).get();
+      final doc =
+          await _firestore.collection('users').doc(firebaseUser.uid).get();
       if (doc.exists) {
         return User.fromJson(doc.data()!);
       }
@@ -44,7 +45,8 @@ class FirebaseAuthRepository implements AuthRepository {
       }
 
       // Get user data from Firestore
-      final doc = await _firestore.collection('users').doc(credential.user!.uid).get();
+      final doc =
+          await _firestore.collection('users').doc(credential.user!.uid).get();
       if (doc.exists) {
         return User.fromJson(doc.data()!);
       }
@@ -56,7 +58,8 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<User> signUpWithEmail(String email, String password, String displayName) async {
+  Future<User> signUpWithEmail(
+      String email, String password, String displayName) async {
     try {
       final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -98,7 +101,8 @@ class FirebaseAuthRepository implements AuthRepository {
       if (firebaseUser == null) return null;
 
       try {
-        final doc = await _firestore.collection('users').doc(firebaseUser.uid).get();
+        final doc =
+            await _firestore.collection('users').doc(firebaseUser.uid).get();
         if (doc.exists) {
           return User.fromJson(doc.data()!);
         }
@@ -113,6 +117,22 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<void> updateUserProfile(User user) async {
     await _firestore.collection('users').doc(user.id).update(user.toJson());
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    final user = _firebaseAuth.currentUser;
+    if (user == null) {
+      throw Exception('No user signed in');
+    }
+
+    // Delete from Firestore
+    await _firestore.collection('users').doc(user.uid).delete();
+
+    // Delete from Firebase Auth
+    // Note: This requires recent login. If it fails with 'requires-recent-login',
+    // the UI should prompt to re-authenticate.
+    await user.delete();
   }
 
   User _mapFirebaseUser(firebase_auth.User firebaseUser) {

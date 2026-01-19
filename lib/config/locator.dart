@@ -17,6 +17,8 @@ import 'package:adhd_supplement_app/presentation/view_models/library_view_model.
 import 'package:adhd_supplement_app/presentation/view_models/history_log_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/mock_symptom_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/mock_supplement_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/safety_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_safety_repository.dart';
 import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
@@ -34,13 +36,13 @@ void setupLocator() {
 
   // Repositories
   locator.registerLazySingleton<SupplementRepository>(
-      () => FirebaseSupplementRepository());
+      () => MockSupplementRepository());
   locator.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository());
   locator
       .registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
   locator.registerLazySingleton<LogRepository>(() => FirebaseLogRepository());
-  locator.registerLazySingleton<SymptomRepository>(
-      () => FirebaseSymptomRepository());
+  locator
+      .registerLazySingleton<SymptomRepository>(() => MockSymptomRepository());
   locator.registerLazySingleton<SafetyRepository>(
       () => FirebaseSafetyRepository());
 

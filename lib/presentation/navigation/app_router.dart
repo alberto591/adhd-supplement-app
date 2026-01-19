@@ -43,7 +43,9 @@ import '../views/developer_handoff_logic_triggers_screen.dart';
 import '../views/help_and_support_screen.dart';
 import '../views/article_detail_screen.dart';
 import '../views/milestone_success_screen.dart';
+import '../views/milestone_success_screen.dart';
 import '../views/notification_history_screen.dart';
+import '../views/emergency_contact_screen.dart';
 import '../../domain/entities/supplement_interaction.dart';
 
 class AppRouter {
@@ -94,6 +96,7 @@ class AppRouter {
   static const String scienceUpdate = '/science-update';
   static const String developerHandoff = '/developer-handoff';
   static const String articleDetail = '/article-detail';
+  static const String emergencyContact = '/emergency-contact';
   static const String milestoneSuccess = '/milestone-success';
   static const String notificationHistory = '/notification-history';
 
@@ -131,6 +134,10 @@ class AppRouter {
 
       case dailyStack: // dailyStack was previously grouped with home, now it's separate
         return MaterialPageRoute(builder: (_) => const DailyStackScreen());
+
+      case emergencyContact:
+        return MaterialPageRoute(
+            builder: (_) => const EmergencyContactScreen());
 
       case dashboard:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
