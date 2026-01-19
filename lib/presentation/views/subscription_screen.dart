@@ -53,6 +53,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         if (!mounted) return;
 
                         if (viewModel.isSubscribed) {
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Purchases Restored!')));
@@ -307,6 +308,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                   if (!mounted) return;
 
                                   if (viewModel.isSubscribed) {
+                                    // ignore: use_build_context_synchronously
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
                                             content: Text(

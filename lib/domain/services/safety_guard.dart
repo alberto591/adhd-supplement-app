@@ -1,10 +1,10 @@
 /// Safety Guard - Medication Interaction Checker
-/// 
+///
 /// Cross-references user's ADHD medications with supplements to detect
 /// potentially harmful interactions and display appropriate warnings.
 library;
 
-import 'package:adhd_supplement_app/domain/models/supplement.dart';
+import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 
 /// Represents a user's current medication
 class Medication {
@@ -22,18 +22,18 @@ class Medication {
 }
 
 enum MedicationType {
-  stimulant,      // Adderall, Ritalin, Vyvanse, etc.
-  nonStimulant,   // Strattera, Wellbutrin, etc.
+  stimulant, // Adderall, Ritalin, Vyvanse, etc.
+  nonStimulant, // Strattera, Wellbutrin, etc.
   antidepressant, // SSRIs, SNRIs
   other,
 }
 
 /// Severity level for interaction warnings
 enum WarningSeverity {
-  info,       // Educational, no action needed
-  caution,    // Consider timing separation
-  warning,    // Consult doctor recommended
-  danger,     // Do not combine without medical supervision
+  info, // Educational, no action needed
+  caution, // Consider timing separation
+  warning, // Consult doctor recommended
+  danger, // Do not combine without medical supervision
 }
 
 /// Represents an interaction warning
@@ -81,19 +81,20 @@ class SafetyGuard {
           'medication to take this supplement. Avoid taking Vitamin C within your '
           'medication\'s peak effectiveness window.',
     ),
-    
+
     // ASCORBIC ACID (pure form)
     const _InteractionRule(
       supplementPattern: 'ascorbic acid',
       medicationType: MedicationType.stimulant,
       severity: WarningSeverity.warning,
       title: 'Interaction Detected',
-      description: 'Ascorbic Acid (Vitamin C) increases GI and urinary acidity, '
+      description:
+          'Ascorbic Acid (Vitamin C) increases GI and urinary acidity, '
           'which accelerates the excretion of amphetamine-based stimulants.',
       recommendation: 'Wait at least 1-2 hours before or after taking your '
           'medication to take this supplement.',
     ),
-    
+
     // CITRUS-BASED SUPPLEMENTS
     const _InteractionRule(
       supplementPattern: 'citrus',
@@ -104,7 +105,7 @@ class SafetyGuard {
           'and citric acid, which can affect stimulant medication absorption.',
       recommendation: 'Take at least 1 hour apart from stimulant medications.',
     ),
-    
+
     // L-TYROSINE + STIMULANTS
     const _InteractionRule(
       supplementPattern: 'tyrosine',
@@ -116,7 +117,7 @@ class SafetyGuard {
       recommendation: 'Start with low doses and monitor for increased '
           'anxiety or jitteriness. Consider taking on medication holidays.',
     ),
-    
+
     // 5-HTP + ANTIDEPRESSANTS
     const _InteractionRule(
       supplementPattern: '5-htp',
@@ -128,7 +129,7 @@ class SafetyGuard {
       recommendation: 'Do NOT take 5-HTP with antidepressants without '
           'explicit doctor approval and monitoring.',
     ),
-    
+
     // ST. JOHN'S WORT + MULTIPLE
     const _InteractionRule(
       supplementPattern: "john's wort",
@@ -140,7 +141,7 @@ class SafetyGuard {
       recommendation: 'Consult your doctor before combining with any '
           'prescription ADHD medication.',
     ),
-    
+
     // GINKGO + STIMULANTS
     const _InteractionRule(
       supplementPattern: 'ginkgo',
@@ -155,12 +156,12 @@ class SafetyGuard {
   ];
 
   /// Check a supplement against user's medications for interactions
-  /// 
+  ///
   /// Returns a list of warnings (empty if no interactions found)
   List<InteractionWarning> checkSupplement(Supplement supplement) {
     final warnings = <InteractionWarning>[];
     final supplementName = supplement.name.toLowerCase();
-    
+
     for (final medication in _userMedications) {
       for (final rule in _interactionRules) {
         if (_matchesRule(supplementName, medication, rule)) {
@@ -175,7 +176,7 @@ class SafetyGuard {
         }
       }
     }
-    
+
     return warnings;
   }
 
@@ -189,20 +190,20 @@ class SafetyGuard {
     if (!supplementName.contains(rule.supplementPattern)) {
       return false;
     }
-    
+
     // Check if medication type matches
     if (medication.type != rule.medicationType) {
       return false;
     }
-    
+
     // If high dose check is required, we'd need supplement dosage info
     // For now, we flag it regardless (conservative approach)
-    
+
     return true;
   }
 
   /// Check if user is on any stimulant medications
-  bool get isOnStimulants => 
+  bool get isOnStimulants =>
       _userMedications.any((m) => m.type == MedicationType.stimulant);
 
   /// Check if user is on any antidepressants
@@ -210,19 +211,19 @@ class SafetyGuard {
       _userMedications.any((m) => m.type == MedicationType.antidepressant);
 
   /// Get the highest severity warning from a list
-  static WarningSeverity? getHighestSeverity(List<InteractionWarning> warnings) {
+  static WarningSeverity? getHighestSeverity(
+      List<InteractionWarning> warnings) {
     if (warnings.isEmpty) return null;
-    
+
     const severityOrder = [
       WarningSeverity.info,
       WarningSeverity.caution,
       WarningSeverity.warning,
       WarningSeverity.danger,
     ];
-    
-    return warnings
-        .map((w) => w.severity)
-        .reduce((a, b) => severityOrder.indexOf(a) > severityOrder.indexOf(b) ? a : b);
+
+    return warnings.map((w) => w.severity).reduce(
+        (a, b) => severityOrder.indexOf(a) > severityOrder.indexOf(b) ? a : b);
   }
 }
 

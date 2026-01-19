@@ -67,7 +67,8 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF112117) : const Color(0xFFF6F8F6),
+      backgroundColor:
+          isDark ? const Color(0xFF112117) : const Color(0xFFF6F8F6),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -224,7 +225,9 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                         border: Border.all(
                           color: isSelected
                               ? AppColors.freshGreen
-                              : (isDark ? Colors.grey[800]! : Colors.grey[200]!),
+                              : (isDark
+                                  ? Colors.grey[800]!
+                                  : Colors.grey[200]!),
                           width: isSelected ? 2 : 1,
                         ),
                         borderRadius: BorderRadius.circular(16),
@@ -235,7 +238,8 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                             width: 48,
                             height: 48,
                             decoration: BoxDecoration(
-                              color: AppColors.freshGreen.withValues(alpha: 0.1),
+                              color:
+                                  AppColors.freshGreen.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
@@ -304,7 +308,8 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: InkWell(
-                    onTap: () => setState(() => _selectedStack = stack['title']),
+                    onTap: () =>
+                        setState(() => _selectedStack = stack['title']),
                     borderRadius: BorderRadius.circular(16),
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -315,7 +320,9 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                         border: Border.all(
                           color: isSelected
                               ? AppColors.freshGreen
-                              : (isDark ? Colors.grey[800]! : Colors.grey[200]!),
+                              : (isDark
+                                  ? Colors.grey[800]!
+                                  : Colors.grey[200]!),
                           width: isSelected ? 2 : 1,
                         ),
                         borderRadius: BorderRadius.circular(16),
@@ -326,12 +333,13 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                             width: 48,
                             height: 48,
                             decoration: BoxDecoration(
-                              color: (stack['color'] as Color).withValues(alpha: 0.1),
+                              color: (stack['color'] as Color)
+                                  .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
-                              stack['icon'],
-                              color: stack['color'],
+                              stack['icon'] as IconData,
+                              color: stack['color'] as Color,
                             ),
                           ),
                           const SizedBox(width: 16),
@@ -340,7 +348,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  stack['title'],
+                                  stack['title'] as String,
                                   style: TextStyle(
                                     color: isDark ? Colors.white : Colors.black,
                                     fontSize: 18,
@@ -349,9 +357,11 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  stack['description'],
+                                  stack['description'] as String,
                                   style: TextStyle(
-                                    color: isDark ? Colors.grey[400] : Colors.grey[500],
+                                    color: isDark
+                                        ? Colors.grey[400]
+                                        : Colors.grey[500],
                                     fontSize: 14,
                                   ),
                                 ),

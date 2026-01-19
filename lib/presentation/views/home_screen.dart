@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
-import 'package:adhd_supplement_app/domain/models/supplement.dart';
+import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 import 'package:adhd_supplement_app/presentation/views/supplement_detail.dart';
 
 /// ADHD-Friendly Home Screen with high-contrast cards and Focus Level badges
@@ -224,7 +224,9 @@ class _SupplementCard extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.read<SupplementViewModel>().onReferralClicked(supplement);
+                      context
+                          .read<SupplementViewModel>()
+                          .onReferralClicked(supplement);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: focusColor,

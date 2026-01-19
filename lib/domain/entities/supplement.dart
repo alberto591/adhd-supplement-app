@@ -101,7 +101,7 @@ class Supplement {
       id: json['id'] as String,
       name: json['name'] as String,
       category: json['category'] as String? ?? 'general',
-      dosage: json['dosage'] as String?,
+      dosage: json['dosage'] as String? ?? json['dosageInstruction'] as String?,
       defaultDosage: json['defaultDosage'] as String? ??
           json['dosageInstruction'] as String?,
       timeOfDay: json['timeOfDay'] as String?,
