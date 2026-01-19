@@ -17,6 +17,8 @@ import 'package:adhd_supplement_app/infrastructure/repositories/perplexity_repos
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/revenue_cat_billing_service.dart';
+import 'package:adhd_supplement_app/domain/services/interaction_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/fda_interaction_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
 import 'package:adhd_supplement_app/presentation/view_models/history_log_view_model.dart';
@@ -50,6 +52,9 @@ void setupLocator() {
   locator
       .registerLazySingleton<NotificationService>(() => NotificationService());
   locator.registerLazySingleton<StreakService>(() => StreakService());
+
+  locator
+      .registerLazySingleton<InteractionService>(() => FDAInteractionService());
 
   // Repositories
   locator.registerLazySingleton<SupplementRepository>(
@@ -92,6 +97,7 @@ void setupLocator() {
       stackRepository: locator<StackRepository>(),
       logRepository: locator<LogRepository>(),
       supplementRepository: locator<SupplementRepository>(),
+      notificationService: locator<NotificationService>(),
       userId: userId,
     ),
   );

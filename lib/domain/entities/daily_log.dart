@@ -1,9 +1,13 @@
+enum LogStatus { taken, skipped, late }
+
 class DailyLog {
   final String id;
   final String userId;
   final DateTime date;
   final List<LogEntry> entries;
   final Map<String, int>? symptomRatings; // symptom name -> rating (1-5)
+  final int? moodScore; // From Backend Spec v1.0
+  final int? focusScore; // From Backend Spec v1.0
   final String? notes;
   final DateTime createdAt;
 
@@ -23,6 +27,8 @@ class DailyLog {
     DateTime? date,
     List<LogEntry>? entries,
     Map<String, int>? symptomRatings,
+    int? moodScore,
+    int? focusScore,
     String? notes,
     DateTime? createdAt,
   }) {
@@ -32,6 +38,8 @@ class DailyLog {
       date: date ?? this.date,
       entries: entries ?? this.entries,
       symptomRatings: symptomRatings ?? this.symptomRatings,
+      moodScore: moodScore ?? this.moodScore,
+      focusScore: focusScore ?? this.focusScore,
       notes: notes ?? this.notes,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -44,6 +52,8 @@ class DailyLog {
       'date': date.toIso8601String(),
       'entries': entries.map((e) => e.toJson()).toList(),
       'symptomRatings': symptomRatings,
+      'moodScore': moodScore,
+      'focusScore': focusScore,
       'notes': notes,
       'createdAt': createdAt.toIso8601String(),
     };
@@ -60,6 +70,8 @@ class DailyLog {
       symptomRatings: (json['symptomRatings'] as Map<String, dynamic>?)?.map(
         (key, value) => MapEntry(key, value as int),
       ),
+      moodScore: json['moodScore'] as int? ?? json['mood_score'] as int?,
+      focusScore: json['focusScore'] as int? ?? json['focus_score'] as int?,
       notes: json['notes'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
@@ -69,7 +81,7 @@ class DailyLog {
 class LogEntry {
   final String supplementId;
   final DateTime takenAt;
-  final bool taken;
+  final LogStatus status;
   final String? skippedReason;
 
   const LogEntry({
@@ -84,13 +96,13 @@ class LogEntry {
   LogEntry copyWith({
     String? supplementId,
     DateTime? takenAt,
-    bool? taken,
+    LogStatus? status,
     Object? skippedReason = _unset,
   }) {
     return LogEntry(
       supplementId: supplementId ?? this.supplementId,
       takenAt: takenAt ?? this.takenAt,
-      taken: taken ?? this.taken,
+      status: status ?? this.status,
       skippedReason: identical(skippedReason, _unset)
           ? this.skippedReason
           : skippedReason as String?,
@@ -101,7 +113,7 @@ class LogEntry {
     return {
       'supplementId': supplementId,
       'takenAt': takenAt.toIso8601String(),
-      'taken': taken,
+      'status': status.name,
       'skippedReason': skippedReason,
     };
   }
@@ -110,7 +122,10 @@ class LogEntry {
     return LogEntry(
       supplementId: json['supplementId'] as String,
       takenAt: DateTime.parse(json['takenAt'] as String),
-      taken: json['taken'] as bool,
+      status: LogStatus.values.firstWhere(
+        (e) => e.name == (json['status'] as String? ?? (json['taken'] as bool? == true ? 'taken' : 'skipped')),
+        orElse: () => LogStatus.skipped,
+      ),
       skippedReason: json['skippedReason'] as String?,
     );
   }

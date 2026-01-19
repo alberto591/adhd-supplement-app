@@ -152,4 +152,50 @@ class NotificationService {
   Future<List<PendingNotificationRequest>> getPendingNotifications() async {
     return await _notificationsPlugin.pendingNotificationRequests();
   }
+
+  /// Schedule a sequence of 5-minute nudges for a specific stack/event
+  /// [baseId] is used to generate a unique sequence (e.g., baseId, baseId+1, ...)
+  Future<void> schedulePersistentNudge({
+    required int baseId,
+    required String title,
+    required String body,
+    required DateTime initialTime,
+    int maxNudges = 12, // 1 hour total (12 * 5m)
+  }) async {
+    for (int i = 0; i < maxNudges; i++) {
+      final nudgeTime = initialTime.add(Duration(minutes: i * 5));
+      if (nudgeTime.isBefore(DateTime.now())) continue;
+
+      await scheduleNotification(
+        id: baseId + i,
+        title: i == 0 ? title : '$title (Reminder $i)',
+        body: body,
+        scheduledDate: nudgeTime,
+      );
+    }
+  }
+
+  /// Snooze a persistent nudge by canceling current ones and rescheduling starting in 5m
+  Future<void> snoozePersistentNudge({
+    required int baseId,
+    required String title,
+    required String body,
+    int maxNudges = 12,
+  }) async {
+    await cancelNudgeSequence(baseId, maxNudges);
+    await schedulePersistentNudge(
+      baseId: baseId,
+      title: title,
+      body: body,
+      initialTime: DateTime.now().add(const Duration(minutes: 5)),
+      maxNudges: maxNudges,
+    );
+  }
+
+  /// Cancel all notifications in a nudge sequence
+  Future<void> cancelNudgeSequence(int baseId, int count) async {
+    for (int i = 0; i < count; i++) {
+      await _notificationsPlugin.cancel(baseId + i);
+    }
+  }
 }

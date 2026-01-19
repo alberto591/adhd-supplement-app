@@ -12,6 +12,7 @@ class DailyStackViewModel extends ChangeNotifier {
   final StackRepository _stackRepository;
   final LogRepository _logRepository;
   final SupplementRepository _supplementRepository;
+  final NotificationService _notificationService;
   final String _userId;
 
   // State
@@ -56,7 +57,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
     if (_todayLog != null) {
       for (final entry in _todayLog!.entries) {
-        if (entry.taken) completedItems++;
+        if (entry.status == LogStatus.taken) completedItems++;
       }
     }
 
@@ -73,7 +74,9 @@ class DailyStackViewModel extends ChangeNotifier {
       final allTaken = stack.items.every((item) {
         if (_todayLog == null) return false;
         return _todayLog!.entries.any(
-          (e) => e.supplementId == item.supplementId && e.taken,
+          (e) =>
+              e.supplementId == item.supplementId &&
+              e.status == LogStatus.taken,
         );
       });
       if (allTaken && stack.items.isNotEmpty) completedStacks++;
@@ -86,10 +89,12 @@ class DailyStackViewModel extends ChangeNotifier {
     required StackRepository stackRepository,
     required LogRepository logRepository,
     required SupplementRepository supplementRepository,
+    required NotificationService notificationService,
     required String userId,
   })  : _stackRepository = stackRepository,
         _logRepository = logRepository,
         _supplementRepository = supplementRepository,
+        _notificationService = notificationService,
         _userId = userId;
 
   /// Initialize the view model - load stacks, today's log, and streak
@@ -125,7 +130,7 @@ class DailyStackViewModel extends ChangeNotifier {
     final entry = LogEntry(
       supplementId: supplementId,
       takenAt: now,
-      taken: true,
+      status: LogStatus.taken,
     );
 
     await _updateTodayLog(entry);
@@ -138,7 +143,7 @@ class DailyStackViewModel extends ChangeNotifier {
     final entry = LogEntry(
       supplementId: supplementId,
       takenAt: now,
-      taken: false,
+      status: LogStatus.skipped,
       skippedReason: reason,
     );
 
@@ -165,11 +170,24 @@ class DailyStackViewModel extends ChangeNotifier {
     }
   }
 
+  /// Snooze a persistent nudge for a supplement
+  Future<void> snoozeSupplement(String supplementId) async {
+    final supplement = _supplementCache[supplementId];
+    if (supplement == null) return;
+
+    await _notificationService.snoozePersistentNudge(
+      baseId: supplementId.hashCode,
+      title: 'Time for ${supplement.name}',
+      body: 'Snoozed for 5 minutes. Don\'t forget your focus stack!',
+    );
+    notifyListeners();
+  }
+
   /// Check if a supplement has been taken today
   bool isSupplementTaken(String supplementId) {
     if (_todayLog == null) return false;
     return _todayLog!.entries.any(
-      (e) => e.supplementId == supplementId && e.taken,
+      (e) => e.supplementId == supplementId && e.status == LogStatus.taken,
     );
   }
 
@@ -193,6 +211,29 @@ class DailyStackViewModel extends ChangeNotifier {
         );
 
     final updatedLog = log.copyWith(symptomRatings: ratings);
+    await _logRepository.saveLog(updatedLog);
+    _todayLog = updatedLog;
+    notifyListeners();
+  }
+
+  /// Save mood and focus scores for today
+  Future<void> saveScores({int? mood, int? focus}) async {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    final log = _todayLog ??
+        DailyLog(
+          id: '${_userId}_${today.toIso8601String()}',
+          userId: _userId,
+          date: today,
+          entries: [],
+          createdAt: now,
+        );
+
+    final updatedLog = log.copyWith(
+      moodScore: mood ?? log.moodScore,
+      focusScore: focus ?? log.focusScore,
+    );
     await _logRepository.saveLog(updatedLog);
     _todayLog = updatedLog;
     notifyListeners();

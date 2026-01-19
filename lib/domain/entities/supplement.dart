@@ -11,8 +11,9 @@ class Supplement {
   final String? imageUrl;
   final bool isPrescription;
   final String? form; // e.g., "Tablet", "Capsule", "Liquid"
-  final String? iconType; // e.g., "pill", "bottle", "sun"
-  final String? iconColor; // Hex string e.g., "#FF0000"
+  final String? benefitTag; // From Backend Spec v1.0
+  final String? shapeIcon; // e.g., "pill", "capsule"
+  final String? colorHex; // e.g., "#135BEC"
 
   // From models/supplement.dart
   final String description;
@@ -34,8 +35,9 @@ class Supplement {
     this.imageUrl,
     this.isPrescription = false,
     this.form,
-    this.iconType,
-    this.iconColor,
+    this.benefitTag,
+    this.shapeIcon,
+    this.colorHex,
     this.description = '',
     this.referralUrl = '',
     this.sideEffects = const [],
@@ -56,8 +58,9 @@ class Supplement {
     String? imageUrl,
     bool? isPrescription,
     String? form,
-    String? iconType,
-    String? iconColor,
+    String? benefitTag,
+    String? shapeIcon,
+    String? colorHex,
     String? description,
     String? referralUrl,
     List<String>? sideEffects,
@@ -77,8 +80,9 @@ class Supplement {
       imageUrl: imageUrl ?? this.imageUrl,
       isPrescription: isPrescription ?? this.isPrescription,
       form: form ?? this.form,
-      iconType: iconType ?? this.iconType,
-      iconColor: iconColor ?? this.iconColor,
+      benefitTag: benefitTag ?? this.benefitTag,
+      shapeIcon: shapeIcon ?? this.shapeIcon,
+      colorHex: colorHex ?? this.colorHex,
       description: description ?? this.description,
       referralUrl: referralUrl ?? this.referralUrl,
       sideEffects: sideEffects ?? this.sideEffects,
@@ -101,8 +105,9 @@ class Supplement {
       'imageUrl': imageUrl,
       'isPrescription': isPrescription,
       'form': form,
-      'iconType': iconType,
-      'iconColor': iconColor,
+      'benefitTag': benefitTag,
+      'shapeIcon': shapeIcon,
+      'colorHex': colorHex,
       'description': description,
       'referralUrl': referralUrl,
       'sideEffects': sideEffects,
@@ -129,8 +134,14 @@ class Supplement {
       imageUrl: json['imageUrl'] as String?,
       isPrescription: json['isPrescription'] as bool? ?? false,
       form: json['form'] as String?,
-      iconType: json['iconType'] as String?,
-      iconColor: json['iconColor'] as String?,
+      benefitTag:
+          json['benefitTag'] as String? ?? json['benefit_tag'] as String?,
+      shapeIcon: json['shapeIcon'] as String? ??
+          json['shape_icon'] as String? ??
+          json['iconType'] as String?,
+      colorHex: json['colorHex'] as String? ??
+          json['color_hex'] as String? ??
+          json['iconColor'] as String?,
       description: json['description'] as String? ?? '',
       referralUrl: json['referralUrl'] as String? ?? '',
       sideEffects: (json['sideEffects'] as List<dynamic>?)
