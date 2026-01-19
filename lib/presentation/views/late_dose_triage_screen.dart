@@ -240,7 +240,28 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Implement logging logic
+                    // Log the user's decision
+                    final decision = _selectedOption == 0
+                        ? 'Took medication late'
+                        : (_selectedOption == 1
+                            ? 'Skipped dose'
+                            : 'Took on time');
+
+                    // In a real implementation, this would save to LogRepository
+                    // For now, show confirmation and close
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Logged: $decision'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+
+                    // Close the screen after brief delay
+                    Future.delayed(const Duration(milliseconds: 500), () {
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
+                    });
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(

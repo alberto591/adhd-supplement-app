@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/supplement_interaction.dart';
 import '../theme/app_theme.dart';
+import '../navigation/app_router.dart';
 
 class SafetyInteractionDetailScreen extends StatelessWidget {
   final SupplementInteraction interaction;
@@ -58,11 +59,12 @@ class SafetyInteractionDetailScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: _getSeverityColor(interaction.severity).withValues(alpha: 0.1),
+                color: _getSeverityColor(interaction.severity)
+                    .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color:
-                      _getSeverityColor(interaction.severity).withValues(alpha: 0.3),
+                  color: _getSeverityColor(interaction.severity)
+                      .withValues(alpha: 0.3),
                 ),
               ),
               child: Column(
@@ -161,7 +163,12 @@ class SafetyInteractionDetailScreen extends StatelessWidget {
               height: 56,
               child: OutlinedButton(
                 onPressed: () {
-                  // TODO: Navigate to override screen if critical but user wants to proceed
+                  // Navigate to override confirmation screen with interaction data
+                  Navigator.pushNamed(
+                    context,
+                    AppRouter.safetyOverrideConfirmation,
+                    arguments: interaction,
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.red[400],

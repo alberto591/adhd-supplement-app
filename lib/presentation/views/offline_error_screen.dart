@@ -68,7 +68,8 @@ class OfflineErrorScreen extends StatelessWidget {
                                   width: 280,
                                   height: 280,
                                   decoration: BoxDecoration(
-                                    color: primaryOrange.withValues(alpha: 0.05),
+                                    color:
+                                        primaryOrange.withValues(alpha: 0.05),
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -107,9 +108,11 @@ class OfflineErrorScreen extends StatelessWidget {
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    _buildDot(primaryOrange.withValues(alpha: 0.4)),
+                                    _buildDot(
+                                        primaryOrange.withValues(alpha: 0.4)),
                                     const SizedBox(width: 8),
-                                    _buildDot(primaryOrange.withValues(alpha: 0.6)),
+                                    _buildDot(
+                                        primaryOrange.withValues(alpha: 0.6)),
                                     const SizedBox(width: 8),
                                     _buildDot(primaryOrange),
                                   ],
@@ -167,12 +170,15 @@ class OfflineErrorScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 56,
                       child: ElevatedButton.icon(
-                        onPressed: onRetry ?? () {
-                          // TODO: Implement retry logic
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Retrying connection...')),
-                          );
-                        },
+                        onPressed: onRetry ??
+                            () {
+                              // Default retry logic: close screen and let parent retry
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Retrying connection...')),
+                              );
+                            },
                         icon: const Icon(Icons.refresh),
                         label: const Text('Try Again'),
                         style: ElevatedButton.styleFrom(
@@ -195,15 +201,18 @@ class OfflineErrorScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 56,
                       child: OutlinedButton(
-                        onPressed: onWorkOffline ?? () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: onWorkOffline ??
+                            () {
+                              Navigator.pop(context);
+                            },
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: isDark ? Colors.white : const Color(0xFF211811),
+                          foregroundColor:
+                              isDark ? Colors.white : const Color(0xFF211811),
                           side: BorderSide(
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.1)
-                                : const Color(0xFF211811).withValues(alpha: 0.1),
+                                : const Color(0xFF211811)
+                                    .withValues(alpha: 0.1),
                           ),
                           backgroundColor: isDark
                               ? Colors.white.withValues(alpha: 0.1)

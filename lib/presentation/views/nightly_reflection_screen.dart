@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '../navigation/app_router.dart';
 
 class NightlyReflectionScreen extends StatefulWidget {
   const NightlyReflectionScreen({super.key});
 
   @override
-  State<NightlyReflectionScreen> createState() => _NightlyReflectionScreenState();
+  State<NightlyReflectionScreen> createState() =>
+      _NightlyReflectionScreenState();
 }
 
 class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
@@ -22,20 +24,25 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
   Widget build(BuildContext context) {
     // Hardcoded theme colors based on design
     const bgDark = Color(0xFF0C0812);
-    const bgLight = Color(0xFFF7F5F8); // Fallback for light mode if needed, though design is dark heavy
+    const bgLight = Color(
+        0xFFF7F5F8); // Fallback for light mode if needed, though design is dark heavy
     const primaryPurple = Color(0xFF7F06F9);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    // Design is essentially "Dark Mode" native, but let's respect system theme slightly 
+
+    // Design is essentially "Dark Mode" native, but let's respect system theme slightly
     // or force dark if the design implies a "Nightly" experience which is usually dark.
     // Given explicitly "Nightly Reflection", forcing a dark-ish theme is appropriate or adapting.
     // The design shows a specific dark palette. Let's stick to the design's dark palette for "Night Mode".
-    
+
     final scaffoldBg = isDark ? bgDark : bgLight;
     final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
-    final subTextColor = isDark ? Colors.white.withValues(alpha: 0.6) : const Color(0xFF475569);
-    final cardBg = isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white.withValues(alpha: 0.5);
-    final cardBorder = isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE2E8F0);
+    final subTextColor =
+        isDark ? Colors.white.withValues(alpha: 0.6) : const Color(0xFF475569);
+    final cardBg = isDark
+        ? Colors.white.withValues(alpha: 0.05)
+        : Colors.white.withValues(alpha: 0.5);
+    final cardBorder =
+        isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE2E8F0);
 
     return Scaffold(
       backgroundColor: scaffoldBg,
@@ -52,16 +59,19 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: primaryPurple.withValues(alpha: 0.15),
-                  // blur is handled by Flutter's lack of direct blur on container without BackdropFilter usually, 
+                  // blur is handled by Flutter's lack of direct blur on container without BackdropFilter usually,
                   // but we can simulate soft glow with box shadow or gradient.
                   // Using radial gradient here is safer.
                   gradient: RadialGradient(
-                    colors: [primaryPurple.withValues(alpha: 0.2), Colors.transparent],
+                    colors: [
+                      primaryPurple.withValues(alpha: 0.2),
+                      Colors.transparent
+                    ],
                   ),
                 ),
               ),
             ),
-             Positioned(
+            Positioned(
               bottom: -50,
               left: -50,
               child: Container(
@@ -70,7 +80,10 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
-                    colors: [primaryPurple.withValues(alpha: 0.1), Colors.transparent],
+                    colors: [
+                      primaryPurple.withValues(alpha: 0.1),
+                      Colors.transparent
+                    ],
                   ),
                 ),
               ),
@@ -82,14 +95,17 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
               children: [
                 // Header
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Row(
                     children: [
                       Container(
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.05)
+                              : Colors.black.withValues(alpha: 0.05),
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(
@@ -139,9 +155,9 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                             fontSize: 16,
                           ),
                         ),
-                        
+
                         const SizedBox(height: 40),
-                        
+
                         // Focus Section
                         Text(
                           'How did your focus feel today?',
@@ -163,7 +179,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'QUIET',
@@ -190,15 +207,20 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                               SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
                                   activeTrackColor: primaryPurple,
-                                  inactiveTrackColor: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[300],
+                                  inactiveTrackColor: isDark
+                                      ? Colors.white.withValues(alpha: 0.1)
+                                      : Colors.grey[300],
                                   thumbColor: Colors.white,
-                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12, elevation: 4),
-                                  overlayColor: primaryPurple.withValues(alpha: 0.2),
+                                  thumbShape: const RoundSliderThumbShape(
+                                      enabledThumbRadius: 12, elevation: 4),
+                                  overlayColor:
+                                      primaryPurple.withValues(alpha: 0.2),
                                   trackHeight: 6,
                                 ),
                                 child: Slider(
                                   value: _focusValue,
-                                  onChanged: (val) => setState(() => _focusValue = val),
+                                  onChanged: (val) =>
+                                      setState(() => _focusValue = val),
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -214,9 +236,9 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                             ],
                           ),
                         ),
-                        
+
                         const SizedBox(height: 32),
-                        
+
                         // Journal Section
                         Text(
                           "One thing you're proud of?",
@@ -240,32 +262,39 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                               TextField(
                                 controller: _journalController,
                                 maxLines: null,
-                                style: TextStyle(color: textColor, fontSize: 16),
+                                style:
+                                    TextStyle(color: textColor, fontSize: 16),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: 'A small win, a moment of clarity, or just showing up...',
-                                  hintStyle: TextStyle(color: subTextColor.withValues(alpha: 0.5)),
-                                  contentPadding: const EdgeInsets.only(bottom: 32),
+                                  hintText:
+                                      'A small win, a moment of clarity, or just showing up...',
+                                  hintStyle: TextStyle(
+                                      color:
+                                          subTextColor.withValues(alpha: 0.5)),
+                                  contentPadding:
+                                      const EdgeInsets.only(bottom: 32),
                                 ),
                               ),
                               Positioned(
                                 bottom: 0,
                                 right: 0,
-                                child: Icon(Icons.mic, color: subTextColor, size: 24),
+                                child: Icon(Icons.mic,
+                                    color: subTextColor, size: 24),
                               ),
                             ],
                           ),
                         ),
-                        
+
                         const SizedBox(height: 32),
-                        
+
                         // Sleep Ready Section
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                             color: primaryPurple.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(24),
-                            border: Border.all(color: primaryPurple.withValues(alpha: 0.2)),
+                            border: Border.all(
+                                color: primaryPurple.withValues(alpha: 0.2)),
                           ),
                           child: Row(
                             children: [
@@ -276,7 +305,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                   color: primaryPurple.withValues(alpha: 0.2),
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.bedtime, color: primaryPurple, size: 20),
+                                child: const Icon(Icons.bedtime,
+                                    color: primaryPurple, size: 20),
                               ),
                               const SizedBox(width: 16),
                               Expanded(
@@ -303,9 +333,11 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                               ),
                               Switch(
                                 value: _isSleepReady,
-                                onChanged: (val) => setState(() => _isSleepReady = val),
+                                onChanged: (val) =>
+                                    setState(() => _isSleepReady = val),
                                 activeThumbColor: primaryPurple,
-                                activeTrackColor: primaryPurple.withValues(alpha: 0.5),
+                                activeTrackColor:
+                                    primaryPurple.withValues(alpha: 0.5),
                               ),
                             ],
                           ),
@@ -314,19 +346,19 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                     ),
                   ),
                 ),
-                
+
                 // Footer buttons
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                     gradient: LinearGradient(
-                       begin: Alignment.bottomCenter,
-                       end: Alignment.topCenter,
-                       colors: [
-                         scaffoldBg,
-                         scaffoldBg.withValues(alpha: 0),
-                       ],
-                     ),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        scaffoldBg,
+                        scaffoldBg.withValues(alpha: 0),
+                      ],
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -335,7 +367,12 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                         height: 64,
                         child: ElevatedButton(
                           onPressed: () {
-                             // TODO: Handle take evening stack logic
+                            // Navigate to Daily Stack screen filtered for Evening
+                            Navigator.pushNamed(
+                              context,
+                              AppRouter.dailyStack,
+                              arguments: {'filter': 'Evening'},
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryPurple,
