@@ -19,7 +19,7 @@ class AuthWrapper extends StatelessWidget {
               ),
             );
           case AuthStatus.authenticated:
-            return DailyStackScreen();
+            return const DailyStackScreen();
           case AuthStatus.unauthenticated:
             return const LoginScreen();
         }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:adhd_supplement_app/presentation/navigation/app_router.dart';
+
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
 import '../../config/locator.dart';
 import '../theme/app_theme.dart';
@@ -14,7 +16,7 @@ class SystemHealthScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Define colors based on the design tokens provided in HTML
-    const Color primaryColor = AppColors.primary;
+    const Color primaryColor = AppColors.primaryGold;
     const Color dangerColor = Color(0xFFff4d4d);
     const Color successColor = Color(0xFF22c55e);
 
@@ -25,8 +27,9 @@ class SystemHealthScreen extends StatelessWidget {
         isDark ? const Color(0xFF9DA8B9) : const Color(0xFF475569); // slate-600
 
     // Background colors
-    final Color bgColor =
-        isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
+    final Color bgColor = isDark
+        ? AppColors.backgroundPremiumDark
+        : AppColors.backgroundPremiumLight;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -45,57 +48,10 @@ class SystemHealthScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 16),
 
-                    // Seed Data Button (Debug)
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () async {
-                          try {
-                            await locator<SeedingService>().seedSupplements();
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Seeding Success!')),
-                              );
-                            }
-                          } catch (e) {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Seeding Error: $e')),
-                              );
-                            }
-                          }
-                        },
-                        icon: const Icon(Icons.cloud_upload),
-                        label: const Text('Seed Sample Data (Firestore)'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Test AI Agent Button (Debug)
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, AppRouter.aiSearch),
-                        icon: const Icon(Icons.psychology),
-                        label: const Text('Test AI Agent (Perplexity)'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple,
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
                     // Headline
                     Text(
                       'Permissions Check',
-                      style: TextStyle(
+                      style: GoogleFonts.lexend(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
@@ -106,7 +62,7 @@ class SystemHealthScreen extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       'Ensuring we stay connected to you so you never miss a reminder.',
-                      style: TextStyle(
+                      style: GoogleFonts.lexend(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: textSecondary,
@@ -194,7 +150,7 @@ class SystemHealthScreen extends StatelessWidget {
                               const SizedBox(width: 8),
                               Text(
                                 'Why do we need these?',
-                                style: TextStyle(
+                                style: GoogleFonts.lexend(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: textPrimary,
@@ -205,7 +161,7 @@ class SystemHealthScreen extends StatelessWidget {
                           const SizedBox(height: 12),
                           Text(
                             'To function as your external brain, the app needs permission to run in the background and send time-sensitive alerts even when you aren\'t using your phone.',
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               fontSize: 14,
                               height: 1.6,
                               color: textSecondary,
@@ -219,8 +175,59 @@ class SystemHealthScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            if (kDebugMode) _buildDebugSection(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDebugSection(BuildContext context) {
+    return Container(
+      color: Colors.black12,
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          const Text('DEVELOPER OPTIONS',
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton.icon(
+                icon: const Icon(Icons.science, size: 16),
+                label: const Text('Seed Data'),
+                onPressed: () async {
+                  try {
+                    final seedingService = locator<SeedingService>();
+                    await seedingService.seedSupplements();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Supplements Seeded Successfully')),
+                      );
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Seeding failed: $e')),
+                      );
+                    }
+                  }
+                },
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.delete_forever,
+                    size: 16, color: Colors.red),
+                label: const Text('Clear All',
+                    style: TextStyle(color: Colors.red)),
+                onPressed: () async {
+                  // Implement clear logic if needed
+                },
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -242,7 +249,7 @@ class SystemHealthScreen extends StatelessWidget {
           ),
           Text(
             'System Health',
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: textPrimary,
@@ -259,7 +266,7 @@ class SystemHealthScreen extends StatelessWidget {
             ),
             child: Text(
               'Help',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: textSecondary,
@@ -281,14 +288,14 @@ class SystemHealthScreen extends StatelessWidget {
           children: [
             Text(
               '2/3 Systems Active',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: textPrimary),
             ),
             Text(
               '66%',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: textSecondary),
@@ -391,7 +398,7 @@ class SystemHealthScreen extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: textPrimary,
@@ -401,7 +408,7 @@ class SystemHealthScreen extends StatelessWidget {
                           const SizedBox(height: 2),
                           Text(
                             'Action Required',
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: dangerColor,
@@ -415,7 +422,7 @@ class SystemHealthScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     fontSize: 14,
                     height: 1.5,
                     color: textSecondary,
@@ -428,17 +435,17 @@ class SystemHealthScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onTap,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
+                      backgroundColor: AppColors.primaryGold,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),
                       elevation: 4,
-                      shadowColor: AppColors.primary.withValues(alpha: 0.2),
+                      shadowColor: AppColors.primaryGold.withValues(alpha: 0.2),
                     ),
                     child: Text(
                       actionLabel,
-                      style: const TextStyle(
+                      style: GoogleFonts.lexend(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -493,7 +500,7 @@ class SystemHealthScreen extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: textPrimary,
@@ -502,7 +509,7 @@ class SystemHealthScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   'Active',
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: successColor,

@@ -10,6 +10,7 @@ import '../navigation/app_router.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../domain/entities/supplement.dart';
 import '../widgets/unified_bottom_nav.dart';
+import '../theme/app_theme.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -42,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       value: _viewModel,
       child: Scaffold(
         backgroundColor:
-            isDark ? const Color(0xFF101822) : const Color(0xFFF8F8F6),
+            isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
         body: SafeArea(
           child: Consumer<DailyStackViewModel>(
             builder: (context, viewModel, child) {
@@ -170,15 +171,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color:
-                  const Color(0xFF3B82F6).withValues(alpha: 0.2), // Blue tint
+              color: AppColors.primaryGold.withValues(alpha: 0.2), // Gold tint
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFF3B82F6)),
+              border: Border.all(color: AppColors.primaryGold),
             ),
             child: const Text(
               'NOW',
               style: TextStyle(
-                color: Color(0xFF3B82F6),
+                color: AppColors.primaryGold,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
@@ -263,7 +263,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         iconColor: HexColor(supplement?.iconColor ?? '#FFB74D'),
         isTaken: isTaken,
         isUpcoming: isUpcoming,
-        statusText: isTaken ? 'Taken' : (isUpcoming ? 'upcoming' : null),
+        statusText: isTaken ? 'Taken' : (isUpcoming ? 'Upcoming' : null),
         onTake: () => viewModel.markSupplementTaken(item.supplementId),
         onMoreOptions: () => _showMedicationOptions(context, item, supplement),
       );
@@ -272,7 +272,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _showMedicationOptions(
       BuildContext context, StackItem item, Supplement? supplement) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(

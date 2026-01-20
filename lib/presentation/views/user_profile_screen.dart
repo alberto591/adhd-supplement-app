@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../navigation/app_router.dart';
 import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
@@ -25,7 +26,7 @@ class UserProfileScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text(
           'Settings',
-          style: TextStyle(
+          style: GoogleFonts.lexend(
             color: isDark ? Colors.white : const Color(0xFF111418),
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -154,7 +155,7 @@ class UserProfileScreen extends StatelessWidget {
               children: [
                 _SettingsTile(
                   icon: Icons.help_outline,
-                  iconColor: Colors.blue,
+                  iconColor: AppColors.primaryGold,
                   title: 'Help & Support Center',
                   subtitle: 'FAQs & Contact',
                   trailing: const Icon(Icons.chevron_right, color: Colors.grey),
@@ -169,7 +170,7 @@ class UserProfileScreen extends StatelessWidget {
                   subtitle: 'Important health information',
                   trailing: const Icon(Icons.open_in_new,
                       color: Colors.grey, size: 20),
-                  onTap: () => showDialog(
+                  onTap: () => showDialog<void>(
                     context: context,
                     builder: (context) => AlertDialog(
                       title: const Text('Medical Disclaimer'),
@@ -206,7 +207,7 @@ class UserProfileScreen extends StatelessWidget {
               children: [
                 _SettingsTile(
                   icon: Icons.monitor_heart,
-                  iconColor: Colors.purple,
+                  iconColor: AppColors.primaryGold,
                   title: 'System Health Hub',
                   subtitle: 'Test permissions',
                   trailing: const Icon(Icons.chevron_right, color: Colors.grey),
@@ -216,7 +217,7 @@ class UserProfileScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 _SettingsTile(
                   icon: Icons.science,
-                  iconColor: Colors.purple,
+                  iconColor: AppColors.primaryGold,
                   title: 'Science Update',
                   subtitle: 'Preview update screen',
                   trailing: const Icon(Icons.chevron_right, color: Colors.grey),
@@ -226,7 +227,7 @@ class UserProfileScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 _SettingsTile(
                   icon: Icons.code,
-                  iconColor: Colors.purple,
+                  iconColor: AppColors.primaryGold,
                   title: 'Logic Triggers',
                   subtitle: 'Backend spec handoff',
                   trailing: const Icon(Icons.chevron_right, color: Colors.grey),
@@ -286,7 +287,7 @@ class UserProfileScreen extends StatelessWidget {
                   icon: Icon(Icons.logout, color: Colors.red[400]),
                   label: Text(
                     'Log Out',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: Colors.red[400],
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -310,7 +311,7 @@ class UserProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Version 2.4.1 (102) • Proudly built for focus',
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark ? Colors.grey[600] : Colors.grey[500],
                   fontSize: 12,
                 ),
@@ -365,7 +366,7 @@ class _ProfileHeader extends StatelessWidget {
           // Name
           Text(
             _getInitials(user),
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isDark ? Colors.white : const Color(0xFF111418),
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -382,7 +383,7 @@ class _ProfileHeader extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 '14 Day Streak',
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark ? Colors.grey[400] : const Color(0xFF617289),
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -406,15 +407,15 @@ class _ProfileHeader extends StatelessWidget {
                 border: Border.all(
                     color: const Color(0xFFF20D93).withValues(alpha: 0.3)),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.palette, size: 16, color: Color(0xFFF20D93)),
-                  SizedBox(width: 8),
+                  const Icon(Icons.palette, size: 16, color: Color(0xFFF20D93)),
+                  const SizedBox(width: 8),
                   Text(
                     'Customize App Icon',
-                    style: TextStyle(
-                      color: Color(0xFFF20D93),
+                    style: GoogleFonts.lexend(
+                      color: const Color(0xFFF20D93),
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -428,7 +429,7 @@ class _ProfileHeader extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             'Member since ${_formatDate(user?.createdAt)}',
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isDark ? Colors.grey[500] : const Color(0xFF94A3B8),
               fontSize: 14,
             ),
@@ -522,7 +523,7 @@ class _SettingsTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isDark ? Colors.grey[800] : Colors.white,
+          color: isDark ? AppColors.cardDark : Colors.white,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -543,7 +544,7 @@ class _SettingsTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: isDark ? Colors.white : const Color(0xFF111418),
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -551,7 +552,7 @@ class _SettingsTile extends StatelessWidget {
                   ),
                   Text(
                     subtitle,
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color:
                           isDark ? Colors.grey[400] : const Color(0xFF617289),
                       fontSize: 14,

@@ -49,7 +49,7 @@ class MockCommunityRepository implements CommunityRepository {
 
   @override
   Future<List<CommunityPost>> getPosts({String? category}) async {
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future<void>.delayed(const Duration(milliseconds: 400));
     if (category == null || category == '#All' || category.isEmpty) {
       return _posts;
     }
@@ -63,7 +63,7 @@ class MockCommunityRepository implements CommunityRepository {
 
   @override
   Future<void> toggleHelpful(String postId) async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     final index = _posts.indexWhere((p) => p.id == postId);
     if (index != -1) {
       final post = _posts[index];

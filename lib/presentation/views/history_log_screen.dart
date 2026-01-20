@@ -227,10 +227,7 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                                 status = _LogStatus
                                     .taken; // Treated as taken but late
                                 break;
-                              default:
-                                status = _LogStatus.missed;
                             }
-
                             // If status is 'late', we can append to title or handling
                             String title =
                                 'Supplement Log'; // Ideally fetched from Supplement ID

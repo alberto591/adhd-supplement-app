@@ -315,7 +315,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
         // Push new article screen
         Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<void>(
             builder: (_) => ArticleDetailScreen.withProvider(article.id),
           ),
         );

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../theme/app_theme.dart';
 
 class HomeWidgetsPreviewScreen extends StatefulWidget {
   const HomeWidgetsPreviewScreen({super.key});
@@ -26,10 +29,35 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
 
-    // Auto-start tutorial
+    _loadPreferences();
+
+    // Auto-start tutorial if first time (could also be pref-based)
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() => _tutorialStep = 1);
+      if (_tutorialStep == 0) {
+        // Only if not restored/set yet
+        setState(() => _tutorialStep = 1);
+      }
     });
+  }
+
+  Future<void> _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      _showNextStack = prefs.getBool('widget_show_next_stack') ?? true;
+      _showProgressRing = prefs.getBool('widget_show_progress_ring') ?? true;
+      _quickLogButton = prefs.getBool('widget_quick_log') ?? false;
+      _selectedTheme = prefs.getString('widget_theme') ?? 'Glassmorphism';
+    });
+  }
+
+  Future<void> _savePreference(String key, dynamic value) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (value is bool) {
+      await prefs.setBool(key, value);
+    } else if (value is String) {
+      await prefs.setString(key, value);
+    }
   }
 
   @override
@@ -41,17 +69,17 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
   @override
   Widget build(BuildContext context) {
     // Force dark theme colors based on design provided
-    const bgDark = Color(0xFF121212);
-    const primaryGold = Color(0xFFF4C025);
-    const cardBg = Color(0xFF27272A); // zinc-800 approx
+    const bgDark = AppColors.backgroundPremiumDark;
+    const primaryGold = AppColors.primaryGold;
+    final cardBg = Colors.grey[900]!; // Zinc 900 approx
 
     return Stack(
       children: [
         Scaffold(
           backgroundColor: bgDark,
           appBar: AppBar(
-            title: const Text('Customize Widget',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            title: Text('Customize Widget',
+                style: GoogleFonts.lexend(fontWeight: FontWeight.bold)),
             backgroundColor: bgDark.withValues(alpha: 0.8),
             foregroundColor: Colors.white,
             elevation: 0,
@@ -85,11 +113,11 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 16),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             'Live Preview',
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               color: Colors.grey,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -115,11 +143,11 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                         const SizedBox(height: 32),
 
                         // Features Section
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             'Widget Features',
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -140,8 +168,10 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                                 title: 'Show Next Stack',
                                 subtitle: 'Display upcoming supplement info',
                                 value: _showNextStack,
-                                onChanged: (v) =>
-                                    setState(() => _showNextStack = v),
+                                onChanged: (v) {
+                                  setState(() => _showNextStack = v);
+                                  _savePreference('widget_show_next_stack', v);
+                                },
                                 primaryGold: primaryGold,
                               ),
                               Divider(
@@ -152,8 +182,11 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                                 title: 'Show Progress Ring',
                                 subtitle: 'Visualize daily completion',
                                 value: _showProgressRing,
-                                onChanged: (v) =>
-                                    setState(() => _showProgressRing = v),
+                                onChanged: (v) {
+                                  setState(() => _showProgressRing = v);
+                                  _savePreference(
+                                      'widget_show_progress_ring', v);
+                                },
                                 primaryGold: primaryGold,
                               ),
                               Divider(
@@ -165,8 +198,10 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                                 subtitle:
                                     'Log intake directly from home screen',
                                 value: _quickLogButton,
-                                onChanged: (v) =>
-                                    setState(() => _quickLogButton = v),
+                                onChanged: (v) {
+                                  setState(() => _quickLogButton = v);
+                                  _savePreference('widget_quick_log', v);
+                                },
                                 primaryGold: primaryGold,
                               ),
                             ],
@@ -176,11 +211,11 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                         const SizedBox(height: 32),
 
                         // Theme Selector
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             'Choose Theme',
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -198,91 +233,117 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                             crossAxisSpacing: 12,
                             childAspectRatio: 1.4,
                             children: [
-                              _buildThemeOption(
-                                'Glassmorphism',
-                                primaryGold,
-                                isSelected: _selectedTheme == 'Glassmorphism',
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                              'https://lh3.googleusercontent.com/aida-public/AB6AXuCAZKCVASRPep6HK8h-8b-3MiOxBYw4HZ6dIqouISEOOCIrfpgpsgJR6qMBMMTWlnMV8fE_GF_hM-t9L-NiZcJF5p6NLScE4VG_FO0IioP-sHRImbT6Q0QfjsoVBism-_yQ-z0vZoC5ig8u3IoV8K77c16rL6Hvk7Y46u4UhyHIcZobcZ2nPaVEmR7LyFyyjKYU7bs8DgI-wO1USCN1wwQTJAfb1knwjDo3i71OQl1DwCryGt3NfVt854NrkQMD9OsxYgQXR8K0J3w'),
-                                          fit: BoxFit.cover,
+                              GestureDetector(
+                                onTap: () {
+                                  setState(
+                                      () => _selectedTheme = 'Glassmorphism');
+                                  _savePreference(
+                                      'widget_theme', 'Glassmorphism');
+                                },
+                                child: _buildThemeOption(
+                                  'Glassmorphism',
+                                  primaryGold,
+                                  isSelected: _selectedTheme == 'Glassmorphism',
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                'https://lh3.googleusercontent.com/aida-public/AB6AXuCAZKCVASRPep6HK8h-8b-3MiOxBYw4HZ6dIqouISEOOCIrfpgpsgJR6qMBMMTWlnMV8fE_GF_hM-t9L-NiZcJF5p6NLScE4VG_FO0IioP-sHRImbT6Q0QfjsoVBism-_yQ-z0vZoC5ig8u3IoV8K77c16rL6Hvk7Y46u4UhyHIcZobcZ2nPaVEmR7LyFyyjKYU7bs8DgI-wO1USCN1wwQTJAfb1knwjDo3i71OQl1DwCryGt3NfVt854NrkQMD9OsxYgQXR8K0J3w'),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.black
+                                              .withValues(alpha: 0.2),
+                                          border: Border.all(
+                                              color: Colors.white
+                                                  .withValues(alpha: 0.2)),
+                                        ),
+                                        margin: const EdgeInsets.all(8),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() => _selectedTheme = 'Dark');
+                                  _savePreference('widget_theme', 'Dark');
+                                },
+                                child: _buildThemeOption(
+                                  'Dark',
+                                  primaryGold,
+                                  isSelected: _selectedTheme == 'Dark',
+                                  child: Container(
+                                    color: const Color(0xFF09090B), // Zinc 950
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      width: 50,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF27272A),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
                                     ),
-                                    Container(
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() => _selectedTheme = 'Light');
+                                  _savePreference('widget_theme', 'Light');
+                                },
+                                child: _buildThemeOption(
+                                  'Light',
+                                  primaryGold,
+                                  isSelected: _selectedTheme == 'Light',
+                                  child: Container(
+                                    color: const Color(0xFFF8FAFC), // Slate 50
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      width: 50,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFE2E8F0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() => _selectedTheme = 'Vibrant');
+                                  _savePreference('widget_theme', 'Vibrant');
+                                },
+                                child: _buildThemeOption(
+                                  'Vibrant',
+                                  primaryGold,
+                                  isSelected: _selectedTheme == 'Vibrant',
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.orange,
+                                          Colors.pinkAccent
+                                        ],
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
+                                      ),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      width: 50,
+                                      height: 30,
                                       decoration: BoxDecoration(
                                         color:
-                                            Colors.black.withValues(alpha: 0.2),
-                                        border: Border.all(
-                                            color: Colors.white
-                                                .withValues(alpha: 0.2)),
+                                            Colors.white.withValues(alpha: 0.3),
+                                        borderRadius: BorderRadius.circular(4),
                                       ),
-                                      margin: const EdgeInsets.all(8),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              _buildThemeOption(
-                                'Dark',
-                                primaryGold,
-                                isSelected: _selectedTheme == 'Dark',
-                                child: Container(
-                                  color: const Color(0xFF09090B), // Zinc 950
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    width: 50,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF27272A),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              _buildThemeOption(
-                                'Light',
-                                primaryGold,
-                                isSelected: _selectedTheme == 'Light',
-                                child: Container(
-                                  color: const Color(0xFFF8FAFC), // Slate 50
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    width: 50,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFE2E8F0),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              _buildThemeOption(
-                                'Vibrant',
-                                primaryGold,
-                                isSelected: _selectedTheme == 'Vibrant',
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.orange,
-                                        Colors.pinkAccent
-                                      ],
-                                      begin: Alignment.bottomLeft,
-                                      end: Alignment.topRight,
-                                    ),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    width: 50,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.3),
-                                      borderRadius: BorderRadius.circular(4),
                                     ),
                                   ),
                                 ),
@@ -303,23 +364,23 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                                 color: primaryGold.withValues(alpha: 0.2)),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: const Row(
+                          child: Row(
                             children: [
-                              Icon(Icons.info, color: primaryGold),
-                              SizedBox(width: 12),
+                              const Icon(Icons.info, color: primaryGold),
+                              const SizedBox(width: 12),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       'How to Add',
-                                      style: TextStyle(
+                                      style: GoogleFonts.lexend(
                                         color: primaryGold,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 4),
-                                    Text(
+                                    const SizedBox(height: 4),
+                                    const Text(
                                       'Press and hold an empty area on your home screen, tap the (+) button, and search for "ADHD Supps".',
                                       style: TextStyle(
                                         color: Colors.grey,
@@ -403,14 +464,15 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                             ),
                             elevation: 0,
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add, fontWeight: FontWeight.bold),
-                              SizedBox(width: 8),
+                              const Icon(Icons.add,
+                                  fontWeight: FontWeight.bold),
+                              const SizedBox(width: 8),
                               Text(
                                 'Add to Home Screen',
-                                style: TextStyle(
+                                style: GoogleFonts.lexend(
                                     fontWeight: FontWeight.bold, fontSize: 16),
                               ),
                             ],
@@ -418,9 +480,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                         ),
                       ),
                       const SizedBox(height: 12),
-                      const Text(
+                      Text(
                         'SYNCED WITH APPLE HEALTH',
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           color: Colors.grey,
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -501,7 +563,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                           Text(
                             message,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: GoogleFonts.lexend(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -510,7 +572,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                           const SizedBox(height: 16),
                           Text(
                             'Tap anywhere to continue',
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               color: primaryGold.withValues(alpha: 0.7),
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -529,8 +591,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
               right: 20,
               child: TextButton(
                 onPressed: () => setState(() => _tutorialStep = 0),
-                child: const Text('Skip',
-                    style: TextStyle(color: Colors.white70, fontSize: 16)),
+                child: Text('Skip',
+                    style: GoogleFonts.lexend(
+                        color: Colors.white70, fontSize: 16)),
               ),
             ),
           ],
@@ -606,9 +669,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         '85%',
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           color: Colors.white,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -616,7 +679,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                       ),
                       Text(
                         'Daily Goal',
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           color: Colors.grey[400],
                           fontSize: 12,
                         ),
@@ -635,7 +698,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
         ),
         Text(
           'Compact summary',
-          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+          style: GoogleFonts.lexend(color: Colors.grey[600], fontSize: 12),
         ),
       ],
     );
@@ -672,7 +735,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                       children: [
                         Text(
                           'UP NEXT',
-                          style: TextStyle(
+                          style: GoogleFonts.lexend(
                             color: primary,
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -680,11 +743,11 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                           ),
                         ),
                         const SizedBox(height: 4),
-                        const Text(
+                        Text(
                           'Vitamin D3 + Omega 3',
-                          style: TextStyle(
+                          style: GoogleFonts.lexend(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
                             height: 1.1,
                           ),
@@ -698,8 +761,8 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                         const SizedBox(width: 4),
                         Text(
                           '12:30 PM',
-                          style:
-                              TextStyle(color: Colors.grey[400], fontSize: 12),
+                          style: GoogleFonts.lexend(
+                              color: Colors.grey[400], fontSize: 12),
                         ),
                       ],
                     ),
@@ -719,9 +782,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                       backgroundColor: Colors.grey[800],
                       valueColor: AlwaysStoppedAnimation<Color>(primary),
                     ),
-                    const Text(
+                    Text(
                       '75%',
-                      style: TextStyle(
+                      style: GoogleFonts.lexend(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -734,13 +797,17 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
           ),
         ),
         const SizedBox(height: 12),
-        const Text(
-          'Medium (4x2)',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Medium (4x2)',
+            style: GoogleFonts.lexend(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ),
         Text(
           'Detailed schedule',
-          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+          style: GoogleFonts.lexend(color: Colors.grey[600], fontSize: 12),
         ),
       ],
     );
@@ -773,7 +840,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: GoogleFonts.lexend(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 15,
@@ -781,7 +848,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: Colors.grey[400],
                     fontSize: 12,
                   ),

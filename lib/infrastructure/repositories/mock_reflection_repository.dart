@@ -10,13 +10,15 @@ class MockReflectionRepository implements ReflectionRepository {
 
   @override
   Future<NightlyReflection?> getReflection(DateTime date) async {
-    await Future.delayed(const Duration(milliseconds: 500)); // Simulate delay
+    await Future<void>.delayed(
+        const Duration(milliseconds: 500)); // Simulate delay
     return _storage[_getDateKey(date)];
   }
 
   @override
   Future<void> saveReflection(NightlyReflection reflection) async {
-    await Future.delayed(const Duration(milliseconds: 800)); // Simulate save
+    await Future<void>.delayed(
+        const Duration(milliseconds: 800)); // Simulate save
     _storage[_getDateKey(reflection.date)] = reflection;
   }
 }

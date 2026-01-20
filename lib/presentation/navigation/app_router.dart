@@ -52,6 +52,7 @@ import '../views/article_detail_screen.dart';
 import '../views/milestone_success_screen.dart';
 import '../views/notification_history_screen.dart';
 import '../views/emergency_contact_screen.dart';
+import '../views/first_stack_success_screen.dart';
 import '../../domain/entities/supplement_interaction.dart';
 
 class AppRouter {
@@ -106,6 +107,7 @@ class AppRouter {
   static const String emergencyContact = '/emergency-contact';
   static const String milestoneSuccess = '/milestone-success';
   static const String notificationHistory = '/notification-history';
+  static const String firstStackSuccess = '/first-stack-success';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -304,6 +306,10 @@ class AppRouter {
       case notificationHistory:
         return MaterialPageRoute(
             builder: (_) => NotificationHistoryScreen.withProvider());
+
+      case firstStackSuccess:
+        return MaterialPageRoute(
+            builder: (_) => const FirstStackSuccessScreen());
 
       default:
         return MaterialPageRoute(

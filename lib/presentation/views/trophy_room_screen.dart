@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../application/view_models/trophy_room_view_model.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../config/locator.dart';
 import '../../domain/entities/gamification.dart';
+import '../theme/app_theme.dart';
 
 class TrophyRoomScreen extends StatelessWidget {
   const TrophyRoomScreen({super.key});
@@ -23,16 +25,17 @@ class TrophyRoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const primaryPink = Color(0xFFEC1380);
-    const bgDark = Color(0xFF221019);
-    const bgLight = Color(0xFFF8F6F7);
+    const primaryGold = AppColors.primaryGold;
+    const bgDark = Color(0xFF190F23);
+    const bgLight = Color(0xFFF7F5F8);
 
     return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
       body: Consumer<TrophyRoomViewModel>(
         builder: (context, viewModel, child) {
           if (viewModel.isLoading) {
-            return Center(child: CircularProgressIndicator(color: primaryPink));
+            return const Center(
+                child: CircularProgressIndicator(color: primaryGold));
           }
           final profile = viewModel.profile;
           if (profile == null) {
@@ -43,18 +46,18 @@ class TrophyRoomScreen extends StatelessWidget {
             children: [
               CustomScrollView(
                 slivers: [
-                  _buildAppBar(context, isDark, primaryPink),
+                  _buildAppBar(context, isDark, primaryGold),
                   SliverToBoxAdapter(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildProgressHeader(isDark, primaryPink, profile),
+                        _buildProgressHeader(isDark, primaryGold, profile),
                         const SizedBox(height: 24),
                         _buildRecentWins(
-                            isDark, primaryPink, viewModel.recentWins),
+                            isDark, primaryGold, viewModel.recentWins),
                         const SizedBox(height: 32),
                         _buildTrophyGrid(
-                            isDark, primaryPink, viewModel.allGridBadges),
+                            isDark, primaryGold, viewModel.allGridBadges),
                         const SizedBox(
                             height: 120), // Bottom padding for fixed button
                       ],
@@ -66,7 +69,7 @@ class TrophyRoomScreen extends StatelessWidget {
                 left: 24,
                 right: 24,
                 bottom: 32,
-                child: _buildContinueButton(primaryPink),
+                child: _buildContinueButton(primaryGold),
               ),
             ],
           );
@@ -78,8 +81,8 @@ class TrophyRoomScreen extends StatelessWidget {
   Widget _buildAppBar(BuildContext context, bool isDark, Color primary) {
     return SliverAppBar(
       backgroundColor: isDark
-          ? const Color(0xFF221019).withValues(alpha: 0.9)
-          : const Color(0xFFF8F6F7).withValues(alpha: 0.9),
+          ? const Color(0xFF190F23).withValues(alpha: 0.9)
+          : const Color(0xFFF7F5F8).withValues(alpha: 0.9),
       pinned: true,
       elevation: 0,
       leading: IconButton(
@@ -98,7 +101,7 @@ class TrophyRoomScreen extends StatelessWidget {
       ),
       title: Text(
         'Trophy Room',
-        style: TextStyle(
+        style: GoogleFonts.lexend(
           color: isDark ? Colors.white : Colors.black,
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -139,7 +142,7 @@ class TrophyRoomScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Your Legend',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: isDark ? Colors.white : Colors.black,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -147,7 +150,7 @@ class TrophyRoomScreen extends StatelessWidget {
                   ),
                   Text(
                     'Level ${profile.level} ${profile.levelTitle}',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: isDark
                           ? const Color(0xFF94A3B8)
                           : const Color(0xFF64748B),
@@ -161,7 +164,7 @@ class TrophyRoomScreen extends StatelessWidget {
                 children: [
                   Text(
                     '${profile.earnedBadgesCount}/${profile.totalBadgesCount}',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: primary,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -169,7 +172,7 @@ class TrophyRoomScreen extends StatelessWidget {
                   ),
                   Text(
                     'BADGES',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: isDark
                           ? const Color(0xFF94A3B8)
                           : const Color(0xFF64748B),
@@ -220,7 +223,7 @@ class TrophyRoomScreen extends StatelessWidget {
             children: [
               Text(
                 '${profile.xpToNextLevel - profile.currentXp} XP to Level ${profile.level + 1}',
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
                       : Colors.black.withValues(alpha: 0.7),
@@ -230,7 +233,7 @@ class TrophyRoomScreen extends StatelessWidget {
               ),
               Text(
                 '${(profile.progress * 100).toInt()}% Mastery',
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
                       : Colors.black.withValues(alpha: 0.7),
@@ -256,7 +259,7 @@ class TrophyRoomScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Text(
             'LATEST WINS',
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: primary,
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -311,7 +314,7 @@ class TrophyRoomScreen extends StatelessWidget {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF221019) : const Color(0xFFF8F6F7),
+              color: isDark ? const Color(0xFF190F23) : const Color(0xFFF7F5F8),
               shape: BoxShape.circle,
               border: Border.all(
                 color: isDark
@@ -331,7 +334,7 @@ class TrophyRoomScreen extends StatelessWidget {
         Text(
           badge.title.split(' ').join('\n'), // Break lines for circle badges
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: GoogleFonts.lexend(
             color: isDark ? Colors.white : Colors.black,
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -351,7 +354,7 @@ class TrophyRoomScreen extends StatelessWidget {
         children: [
           Text(
             'Trophy Case',
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isDark ? Colors.white : Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -442,8 +445,8 @@ class TrophyRoomScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: isDark
-                            ? const Color(0xFF221019)
-                            : const Color(0xFFF8F6F7),
+                            ? const Color(0xFF190F23)
+                            : const Color(0xFFF7F5F8),
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: isDark
@@ -466,7 +469,7 @@ class TrophyRoomScreen extends StatelessWidget {
             Text(
               badge.title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 color: isDark ? Colors.white : Colors.black,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
@@ -476,7 +479,7 @@ class TrophyRoomScreen extends StatelessWidget {
             Text(
               !badge.isLocked ? badge.subtitle.toUpperCase() : badge.subtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 color: badge.isLocked
                     ? (isDark
                         ? Colors.white.withValues(alpha: 0.5)
@@ -508,14 +511,14 @@ class TrophyRoomScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.rocket_launch, color: Colors.white),
-          SizedBox(width: 8),
+          const Icon(Icons.rocket_launch, color: Colors.white),
+          const SizedBox(width: 8),
           Text(
             'Continue Progress',
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,

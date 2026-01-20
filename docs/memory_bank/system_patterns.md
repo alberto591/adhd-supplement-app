@@ -62,12 +62,34 @@ final locator = GetIt.instance;
 locator.registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
 ```
 
-### 4. Strategy Pattern (Safety Guards)
+### 5. Strategy Pattern (Safety Guards)
 Multiple safety checking strategies that can be composed.
 ```dart
 class SafetyGuard { ... }
 class ADHDInteractionGuard { ... }
 ```
+
+### 6. Command/Action Pattern (Dashboard)
+Decoupling long-press and menu actions from screen builds.
+```dart
+void _showMedicationOptions(BuildContext context, Supplement supplement) { ... }
+```
+
+## UI/UX Patterns (Gold Standard)
+
+### 1. Depth & Branding (Deep Focus Gold)
+Standardized branding applied to all primary user-facing screens.
+- **Font**: `Lexend` (Readability optimized for neurodivergent users).
+- **Colors**: `primaryGold` (#D4AF37) for all primary actions/status.
+- **Card Style**: Standardized `boxShadow` and `borderRadius: 16`.
+
+### 2. Unified Navigation (5-Tab)
+Standardized `UnifiedBottomNav` used across 5 root screens to prevent navigation drift.
+1. **Today** -> Dashboard
+2. **Stacks** -> DailyStack
+3. **Insights** -> SuccessStats
+4. **Library** -> ScienceHub/Discovery
+5. **Profile** -> UserProfile
 
 ## Key Domain Entities
 | Entity | Purpose |
@@ -75,12 +97,9 @@ class ADHDInteractionGuard { ... }
 | `Supplement` | Catalog item with benefits, dosage, interactions |
 | `SupplementStack` | User's grouped supplements (Morning, Evening) |
 | `DailyLog` | Daily intake record with timestamps |
-| `LogEntry` | Individual supplement intake event |
-| `Medication` | User's ADHD medication for safety checks |
-| `InteractionWarning` | Safety alert with severity level |
+| `User` | User profile with XP, Level, and preferences |
+| `NightlyReflection` | Evening focus and sleep readiness data |
+| `Report` | PDF-generated summary for clinicians |
 
-## Navigation Pattern
-Centralized routing via `AppRouter` with named routes.
-```dart
-Navigator.pushNamed(context, AppRouter.dashboard);
-```
+## Navigation Architecture
+Centralized routing via `AppRouter` using a mix of `MaterialPageRoute` (standard) and `UnifiedBottomNav` (persistent root).

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
 class DailyProgressCard extends StatelessWidget {
   final int streakCount;
@@ -72,7 +73,7 @@ class DailyProgressCard extends StatelessWidget {
               Text(
                 "${(progress * 100).round()}%",
                 style: const TextStyle(
-                  color: Color(0xFF3B82F6), // Blue
+                  color: AppColors.primaryGold, // Gold
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                 ),
@@ -103,7 +104,7 @@ class DailyProgressCard extends StatelessWidget {
                     width: constraints.maxWidth * progress,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
+                        colors: [AppColors.primaryGold, Color(0xFFFFD54F)],
                       ),
                       borderRadius: BorderRadius.circular(6),
                     ),

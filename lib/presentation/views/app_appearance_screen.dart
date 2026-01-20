@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../theme/app_theme.dart';
 
 class AppAppearanceScreen extends StatefulWidget {
   const AppAppearanceScreen({super.key});
@@ -12,11 +15,31 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
   String _selectedIcon = 'Dopamine Hit';
 
   @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      _selectedWallpaper = prefs.getString('appearance_wallpaper') ?? 'Nature';
+      _selectedIcon = prefs.getString('appearance_icon') ?? 'Dopamine Hit';
+    });
+  }
+
+  Future<void> _savePreference(String key, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, value);
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Colors from design
-    const bgDark = Color(0xFF22101B); // "background-dark": "#22101b"
-    const bgLight = Color(0xFFF8F5F7); // "background-light": "#f8f5f7"
-    const primaryPink = Color(0xFFF20D93); // "primary": "#f20d93"
+    const bgDark = AppColors.backgroundPremiumDark;
+    const bgLight = AppColors.backgroundPremiumLight;
+    const primaryGold = AppColors.primaryGold;
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? bgDark : bgLight;
@@ -32,12 +55,12 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
-              color: primaryPink.withValues(alpha: 0.1),
+              color: primaryGold.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: IconButton(
               icon: const Icon(Icons.arrow_back, size: 20),
-              color: primaryPink,
+              color: primaryGold,
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -46,7 +69,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
           children: [
             Text(
               'App Appearance',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 color: isDark ? Colors.white : const Color(0xFF111418),
                 fontSize: 18,
                 fontWeight: FontWeight.w900, // Extrabold
@@ -54,7 +77,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
             ),
             Text(
               'Make it yours',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 color: isDark ? Colors.grey[400] : Colors.grey[500],
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -77,7 +100,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                       padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
                       child: Text(
                         'Preview on Home Screen',
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           color:
                               isDark ? Colors.white : const Color(0xFF111418),
                           fontSize: 22,
@@ -109,24 +132,25 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                               'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ-nxTxmGSXL3P2fZ-MUFeVo5aYTAjTQm5PuIca3EV9pqLy2l7UcW28rMGc5ojaEyhYC0m0dRzptKCWhTyp5JM33LMfothoqg2xhPz7icCMqLjtFOGCtumUW1-TUWbZ46KrCYP4TRkpcqoGXIh_iBVOsf-p-zHFjEL0b2t8x3o11MNM2tKYi8A8Xeib6ctj8PBXEHM8O9J9rOpXM9kizznS_woimoNpyke-cn54Fk516Jpcd7L5u-HZvor1piFvRXtRLOV8DjovrI'),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
-                              Colors.black.withValues(alpha: 0.2), BlendMode.darken),
+                              Colors.black.withValues(alpha: 0.2),
+                              BlendMode.darken),
                         ),
                       ),
                       child: Column(
                         children: [
                           // Status Bar Mockup
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 24, vertical: 16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('9:41',
-                                    style: TextStyle(
+                                    style: GoogleFonts.lexend(
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold)),
-                                Row(
+                                const Row(
                                   children: [
                                     Icon(Icons.signal_cellular_alt,
                                         color: Colors.white, size: 14),
@@ -158,12 +182,13 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                                           : null,
                                       borderRadius: BorderRadius.circular(20),
                                       border: Border.all(
-                                          color: Colors.white.withValues(alpha: 0.2),
+                                          color: Colors.white
+                                              .withValues(alpha: 0.2),
                                           width: 2),
                                       boxShadow: [
                                         BoxShadow(
-                                            color:
-                                                Colors.black.withValues(alpha: 0.3),
+                                            color: Colors.black
+                                                .withValues(alpha: 0.3),
                                             blurRadius: 15,
                                             offset: const Offset(0, 5)),
                                       ],
@@ -183,12 +208,13 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8, vertical: 2),
                                     decoration: BoxDecoration(
-                                      color: Colors.black.withValues(alpha: 0.2),
+                                      color:
+                                          Colors.black.withValues(alpha: 0.2),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'FocusApp',
-                                      style: TextStyle(
+                                      style: GoogleFonts.lexend(
                                         color: Colors.white,
                                         fontSize: 11,
                                         fontWeight: FontWeight.w600,
@@ -243,7 +269,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'Choose your icon',
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           color:
                               isDark ? Colors.white : const Color(0xFF111418),
                           fontSize: 18,
@@ -296,7 +322,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
               Text(
                 'iOS will show a system confirmation when you change the app icon.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark ? Colors.grey[400] : Colors.grey[500],
                   fontSize:
                       12, // Small text size 10px in design = ~12 in Flutter logical pixels roughly
@@ -316,22 +342,23 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryPink,
-                    foregroundColor: Colors.white,
+                    backgroundColor: primaryGold,
+                    foregroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
                     elevation: 8,
-                    shadowColor: primaryPink.withValues(alpha: 0.4),
+                    shadowColor: primaryGold.withValues(alpha: 0.4),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.auto_fix_high, size: 24), // magic_button proxy
-                      SizedBox(width: 8),
+                      const Icon(Icons.auto_fix_high,
+                          size: 24), // magic_button proxy
+                      const SizedBox(width: 8),
                       Text(
                         'Apply New Icon',
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           fontSize: 16,
                           fontWeight: FontWeight.bold, // Extrabold proxy
                         ),
@@ -360,7 +387,6 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
 
   Widget _buildWallpaperOption(String label, bool isDark) {
     final isSelected = _selectedWallpaper == label;
-    const primaryPink = Color(0xFFF20D93);
 
     // In design, selected is white bg with pink text/shadow.
     // Dark mode: bg #22101b for selected
@@ -368,7 +394,10 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
 
     return Expanded(
       child: GestureDetector(
-        onTap: () => setState(() => _selectedWallpaper = label),
+        onTap: () {
+          setState(() => _selectedWallpaper = label);
+          _savePreference('appearance_wallpaper', label);
+        },
         child: Container(
           margin: const EdgeInsets.all(4),
           decoration: BoxDecoration(
@@ -377,16 +406,17 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05), blurRadius: 4)
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 4)
                   ]
                 : null,
           ),
           alignment: Alignment.center,
           child: Text(
             label,
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isSelected
-                  ? primaryPink
+                  ? AppColors.primaryGold
                   : (isDark ? Colors.grey[400] : Colors.grey[500]),
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -400,18 +430,22 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
   Widget _buildIconCard(
       String title, String subtitle, IconData icon, bool isDark) {
     final isSelected = _selectedIcon == title;
-    const primaryPink = Color(0xFFF20D93);
+    const primaryGold = AppColors.primaryGold;
 
-    final bgDark = const Color(0xFF1E293B).withValues(alpha: 0.5); // slate-800/50
+    final bgDark =
+        const Color(0xFF1E293B).withValues(alpha: 0.5); // slate-800/50
     const bgLight = Color(0xFFF1F5F9); // slate-100
 
     final bgColor = isSelected
-        ? primaryPink.withValues(alpha: isDark ? 0.2 : 0.1)
+        ? primaryGold.withValues(alpha: isDark ? 0.2 : 0.1)
         : (isDark ? bgDark : bgLight);
-    final borderColor = isSelected ? primaryPink : Colors.transparent;
+    final borderColor = isSelected ? primaryGold : Colors.transparent;
 
     return GestureDetector(
-      onTap: () => setState(() => _selectedIcon = title),
+      onTap: () {
+        setState(() => _selectedIcon = title);
+        _savePreference('appearance_icon', title);
+      },
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -419,7 +453,10 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: borderColor, width: 2),
           boxShadow: isSelected
-              ? [BoxShadow(color: primaryPink.withValues(alpha: 0.2), blurRadius: 15)]
+              ? [
+                  BoxShadow(
+                      color: primaryGold.withValues(alpha: 0.2), blurRadius: 15)
+                ]
               : null,
         ),
         child: Stack(
@@ -458,7 +495,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                 const SizedBox(height: 12),
                 Text(
                   title,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: isDark ? Colors.white : const Color(0xFF111418),
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -466,9 +503,9 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: title == 'Dopamine Hit' && isSelected
-                        ? primaryPink
+                        ? const Color(0xFFF20D93)
                         : (isDark ? Colors.grey[400] : Colors.grey[500]),
                     fontSize: 10,
                     fontWeight: title == 'Dopamine Hit' && isSelected
@@ -485,7 +522,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(4),
                   decoration: const BoxDecoration(
-                    color: primaryPink,
+                    color: primaryGold,
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(Icons.check, color: Colors.white, size: 10),

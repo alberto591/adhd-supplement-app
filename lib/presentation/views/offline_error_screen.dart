@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../theme/app_theme.dart';
 
 class OfflineErrorScreen extends StatelessWidget {
   final VoidCallback? onRetry;
@@ -13,9 +15,10 @@ class OfflineErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const primaryOrange = Color(0xFFE87D30);
-    const bgLight = Color(0xFFF8F7F6);
-    const bgDark = Color(0xFF211811);
+
+    const primaryGold = AppColors.primaryGold;
+    const bgLight = AppColors.backgroundLight;
+    const bgDark = AppColors.backgroundDark;
 
     return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
@@ -26,9 +29,9 @@ class OfflineErrorScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Connection Status',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: GoogleFonts.lexend(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
       ),
@@ -53,7 +56,7 @@ class OfflineErrorScreen extends StatelessWidget {
                             width: 250,
                             height: 250,
                             decoration: BoxDecoration(
-                              color: primaryOrange.withValues(alpha: 0.1),
+                              color: primaryGold.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -68,8 +71,7 @@ class OfflineErrorScreen extends StatelessWidget {
                                   width: 280,
                                   height: 280,
                                   decoration: BoxDecoration(
-                                    color:
-                                        primaryOrange.withValues(alpha: 0.05),
+                                    color: primaryGold.withValues(alpha: 0.05),
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -102,19 +104,19 @@ class OfflineErrorScreen extends StatelessWidget {
                                 const Icon(
                                   Icons.satellite_alt,
                                   size: 96,
-                                  color: primaryOrange,
+                                  color: primaryGold,
                                 ),
                                 const SizedBox(height: 16),
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     _buildDot(
-                                        primaryOrange.withValues(alpha: 0.4)),
+                                        primaryGold.withValues(alpha: 0.4)),
                                     const SizedBox(width: 8),
                                     _buildDot(
-                                        primaryOrange.withValues(alpha: 0.6)),
+                                        primaryGold.withValues(alpha: 0.6)),
                                     const SizedBox(width: 8),
-                                    _buildDot(primaryOrange),
+                                    _buildDot(primaryGold),
                                   ],
                                 ),
                               ],
@@ -130,7 +132,7 @@ class OfflineErrorScreen extends StatelessWidget {
                     Text(
                       'Oops, we lost our focus!',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.lexend(
                         fontSize: 28,
                         fontWeight: FontWeight.w800,
                         color: isDark ? Colors.white : const Color(0xFF211811),
@@ -141,7 +143,7 @@ class OfflineErrorScreen extends StatelessWidget {
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           fontSize: 16,
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.7)
@@ -154,9 +156,9 @@ class OfflineErrorScreen extends StatelessWidget {
                           ),
                           TextSpan(
                             text: 'Your local reminders will still work!',
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               fontWeight: FontWeight.w600,
-                              color: primaryOrange.withValues(alpha: 0.9),
+                              color: primaryGold.withValues(alpha: 0.9),
                             ),
                           ),
                         ],
@@ -182,17 +184,17 @@ class OfflineErrorScreen extends StatelessWidget {
                         icon: const Icon(Icons.refresh),
                         label: const Text('Try Again'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryOrange,
+                          backgroundColor: primaryGold,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(999),
                           ),
-                          textStyle: const TextStyle(
+                          textStyle: GoogleFonts.lexend(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                           elevation: 8,
-                          shadowColor: primaryOrange.withValues(alpha: 0.3),
+                          shadowColor: primaryGold.withValues(alpha: 0.3),
                         ),
                       ),
                     ),
@@ -220,7 +222,7 @@ class OfflineErrorScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(999),
                           ),
-                          textStyle: const TextStyle(
+                          textStyle: GoogleFonts.lexend(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -259,7 +261,7 @@ class OfflineErrorScreen extends StatelessWidget {
                                 width: 8,
                                 height: 8,
                                 decoration: const BoxDecoration(
-                                  color: primaryOrange,
+                                  color: primaryGold,
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -275,7 +277,7 @@ class OfflineErrorScreen extends StatelessWidget {
                         width: 8,
                         height: 8,
                         decoration: const BoxDecoration(
-                          color: primaryOrange,
+                          color: primaryGold,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -285,7 +287,7 @@ class OfflineErrorScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   'Attempting to reconnect...',
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     fontSize: 12,
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.5)
@@ -298,7 +300,7 @@ class OfflineErrorScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: _buildBottomNav(context, isDark),
+      // bottomNavigationBar: _buildBottomNav(context, isDark), // Removed custom nav
     );
   }
 
@@ -309,55 +311,6 @@ class OfflineErrorScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle,
-      ),
-    );
-  }
-
-  Widget _buildBottomNav(BuildContext context, bool isDark) {
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF26201C) : const Color(0xFFF8F7F6),
-        border: Border(
-          top: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.1)
-                : Colors.black.withValues(alpha: 0.05),
-          ),
-        ),
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.today, 'Today', false),
-              _buildNavItem(Icons.medication, 'Supplements', false),
-              _buildNavItem(Icons.analytics, 'Progress', false),
-              _buildNavItem(Icons.settings, 'Settings', false),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Opacity(
-      opacity: 0.4,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 24),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
       ),
     );
   }

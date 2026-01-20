@@ -25,6 +25,8 @@
 | `google_fonts` | ^6.1.0 | Typography |
 | `fl_chart` | ^0.68.0 | Charts and visualizations |
 | `cupertino_icons` | ^1.0.6 | iOS-style icons |
+| **`pdf`** | ^3.11.0 | PDF generation (Report Export) |
+| **`printing`** | ^5.13.0 | Print and Share PDFs |
 
 ## Notifications
 | Package | Version | Purpose |
@@ -37,6 +39,7 @@
 | `url_launcher` | ^6.2.0 | Open external URLs |
 | `share_plus` | ^9.0.0 | Native share sheet |
 | `uuid` | ^4.0.0 | Unique ID generation |
+| **`intl`** | ^0.19.0 | Date formatting/localization |
 
 ## Development Tools
 | Tool | Purpose |

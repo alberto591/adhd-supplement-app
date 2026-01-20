@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WeeklyWinCard extends StatelessWidget {
   final int streakDays;
@@ -71,9 +72,9 @@ class WeeklyWinCard extends StatelessWidget {
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
+                    child: Text(
                       'CHAMPION',
-                      style: TextStyle(
+                      style: GoogleFonts.lexend(
                         color: Colors.white,
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -92,9 +93,12 @@ class WeeklyWinCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                const SizedBox(
+                    height:
+                        8), // Assuming previous const was okay or not related to Text
+                Text(
                   'WEEKLY WIN',
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: AppColors.primary,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -104,7 +108,7 @@ class WeeklyWinCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   '$streakDays Day Streak!',
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: isDark ? Colors.white : const Color(0xFF0F172A),
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -114,12 +118,12 @@ class WeeklyWinCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 RichText(
                   text: TextSpan(
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color:
                           isDark ? Colors.grey[400] : const Color(0xFF64748B),
                       fontSize: 16,
                       height: 1.5,
-                      fontFamily: 'Lexend', // Ensure font matches app
+                      // fontFamily: 'Lexend', // Removed invalid arg
                     ),
                     children: [
                       const TextSpan(
@@ -137,13 +141,14 @@ class WeeklyWinCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.trending_up, color: AppColors.primary, size: 16),
-                    SizedBox(width: 8),
+                    const Icon(Icons.trending_up,
+                        color: AppColors.primary, size: 16),
+                    const SizedBox(width: 8),
                     Text(
                       'Keep this momentum going!',
-                      style: TextStyle(
+                      style: GoogleFonts.lexend(
                         color: AppColors.primary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,

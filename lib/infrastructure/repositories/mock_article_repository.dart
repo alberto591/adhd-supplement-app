@@ -61,7 +61,7 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
 
   @override
   Future<Article?> getArticle(String id) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     try {
       return _articles.firstWhere((a) => a.id == id);
     } catch (_) {
@@ -71,19 +71,19 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
 
   @override
   Future<List<Article>> getRelatedArticles(String articleId) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return _articles.where((a) => a.id != articleId).toList();
   }
 
   @override
   Future<List<Article>> getArticles() async {
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future<void>.delayed(const Duration(milliseconds: 400));
     return _articles;
   }
 
   @override
   Future<Article?> getArticleOfTheDay() async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return _articles.first;
   }
 }

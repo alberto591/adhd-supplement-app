@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../application/view_models/focus_buddies_view_model.dart';
 import '../../config/locator.dart';
+import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 
 class FocusBuddiesScreen extends StatefulWidget {
@@ -22,9 +24,10 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const primaryPurple = Color(0xFF8C1FF9);
-    const bgDark = Color(0xFF190F23);
-    const bgLight = Color(0xFFF7F5F8);
+    const primaryGold = AppColors.primaryGold;
+    // const bgDark = Color(0xFF190F23); // Old purple dark
+    const bgDark = AppColors.backgroundPremiumDark;
+    const bgLight = AppColors.backgroundPremiumLight;
 
     return Consumer<FocusBuddiesViewModel>(
       builder: (context, viewModel, child) {
@@ -41,23 +44,23 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
             children: [
               CustomScrollView(
                 slivers: [
-                  _buildAppBar(context, isDark, primaryPurple),
+                  _buildAppBar(context, isDark, primaryGold),
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
                       child: Column(
                         children: [
                           _buildTeamGoalProgress(
-                              isDark, primaryPurple, viewModel),
+                              isDark, primaryGold, viewModel),
                           const SizedBox(height: 24),
                           _buildSplitViewLeaderboard(
-                              isDark, primaryPurple, viewModel),
+                              isDark, primaryGold, viewModel),
                           const SizedBox(height: 24),
-                          _buildXPStats(isDark, primaryPurple, viewModel),
+                          _buildXPStats(isDark, primaryGold, viewModel),
                           const SizedBox(height: 32),
-                          _buildActivityFeed(isDark, primaryPurple, viewModel),
+                          _buildActivityFeed(isDark, primaryGold, viewModel),
                           const SizedBox(height: 40),
-                          _buildCallToAction(isDark, primaryPurple, viewModel),
+                          _buildCallToAction(isDark, primaryGold, viewModel),
                           const SizedBox(height: 16),
                           _buildSecondaryActions(isDark),
                         ],
@@ -66,13 +69,12 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                   ),
                 ],
               ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: _buildBottomNav(isDark, primaryPurple),
-              ),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: primaryGold,
+            onPressed: () => _showInviteDialog(context, viewModel, primaryGold),
+            child: const Icon(Icons.person_add, color: Colors.black),
           ),
         );
       },
@@ -97,7 +99,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
       ),
       title: Text(
         'Focus Buddies',
-        style: TextStyle(
+        style: GoogleFonts.lexend(
           color: isDark ? Colors.white : const Color(0xFF0F172A),
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -155,7 +157,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                   const SizedBox(width: 8),
                   Text(
                     'Shared Weekly Goal',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: isDark ? Colors.white : const Color(0xFF0F172A),
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -165,7 +167,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
               ),
               Text(
                 '${(viewModel.teamGoalProgress * 100).toInt()}%',
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: primary,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -206,7 +208,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           const SizedBox(height: 12),
           Text(
             '${viewModel.sharedGoalDays}/${viewModel.totalDaysGoal} days completed this week. Keep it up!',
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isDark ? primary.withValues(alpha: 0.7) : Colors.grey[500],
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -249,9 +251,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                 ),
               ],
             ),
-            child: const Text(
+            child: Text(
               'VS',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.w900,
@@ -331,7 +333,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           const SizedBox(height: 16),
           Text(
             name,
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isDark ? Colors.white : const Color(0xFF0F172A),
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -345,8 +347,10 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
             children: [
               Text(
                 streak,
-                style: TextStyle(
-                  color: isLeading ? Colors.orange : Colors.grey,
+                style: GoogleFonts.lexend(
+                  color: isLeading
+                      ? AppColors.primaryGold
+                      : Colors.grey, // Gold for leader
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -354,8 +358,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
               const SizedBox(width: 4),
               Text(
                 'DAYS',
-                style: TextStyle(
-                  color: isLeading ? Colors.orange : Colors.grey,
+                style: GoogleFonts.lexend(
+                  color: isLeading ? AppColors.primaryGold : Colors.grey,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -422,7 +426,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
         children: [
           Text(
             label.toUpperCase(),
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.6)
                   : Colors.grey[500],
@@ -436,7 +440,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
             children: [
               Text(
                 value,
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark ? Colors.white : const Color(0xFF0F172A),
                   fontSize: 24,
                   fontWeight: FontWeight.w900,
@@ -445,7 +449,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
               const SizedBox(width: 8),
               Text(
                 growth,
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: growthColor,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -465,7 +469,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
       children: [
         Text(
           'LIVE FEED',
-          style: TextStyle(
+          style: GoogleFonts.lexend(
             color: isDark ? Colors.white : const Color(0xFF0F172A),
             fontSize: 14,
             fontWeight: FontWeight.bold,
@@ -540,10 +544,9 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark ? Colors.white : const Color(0xFF0F172A),
                   fontSize: 14,
-                  fontFamily: 'Spline Sans',
                 ),
                 children: _parseFeedText(text, iconColor, isDark),
               ),
@@ -633,7 +636,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                 const SizedBox(width: 12),
                 Text(
                   'Nudge ${viewModel.opponentName}',
-                  style: const TextStyle(
+                  style: GoogleFonts.lexend(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -646,7 +649,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
         const SizedBox(height: 12),
         Text(
           'Sends "Don\'t forget your stack!" alert',
-          style: TextStyle(
+          style: GoogleFonts.lexend(
             color:
                 isDark ? Colors.white.withValues(alpha: 0.4) : Colors.grey[500],
             fontSize: 12,
@@ -711,7 +714,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
               const SizedBox(width: 8),
               Text(
                 label,
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isDark ? Colors.white : const Color(0xFF334155),
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -724,115 +727,67 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     );
   }
 
-  Widget _buildBottomNav(bool isDark, Color primary) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(24, 12, 24, 32),
-      decoration: BoxDecoration(
-        color: isDark
-            ? const Color(0xFF190F23).withValues(alpha: 0.9)
-            : const Color(0xFFF7F5F8).withValues(alpha: 0.9),
-        border: Border(
-          top: BorderSide(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.1)
-                  : Colors.grey[200]!),
+  void _showInviteDialog(
+      BuildContext context, FocusBuddiesViewModel viewModel, Color primary) {
+    final emailController = TextEditingController();
+
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Invite Friend',
+          style: GoogleFonts.lexend(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildNavItem(0, Icons.home, 'Home', false, isDark, primary),
-          _buildNavItem(1, Icons.group, 'Buddies', true, isDark, primary),
-          _buildAddButton(isDark, primary),
-          _buildNavItem(3, Icons.insights, 'Stats', false, isDark, primary),
-          _buildNavItem(4, Icons.person, 'Profile', false, isDark, primary),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(int index, IconData icon, String label, bool isActive,
-      bool isDark, Color primary) {
-    final color =
-        isActive ? primary : (isDark ? Colors.grey[500] : Colors.grey[400]);
-    return GestureDetector(
-      onTap: () {
-        if (index == 0) {
-          Navigator.of(context)
-              .popUntil((route) => route.settings.name == AppRouter.dashboard);
-        } else if (index == 4) {
-          Navigator.pushReplacementNamed(context, AppRouter.profile);
-        } else if (index == 3) {
-          Navigator.pushReplacementNamed(context, AppRouter.successStats);
-        }
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 28),
-          Text(
-            label.toUpperCase(),
-            style: TextStyle(
-              color: color,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Enter email or username to invite a new accountability partner.',
+              style: GoogleFonts.lexend(),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAddButton(bool isDark, Color primary) {
-    return GestureDetector(
-      onTap: () {
-        showDialog<void>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Invite Friend'),
-            content: const Text(
-                'Enter email or username to invite a new accountability partner.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
+            const SizedBox(height: 16),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                hintText: 'Email or Username',
+                border: OutlineInputBorder(),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Invitation sent! 📩'),
-                      backgroundColor: primary,
-                    ),
-                  );
-                },
-                child: const Text('Invite'),
-              ),
-            ],
-          ),
-        );
-      },
-      child: Container(
-        width: 56,
-        height: 56,
-        margin: const EdgeInsets.only(bottom: 24),
-        decoration: BoxDecoration(
-          color: primary,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: isDark ? const Color(0xFF190F23) : const Color(0xFFF7F5F8),
-            width: 4,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: primary.withValues(alpha: 0.4),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
             ),
           ],
         ),
-        child: const Icon(Icons.add, color: Colors.white, size: 32),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancel',
+              style: GoogleFonts.lexend(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              viewModel.addBuddy(emailController.text);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content:
+                      Text('Invitation sent to ${emailController.text}! 📩'),
+                  backgroundColor: primary,
+                ),
+              );
+            },
+            child: Text(
+              'Invite',
+              style: GoogleFonts.lexend(
+                fontWeight: FontWeight.bold,
+                color: primary,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

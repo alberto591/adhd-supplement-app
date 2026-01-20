@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
-import '../navigation/app_router.dart';
+
 import '../widgets/unified_bottom_nav.dart';
 import '../view_models/library_view_model.dart';
 import '../../config/locator.dart';
@@ -40,9 +40,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primaryGold = AppColors.primaryGold;
-    final bgLight = AppColors.backgroundPremiumLight;
-    final bgDark = AppColors.backgroundPremiumDark;
+    const primaryGold = AppColors.primaryGold;
+    const bgLight = AppColors.backgroundPremiumLight;
+    const bgDark = AppColors.backgroundPremiumDark;
     const cardBgLight = AppColors.cardLight;
     const cardBgDark = AppColors.cardDark;
     const borderColorLight = Color(0xFFE2E8F0);
@@ -68,7 +68,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           child: Container(
                             width: 50,
                             alignment: Alignment.centerLeft,
-                            child: Icon(
+                            child: const Icon(
                                 Icons
                                     .arrow_back, // Changed to arrow_back to match premium feel
                                 size: 24,
@@ -91,7 +91,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         Container(
                           width: 50,
                           alignment: Alignment.centerRight,
-                          child: Icon(Icons.bookmark_outline,
+                          child: const Icon(Icons.bookmark_outline,
                               size: 24, color: AppColors.primaryGold),
                         ),
                       ],
@@ -283,9 +283,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 child: Center(
                                   child: Column(
                                     children: [
-                                      Icon(Icons.search_off,
+                                      const Icon(Icons.search_off,
                                           size: 48, color: Colors.grey),
-                                      SizedBox(height: 16),
+                                      const SizedBox(height: 16),
                                       Text(
                                         'No supplements found',
                                         style: GoogleFonts.lexend(
@@ -768,7 +768,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     final viewModel = context.read<LibraryViewModel>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -877,7 +877,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     String title,
     List<String> options,
     String? selectedValue,
-    Function(String) onSelect,
+    void Function(String) onSelect,
     bool isDark,
   ) {
     return Column(

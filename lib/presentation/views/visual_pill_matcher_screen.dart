@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/pill_matcher_view_model.dart';
 import '../theme/app_theme.dart';
@@ -18,10 +19,13 @@ class VisualPillMatcherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    const primaryGold = AppColors.primaryGold;
+    final viewModel = Provider.of<PillMatcherViewModel>(context, listen: false);
 
     return Scaffold(
-      backgroundColor:
-          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor: isDark
+          ? AppColors.backgroundPremiumDark
+          : AppColors.backgroundPremiumLight,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -30,17 +34,18 @@ class VisualPillMatcherScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Visual Pill Matcher',
-          style: TextStyle(
+          'VISUAL PILL MATCHER',
+          style: GoogleFonts.lexend(
             color: isDark ? Colors.white : Colors.black,
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
           ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.help_outline, color: AppColors.primary),
+            icon: const Icon(Icons.help_outline, color: primaryGold),
             onPressed: () {},
           ),
         ],
@@ -52,11 +57,11 @@ class VisualPillMatcherScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircularProgressIndicator(color: AppColors.primary),
+                  const CircularProgressIndicator(color: primaryGold),
                   const SizedBox(height: 24),
                   Text(
                     'Analyzing Pill Structure...',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: isDark ? Colors.white : Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -65,7 +70,7 @@ class VisualPillMatcherScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     'AI logic identifying shape and color',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: isDark ? Colors.grey : Colors.grey[700],
                       fontSize: 12,
                     ),
@@ -149,14 +154,13 @@ class VisualPillMatcherScreen extends StatelessWidget {
                                 child: Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary
-                                        .withValues(alpha: 0.2),
+                                    color: primaryGold.withValues(alpha: 0.2),
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                        color: AppColors.primary, width: 1.5),
+                                        color: primaryGold, width: 1.5),
                                   ),
                                   child: const Icon(Icons.camera_alt,
-                                      color: AppColors.primary, size: 20),
+                                      color: primaryGold, size: 20),
                                 ),
                               ),
                             ),
@@ -175,15 +179,15 @@ class VisualPillMatcherScreen extends StatelessWidget {
                                       color:
                                           Colors.white.withValues(alpha: 0.1)),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.view_in_ar,
+                                    const Icon(Icons.view_in_ar,
                                         color: Colors.white, size: 14),
-                                    SizedBox(width: 6),
+                                    const SizedBox(width: 6),
                                     Text(
                                       '3D PREVIEW',
-                                      style: TextStyle(
+                                      style: GoogleFonts.lexend(
                                         color: Colors.white,
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
@@ -204,9 +208,9 @@ class VisualPillMatcherScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'Morning Focus',
-                                style: TextStyle(
+                                style: GoogleFonts.lexend(
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -219,7 +223,7 @@ class VisualPillMatcherScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Matches your physical supplement',
-                                    style: TextStyle(
+                                    style: GoogleFonts.lexend(
                                       color: Colors.grey[400],
                                       fontSize: 13,
                                     ),
@@ -227,7 +231,7 @@ class VisualPillMatcherScreen extends StatelessWidget {
                                   const Text(
                                     'ACTIVE',
                                     style: TextStyle(
-                                      color: AppColors.primary,
+                                      color: primaryGold,
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       letterSpacing: 0.5,
@@ -283,7 +287,7 @@ class VisualPillMatcherScreen extends StatelessWidget {
                             color: color,
                             shape: BoxShape.circle,
                             border: isSelected
-                                ? Border.all(color: AppColors.primary, width: 2)
+                                ? Border.all(color: primaryGold, width: 2)
                                 : Border.all(
                                     color: Colors.grey[800]!, width: 1),
                             boxShadow: isSelected
@@ -329,7 +333,7 @@ class VisualPillMatcherScreen extends StatelessWidget {
                           Color(0xFFFF4B4B), // Red
                           Color(0xFFFF9F00), // Orange/Yellow
                           Color(0xFF00D084), // Green
-                          AppColors.primary, // Blue
+                          primaryGold, // Gold/Blue
                           Color(0xFF7B61FF), // Purple
                         ],
                       ),
@@ -407,23 +411,25 @@ class VisualPillMatcherScreen extends StatelessWidget {
           height: 56,
           child: ElevatedButton(
             onPressed: () {
+              // TODO: Return actual data or save via ViewModel
+              viewModel.savePillAppearance(); // Assume ViewModel has this
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Pill appearance saved!')),
               );
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              backgroundColor: primaryGold,
+              foregroundColor: Colors.black,
               elevation: 8,
-              shadowColor: AppColors.primary.withValues(alpha: 0.4),
+              shadowColor: primaryGold.withValues(alpha: 0.4),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            child: const Text(
+            child: Text(
               'Save Appearance',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -477,7 +483,7 @@ class VisualPillMatcherScreen extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           title,
-          style: TextStyle(
+          style: GoogleFonts.lexend(
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.white
                 : Colors.black,
@@ -511,7 +517,7 @@ class VisualPillMatcherScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: isSelected
-                    ? AppColors.primary
+                    ? AppColors.primaryGold
                     : (isDark
                         ? Colors.white.withValues(alpha: 0.1)
                         : Colors.grey[300]!),
@@ -525,9 +531,9 @@ class VisualPillMatcherScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   label,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: isSelected
-                        ? (isDark ? Colors.white : AppColors.primary)
+                        ? (isDark ? Colors.white : AppColors.primaryGold)
                         : Colors.grey,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -583,14 +589,14 @@ class VisualPillMatcherScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 24),
           decoration: BoxDecoration(
             color: isSelected
-                ? AppColors.primary.withValues(alpha: 0.1)
+                ? AppColors.primaryGold.withValues(alpha: 0.1)
                 : (isDark
                     ? Colors.white.withValues(alpha: 0.05)
                     : Colors.grey.withValues(alpha: 0.05)),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: isSelected
-                  ? AppColors.primary
+                  ? AppColors.primaryGold
                   : (isDark
                       ? Colors.white.withValues(alpha: 0.1)
                       : Colors.grey[300]!),
@@ -601,15 +607,15 @@ class VisualPillMatcherScreen extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isSelected ? AppColors.primary : Colors.grey,
+                color: isSelected ? AppColors.primaryGold : Colors.grey,
                 size: 28,
               ),
               const SizedBox(height: 8),
               Text(
                 label,
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   color: isSelected
-                      ? (isDark ? Colors.white : AppColors.primary)
+                      ? (isDark ? Colors.white : AppColors.primaryGold)
                       : Colors.grey,
                   fontSize: 12,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,

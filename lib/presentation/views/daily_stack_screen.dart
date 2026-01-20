@@ -176,7 +176,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                         Text(
                                           "${(viewModel.todayProgress * 100).round()}%",
                                           style: const TextStyle(
-                                            color: AppColors.accentGreen,
+                                            color: AppColors.primaryGold,
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -190,7 +190,8 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                           height: 10,
                                           width: double.infinity,
                                           decoration: BoxDecoration(
-                                            color: const Color(0xFF3B5445),
+                                            color: AppColors.primaryGold
+                                                .withValues(alpha: 0.2),
                                             borderRadius:
                                                 BorderRadius.circular(999),
                                           ),
@@ -202,7 +203,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                                   .width *
                                               viewModel.todayProgress,
                                           decoration: BoxDecoration(
-                                            color: AppColors.accentGreen,
+                                            color: AppColors.primaryGold,
                                             borderRadius:
                                                 BorderRadius.circular(999),
                                           ),
@@ -306,9 +307,9 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   icon: const Icon(Icons.insights),
                                   label: const Text('View Insights'),
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: AppColors.accentGreen,
+                                    foregroundColor: AppColors.primaryGold,
                                     side: const BorderSide(
-                                        color: AppColors.accentGreen),
+                                        color: AppColors.primaryGold),
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12),
                                     shape: RoundedRectangleBorder(
@@ -369,7 +370,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
 
   void _showItemOptions(
       BuildContext context, String itemName, String supplementId) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(

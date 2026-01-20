@@ -86,6 +86,26 @@ class FocusBuddiesViewModel extends ChangeNotifier {
         ));
     notifyListeners();
   }
+
+  Future<void> addBuddy(String email) async {
+    // Simulate API call
+    _isLoading = true;
+    notifyListeners();
+    await Future<void>.delayed(const Duration(seconds: 1));
+    _isLoading = false;
+
+    // In a real app, this would update the list of buddies.
+    // For now, we just add a feed item.
+    _feedItems.insert(
+        0,
+        BuddyFeedItem(
+          iconType: FeedIconType.check,
+          text: "Invite sent to $email",
+          timestamp: DateTime.now(),
+        ));
+
+    notifyListeners();
+  }
 }
 
 enum FeedIconType { check, notification, bolt }

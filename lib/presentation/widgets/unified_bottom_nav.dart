@@ -49,7 +49,7 @@ class UnifiedBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primaryColor = AppColors.primaryGold;
+    const primaryColor = AppColors.primaryGold;
     final unselectedColor = isDark ? Colors.grey[500] : Colors.grey[400];
     final backgroundColor =
         (isDark ? const Color(0xFF221D10) : const Color(0xFFF8F8F6))

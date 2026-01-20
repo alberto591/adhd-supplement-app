@@ -693,10 +693,6 @@ class _SuccessStatsScreenState extends State<SuccessStatsScreen> {
       ),
     );
   }
-
-  Widget _buildBottomNav(BuildContext context) {
-    return const UnifiedBottomNav(currentIndex: 2);
-  }
 }
 
 // Custom Chart Painter

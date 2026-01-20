@@ -6,7 +6,7 @@ class MockGamificationRepository implements GamificationRepository {
   @override
   Future<GamificationProfile> getProfile(String userId) async {
     // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
 
     return GamificationProfile(
       userId: userId,
@@ -20,7 +20,7 @@ class MockGamificationRepository implements GamificationRepository {
 
   @override
   Future<List<GamificationBadge>> getBadges(String userId) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return _getMockBadges();
   }
 

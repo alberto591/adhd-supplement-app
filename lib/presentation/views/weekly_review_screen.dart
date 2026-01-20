@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../widgets/weekly_win_card.dart';
 import '../widgets/consistency_tracker.dart';
 import '../widgets/focus_comparison_chart.dart';
@@ -74,7 +75,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                           child: Text(
                             'Weekly Review',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               color: isDark ? Colors.white : Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -148,9 +149,9 @@ class WeeklyReviewScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Weekly Tip',
-                                          style: TextStyle(
+                                          style: GoogleFonts.lexend(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
@@ -159,7 +160,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                                         const SizedBox(height: 4),
                                         Text(
                                           'Taking your supplement with a high-protein breakfast improved your focus score by ${viewModel.focusImprovement.toStringAsFixed(0)}% this week. Try to keep this habit!',
-                                          style: TextStyle(
+                                          style: GoogleFonts.lexend(
                                             color: isDark
                                                 ? Colors.grey[400]
                                                 : Colors.grey[700],
@@ -246,14 +247,15 @@ class WeeklyReviewScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.share, size: 20),
-                              SizedBox(width: 8),
+                              const Icon(Icons.share, size: 20),
+                              const SizedBox(width: 8),
                               Text(
+                                // Removed const due to google_fonts usage check if needed
                                 'Share Progress',
-                                style: TextStyle(
+                                style: GoogleFonts.lexend(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -267,7 +269,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                         onPressed: () => Navigator.pop(context),
                         child: Text(
                           'Dismiss',
-                          style: TextStyle(
+                          style: GoogleFonts.lexend(
                             color: isDark ? Colors.grey[500] : Colors.grey[500],
                             fontSize: 14,
                             fontWeight: FontWeight.w600,

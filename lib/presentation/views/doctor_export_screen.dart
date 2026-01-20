@@ -568,7 +568,8 @@ class _DoctorExportScreenState extends State<DoctorExportScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.insert_chart, size: 28, color: AppColors.primary),
+                  const Icon(Icons.insert_chart,
+                      size: 28, color: AppColors.primary),
                   const SizedBox(width: 8),
                   Text("ADHD REPORT",
                       style: TextStyle(
@@ -577,7 +578,7 @@ class _DoctorExportScreenState extends State<DoctorExportScreen> {
                           color: isDark ? Colors.white : Colors.black)),
                   const Spacer(),
                   Text(DateFormat.yMMMd().format(DateTime.now()),
-                      style: TextStyle(fontSize: 12, color: Colors.grey)),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey)),
                 ],
               ),
               const Divider(),
@@ -619,7 +620,7 @@ class _DoctorExportScreenState extends State<DoctorExportScreen> {
                     ),
                   )),
               if (viewModel.logs.isEmpty)
-                Text("No logs found for this period.",
+                const Text("No logs found for this period.",
                     style:
                         TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
             ],

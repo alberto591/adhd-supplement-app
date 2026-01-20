@@ -5,7 +5,7 @@ class MockReferralRepository implements ReferralRepository {
   @override
   Future<ReferralData> getReferralData() async {
     // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future<void>.delayed(const Duration(milliseconds: 800));
 
     return ReferralData(
       referralCode: 'FOCUS-JANE-99',

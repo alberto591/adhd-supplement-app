@@ -11,7 +11,7 @@ class PillMatcherViewModel extends ChangeNotifier {
   PillShape _selectedShape = PillShape.capsule;
   PillShape get selectedShape => _selectedShape;
 
-  Color _selectedColor = AppColors.primary;
+  Color _selectedColor = AppColors.primaryGold;
   Color get selectedColor => _selectedColor;
 
   PillTexture _selectedTexture = PillTexture.solid;
@@ -22,7 +22,7 @@ class PillMatcherViewModel extends ChangeNotifier {
 
   // Preset colors for UI
   final List<Color> presetColors = [
-    AppColors.primary,
+    AppColors.primaryGold,
     const Color(0xFFFF4B4B),
     const Color(0xFF00D084),
     const Color(0xFFFF9F00),
@@ -75,7 +75,7 @@ class PillMatcherViewModel extends ChangeNotifier {
     notifyListeners();
 
     // SImulate AI Analysis delay
-    await Future.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 2));
 
     // Mock "Analysis Result" - randomizing for demo effect
     // In a real app, this would send image to backend
@@ -84,6 +84,19 @@ class PillMatcherViewModel extends ChangeNotifier {
     _selectedColor = presetColors[random.nextInt(presetColors.length)];
     _selectedTexture =
         PillTexture.values[random.nextInt(PillTexture.values.length)];
+
+    _isAnalyzing = false;
+    notifyListeners();
+  }
+
+  Future<void> savePillAppearance() async {
+    // In a real app, this would persist the data to the backend or local DB
+    // linked to a specific supplement ID.
+    // For now, we simulate a network delay and success.
+    _isAnalyzing = true;
+    notifyListeners();
+
+    await Future<void>.delayed(const Duration(milliseconds: 800));
 
     _isAnalyzing = false;
     notifyListeners();

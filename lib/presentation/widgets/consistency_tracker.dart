@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ConsistencyTracker extends StatelessWidget {
   final Map<String, int>
@@ -22,7 +23,7 @@ class ConsistencyTracker extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
             'Consistency Tracker',
-            style: TextStyle(
+            style: GoogleFonts.lexend(
               color: isDark ? Colors.white : const Color(0xFF0F172A),
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -54,7 +55,7 @@ class ConsistencyTracker extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Grace Days help keep the streak alive when you need a break.',
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: isDark ? Colors.grey[500] : const Color(0xFF94A3B8),
                     fontSize: 12,
                     fontStyle: FontStyle.italic,
@@ -111,7 +112,7 @@ class ConsistencyTracker extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           day,
-          style: TextStyle(
+          style: GoogleFonts.lexend(
             color: isDark ? Colors.grey[400] : const Color(0xFF64748B),
             fontSize: 12,
             fontWeight: FontWeight.w500,

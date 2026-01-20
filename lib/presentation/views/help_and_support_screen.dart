@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 
 class HelpAndSupportScreen extends StatefulWidget {
@@ -11,6 +12,34 @@ class HelpAndSupportScreen extends StatefulWidget {
 
 class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _feedbackController = TextEditingController();
+  String _selectedFeedbackType = 'Report a Bug';
+
+  Future<void> _launchEmail() async {
+    final String subject =
+        Uri.encodeComponent('$_selectedFeedbackType: ADHD App Feedback');
+    final String body = Uri.encodeComponent(_feedbackController.text);
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'support@adhdsupps.com',
+      query: 'subject=$subject&body=$body',
+    );
+
+    if (!await launchUrl(emailLaunchUri)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not launch email client')),
+        );
+      }
+    }
+  }
+
+  Future<void> _launchResource(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      // Fail silently or show error
+    }
+  }
 
   // Dummy FAQ Data
   final List<Map<String, String>> _faqs = [
@@ -44,10 +73,10 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primaryColor = AppColors.primaryBlue;
+    const primaryColor = AppColors.primaryGold;
     final bgColor = isDark
-        ? AppColors.backgroundUtilityDark
-        : AppColors.backgroundUtilityLight;
+        ? AppColors.backgroundPremiumDark
+        : AppColors.backgroundPremiumLight;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -91,7 +120,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                 decoration: InputDecoration(
                   hintText: 'Search for answers...',
                   hintStyle: TextStyle(color: Colors.grey[500]),
-                  prefixIcon: Icon(Icons.search, color: primaryColor),
+                  prefixIcon: const Icon(Icons.search, color: primaryColor),
                   filled: true,
                   fillColor: isDark
                       ? Colors.white.withValues(alpha: 0.05)
@@ -128,14 +157,14 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    _buildResourceCard(
-                        'Quick Start', Icons.rocket_launch, Colors.orange),
+                    _buildResourceCard('Quick Start', Icons.rocket_launch,
+                        Colors.orange, 'https://adhdsupps.com/start'),
                     const SizedBox(width: 12),
-                    _buildResourceCard(
-                        'Safety FAQ', Icons.security, Colors.green),
+                    _buildResourceCard('Safety FAQ', Icons.security,
+                        Colors.green, 'https://adhdsupps.com/safety'),
                     const SizedBox(width: 12),
-                    _buildResourceCard(
-                        'Watch Tutorials', Icons.play_circle, Colors.red),
+                    _buildResourceCard('Watch Tutorials', Icons.play_circle,
+                        Colors.red, 'https://youtube.com/adhdsupps'),
                   ],
                 ),
               ),
@@ -230,18 +259,33 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: _buildFeedbackButton(
-                              'Report a Bug', Icons.bug_report, isDark),
+                          child: InkWell(
+                            onTap: () => setState(
+                                () => _selectedFeedbackType = 'Report a Bug'),
+                            child: _buildFeedbackButton(
+                                'Report a Bug',
+                                Icons.bug_report,
+                                isDark,
+                                _selectedFeedbackType == 'Report a Bug'),
+                          ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: _buildFeedbackButton(
-                              'Suggest Idea', Icons.lightbulb, isDark),
+                          child: InkWell(
+                            onTap: () => setState(
+                                () => _selectedFeedbackType = 'Suggest Idea'),
+                            child: _buildFeedbackButton(
+                                'Suggest Idea',
+                                Icons.lightbulb,
+                                isDark,
+                                _selectedFeedbackType == 'Suggest Idea'),
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
                     TextField(
+                      controller: _feedbackController,
                       maxLines: 3,
                       decoration: InputDecoration(
                         hintText: 'Tell us more...',
@@ -258,7 +302,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _launchEmail,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primaryColor,
                           foregroundColor: Colors.white,
@@ -285,54 +329,61 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     );
   }
 
-  Widget _buildResourceCard(String title, IconData icon, Color color) {
+  Widget _buildResourceCard(
+      String title, IconData icon, Color color, String url) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      width: 140,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isDark
-            ? color.withValues(alpha: 0.1)
-            : color.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withValues(alpha: 0.2)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: GoogleFonts.lexend(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-              color: isDark ? Colors.white : AppColors.textPrimaryLight,
+    return GestureDetector(
+      onTap: () => _launchResource(url),
+      child: Container(
+        width: 140,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isDark
+              ? color.withValues(alpha: 0.1)
+              : color.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withValues(alpha: 0.2)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: color, size: 24),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              style: GoogleFonts.lexend(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: isDark ? Colors.white : AppColors.textPrimaryLight,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildFeedbackButton(String label, IconData icon, bool isDark) {
+  Widget _buildFeedbackButton(
+      String label, IconData icon, bool isDark, bool isSelected) {
+    final color = isSelected ? AppColors.primaryGold : Colors.grey;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
         color: isDark ? Colors.black26 : Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white12),
+        border: Border.all(
+            color: isSelected ? AppColors.primaryGold : Colors.white12),
       ),
       child: Column(
         children: [
-          Icon(icon, size: 20, color: Colors.grey),
+          Icon(icon, size: 20, color: color),
           const SizedBox(height: 4),
           Text(
             label,
             style: GoogleFonts.lexend(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Colors.grey,
+              color: color,
             ),
           ),
         ],

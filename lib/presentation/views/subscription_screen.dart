@@ -24,8 +24,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const primaryGold = Color(0xFFD4A411);
-    const bgDark = Color(0xFF181611);
+    const primaryGold = AppColors.primaryGold;
+    const bgDark = AppColors.backgroundPremiumDark;
 
     return Scaffold(
       backgroundColor: isDark
@@ -180,7 +180,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     child: Column(
                       children: [
                         _buildFeatureCard(
-                          icon: Icons.shield_outlined,
+                          icon: Icons.health_and_safety,
                           title: 'Advanced Safety Interaction Checker',
                           description:
                               'Cross-reference supplements with common medications safely.',
@@ -189,7 +189,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         ),
                         const SizedBox(height: 16),
                         _buildFeatureCard(
-                          icon: Icons.description_outlined,
+                          icon: Icons.assignment,
                           title: 'Detailed Doctor Export Reports',
                           description:
                               'Generate professional PDFs of your stack to share with specialists.',
@@ -250,7 +250,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                               children: [
                                 Text(
                                   _isYearly ? '\$79.99' : '\$9.99',
-                                  style: const TextStyle(
+                                  style: GoogleFonts.lexend(
                                     fontSize: 28,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -258,7 +258,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                 ),
                                 Text(
                                   _isYearly ? ' / year' : ' / month',
-                                  style: TextStyle(
+                                  style: GoogleFonts.lexend(
                                     fontSize: 14,
                                     color: Colors.grey[400],
                                   ),
@@ -267,9 +267,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             ),
                             if (_isYearly) ...[
                               const SizedBox(height: 4),
-                              const Text(
+                              Text(
                                 'Saves \$40 per year compared to monthly',
-                                style: TextStyle(
+                                style: GoogleFonts.lexend(
                                   fontSize: 12,
                                   color: primaryGold,
                                   fontWeight: FontWeight.w500,
@@ -341,7 +341,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            textStyle: const TextStyle(
+                            textStyle: GoogleFonts.lexend(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -354,14 +354,17 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                   width: 24,
                                   child: CircularProgressIndicator(
                                       color: Colors.black, strokeWidth: 2))
-                              : const Text('Start 7-Day Free Trial'),
+                              : Text(
+                                  'Start 7-Day Free Trial',
+                                  style: GoogleFonts.lexend(),
+                                ),
                         ),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'CANCEL ANYTIME • TERMS & PRIVACY APPLY',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: GoogleFonts.lexend(
                           fontSize: 10,
                           color: Colors.grey[600],
                           letterSpacing: 1.5,
@@ -424,7 +427,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: GoogleFonts.lexend(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
@@ -434,7 +437,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     fontSize: 14,
                     color: Colors.grey[400],
                     height: 1.4,
@@ -467,7 +470,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               child: Center(
                 child: Text(
                   label,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: isSelected ? Colors.white : Colors.grey[400],
@@ -492,9 +495,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                     ],
                   ),
-                  child: const Text(
+                  child: Text(
                     'BEST VALUE',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       fontSize: 9,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,

@@ -212,10 +212,9 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                     const SizedBox(width: 16),
                     const Icon(Icons.verified, color: Colors.yellow, size: 16),
                     const SizedBox(width: 4),
-                    Text(
+                    const Text(
                       'High Evidence', // Static for now, could be dynamic
-                      style:
-                          const TextStyle(color: Colors.white70, fontSize: 12),
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
                     ),
                   ],
                 ),

@@ -54,9 +54,10 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
 
   @override
   Widget build(BuildContext context) {
-    const bgDark = Color(0xFF102216);
-    const bgLight = Color(0xFFF5F8F6);
-    const primaryGreen = Color(0xFF0DF259);
+    const bgDark = Color(
+        0xFF161d2b); // Matches handoff card-dark or background-dark #101622
+    const bgLight = Color(0xFFF8F8F6);
+    const primaryGold = AppColors.primaryGold;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Stack(
@@ -95,7 +96,8 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    icon: const Icon(Icons.help_outline, color: primaryGreen),
+                    icon: const Icon(Icons.help_outline,
+                        color: AppColors.primaryGold),
                     onPressed: () {},
                   ),
                 ),
@@ -127,7 +129,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                           const Text(
                             '65%',
                             style: TextStyle(
-                              color: primaryGreen,
+                              color: primaryGold,
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -141,10 +143,10 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                           value: 0.65,
                           minHeight: 8,
                           backgroundColor: isDark
-                              ? const Color(0xFF064E3B).withValues(alpha: 0.3)
+                              ? Colors.white.withValues(alpha: 0.1)
                               : Colors.grey[200], // emerald-900/30
-                          valueColor:
-                              const AlwaysStoppedAnimation<Color>(primaryGreen),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                              AppColors.primaryGold),
                         ),
                       ),
                     ],
@@ -195,7 +197,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                             height: 56,
                             decoration: BoxDecoration(
                               color: isDark
-                                  ? const Color(0xFF064E3B)
+                                  ? const Color(0xFF161d2b)
                                       .withValues(alpha: 0.2)
                                   : Colors.white,
                               borderRadius: BorderRadius.circular(12),
@@ -215,7 +217,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                                       horizontal: 16),
                                   child: Icon(Icons.search,
                                       color: isDark
-                                          ? const Color(0xFF10B981)
+                                          ? AppColors.primaryGold
                                               .withValues(alpha: 0.5)
                                           : Colors.grey[400]),
                                 ),
@@ -227,7 +229,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                                           'Search supplements (e.g. Omega-3)',
                                       hintStyle: TextStyle(
                                         color: isDark
-                                            ? const Color(0xFF047857)
+                                            ? AppColors.primaryGold
                                                 .withValues(alpha: 0.8)
                                             : Colors.grey[400],
                                       ),
@@ -255,7 +257,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                                 'SUGGESTED ADHD PAIRS',
                                 style: TextStyle(
                                   color: isDark
-                                      ? const Color(0xFF10B981)
+                                      ? AppColors.primaryGold
                                           .withValues(alpha: 0.6)
                                       : Colors.grey[500],
                                   fontSize: 12,
@@ -266,7 +268,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                               const Text(
                                 'View All',
                                 style: TextStyle(
-                                  color: primaryGreen,
+                                  color: primaryGold,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -285,8 +287,8 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                                 title: 'L-Theanine + Caffeine',
                                 subtitle: 'For jitters-free focus',
                                 icon: Icons.bolt,
-                                iconColor: primaryGreen,
-                                iconBg: primaryGreen.withValues(alpha: 0.1),
+                                iconColor: primaryGold,
+                                iconBg: primaryGold.withValues(alpha: 0.1),
                               ),
                               const SizedBox(width: 16),
                               _buildSuggestionCard(
@@ -310,8 +312,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                             'CURRENT ROUTINE',
                             style: TextStyle(
                               color: isDark
-                                  ? const Color(0xFF10B981)
-                                      .withValues(alpha: 0.6)
+                                  ? AppColors.primaryGold.withValues(alpha: 0.6)
                                   : Colors.grey[500],
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -332,7 +333,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                               ? Colors.amber.withValues(alpha: 0.2)
                               : Colors.amber.withValues(alpha: 0.1),
                           isDark: isDark,
-                          primaryGreen: primaryGreen,
+                          primaryColor: primaryGold,
                           children: [
                             Wrap(
                               spacing: 8,
@@ -340,7 +341,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                               children: [
                                 _buildSupplementTag('Vyvanse (30mg)', isDark),
                                 _buildSupplementTag('Vitamin D3', isDark),
-                                _buildAddTag(isDark, primaryGreen),
+                                _buildAddTag(isDark, primaryGold),
                               ],
                             ),
                           ],
@@ -359,7 +360,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                               ? Colors.indigo.withValues(alpha: 0.2)
                               : Colors.indigo.withValues(alpha: 0.1),
                           isDark: isDark,
-                          primaryGreen: primaryGreen,
+                          primaryColor: primaryGold,
                           children: [],
                         ),
                       ],
@@ -370,7 +371,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
             ),
           ),
           bottomSheet:
-              _buildBottomSheet(context, isDark, primaryGreen, bgDark, bgLight),
+              _buildBottomSheet(context, isDark, primaryGold, bgDark, bgLight),
         ),
         if (_walkthroughStep > 0) _buildWalkthroughOverlay(),
       ],
@@ -495,7 +496,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
   }
 
   Widget _buildBottomSheet(BuildContext context, bool isDark,
-      Color primaryGreen, Color bgDark, Color bgLight) {
+      Color primaryColor, Color bgDark, Color bgLight) {
     return Container(
       color: isDark
           ? bgDark.withValues(alpha: 0.95)
@@ -511,7 +512,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                 final hasInteractions =
                     safetyViewModel.currentInteractions.isNotEmpty;
                 final bannerColor =
-                    hasInteractions ? Colors.amber : primaryGreen;
+                    hasInteractions ? Colors.amber : primaryColor;
 
                 return Container(
                   margin: const EdgeInsets.only(bottom: 16),
@@ -635,12 +636,12 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark
-            ? const Color(0xFF064E3B).withValues(alpha: 0.1)
+            ? const Color(0xFF161d2b).withValues(alpha: 0.5)
             : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
             color: isDark
-                ? const Color(0xFF064E3B).withValues(alpha: 0.3)
+                ? Colors.white.withValues(alpha: 0.1)
                 : Colors.grey[100]!),
       ),
       child: Column(
@@ -658,7 +659,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0DF259), // Primary green
+                  color: AppColors.primaryGold,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
@@ -703,7 +704,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
     required Color iconColor,
     required Color iconBg,
     required bool isDark,
-    required Color primaryGreen,
+    required Color primaryColor,
     required List<Widget> children,
   }) {
     return Container(
@@ -711,14 +712,14 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark
-            ? const Color(0xFF064E3B).withValues(alpha: 0.2)
+            ? const Color(0xFF161d2b).withValues(alpha: 0.5) // Updated dark bg
             : Colors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: title == 'Morning Stack'
-              ? primaryGreen.withValues(alpha: 0.4)
+              ? primaryColor.withValues(alpha: 0.4)
               : (isDark
-                  ? const Color(0xFF064E3B).withValues(alpha: 0.3)
+                  ? Colors.white.withValues(alpha: 0.1)
                   : Colors.grey[100]!),
           width: title == 'Morning Stack' ? 2 : 1,
         ),
@@ -779,14 +780,11 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: isDark
-            ? const Color(0xFF064E3B).withValues(alpha: 0.4)
-            : Colors.grey[100],
+        color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[100],
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isDark
-              ? const Color(0xFF047857).withValues(alpha: 0.3)
-              : Colors.grey[200]!,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!,
         ),
       ),
       child: Row(
@@ -808,33 +806,27 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
     );
   }
 
-  Widget _buildAddTag(bool isDark, Color primaryGreen) {
+  Widget _buildAddTag(bool isDark, Color primaryColor) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isDark
-              ? const Color(0xFF047857).withValues(alpha: 0.8)
-              : Colors.grey[300]!,
-          style: BorderStyle
-              .none, // Dashed border not simple in standard Container, simplified for now
+          color: primaryColor.withValues(alpha: 0.6),
+          style: BorderStyle.none,
         ),
+        // Use a simple workaround for dashed effect or just colored text
       ),
-      // Use CustomPaint for dashed border if strictly needed, but outlined button with DottedBorder is common.
-      // Using simple row for speed, mirroring 'Tap to add' style
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.add,
-              size: 14,
-              color: isDark ? const Color(0xFF047857) : Colors.grey[400]),
+          Icon(Icons.add, size: 14, color: primaryColor),
           const SizedBox(width: 4),
           Text(
             'Tap to add',
             style: TextStyle(
-              color: isDark ? const Color(0xFF047857) : Colors.grey[400],
+              color: primaryColor,
               fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
