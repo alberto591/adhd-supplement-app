@@ -8,6 +8,7 @@ class WeeklyReviewViewModel extends ChangeNotifier {
   final String _userId;
 
   bool _isLoading = false;
+  // ignore: unused_field
   List<DailyLog> _weeklyLogs = [];
   Map<String, int> _consistencyMap =
       {}; // "Mon" -> 1 (Complete), 0 (Missed), 2 (Grace)
@@ -37,7 +38,7 @@ class WeeklyReviewViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final now = DateTime.now();
+      // final now = DateTime.now(); // Unused
       // Get last 7 days
       _weeklyLogs = await _logRepository.getRecentLogs(_userId, 7);
 

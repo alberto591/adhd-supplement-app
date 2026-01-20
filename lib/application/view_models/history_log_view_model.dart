@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../../domain/repositories/log_repository.dart';
 import '../../domain/repositories/stack_repository.dart';
 import '../../domain/entities/daily_log.dart';
-import '../../domain/entities/supplement_stack.dart';
+// import '../../domain/entities/supplement_stack.dart';
 import '../../config/locator.dart';
 
 class HistoryLogViewModel extends ChangeNotifier {

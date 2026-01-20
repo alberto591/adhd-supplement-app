@@ -4,6 +4,7 @@ import '../navigation/app_router.dart';
 import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../application/view_models/persistent_reminders_view_model.dart';
+import '../widgets/unified_bottom_nav.dart';
 
 import 'package:intl/intl.dart';
 import '../../domain/entities/user.dart';
@@ -21,11 +22,7 @@ class UserProfileScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new,
-              color: isDark ? Colors.white : const Color(0xFF111418), size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
+        automaticallyImplyLeading: false,
         title: Text(
           'Settings',
           style: TextStyle(
@@ -322,6 +319,7 @@ class UserProfileScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: const UnifiedBottomNav(currentIndex: 4),
     );
   }
 }

@@ -4,7 +4,7 @@ import '../theme/app_theme.dart';
 import '../widgets/up_next_card.dart';
 import '../widgets/daily_stack_item.dart';
 import '../widgets/symptom_quick_log.dart';
-import '../widgets/custom_fab_bottom_nav.dart';
+import '../widgets/unified_bottom_nav.dart';
 import '../widgets/symptom_check_in_modal.dart';
 import '../navigation/app_router.dart';
 import '../view_models/daily_stack_view_model.dart';
@@ -327,36 +327,18 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                     ],
                   ),
 
-                  // Bottom Nav
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: CustomFabBottomNav(
-                      selectedIndex: 0,
-                      onTap: (index) {
-                        if (index == 0)
-                          return; // Already on Daily Stack (Today)
-                        switch (index) {
-                          case 1:
-                            Navigator.pushNamed(context, AppRouter.historyLog);
-                            break;
-                          case 2:
-                            Navigator.pushNamed(context, AppRouter.insights);
-                            break;
-                          case 3:
-                            Navigator.pushNamed(context, AppRouter.profile);
-                            break;
-                        }
-                      },
-                      onFabTap: _showCheckInModal,
-                    ),
-                  ),
+                  // Bottom Nav is handled by Scaffold bottomNavigationBar property
                 ],
               );
             },
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _showCheckInModal,
+          backgroundColor: AppColors.primaryGold,
+          child: const Icon(Icons.check, color: AppColors.backgroundDark),
+        ),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 1),
       ),
     );
   }

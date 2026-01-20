@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import '../widgets/unified_bottom_nav.dart';
 
 class SuccessStatsScreen extends StatefulWidget {
   const SuccessStatsScreen({super.key});
@@ -316,7 +317,7 @@ class _SuccessStatsScreenState extends State<SuccessStatsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNav(context, primaryGold, isDark),
+      bottomNavigationBar: const UnifiedBottomNav(currentIndex: 2),
     );
   }
 
@@ -693,67 +694,8 @@ class _SuccessStatsScreenState extends State<SuccessStatsScreen> {
     );
   }
 
-  Widget _buildBottomNav(BuildContext context, Color primaryGold, bool isDark) {
-    return Container(
-      decoration: BoxDecoration(
-        color: (isDark ? const Color(0xFF221D10) : const Color(0xFFF8F8F6))
-            .withValues(alpha: 0.8),
-        border: Border(
-          top: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.1)
-                : Colors.black.withValues(alpha: 0.05),
-          ),
-        ),
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.home, 'HOME', false, primaryGold, () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, AppRouter.dashboard, (route) => false);
-              }),
-              _buildNavItem(
-                  Icons.medication, 'PLAN', false, primaryGold, () {}),
-              _buildNavItem(Icons.bar_chart, 'STATS', true, primaryGold, () {}),
-              _buildNavItem(Icons.person, 'PROFILE', false, primaryGold, () {
-                Navigator.pushNamed(context, AppRouter.profile);
-              }),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive,
-      Color primaryGold, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isActive ? primaryGold : Colors.grey[600],
-            size: 24,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: GoogleFonts.lexend(
-              fontSize: 9,
-              fontWeight: FontWeight.bold,
-              color: isActive ? primaryGold : Colors.grey[600],
-              letterSpacing: 1,
-            ),
-          ),
-        ],
-      ),
-    );
+  Widget _buildBottomNav(BuildContext context) {
+    return const UnifiedBottomNav(currentIndex: 2);
   }
 }
 

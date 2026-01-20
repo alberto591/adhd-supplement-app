@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import '../widgets/unified_bottom_nav.dart';
 import '../view_models/library_view_model.dart';
 import '../../config/locator.dart';
 import '../../domain/entities/supplement.dart';
@@ -328,40 +329,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             },
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1C2633) : Colors.white,
-            border: Border(
-                top: BorderSide(
-                    color: isDark
-                        ? const Color(0xFF334155)
-                        : const Color(0xFFE2E8F0))),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: SafeArea(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildBottomNavItem(context, Icons.home, 'Routine', false, () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, AppRouter.dashboard, (route) => false);
-                }),
-                _buildBottomNavItem(context, Icons.explore, 'Discover', true,
-                    () {
-                  Navigator.pushNamed(context, AppRouter.scienceHub);
-                }),
-                _buildBottomNavItem(context, Icons.analytics, 'Stats', false,
-                    () {
-                  Navigator.pushNamed(context, AppRouter.insights);
-                }),
-                _buildBottomNavItem(context, Icons.settings, 'Settings', false,
-                    () {
-                  Navigator.pushNamed(context, AppRouter.profile);
-                }),
-              ],
-            ),
-          ),
-        ),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 3),
       ),
     );
   }
@@ -962,38 +930,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
           }).toList(),
         ),
       ],
-    );
-  }
-
-  Widget _buildBottomNavItem(
-    BuildContext context,
-    IconData icon,
-    String label,
-    bool isSelected,
-    VoidCallback onTap,
-  ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final color = isSelected
-        ? AppColors.primaryGold
-        : (isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8));
-
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: GoogleFonts.lexend(
-              color: color,
-              fontSize: 10,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

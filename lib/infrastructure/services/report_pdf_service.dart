@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
-import 'package:printing/printing.dart';
+// import 'package:printing/printing.dart';
 import '../../domain/entities/daily_log.dart';
 
 class ReportPdfService {

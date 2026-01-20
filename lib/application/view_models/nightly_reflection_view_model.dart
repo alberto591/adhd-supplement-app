@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/repositories/log_repository.dart';
-import 'package:uuid/uuid.dart';
+// import 'package:uuid/uuid.dart';
 
 class NightlyReflectionViewModel extends ChangeNotifier {
   final LogRepository _logRepository;

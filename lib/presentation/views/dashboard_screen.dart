@@ -9,6 +9,7 @@ import '../widgets/daily_progress_card.dart';
 import '../navigation/app_router.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../domain/entities/supplement.dart';
+import '../widgets/unified_bottom_nav.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -19,7 +20,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late DailyStackViewModel _viewModel;
-  int _selectedIndex = 0; // 0: Today, 1: Trends, 2: Meds
+  // int _selectedIndex = 0; // Removed, handled by UnifiedBottomNav
 
   @override
   void initState() {
@@ -146,36 +147,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             },
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: (index) {
-            setState(() => _selectedIndex = index);
-            if (index == 1) {
-              Navigator.pushNamed(context, AppRouter.insights);
-            } else if (index == 2) {
-              Navigator.pushNamed(context, AppRouter.library);
-            }
-          },
-          backgroundColor: isDark ? const Color(0xFF101822) : Colors.white,
-          selectedItemColor: const Color(0xFF3B82F6),
-          unselectedItemColor: Colors.grey,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view),
-              label: 'Today',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.show_chart),
-              label: 'Trends',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.medical_services_outlined),
-              label: 'Meds',
-            ),
-          ],
-        ),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 0),
       ),
     );
   }
