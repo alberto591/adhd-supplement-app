@@ -17,9 +17,6 @@ class PrivacySettingsScreen extends StatefulWidget {
 }
 
 class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
-  bool _localStorageOnly = true;
-  bool _biometricLock = false;
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -65,7 +62,6 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
         return SingleChildScrollView(
           child: Column(
             children: [
-              // Your Health Data Section
               _buildSectionHeader('Your Health Data', isDark),
               _buildSettingsContainer(
                 context,
@@ -75,10 +71,25 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                     title: 'Local Storage Only',
                     subtitle:
                         'Keep all supplement logs on this device. Disables cloud sync to our servers.',
-                    value: _localStorageOnly,
+                    value: viewModel.localStorageOnly,
                     showInfoIcon: true,
-                    onChanged: (val) => setState(() => _localStorageOnly = val),
+                    onChanged: (val) => viewModel.setLocalStorageOnly(val),
                     isFirst: true,
+                  ),
+                  _buildToggleTile(
+                    context,
+                    title: 'Share Analytics',
+                    subtitle:
+                        'Help us improve by sharing anonymous usage stats.',
+                    value: viewModel.analyticsEnabled,
+                    onChanged: (val) => viewModel.setAnalyticsEnabled(val),
+                  ),
+                  _buildToggleTile(
+                    context,
+                    title: 'Crash Reporting',
+                    subtitle: 'Send automatic reports when the app crashes.',
+                    value: viewModel.crashReportingEnabled,
+                    onChanged: (val) => viewModel.setCrashReportingEnabled(val),
                   ),
                   _buildActionTile(
                     context,
@@ -93,6 +104,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Data export generated (Simulation)')));
                     },
+                    isLast: true,
                   ),
                 ],
               ),
@@ -106,8 +118,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                     context,
                     title: 'Biometric Lock',
                     subtitle: 'Require FaceID or TouchID',
-                    value: _biometricLock,
-                    onChanged: (val) => setState(() => _biometricLock = val),
+                    value: viewModel.biometricLockEnabled,
+                    onChanged: (val) => viewModel.setBiometricLockEnabled(val),
                     icon: Icons.fingerprint,
                     iconColor: primaryBlue,
                     isFirst: true,
@@ -377,6 +389,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
     required String title,
     required String subtitle,
     required VoidCallback onTap,
+    bool isLast = false,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -384,6 +397,17 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          border: !isLast
+              ? Border(
+                  bottom: BorderSide(
+                    color: isDark
+                        ? const Color(0xFF2D3648)
+                        : const Color(0xFFF0F2F4),
+                  ),
+                )
+              : null,
+        ),
         child: Row(
           children: [
             Container(

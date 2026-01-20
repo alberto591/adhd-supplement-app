@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../application/providers/auth_provider.dart';
+import '../../application/view_models/history_log_view_model.dart';
+import '../../domain/entities/daily_log.dart';
 import '../navigation/app_router.dart';
+import '../../presentation/theme/app_theme.dart';
 
 class HistoryLogScreen extends StatefulWidget {
   const HistoryLogScreen({super.key});
+
+  static Widget withProvider() {
+    return Consumer<AuthProvider>(
+      builder: (context, auth, _) => ChangeNotifierProvider(
+        create: (_) =>
+            HistoryLogViewModel.withParams(auth.user?.id ?? '')..fetchHistory(),
+        child: const HistoryLogScreen(),
+      ),
+    );
+  }
 
   @override
   State<HistoryLogScreen> createState() => _HistoryLogScreenState();
@@ -49,26 +64,30 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
             padding: const EdgeInsets.only(right: 16),
             child: TextButton(
               onPressed: () {
+                final viewModel =
+                    Provider.of<HistoryLogViewModel>(context, listen: false);
                 // Show confirmation dialog before resolving all
                 showDialog<void>(
                   context: context,
-                  builder: (context) => AlertDialog(
+                  builder: (ctx) => AlertDialog(
                     title: const Text('Resolve All?'),
                     content: const Text(
-                      'This will mark all missed reminders as acknowledged.  You can still view them in your history.',
+                      'This will mark all missed reminders as acknowledged. You can still view them in your history.',
                     ),
                     actions: [
                       TextButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => Navigator.pop(ctx),
                         child: const Text('Cancel'),
                       ),
                       TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
+                        onPressed: () async {
+                          Navigator.pop(ctx);
+                          await viewModel.resolveAllMissed();
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('All items resolved'),
-                              backgroundColor: primaryGreen,
+                              backgroundColor: AppColors.primaryGold,
                             ),
                           );
                         },
@@ -79,8 +98,8 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                 );
               },
               style: TextButton.styleFrom(
-                backgroundColor: primaryGreen.withValues(alpha: 0.2),
-                foregroundColor: primaryGreen,
+                backgroundColor: AppColors.primaryGold.withValues(alpha: 0.2),
+                foregroundColor: AppColors.primaryGold,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 shape: RoundedRectangleBorder(
@@ -125,161 +144,127 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
       ),
       body: Stack(
         children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8),
-                const Text(
-                  'Earlier Today',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
+          Consumer<HistoryLogViewModel>(
+            builder: (context, viewModel, child) {
+              if (viewModel.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-                // Timeline
-                _buildTimelineItem(
-                  status: _LogStatus.taken,
-                  title: 'Morning Vitamin Stack',
-                  time: '08:00 AM',
-                  primaryGreen: primaryGreen,
-                  isDark: isDark,
-                  isFirst: true,
-                ),
-                _buildTimelineItem(
-                  status: _LogStatus.missed,
-                  title: 'Focus Booster',
-                  time: '10:30 AM',
-                  primaryGreen: primaryGreen,
-                  isDark: isDark,
-                  actionButton: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryGreen,
-                      foregroundColor: bgDark,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 0),
-                      minimumSize: const Size(0, 28),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14)),
-                      elevation: 0,
+              if (viewModel.recentLogs.isEmpty && viewModel.error == null) {
+                return Center(
+                  child: Text(
+                    'No history yet',
+                    style: TextStyle(
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      fontSize: 16,
                     ),
-                    child: const Text('Log Now',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 12)),
                   ),
-                ),
-                _buildTimelineItem(
-                  status: _LogStatus.active,
-                  title: 'Hydration Reminder',
-                  time: '12:00 PM',
-                  primaryGreen: primaryGreen,
-                  isDark: isDark,
-                  isLastGroup: true,
-                ),
+                );
+              }
 
-                const SizedBox(height: 24),
-                Divider(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.1)
-                        : Colors.grey[200]),
-                const SizedBox(height: 16),
+              // Group logs by day (Today, Yesterday, etc.)
+              final today = DateTime.now();
+              final yesterday = today.subtract(const Duration(days: 1));
 
-                const Text(
-                  'Yesterday',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                _buildTimelineItem(
-                  status: _LogStatus.taken,
-                  title: 'Evening Wind-Down',
-                  time: '09:00 PM',
-                  primaryGreen: primaryGreen,
-                  isDark: isDark,
-                  isFirst: true,
-                ),
-                _buildTimelineItem(
-                  status: _LogStatus.dismissed,
-                  title: 'Brain Fog Rescue',
-                  time: '03:45 PM',
-                  primaryGreen: primaryGreen,
-                  isDark: isDark,
-                  isLastGroup: true,
-                  isFaded: true,
-                ),
-
-                const SizedBox(height: 32),
-
-                // Summary Card
-                Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: primaryGreen.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(24),
-                    border:
-                        Border.all(color: primaryGreen.withValues(alpha: 0.2)),
-                  ),
-                  child: Column(
-                    children: [
-                      const Row(
-                        children: [
-                          Icon(Icons.auto_awesome, color: primaryGreen),
-                          SizedBox(width: 12),
-                          Text(
-                            'Daily Summary',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        'You completed 4 out of 6 reminders yesterday. Consistency is key for ADHD management!',
-                        style: TextStyle(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.8)
-                              : Colors.black87,
-                          fontSize: 14,
-                          height: 1.5,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: 0.66,
-                          minHeight: 8,
-                          backgroundColor: isDark
-                              ? Colors.white.withValues(alpha: 0.1)
-                              : Colors.grey[300],
-                          valueColor:
-                              const AlwaysStoppedAnimation<Color>(primaryGreen),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Align(
-                        alignment: Alignment.centerRight,
+              return SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (viewModel.error != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
                         child: Text(
-                          '66% Completion',
-                          style: TextStyle(
-                            color: primaryGreen,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                          viewModel.error!,
+                          style: const TextStyle(color: Colors.red),
                         ),
                       ),
-                    ],
-                  ),
+                    ...viewModel.recentLogs.map((log) {
+                      final isToday = log.date.year == today.year &&
+                          log.date.month == today.month &&
+                          log.date.day == today.day;
+                      final isYesterday = log.date.year == yesterday.year &&
+                          log.date.month == yesterday.month &&
+                          log.date.day == yesterday.day;
+
+                      String header = isToday
+                          ? 'Today'
+                          : (isYesterday
+                              ? 'Yesterday'
+                              : '${log.date.month}/${log.date.day}');
+
+                      if (log.entries.isEmpty) return const SizedBox.shrink();
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          Text(
+                            header,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          ...log.entries.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final item = entry.value;
+                            final isLast = index == log.entries.length - 1;
+
+                            // Map LogStatus to internal _LogStatus enum if needed,
+                            // or verify they match. _LogStatus is local to this file.
+                            _LogStatus status;
+                            switch (item.status) {
+                              case LogStatus.taken:
+                                status = _LogStatus.taken;
+                                break;
+                              case LogStatus.skipped:
+                                status =
+                                    _LogStatus.missed; // or dismissed/skipped
+                                break;
+                              case LogStatus.late:
+                                status = _LogStatus
+                                    .taken; // Treated as taken but late
+                                break;
+                              default:
+                                status = _LogStatus.missed;
+                            }
+
+                            // If status is 'late', we can append to title or handling
+                            String title =
+                                'Supplement Log'; // Ideally fetched from Supplement ID
+                            // Since LogEntry only has ID, we might need a way to look up name
+                            // For now, we'll display the ID or generic text until we fetch Supplement details
+                            // Optimization: ViewModel should probably join this data or we just show simplified view
+                            title = 'Supplement Check-in';
+
+                            return _buildTimelineItem(
+                              status: status,
+                              title:
+                                  title, // Placeholder: Needs Supplement Name lookup
+                              time:
+                                  '${item.takenAt.hour}:${item.takenAt.minute.toString().padLeft(2, '0')}',
+                              primaryGreen: primaryGreen,
+                              isDark: isDark,
+                              isFirst: index == 0,
+                              isLastGroup: isLast,
+                              // Add action button logic if needed for 'missed' items
+                            );
+                          }),
+                          const SizedBox(height: 24),
+                          Divider(
+                              color: isDark
+                                  ? Colors.white.withValues(alpha: 0.1)
+                                  : Colors.grey[200]),
+                          const SizedBox(height: 16),
+                        ],
+                      );
+                    }),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
 
           // Custom Floating Bottom Bar

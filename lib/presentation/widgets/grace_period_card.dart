@@ -48,7 +48,7 @@ class GracePeriodCard extends StatelessWidget {
               Row(
                 children: [
                   const Icon(Icons.favorite,
-                      color: AppColors.streakBlue, size: 24),
+                      color: AppColors.primaryBlue, size: 24),
                   const SizedBox(width: 4),
                   Icon(Icons.favorite,
                       color: isDark ? Colors.grey[700] : Colors.grey[300],
@@ -73,7 +73,7 @@ class GracePeriodCard extends StatelessWidget {
               widthFactor: 0.5,
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.streakBlue,
+                  color: AppColors.primaryBlue,
                   borderRadius: BorderRadius.circular(999),
                 ),
               ),
@@ -88,8 +88,8 @@ class GracePeriodCard extends StatelessWidget {
             child: TextButton(
               onPressed: () {},
               style: TextButton.styleFrom(
-                backgroundColor: AppColors.streakBlue.withValues(alpha: 0.1),
-                foregroundColor: AppColors.streakBlue,
+                backgroundColor: AppColors.primaryBlue.withValues(alpha: 0.1),
+                foregroundColor: AppColors.primaryBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

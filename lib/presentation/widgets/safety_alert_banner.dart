@@ -24,7 +24,7 @@ class SafetyAlertBanner extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: AppColors.cardDark,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: severityColor.withValues(alpha: 0.2)),
         boxShadow: [
@@ -68,7 +68,7 @@ class SafetyAlertBanner extends StatelessWidget {
                     Text(
                       interaction!.description,
                       style: const TextStyle(
-                        color: AppColors.textSecondaryBlue,
+                        color: AppColors.textSecondaryDark,
                         fontSize: 14,
                         height: 1.4,
                       ),
@@ -79,13 +79,13 @@ class SafetyAlertBanner extends StatelessWidget {
                         if (onLearnMore != null)
                           _buildActionButton(
                               'Learn More',
-                              AppColors.surfaceHighlight,
+                              AppColors.secondary.withValues(alpha: 0.2),
                               Colors.white,
                               onLearnMore!),
                         const SizedBox(width: 12),
                         if (onDismiss != null)
                           _buildActionButton('Dismiss', Colors.transparent,
-                              AppColors.textSecondaryBlue, onDismiss!),
+                              AppColors.textSecondaryDark, onDismiss!),
                       ],
                     ),
                   ],

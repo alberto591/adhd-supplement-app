@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/particles_background.dart';
 
@@ -42,6 +43,7 @@ class _MilestoneSuccessScreenState extends State<MilestoneSuccessScreen>
     super.dispose();
   }
 
+  // ignore: unused_element
   void _shareMilestone() {
     Share.share(
       'I just hit a ${widget.days}-day streak on FocusStack! 🚀 Optimizing my ADHD routine one day at a time.',
@@ -54,75 +56,133 @@ class _MilestoneSuccessScreenState extends State<MilestoneSuccessScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       body: Stack(
         children: [
-          // Background Particles (Confetti-like)
+          // Background Glow/Particles
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: const Alignment(0, -0.3),
+                  radius: 1.2,
+                  colors: [
+                    AppColors.primaryGold.withValues(alpha: 0.15),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+            ),
+          ),
           const Positioned.fill(
             child: ParticlesBackground(
-              color: AppColors.primary,
-              particleCount: 50,
+              color: AppColors.primaryGold,
+              particleCount: 40,
             ),
           ),
 
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(),
-
-                  // Badge Animation
+                  // Bottle Illustration Card
                   ScaleTransition(
                     scale: _scaleAnimation,
                     child: Container(
-                      width: 200,
-                      height: 200,
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            AppColors.primary,
-                            AppColors.primary.withValues(alpha: 0.7),
-                          ],
-                        ),
+                        color: isDark ? AppColors.cardDark : Colors.white,
+                        borderRadius: BorderRadius.circular(32),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.5),
-                            blurRadius: 30,
-                            spreadRadius: 5,
+                            color: AppColors.primaryGold.withValues(alpha: 0.3),
+                            blurRadius: 40,
+                            offset: const Offset(0, 20),
                           ),
                         ],
+                        border: Border.all(
+                          color: AppColors.primaryGold.withValues(alpha: 0.2),
+                        ),
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.emoji_events,
-                            size: 64,
-                            color: Colors.white,
+                          const SizedBox(height: 40),
+                          // The "Shelf" and "Bottle"
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              // Glow behind bottle
+                              Container(
+                                width: 140,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.primaryGold
+                                          .withValues(alpha: 0.4),
+                                      blurRadius: 100,
+                                      spreadRadius: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Bottle Illustration (Placeholder for actual image/SVG)
+                              Container(
+                                width: 100,
+                                height: 160,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryGold
+                                      .withValues(alpha: 0.9),
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 15,
+                                      offset: Offset(0, 10),
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Icon(Icons.bolt,
+                                      color: Colors.white, size: 48),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '${widget.days} DAYS',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              height: 1.0,
+                          const SizedBox(height: 32),
+                          // Achievement Badge
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: AppColors.primaryGold
+                                      .withValues(alpha: 0.3)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.star,
+                                    color: AppColors.primaryGold, size: 16),
+                                const SizedBox(width: 8),
+                                Text(
+                                  '7 DAY STREAK',
+                                  style: GoogleFonts.lexend(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primaryGold,
+                                    fontSize: 12,
+                                    letterSpacing: 1.0,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const Text(
-                            'STREAK',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
+                          const SizedBox(height: 40),
                         ],
                       ),
                     ),
@@ -130,67 +190,70 @@ class _MilestoneSuccessScreenState extends State<MilestoneSuccessScreen>
 
                   const SizedBox(height: 48),
 
-                  // Title
+                  // Congratulations Text
                   Text(
-                    'Milestone Unlocked!',
+                    'Your First Stack is Ready!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 32,
+                    style: GoogleFonts.lexend(
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black87,
+                      color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                      height: 1.2,
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // Description
                   Text(
-                    'You\'ve stuck to your routine for ${widget.days} days straight. Your consistency is rewiring your brain for success.',
+                    'You\'ve successfully built your first focus protocol. Consistency is the secret to neuro-optimization.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       fontSize: 16,
-                      height: 1.5,
                       color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      height: 1.5,
                     ),
                   ),
 
                   const Spacer(),
 
-                  // Actions
+                  // Action Buttons
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: _shareMilestone,
-                      icon: const Icon(Icons.share),
-                      label: const Text('Share Achievement'),
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Logic to navigate to nudge setup
+                        Navigator.pushNamed(context, '/pill-matcher');
+                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isDark
-                            ? Colors.white.withValues(alpha: 0.1)
-                            : Colors.grey[200],
-                        foregroundColor: isDark ? Colors.white : Colors.black87,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        elevation: 0,
+                        backgroundColor: AppColors.primaryGold,
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        elevation: 8,
+                        shadowColor:
+                            AppColors.primaryGold.withValues(alpha: 0.4),
+                      ),
+                      child: Text(
+                        'Schedule My First Nudge',
+                        style: GoogleFonts.lexend(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        elevation: 4,
-                        shadowColor: AppColors.primary.withValues(alpha: 0.4),
-                      ),
-                      child: const Text(
-                        'Continue',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Not now, show my dashboard',
+                      style: GoogleFonts.lexend(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

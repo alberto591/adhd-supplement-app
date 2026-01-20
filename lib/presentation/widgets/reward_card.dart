@@ -34,12 +34,13 @@ class RewardCard extends StatelessWidget {
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,
                     colors: [
-                      AppColors.royalPurple,
+                      AppColors.primaryBlue,
                       Color(0xFFC084FC), // purple-400
                     ],
                   ),
                 ),
-                child: const Icon(Icons.card_giftcard, color: Colors.white, size: 24),
+                child: const Icon(Icons.card_giftcard,
+                    color: Colors.white, size: 24),
               ),
               const SizedBox(width: 16),
               Column(
@@ -66,7 +67,7 @@ class RewardCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          
+
           // Inner Item
           Container(
             padding: const EdgeInsets.all(12),
@@ -84,7 +85,8 @@ class RewardCard extends StatelessWidget {
                     color: AppColors.primaryGold.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.pentagon, color: AppColors.primaryGold),
+                  child:
+                      const Icon(Icons.pentagon, color: AppColors.primaryGold),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -113,9 +115,9 @@ class RewardCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // XP Text
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class ConsistencyTracker extends StatelessWidget {
-  const ConsistencyTracker({super.key});
+  final Map<String, int>
+      consistencyMap; // Day -> Status (0:Missed, 1:Complete, 2:Grace)
+
+  const ConsistencyTracker({
+    super.key,
+    required this.consistencyMap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,21 +33,16 @@ class ConsistencyTracker extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
-            children: [
-              _buildDayItem(context, 'Mon', true, false),
-              const SizedBox(width: 12),
-              _buildDayItem(context, 'Tue', true, false),
-              const SizedBox(width: 12),
-              _buildDayItem(context, 'Wed', false, true), // Grace day
-              const SizedBox(width: 12),
-              _buildDayItem(context, 'Thu', true, false),
-              const SizedBox(width: 12),
-              _buildDayItem(context, 'Fri', true, false),
-              const SizedBox(width: 12),
-              _buildDayItem(context, 'Sat', true, false),
-              const SizedBox(width: 12),
-              _buildDayItem(context, 'Sun', false, true), // Grace day example
-            ],
+            children: days.map((day) {
+              final status = consistencyMap[day] ?? 0;
+              final isComplete = status == 1;
+              final isGrace = status == 2;
+
+              return Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: _buildDayItem(context, day, isComplete, isGrace),
+              );
+            }).toList(),
           ),
         ),
         Padding(
@@ -66,9 +68,10 @@ class ConsistencyTracker extends StatelessWidget {
     );
   }
 
-  Widget _buildDayItem(BuildContext context, String day, bool isComplete, bool isGraceDay) {
+  Widget _buildDayItem(
+      BuildContext context, String day, bool isComplete, bool isGraceDay) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     // Determine visuals based on state
     Color bgColor;
     Color borderColor;
@@ -81,10 +84,10 @@ class ConsistencyTracker extends StatelessWidget {
       iconColor = AppColors.primary;
       icon = Icons.favorite;
     } else if (isComplete) {
-       bgColor = AppColors.accentGreen.withValues(alpha: 0.1);
-       borderColor = AppColors.accentGreen.withValues(alpha: 0.3);
-       iconColor = AppColors.accentGreen;
-       icon = Icons.check_circle;
+      bgColor = AppColors.accentGreen.withValues(alpha: 0.1);
+      borderColor = AppColors.accentGreen.withValues(alpha: 0.3);
+      iconColor = AppColors.accentGreen;
+      icon = Icons.check_circle;
     } else {
       // Incomplete state fallback (not used in mock but good to have)
       bgColor = isDark ? Colors.grey[800]! : Colors.grey[100]!;

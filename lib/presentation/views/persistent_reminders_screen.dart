@@ -5,8 +5,17 @@ import '../../application/view_models/persistent_reminders_view_model.dart';
 import '../theme/app_theme.dart';
 import '../widgets/nudge_timeline_widget.dart';
 
+import '../../config/locator.dart';
+
 class PersistentRemindersScreen extends StatelessWidget {
   const PersistentRemindersScreen({super.key});
+
+  static Widget withProvider() {
+    return ChangeNotifierProvider(
+      create: (_) => locator<PersistentRemindersViewModel>(),
+      child: const PersistentRemindersScreen(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

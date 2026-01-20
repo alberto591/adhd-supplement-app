@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../config/locator.dart';
+import '../../application/view_models/pill_matcher_view_model.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pill_preview_widget.dart';
 
-class VisualPillMatcherScreen extends StatefulWidget {
+class VisualPillMatcherScreen extends StatelessWidget {
   const VisualPillMatcherScreen({super.key});
 
-  @override
-  State<VisualPillMatcherScreen> createState() =>
-      _VisualPillMatcherScreenState();
-}
-
-class _VisualPillMatcherScreenState extends State<VisualPillMatcherScreen> {
-  PillShape _selectedShape = PillShape.capsule;
-  Color _selectedColor = AppColors.primary;
-  PillTexture _selectedTexture = PillTexture.solid;
-
-  final List<Color> _presetColors = [
-    AppColors.primary, // Blue
-    const Color(0xFFFF4B4B), // Red
-    const Color(0xFF00D084), // Green
-    const Color(0xFFFF9F00), // Orange
-    const Color(0xFF7B61FF), // Purple
-    Colors.white,
-    Colors.grey,
-  ];
+  static Widget withProvider() {
+    return ChangeNotifierProvider(
+      create: (_) => locator<PillMatcherViewModel>(),
+      child: const VisualPillMatcherScreen(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,287 +45,350 @@ class _VisualPillMatcherScreenState extends State<VisualPillMatcherScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Preview Card
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  color: const Color(
-                      0xFF1C2027), // Specific dark color from wireframe
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
+      body: Consumer<PillMatcherViewModel>(
+        builder: (context, viewModel, child) {
+          if (viewModel.isAnalyzing) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(color: AppColors.primary),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Analyzing Pill Structure...',
+                    style: TextStyle(
+                      color: isDark ? Colors.white : Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    // Preview Area with Gradient
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          height: 240,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Color(0xFF1A2230),
-                                Color(0xFF0A0E14),
-                              ],
-                            ),
-                          ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'AI logic identifying shape and color',
+                    style: TextStyle(
+                      color: isDark ? Colors.grey : Colors.grey[700],
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                // Preview Card
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      color: const Color(
+                          0xFF1C2027), // Specific dark color from wireframe
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.1)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
                         ),
-                        // Background glow effect
-                        Positioned.fill(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                colors: [
-                                  AppColors.primary.withValues(alpha: 0.2),
-                                  Colors.transparent,
-                                ],
-                                radius: 0.7,
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        // Preview Area with Gradient
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              height: 240,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xFF1A2230),
+                                    Color(0xFF0A0E14),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-
-                        // 3D Pill Preview
-                        PillPreviewWidget(
-                          shape: _selectedShape,
-                          color: _selectedColor,
-                          texture: _selectedTexture,
-                        ),
-
-                        // Label
-                        Positioned(
-                          bottom: 16,
-                          right: 16,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.05),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.1)),
-                            ),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.view_in_ar,
-                                    color: Colors.white, size: 14),
-                                SizedBox(width: 6),
-                                Text(
-                                  '3D PREVIEW',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1.0,
+                            // Background glow effect
+                            Positioned.fill(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      viewModel.selectedColor
+                                          .withValues(alpha: 0.2),
+                                      Colors.transparent,
+                                    ],
+                                    radius: 0.7,
                                   ),
                                 ),
+                              ),
+                            ),
+
+                            // 3D Pill Preview
+                            PillPreviewWidget(
+                              shape: viewModel.selectedShape,
+                              color: viewModel.selectedColor,
+                              texture: viewModel.selectedTexture,
+                            ),
+
+                            // Camera/Scan Button
+                            Positioned(
+                              top: 16,
+                              right: 16,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    _showScanOptions(context, viewModel),
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary
+                                        .withValues(alpha: 0.2),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: AppColors.primary, width: 1.5),
+                                  ),
+                                  child: const Icon(Icons.camera_alt,
+                                      color: AppColors.primary, size: 20),
+                                ),
+                              ),
+                            ),
+
+                            // Label
+                            Positioned(
+                              bottom: 16,
+                              right: 16,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.05),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color:
+                                          Colors.white.withValues(alpha: 0.1)),
+                                ),
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.view_in_ar,
+                                        color: Colors.white, size: 14),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      '3D PREVIEW',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        // Info Section
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Morning Focus',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Matches your physical supplement',
+                                    style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  const Text(
+                                    'ACTIVE',
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // Shape Selector
+                _buildSectionHeader(context, 'Shape'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      _buildShapeOption(
+                          context, viewModel, PillShape.round, 'Round'),
+                      const SizedBox(width: 12),
+                      _buildShapeOption(
+                          context, viewModel, PillShape.capsule, 'Capsule'),
+                      const SizedBox(width: 12),
+                      _buildShapeOption(
+                          context, viewModel, PillShape.oval, 'Oval'),
+                    ],
+                  ),
+                ),
+
+                // Color Selector
+                const SizedBox(height: 24),
+                _buildSectionHeader(context, 'Color'),
+                SizedBox(
+                  height: 60,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: viewModel.presetColors.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      final color = viewModel.presetColors[index];
+                      final isSelected = viewModel.selectedColor == color;
+                      return GestureDetector(
+                        onTap: () => viewModel.setColor(color),
+                        child: Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                            border: isSelected
+                                ? Border.all(color: AppColors.primary, width: 2)
+                                : Border.all(
+                                    color: Colors.grey[800]!, width: 1),
+                            boxShadow: isSelected
+                                ? [
+                                    BoxShadow(
+                                        color: color.withValues(alpha: 0.4),
+                                        blurRadius: 8,
+                                        spreadRadius: 1)
+                                  ]
+                                : null,
+                          ),
+                          child: isSelected
+                              ? Center(
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: color,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: isDark
+                                              ? AppColors.backgroundDark
+                                              : Colors.white,
+                                          width: 2),
+                                    ),
+                                  ),
+                                )
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                // Gradient Slider Mockup
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Container(
+                    height: 48,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFFF4B4B), // Red
+                          Color(0xFFFF9F00), // Orange/Yellow
+                          Color(0xFF00D084), // Green
+                          AppColors.primary, // Blue
+                          Color(0xFF7B61FF), // Purple
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.1)),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        // Mock Slider Thumb
+                        Positioned(
+                          left: 100,
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2)),
                               ],
+                              border: Border.all(
+                                  color: AppColors.backgroundDark, width: 2),
                             ),
                           ),
                         ),
                       ],
                     ),
-
-                    // Info Section
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Morning Focus',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Matches your physical supplement',
-                                style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 13,
-                                ),
-                              ),
-                              const Text(
-                                'ACTIVE',
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
 
-            // Shape Selector
-            _buildSectionHeader(context, 'Shape'),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  _buildShapeOption(PillShape.round, 'Round'),
-                  const SizedBox(width: 12),
-                  _buildShapeOption(PillShape.capsule, 'Capsule'),
-                  const SizedBox(width: 12),
-                  _buildShapeOption(PillShape.oval, 'Oval'),
-                ],
-              ),
-            ),
-
-            // Color Selector
-            const SizedBox(height: 24),
-            _buildSectionHeader(context, 'Color'),
-            SizedBox(
-              height: 60,
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                scrollDirection: Axis.horizontal,
-                itemCount: _presetColors.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 12),
-                itemBuilder: (context, index) {
-                  final color = _presetColors[index];
-                  final isSelected = _selectedColor == color;
-                  return GestureDetector(
-                    onTap: () => setState(() => _selectedColor = color),
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                        border: isSelected
-                            ? Border.all(color: AppColors.primary, width: 2)
-                            : Border.all(color: Colors.grey[800]!, width: 1),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                    color: color.withValues(alpha: 0.4),
-                                    blurRadius: 8,
-                                    spreadRadius: 1)
-                              ]
-                            : null,
-                      ),
-                      child: isSelected
-                          ? Center(
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: color,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: isDark
-                                          ? AppColors.backgroundDark
-                                          : Colors.white,
-                                      width: 2),
-                                ),
-                              ),
-                            )
-                          : null,
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            // Gradient Slider Mockup
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: Container(
-                height: 48,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFFF4B4B), // Red
-                      Color(0xFFFF9F00), // Orange/Yellow
-                      Color(0xFF00D084), // Green
-                      AppColors.primary, // Blue
-                      Color(0xFF7B61FF), // Purple
+                // Texture Selector
+                const SizedBox(height: 24),
+                _buildSectionHeader(context, 'Texture'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      _buildTextureOption(context, viewModel, PillTexture.solid,
+                          'Solid', Icons.texture),
+                      const SizedBox(width: 12),
+                      _buildTextureOption(context, viewModel, PillTexture.clear,
+                          'Clear', Icons.water_drop), // Opacity/Water drop
+                      const SizedBox(width: 12),
+                      _buildTextureOption(context, viewModel, PillTexture.pearl,
+                          'Pearl', Icons.auto_awesome),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
                 ),
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    // Mock Slider Thumb
-                    Positioned(
-                      left: 100,
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 4,
-                                offset: Offset(0, 2)),
-                          ],
-                          border: Border.all(
-                              color: AppColors.backgroundDark, width: 2),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
 
-            // Texture Selector
-            const SizedBox(height: 24),
-            _buildSectionHeader(context, 'Texture'),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  _buildTextureOption(
-                      PillTexture.solid, 'Solid', Icons.texture),
-                  const SizedBox(width: 12),
-                  _buildTextureOption(PillTexture.clear, 'Clear',
-                      Icons.water_drop), // Opacity/Water drop
-                  const SizedBox(width: 12),
-                  _buildTextureOption(
-                      PillTexture.pearl, 'Pearl', Icons.auto_awesome),
-                ],
-              ),
+                const SizedBox(height: 120), // Bottom spacing
+              ],
             ),
-
-            const SizedBox(height: 120), // Bottom spacing
-          ],
-        ),
+          );
+        },
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(24),
@@ -381,6 +434,42 @@ class _VisualPillMatcherScreenState extends State<VisualPillMatcherScreen> {
     );
   }
 
+  void _showScanOptions(BuildContext context, PillMatcherViewModel viewModel) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take Photo'),
+                onTap: () {
+                  Navigator.pop(context);
+                  viewModel.scanPill();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Choose from Gallery'),
+                onTap: () {
+                  Navigator.pop(context);
+                  viewModel.pickFromGallery();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildSectionHeader(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -400,13 +489,14 @@ class _VisualPillMatcherScreenState extends State<VisualPillMatcherScreen> {
     );
   }
 
-  Widget _buildShapeOption(PillShape shape, String label) {
-    final isSelected = _selectedShape == shape;
+  Widget _buildShapeOption(BuildContext context, PillMatcherViewModel viewModel,
+      PillShape shape, String label) {
+    final isSelected = viewModel.selectedShape == shape;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Expanded(
       child: GestureDetector(
-        onTap: () => setState(() => _selectedShape = shape),
+        onTap: () => viewModel.setShape(shape),
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(
@@ -431,7 +521,6 @@ class _VisualPillMatcherScreenState extends State<VisualPillMatcherScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Mock shape icon/preview
                 _buildShapeIcon(shape),
                 const SizedBox(height: 12),
                 Text(
@@ -459,7 +548,8 @@ class _VisualPillMatcherScreenState extends State<VisualPillMatcherScreen> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-                shape: BoxShape.circle, color: Colors.grey.withValues(alpha: 0.3)));
+                shape: BoxShape.circle,
+                color: Colors.grey.withValues(alpha: 0.3)));
       case PillShape.capsule:
         return Container(
             width: 50,
@@ -477,13 +567,18 @@ class _VisualPillMatcherScreenState extends State<VisualPillMatcherScreen> {
     }
   }
 
-  Widget _buildTextureOption(PillTexture texture, String label, IconData icon) {
-    final isSelected = _selectedTexture == texture;
+  Widget _buildTextureOption(
+      BuildContext context,
+      PillMatcherViewModel viewModel,
+      PillTexture texture,
+      String label,
+      IconData icon) {
+    final isSelected = viewModel.selectedTexture == texture;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Expanded(
       child: GestureDetector(
-        onTap: () => setState(() => _selectedTexture = texture),
+        onTap: () => viewModel.setTexture(texture),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 24),
           decoration: BoxDecoration(

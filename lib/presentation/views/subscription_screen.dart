@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../application/view_models/subscription_view_model.dart';
+import '../theme/app_theme.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -23,21 +25,30 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     const primaryGold = Color(0xFFD4A411);
-    const bgLight = Color(0xFFF8F8F6);
     const bgDark = Color(0xFF181611);
 
     return Scaffold(
-      backgroundColor: isDark ? bgDark : bgLight,
+      backgroundColor: isDark
+          ? AppColors.backgroundPremiumDark
+          : AppColors.backgroundPremiumLight,
       appBar: AppBar(
-        backgroundColor: (isDark ? bgDark : bgLight).withValues(alpha: 0.9),
+        backgroundColor: (isDark
+                ? AppColors.backgroundPremiumDark
+                : AppColors.backgroundPremiumLight)
+            .withValues(alpha: 0.9),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.grey[400]),
+          icon: const Icon(Icons.close, color: Colors.grey),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'FocusStack Pro',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        title: Text(
+          'FOCUSSTACK PRO',
+          style: GoogleFonts.lexend(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            letterSpacing: 2.0,
+            color: AppColors.primaryGold,
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -67,10 +78,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           });
                         }
                       },
-                child: const Text(
+                child: Text(
                   'Restore',
-                  style: TextStyle(
-                    color: primaryGold,
+                  style: GoogleFonts.lexend(
+                    color: AppColors.primaryGold,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -84,7 +95,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           Consumer<SubscriptionViewModel>(builder: (context, viewModel, child) {
         if (viewModel.isLoading) {
           return const Center(
-              child: CircularProgressIndicator(color: primaryGold));
+              child: CircularProgressIndicator(color: AppColors.primaryGold));
         }
 
         if (viewModel.error != null) {
@@ -105,11 +116,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
                     child: Column(
                       children: [
-                        const Text(
+                        Text(
                           'Unlock Your Full Potential',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 34,
+                          style: GoogleFonts.lexend(
+                            fontSize: 32,
                             fontWeight: FontWeight.bold,
                             height: 1.1,
                           ),
@@ -118,7 +129,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         Text(
                           'Optimize your routine with clinical-grade tools',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: GoogleFonts.lexend(
                             fontSize: 16,
                             color: Colors.grey[400],
                           ),
@@ -150,10 +161,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             border: Border.all(
                                 color: primaryGold.withValues(alpha: 0.2)),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Joined by 10,000+ Focus Masters',
-                            style: TextStyle(
-                              color: primaryGold,
+                            style: GoogleFonts.lexend(
+                              color: AppColors.primaryGold,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                             ),

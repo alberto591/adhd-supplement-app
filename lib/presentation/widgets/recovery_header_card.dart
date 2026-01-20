@@ -10,11 +10,11 @@ class RecoveryHeaderCard extends StatelessWidget {
       width: double.infinity,
       height: 250,
       decoration: BoxDecoration(
-        color: AppColors.backgroundDarkBrown,
+        color: AppColors.backgroundPremiumDark,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryOrange.withValues(alpha: 0.15),
+            color: AppColors.primaryGold.withValues(alpha: 0.15),
             blurRadius: 20,
             spreadRadius: 0,
           ),
@@ -43,15 +43,16 @@ class RecoveryHeaderCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Icon(
-              Icons.battery_charging_full, // Closest match to battery_charging_80
-              color: AppColors.primaryOrange,
+              Icons
+                  .battery_charging_full, // Closest match to battery_charging_80
+              color: AppColors.primaryGold,
               size: 48,
             ),
             SizedBox(height: 8),
             Text(
               'BATTERY REPLENISHED',
               style: TextStyle(
-                color: AppColors.primaryOrange,
+                color: AppColors.primaryGold,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 2.0,

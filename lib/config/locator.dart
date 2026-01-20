@@ -19,6 +19,7 @@ import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/revenue_cat_billing_service.dart';
 import 'package:adhd_supplement_app/domain/services/interaction_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/fda_interaction_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/report_pdf_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
 import 'package:adhd_supplement_app/presentation/view_models/history_log_view_model.dart';
@@ -26,6 +27,7 @@ import 'package:adhd_supplement_app/presentation/view_models/library_view_model.
 import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
 
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/mock_symptom_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_supplement_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_streak_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/safety_repository.dart';
@@ -41,6 +43,28 @@ import 'package:adhd_supplement_app/infrastructure/services/notification_service
 import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
 import 'package:adhd_supplement_app/application/view_models/persistent_reminders_view_model.dart';
+import 'package:adhd_supplement_app/application/view_models/focus_buddies_view_model.dart';
+import 'package:adhd_supplement_app/application/view_models/trophy_room_view_model.dart';
+import 'package:adhd_supplement_app/domain/repositories/gamification_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/mock_gamification_repository.dart';
+import '../application/view_models/article_detail_view_model.dart';
+import '../application/view_models/science_hub_view_model.dart';
+import '../application/view_models/community_view_model.dart';
+import '../application/view_models/pill_matcher_view_model.dart';
+import '../domain/repositories/article_repository.dart';
+import '../domain/repositories/community_repository.dart';
+import '../infrastructure/repositories/mock_article_repository.dart';
+import '../infrastructure/repositories/mock_community_repository.dart';
+import '../domain/repositories/referral_repository.dart';
+import '../infrastructure/repositories/mock_referral_repository.dart';
+import '../application/view_models/refer_friend_view_model.dart';
+import '../domain/repositories/reflection_repository.dart';
+import '../infrastructure/repositories/mock_reflection_repository.dart';
+import '../application/view_models/nightly_reflection_view_model.dart';
+
+import '../application/view_models/refer_friend_view_model.dart';
+import '../application/view_models/nightly_reflection_view_model.dart';
+import '../application/view_models/doctor_export_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -55,6 +79,7 @@ void setupLocator() {
 
   locator
       .registerLazySingleton<InteractionService>(() => FDAInteractionService());
+  locator.registerLazySingleton<ReportPdfService>(() => ReportPdfService());
 
   // Repositories
   locator.registerLazySingleton<SupplementRepository>(
@@ -69,12 +94,20 @@ void setupLocator() {
       () => FirebaseStreakRepository());
 
   locator.registerLazySingleton<LogRepository>(() => FirebaseLogRepository());
-  locator.registerLazySingleton<SymptomRepository>(
-      () => FirebaseSymptomRepository());
+  locator
+      .registerLazySingleton<SymptomRepository>(() => MockSymptomRepository());
+  locator.registerLazySingleton<GamificationRepository>(
+      () => MockGamificationRepository());
+  locator.registerLazySingleton<CommunityRepository>(
+      () => MockCommunityRepository());
   locator.registerLazySingleton<SafetyRepository>(
       () => FirebaseSafetyRepository());
   locator.registerLazySingleton<SettingsRepository>(
       () => SharedPrefsSettingsRepository());
+  locator.registerLazySingleton<ReferralRepository>(
+      () => MockReferralRepository());
+  locator.registerLazySingleton<ReflectionRepository>(
+      () => MockReflectionRepository());
 
   // Providers
   locator.registerLazySingleton(() => AuthProvider(locator<AuthRepository>()));
@@ -98,6 +131,7 @@ void setupLocator() {
       logRepository: locator<LogRepository>(),
       supplementRepository: locator<SupplementRepository>(),
       notificationService: locator<NotificationService>(),
+      authRepository: locator<AuthRepository>(),
       userId: userId,
     ),
   );
@@ -107,10 +141,18 @@ void setupLocator() {
       ));
 
   locator.registerFactory(() => SubscriptionViewModel());
+  locator.registerFactory(
+      () => CommunityViewModel(locator<CommunityRepository>()));
+  locator.registerFactory(() => PillMatcherViewModel());
   locator.registerFactory(() => PrivacyViewModel());
   locator.registerFactory(() => NotificationHistoryViewModel());
-  locator.registerFactory(() =>
-      StreakViewModel(locator<StreakService>(), locator<StreakRepository>()));
+  locator.registerFactory(() => FocusBuddiesViewModel(
+      locator<AuthRepository>(), locator<LogRepository>()));
+
+  locator.registerFactoryParam<TrophyRoomViewModel, String, void>(
+    (userId, _) =>
+        TrophyRoomViewModel(locator<GamificationRepository>(), userId),
+  );
 
   locator.registerFactoryParam<HistoryLogViewModel, String, void>(
     (userId, _) => HistoryLogViewModel(
@@ -133,4 +175,28 @@ void setupLocator() {
     ),
   );
   locator.registerLazySingleton<SeedingService>(() => SeedingService());
+  locator
+      .registerLazySingleton<ArticleRepository>(() => MockArticleRepository());
+
+  locator.registerFactory(
+      () => ArticleDetailViewModel(locator<ArticleRepository>()));
+  locator
+      .registerFactory(() => ScienceHubViewModel(locator<ArticleRepository>()));
+  locator.registerFactory(
+      () => ReferFriendViewModel(locator<ReferralRepository>()));
+  locator.registerFactoryParam<NightlyReflectionViewModel, String, void>(
+    (userId, _) => NightlyReflectionViewModel(
+      logRepository: locator<LogRepository>(),
+      userId: userId,
+    ),
+  );
+
+  locator.registerFactoryParam<DoctorExportViewModel, String, void>(
+    (userId, _) => DoctorExportViewModel(
+      logRepository: locator<LogRepository>(),
+      authRepository: locator<AuthRepository>(),
+      pdfService: locator<ReportPdfService>(),
+      userId: userId,
+    ),
+  );
 }

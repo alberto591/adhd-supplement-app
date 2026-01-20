@@ -3,6 +3,8 @@ import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_mo
 import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
+import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
+import 'package:adhd_supplement_app/domain/entities/user.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
 import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
@@ -51,6 +53,12 @@ class FakeLogRepository implements LogRepository {
   Future<List<DailyLog>> getRecentLogs(String userId, int days) async => [];
   @override
   Stream<DailyLog?> watchTodayLog(String userId) => Stream.value(todayLog);
+
+  @override
+  Future<void> clearAllLogs(String userId) async {
+    todayLog = null;
+    streakCount = 0;
+  }
 }
 
 class FakeSupplementRepository implements SupplementRepository {
@@ -117,11 +125,47 @@ class FakeNotificationService implements NotificationService {
   Future<void> cancelNudgeSequence(int baseId, int count) async {}
 }
 
+class FakeAuthRepository implements AuthRepository {
+  User? currentUser;
+  User? lastUpdatedUser;
+
+  @override
+  Future<User?> getCurrentUser() async => currentUser;
+
+  @override
+  Future<User> signInAnonymously() async => currentUser!;
+
+  @override
+  Future<User> signInWithEmail(String email, String password) async =>
+      currentUser!;
+
+  @override
+  Future<User> signUpWithEmail(
+          String email, String password, String displayName) async =>
+      currentUser!;
+
+  @override
+  Future<void> signOut() async {}
+
+  @override
+  Stream<User?> authStateChanges() => Stream.value(currentUser);
+
+  @override
+  Future<void> updateUserProfile(User user) async {
+    lastUpdatedUser = user;
+    currentUser = user;
+  }
+
+  @override
+  Future<void> deleteUser() async {}
+}
+
 void main() {
   late DailyStackViewModel viewModel;
   late FakeStackRepository fakeStackRepo;
   late FakeLogRepository fakeLogRepo;
   late FakeSupplementRepository fakeSupplementRepo;
+  late FakeAuthRepository fakeAuthRepo;
   const String userId = 'test-user';
 
   const testSupplement = Supplement(
@@ -154,11 +198,13 @@ void main() {
     fakeStackRepo = FakeStackRepository();
     fakeLogRepo = FakeLogRepository();
     fakeSupplementRepo = FakeSupplementRepository();
+    fakeAuthRepo = FakeAuthRepository();
     viewModel = DailyStackViewModel(
       stackRepository: fakeStackRepo,
       logRepository: fakeLogRepo,
       supplementRepository: fakeSupplementRepo,
       notificationService: FakeNotificationService(),
+      authRepository: fakeAuthRepo,
       userId: userId,
     );
   });
@@ -227,6 +273,22 @@ void main() {
         'Good Night'
       ];
       expect(validGreetings.contains(viewModel.greeting), true);
+    });
+
+    test('markSupplementTaken increments user XP', () async {
+      final initialUser = User(
+        id: userId,
+        email: 'test@example.com',
+        createdAt: DateTime.now(),
+        xp: 0,
+        level: 1,
+      );
+      fakeAuthRepo.currentUser = initialUser;
+
+      await viewModel.markSupplementTaken('supp1');
+
+      expect(fakeAuthRepo.lastUpdatedUser, isNotNull);
+      expect(fakeAuthRepo.lastUpdatedUser!.xp, 10);
     });
   });
 }

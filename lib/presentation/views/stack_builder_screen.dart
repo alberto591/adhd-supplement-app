@@ -360,7 +360,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                 'Routine for 08:00 AM',
                                                 style: TextStyle(
                                                   color: AppColors
-                                                      .textSecondaryBlue,
+                                                      .textSecondaryDark,
                                                   fontSize: 12,
                                                 ),
                                               ),
@@ -369,7 +369,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           IconButton(
                                             icon: const Icon(Icons.edit,
                                                 color:
-                                                    AppColors.textSecondaryBlue,
+                                                    AppColors.textSecondaryDark,
                                                 size: 18),
                                             onPressed: () {},
                                           ),
@@ -400,7 +400,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                             'Total Items: ${_currentStack.length}',
                                             style: const TextStyle(
                                               color:
-                                                  AppColors.textSecondaryBlue,
+                                                  AppColors.textSecondaryDark,
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12,
                                             ),
@@ -411,7 +411,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                 'Safety Status: ',
                                                 style: TextStyle(
                                                   color: AppColors
-                                                      .textSecondaryBlue,
+                                                      .textSecondaryDark,
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 12,
                                                 ),

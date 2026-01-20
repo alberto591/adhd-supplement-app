@@ -71,7 +71,7 @@ class _OnboardingGoalSelectionScreenState
                         width: 32,
                         height: 8,
                         decoration: BoxDecoration(
-                          color: AppColors.freshGreen,
+                          color: AppColors.accentGreen,
                           borderRadius: BorderRadius.circular(99),
                         ),
                       ),
@@ -188,7 +188,7 @@ class _OnboardingGoalSelectionScreenState
                         onPressed: () => Navigator.pushNamed(
                             context, '/onboarding/medication-safety'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.freshGreen,
+                          backgroundColor: AppColors.accentGreen,
                           foregroundColor: const Color(
                               0xFF112117), // Dark text on green button
                           elevation: 4,

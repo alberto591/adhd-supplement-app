@@ -4,136 +4,273 @@ import '../widgets/weekly_win_card.dart';
 import '../widgets/consistency_tracker.dart';
 import '../widgets/focus_comparison_chart.dart';
 
+import 'package:provider/provider.dart';
+import '../../application/providers/auth_provider.dart';
+import '../../application/view_models/weekly_review_view_model.dart';
+
 class WeeklyReviewScreen extends StatelessWidget {
   const WeeklyReviewScreen({super.key});
+
+  static Widget withProvider() {
+    return Consumer<AuthProvider>(
+      builder: (context, auth, _) => ChangeNotifierProvider(
+        create: (_) => WeeklyReviewViewModel.withParams(auth.user?.id ?? '')
+          ..fetchWeeklyStats(),
+        child: const WeeklyReviewScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor:
-          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      body: Stack(
-        children: [
-          // Confetti Background Pattern
-          Positioned.fill(
-            child: CustomPaint(
-              painter: ConfettiPatternPainter(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.05)
-                    : Colors.black.withValues(alpha: 0.05),
-              ),
-            ),
-          ),
+    return Consumer<WeeklyReviewViewModel>(
+      builder: (context, viewModel, child) {
+        if (viewModel.isLoading) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
 
-          Column(
+        return Scaffold(
+          backgroundColor:
+              isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+          body: Stack(
             children: [
-              // Top App Bar Area
-              Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 8,
-                  left: 16,
-                  right: 16,
-                  bottom: 8,
-                ),
-                color: (isDark
-                        ? AppColors.backgroundDark
-                        : AppColors.backgroundLight)
-                    .withValues(alpha: 0.8),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.close,
-                          color: isDark ? Colors.white : Colors.black),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Weekly Review',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: isDark ? Colors.white : Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.auto_awesome,
-                          color: AppColors.primary),
-                      onPressed: () {
-                        // Show insights or tips
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('AI insights coming soon!'),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+              // Confetti Background Pattern
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: ConfettiPatternPainter(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.05)
+                        : Colors.black.withValues(alpha: 0.05),
+                  ),
                 ),
               ),
 
-              // Scrolling Content
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: WeeklyWinCard(),
-                      ),
-                      const ConsistencyTracker(),
-                      const SizedBox(height: 16),
-                      const FocusComparisonChart(),
-
-                      // Weekly Tip
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                                color:
-                                    AppColors.primary.withValues(alpha: 0.1)),
+              Column(
+                children: [
+                  // Top App Bar Area
+                  Container(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top + 8,
+                      left: 16,
+                      right: 16,
+                      bottom: 8,
+                    ),
+                    color: (isDark
+                            ? AppColors.backgroundDark
+                            : AppColors.backgroundLight)
+                        .withValues(alpha: 0.8),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.close,
+                              color: isDark ? Colors.white : Colors.black),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        Expanded(
+                          child: Text(
+                            'Weekly Review',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: isDark ? Colors.white : Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.auto_awesome,
+                              color: AppColors.primary),
+                          onPressed: () {
+                            // Show insights or tips
+                            showDialog<void>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('AI Analysis'),
+                                content: Text(
+                                    'Your consistency has improved by ${viewModel.focusImprovement.toStringAsFixed(1)}% compared to last week. Great job maintaining your streak!'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Close'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Scrolling Content
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.only(bottom: 100),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: WeeklyWinCard(
+                              streakDays: viewModel.streakDays,
+                              focusImprovement: viewModel.focusImprovement,
+                            ),
+                          ),
+                          ConsistencyTracker(
+                            consistencyMap: viewModel.consistencyMap,
+                          ),
+                          const SizedBox(height: 16),
+                          const FocusComparisonChart(),
+
+                          // Weekly Tip
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                    color: AppColors.primary
+                                        .withValues(alpha: 0.1)),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Icon(Icons.lightbulb,
+                                      color: AppColors.primary),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Weekly Tip',
+                                          style: TextStyle(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Taking your supplement with a high-protein breakfast improved your focus score by ${viewModel.focusImprovement.toStringAsFixed(0)}% this week. Try to keep this habit!',
+                                          style: TextStyle(
+                                            color: isDark
+                                                ? Colors.grey[400]
+                                                : Colors.grey[700],
+                                            fontSize: 12,
+                                            height: 1.4,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // Fixed Bottom Bar
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(
+                      16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
+                  decoration: BoxDecoration(
+                    color: (isDark
+                            ? AppColors.backgroundDark
+                            : AppColors.backgroundLight)
+                        .withValues(alpha: 0.95),
+                    border: Border(
+                      top: BorderSide(
+                          color: isDark ? Colors.white12 : Colors.grey[200]!),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Show share options dialog
+                            showDialog<void>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Share Weekly Progress'),
+                                content: const Text(
+                                  'Share your weekly supplement progress with your doctor, accountability partner, or social media.',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Progress shared!'),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Share'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            elevation: 8,
+                            shadowColor:
+                                AppColors.primary.withValues(alpha: 0.4),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.lightbulb,
-                                  color: AppColors.primary),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Weekly Tip',
-                                      style: TextStyle(
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Taking your supplement with a high-protein breakfast improved your focus score by 8% this week. Try to keep this habit!',
-                                      style: TextStyle(
-                                        color: isDark
-                                            ? Colors.grey[400]
-                                            : Colors.grey[700],
-                                        fontSize: 12,
-                                        height: 1.4,
-                                      ),
-                                    ),
-                                  ],
+                              Icon(Icons.share, size: 20),
+                              SizedBox(width: 8),
+                              Text(
+                                'Share Progress',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          'Dismiss',
+                          style: TextStyle(
+                            color: isDark ? Colors.grey[500] : Colors.grey[500],
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -143,104 +280,8 @@ class WeeklyReviewScreen extends StatelessWidget {
               ),
             ],
           ),
-
-          // Fixed Bottom Bar
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(
-                  16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
-              decoration: BoxDecoration(
-                color: (isDark
-                        ? AppColors.backgroundDark
-                        : AppColors.backgroundLight)
-                    .withValues(alpha: 0.95),
-                border: Border(
-                  top: BorderSide(
-                      color: isDark ? Colors.white12 : Colors.grey[200]!),
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Show share options dialog
-                        showDialog<void>(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: const Text('Share Weekly Progress'),
-                            content: const Text(
-                              'Share your weekly supplement progress with your doctor, accountability partner, or social media.',
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Progress shared!'),
-                                    ),
-                                  );
-                                },
-                                child: const Text('Share'),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        elevation: 8,
-                        shadowColor: AppColors.primary.withValues(alpha: 0.4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.share, size: 20),
-                          SizedBox(width: 8),
-                          Text(
-                            'Share Progress',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'Dismiss',
-                      style: TextStyle(
-                        color: isDark ? Colors.grey[500] : Colors.grey[500],
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

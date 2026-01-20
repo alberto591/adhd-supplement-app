@@ -2,7 +2,8 @@ import '../entities/daily_log.dart';
 
 abstract class LogRepository {
   /// Get logs for a specific date range
-  Future<List<DailyLog>> getLogsByDateRange(String userId, DateTime start, DateTime end);
+  Future<List<DailyLog>> getLogsByDateRange(
+      String userId, DateTime start, DateTime end);
 
   /// Get log for a specific date
   Future<DailyLog?> getLogForDate(String userId, DateTime date);
@@ -18,4 +19,7 @@ abstract class LogRepository {
 
   /// Stream of today's log (real-time updates)
   Stream<DailyLog?> watchTodayLog(String userId);
+
+  /// Delete all logs for a user (Privacy/Data Reset)
+  Future<void> clearAllLogs(String userId);
 }

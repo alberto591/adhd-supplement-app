@@ -70,12 +70,10 @@ class PersistentRemindersViewModel extends ChangeNotifier {
         minute: _nudgeTime.minute,
       );
 
-      // Schedule warning/follow-up if enabled
-      if (_warningNudgeOption == '15m') {
-        // Calculate 15 minutes after
+      // Warning Nudge (15m before or after - assume after for "missed")
+      if (_warningNudgeOption == '15m' || _warningNudgeOption == 'followup') {
         int warningHour = _nudgeTime.hour;
         int warningMinute = _nudgeTime.minute + 15;
-
         if (warningMinute >= 60) {
           warningHour = (warningHour + 1) % 24;
           warningMinute = warningMinute - 60;
@@ -91,9 +89,31 @@ class PersistentRemindersViewModel extends ChangeNotifier {
       } else {
         await _notificationService.cancelNotification(1001);
       }
+
+      // Follow-up / Extended Logic (Scheduling additional nudges)
+      if (_warningNudgeOption == 'followup' || _extendedRemindersEnabled) {
+        // Schedule a second nudge +30m
+        int secondHour = _nudgeTime.hour;
+        int secondMinute = _nudgeTime.minute + 30;
+        if (secondMinute >= 60) {
+          secondHour = (secondHour + 1) % 24;
+          secondMinute = secondMinute - 60;
+        }
+
+        await _notificationService.scheduleRecurringNotification(
+          id: 1002,
+          title: 'Still haven\'t logged?',
+          body: 'Consistency is key! tracking helps your doctor help you.',
+          hour: secondHour,
+          minute: secondMinute,
+        );
+      } else {
+        await _notificationService.cancelNotification(1002);
+      }
     } else {
       await _notificationService.cancelNotification(1000);
       await _notificationService.cancelNotification(1001);
+      await _notificationService.cancelNotification(1002);
     }
   }
 

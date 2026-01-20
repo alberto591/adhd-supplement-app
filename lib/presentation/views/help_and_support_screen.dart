@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 
 class HelpAndSupportScreen extends StatefulWidget {
@@ -43,23 +44,30 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const primaryColor = AppColors.primary;
-    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
-    final cardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final primaryColor = AppColors.primaryBlue;
+    final bgColor = isDark
+        ? AppColors.backgroundUtilityDark
+        : AppColors.backgroundUtilityLight;
 
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
         title: Text(
-          'Help & Support',
-          style: TextStyle(
-            color: isDark ? Colors.white : Colors.black,
+          'HELP & SUPPORT',
+          style: GoogleFonts.lexend(
+            color: isDark ? Colors.white : AppColors.textPrimaryLight,
             fontWeight: FontWeight.bold,
+            fontSize: 16,
+            letterSpacing: 2.0,
           ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: BackButton(color: isDark ? Colors.white : Colors.black),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: isDark ? Colors.white : Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -71,10 +79,10 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
               // Search Bar
               Text(
                 'How can we help?',
-                style: TextStyle(
+                style: GoogleFonts.lexend(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                  color: isDark ? Colors.white : AppColors.textPrimaryLight,
                 ),
               ),
               const SizedBox(height: 16),
@@ -83,65 +91,64 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                 decoration: InputDecoration(
                   hintText: 'Search for answers...',
                   hintStyle: TextStyle(color: Colors.grey[500]),
-                  prefixIcon: const Icon(Icons.search, color: primaryColor),
+                  prefixIcon: Icon(Icons.search, color: primaryColor),
                   filled: true,
-                  fillColor: cardColor,
+                  fillColor: isDark
+                      ? Colors.white.withValues(alpha: 0.05)
+                      : Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(
+                      color: primaryColor.withValues(alpha: 0.1),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(
+                      color: primaryColor.withValues(alpha: 0.1),
+                    ),
                   ),
                   contentPadding: const EdgeInsets.symmetric(vertical: 16),
                 ),
               ),
               const SizedBox(height: 32),
 
-              // Quick Actions Grid
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildQuickActionCard(
-                      context,
-                      icon: Icons.chat_bubble_outline,
-                      title: 'Chat Us',
-                      subtitle: 'Wait time: < 2 min',
-                      color: const Color(0xFF10B981), // Emerald
-                      isDark: isDark,
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Live chat coming soon!')),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: _buildQuickActionCard(
-                      context,
-                      icon: Icons.email_outlined,
-                      title: 'Email',
-                      subtitle: 'Get a reply in 24h',
-                      color: const Color(0xFF3B82F6), // Blue
-                      isDark: isDark,
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Email support drafting...')),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+              // Resources Section (NEW)
+              Text(
+                'RESOURCES',
+                style: GoogleFonts.lexend(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.5,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildResourceCard(
+                        'Quick Start', Icons.rocket_launch, Colors.orange),
+                    const SizedBox(width: 12),
+                    _buildResourceCard(
+                        'Safety FAQ', Icons.security, Colors.green),
+                    const SizedBox(width: 12),
+                    _buildResourceCard(
+                        'Watch Tutorials', Icons.play_circle, Colors.red),
+                  ],
+                ),
               ),
               const SizedBox(height: 32),
 
               // FAQ Section
               Text(
-                'Frequently Asked',
-                style: TextStyle(
-                  fontSize: 20,
+                'FREQUENTLY ASKED',
+                style: GoogleFonts.lexend(
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                  letterSpacing: 1.5,
+                  color: Colors.grey,
                 ),
               ),
               const SizedBox(height: 16),
@@ -154,15 +161,13 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                   final faq = _faqs[index];
                   return Container(
                     decoration: BoxDecoration(
-                      color: cardColor,
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.05)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
+                      border: Border.all(
+                        color: primaryColor.withValues(alpha: 0.1),
+                      ),
                     ),
                     child: Theme(
                       data: Theme.of(context)
@@ -170,10 +175,12 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                       child: ExpansionTile(
                         title: Text(
                           faq['question']!,
-                          style: TextStyle(
+                          style: GoogleFonts.lexend(
                             fontWeight: FontWeight.w600,
-                            color:
-                                isDark ? Colors.white : const Color(0xFF334155),
+                            fontSize: 14,
+                            color: isDark
+                                ? Colors.white
+                                : AppColors.textPrimaryLight,
                           ),
                         ),
                         childrenPadding:
@@ -181,9 +188,10 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                         children: [
                           Text(
                             faq['answer']!,
-                            style: TextStyle(
+                            style: GoogleFonts.lexend(
                               color:
                                   isDark ? Colors.grey[400] : Colors.grey[600],
+                              fontSize: 13,
                               height: 1.5,
                             ),
                           ),
@@ -193,34 +201,83 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                   );
                 },
               ),
+              const SizedBox(height: 32),
 
-              const SizedBox(height: 48),
-
-              // Bottom Footer
-              Center(
+              // Share Feedback Section (NEW)
+              Text(
+                'SHARE FEEDBACK',
+                style: GoogleFonts.lexend(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.5,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.05)
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: primaryColor.withValues(alpha: 0.1),
+                  ),
+                ),
                 child: Column(
                   children: [
-                    Text(
-                      'Still need help?',
-                      style: TextStyle(
-                        color: isDark ? Colors.grey[400] : Colors.grey[500],
-                        fontWeight: FontWeight.w600,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildFeedbackButton(
+                              'Report a Bug', Icons.bug_report, isDark),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _buildFeedbackButton(
+                              'Suggest Idea', Icons.lightbulb, isDark),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        hintText: 'Tell us more...',
+                        hintStyle: GoogleFonts.lexend(fontSize: 13),
+                        filled: true,
+                        fillColor: isDark ? Colors.black12 : Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Visit our Help Center Web',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.bold,
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'Send Feedback',
+                          style:
+                              GoogleFonts.lexend(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 48),
             ],
           ),
         ),
@@ -228,61 +285,57 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     );
   }
 
-  Widget _buildQuickActionCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required Color color,
-    required bool isDark,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: color.withValues(alpha: 0.2)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: color.withValues(alpha: 0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Icon(icon, color: color, size: 24),
+  Widget _buildResourceCard(String title, IconData icon, Color color) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: 140,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark
+            ? color.withValues(alpha: 0.1)
+            : color.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: 24),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: GoogleFonts.lexend(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              color: isDark ? Colors.white : AppColors.textPrimaryLight,
             ),
-            const SizedBox(height: 16),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
-              ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeedbackButton(String label, IconData icon, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.black26 : Colors.grey[100],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 20, color: Colors.grey),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: GoogleFonts.lexend(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey,
             ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: TextStyle(
-                fontSize: 12,
-                color: isDark ? Colors.grey[400] : Colors.grey[600],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

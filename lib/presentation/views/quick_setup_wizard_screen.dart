@@ -86,7 +86,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
             child: const Text(
               'Skip',
               style: TextStyle(
-                color: AppColors.freshGreen,
+                color: AppColors.accentGreen,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -107,7 +107,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                         height: 4,
                         decoration: BoxDecoration(
                           color: i <= _currentStep
-                              ? AppColors.freshGreen
+                              ? AppColors.accentGreen
                               : (isDark ? Colors.grey[800] : Colors.grey[200]),
                           borderRadius: BorderRadius.circular(2),
                         ),
@@ -133,7 +133,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                 child: ElevatedButton(
                   onPressed: _canProceed() ? _nextStep : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.freshGreen,
+                    backgroundColor: AppColors.accentGreen,
                     foregroundColor: const Color(0xFF112117),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -221,11 +221,11 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.freshGreen.withValues(alpha: 0.1)
+                            ? AppColors.accentGreen.withValues(alpha: 0.1)
                             : (isDark ? const Color(0xFF1a2920) : Colors.white),
                         border: Border.all(
                           color: isSelected
-                              ? AppColors.freshGreen
+                              ? AppColors.accentGreen
                               : (isDark
                                   ? Colors.grey[800]!
                                   : Colors.grey[200]!),
@@ -240,12 +240,12 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                             height: 48,
                             decoration: BoxDecoration(
                               color:
-                                  AppColors.freshGreen.withValues(alpha: 0.1),
+                                  AppColors.accentGreen.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               goal['icon'] as IconData,
-                              color: AppColors.freshGreen,
+                              color: AppColors.accentGreen,
                             ),
                           ),
                           const SizedBox(width: 16),
@@ -262,7 +262,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                           if (isSelected)
                             const Icon(
                               Icons.check_circle,
-                              color: AppColors.freshGreen,
+                              color: AppColors.accentGreen,
                             ),
                         ],
                       ),
@@ -316,11 +316,11 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.freshGreen.withValues(alpha: 0.1)
+                            ? AppColors.accentGreen.withValues(alpha: 0.1)
                             : (isDark ? const Color(0xFF1a2920) : Colors.white),
                         border: Border.all(
                           color: isSelected
-                              ? AppColors.freshGreen
+                              ? AppColors.accentGreen
                               : (isDark
                                   ? Colors.grey[800]!
                                   : Colors.grey[200]!),
@@ -372,7 +372,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
                           if (isSelected)
                             const Icon(
                               Icons.check_circle,
-                              color: AppColors.freshGreen,
+                              color: AppColors.accentGreen,
                             ),
                         ],
                       ),
@@ -398,13 +398,13 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: AppColors.freshGreen.withValues(alpha: 0.1),
+              color: AppColors.accentGreen.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.check_circle,
               size: 60,
-              color: AppColors.freshGreen,
+              color: AppColors.accentGreen,
             ),
           ),
           const SizedBox(height: 32),

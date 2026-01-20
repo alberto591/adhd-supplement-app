@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../config/locator.dart';
+import '../../application/view_models/community_view_model.dart';
+import '../../domain/entities/community_post.dart';
 import '../navigation/app_router.dart';
 
-class CommunityScreen extends StatefulWidget {
+class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
 
-  @override
-  State<CommunityScreen> createState() => _CommunityScreenState();
-}
-
-class _CommunityScreenState extends State<CommunityScreen> {
-  // final int _selectedIndex = 1; // Community tab
-  String _selectedFilter = '#All';
-
-  final List<String> _filters = [
-    '#All',
-    '#MorningRoutine',
-    '#FocusTips',
-    '#SleepHacks',
-  ];
+  static Widget withProvider() {
+    return ChangeNotifierProvider(
+      create: (_) => locator<CommunityViewModel>(),
+      child: const CommunityScreen(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,52 +27,50 @@ class _CommunityScreenState extends State<CommunityScreen> {
           SafeArea(
             child: Column(
               children: [
-                _buildHeader(isDark),
+                _buildHeader(context, isDark),
                 _buildSearchBar(isDark),
                 _buildFilterChips(isDark),
                 Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 100),
-                    children: [
-                      _buildTipCard(
-                        isDark: isDark,
-                        username: '@adhd_hacker',
-                        timeAgo: '5m ago',
-                        category: 'Morning Routine',
-                        title:
-                            'Try setting a \'take supplement\' alarm 10 mins before your actual wake-up.',
-                        content:
-                            'This helps the medication start working right as you need to get out of bed. No more morning fog!',
-                        helpfulCount: 24,
-                        userColor: Colors.orange,
-                        userIcon: Icons.person,
-                      ),
-                      _buildTipCard(
-                        isDark: isDark,
-                        username: '@sleepy_doe',
-                        timeAgo: '2h ago',
-                        category: 'Sleep Hacks',
-                        title:
-                            'Magnesium before bed has changed my sleep quality significantly.',
-                        content:
-                            'I take Magnesium Glycinate about 30 minutes before lights out. I wake up feeling much more rested.',
-                        helpfulCount: 156,
-                        userColor: Colors.purple,
-                        userIcon: Icons.bedtime,
-                        isInsightful: true,
-                      ),
-                      _buildImageTipCard(
-                        isDark: isDark,
-                        username: '@creative_brain',
-                        timeAgo: '4h ago',
-                        category: 'Supplement Stack',
-                        title:
-                            'Visual cues are everything! Use a clear pill box.',
-                        helpfulCount: 89,
-                        userColor: Colors.teal,
-                        userIcon: Icons.palette,
-                      ),
-                    ],
+                  child: Consumer<CommunityViewModel>(
+                    builder: (context, viewModel, child) {
+                      if (viewModel.isLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (viewModel.posts.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'No posts found for this filter.',
+                            style: TextStyle(
+                              color: isDark ? Colors.white70 : Colors.black54,
+                            ),
+                          ),
+                        );
+                      }
+                      return ListView.builder(
+                        padding: const EdgeInsets.only(bottom: 100),
+                        itemCount: viewModel.posts.length,
+                        itemBuilder: (context, index) {
+                          final post = viewModel.posts[index];
+                          if (post.imageUrl != null &&
+                              post.imageUrl!.isNotEmpty) {
+                            return _buildImageTipCard(
+                              context: context,
+                              isDark: isDark,
+                              post: post,
+                              onToggleHelpful: () =>
+                                  viewModel.toggleHelpful(post.id),
+                            );
+                          }
+                          return _buildTipCard(
+                            context: context,
+                            isDark: isDark,
+                            post: post,
+                            onToggleHelpful: () =>
+                                viewModel.toggleHelpful(post.id),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ],
@@ -103,14 +97,14 @@ class _CommunityScreenState extends State<CommunityScreen> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: _buildBottomNav(isDark),
+            child: _buildBottomNav(context, isDark),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildHeader(bool isDark) {
+  Widget _buildHeader(BuildContext context, bool isDark) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
@@ -208,63 +202,61 @@ class _CommunityScreenState extends State<CommunityScreen> {
   }
 
   Widget _buildFilterChips(bool isDark) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        children: _filters.map((filter) {
-          final isSelected = _selectedFilter == filter;
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: GestureDetector(
-              onTap: () => setState(() => _selectedFilter = filter),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? const Color(0xFFEE8C2B)
-                      : (isDark ? const Color(0xFF322820) : Colors.white),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: isSelected
-                        ? Colors.transparent
-                        : (isDark
-                            ? const Color(0xFF4A3D32)
-                            : const Color(0xFFE0DDD8)),
+    return Consumer<CommunityViewModel>(
+      builder: (context, viewModel, _) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: viewModel.filters.map((filter) {
+              final isSelected = viewModel.selectedFilter == filter;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: GestureDetector(
+                  onTap: () => viewModel.setFilter(filter),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? const Color(0xFFEE8C2B)
+                          : (isDark ? const Color(0xFF322820) : Colors.white),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: isSelected
+                            ? Colors.transparent
+                            : (isDark
+                                ? const Color(0xFF4A3D32)
+                                : const Color(0xFFE0DDD8)),
+                      ),
+                    ),
+                    child: Text(
+                      filter,
+                      style: TextStyle(
+                        color: isSelected
+                            ? Colors.white
+                            : (isDark
+                                ? const Color(0xFFF8F7F6)
+                                : const Color(0xFF181411)),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
-                child: Text(
-                  filter,
-                  style: TextStyle(
-                    color: isSelected
-                        ? Colors.white
-                        : (isDark
-                            ? const Color(0xFFF8F7F6)
-                            : const Color(0xFF181411)),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }).toList(),
-      ),
+              );
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 
   Widget _buildTipCard({
+    required BuildContext context,
     required bool isDark,
-    required String username,
-    required String timeAgo,
-    required String category,
-    required String title,
-    required String content,
-    required int helpfulCount,
-    required Color userColor,
-    required IconData userIcon,
-    bool isInsightful = false,
+    required CommunityPost post,
+    required VoidCallback onToggleHelpful,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -285,17 +277,17 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: userColor.withValues(alpha: 0.2),
+                  color: post.userColor.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(userIcon, color: userColor, size: 24),
+                child: Icon(post.userIcon, color: post.userColor, size: 24),
               ),
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    username,
+                    post.userHandle, // Use handle for display like original @username
                     style: TextStyle(
                       color: isDark ? Colors.white : const Color(0xFF181411),
                       fontWeight: FontWeight.bold,
@@ -303,7 +295,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                     ),
                   ),
                   Text(
-                    timeAgo,
+                    '${post.postedAt.minute}m ago', // Simplified time for now
                     style: const TextStyle(
                       color: Color(0xFF897561),
                       fontSize: 12,
@@ -315,7 +307,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            category.toUpperCase(),
+            post.category.toUpperCase(),
             style: const TextStyle(
               color: Color(0xFF897561),
               fontSize: 10,
@@ -325,7 +317,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            title,
+            post.title,
             style: TextStyle(
               color: isDark ? const Color(0xFFF8F7F6) : const Color(0xFF181411),
               fontSize: 16,
@@ -335,7 +327,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            content,
+            post.content,
             style: TextStyle(
               color: isDark ? const Color(0xFFD0C0B0) : const Color(0xFF4E453D),
               fontSize: 14,
@@ -347,41 +339,45 @@ class _CommunityScreenState extends State<CommunityScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '$helpfulCount people found this helpful',
+                '${post.helpfulCount} people found this helpful',
                 style: const TextStyle(
                   color: Color(0xFF897561),
                   fontSize: 12,
                 ),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: isInsightful
-                      ? const Color(0xFFEE8C2B)
-                      : const Color(0xFFEE8C2B).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.lightbulb_outline,
-                      size: 16,
-                      color:
-                          isInsightful ? Colors.white : const Color(0xFFEE8C2B),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Insightful',
-                      style: TextStyle(
-                        color: isInsightful
+              GestureDetector(
+                onTap: onToggleHelpful,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: post.isInsightful
+                        ? const Color(0xFFEE8C2B)
+                        : const Color(0xFFEE8C2B).withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.lightbulb_outline,
+                        size: 16,
+                        color: post.isInsightful
                             ? Colors.white
                             : const Color(0xFFEE8C2B),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 4),
+                      Text(
+                        'Insightful',
+                        style: TextStyle(
+                          color: post.isInsightful
+                              ? Colors.white
+                              : const Color(0xFFEE8C2B),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -392,14 +388,10 @@ class _CommunityScreenState extends State<CommunityScreen> {
   }
 
   Widget _buildImageTipCard({
+    required BuildContext context,
     required bool isDark,
-    required String username,
-    required String timeAgo,
-    required String category,
-    required String title,
-    required int helpfulCount,
-    required Color userColor,
-    required IconData userIcon,
+    required CommunityPost post,
+    required VoidCallback onToggleHelpful,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -413,7 +405,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image placeholder since we can't use network images easily
+          // Image placeholder
           Container(
             height: 200,
             decoration: const BoxDecoration(
@@ -435,17 +427,18 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: userColor.withValues(alpha: 0.2),
+                        color: post.userColor.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(userIcon, color: userColor, size: 24),
+                      child:
+                          Icon(post.userIcon, color: post.userColor, size: 24),
                     ),
                     const SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          username,
+                          post.userHandle,
                           style: TextStyle(
                             color:
                                 isDark ? Colors.white : const Color(0xFF181411),
@@ -454,7 +447,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                           ),
                         ),
                         Text(
-                          timeAgo,
+                          '${post.postedAt.minute}m ago', // simplified
                           style: const TextStyle(
                             color: Color(0xFF897561),
                             fontSize: 12,
@@ -466,7 +459,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  category.toUpperCase(),
+                  post.category.toUpperCase(),
                   style: const TextStyle(
                     color: Color(0xFF897561),
                     fontSize: 10,
@@ -476,7 +469,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  title,
+                  post.title,
                   style: TextStyle(
                     color: isDark
                         ? const Color(0xFFF8F7F6)
@@ -491,36 +484,45 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '$helpfulCount helpful',
+                      '${post.helpfulCount} helpful',
                       style: const TextStyle(
                         color: Color(0xFF897561),
                         fontSize: 12,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFEE8C2B).withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(
-                            Icons.lightbulb_outline,
-                            size: 16,
-                            color: Color(0xFFEE8C2B),
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Insightful',
-                            style: TextStyle(
-                              color: Color(0xFFEE8C2B),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
+                    GestureDetector(
+                      onTap: onToggleHelpful,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: post.isInsightful
+                              ? const Color(0xFFEE8C2B)
+                              : const Color(0xFFEE8C2B).withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.lightbulb_outline,
+                              size: 16,
+                              color: post.isInsightful
+                                  ? Colors.white
+                                  : const Color(0xFFEE8C2B),
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 4),
+                            Text(
+                              'Insightful',
+                              style: TextStyle(
+                                color: post.isInsightful
+                                    ? Colors.white
+                                    : const Color(0xFFEE8C2B),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -533,7 +535,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
     );
   }
 
-  Widget _buildBottomNav(bool isDark) {
+  Widget _buildBottomNav(BuildContext context, bool isDark) {
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -549,18 +551,20 @@ class _CommunityScreenState extends State<CommunityScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildNavItem(0, Icons.dashboard_outlined, 'Today', false, isDark),
-          _buildNavItem(1, Icons.forum, 'Community', true, isDark),
           _buildNavItem(
-              2, Icons.local_pharmacy_outlined, 'Supplements', false, isDark),
-          _buildNavItem(3, Icons.person_outline, 'Profile', false, isDark),
+              context, 0, Icons.dashboard_outlined, 'Today', false, isDark),
+          _buildNavItem(context, 1, Icons.forum, 'Community', true, isDark),
+          _buildNavItem(context, 2, Icons.local_pharmacy_outlined,
+              'Supplements', false, isDark),
+          _buildNavItem(
+              context, 3, Icons.person_outline, 'Profile', false, isDark),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(
-      int index, IconData icon, String label, bool isActive, bool isDark) {
+  Widget _buildNavItem(BuildContext context, int index, IconData icon,
+      String label, bool isActive, bool isDark) {
     final color = isActive
         ? const Color(0xFFEE8C2B)
         : (isDark

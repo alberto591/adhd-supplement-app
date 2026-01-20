@@ -23,7 +23,7 @@ class CustomFabBottomNav extends StatelessWidget {
         Container(
           height: 80,
           decoration: BoxDecoration(
-            color: AppColors.forestGreen,
+            color: AppColors.cardDark,
             border: Border(
                 top: BorderSide(color: Colors.white.withValues(alpha: 0.1))),
           ),
@@ -47,7 +47,7 @@ class CustomFabBottomNav extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.brightGreen.withValues(alpha: 0.3),
+                  color: AppColors.primaryGold.withValues(alpha: 0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -55,8 +55,8 @@ class CustomFabBottomNav extends StatelessWidget {
             ),
             child: FloatingActionButton(
               onPressed: onFabTap,
-              backgroundColor: AppColors.brightGreen,
-              foregroundColor: AppColors.forestGreen,
+              backgroundColor: AppColors.primaryGold,
+              foregroundColor: AppColors.backgroundPremiumDark,
               elevation: 0,
               shape: const CircleBorder(),
               child: const Icon(Icons.add, size: 32),
@@ -69,7 +69,7 @@ class CustomFabBottomNav extends StatelessWidget {
 
   Widget _buildNavItem(IconData icon, String label, int index) {
     final isSelected = selectedIndex == index;
-    final color = isSelected ? AppColors.brightGreen : const Color(0xFF9DB9A8);
+    final color = isSelected ? AppColors.primaryGold : const Color(0xFF9DB9A8);
 
     return InkWell(
       onTap: () => onTap(index),

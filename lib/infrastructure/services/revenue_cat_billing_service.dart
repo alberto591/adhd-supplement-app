@@ -4,9 +4,12 @@ import 'dart:io' show Platform;
 import '../../domain/services/billing_service.dart';
 
 class RevenueCatBillingService implements BillingService {
-  // TODO: Replace with your actual RevenueCat API keys
-  static const _androidApiKey = 'goog_placeholder_api_key';
-  static const _iosApiKey = 'appl_placeholder_api_key';
+  // Keys should ideally be loaded from environment variables or a secure config
+  // Use 'flutter build --dart-define=RC_ANDROID_KEY=your_key'
+  static const _androidApiKey = String.fromEnvironment('RC_ANDROID_KEY',
+      defaultValue: 'goog_placeholder_api_key');
+  static const _iosApiKey = String.fromEnvironment('RC_IOS_KEY',
+      defaultValue: 'appl_placeholder_api_key');
 
   bool _isInitialized = false;
 

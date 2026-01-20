@@ -17,9 +17,9 @@ class _SymptomQuickLogState extends State<SymptomQuickLog> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.accentPurple.withValues(alpha: 0.05),
+        color: AppColors.primaryGold.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.accentPurple.withValues(alpha: 0.1)),
+        border: Border.all(color: AppColors.primaryGold.withValues(alpha: 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +27,7 @@ class _SymptomQuickLogState extends State<SymptomQuickLog> {
           const Text(
             'Symptom Quick-Log',
             style: TextStyle(
-              color: AppColors.accentPurple,
+              color: AppColors.primaryGold,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -55,13 +55,13 @@ class _SymptomQuickLogState extends State<SymptomQuickLog> {
                       duration: const Duration(milliseconds: 200),
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       decoration: BoxDecoration(
-                        color: isSelected 
-                            ? AppColors.brightGreen.withValues(alpha: 0.2) 
-                            : AppColors.cardForest,
+                        color: isSelected
+                            ? AppColors.accentGreen.withValues(alpha: 0.2)
+                            : AppColors.cardDark,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: isSelected 
-                              ? AppColors.brightGreen.withValues(alpha: 0.3) 
+                          color: isSelected
+                              ? AppColors.accentGreen.withValues(alpha: 0.3)
                               : Colors.transparent,
                         ),
                       ),

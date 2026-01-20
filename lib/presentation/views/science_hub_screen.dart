@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../config/locator.dart';
+import '../../application/view_models/science_hub_view_model.dart';
+import '../../domain/entities/article.dart';
 import '../navigation/app_router.dart';
 
 class ScienceHubScreen extends StatefulWidget {
@@ -9,7 +13,14 @@ class ScienceHubScreen extends StatefulWidget {
 }
 
 class _ScienceHubScreenState extends State<ScienceHubScreen> {
-  // final int _selectedIndex = 1;
+  late ScienceHubViewModel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = locator<ScienceHubViewModel>();
+    _viewModel.loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,37 +29,50 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
     const bgDark = Color(0xFF101822);
     const bgLight = Color(0xFFF6F7F8);
 
-    return Scaffold(
-      backgroundColor: isDark ? bgDark : bgLight,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              _buildAppBar(context, isDark),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildArticleOfTheDay(isDark, primaryBlue),
-                      _buildCategories(isDark, primaryBlue),
-                      _buildEvidenceBasedResearch(isDark, primaryBlue),
-                      _buildSafetyGuides(isDark, primaryBlue),
-                      _buildUserInsights(isDark, primaryBlue),
-                    ],
-                  ),
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
+      child: Scaffold(
+        backgroundColor: isDark ? bgDark : bgLight,
+        body: Consumer<ScienceHubViewModel>(
+          builder: (context, viewModel, child) {
+            if (viewModel.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Stack(
+              children: [
+                CustomScrollView(
+                  slivers: [
+                    _buildAppBar(context, isDark),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 100),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (viewModel.articleOfTheDay != null)
+                              _buildArticleOfTheDay(context, isDark,
+                                  primaryBlue, viewModel.articleOfTheDay!),
+                            _buildCategories(isDark, primaryBlue),
+                            _buildEvidenceBasedResearch(context, isDark,
+                                primaryBlue, viewModel.articles),
+                            _buildSafetyGuides(isDark, primaryBlue),
+                            _buildUserInsights(isDark, primaryBlue),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: _buildBottomNav(isDark, primaryBlue),
-          ),
-        ],
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: _buildBottomNav(isDark, primaryBlue),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -80,7 +104,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
           color: isDark ? Colors.white : const Color(0xFF111418),
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          fontFamily: 'Serif', // Placeholder for "Newsreader"
+          fontFamily: 'Serif', // Placeholder
         ),
       ),
       centerTitle: true,
@@ -105,91 +129,98 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
     );
   }
 
-  Widget _buildArticleOfTheDay(bool isDark, Color primary) {
+  Widget _buildArticleOfTheDay(
+      BuildContext context, bool isDark, Color primary, Article article) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Container(
-        height: 380,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          image: const DecorationImage(
-            image: NetworkImage(
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuC-Mo0FP3KsqIDUdVS9d0Nxs-dTiPcnT5WIrtBXKPcMRXD8weLqbGrFa75a-nRFYk_Gul-c883Vvi49HCOJKXFg9fKH3jzu_hCf2kEz4Iq9YDMlj0JKC4QMFBSGVwdp6ETo3qN1hRQRyOPit6o0Lm85cByokXZFeevqjj0b4b7A0p5yC4SyiZnAlYHybwJzxuiRV4kZzIO1dBZ_PJjKg1CIUNX1yZGPDBoVnjeZq8I3Hq-SxovI6ViwIR_7GvevvPvTCmoQSk-PF7M'),
-            fit: BoxFit.cover,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
+      child: GestureDetector(
+        onTap: () => Navigator.pushNamed(context, AppRouter.articleDetail,
+            arguments: article.id),
         child: Container(
+          height: 380,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.transparent,
-                Colors.black.withValues(alpha: 0.4),
-                Colors.black.withValues(alpha: 0.9),
-              ],
-              stops: const [0.4, 0.7, 1.0],
+            image: DecorationImage(
+              image: NetworkImage(article.imageUrl),
+              fit: BoxFit.cover,
             ),
-          ),
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Text(
-                  'ARTICLE OF THE DAY',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'The Science of Omega-3 and ADHD Focus',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Serif',
-                  height: 1.1,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Row(
-                children: [
-                  Icon(Icons.schedule, color: Colors.white70, size: 16),
-                  SizedBox(width: 4),
-                  Text(
-                    '6 min read',
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                  SizedBox(width: 16),
-                  Icon(Icons.verified, color: Colors.yellow, size: 16),
-                  SizedBox(width: 4),
-                  Text(
-                    'High Evidence',
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
               ),
             ],
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.4),
+                  Colors.black.withValues(alpha: 0.9),
+                ],
+                stops: const [0.4, 0.7, 1.0],
+              ),
+            ),
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: primary,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: const Text(
+                    'ARTICLE OF THE DAY',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  article.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Serif',
+                    height: 1.1,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Icon(Icons.schedule, color: Colors.white70, size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      article.readTime,
+                      style:
+                          const TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                    const SizedBox(width: 16),
+                    const Icon(Icons.verified, color: Colors.yellow, size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      'High Evidence', // Static for now, could be dynamic
+                      style:
+                          const TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -262,7 +293,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
     );
   }
 
-  Widget _buildEvidenceBasedResearch(bool isDark, Color primary) {
+  Widget _buildEvidenceBasedResearch(BuildContext context, bool isDark,
+      Color primary, List<Article> articles) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -290,157 +322,158 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          _buildResearchCard(
-            isDark,
-            primary,
-            'HIGH EVIDENCE',
-            '5 min read',
-            'Magnesium L-Threonate: Cognitive Impacts on Working Memory',
-            'A summary of the latest peer-reviewed clinical trials regarding cognitive enhancement...',
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuAXSn9oUPeGXFKbULkQ1iQxMlNyzbsKCAw5Nf805Rd4zEhtbK0CXYhy-ELcoHBtYx4v8frj0sOwZPjNisMLZY6QLvrPBr6sp-bpJOMyWZUG_9sDOnmMZ0Nr_8RFv4lS9uXSApADCgad0_BoHTVQ8_6o-d63ZJo2oAy_SSjqp-AKK4ppI3RgJOQWGBMu8u6eM6h_UYd-KI5JoVhyubR5IPm3G-zjxPnRLSrK5XYJdwB_G4KezpJlnVZgNqQJeE9ApRyUR1-FYEu-31M',
-          ),
-          const SizedBox(height: 16),
-          _buildResearchCard(
-            isDark,
-            primary,
-            'EMERGING',
-            '3 min read',
-            'Bacopa Monnieri: Traditional Herb Meets Modern Science',
-            'Exploring the adaptogenic properties and their effects on attention span...',
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuDLri_GTvn1jzv5Y1BRh-FB2UntIdqIwB31HO8atQfoD8AmOYiFBHRc5GqYVQyENqLQ7aIZKutCHPq9bvTLhSRj1qvxfDG5waXkD_9kPeoMZ9PfTEg6UUMmGXmKW5OBjZ77Z-EVSi5q7qMMOOwGkzjvchBMvvCU7RP1MGFm3szoDhZYrp73dEISPrfgucirht6beZbIA6pB28aN4TbnAJ2ENtRdn_w_knJGWeOUEBFV9G3-6ExiX3G_SFmVhcQXNPHU6PTc_BP2gzw',
-            isEmerging: true,
-          ),
+          ...articles.map((article) => Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: _buildResearchCard(
+                  context,
+                  isDark,
+                  primary,
+                  'HIGH EVIDENCE', // Mock badge
+                  article.readTime,
+                  article.title,
+                  article.tldr,
+                  article.imageUrl,
+                  article.id,
+                  isEmerging: false,
+                ),
+              )),
         ],
       ),
     );
   }
 
   Widget _buildResearchCard(
+    BuildContext context,
     bool isDark,
     Color primary,
     String badge,
     String time,
     String title,
     String description,
-    String imageUrl, {
+    String imageUrl,
+    String articleId, {
     bool isEmerging = false,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, AppRouter.articleDetail,
+          arguments: articleId),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E293B) : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
           ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: isEmerging
-                            ? (isDark
-                                ? const Color(0xFF334155)
-                                : const Color(0xFFF1F5F9))
-                            : primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        badge,
-                        style: TextStyle(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
                           color: isEmerging
                               ? (isDark
-                                  ? const Color(0xFF94A3B8)
-                                  : const Color(0xFF64748B))
-                              : primary,
+                                  ? const Color(0xFF334155)
+                                  : const Color(0xFFF1F5F9))
+                              : primary.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          badge,
+                          style: TextStyle(
+                            color: isEmerging
+                                ? (isDark
+                                    ? const Color(0xFF94A3B8)
+                                    : const Color(0xFF64748B))
+                                : primary,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        time,
+                        style: TextStyle(
+                          color: isDark
+                              ? const Color(0xFF94A3B8)
+                              : const Color(0xFF64748B),
                           fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: isDark ? Colors.white : const Color(0xFF111418),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Serif',
+                      height: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: isDark
+                          ? const Color(0xFF94A3B8)
+                          : const Color(0xFF64748B),
+                      fontSize: 12,
+                      height: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Text(
+                        'Read Full Analysis',
+                        style: TextStyle(
+                          color: primary,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      time,
-                      style: TextStyle(
-                        color: isDark
-                            ? const Color(0xFF94A3B8)
-                            : const Color(0xFF64748B),
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: isDark ? Colors.white : const Color(0xFF111418),
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Serif',
-                    height: 1.2,
+                      Icon(Icons.chevron_right, color: primary, size: 16),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: isDark
-                        ? const Color(0xFF94A3B8)
-                        : const Color(0xFF64748B),
-                    fontSize: 12,
-                    height: 1.4,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      'Read Full Analysis',
-                      style: TextStyle(
-                        color: primary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Icon(Icons.chevron_right, color: primary, size: 16),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                image: NetworkImage(imageUrl),
-                fit: BoxFit.cover,
+                ],
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: 16),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

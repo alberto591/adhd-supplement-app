@@ -12,6 +12,9 @@ class LibraryViewModel extends ChangeNotifier {
   List<Supplement> _filteredSupplements = [];
   String _searchQuery = '';
   String? _selectedCategory;
+  String? _evidenceStrength;
+  bool? _stimulantCompatible;
+  String? _form;
   bool _isLoading = false;
   String? _error;
 
@@ -20,6 +23,9 @@ class LibraryViewModel extends ChangeNotifier {
   List<Supplement> get allSupplements => _allSupplements;
   String get searchQuery => _searchQuery;
   String? get selectedCategory => _selectedCategory;
+  String? get evidenceStrength => _evidenceStrength;
+  bool? get stimulantCompatible => _stimulantCompatible;
+  String? get form => _form;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
@@ -55,28 +61,7 @@ class LibraryViewModel extends ChangeNotifier {
   /// Search supplements by query
   Future<void> search(String query) async {
     _searchQuery = query;
-
-    if (query.isEmpty) {
-      _applyFilters();
-      return;
-    }
-
-    _setLoading(true);
-    try {
-      _filteredSupplements =
-          await _supplementRepository.searchSupplements(query);
-
-      // Also filter by category if selected
-      if (_selectedCategory != null) {
-        _filteredSupplements = _filteredSupplements
-            .where((s) => s.category == _selectedCategory)
-            .toList();
-      }
-    } catch (e) {
-      _error = 'Search failed: $e';
-    } finally {
-      _setLoading(false);
-    }
+    _applyFilters();
   }
 
   /// Filter by category
@@ -85,12 +70,32 @@ class LibraryViewModel extends ChangeNotifier {
     _applyFilters();
   }
 
+  /// Filter by evidence strength
+  void filterByEvidence(String? strength) {
+    _evidenceStrength = strength;
+    _applyFilters();
+  }
+
+  /// Filter by stimulant compatibility
+  void filterByStimulant(bool? compatible) {
+    _stimulantCompatible = compatible;
+    _applyFilters();
+  }
+
+  /// Filter by form
+  void filterByForm(String? form) {
+    _form = form;
+    _applyFilters();
+  }
+
   /// Clear all filters
   void clearFilters() {
     _searchQuery = '';
     _selectedCategory = null;
-    _filteredSupplements = List.from(_allSupplements);
-    notifyListeners();
+    _evidenceStrength = null;
+    _stimulantCompatible = null;
+    _form = null;
+    _applyFilters();
   }
 
   /// Get supplement by ID
@@ -108,6 +113,25 @@ class LibraryViewModel extends ChangeNotifier {
     _filteredSupplements = _allSupplements.where((s) {
       // Category filter
       if (_selectedCategory != null && s.category != _selectedCategory) {
+        return false;
+      }
+
+      // Evidence filter
+      if (_evidenceStrength != null &&
+          s.evidenceLevel?.toLowerCase() != _evidenceStrength!.toLowerCase()) {
+        return false;
+      }
+
+      // Stimulant compatibility filter
+      if (_stimulantCompatible != null) {
+        // Assume isPrescription = stimulant for now, or just true if matches
+        // In wireframe "Stimulant Compatible" might mean isPrescription == false
+        if (_stimulantCompatible! && s.isPrescription) return false;
+        if (!_stimulantCompatible! && !s.isPrescription) return false;
+      }
+
+      // Form filter
+      if (_form != null && s.form?.toLowerCase() != _form!.toLowerCase()) {
         return false;
       }
 

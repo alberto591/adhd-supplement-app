@@ -14,10 +14,8 @@ class SafetyDetailScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, 
-            color: isDark ? Colors.white : const Color(0xFF111418), 
-            size: 20
-          ),
+          icon: Icon(Icons.arrow_back_ios_new,
+              color: isDark ? Colors.white : const Color(0xFF111418), size: 20),
           onPressed: () {},
         ),
         title: Text(
@@ -40,10 +38,14 @@ class SafetyDetailScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.warningAmberBgDark.withValues(alpha: 0.3) : AppColors.warningAmberBgLight,
+                  color: isDark
+                      ? AppColors.warningAmber.withValues(alpha: 0.3)
+                      : AppColors.warningAmber.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isDark ? AppColors.warningAmberDark.withValues(alpha: 0.5) : Colors.amber.shade100,
+                    color: isDark
+                        ? AppColors.warningAmber.withValues(alpha: 0.5)
+                        : Colors.amber.shade100,
                   ),
                 ),
                 child: Row(
@@ -51,7 +53,9 @@ class SafetyDetailScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.warningAmberDark : Colors.amber.shade100,
+                        color: isDark
+                            ? AppColors.warningAmber
+                            : Colors.amber.shade100,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -68,7 +72,9 @@ class SafetyDetailScreen extends StatelessWidget {
                           Text(
                             'INTERACTION DETECTED',
                             style: TextStyle(
-                              color: isDark ? Colors.amber.shade200 : Colors.amber.shade900,
+                              color: isDark
+                                  ? Colors.amber.shade200
+                                  : Colors.amber.shade900,
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.0,
@@ -78,7 +84,9 @@ class SafetyDetailScreen extends StatelessWidget {
                           Text(
                             'Moderate Severity • Reduced Efficacy',
                             style: TextStyle(
-                              color: isDark ? Colors.amber.shade100 : Colors.amber.shade800,
+                              color: isDark
+                                  ? Colors.amber.shade100
+                                  : Colors.amber.shade800,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                             ),
@@ -90,7 +98,7 @@ class SafetyDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Headline
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
@@ -115,7 +123,7 @@ class SafetyDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Hero Illustration
             Padding(
               padding: const EdgeInsets.all(16),
@@ -126,7 +134,8 @@ class SafetyDetailScreen extends StatelessWidget {
                   color: isDark ? Colors.grey[800] : Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   image: const DecorationImage(
-                    image: NetworkImage('https://lh3.googleusercontent.com/aida-public/AB6AXuB-adbbLnJNcnGxGmQL1P9ncwbUp45axu7D2yFB-m-2uxE0VVb2Ok6VSu3GxQMCr7fzx5DI4qjoc3qVpw9EdO730wePvqFf-gABNDQZkgQNjOp58eMDVPnJOEbn15qMvbUUkwsVcLeFyitO02G8w3k9PGnBx-zZn7OMu_-km7q9jCq6AJq7OmnAm0prExDvYUo1K0FC5HArZK3u31Pm8Q51h0l9qmMxw9EXnkQpZB7uSmBljuhjilgoZ6GMlsjo7IKpKYBf9Houiak'),
+                    image: NetworkImage(
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuB-adbbLnJNcnGxGmQL1P9ncwbUp45axu7D2yFB-m-2uxE0VVb2Ok6VSu3GxQMCr7fzx5DI4qjoc3qVpw9EdO730wePvqFf-gABNDQZkgQNjOp58eMDVPnJOEbn15qMvbUUkwsVcLeFyitO02G8w3k9PGnBx-zZn7OMu_-km7q9jCq6AJq7OmnAm0prExDvYUo1K0FC5HArZK3u31Pm8Q51h0l9qmMxw9EXnkQpZB7uSmBljuhjilgoZ6GMlsjo7IKpKYBf9Houiak'),
                     fit: BoxFit.cover,
                   ),
                   boxShadow: [
@@ -149,7 +158,8 @@ class SafetyDetailScreen extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [Colors.transparent, Colors.black45],
                     ),
-                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(16)),
                   ),
                   child: const Text(
                     'Detailed Interaction Analysis',
@@ -162,36 +172,41 @@ class SafetyDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Solution Card
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF111827) : Colors.white, // dark:bg-gray-900
+                  color: isDark
+                      ? const Color(0xFF111827)
+                      : Colors.white, // dark:bg-gray-900
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: AppColors.primary.withValues(alpha: 0.2),
                   ),
                   boxShadow: [
-                     BoxShadow(
-                       color: Colors.black.withValues(alpha: 0.05), // shadow-lg equivalent-ish
-                       blurRadius: 10,
-                       offset: const Offset(0, 4),
-                     ),
+                    BoxShadow(
+                      color: Colors.black
+                          .withValues(alpha: 0.05), // shadow-lg equivalent-ish
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
                   ],
                 ),
                 child: Column(
                   children: [
                     // Header
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       color: AppColors.primary,
                       width: double.infinity,
                       child: const Row(
                         children: [
-                          Icon(Icons.check_circle, color: Colors.white, size: 16),
+                          Icon(Icons.check_circle,
+                              color: Colors.white, size: 16),
                           SizedBox(width: 8),
                           Text(
                             'THE SOLUTION',
@@ -214,7 +229,9 @@ class SafetyDetailScreen extends StatelessWidget {
                           Text(
                             'Wait 2 Hours',
                             style: TextStyle(
-                              color: isDark ? Colors.white : const Color(0xFF111418),
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xFF111418),
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -223,7 +240,9 @@ class SafetyDetailScreen extends StatelessWidget {
                           Text(
                             'Take Vitamin C at least 2 hours before or after your stimulant medication to ensure full absorption.',
                             style: TextStyle(
-                              color: isDark ? Colors.grey[300] : const Color(0xFF617289),
+                              color: isDark
+                                  ? Colors.grey[300]
+                                  : const Color(0xFF617289),
                               fontSize: 16,
                               height: 1.5,
                             ),
@@ -265,7 +284,7 @@ class SafetyDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Risk Section
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
@@ -289,7 +308,9 @@ class SafetyDetailScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.grey[800]!.withValues(alpha: 0.5) : const Color(0xFFF9FAFB), // gray-50
+                  color: isDark
+                      ? Colors.grey[800]!.withValues(alpha: 0.5)
+                      : const Color(0xFFF9FAFB), // gray-50
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -302,15 +323,15 @@ class SafetyDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Science Section
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
               child: Row(
                 children: [
-                   const Icon(Icons.science, color: AppColors.primary, size: 24),
-                   const SizedBox(width: 8),
-                   Text(
+                  const Icon(Icons.science, color: AppColors.primary, size: 24),
+                  const SizedBox(width: 8),
+                  Text(
                     'The Science',
                     style: TextStyle(
                       color: isDark ? Colors.white : const Color(0xFF111418),
@@ -325,27 +346,18 @@ class SafetyDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 40),
               child: Column(
                 children: [
-                  _buildSciencePoint(
-                    context, 
-                    'pH Sensitivity', 
-                    'Stimulants are alkaline. Higher stomach acidity from Vitamin C prevents the medication from crossing into the bloodstream.'
-                  ),
+                  _buildSciencePoint(context, 'pH Sensitivity',
+                      'Stimulants are alkaline. Higher stomach acidity from Vitamin C prevents the medication from crossing into the bloodstream.'),
                   const SizedBox(height: 16),
-                  _buildSciencePoint(
-                    context, 
-                    'Renal Clearance', 
-                    'Acidified urine increases the rate at which the kidneys filter out amphetamine salts, shortening the duration of effect.'
-                  ),
-                   const SizedBox(height: 16),
-                  _buildSciencePoint(
-                    context, 
-                    'Metabolic Impact', 
-                    'The interaction can reduce effective medication levels by up to 30-50% in sensitive individuals.'
-                  ),
+                  _buildSciencePoint(context, 'Renal Clearance',
+                      'Acidified urine increases the rate at which the kidneys filter out amphetamine salts, shortening the duration of effect.'),
+                  const SizedBox(height: 16),
+                  _buildSciencePoint(context, 'Metabolic Impact',
+                      'The interaction can reduce effective medication levels by up to 30-50% in sensitive individuals.'),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 20),
           ],
         ),
@@ -353,15 +365,17 @@ class SafetyDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSciencePoint(BuildContext context, String title, String description) {
+  Widget _buildSciencePoint(
+      BuildContext context, String title, String description) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 6),
-          child: Icon(Icons.fiber_manual_record, color: AppColors.primary, size: 12),
+          child: Icon(Icons.fiber_manual_record,
+              color: AppColors.primary, size: 12),
         ),
         const SizedBox(width: 12),
         Expanded(

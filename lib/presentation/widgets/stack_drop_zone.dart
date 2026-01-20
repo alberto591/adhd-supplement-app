@@ -63,12 +63,13 @@ class _StackDropZoneState extends State<StackDropZone> {
           constraints: const BoxConstraints(minHeight: 300),
           decoration: BoxDecoration(
             color: _isHovering
-                ? AppColors.surfaceDark.withValues(alpha: 0.5)
-                : AppColors.surfaceDark.withValues(alpha: 0.3),
+                ? AppColors.cardDark.withValues(alpha: 0.5)
+                : AppColors.cardDark.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color:
-                  _isHovering ? AppColors.primary : AppColors.surfaceHighlight,
+              color: _isHovering
+                  ? AppColors.primary
+                  : AppColors.secondary.withValues(alpha: 0.2),
               width: 2,
               style: BorderStyle.none,
             ),
@@ -80,7 +81,7 @@ class _StackDropZoneState extends State<StackDropZone> {
                   painter: _DashedBorderPainter(
                     color: _isHovering
                         ? AppColors.primary
-                        : AppColors.surfaceHighlight,
+                        : AppColors.secondary.withValues(alpha: 0.2),
                     strokeWidth: 2,
                     gap: 5,
                   ),
@@ -99,7 +100,7 @@ class _StackDropZoneState extends State<StackDropZone> {
                             Icon(
                               Icons.drag_indicator,
                               size: 48,
-                              color: AppColors.textSecondaryBlue
+                              color: AppColors.textSecondaryDark
                                   .withValues(alpha: 0.5),
                             ),
                             const SizedBox(height: 8),
@@ -107,7 +108,7 @@ class _StackDropZoneState extends State<StackDropZone> {
                               'Drag supplements here to build your morning routine.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: AppColors.textSecondaryBlue
+                                color: AppColors.textSecondaryDark
                                     .withValues(alpha: 0.7),
                                 fontSize: 14,
                               ),

@@ -22,15 +22,16 @@ class UpNextCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.accentPurple.withValues(alpha: 0.1),
+                  color: AppColors.primaryGold.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Text(
                   'Evening Focus',
                   style: TextStyle(
-                    color: AppColors.accentPurple,
+                    color: AppColors.primaryGold,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -42,7 +43,7 @@ class UpNextCard extends StatelessWidget {
         Container(
           height: 220, // Aspect ratio approx from wireframe
           decoration: BoxDecoration(
-            color: AppColors.cardForest,
+            color: AppColors.cardDark,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
             boxShadow: [
@@ -61,7 +62,8 @@ class UpNextCard extends StatelessWidget {
               Image.network(
                 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDeQAsZknPjXtiKsTY8VWHBbswWWoy9p8P-2sDVv2vDVdiw_IwzwkZsuqJWdu8c3V0OXw-zS8sI7X6IqkKN8g2NSbpAsL5Rov_pBWXTiKHTHI-NJBs-it-RnMc4aq-9iOXOXj9G5msIkcSdri6U7Htbl5WcOfNor4n22tI0hAiK-qI-ZVdvv2-mWa7RHsQwaosBTTyXPDbsoLMUBRNfJf1FvNaPs6pZ3XvwJgPazI4K8XSXqgzTPC4QDEeglh-uXczZBn-VISEvtg',
                 fit: BoxFit.cover,
-                errorBuilder: (ctx, err, stack) => Container(color: AppColors.cardForest),
+                errorBuilder: (ctx, err, stack) =>
+                    Container(color: AppColors.cardDark),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -70,13 +72,13 @@ class UpNextCard extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.black.withValues(alpha: 0.2),
-                      AppColors.cardForest.withValues(alpha: 0.9),
+                      AppColors.cardDark.withValues(alpha: 0.9),
                     ],
                     stops: const [0.3, 0.9],
                   ),
                 ),
               ),
-              
+
               // Content Overlay
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -87,7 +89,7 @@ class UpNextCard extends StatelessWidget {
                     const Text(
                       'EVENING STACK',
                       style: TextStyle(
-                        color: AppColors.accentPurple,
+                        color: AppColors.primaryGold,
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
@@ -105,7 +107,8 @@ class UpNextCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     const Row(
                       children: [
-                        Icon(Icons.schedule, color: Color(0xFF9DB9A8), size: 14),
+                        Icon(Icons.schedule,
+                            color: Color(0xFF9DB9A8), size: 14),
                         SizedBox(width: 4),
                         Text(
                           '8:00 PM • 3 Supplements',
@@ -124,14 +127,15 @@ class UpNextCard extends StatelessWidget {
                         icon: const Icon(Icons.done_all, size: 20),
                         label: const Text('Mark all as Taken'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.brightGreen,
+                          backgroundColor: AppColors.accentGreen,
                           foregroundColor: const Color(0xFF111814),
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           elevation: 4,
-                          shadowColor: AppColors.brightGreen.withValues(alpha: 0.3),
+                          shadowColor:
+                              AppColors.accentGreen.withValues(alpha: 0.3),
                           textStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,

@@ -59,14 +59,6 @@ class UserProfileScreen extends StatelessWidget {
                   trailing: Icon(Icons.chevron_right, color: Colors.grey),
                 ),
                 const SizedBox(height: 2),
-                const _SettingsTile(
-                  icon: Icons.medication,
-                  iconColor: AppColors.primary,
-                  title: 'Medications',
-                  subtitle: 'Vyvanse 30mg, Magnesium',
-                  trailing: Icon(Icons.chevron_right, color: Colors.grey),
-                ),
-                const SizedBox(height: 2),
                 _SettingsTile(
                   icon: Icons.medication,
                   iconColor: AppColors.primary,
@@ -173,13 +165,30 @@ class UserProfileScreen extends StatelessWidget {
                       Navigator.pushNamed(context, AppRouter.helpAndSupport),
                 ),
                 const SizedBox(height: 2),
-                const _SettingsTile(
+                _SettingsTile(
                   icon: Icons.description, // clinical_notes equivalent
                   iconColor: AppColors.primary,
                   title: 'Medical Disclaimer',
                   subtitle: 'Important health information',
-                  trailing:
-                      Icon(Icons.open_in_new, color: Colors.grey, size: 20),
+                  trailing: const Icon(Icons.open_in_new,
+                      color: Colors.grey, size: 20),
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Medical Disclaimer'),
+                      content: const SingleChildScrollView(
+                        child: Text(
+                          'The information provided in this app is for educational and informational purposes only and is not intended as medical advice. \n\nAlways consult with a qualified healthcare professional regarding any medical condition or treatment. \n\nDo not disregard professional medical advice or delay in seeking it because of something you have read in this application.',
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Close'),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 2),
                 _SettingsTile(

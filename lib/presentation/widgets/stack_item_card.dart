@@ -23,7 +23,8 @@ class StackItemCard extends StatefulWidget {
   State<StackItemCard> createState() => _StackItemCardState();
 }
 
-class _StackItemCardState extends State<StackItemCard> with SingleTickerProviderStateMixin {
+class _StackItemCardState extends State<StackItemCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -57,7 +58,7 @@ class _StackItemCardState extends State<StackItemCard> with SingleTickerProvider
           margin: const EdgeInsets.only(bottom: 8),
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.surfaceDark,
+            color: AppColors.cardDark,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
             boxShadow: [
@@ -97,7 +98,7 @@ class _StackItemCardState extends State<StackItemCard> with SingleTickerProvider
                       Text(
                         widget.dosage,
                         style: const TextStyle(
-                          color: AppColors.textSecondaryBlue,
+                          color: AppColors.textSecondaryDark,
                           fontSize: 12,
                         ),
                       ),
@@ -107,7 +108,8 @@ class _StackItemCardState extends State<StackItemCard> with SingleTickerProvider
               ),
               IconButton(
                 onPressed: widget.onRemove,
-                icon: const Icon(Icons.remove_circle_outline, color: AppColors.textSecondaryBlue, size: 20),
+                icon: const Icon(Icons.remove_circle_outline,
+                    color: AppColors.textSecondaryDark, size: 20),
                 style: IconButton.styleFrom(
                   hoverColor: Colors.red.withValues(alpha: 0.1),
                   highlightColor: Colors.red.withValues(alpha: 0.2),

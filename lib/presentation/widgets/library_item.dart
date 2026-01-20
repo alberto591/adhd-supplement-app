@@ -43,7 +43,7 @@ class LibraryItem extends StatelessWidget {
       height: 104, // increased height slightly to assume fitting 2 lines
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: AppColors.cardDark,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
         boxShadow: [
@@ -86,7 +86,7 @@ class LibraryItem extends StatelessWidget {
             dosage,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: AppColors.textSecondaryBlue,
+              color: AppColors.textSecondaryDark,
               fontSize: 9,
             ),
             maxLines: 1,

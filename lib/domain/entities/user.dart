@@ -4,6 +4,8 @@ class User {
   final String? displayName;
   final String? photoUrl;
   final DateTime createdAt;
+  final int xp;
+  final int level;
   final bool hasCompletedOnboarding;
 
   const User({
@@ -13,6 +15,8 @@ class User {
     this.photoUrl,
     required this.createdAt,
     this.hasCompletedOnboarding = false,
+    this.xp = 0,
+    this.level = 1,
   });
 
   static const Object _unset = Object();
@@ -24,15 +28,22 @@ class User {
     Object? photoUrl = _unset,
     DateTime? createdAt,
     bool? hasCompletedOnboarding,
+    int? xp,
+    int? level,
   }) {
     return User(
       id: id ?? this.id,
       email: email ?? this.email,
-      displayName:
-          identical(displayName, _unset) ? this.displayName : displayName as String?,
-      photoUrl: identical(photoUrl, _unset) ? this.photoUrl : photoUrl as String?,
+      displayName: identical(displayName, _unset)
+          ? this.displayName
+          : displayName as String?,
+      photoUrl:
+          identical(photoUrl, _unset) ? this.photoUrl : photoUrl as String?,
       createdAt: createdAt ?? this.createdAt,
-      hasCompletedOnboarding: hasCompletedOnboarding ?? this.hasCompletedOnboarding,
+      hasCompletedOnboarding:
+          hasCompletedOnboarding ?? this.hasCompletedOnboarding,
+      xp: xp ?? this.xp,
+      level: level ?? this.level,
     );
   }
 
@@ -44,6 +55,8 @@ class User {
       'photoUrl': photoUrl,
       'createdAt': createdAt.toIso8601String(),
       'hasCompletedOnboarding': hasCompletedOnboarding,
+      'xp': xp,
+      'level': level,
     };
   }
 
@@ -55,6 +68,8 @@ class User {
       photoUrl: json['photoUrl'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       hasCompletedOnboarding: json['hasCompletedOnboarding'] as bool? ?? false,
+      xp: json['xp'] as int? ?? 0,
+      level: json['level'] as int? ?? 1,
     );
   }
 }

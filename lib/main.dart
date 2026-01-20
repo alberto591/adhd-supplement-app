@@ -66,7 +66,7 @@ class AdhdSupplementApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
         // Start with login screen for now
-        // TODO: Check auth state and redirect accordingly
+        // Start with AuthWrapper to determine destination
         home: const AuthWrapper(),
         onGenerateRoute: AppRouter.generateRoute,
       ),

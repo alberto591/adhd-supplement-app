@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../application/view_models/focus_buddies_view_model.dart';
+import '../../config/locator.dart';
 import '../navigation/app_router.dart';
 
 class FocusBuddiesScreen extends StatefulWidget {
   const FocusBuddiesScreen({super.key});
+
+  static Widget withProvider() {
+    return ChangeNotifierProvider(
+      create: (_) => locator<FocusBuddiesViewModel>()..loadData(),
+      child: const FocusBuddiesScreen(),
+    );
+  }
 
   @override
   State<FocusBuddiesScreen> createState() => _FocusBuddiesScreenState();
@@ -16,43 +26,56 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     const bgDark = Color(0xFF190F23);
     const bgLight = Color(0xFFF7F5F8);
 
-    return Scaffold(
-      backgroundColor: isDark ? bgDark : bgLight,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              _buildAppBar(context, isDark, primaryPurple),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
-                  child: Column(
-                    children: [
-                      _buildTeamGoalProgress(isDark, primaryPurple),
-                      const SizedBox(height: 24),
-                      _buildSplitViewLeaderboard(isDark, primaryPurple),
-                      const SizedBox(height: 24),
-                      _buildXPStats(isDark, primaryPurple),
-                      const SizedBox(height: 32),
-                      _buildActivityFeed(isDark, primaryPurple),
-                      const SizedBox(height: 40),
-                      _buildCallToAction(isDark, primaryPurple),
-                      const SizedBox(height: 16),
-                      _buildSecondaryActions(isDark),
-                    ],
+    return Consumer<FocusBuddiesViewModel>(
+      builder: (context, viewModel, child) {
+        if (viewModel.isLoading) {
+          return Scaffold(
+            backgroundColor: isDark ? bgDark : bgLight,
+            body: const Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        return Scaffold(
+          backgroundColor: isDark ? bgDark : bgLight,
+          body: Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  _buildAppBar(context, isDark, primaryPurple),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
+                      child: Column(
+                        children: [
+                          _buildTeamGoalProgress(
+                              isDark, primaryPurple, viewModel),
+                          const SizedBox(height: 24),
+                          _buildSplitViewLeaderboard(
+                              isDark, primaryPurple, viewModel),
+                          const SizedBox(height: 24),
+                          _buildXPStats(isDark, primaryPurple, viewModel),
+                          const SizedBox(height: 32),
+                          _buildActivityFeed(isDark, primaryPurple, viewModel),
+                          const SizedBox(height: 40),
+                          _buildCallToAction(isDark, primaryPurple, viewModel),
+                          const SizedBox(height: 16),
+                          _buildSecondaryActions(isDark),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: _buildBottomNav(isDark, primaryPurple),
               ),
             ],
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: _buildBottomNav(isDark, primaryPurple),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -102,7 +125,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     );
   }
 
-  Widget _buildTeamGoalProgress(bool isDark, Color primary) {
+  Widget _buildTeamGoalProgress(
+      bool isDark, Color primary, FocusBuddiesViewModel viewModel) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -140,7 +164,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                 ],
               ),
               Text(
-                '75%',
+                '${(viewModel.teamGoalProgress * 100).toInt()}%',
                 style: TextStyle(
                   color: primary,
                   fontSize: 14,
@@ -164,7 +188,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                 Container(
                   height: 12,
                   width: MediaQuery.of(context).size.width *
-                      0.6, // rough approx for 75%
+                      0.8 *
+                      viewModel.teamGoalProgress, // rough approx
                   decoration: BoxDecoration(
                     color: primary,
                     boxShadow: [
@@ -180,7 +205,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            '6/8 days completed this week. Keep it up!',
+            '${viewModel.sharedGoalDays}/${viewModel.totalDaysGoal} days completed this week. Keep it up!',
             style: TextStyle(
               color: isDark ? primary.withValues(alpha: 0.7) : Colors.grey[500],
               fontSize: 14,
@@ -192,17 +217,18 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     );
   }
 
-  Widget _buildSplitViewLeaderboard(bool isDark, Color primary) {
+  Widget _buildSplitViewLeaderboard(
+      bool isDark, Color primary, FocusBuddiesViewModel viewModel) {
     return Row(
       children: [
         Expanded(
           child: _buildProfileCard(
             isDark,
             primary,
-            'You',
-            '12',
-            true,
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuCW4otpvyD5on_5_YykKsYQDwXOKJ03f_jAdGJZmcqhS5WzZbNDZSvwtkfTzmEZz2LigExl9e5SkShfbDq-5RZHiXQe8puS2SFpKn1YdTQT4YI3bQuKhRg6yd6vHyloHlQWxEV7rj4yYC_nFRh16-9-YSc9xji_OrmO-y5bhTT-EhkNYCgRXC5kzsUKzqukF_ui02Awx2B-k6etsC2bAv0IOvojziEOo95cqEAeAVAf1pgq4vQI7kKcVWe9ZSX7ubYEODJ2IBUiWwA',
+            'You', // Could use authName if available
+            viewModel.userStreak.toString(),
+            viewModel.userStreak >= viewModel.opponentStreak,
+            viewModel.userImage,
             isUser: true,
           ),
         ),
@@ -238,10 +264,10 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           child: _buildProfileCard(
             isDark,
             primary,
-            'Alex',
-            '10',
-            false,
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuC2ESo4fGI8ZC0JqCjTqfeMrymcGC86qXyaKokGASl6caxhGNVViQQz5zf1HtFYlDwm7KsGm7sDC5E_J-d6g7nIaf3DkondKQ7hD7dZsrArtf1ddF9qqbkvG1pSnhh690nlE8n25x4dqFy3OlGr46QPR7vmKlVvdxlb4i8elu3rmA-NjZMo6xxF2zLZ15lyepeWzklRLOT9PxUelGa-UjLj4JpS3B7NuNNttb4TmXmSz7DCcvsK3DvbEXU4v0VjDecArCGEtiqdyiM',
+            viewModel.opponentName,
+            viewModel.opponentStreak.toString(),
+            viewModel.opponentStreak > viewModel.userStreak,
+            viewModel.opponentImage,
             isUser: false,
           ),
         ),
@@ -352,15 +378,16 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     );
   }
 
-  Widget _buildXPStats(bool isDark, Color primary) {
+  Widget _buildXPStats(
+      bool isDark, Color primary, FocusBuddiesViewModel viewModel) {
     return Row(
       children: [
         Expanded(
           child: _buildStatCard(
             isDark,
             'Total Team XP',
-            '4,550',
-            '+15%',
+            viewModel.teamXP,
+            viewModel.teamGrowth,
             const Color(0xFF10B981),
           ),
         ),
@@ -369,8 +396,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           child: _buildStatCard(
             isDark,
             'Days Active',
-            '22',
-            '+2',
+            viewModel.daysActive,
+            viewModel.activeGrowth,
             const Color(0xFF10B981),
           ),
         ),
@@ -431,7 +458,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     );
   }
 
-  Widget _buildActivityFeed(bool isDark, Color primary) {
+  Widget _buildActivityFeed(
+      bool isDark, Color primary, FocusBuddiesViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -445,22 +473,43 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
           ),
         ),
         const SizedBox(height: 16),
-        _buildFeedItem(
-          isDark,
-          Icons.check_circle,
-          const Color(0xFF10B981),
-          const Color(0xFF10B981).withValues(alpha: 0.1),
-          'You logged Morning Stack! +50 XP',
-        ),
-        const SizedBox(height: 12),
-        _buildFeedItem(
-          isDark,
-          Icons.notifications_active,
-          primary,
-          isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100]!,
-          'Alex needs a nudge for Afternoon Stack.',
-          isNotification: true,
-        ),
+        ...viewModel.feedItems.map((item) {
+          IconData icon;
+          Color iconColor;
+          Color bgColor;
+
+          switch (item.iconType) {
+            case FeedIconType.check:
+              icon = Icons.check_circle;
+              iconColor = const Color(0xFF10B981);
+              bgColor = const Color(0xFF10B981).withValues(alpha: 0.1);
+              break;
+            case FeedIconType.notification:
+              icon = Icons.notifications_active;
+              iconColor = primary;
+              bgColor = isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.grey[100]!;
+              break;
+            case FeedIconType.bolt:
+              icon = Icons.bolt;
+              iconColor = Colors.orange;
+              bgColor = Colors.orange.withValues(alpha: 0.1);
+              break;
+          }
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _buildFeedItem(
+              isDark,
+              icon,
+              iconColor,
+              bgColor,
+              item.text,
+              isNotification: item.isActionable,
+            ),
+          );
+        }),
       ],
     );
   }
@@ -527,7 +576,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
     return [TextSpan(text: text)];
   }
 
-  Widget _buildCallToAction(bool isDark, Color primary) {
+  Widget _buildCallToAction(
+      bool isDark, Color primary, FocusBuddiesViewModel viewModel) {
     return Column(
       children: [
         SizedBox(
@@ -540,8 +590,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Send Nudge?'),
-                  content: const Text(
-                    'This will send "Don\'t forget your stack!" notification to Alex.',
+                  content: Text(
+                    'This will send "Don\'t forget your stack!" notification to ${viewModel.opponentName}.',
                   ),
                   actions: [
                     TextButton(
@@ -549,14 +599,18 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                       child: const Text('Cancel'),
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text('Nudge sent to Alex! ⚡'),
-                            backgroundColor: primary,
-                          ),
-                        );
+                        await viewModel.sendNudge();
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Nudge sent to ${viewModel.opponentName}! ⚡'),
+                              backgroundColor: primary,
+                            ),
+                          );
+                        }
                       },
                       child: const Text('Send'),
                     ),
@@ -572,14 +626,14 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
               elevation: 4,
               shadowColor: primary.withValues(alpha: 0.4),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.bolt, color: Colors.white, size: 24),
-                SizedBox(width: 12),
+                const Icon(Icons.bolt, color: Colors.white, size: 24),
+                const SizedBox(width: 12),
                 Text(
-                  'Nudge Alex',
-                  style: TextStyle(
+                  'Nudge ${viewModel.opponentName}',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -708,6 +762,8 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
               .popUntil((route) => route.settings.name == AppRouter.dashboard);
         } else if (index == 4) {
           Navigator.pushReplacementNamed(context, AppRouter.profile);
+        } else if (index == 3) {
+          Navigator.pushReplacementNamed(context, AppRouter.successStats);
         }
       },
       child: Column(
@@ -728,26 +784,56 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
   }
 
   Widget _buildAddButton(bool isDark, Color primary) {
-    return Container(
-      width: 56,
-      height: 56,
-      margin: const EdgeInsets.only(bottom: 24),
-      decoration: BoxDecoration(
-        color: primary,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: isDark ? const Color(0xFF190F23) : const Color(0xFFF7F5F8),
-          width: 4,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: primary.withValues(alpha: 0.4),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: () {
+        showDialog<void>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Invite Friend'),
+            content: const Text(
+                'Enter email or username to invite a new accountability partner.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Invitation sent! 📩'),
+                      backgroundColor: primary,
+                    ),
+                  );
+                },
+                child: const Text('Invite'),
+              ),
+            ],
           ),
-        ],
+        );
+      },
+      child: Container(
+        width: 56,
+        height: 56,
+        margin: const EdgeInsets.only(bottom: 24),
+        decoration: BoxDecoration(
+          color: primary,
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: isDark ? const Color(0xFF190F23) : const Color(0xFFF7F5F8),
+            width: 4,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: primary.withValues(alpha: 0.4),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: const Icon(Icons.add, color: Colors.white, size: 32),
       ),
-      child: const Icon(Icons.add, color: Colors.white, size: 32),
     );
   }
 }

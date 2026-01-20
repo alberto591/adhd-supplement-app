@@ -32,6 +32,10 @@ dependencies:
   shared_preferences: ^2.5.4
   http: ^1.6.0
   purchases_flutter: ^8.5.0
+  image_picker: ^1.2.1
+  pdf: ^3.11.3
+  printing: ^5.13.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

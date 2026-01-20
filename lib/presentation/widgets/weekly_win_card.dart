@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class WeeklyWinCard extends StatelessWidget {
-  const WeeklyWinCard({super.key});
+  final int streakDays;
+  final double focusImprovement;
+
+  const WeeklyWinCard({
+    super.key,
+    required this.streakDays,
+    required this.focusImprovement,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -32,7 +39,8 @@ class WeeklyWinCard extends StatelessWidget {
             height: 180,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage('https://lh3.googleusercontent.com/aida-public/AB6AXuBVHwiwS1N_25BZq-s9mst15_yTJ3Q5L6iPXcYO0Bu_OIvXgxn8kQO59NMvTSavE0lfm6LvA2feUBmgEDKZ1K9ZAatHyNEMo0gZ8f1gwDHFZ_srI1vgF8EDij1FH72nHK58LCPl4Uwav0gFLXyx21fN6_G92_1AJAoZ2UqPVEZdyW7qbRoFhqZJvy0RnYxXKsJecug_KFQy5CSzNqvcHtekORwj3IXyN50ors8BcKTtvDx6UZvEh9YDWNnw925k7Gc_0drgYIdA_hM'),
+                image: NetworkImage(
+                    'https://lh3.googleusercontent.com/aida-public/AB6AXuBVHwiwS1N_25BZq-s9mst15_yTJ3Q5L6iPXcYO0Bu_OIvXgxn8kQO59NMvTSavE0lfm6LvA2feUBmgEDKZ1K9ZAatHyNEMo0gZ8f1gwDHFZ_srI1vgF8EDij1FH72nHK58LCPl4Uwav0gFLXyx21fN6_G92_1AJAoZ2UqPVEZdyW7qbRoFhqZJvy0RnYxXKsJecug_KFQy5CSzNqvcHtekORwj3IXyN50ors8BcKTtvDx6UZvEh9YDWNnw925k7Gc_0drgYIdA_hM'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -45,7 +53,8 @@ class WeeklyWinCard extends StatelessWidget {
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
                         colors: [
-                          (isDark ? const Color(0xFF1C2027) : Colors.white).withValues(alpha: 0.8),
+                          (isDark ? const Color(0xFF1C2027) : Colors.white)
+                              .withValues(alpha: 0.8),
                           Colors.transparent,
                         ],
                       ),
@@ -56,7 +65,8 @@ class WeeklyWinCard extends StatelessWidget {
                   bottom: 16,
                   left: 16,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(20),
@@ -75,7 +85,7 @@ class WeeklyWinCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Content
           Padding(
             padding: const EdgeInsets.all(20),
@@ -93,7 +103,7 @@ class WeeklyWinCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '7 Day Streak!',
+                  '$streakDays Day Streak!',
                   style: TextStyle(
                     color: isDark ? Colors.white : const Color(0xFF0F172A),
                     fontSize: 24,
@@ -105,38 +115,41 @@ class WeeklyWinCard extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     style: TextStyle(
-                       color: isDark ? Colors.grey[400] : const Color(0xFF64748B),
-                       fontSize: 16,
-                       height: 1.5,
-                       fontFamily: 'Lexend', // Ensure font matches app
+                      color:
+                          isDark ? Colors.grey[400] : const Color(0xFF64748B),
+                      fontSize: 16,
+                      height: 1.5,
+                      fontFamily: 'Lexend', // Ensure font matches app
                     ),
-                    children: const [
-                      TextSpan(text: "You've been incredibly consistent this week. Your average focus levels are up by "),
+                    children: [
+                      const TextSpan(
+                          text:
+                              "You've been incredibly consistent this week. Your average focus levels are up by "),
                       TextSpan(
-                        text: "15%",
-                        style: TextStyle(
+                        text: "${focusImprovement.toStringAsFixed(0)}%",
+                        style: const TextStyle(
                           color: AppColors.accentGreen,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextSpan(text: " compared to last week."),
+                      const TextSpan(text: " compared to last week."),
                     ],
                   ),
                 ),
                 const SizedBox(height: 16),
                 const Row(
-                   children: [
-                     Icon(Icons.trending_up, color: AppColors.primary, size: 16),
-                     SizedBox(width: 8),
-                     Text(
-                       'Keep this momentum going!',
-                       style: TextStyle(
-                         color: AppColors.primary,
-                         fontSize: 14,
-                         fontWeight: FontWeight.w600,
-                       ),
-                     ),
-                   ],
+                  children: [
+                    Icon(Icons.trending_up, color: AppColors.primary, size: 16),
+                    SizedBox(width: 8),
+                    Text(
+                      'Keep this momentum going!',
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

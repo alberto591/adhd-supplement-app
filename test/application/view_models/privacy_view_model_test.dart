@@ -2,9 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:adhd_supplement_app/application/view_models/privacy_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
 import 'package:adhd_supplement_app/domain/entities/user.dart';
 import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:flutter/material.dart';
 
 class MockAuthRepository implements AuthRepository {
   bool _shouldThrow = false;
@@ -71,11 +73,60 @@ class MockLogRepository implements LogRepository {
 
   @override
   Stream<DailyLog?> watchTodayLog(String userId) => const Stream.empty();
+
+  @override
+  Future<void> clearAllLogs(String userId) async {}
+}
+
+class MockSettingsRepository implements SettingsRepository {
+  @override
+  Future<void> init() async {}
+
+  @override
+  bool getNudgeModeEnabled() => false;
+  @override
+  Future<void> setNudgeModeEnabled(bool enabled) async {}
+
+  @override
+  TimeOfDay getNudgeTime() => const TimeOfDay(hour: 12, minute: 0);
+  @override
+  Future<void> setNudgeTime(TimeOfDay time) async {}
+
+  @override
+  String getWarningNudgeOption() => 'none';
+  @override
+  Future<void> setWarningNudgeOption(String option) async {}
+
+  @override
+  bool getExtendedRemindersEnabled() => false;
+  @override
+  Future<void> setExtendedRemindersEnabled(bool enabled) async {}
+
+  @override
+  bool getBiometricLockEnabled() => false;
+  @override
+  Future<void> setBiometricLockEnabled(bool enabled) async {}
+
+  @override
+  bool getLocalStorageOnly() => true;
+  @override
+  Future<void> setLocalStorageOnly(bool enabled) async {}
+
+  @override
+  bool getAnalyticsEnabled() => false;
+  @override
+  Future<void> setAnalyticsEnabled(bool enabled) async {}
+
+  @override
+  bool getCrashReportingEnabled() => false;
+  @override
+  Future<void> setCrashReportingEnabled(bool enabled) async {}
 }
 
 void main() {
   late MockAuthRepository mockAuthRepository;
   late MockLogRepository mockLogRepository;
+  late MockSettingsRepository mockSettingsRepository;
 
   setUp(() {
     // Clear any existing registrations
@@ -85,12 +136,18 @@ void main() {
     if (locator.isRegistered<LogRepository>()) {
       locator.unregister<LogRepository>();
     }
+    if (locator.isRegistered<SettingsRepository>()) {
+      locator.unregister<SettingsRepository>();
+    }
 
     // Register mock services
     mockAuthRepository = MockAuthRepository();
     mockLogRepository = MockLogRepository();
+    mockSettingsRepository = MockSettingsRepository();
     locator.registerLazySingleton<AuthRepository>(() => mockAuthRepository);
     locator.registerLazySingleton<LogRepository>(() => mockLogRepository);
+    locator.registerLazySingleton<SettingsRepository>(
+        () => mockSettingsRepository);
   });
 
   tearDown(() {
@@ -100,6 +157,9 @@ void main() {
     }
     if (locator.isRegistered<LogRepository>()) {
       locator.unregister<LogRepository>();
+    }
+    if (locator.isRegistered<SettingsRepository>()) {
+      locator.unregister<SettingsRepository>();
     }
   });
 

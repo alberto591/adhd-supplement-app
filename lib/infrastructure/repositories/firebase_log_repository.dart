@@ -126,6 +126,25 @@ class FirebaseLogRepository implements LogRepository {
     });
   }
 
+  @override
+  Future<void> clearAllLogs(String userId) async {
+    try {
+      final batch = _firestore.batch();
+      final snapshots = await _firestore
+          .collection('logs')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      for (var doc in snapshots.docs) {
+        batch.delete(doc.reference);
+      }
+
+      await batch.commit();
+    } catch (e) {
+      throw Exception('Failed to clear logs: $e');
+    }
+  }
+
   String _dateOnlyString(DateTime date) {
     return DateTime(date.year, date.month, date.day)
         .toIso8601String()

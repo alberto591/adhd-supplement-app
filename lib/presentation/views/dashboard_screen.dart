@@ -8,6 +8,7 @@ import '../widgets/medication_card.dart';
 import '../widgets/daily_progress_card.dart';
 import '../navigation/app_router.dart';
 import '../../domain/entities/supplement_stack.dart';
+import '../../domain/entities/supplement.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -150,10 +151,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           onTap: (index) {
             setState(() => _selectedIndex = index);
             if (index == 1) {
-              // Navigator.pushNamed(context, AppRouter.trends); // Assuming trends route
+              Navigator.pushNamed(context, AppRouter.insights);
             } else if (index == 2) {
-              Navigator.pushNamed(
-                  context, AppRouter.library); // Meds -> Library?
+              Navigator.pushNamed(context, AppRouter.library);
             }
           },
           backgroundColor: isDark ? const Color(0xFF101822) : Colors.white,
@@ -287,17 +287,98 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: supplement?.name ?? 'Loading...',
         dosage: item.customDosage ?? supplement?.dosage ?? 'As directed',
         form: supplement?.form ?? 'Pill',
-        icon: Icons.medication, // TODO: map iconType
+        icon: _getIconForType(supplement?.shapeIcon ?? 'pill'),
         iconColor: HexColor(supplement?.iconColor ?? '#FFB74D'),
         isTaken: isTaken,
         isUpcoming: isUpcoming,
         statusText: isTaken ? 'Taken' : (isUpcoming ? 'upcoming' : null),
         onTake: () => viewModel.markSupplementTaken(item.supplementId),
-        onMoreOptions: () {
-          // Show bottom sheet
-        },
+        onMoreOptions: () => _showMedicationOptions(context, item, supplement),
       );
     }).toList();
+  }
+
+  void _showMedicationOptions(
+      BuildContext context, StackItem item, Supplement? supplement) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: const Text('View Details'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Navigate to library detail or dedicated detail
+                  // TODO: Navigate to Supplement Details
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.snooze),
+                title: const Text('Snooze Reminder'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _viewModel.snoozeSupplement(item.supplementId);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.skip_next),
+                title: const Text('Skip Dose'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _viewModel.markSupplementSkipped(item.supplementId,
+                      reason: 'User Skipped');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.edit_outlined),
+                title: const Text('Edit Schedule'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // TODO: Navigate to Edit Stack Item
+                  // Navigator.pushNamed(context, AppRouter.editStackItem, arguments: item);
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  IconData _getIconForType(String type) {
+    switch (type.toLowerCase()) {
+      case 'capsule':
+        return Icons.circle; // Approximate for capsule if no specific icon
+      case 'tablet':
+        return Icons.circle_outlined;
+      case 'liquid':
+      case 'drop':
+        return Icons.water_drop;
+      case 'powder':
+        return Icons.grain;
+      case 'pill':
+      default:
+        return Icons.medication;
+    }
   }
 }
 

@@ -68,7 +68,7 @@ class ParticlesBackground extends StatelessWidget {
             child: Container(
               width: 8,
               height: 16,
-              color: AppColors.royalPurple.withValues(alpha: 0.6),
+              color: AppColors.primaryBlue.withValues(alpha: 0.6),
             ),
           ),
         ),
@@ -80,7 +80,7 @@ class ParticlesBackground extends StatelessWidget {
             child: Container(
               width: 16,
               height: 8,
-              color: AppColors.gold.withValues(alpha: 0.6),
+              color: AppColors.primaryGold.withValues(alpha: 0.6),
             ),
           ),
         ),

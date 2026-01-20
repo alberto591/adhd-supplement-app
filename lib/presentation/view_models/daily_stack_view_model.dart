@@ -5,6 +5,7 @@ import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/stack_repository.dart';
 import '../../domain/repositories/log_repository.dart';
 import '../../domain/repositories/supplement_repository.dart';
+import '../../domain/repositories/auth_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
 
 /// View model for the Daily Stack screen
@@ -14,6 +15,7 @@ class DailyStackViewModel extends ChangeNotifier {
   final LogRepository _logRepository;
   final SupplementRepository _supplementRepository;
   final NotificationService _notificationService;
+  final AuthRepository _authRepository;
   final String _userId;
 
   // State
@@ -91,11 +93,13 @@ class DailyStackViewModel extends ChangeNotifier {
     required LogRepository logRepository,
     required SupplementRepository supplementRepository,
     required NotificationService notificationService,
+    required AuthRepository authRepository,
     required String userId,
   })  : _stackRepository = stackRepository,
         _logRepository = logRepository,
         _supplementRepository = supplementRepository,
         _notificationService = notificationService,
+        _authRepository = authRepository,
         _userId = userId;
 
   /// Initialize the view model - load stacks, today's log, and streak
@@ -136,8 +140,24 @@ class DailyStackViewModel extends ChangeNotifier {
 
     await _updateTodayLog(entry);
 
+    // Give 10 XP per supplement taken
+    await _incrementUserXP(10);
+
     // Cancel any active nudges for this supplement
     await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+  }
+
+  Future<void> _incrementUserXP(int amount) async {
+    try {
+      final user = await _authRepository.getCurrentUser();
+      if (user != null) {
+        final updatedUser = user.copyWith(xp: user.xp + amount);
+        await _authRepository.updateUserProfile(updatedUser);
+        debugPrint('XP Added: $amount. Total: ${updatedUser.xp}');
+      }
+    } catch (e) {
+      debugPrint('Failed to update user XP: $e');
+    }
   }
 
   /// Mark a supplement as skipped

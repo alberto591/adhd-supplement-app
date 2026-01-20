@@ -10,9 +10,10 @@ class StreakRecoveryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDarkBrown : AppColors.backgroundLight,
+      backgroundColor:
+          isDark ? AppColors.backgroundPremiumDark : AppColors.backgroundLight,
       body: SafeArea(
         child: Column(
           children: [
@@ -25,7 +26,8 @@ class StreakRecoveryScreen extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.close),
                     color: isDark ? Colors.grey[400] : Colors.grey[600],
-                    onPressed: () => Navigator.pushNamedAndRemoveUntil(context, AppRouter.dashboard, (route) => false),
+                    onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                        context, AppRouter.dashboard, (route) => false),
                   ),
                   Text(
                     'Rest & Recharge',
@@ -39,16 +41,16 @@ class StreakRecoveryScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
                     const RecoveryHeaderCard(),
-                    
+
                     const SizedBox(height: 24),
-                    
+
                     Text(
                       "Life happens! You're still on your journey.",
                       textAlign: TextAlign.center,
@@ -59,9 +61,9 @@ class StreakRecoveryScreen extends StatelessWidget {
                         height: 1.1,
                       ),
                     ),
-                    
+
                     const SizedBox(height: 12),
-                    
+
                     Text(
                       "Your journey isn't a straight line, and that's okay. You didn't lose progress; you just took a breath. Your routine is waiting whenever you're ready.",
                       textAlign: TextAlign.center,
@@ -71,9 +73,9 @@ class StreakRecoveryScreen extends StatelessWidget {
                         height: 1.5,
                       ),
                     ),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     // Stats Row
                     Row(
                       children: [
@@ -96,29 +98,31 @@ class StreakRecoveryScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     const WeeklyOverviewTimeline(),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     // Actions
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
-                        onPressed: () => Navigator.pushNamedAndRemoveUntil(context, AppRouter.dashboard, (route) => false),
+                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                            context, AppRouter.dashboard, (route) => false),
                         icon: const Icon(Icons.bolt),
                         label: const Text('Jump Back In'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryOrange,
+                          backgroundColor: AppColors.primaryGold,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                           elevation: 8,
-                          shadowColor: AppColors.primaryOrange.withValues(alpha: 0.2),
+                          shadowColor:
+                              AppColors.primaryGold.withValues(alpha: 0.2),
                           textStyle: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -126,19 +130,22 @@ class StreakRecoveryScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    
+
                     const SizedBox(height: 12),
-                    
+
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
-                        onPressed: () => Navigator.pushNamedAndRemoveUntil(context, AppRouter.dashboard, (route) => false),
+                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                            context, AppRouter.dashboard, (route) => false),
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
-                            color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
+                            color:
+                                isDark ? Colors.grey[700]! : Colors.grey[300]!,
                             width: 2,
                           ),
-                          foregroundColor: isDark ? Colors.grey[300] : Colors.grey[700],
+                          foregroundColor:
+                              isDark ? Colors.grey[300] : Colors.grey[700],
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -151,7 +158,7 @@ class StreakRecoveryScreen extends StatelessWidget {
                         child: const Text('Quick Check-in Only'),
                       ),
                     ),
-                    
+
                     const SizedBox(height: 48),
                   ],
                 ),
@@ -163,16 +170,21 @@ class StreakRecoveryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(BuildContext context, String label, String value, {bool isProtected = false, String? subtext}) {
+  Widget _buildStatCard(BuildContext context, String label, String value,
+      {bool isProtected = false, String? subtext}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.primaryOrange.withValues(alpha: 0.1) : Colors.grey[100],
+        color: isDark
+            ? AppColors.primaryGold.withValues(alpha: 0.1)
+            : Colors.grey[100],
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? AppColors.primaryOrange.withValues(alpha: 0.2) : Colors.grey[200]!,
+          color: isDark
+              ? AppColors.primaryGold.withValues(alpha: 0.2)
+              : Colors.grey[200]!,
         ),
       ),
       child: Column(
@@ -191,7 +203,9 @@ class StreakRecoveryScreen extends StatelessWidget {
             value,
             style: TextStyle(
               color: isDark ? Colors.white : Colors.black,
-              fontSize: isProtected ? 32 : 24, // Slight adjustment for "Morning Stack" length
+              fontSize: isProtected
+                  ? 32
+                  : 24, // Slight adjustment for "Morning Stack" length
               fontWeight: FontWeight.bold,
               height: 1.1,
             ),
@@ -213,14 +227,14 @@ class StreakRecoveryScreen extends StatelessWidget {
               ],
             ),
           if (subtext != null)
-             Text(
-               subtext,
-               style: const TextStyle(
-                 color: AppColors.primaryOrange,
-                 fontSize: 12,
-                 fontWeight: FontWeight.w500,
-               ),
-             ),
+            Text(
+              subtext,
+              style: const TextStyle(
+                color: AppColors.primaryGold,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
         ],
       ),
     );

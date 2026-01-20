@@ -144,8 +144,7 @@ class _NotificationTile extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 0,
-      color:
-          isDark ? AppColors.surfaceDark.withValues(alpha: 0.5) : Colors.white,
+      color: isDark ? AppColors.cardDark.withValues(alpha: 0.5) : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(

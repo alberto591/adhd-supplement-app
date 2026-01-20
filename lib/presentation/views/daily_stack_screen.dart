@@ -62,7 +62,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
         ChangeNotifierProvider.value(value: _safetyViewModel),
       ],
       child: Scaffold(
-        backgroundColor: AppColors.forestGreen,
+        backgroundColor: AppColors.backgroundDark,
         body: SafeArea(
           bottom: false,
           child: Consumer2<DailyStackViewModel, SafetyViewModel>(
@@ -133,6 +133,13 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                             ),
                             GestureDetector(
                               onTap: () => Navigator.pushNamed(
+                                  context, AppRouter.nightlyReflection),
+                              child: const Icon(Icons.nightlight_round,
+                                  color: Colors.white, size: 24),
+                            ),
+                            const SizedBox(width: 16),
+                            GestureDetector(
+                              onTap: () => Navigator.pushNamed(
                                   context, AppRouter.profile),
                               child: const Icon(Icons.settings,
                                   color: Colors.white, size: 24),
@@ -169,7 +176,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                         Text(
                                           "${(viewModel.todayProgress * 100).round()}%",
                                           style: const TextStyle(
-                                            color: AppColors.brightGreen,
+                                            color: AppColors.accentGreen,
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -195,7 +202,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                                   .width *
                                               viewModel.todayProgress,
                                           decoration: BoxDecoration(
-                                            color: AppColors.brightGreen,
+                                            color: AppColors.accentGreen,
                                             borderRadius:
                                                 BorderRadius.circular(999),
                                           ),
@@ -250,6 +257,12 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                     isTaken: isTaken,
                                     onTap: () => viewModel.toggleSupplement(
                                         stackItem.supplementId),
+                                    onLongPress: () {
+                                      _showItemOptions(
+                                          context,
+                                          supplement?.name ?? 'Item',
+                                          stackItem.supplementId);
+                                    },
                                   );
                                 });
                               }),
@@ -293,9 +306,9 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   icon: const Icon(Icons.insights),
                                   label: const Text('View Insights'),
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: AppColors.brightGreen,
+                                    foregroundColor: AppColors.accentGreen,
                                     side: const BorderSide(
-                                        color: AppColors.brightGreen),
+                                        color: AppColors.accentGreen),
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12),
                                     shape: RoundedRectangleBorder(
@@ -321,7 +334,21 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                     right: 0,
                     child: CustomFabBottomNav(
                       selectedIndex: 0,
-                      onTap: (_) {},
+                      onTap: (index) {
+                        if (index == 0)
+                          return; // Already on Daily Stack (Today)
+                        switch (index) {
+                          case 1:
+                            Navigator.pushNamed(context, AppRouter.historyLog);
+                            break;
+                          case 2:
+                            Navigator.pushNamed(context, AppRouter.insights);
+                            break;
+                          case 3:
+                            Navigator.pushNamed(context, AppRouter.profile);
+                            break;
+                        }
+                      },
                       onFabTap: _showCheckInModal,
                     ),
                   ),
@@ -356,5 +383,60 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
       default:
         return Icons.medication;
     }
+  }
+
+  void _showItemOptions(
+      BuildContext context, String itemName, String supplementId) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: AppColors.cardDark,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: Text(
+                  itemName,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const Divider(color: Colors.white10),
+              ListTile(
+                leading: const Icon(Icons.edit, color: Colors.white),
+                title: const Text('Edit Stack',
+                    style: TextStyle(color: Colors.white)),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, AppRouter.stackBuilder);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outline, color: Colors.white),
+                title: const Text('View Details',
+                    style: TextStyle(color: Colors.white)),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Find supplement and show details?
+                  // For now, go to Library which is the closest "Details" view
+                  Navigator.pushNamed(context, AppRouter.library);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -7,7 +7,7 @@ class WeeklyOverviewTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -44,30 +44,37 @@ class WeeklyOverviewTimeline extends StatelessWidget {
     );
   }
 
-  Widget _buildDayItem(String day, DayStatus status, {bool isSelected = false}) {
+  Widget _buildDayItem(String day, DayStatus status,
+      {bool isSelected = false}) {
     Color bgColor;
     Color textColor;
     Widget bottomIndicator;
 
     switch (status) {
       case DayStatus.completed:
-        bgColor = AppColors.primaryOrange;
+        bgColor = AppColors.primaryGold;
         textColor = Colors.white;
-        bottomIndicator = const Icon(Icons.check_circle, color: AppColors.primaryOrange, size: 14);
+        bottomIndicator = const Icon(Icons.check_circle,
+            color: AppColors.primaryGold, size: 14);
         break;
       case DayStatus.rest:
-        bgColor = isSelected ? AppColors.primaryOrange.withValues(alpha: 0.2) : Colors.transparent;
-        textColor = AppColors.primaryOrange;
-        bottomIndicator = const Icon(Icons.coffee, color: AppColors.primaryOrange, size: 14);
+        bgColor = isSelected
+            ? AppColors.primaryGold.withValues(alpha: 0.2)
+            : Colors.transparent;
+        textColor = AppColors.primaryGold;
+        bottomIndicator =
+            const Icon(Icons.coffee, color: AppColors.primaryGold, size: 14);
         break;
       case DayStatus.upcoming:
         bgColor = const Color(0xFF334155); // Slate 700ish for dark mode
         textColor = const Color(0xFF64748B); // Slate 500
         bottomIndicator = Container(
             margin: const EdgeInsets.only(top: 4),
-            width: 4, height: 4, 
-            decoration: BoxDecoration(color: const Color(0xFF334155), borderRadius: BorderRadius.circular(2))
-        );
+            width: 4,
+            height: 4,
+            decoration: BoxDecoration(
+                color: const Color(0xFF334155),
+                borderRadius: BorderRadius.circular(2)));
         break;
     }
 
@@ -80,10 +87,12 @@ class WeeklyOverviewTimeline extends StatelessWidget {
             decoration: BoxDecoration(
               color: bgColor,
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primaryOrange.withValues(alpha: 0.4), width: 2),
+              border: Border.all(
+                  color: AppColors.primaryGold.withValues(alpha: 0.4),
+                  width: 2),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primaryOrange.withValues(alpha: 0.1),
+                  color: AppColors.primaryGold.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),

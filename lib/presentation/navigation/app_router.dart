@@ -170,17 +170,18 @@ class AppRouter {
 
       case pillMatcher:
         return MaterialPageRoute(
-            builder: (_) => const VisualPillMatcherScreen());
+            builder: (_) => VisualPillMatcherScreen.withProvider());
 
       case reminders:
         return MaterialPageRoute(
-            builder: (_) => const PersistentRemindersScreen());
+            builder: (_) => PersistentRemindersScreen.withProvider());
 
       case profile:
         return MaterialPageRoute(builder: (_) => const UserProfileScreen());
 
       case weeklyReview:
-        return MaterialPageRoute(builder: (_) => const WeeklyReviewScreen());
+        return MaterialPageRoute(
+            builder: (_) => WeeklyReviewScreen.withProvider());
 
       case levelUp:
         return MaterialPageRoute(builder: (_) => const LevelUpScreen());
@@ -199,22 +200,27 @@ class AppRouter {
             builder: (_) => const HomeWidgetsPreviewScreen());
 
       case doctorExport:
-        return MaterialPageRoute(builder: (_) => const DoctorExportScreen());
+        return MaterialPageRoute(
+            builder: (_) => DoctorExportScreen.withProvider());
 
       case historyLog:
-        return MaterialPageRoute(builder: (_) => const HistoryLogScreen());
+        return MaterialPageRoute(
+            builder: (_) => HistoryLogScreen.withProvider());
 
       case community:
-        return MaterialPageRoute(builder: (_) => const CommunityScreen());
+        return MaterialPageRoute(
+            builder: (_) => CommunityScreen.withProvider());
 
       case trophyRoom:
-        return MaterialPageRoute(builder: (_) => const TrophyRoomScreen());
+        return MaterialPageRoute(
+            builder: (_) => TrophyRoomScreen.withProvider());
 
       case scienceHub:
         return MaterialPageRoute(builder: (_) => const ScienceHubScreen());
 
       case focusBuddies:
-        return MaterialPageRoute(builder: (_) => const FocusBuddiesScreen());
+        return MaterialPageRoute(
+            builder: (_) => FocusBuddiesScreen.withProvider());
 
       case appAppearance:
         return MaterialPageRoute(builder: (_) => const AppAppearanceScreen());
@@ -287,7 +293,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HelpAndSupportScreen());
 
       case articleDetail:
-        return MaterialPageRoute(builder: (_) => const ArticleDetailScreen());
+        final articleId = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => ArticleDetailScreen.withProvider(articleId));
 
       case milestoneSuccess:
         return MaterialPageRoute(

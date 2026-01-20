@@ -15,4 +15,17 @@ abstract class SettingsRepository {
 
   bool getExtendedRemindersEnabled();
   Future<void> setExtendedRemindersEnabled(bool enabled);
+
+  // Privacy Settings
+  bool getBiometricLockEnabled();
+  Future<void> setBiometricLockEnabled(bool enabled);
+
+  bool getLocalStorageOnly();
+  Future<void> setLocalStorageOnly(bool enabled);
+
+  bool getAnalyticsEnabled();
+  Future<void> setAnalyticsEnabled(bool enabled);
+
+  bool getCrashReportingEnabled();
+  Future<void> setCrashReportingEnabled(bool enabled);
 }

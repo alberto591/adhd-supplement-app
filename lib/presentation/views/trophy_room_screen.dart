@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../application/view_models/trophy_room_view_model.dart';
+import '../../application/providers/auth_provider.dart';
+import '../../config/locator.dart';
+import '../../domain/entities/gamification.dart';
 
 class TrophyRoomScreen extends StatelessWidget {
   const TrophyRoomScreen({super.key});
+
+  static Widget withProvider() {
+    return Consumer<AuthProvider>(
+      builder: (context, auth, _) {
+        final userId = auth.user?.id ?? 'user_1';
+        return ChangeNotifierProvider(
+          create: (_) => locator<TrophyRoomViewModel>(param1: userId),
+          child: const TrophyRoomScreen(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,34 +29,48 @@ class TrophyRoomScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              _buildAppBar(context, isDark, primaryPink),
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildProgressHeader(isDark, primaryPink),
-                    const SizedBox(height: 24),
-                    _buildRecentWins(isDark, primaryPink),
-                    const SizedBox(height: 32),
-                    _buildTrophyGrid(isDark, primaryPink),
-                    const SizedBox(
-                        height: 120), // Bottom padding for fixed button
-                  ],
-                ),
+      body: Consumer<TrophyRoomViewModel>(
+        builder: (context, viewModel, child) {
+          if (viewModel.isLoading) {
+            return Center(child: CircularProgressIndicator(color: primaryPink));
+          }
+          final profile = viewModel.profile;
+          if (profile == null) {
+            return const Center(child: Text('Failed to load profile'));
+          }
+
+          return Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  _buildAppBar(context, isDark, primaryPink),
+                  SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildProgressHeader(isDark, primaryPink, profile),
+                        const SizedBox(height: 24),
+                        _buildRecentWins(
+                            isDark, primaryPink, viewModel.recentWins),
+                        const SizedBox(height: 32),
+                        _buildTrophyGrid(
+                            isDark, primaryPink, viewModel.allGridBadges),
+                        const SizedBox(
+                            height: 120), // Bottom padding for fixed button
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                left: 24,
+                right: 24,
+                bottom: 32,
+                child: _buildContinueButton(primaryPink),
               ),
             ],
-          ),
-          Positioned(
-            left: 24,
-            right: 24,
-            bottom: 32,
-            child: _buildContinueButton(primaryPink),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -94,7 +125,8 @@ class TrophyRoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressHeader(bool isDark, Color primary) {
+  Widget _buildProgressHeader(
+      bool isDark, Color primary, GamificationProfile profile) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -114,7 +146,7 @@ class TrophyRoomScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Level 12 Supplement Master',
+                    'Level ${profile.level} ${profile.levelTitle}',
                     style: TextStyle(
                       color: isDark
                           ? const Color(0xFF94A3B8)
@@ -128,7 +160,7 @@ class TrophyRoomScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '12/30',
+                    '${profile.earnedBadgesCount}/${profile.totalBadgesCount}',
                     style: TextStyle(
                       color: primary,
                       fontSize: 24,
@@ -151,39 +183,43 @@ class TrophyRoomScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Stack(
-              children: [
-                Container(
-                  height: 12,
-                  width: double.infinity,
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.1)
-                      : Colors.black.withValues(alpha: 0.05),
-                ),
-                Container(
-                  height: 12,
-                  width: 150, // 40% roughly
-                  decoration: BoxDecoration(
-                    color: primary,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primary.withValues(alpha: 0.5),
-                        blurRadius: 10,
-                      ),
-                    ],
+          LayoutBuilder(builder: (context, constraints) {
+            final progressWidth =
+                constraints.maxWidth * profile.progress.clamp(0.0, 1.0);
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 12,
+                    width: double.infinity,
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : Colors.black.withValues(alpha: 0.05),
                   ),
-                ),
-              ],
-            ),
-          ),
+                  Container(
+                    height: 12,
+                    width: progressWidth,
+                    decoration: BoxDecoration(
+                      color: primary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: primary.withValues(alpha: 0.5),
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '18 more to Level 13',
+                '${profile.xpToNextLevel - profile.currentXp} XP to Level ${profile.level + 1}',
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
@@ -193,7 +229,7 @@ class TrophyRoomScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                '40% Mastery',
+                '${(profile.progress * 100).toInt()}% Mastery',
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
@@ -209,7 +245,10 @@ class TrophyRoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentWins(bool isDark, Color primary) {
+  Widget _buildRecentWins(
+      bool isDark, Color primary, List<GamificationBadge> badges) {
+    if (badges.isEmpty) return const SizedBox.shrink();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -230,39 +269,16 @@ class TrophyRoomScreen extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
-            children: [
-              _buildWinBadge(
-                isDark,
-                icon: Icons.light_mode,
-                color: Colors.amber,
-                label: 'Early Bird',
-                glow: true,
-              ),
-              const SizedBox(width: 24),
-              _buildWinBadge(
-                isDark,
-                icon: Icons.local_fire_department,
-                color: primary,
-                label: 'Streak\nMaster',
-                glow: true,
-              ),
-              const SizedBox(width: 24),
-              _buildWinBadge(
-                isDark,
-                icon: Icons.verified_user,
-                color: Colors.blue,
-                label: 'Safety First',
-                glow: true,
-              ),
-              const SizedBox(width: 24),
-              _buildWinBadge(
-                isDark,
-                icon: Icons.psychology,
-                color: Colors.green,
-                label: 'Focus Legend',
-                glow: true,
-              ),
-            ],
+            children: badges
+                .map((badge) => Padding(
+                      padding: const EdgeInsets.only(right: 24),
+                      child: _buildWinBadge(
+                        isDark,
+                        badge: badge,
+                        glow: true,
+                      ),
+                    ))
+                .toList(),
           ),
         ),
       ],
@@ -270,10 +286,7 @@ class TrophyRoomScreen extends StatelessWidget {
   }
 
   Widget _buildWinBadge(bool isDark,
-      {required IconData icon,
-      required Color color,
-      required String label,
-      bool glow = false}) {
+      {required GamificationBadge badge, bool glow = false}) {
     return Column(
       children: [
         Container(
@@ -285,12 +298,12 @@ class TrophyRoomScreen extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [color, color.withValues(alpha: 0.6)],
+              colors: [badge.color, badge.color.withValues(alpha: 0.6)],
             ),
             boxShadow: glow
                 ? [
                     BoxShadow(
-                      color: color.withValues(alpha: 0.4),
+                      color: badge.color.withValues(alpha: 0.4),
                       blurRadius: 15,
                     ),
                   ]
@@ -308,15 +321,15 @@ class TrophyRoomScreen extends StatelessWidget {
               ),
             ),
             child: Icon(
-              icon,
-              color: color,
+              badge.icon,
+              color: badge.color,
               size: 32,
             ),
           ),
         ),
         const SizedBox(height: 12),
         Text(
-          label,
+          badge.title.split(' ').join('\n'), // Break lines for circle badges
           textAlign: TextAlign.center,
           style: TextStyle(
             color: isDark ? Colors.white : Colors.black,
@@ -329,7 +342,8 @@ class TrophyRoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTrophyGrid(bool isDark, Color primary) {
+  Widget _buildTrophyGrid(
+      bool isDark, Color primary, List<GamificationBadge> badges) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -351,74 +365,23 @@ class TrophyRoomScreen extends StatelessWidget {
             mainAxisSpacing: 16,
             crossAxisSpacing: 16,
             childAspectRatio: 0.85,
-            children: [
-              _buildTrophyCard(
-                isDark,
-                title: 'Focus Legend',
-                subtitle: 'EARNED 2D AGO',
-                icon: Icons.military_tech,
-                color: primary,
-                isLocked: false,
-              ),
-              _buildTrophyCard(
-                isDark,
-                title: '14-Day Rush',
-                subtitle: 'EARNED OCT 12',
-                icon: Icons.bolt,
-                color: Colors.orange,
-                isLocked: false,
-              ),
-              _buildTrophyCard(
-                isDark,
-                title: 'Omega Master',
-                subtitle: 'Take Omega-3 for 7 days',
-                icon: Icons.set_meal,
-                color: Colors.blue,
-                isLocked: true,
-              ),
-              _buildTrophyCard(
-                isDark,
-                title: 'Night Owl',
-                subtitle: 'Log night stack before 10 PM',
-                icon: Icons.dark_mode,
-                color: Colors.indigo,
-                isLocked: true,
-              ),
-              _buildTrophyCard(
-                isDark,
-                title: 'Safety First II',
-                subtitle: 'Check 5 interactions',
-                icon: Icons.medical_services,
-                color: Colors.red,
-                isLocked: true,
-              ),
-              _buildTrophyCard(
-                isDark,
-                title: 'Routine Pro',
-                subtitle: 'Set up 3 custom stacks',
-                icon: Icons.calendar_month,
-                color: Colors.teal,
-                isLocked: true,
-              ),
-            ],
+            children: badges
+                .map((badge) => _buildTrophyCard(
+                      isDark,
+                      badge: badge,
+                    ))
+                .toList(),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTrophyCard(
-    bool isDark, {
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required Color color,
-    required bool isLocked,
-  }) {
+  Widget _buildTrophyCard(bool isDark, {required GamificationBadge badge}) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isLocked
+        color: badge.isLocked
             ? (isDark
                 ? Colors.white.withValues(alpha: 0.05)
                 : Colors.black.withValues(alpha: 0.03))
@@ -431,7 +394,7 @@ class TrophyRoomScreen extends StatelessWidget {
         ),
       ),
       child: Opacity(
-        opacity: isLocked ? 0.7 : 1.0,
+        opacity: badge.isLocked ? 0.7 : 1.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -442,36 +405,36 @@ class TrophyRoomScreen extends StatelessWidget {
                   width: 64,
                   height: 64,
                   decoration: BoxDecoration(
-                    color: isLocked
+                    color: badge.isLocked
                         ? Colors.white.withValues(alpha: 0.1)
-                        : color.withValues(alpha: 0.2),
+                        : badge.color.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
-                    border: isLocked
+                    border: badge.isLocked
                         ? null
                         : Border.all(
-                            color: color,
+                            color: badge.color,
                             width: 2,
                           ),
-                    boxShadow: !isLocked
+                    boxShadow: !badge.isLocked
                         ? [
                             BoxShadow(
-                              color: color.withValues(alpha: 0.4),
+                              color: badge.color.withValues(alpha: 0.4),
                               blurRadius: 10,
                             ),
                           ]
                         : null,
                   ),
                   child: Icon(
-                    icon,
-                    color: isLocked
+                    badge.icon,
+                    color: badge.isLocked
                         ? (isDark
                             ? Colors.white.withValues(alpha: 0.4)
                             : Colors.black.withValues(alpha: 0.4))
-                        : color,
+                        : badge.color,
                     size: 32,
                   ),
                 ),
-                if (isLocked)
+                if (badge.isLocked)
                   Positioned(
                     bottom: -4,
                     right: -4,
@@ -501,7 +464,7 @@ class TrophyRoomScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              title,
+              badge.title,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: isDark ? Colors.white : Colors.black,
@@ -511,17 +474,18 @@ class TrophyRoomScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              !isLocked ? subtitle.toUpperCase() : subtitle,
+              !badge.isLocked ? badge.subtitle.toUpperCase() : badge.subtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: isLocked
+                color: badge.isLocked
                     ? (isDark
                         ? Colors.white.withValues(alpha: 0.5)
                         : Colors.black.withValues(alpha: 0.5))
-                    : color,
+                    : badge.color,
                 fontSize: 10,
-                fontWeight: isLocked ? FontWeight.normal : FontWeight.bold,
-                fontStyle: isLocked ? FontStyle.italic : FontStyle.normal,
+                fontWeight:
+                    badge.isLocked ? FontWeight.normal : FontWeight.bold,
+                fontStyle: badge.isLocked ? FontStyle.italic : FontStyle.normal,
               ),
             ),
           ],

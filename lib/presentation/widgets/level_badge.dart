@@ -26,7 +26,7 @@ class LevelBadge extends StatelessWidget {
             color: AppColors.primaryGold.withValues(alpha: 0.2),
           ),
         ),
-        
+
         // Main Badge Container
         Container(
           width: 224, // w-56
@@ -34,13 +34,13 @@ class LevelBadge extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.goldLight,
-                AppColors.gold,
-                AppColors.goldDark,
+                AppColors.primaryGold.withValues(alpha: 0.5),
+                AppColors.primaryGold,
+                AppColors.primaryGold.withValues(alpha: 0.8),
               ],
             ),
             border: Border.all(
@@ -49,7 +49,7 @@ class LevelBadge extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.gold.withValues(alpha: 0.4),
+                color: AppColors.primaryGold.withValues(alpha: 0.4),
                 blurRadius: 50,
                 spreadRadius: 10,
               ),
@@ -71,7 +71,7 @@ class LevelBadge extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +79,7 @@ class LevelBadge extends StatelessWidget {
                     Text(
                       'LEVEL',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: AppColors.goldDark.withValues(alpha: 0.8),
+                            color: AppColors.primaryGold.withValues(alpha: 0.8),
                             fontWeight: FontWeight.w900,
                             letterSpacing: 2.0,
                           ),
@@ -87,18 +87,18 @@ class LevelBadge extends StatelessWidget {
                     Text(
                       '$level',
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                            color: Colors.white,
-                            fontSize: 96,
-                            fontWeight: FontWeight.w900,
-                            height: 1.0,
-                            shadows: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.2),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
+                        color: Colors.white,
+                        fontSize: 96,
+                        fontWeight: FontWeight.w900,
+                        height: 1.0,
+                        shadows: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
                           ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -106,7 +106,7 @@ class LevelBadge extends StatelessWidget {
             ],
           ),
         ),
-        
+
         // Bottom Title Pill
         Positioned(
           bottom: -16,
@@ -126,7 +126,7 @@ class LevelBadge extends StatelessWidget {
             child: Text(
               title,
               style: const TextStyle(
-                color: AppColors.deepNavy,
+                color: AppColors.textPrimaryLight,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),

@@ -60,4 +60,50 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   Future<void> setExtendedRemindersEnabled(bool enabled) async {
     await _prefs.setBool(_keyExtendedEnabled, enabled);
   }
+
+  // Privacy Settings
+  static const String _keyBiometricEnabled = 'biometric_enabled';
+  static const String _keyLocalStorageOnly = 'local_storage_only';
+  static const String _keyAnalyticsEnabled = 'analytics_enabled';
+  static const String _keyCrashReportingEnabled = 'crash_reporting_enabled';
+
+  @override
+  bool getBiometricLockEnabled() {
+    return _prefs.getBool(_keyBiometricEnabled) ?? false;
+  }
+
+  @override
+  Future<void> setBiometricLockEnabled(bool enabled) async {
+    await _prefs.setBool(_keyBiometricEnabled, enabled);
+  }
+
+  @override
+  bool getLocalStorageOnly() {
+    return _prefs.getBool(_keyLocalStorageOnly) ?? true;
+  }
+
+  @override
+  Future<void> setLocalStorageOnly(bool enabled) async {
+    await _prefs.setBool(_keyLocalStorageOnly, enabled);
+  }
+
+  @override
+  bool getAnalyticsEnabled() {
+    return _prefs.getBool(_keyAnalyticsEnabled) ?? false;
+  }
+
+  @override
+  Future<void> setAnalyticsEnabled(bool enabled) async {
+    await _prefs.setBool(_keyAnalyticsEnabled, enabled);
+  }
+
+  @override
+  bool getCrashReportingEnabled() {
+    return _prefs.getBool(_keyCrashReportingEnabled) ?? false;
+  }
+
+  @override
+  Future<void> setCrashReportingEnabled(bool enabled) async {
+    await _prefs.setBool(_keyCrashReportingEnabled, enabled);
+  }
 }

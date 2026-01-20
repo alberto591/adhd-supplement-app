@@ -33,7 +33,7 @@ class GoalSelectionCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: isSelected
-                    ? AppColors.freshGreen
+                    ? AppColors.accentGreen
                     : Colors
                         .transparent, // Transparent when not selected to match wireframe style
                 width: 2,
@@ -55,13 +55,13 @@ class GoalSelectionCard extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: AppColors.freshGreen
+                    color: AppColors.accentGreen
                         .withValues(alpha: isSelected ? 0.2 : 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     icon,
-                    color: AppColors.freshGreen,
+                    color: AppColors.accentGreen,
                     size: 28,
                   ),
                 ),
@@ -101,7 +101,7 @@ class GoalSelectionCard extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.check_circle,
-                  color: AppColors.freshGreen,
+                  color: AppColors.accentGreen,
                   size: 24,
                 ),
               ),

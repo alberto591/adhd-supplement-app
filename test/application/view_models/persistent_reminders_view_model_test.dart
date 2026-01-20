@@ -52,6 +52,32 @@ class _FakeSettingsRepository implements SettingsRepository {
   Future<void> setExtendedRemindersEnabled(bool enabled) async {
     extendedRemindersEnabled = enabled;
   }
+
+  @override
+  bool getBiometricLockEnabled() {
+    return false;
+  }
+
+  @override
+  Future<void> setBiometricLockEnabled(bool enabled) async {}
+
+  @override
+  bool getLocalStorageOnly() => false;
+
+  @override
+  Future<void> setLocalStorageOnly(bool enabled) async {}
+
+  @override
+  bool getAnalyticsEnabled() => false;
+
+  @override
+  Future<void> setAnalyticsEnabled(bool enabled) async {}
+
+  @override
+  bool getCrashReportingEnabled() => false;
+
+  @override
+  Future<void> setCrashReportingEnabled(bool enabled) async {}
 }
 
 class _FakeNotificationService extends NotificationService {
@@ -186,4 +212,3 @@ void main() {
     });
   });
 }
-
