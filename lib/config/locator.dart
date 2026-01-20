@@ -26,7 +26,7 @@ import 'package:adhd_supplement_app/presentation/view_models/history_log_view_mo
 import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
 
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart';
+// import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart'; // Unused
 import 'package:adhd_supplement_app/infrastructure/repositories/mock_symptom_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_supplement_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_streak_repository.dart';
@@ -37,7 +37,7 @@ import 'package:adhd_supplement_app/application/view_models/symptom_checkin_view
 import 'package:adhd_supplement_app/application/view_models/subscription_view_model.dart';
 import 'package:adhd_supplement_app/application/view_models/privacy_view_model.dart';
 import 'package:adhd_supplement_app/application/view_models/notification_history_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/streak_view_model.dart';
+// import 'package:adhd_supplement_app/application/view_models/streak_view_model.dart'; // Unused
 import 'package:adhd_supplement_app/infrastructure/services/streak_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
@@ -57,10 +57,10 @@ import '../infrastructure/repositories/mock_article_repository.dart';
 import '../infrastructure/repositories/mock_community_repository.dart';
 import '../domain/repositories/referral_repository.dart';
 import '../infrastructure/repositories/mock_referral_repository.dart';
-import '../application/view_models/refer_friend_view_model.dart';
+// import '../application/view_models/refer_friend_view_model.dart'; // Duplicate
 import '../domain/repositories/reflection_repository.dart';
 import '../infrastructure/repositories/mock_reflection_repository.dart';
-import '../application/view_models/nightly_reflection_view_model.dart';
+// import '../application/view_models/nightly_reflection_view_model.dart'; // Duplicate
 
 import '../application/view_models/refer_friend_view_model.dart';
 import '../application/view_models/nightly_reflection_view_model.dart';

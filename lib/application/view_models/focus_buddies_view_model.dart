@@ -1,36 +1,37 @@
 import 'package:flutter/foundation.dart';
-import '../../config/locator.dart';
-// import '../../domain/repositories/social_repository.dart'; // Future
 
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/log_repository.dart';
 
 class FocusBuddiesViewModel extends ChangeNotifier {
+  // Ignored for now as they are placeholders for future implementation
+  // ignore: unused_field
   final AuthRepository _authRepository;
+  // ignore: unused_field
   final LogRepository _logRepository;
 
   FocusBuddiesViewModel(this._authRepository, this._logRepository);
 
   // Mock data for now, would come from SocialRepository
-  double _teamGoalProgress = 0.75;
-  int _sharedGoalDays = 6;
-  int _totalDaysGoal = 8;
+  final double _teamGoalProgress = 0.75;
+  final int _sharedGoalDays = 6;
+  final int _totalDaysGoal = 8;
 
-  String _opponentName = "Alex";
-  int _opponentStreak = 10;
-  String _opponentImage =
+  final String _opponentName = "Alex";
+  final int _opponentStreak = 10;
+  final String _opponentImage =
       'https://lh3.googleusercontent.com/aida-public/AB6AXuC2ESo4fGI8ZC0JqCjTqfeMrymcGC86qXyaKokGASl6caxhGNVViQQz5zf1HtFYlDwm7KsGm7sDC5E_J-d6g7nIaf3DkondKQ7hD7dZsrArtf1ddF9qqbkvG1pSnhh690nlE8n25x4dqFy3OlGr46QPR7vmKlVvdxlb4i8elu3rmA-NjZMo6xxF2zLZ15lyepeWzklRLOT9PxUelGa-UjLj4JpS3B7NuNNttb4TmXmSz7DCcvsK3DvbEXU4v0VjDecArCGEtiqdyiM';
 
-  int _userStreak = 12;
-  String _userImage =
+  final int _userStreak = 12;
+  final String _userImage =
       'https://lh3.googleusercontent.com/aida-public/AB6AXuCW4otpvyD5on_5_YykKsYQDwXOKJ03f_jAdGJZmcqhS5WzZbNDZSvwtkfTzmEZz2LigExl9e5SkShfbDq-5RZHiXQe8puS2SFpKn1YdTQT4YI3bQuKhRg6yd6vHyloHlQWxEV7rj4yYC_nFRh16-9-YSc9xji_OrmO-y5bhTT-EhkNYCgRXC5kzsUKzqukF_ui02Awx2B-k6etsC2bAv0IOvojziEOo95cqEAeAVAf1pgq4vQI7kKcVWe9ZSX7ubYEODJ2IBUiWwA';
 
-  String _teamXP = '4,550';
-  String _teamGrowth = '+15%';
-  String _daysActive = '22';
-  String _activeGrowth = '+2';
+  final String _teamXP = '4,550';
+  final String _teamGrowth = '+15%';
+  final String _daysActive = '22';
+  final String _activeGrowth = '+2';
 
-  List<BuddyFeedItem> _feedItems = [
+  final List<BuddyFeedItem> _feedItems = [
     BuddyFeedItem(
       iconType: FeedIconType.check,
       text: "You logged Morning Stack! +50 XP",
@@ -66,7 +67,7 @@ class FocusBuddiesViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     _isLoading = false;
     notifyListeners();
   }
@@ -74,7 +75,7 @@ class FocusBuddiesViewModel extends ChangeNotifier {
   Future<void> sendNudge() async {
     // Logic to send nudge
     // In real app, call repository
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
     // Could add a feed item saying "You nudged Alex"
     _feedItems.insert(
         0,

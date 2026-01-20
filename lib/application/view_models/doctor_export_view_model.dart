@@ -7,7 +7,7 @@ import '../../infrastructure/services/report_pdf_service.dart';
 
 class DoctorExportViewModel extends ChangeNotifier {
   final LogRepository _logRepository;
-  final AuthRepository _authRepository;
+  // final AuthRepository _authRepository; // Unused but kept in constructor for consistent DI pattern if needed later
   final ReportPdfService _pdfService; // New Dependency
   final String _userId;
 
@@ -39,7 +39,7 @@ class DoctorExportViewModel extends ChangeNotifier {
     required ReportPdfService pdfService,
     required String userId,
   })  : _logRepository = logRepository,
-        _authRepository = authRepository,
+        // _authRepository = authRepository,
         _pdfService = pdfService,
         _userId = userId;
 
