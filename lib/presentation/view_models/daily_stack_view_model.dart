@@ -30,6 +30,7 @@ class DailyStackViewModel extends ChangeNotifier {
   List<StackItem> get morningItems => _getItemsForSlot('morning');
   List<StackItem> get afternoonItems => _getItemsForSlot('afternoon');
   List<StackItem> get eveningItems => _getItemsForSlot('evening');
+  List<StackItem> get nightItems => _getItemsForSlot('night');
 
   // Getters
   List<SupplementStack> get stacks => _stacks;
@@ -282,7 +283,8 @@ class DailyStackViewModel extends ChangeNotifier {
           final hour = int.parse(parts[0]);
           if (slot == 'morning') return hour < 12;
           if (slot == 'afternoon') return hour >= 12 && hour < 18;
-          if (slot == 'evening') return hour >= 18;
+          if (slot == 'evening') return hour >= 18 && hour < 21;
+          if (slot == 'night') return hour >= 21;
         } catch (_) {}
       }
 
@@ -297,10 +299,17 @@ class DailyStackViewModel extends ChangeNotifier {
       final supplement = _supplementCache[item.supplementId];
       final timeOfDay = supplement?.timeOfDay?.toLowerCase() ?? 'morning';
 
-      if (slot == 'morning') return timeOfDay.contains('morning');
-      if (slot == 'afternoon') return timeOfDay.contains('afternoon');
+      if (slot == 'morning') {
+        return timeOfDay.contains('morning');
+      }
+      if (slot == 'afternoon') {
+        return timeOfDay.contains('afternoon');
+      }
       if (slot == 'evening') {
-        return timeOfDay.contains('evening') || timeOfDay.contains('bed');
+        return timeOfDay.contains('evening');
+      }
+      if (slot == 'night') {
+        return timeOfDay.contains('night') || timeOfDay.contains('bed');
       }
 
       return false;

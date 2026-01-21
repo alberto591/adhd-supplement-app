@@ -56,21 +56,30 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Capture theme brightness
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : AppColors.textPrimaryLight;
+    final secondaryTextColor =
+        isDark ? Colors.white70 : AppColors.textSecondaryLight;
+    final iconColor = isDark ? Colors.white : AppColors.textPrimaryLight;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: _viewModel),
         ChangeNotifierProvider.value(value: _safetyViewModel),
       ],
       child: Scaffold(
-        backgroundColor: AppColors.backgroundDark,
+        // Use theme background (handles light/dark automatically)
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
           bottom: false,
           child: Consumer2<DailyStackViewModel, SafetyViewModel>(
             builder: (context, viewModel, safetyViewModel, child) {
               // Show loading indicator
               if (viewModel.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(color: Colors.white),
+                return Center(
+                  child: CircularProgressIndicator(
+                      color: isDark ? Colors.white : AppColors.primaryGold),
                 );
               }
 
@@ -82,12 +91,11 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.error_outline,
-                            color: Colors.white, size: 48),
+                        Icon(Icons.error_outline, color: iconColor, size: 48),
                         const SizedBox(height: 16),
                         Text(
                           viewModel.error!,
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: textColor),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 24),
@@ -113,10 +121,10 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                         child: Row(
                           children: [
                             GestureDetector(
-                              onTap: () => Navigator.pushNamed(
-                                  context, AppRouter.historyLog),
-                              child: const Icon(Icons.calendar_today,
-                                  color: Colors.white, size: 24),
+                              onTap: () => Navigator.pushReplacementNamed(
+                                  context, AppRouter.dashboard),
+                              child: Icon(Icons.arrow_back_ios_new,
+                                  color: iconColor, size: 24),
                             ),
                             Expanded(
                               child: Text(
@@ -127,22 +135,22 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                     .titleLarge
                                     ?.copyWith(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: textColor,
                                     ),
                               ),
                             ),
                             GestureDetector(
                               onTap: () => Navigator.pushNamed(
                                   context, AppRouter.nightlyReflection),
-                              child: const Icon(Icons.nightlight_round,
-                                  color: Colors.white, size: 24),
+                              child: Icon(Icons.nightlight_round,
+                                  color: iconColor, size: 24),
                             ),
                             const SizedBox(width: 16),
                             GestureDetector(
                               onTap: () => Navigator.pushNamed(
                                   context, AppRouter.profile),
-                              child: const Icon(Icons.settings,
-                                  color: Colors.white, size: 24),
+                              child: Icon(Icons.settings,
+                                  color: iconColor, size: 24),
                             ),
                           ],
                         ),
@@ -165,10 +173,10 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
+                                        Text(
                                           "Today's Progress",
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: textColor,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -213,8 +221,10 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                     const SizedBox(height: 6),
                                     Text(
                                       viewModel.progressText,
-                                      style: const TextStyle(
-                                        color: Color(0xFF9DB9A8),
+                                      style: TextStyle(
+                                        color: isDark
+                                            ? const Color(0xFF9DB9A8)
+                                            : Colors.grey[600],
                                         fontSize: 12,
                                       ),
                                     ),
@@ -234,7 +244,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                     .titleLarge
                                     ?.copyWith(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: textColor,
                                       fontSize: 18,
                                     ),
                               ),
@@ -258,6 +268,16 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                     isTaken: isTaken,
                                     onTap: () => viewModel.toggleSupplement(
                                         stackItem.supplementId),
+                                    onInfoTap: () {
+                                      final supplement =
+                                          viewModel.getSupplement(
+                                              stackItem.supplementId);
+                                      if (supplement != null) {
+                                        Navigator.pushNamed(
+                                            context, AppRouter.supplementDetail,
+                                            arguments: supplement);
+                                      }
+                                    },
                                     onLongPress: () {
                                       _showItemOptions(
                                           context,
@@ -276,13 +296,14 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   child: Center(
                                     child: Column(
                                       children: [
-                                        const Icon(Icons.add_circle_outline,
-                                            color: Colors.white70, size: 48),
+                                        Icon(Icons.add_circle_outline,
+                                            color: secondaryTextColor,
+                                            size: 48),
                                         const SizedBox(height: 16),
-                                        const Text(
+                                        Text(
                                           'No stacks configured',
                                           style: TextStyle(
-                                              color: Colors.white70,
+                                              color: secondaryTextColor,
                                               fontSize: 16),
                                         ),
                                         const SizedBox(height: 8),
@@ -370,13 +391,15 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
 
   void _showItemOptions(
       BuildContext context, String itemName, String supplementId) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        decoration: const BoxDecoration(
-          color: AppColors.cardDark,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: SafeArea(
@@ -388,32 +411,46 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 child: Text(
                   itemName,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: isDark ? Colors.white : AppColors.textPrimaryLight,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const Divider(color: Colors.white10),
+              Divider(color: isDark ? Colors.white10 : Colors.black12),
               ListTile(
-                leading: const Icon(Icons.edit, color: Colors.white),
-                title: const Text('Edit Stack',
-                    style: TextStyle(color: Colors.white)),
+                leading: Icon(Icons.edit,
+                    color: isDark ? Colors.white : AppColors.textPrimaryLight),
+                title: Text('Edit Stack',
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimaryLight)),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, AppRouter.stackBuilder);
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.info_outline, color: Colors.white),
-                title: const Text('View Details',
-                    style: TextStyle(color: Colors.white)),
+                leading: Icon(Icons.info_outline,
+                    color: isDark ? Colors.white : AppColors.textPrimaryLight),
+                title: Text('View Details',
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimaryLight)),
                 onTap: () {
                   Navigator.pop(context);
-                  // Find supplement and show details?
-                  // For now, go to Library which is the closest "Details" view
-                  Navigator.pushNamed(context, AppRouter.library);
+                  final supplement = _viewModel.getSupplement(supplementId);
+                  if (supplement != null) {
+                    Navigator.pushNamed(context, AppRouter.supplementDetail,
+                        arguments: supplement);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Details not available')),
+                    );
+                  }
                 },
               ),
             ],

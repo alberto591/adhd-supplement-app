@@ -8,6 +8,7 @@ class DailyStackItem extends StatelessWidget {
   final bool isTaken;
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
+  final VoidCallback? onInfoTap;
 
   const DailyStackItem({
     super.key,
@@ -17,10 +18,21 @@ class DailyStackItem extends StatelessWidget {
     this.isTaken = false,
     required this.onTap,
     this.onLongPress,
+    this.onInfoTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    // Capture theme brightness
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardColor = isDark ? AppColors.cardDark : AppColors.cardLight;
+    final borderColor = isDark
+        ? Colors.white.withValues(alpha: 0.05)
+        : Colors.black.withValues(alpha: 0.05);
+    final textColor = isDark ? Colors.white : AppColors.textPrimaryLight;
+    final secondaryTextColor =
+        isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+
     return GestureDetector(
       onLongPress: onLongPress,
       onTap: onTap, // Making the whole card tappable for toggle
@@ -28,9 +40,18 @@ class DailyStackItem extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.cardDark,
+          color: cardColor,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          border: Border.all(color: borderColor),
+          boxShadow: isDark
+              ? null
+              : [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,19 +71,33 @@ class DailyStackItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          name,
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        if (onInfoTap != null) ...[
+                          const SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: onInfoTap,
+                            child: Icon(Icons.info_outline,
+                                size: 14,
+                                color: AppColors.primaryGold
+                                    .withValues(alpha: 0.6)),
+                          ),
+                        ],
+                      ],
                     ),
                     const SizedBox(height: 2),
                     Text(
                       details,
-                      style: const TextStyle(
-                        color: AppColors.textSecondaryDark,
+                      style: TextStyle(
+                        color: secondaryTextColor,
                         fontSize: 12,
                       ),
                     ),
@@ -83,7 +118,9 @@ class DailyStackItem extends StatelessWidget {
                   border: Border.all(
                     color: isTaken
                         ? AppColors.accentGreen.withValues(alpha: 0.4)
-                        : Colors.white.withValues(alpha: 0.1),
+                        : (isDark
+                            ? Colors.white.withValues(alpha: 0.1)
+                            : Colors.black.withValues(alpha: 0.1)),
                     width: 2,
                   ),
                 ),

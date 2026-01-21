@@ -8,7 +8,7 @@ import '../views/auth/login_screen.dart';
 import '../views/auth/signup_screen.dart';
 import '../views/daily_stack_screen.dart';
 import '../views/dashboard_screen.dart';
-import '../views/insights_screen.dart';
+// import '../views/insights_screen.dart';
 import '../views/level_up_screen.dart';
 import '../views/library_screen.dart';
 import '../views/stack_builder_screen.dart';
@@ -23,19 +23,22 @@ import '../views/persistent_reminders_screen.dart';
 import '../views/safety_detail_screen.dart';
 import '../views/weekly_review_screen.dart';
 import '../views/user_profile_screen.dart';
+import '../view_models/library_view_model.dart';
 import '../views/home_widgets_preview_screen.dart';
 import '../views/doctor_export_screen.dart';
 import '../views/history_log_screen.dart';
 import '../views/community_screen.dart';
 import '../views/trophy_room_screen.dart';
 import '../views/science_hub_screen.dart';
+import '../views/chemist_screen.dart';
 import '../views/focus_buddies_screen.dart';
 import '../views/privacy_settings_screen.dart';
 import '../views/nightly_reflection_screen.dart';
 import '../views/app_appearance_screen.dart';
 import '../views/refer_friend_screen.dart';
-import '../views/success_stats_screen.dart';
+import '../views/insights_screen.dart';
 import '../views/subscription_screen.dart';
+import 'auth_wrapper.dart';
 
 import '../views/daily_symptom_checkin_screen.dart';
 import '../views/quick_setup_wizard_screen.dart';
@@ -53,6 +56,8 @@ import '../views/milestone_success_screen.dart';
 import '../views/notification_history_screen.dart';
 import '../views/emergency_contact_screen.dart';
 import '../views/first_stack_success_screen.dart';
+import '../views/supplement_detail.dart';
+import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_interaction.dart';
 
 class AppRouter {
@@ -84,6 +89,7 @@ class AppRouter {
   static const String community = '/community';
   static const String trophyRoom = '/trophy-room';
   static const String scienceHub = '/science-hub';
+  static const String chemist = '/chemist';
   static const String focusBuddies = '/focus-buddies';
   static const String privacySettings = '/privacy-settings';
   static const String nightlyReflection = '/nightly-reflection';
@@ -108,6 +114,7 @@ class AppRouter {
   static const String milestoneSuccess = '/milestone-success';
   static const String notificationHistory = '/notification-history';
   static const String firstStackSuccess = '/first-stack-success';
+  static const String supplementDetail = '/supplement-detail';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -134,6 +141,8 @@ class AppRouter {
             builder: (_) => const OnboardingStackSetupScreen());
 
       case home:
+        return MaterialPageRoute(builder: (_) => const AuthWrapper());
+
       case privacySettings:
         return MaterialPageRoute(builder: (_) => const PrivacySettingsScreen());
 
@@ -141,7 +150,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => const NightlyReflectionScreen());
 
-      case dailyStack: // dailyStack was previously grouped with home, now it's separate
+      case dailyStack:
         return MaterialPageRoute(builder: (_) => const DailyStackScreen());
 
       case emergencyContact:
@@ -152,6 +161,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
 
       case insights:
+      case successStats:
         return MaterialPageRoute(builder: (_) => const InsightsScreen());
 
       case library:
@@ -219,6 +229,8 @@ class AppRouter {
 
       case scienceHub:
         return MaterialPageRoute(builder: (_) => const ScienceHubScreen());
+      case chemist:
+        return MaterialPageRoute(builder: (_) => ChemistScreen.withProvider());
 
       case focusBuddies:
         return MaterialPageRoute(
@@ -228,12 +240,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const AppAppearanceScreen());
       case referFriend:
         return MaterialPageRoute(builder: (_) => const ReferFriendScreen());
-      case successStats:
-        return MaterialPageRoute(builder: (_) => const SuccessStatsScreen());
-      case subscription:
-        return MaterialPageRoute(
-            builder: (_) => SubscriptionScreen.withProvider());
-
       case symptomCheckin:
         return MaterialPageRoute(
           builder: (context) {
@@ -310,6 +316,17 @@ class AppRouter {
       case firstStackSuccess:
         return MaterialPageRoute(
             builder: (_) => const FirstStackSuccessScreen());
+
+      case supplementDetail:
+        final supplement = settings.arguments as Supplement;
+        final authProvider = locator<AuthProvider>();
+        final userId = authProvider.user?.id ?? '';
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider(
+                  create: (_) =>
+                      locator<LibraryViewModel>(param1: userId)..initialize(),
+                  child: SupplementDetail(supplement: supplement),
+                ));
 
       default:
         return MaterialPageRoute(

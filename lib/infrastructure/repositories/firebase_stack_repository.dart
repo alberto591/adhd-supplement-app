@@ -8,13 +8,12 @@ class FirebaseStackRepository implements StackRepository {
   @override
   Future<void> saveStack(String userId, SupplementStack stack) async {
     try {
-      // Saving to a subcollection 'stacks' for the user, or a specific document 'daily_stack'
-      // Assuming a single daily stack for now
+      // Use the stack's ID as the document ID instead of a hardcoded 'daily_stack'
       await _firestore
           .collection('users')
           .doc(userId)
           .collection('stacks')
-          .doc('daily_stack')
+          .doc(stack.id)
           .set(stack.toJson());
     } catch (e) {
       throw Exception('Failed to save stack: $e');

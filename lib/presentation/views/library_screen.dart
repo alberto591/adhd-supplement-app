@@ -7,6 +7,8 @@ import '../widgets/unified_bottom_nav.dart';
 import '../view_models/library_view_model.dart';
 import '../../config/locator.dart';
 import '../../domain/entities/supplement.dart';
+import '../../application/providers/auth_provider.dart';
+import '../navigation/app_router.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -22,7 +24,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   void initState() {
     super.initState();
-    _viewModel = locator.get<LibraryViewModel>();
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final userId = authProvider.user?.id ?? '';
+    _viewModel = locator.get<LibraryViewModel>(param1: userId);
     _viewModel.initialize();
 
     _searchController.addListener(() {
@@ -64,7 +68,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     child: Row(
                       children: [
                         InkWell(
-                          onTap: () => Navigator.pop(context),
+                          onTap: () => Navigator.pushReplacementNamed(
+                              context, AppRouter.dashboard),
                           child: Container(
                             width: 50,
                             alignment: Alignment.centerLeft,
@@ -303,8 +308,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   children:
                                       viewModel.supplements.map((supplement) {
                                     return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 16),
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8), // Reduced spacing
                                       child: _buildSupplementCard(
                                         context,
                                         supplement: supplement,
@@ -335,11 +340,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 
   void _showAddToStackSheet(BuildContext context, Supplement supplement) {
+    final viewModel =
+        context.read<LibraryViewModel>(); // Capture VM from parent context
     final isDark = Theme.of(context).brightness == Brightness.dark;
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) => Container(
+      builder: (sheetContext) => Container(
         decoration: BoxDecoration(
           color: isDark ? const Color(0xFF1C2633) : Colors.white,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
@@ -373,13 +380,21 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 'Best for focus and energy',
                 () {
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.showSnackBar(
                     SnackBar(
-                      content:
-                          Text('Added ${supplement.name} to Morning Stack'),
-                      action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                      backgroundColor: AppColors.primaryGold,
+                      content: Text('Added ${supplement.name} to Morning Stack',
+                          style: const TextStyle(color: Colors.black)),
                     ),
                   );
+                  viewModel
+                      .addToStack(supplement, 'Morning Stack')
+                      .catchError((Object e) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text('Error syncing: $e')),
+                    );
+                  });
                 },
               ),
               const SizedBox(height: 12),
@@ -389,13 +404,21 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 'For relaxation and recovery',
                 () {
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.showSnackBar(
                     SnackBar(
-                      content:
-                          Text('Added ${supplement.name} to Evening Stack'),
-                      action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                      backgroundColor: AppColors.primaryGold,
+                      content: Text('Added ${supplement.name} to Evening Stack',
+                          style: const TextStyle(color: Colors.black)),
                     ),
                   );
+                  viewModel
+                      .addToStack(supplement, 'Evening Stack')
+                      .catchError((Object e) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text('Error syncing: $e')),
+                    );
+                  });
                 },
               ),
               const SizedBox(height: 12),
@@ -405,12 +428,21 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 'Sleep support',
                 () {
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.showSnackBar(
                     SnackBar(
-                      content: Text('Added ${supplement.name} to Night Stack'),
-                      action: SnackBarAction(label: 'UNDO', onPressed: () {}),
+                      backgroundColor: AppColors.primaryGold,
+                      content: Text('Added ${supplement.name} to Night Stack',
+                          style: const TextStyle(color: Colors.black)),
                     ),
                   );
+                  viewModel
+                      .addToStack(supplement, 'Night Stack')
+                      .catchError((Object e) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text('Error syncing: $e')),
+                    );
+                  });
                 },
               ),
               const SizedBox(height: 24),
@@ -536,197 +568,108 @@ class _LibraryScreenState extends State<LibraryScreen> {
     required Color borderColorDark,
   }) {
     final isGold = supplement.evidenceLevel?.toLowerCase() == 'high';
-    final isStimSafe = !supplement.isPrescription;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isGold
-              ? AppColors.primaryGold.withValues(alpha: 0.3)
-              : AppColors.primaryGold.withValues(alpha: 0.05),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color:
-                AppColors.primaryGold.withValues(alpha: isGold ? 0.15 : 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+    return InkWell(
+      onTap: () => Navigator.pushNamed(context, AppRouter.supplementDetail,
+          arguments: supplement),
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.cardDark : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isGold
+                ? AppColors.primaryGold.withValues(alpha: 0.3)
+                : AppColors.primaryGold.withValues(alpha: 0.05),
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Column(
-          children: [
-            // Image/Illustration Side
-            Stack(
-              children: [
-                Container(
-                  height: 120,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        isDark ? AppColors.backgroundDark : Colors.grey[100]!,
-                        isGold
-                            ? AppColors.primaryGold.withValues(alpha: 0.1)
-                            : Colors.grey[200]!,
-                      ],
-                    ),
-                  ),
-                  child: Center(
-                    child: _buildPillIllustration(supplement),
-                  ),
-                ),
-                if (isGold)
-                  Positioned(
-                    top: 12,
-                    right: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryGold,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.star, color: Colors.white, size: 12),
-                          const SizedBox(width: 4),
-                          Text(
-                            'GOLD STANDARD',
-                            style: GoogleFonts.lexend(
-                              color: Colors.white,
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (isStimSafe)
-                  Positioned(
-                    top: 12,
-                    left: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.5),
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: Colors.white24),
-                      ),
-                      child: Text(
-                        'STIM-SAFE',
-                        style: GoogleFonts.lexend(
-                          color: Colors.white,
-                          fontSize: 9,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
-            // Details Side
-            Padding(
-              padding: const EdgeInsets.all(16),
+          ],
+        ),
+        child: Row(
+          children: [
+            // Small Leading Illustration
+            _buildPillIllustration(supplement, isSmall: true),
+            const SizedBox(width: 16),
+
+            // Name and Category
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        supplement.name,
-                        style: GoogleFonts.lexend(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      Row(
-                        children: List.generate(
-                          5,
-                          (index) => Icon(
-                            index < supplement.focusLevel
-                                ? Icons.star
-                                : Icons.star_border,
-                            color: AppColors.primaryGold,
-                            size: 14,
+                      Flexible(
+                        child: Text(
+                          supplement.name,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.lexend(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color:
+                                isDark ? Colors.white : const Color(0xFF0F172A),
                           ),
                         ),
                       ),
+                      if (isGold) ...[
+                        const SizedBox(width: 6),
+                        const Icon(Icons.verified,
+                            color: AppColors.primaryGold, size: 14),
+                      ],
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  if (supplement.benefitTag != null)
-                    Text(
-                      supplement.benefitTag!.toUpperCase(),
-                      style: GoogleFonts.lexend(
-                        color: AppColors.primaryGold,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  const SizedBox(height: 8),
                   Text(
-                    supplement.description,
-                    style: GoogleFonts.lexend(
-                      fontSize: 13,
-                      color: isDark ? Colors.grey[400] : Colors.grey[600],
-                      height: 1.5,
-                    ),
-                    maxLines: 2,
+                    supplement.category,
                     overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: isDark ? Colors.white10 : Colors.grey[100],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          supplement.category,
-                          style: GoogleFonts.lexend(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: isDark ? Colors.grey[400] : Colors.grey[700],
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      ElevatedButton(
-                        onPressed: () =>
-                            _showAddToStackSheet(context, supplement),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryGold,
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                        ),
-                        child: Text(
-                          'ADD',
-                          style: GoogleFonts.lexend(
-                              fontWeight: FontWeight.bold, fontSize: 13),
-                        ),
-                      ),
-                    ],
+                    maxLines: 1,
+                    style: GoogleFonts.lexend(
+                      fontSize: 11,
+                      color: isDark ? Colors.grey[400] : Colors.grey[500],
+                    ),
                   ),
                 ],
+              ),
+            ),
+
+            // Focus Level (Stars)
+            Row(
+              children: List.generate(
+                5,
+                (index) => Icon(
+                  index < supplement.focusLevel
+                      ? Icons.star
+                      : Icons.star_border,
+                  color: AppColors.primaryGold,
+                  size: 10, // Slightly smaller to fit 5 stars
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+
+            // Add Button (Compact)
+            SizedBox(
+              height: 32,
+              child: ElevatedButton(
+                onPressed: () => _showAddToStackSheet(context, supplement),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryGold,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                child: Text(
+                  'ADD',
+                  style: GoogleFonts.lexend(
+                      fontWeight: FontWeight.bold, fontSize: 11),
+                ),
               ),
             ),
           ],
@@ -735,30 +678,30 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  Widget _buildPillIllustration(Supplement supplement) {
+  Widget _buildPillIllustration(Supplement supplement, {bool isSmall = false}) {
     final color = Color(int.parse(
         (supplement.colorHex ?? '#D4A411').replaceFirst('#', '0xFF')));
     final isCapsule = supplement.shapeIcon == 'capsule';
 
     return Container(
-      width: 40,
-      height: 60,
+      width: isSmall ? 32 : 40,
+      height: isSmall ? 32 : 60,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.8),
-        borderRadius: BorderRadius.circular(isCapsule ? 20 : 10),
+        borderRadius: BorderRadius.circular(isCapsule && !isSmall ? 20 : 8),
         boxShadow: [
           BoxShadow(
-            color: color.withValues(alpha: 0.3),
-            blurRadius: 15,
-            spreadRadius: 2,
+            color: color.withValues(alpha: 0.2),
+            blurRadius: isSmall ? 5 : 15,
+            spreadRadius: isSmall ? 1 : 2,
           ),
         ],
       ),
       child: Center(
         child: Icon(
           isCapsule ? Icons.wb_sunny_outlined : Icons.track_changes,
-          color: Colors.white54,
-          size: 20,
+          color: Colors.white70,
+          size: isSmall ? 14 : 20,
         ),
       ),
     );

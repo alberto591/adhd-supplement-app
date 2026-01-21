@@ -26,8 +26,8 @@ import 'package:adhd_supplement_app/presentation/view_models/history_log_view_mo
 import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
 
-// import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart'; // Unused
-import 'package:adhd_supplement_app/infrastructure/repositories/mock_symptom_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart';
+// import 'package:adhd_supplement_app/infrastructure/repositories/mock_symptom_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_supplement_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_streak_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/safety_repository.dart';
@@ -58,13 +58,12 @@ import '../infrastructure/repositories/mock_community_repository.dart';
 import '../domain/repositories/referral_repository.dart';
 import '../infrastructure/repositories/mock_referral_repository.dart';
 // import '../application/view_models/refer_friend_view_model.dart'; // Duplicate
-import '../domain/repositories/reflection_repository.dart';
-import '../infrastructure/repositories/mock_reflection_repository.dart';
-// import '../application/view_models/nightly_reflection_view_model.dart'; // Duplicate
+// import '../application/view_models/refer_friend_view_model.dart'; // Duplicate
 
 import '../application/view_models/refer_friend_view_model.dart';
 import '../application/view_models/nightly_reflection_view_model.dart';
 import '../application/view_models/doctor_export_view_model.dart';
+import '../application/view_models/chemist_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -94,8 +93,8 @@ void setupLocator() {
       () => FirebaseStreakRepository());
 
   locator.registerLazySingleton<LogRepository>(() => FirebaseLogRepository());
-  locator
-      .registerLazySingleton<SymptomRepository>(() => MockSymptomRepository());
+  locator.registerLazySingleton<SymptomRepository>(
+      () => FirebaseSymptomRepository());
   locator.registerLazySingleton<GamificationRepository>(
       () => MockGamificationRepository());
   locator.registerLazySingleton<CommunityRepository>(
@@ -106,8 +105,6 @@ void setupLocator() {
       () => SharedPrefsSettingsRepository());
   locator.registerLazySingleton<ReferralRepository>(
       () => MockReferralRepository());
-  locator.registerLazySingleton<ReflectionRepository>(
-      () => MockReflectionRepository());
 
   // Providers
   locator.registerLazySingleton(() => AuthProvider(locator<AuthRepository>()));
@@ -136,9 +133,13 @@ void setupLocator() {
     ),
   );
 
-  locator.registerFactory(() => LibraryViewModel(
-        supplementRepository: locator<SupplementRepository>(),
-      ));
+  locator.registerFactoryParam<LibraryViewModel, String, void>(
+    (userId, _) => LibraryViewModel(
+      supplementRepository: locator<SupplementRepository>(),
+      stackRepository: locator<StackRepository>(),
+      userId: userId,
+    ),
+  );
 
   locator.registerFactory(() => SubscriptionViewModel());
   locator.registerFactory(
@@ -199,4 +200,7 @@ void setupLocator() {
       userId: userId,
     ),
   );
+
+  locator
+      .registerFactory(() => ChemistViewModel(locator<PerplexityRepository>()));
 }

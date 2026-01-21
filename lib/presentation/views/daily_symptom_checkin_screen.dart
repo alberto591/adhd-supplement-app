@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../application/view_models/symptom_checkin_viewmodel.dart';
+import '../theme/app_theme.dart';
 
 class DailySymptomCheckinScreen extends StatefulWidget {
   const DailySymptomCheckinScreen({super.key});
@@ -58,12 +60,13 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    const primaryGold = AppColors.primaryGold;
 
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
           decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: 0.4),
+            color: Colors.black.withValues(alpha: 0.6),
           ),
           child: GestureDetector(
             onTap: () => Navigator.of(context).pop(),
@@ -76,10 +79,16 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                     child: Container(
                       decoration: BoxDecoration(
                         color: isDark
-                            ? const Color(0xFF101822)
-                            : const Color(0xFFF6F7F8),
+                            ? AppColors.backgroundPremiumDark
+                            : AppColors.backgroundPremiumLight,
                         borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(24)),
+                            top: Radius.circular(32)),
+                        border: Border(
+                          top: BorderSide(
+                            color: primaryGold.withValues(alpha: 0.2),
+                            width: 1.5,
+                          ),
+                        ),
                       ),
                       child: SafeArea(
                         top: false,
@@ -91,41 +100,41 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                               Container(
                                 margin: const EdgeInsets.only(top: 12),
                                 width: 48,
-                                height: 6,
+                                height: 4,
                                 decoration: BoxDecoration(
                                   color: isDark
-                                      ? const Color(0xFF3b4554)
+                                      ? Colors.white.withValues(alpha: 0.1)
                                       : Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(3),
+                                  borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
 
                               // Header
                               Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(24, 24, 24, 8),
+                                    const EdgeInsets.fromLTRB(24, 32, 24, 12),
                                 child: Column(
                                   children: [
                                     Text(
-                                      'How are you feeling?',
+                                      'State of Body & Mind',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: GoogleFonts.lexend(
                                         color: isDark
                                             ? Colors.white
-                                            : const Color(0xFF101822),
-                                        fontSize: 28,
+                                            : AppColors.backgroundPremiumDark,
+                                        fontSize: 26,
                                         fontWeight: FontWeight.bold,
                                         height: 1.1,
                                       ),
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      'Checking in helps track your progress',
+                                      'How are you feeling at this moment?',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: GoogleFonts.lexend(
                                         color: isDark
                                             ? Colors.grey[400]
-                                            : Colors.grey[500],
+                                            : Colors.grey[600],
                                         fontSize: 14,
                                       ),
                                     ),
@@ -133,25 +142,26 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                                 ),
                               ),
 
-                              // Progress Indicator
+                              // Separator
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 16),
+                                    horizontal: 60, vertical: 16),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    for (int i = 0; i < 3; i++) ...[
-                                      Container(
-                                        width: 48,
-                                        height: 6,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFF136dec),
-                                          borderRadius:
-                                              BorderRadius.circular(3),
-                                        ),
-                                      ),
-                                      if (i < 2) const SizedBox(width: 8),
-                                    ],
+                                    Expanded(
+                                        child: Divider(
+                                            color: primaryGold.withValues(
+                                                alpha: 0.1))),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 16),
+                                      child: Icon(Icons.psychology_outlined,
+                                          color: primaryGold, size: 24),
+                                    ),
+                                    Expanded(
+                                        child: Divider(
+                                            color: primaryGold.withValues(
+                                                alpha: 0.1))),
                                   ],
                                 ),
                               ),
@@ -170,6 +180,7 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                                           value: viewModel.focusLevel,
                                           onChanged: viewModel.setFocusLevel,
                                           isDark: isDark,
+                                          primaryColor: primaryGold,
                                         ),
                                         _buildSlider(
                                           context,
@@ -177,6 +188,7 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                                           value: viewModel.energyLevel,
                                           onChanged: viewModel.setEnergyLevel,
                                           isDark: isDark,
+                                          primaryColor: primaryGold,
                                         ),
                                         _buildSlider(
                                           context,
@@ -184,6 +196,7 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                                           value: viewModel.moodLevel,
                                           onChanged: viewModel.setMoodLevel,
                                           isDark: isDark,
+                                          primaryColor: primaryGold,
                                         ),
                                       ],
                                     ),
@@ -194,27 +207,28 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                               // Action Buttons
                               Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(24, 16, 24, 40),
+                                    const EdgeInsets.fromLTRB(24, 32, 24, 40),
                                 child: Consumer<SymptomCheckInViewModel>(
                                   builder: (context, viewModel, child) {
                                     return Column(
                                       children: [
                                         SizedBox(
                                           width: double.infinity,
-                                          height: 56,
+                                          height: 64,
                                           child: ElevatedButton(
                                             onPressed: viewModel.isLoading
                                                 ? null
                                                 : () => _submitCheckIn(context),
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0xFF136dec),
-                                              foregroundColor: Colors.white,
+                                              backgroundColor: primaryGold,
+                                              foregroundColor: Colors.black,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(16),
+                                                    BorderRadius.circular(32),
                                               ),
-                                              elevation: 4,
+                                              elevation: 8,
+                                              shadowColor: primaryGold
+                                                  .withValues(alpha: 0.3),
                                             ),
                                             child: viewModel.isLoading
                                                 ? const SizedBox(
@@ -226,24 +240,27 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                                                       valueColor:
                                                           AlwaysStoppedAnimation<
                                                                   Color>(
-                                                              Colors.white),
+                                                              Colors.black),
                                                     ),
                                                   )
-                                                : const Row(
+                                                : Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        'Done',
-                                                        style: TextStyle(
+                                                        'Log Check-in',
+                                                        style:
+                                                            GoogleFonts.lexend(
                                                           fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
                                                       ),
-                                                      SizedBox(width: 8),
-                                                      Icon(Icons.celebration,
+                                                      const SizedBox(width: 8),
+                                                      const Icon(
+                                                          Icons
+                                                              .celebration_outlined,
                                                           size: 20),
                                                     ],
                                                   ),
@@ -255,10 +272,10 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                                               Navigator.of(context).pop(),
                                           child: Text(
                                             'Skip for now',
-                                            style: TextStyle(
+                                            style: GoogleFonts.lexend(
                                               color: isDark
                                                   ? Colors.grey[400]
-                                                  : Colors.grey[500],
+                                                  : Colors.grey[600],
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -290,8 +307,7 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                             child: Icon(
                               Icons.task_alt,
                               size: 100,
-                              color: const Color(0xFF136dec)
-                                  .withValues(alpha: 0.2),
+                              color: primaryGold.withValues(alpha: 0.2),
                             ),
                           ),
                         ),
@@ -310,9 +326,10 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
     required double value,
     required ValueChanged<double> onChanged,
     required bool isDark,
+    required Color primaryColor,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -321,17 +338,27 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  color: isDark ? Colors.white : const Color(0xFF101822),
+                style: GoogleFonts.lexend(
+                  color:
+                      isDark ? Colors.white : AppColors.backgroundPremiumDark,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Text(
-                '${value.round()}%',
-                style: TextStyle(
-                  color: isDark ? Colors.grey[400] : Colors.grey[600],
-                  fontSize: 14,
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                decoration: BoxDecoration(
+                  color: primaryColor.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  '${value.round()}%',
+                  style: GoogleFonts.lexend(
+                    color: primaryColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -343,18 +370,18 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: 6,
+                    activeTrackColor: primaryColor,
+                    inactiveTrackColor: isDark
+                        ? Colors.white.withValues(alpha: 0.05)
+                        : Colors.grey[200],
+                    thumbColor: Colors.white,
+                    overlayColor: primaryColor.withValues(alpha: 0.2),
                     thumbShape: const RoundSliderThumbShape(
-                      enabledThumbRadius: 12,
-                      elevation: 2,
+                      enabledThumbRadius: 10,
+                      elevation: 4,
                     ),
                     overlayShape:
-                        const RoundSliderOverlayShape(overlayRadius: 24),
-                    activeTrackColor: const Color(0xFF136dec),
-                    inactiveTrackColor:
-                        isDark ? const Color(0xFF3b4554) : Colors.grey[200],
-                    thumbColor: Colors.white,
-                    overlayColor:
-                        const Color(0xFF136dec).withValues(alpha: 0.2),
+                        const RoundSliderOverlayShape(overlayRadius: 20),
                   ),
                   child: Slider(
                     value: value,

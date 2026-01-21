@@ -131,12 +131,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                           const SizedBox(height: 32),
 
-                          // 4. Evening Stack
+                          // 4. Afternoon Focus (if any)
+                          if (viewModel.afternoonItems.isNotEmpty) ...[
+                            const SizedBox(height: 32),
+                            _buildSectionHeader(context, 'Afternoon Focus',
+                                timeBadge: '2:00 PM'),
+                            const SizedBox(height: 16),
+                            ..._buildMedicationList(
+                                viewModel.afternoonItems, viewModel),
+                          ],
+
+                          const SizedBox(height: 32),
+
+                          // 5. Evening Stack
                           _buildSectionHeader(context, 'Evening Stack',
                               timeBadge: '8:00 PM'),
                           const SizedBox(height: 16),
                           ..._buildMedicationList(
                               viewModel.eveningItems, viewModel),
+
+                          // 6. Night Stack (if any)
+                          if (viewModel.nightItems.isNotEmpty) ...[
+                            const SizedBox(height: 32),
+                            _buildSectionHeader(context, 'Night Stack',
+                                timeBadge: '10:00 PM'),
+                            const SizedBox(height: 16),
+                            ..._buildMedicationList(
+                                viewModel.nightItems, viewModel),
+                          ],
 
                           const SizedBox(height: 80), // Bottom padding
                         ],
@@ -264,6 +286,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         isTaken: isTaken,
         isUpcoming: isUpcoming,
         statusText: isTaken ? 'Taken' : (isUpcoming ? 'Upcoming' : null),
+        onTap: () {
+          if (supplement != null) {
+            Navigator.pushNamed(context, AppRouter.supplementDetail,
+                arguments: supplement);
+          }
+        },
         onTake: () => viewModel.markSupplementTaken(item.supplementId),
         onMoreOptions: () => _showMedicationOptions(context, item, supplement),
       );
@@ -298,8 +326,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 title: const Text('View Details'),
                 onTap: () {
                   Navigator.pop(context);
-                  // Navigate to library detail or dedicated detail
-                  // TODO: Navigate to Supplement Details
+                  final supplement =
+                      _viewModel.getSupplement(item.supplementId);
+                  if (supplement != null) {
+                    Navigator.pushNamed(context, AppRouter.supplementDetail,
+                        arguments: supplement);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Details not available')),
+                    );
+                  }
                 },
               ),
               ListTile(
@@ -324,8 +360,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 title: const Text('Edit Schedule'),
                 onTap: () {
                   Navigator.pop(context);
-                  // TODO: Navigate to Edit Stack Item
-                  // Navigator.pushNamed(context, AppRouter.editStackItem, arguments: item);
+                  Navigator.pushNamed(context, AppRouter.stackBuilder);
                 },
               ),
               const SizedBox(height: 20),

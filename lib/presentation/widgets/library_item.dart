@@ -7,6 +7,7 @@ class LibraryItem extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final Color iconBgColor;
+  final VoidCallback? onTap;
 
   const LibraryItem({
     super.key,
@@ -15,6 +16,7 @@ class LibraryItem extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     required this.iconBgColor,
+    this.onTap,
   });
 
   @override
@@ -33,7 +35,11 @@ class LibraryItem extends StatelessWidget {
         opacity: 0.5,
         child: _buildCardContent(),
       ),
-      child: _buildCardContent(),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: _buildCardContent(),
+      ),
     );
   }
 

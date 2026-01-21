@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:app_settings/app_settings.dart';
+import '../theme/app_theme.dart';
+import '../navigation/app_router.dart';
 
 class NotificationReliabilitySetupScreen extends StatefulWidget {
   const NotificationReliabilitySetupScreen({super.key});
@@ -37,27 +40,30 @@ class _NotificationReliabilitySetupScreenState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const primaryColor = Color(0xFF135bec);
-    const bgDark = Color(0xFF101622);
-    const surfaceDark = Color(0xFF1a2230);
-    const bgLight = Color(0xFFf6f6f8);
+    const primaryGold = AppColors.primaryGold;
+    final bgColor = isDark
+        ? AppColors.backgroundPremiumDark
+        : AppColors.backgroundPremiumLight;
+    final surfaceColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
 
     return Scaffold(
-      backgroundColor: isDark ? bgDark : bgLight,
+      backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
+          icon: Icon(Icons.arrow_back_ios_new,
               color: isDark ? Colors.white : Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () =>
+              Navigator.pushReplacementNamed(context, AppRouter.dashboard),
         ),
         title: Text(
-          'Reliability Setup',
-          style: TextStyle(
+          'RELIABILITY',
+          style: GoogleFonts.lexend(
             color: isDark ? Colors.white : Colors.black,
-            fontSize: 18,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
+            letterSpacing: 2.0,
           ),
         ),
         centerTitle: true,
@@ -67,7 +73,7 @@ class _NotificationReliabilitySetupScreenState
           children: [
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 100),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
                 child: Column(
                   children: [
                     // Hero Illustration
@@ -76,50 +82,38 @@ class _NotificationReliabilitySetupScreenState
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          // Abstract glowing background
                           Container(
-                            width: 192,
-                            height: 192,
+                            width: 180,
+                            height: 180,
                             decoration: BoxDecoration(
-                              color: primaryColor.withValues(alpha: 0.2),
+                              color: primaryGold.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
-                            child: FittedBox(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: primaryColor.withValues(alpha: 0.2),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            ),
                           ),
-                          // Icons
                           Stack(
                             clipBehavior: Clip.none,
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(24),
+                                padding: const EdgeInsets.all(32),
                                 decoration: BoxDecoration(
-                                  color: isDark ? surfaceDark : Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
+                                  color: surfaceColor,
+                                  borderRadius: BorderRadius.circular(32),
                                   border: Border.all(
-                                    color: isDark
-                                        ? Colors.grey[800]!
-                                        : Colors.grey[200]!,
+                                    color: primaryGold.withValues(alpha: 0.2),
                                   ),
                                   boxShadow: [
                                     BoxShadow(
                                       color:
                                           Colors.black.withValues(alpha: 0.1),
-                                      blurRadius: 20,
-                                      offset: const Offset(0, 10),
+                                      blurRadius: 30,
+                                      offset: const Offset(0, 15),
                                     ),
                                   ],
                                 ),
-                                child: Icon(
-                                  Icons.battery_charging_full,
+                                child: const Icon(
+                                  Icons.notifications_active_outlined,
                                   size: 64,
-                                  color: isDark ? Colors.white : Colors.black,
+                                  color: primaryGold,
                                 ),
                               ),
                               Positioned(
@@ -134,27 +128,27 @@ class _NotificationReliabilitySetupScreenState
                                     );
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      borderRadius: BorderRadius.circular(12),
+                                      color: primaryGold,
+                                      borderRadius: BorderRadius.circular(16),
                                       border: Border.all(
-                                        color: isDark ? bgDark : bgLight,
+                                        color: bgColor,
                                         width: 4,
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: primaryColor.withValues(
-                                              alpha: 0.3),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 4),
+                                          color: primaryGold.withValues(
+                                              alpha: 0.4),
+                                          blurRadius: 15,
+                                          offset: const Offset(0, 5),
                                         ),
                                       ],
                                     ),
                                     child: const Icon(
-                                      Icons.shield,
-                                      size: 32,
-                                      color: Colors.white,
+                                      Icons.lock_clock_outlined,
+                                      size: 28,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
@@ -167,40 +161,41 @@ class _NotificationReliabilitySetupScreenState
 
                     // Headline
                     Text(
-                      "Don't miss a nudge",
+                      "Don't Miss a Nudge",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      style: GoogleFonts.lexend(
+                        color: isDark ? Colors.white : Colors.black,
                         fontSize: 28,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w800,
                         height: 1.1,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     Text(
-                      "To keep your nudges reliable, FocusStack needs to stay awake. iOS may try to sleep the app to save battery, which stops your notifications.",
+                      "ADHD brains rely on external cues. Let's ensure your phone doesn't silence your critical health loops.",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: isDark ? Colors.grey[400] : Colors.grey[600],
-                        fontSize: 16,
+                      style: GoogleFonts.lexend(
+                        color: Colors.grey,
+                        fontSize: 15,
                         height: 1.5,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 48),
 
                     // Step 1
                     _buildStepCard(
                       context,
                       isDark: isDark,
                       number: '1',
-                      title: 'Tap "Grant Permission"',
-                      subtitle: 'It will open your settings',
-                      trailing: Icon(
-                        Icons.touch_app,
-                        color: isDark ? Colors.grey[500] : Colors.grey[400],
+                      title: 'Tap "Configure Flow"',
+                      subtitle: 'Opens system notification relay',
+                      trailing: const Icon(
+                        Icons.touch_app_outlined,
+                        color: primaryGold,
+                        size: 20,
                       ),
-                      primaryColor: primaryColor,
-                      surfaceDark: surfaceDark,
+                      primaryGold: primaryGold,
+                      surfaceColor: surfaceColor,
                     ),
                     const SizedBox(height: 16),
 
@@ -209,34 +204,30 @@ class _NotificationReliabilitySetupScreenState
                       context,
                       isDark: isDark,
                       number: '2',
-                      title: 'Enable Background App Refresh',
-                      subtitle: 'Toggle the switch to ON',
+                      title: 'Enable Full Relays',
+                      subtitle: 'Toggle persistent status to ON',
                       trailing: Container(
-                        width: 40,
+                        width: 44,
                         height: 24,
                         decoration: BoxDecoration(
-                          color: Colors.grey[700],
+                          color: primaryGold,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin: const EdgeInsets.all(2),
-                                width: 20,
-                                height: 20,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            margin: const EdgeInsets.all(2),
+                            width: 20,
+                            height: 20,
+                            decoration: const BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle,
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                      primaryColor: primaryColor,
-                      surfaceDark: surfaceDark,
+                      primaryGold: primaryGold,
+                      surfaceColor: surfaceColor,
                     ),
                   ],
                 ),
@@ -245,62 +236,51 @@ class _NotificationReliabilitySetupScreenState
 
             // Fixed Bottom Actions
             Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    isDark ? bgDark : bgLight,
-                    isDark ? bgDark : bgLight,
-                    (isDark ? bgDark : bgLight).withValues(alpha: 0),
-                  ],
-                  stops: const [0.0, 0.5, 1.0],
-                ),
-              ),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 40),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
                     width: double.infinity,
-                    height: 56,
+                    height: 64,
                     child: ElevatedButton(
                       onPressed: () {
                         AppSettings.openAppSettings(
                             type: AppSettingsType.notification);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: Colors.white,
+                        backgroundColor: primaryGold,
+                        foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
+                          borderRadius: BorderRadius.circular(32),
                         ),
-                        elevation: 8,
-                        shadowColor: primaryColor.withValues(alpha: 0.2),
+                        elevation: 12,
+                        shadowColor: primaryGold.withValues(alpha: 0.4),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Grant Permission',
-                            style: TextStyle(
+                            'Configure Flow',
+                            style: GoogleFonts.lexend(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(width: 8),
-                          Icon(Icons.open_in_new, size: 20),
+                          const SizedBox(width: 12),
+                          const Icon(Icons.settings_suggest, size: 22),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.pushReplacementNamed(
+                        context, AppRouter.dashboard),
                     child: Text(
-                      'Skip for now',
-                      style: TextStyle(
-                        color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      'Dismiss for now',
+                      style: GoogleFonts.lexend(
+                        color: Colors.grey,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -322,62 +302,63 @@ class _NotificationReliabilitySetupScreenState
     required String title,
     required String subtitle,
     required Widget trailing,
-    required Color primaryColor,
-    required Color surfaceDark,
+    required Color primaryGold,
+    required Color surfaceColor,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isDark ? surfaceDark : Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: surfaceColor,
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isDark ? Colors.grey[800]! : Colors.grey[200]!,
+          color: primaryGold.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: 52,
+            height: 52,
             decoration: BoxDecoration(
-              color: primaryColor.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
+              color: primaryGold.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Center(
               child: Text(
                 number,
-                style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 18,
+                style: GoogleFonts.lexend(
+                  color: primaryGold,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 20),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: GoogleFonts.lexend(
                     color: isDark ? Colors.white : Colors.black,
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    color: isDark ? Colors.grey[400] : Colors.grey[500],
+                  style: GoogleFonts.lexend(
+                    color: Colors.grey,
                     fontSize: 12,
                   ),
                 ),

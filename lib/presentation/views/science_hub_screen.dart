@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/science_hub_view_model.dart';
 import '../../domain/entities/article.dart';
 import '../navigation/app_router.dart';
+import '../theme/app_theme.dart';
+import '../widgets/unified_bottom_nav.dart';
 
 class ScienceHubScreen extends StatefulWidget {
   const ScienceHubScreen({super.key});
@@ -38,41 +41,33 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
             if (viewModel.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-            return Stack(
-              children: [
-                CustomScrollView(
-                  slivers: [
-                    _buildAppBar(context, isDark),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 100),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (viewModel.articleOfTheDay != null)
-                              _buildArticleOfTheDay(context, isDark,
-                                  primaryBlue, viewModel.articleOfTheDay!),
-                            _buildCategories(isDark, primaryBlue),
-                            _buildEvidenceBasedResearch(context, isDark,
-                                primaryBlue, viewModel.articles),
-                            _buildSafetyGuides(isDark, primaryBlue),
-                            _buildUserInsights(isDark, primaryBlue),
-                          ],
-                        ),
-                      ),
+            return CustomScrollView(
+              slivers: [
+                _buildAppBar(context, isDark),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (viewModel.articleOfTheDay != null)
+                          _buildArticleOfTheDay(context, isDark, primaryBlue,
+                              viewModel.articleOfTheDay!),
+                        _buildCategories(isDark, primaryBlue),
+                        _buildEvidenceBasedResearch(
+                            context, isDark, primaryBlue, viewModel.articles),
+                        _buildAiChemistCard(context, isDark, primaryBlue),
+                        _buildSafetyGuides(isDark, primaryBlue),
+                        _buildUserInsights(isDark, primaryBlue),
+                      ],
                     ),
-                  ],
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: _buildBottomNav(isDark, primaryBlue),
+                  ),
                 ),
               ],
             );
           },
         ),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 3),
       ),
     );
   }
@@ -96,7 +91,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
           child: Icon(Icons.arrow_back_ios_new,
               size: 18, color: isDark ? Colors.white : const Color(0xFF111418)),
         ),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () =>
+            Navigator.pushReplacementNamed(context, AppRouter.dashboard),
       ),
       title: Text(
         'Science Hub',
@@ -645,62 +641,70 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
     );
   }
 
-  Widget _buildBottomNav(bool isDark, Color primary) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF101822) : Colors.white,
-        border: Border(
-          top: BorderSide(
-            color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+  Widget _buildAiChemistCard(BuildContext context, bool isDark, Color primary) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: GestureDetector(
+        onTap: () => Navigator.pushNamed(context, AppRouter.chemist),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: isDark
+                  ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
+                  : [const Color(0xFFE2E8F0), Colors.white],
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border:
+                Border.all(color: AppColors.primaryGold.withValues(alpha: 0.5)),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primaryGold.withValues(alpha: 0.1),
+                blurRadius: 10,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryGold.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.science,
+                    color: AppColors.primaryGold, size: 32),
+              ),
+              const SizedBox(width: 20),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Talk to Dr. Alchemist',
+                      style: GoogleFonts.lexend(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Our AI PhD Chemist is ready for your technical questions.',
+                      style: GoogleFonts.lexend(
+                        fontSize: 12,
+                        color: isDark ? Colors.grey[400] : Colors.grey[700],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.arrow_forward_ios,
+                  color: AppColors.primaryGold, size: 16),
+            ],
           ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(0, Icons.home, 'Home', false, isDark, primary),
-          _buildNavItem(
-              1, Icons.library_books, 'Library', true, isDark, primary),
-          _buildNavItem(
-              2, Icons.medication, 'My Stack', false, isDark, primary),
-          _buildNavItem(3, Icons.person, 'Profile', false, isDark, primary),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(int index, IconData icon, String label, bool isActive,
-      bool isDark, Color primary) {
-    final color = isActive
-        ? primary
-        : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF94A3B8));
-
-    return GestureDetector(
-      onTap: () {
-        if (index == 0) {
-          Navigator.of(context)
-              .popUntil((route) => route.settings.name == AppRouter.dashboard);
-        } else if (index == 2) {
-          Navigator.pushNamed(context, AppRouter.stackBuilder);
-        } else if (index == 3) {
-          Navigator.pushReplacementNamed(context, AppRouter.profile);
-        }
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 28),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: color,
-              fontSize: 10,
-              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ],
       ),
     );
   }

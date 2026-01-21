@@ -6,6 +6,10 @@ class UpNextCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Capture theme brightness
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : AppColors.textPrimaryLight;
+
     return Column(
       children: [
         Padding(
@@ -13,10 +17,10 @@ class UpNextCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Up Next',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: textColor,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

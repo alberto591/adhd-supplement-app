@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../theme/app_theme.dart';
+import '../navigation/app_router.dart';
 
 class LateDoseTriageScreen extends StatefulWidget {
   const LateDoseTriageScreen({super.key});
@@ -13,14 +16,14 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const primaryColor = Color(0xFF135bec);
-    const bgDark = Color(0xFF101622);
-    const surfaceDark = Color(0xFF1a2230);
-    const bgLight = Color(0xFFf6f6f8);
-    const surfaceLight = Color(0xFFffffff);
+    const primaryGold = AppColors.primaryGold;
+    final bgColor = isDark
+        ? AppColors.backgroundPremiumDark
+        : AppColors.backgroundPremiumLight;
+    final surfaceColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
 
     return Scaffold(
-      backgroundColor: isDark ? bgDark : bgLight,
+      backgroundColor: bgColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -31,10 +34,12 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                 children: [
                   Container(
                     width: 48,
-                    height: 6,
+                    height: 4,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.grey[700] : Colors.grey[300],
-                      borderRadius: BorderRadius.circular(3),
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.1)
+                          : Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -45,10 +50,11 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                       children: [
                         const SizedBox(width: 60), // Spacer
                         Text(
-                          'Late Entry Detected',
-                          style: TextStyle(
-                            fontSize: 18,
+                          'TRIAGE',
+                          style: GoogleFonts.lexend(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            letterSpacing: 2.0,
                             color: isDark ? Colors.white : Colors.black,
                           ),
                         ),
@@ -57,14 +63,14 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => Navigator.pushReplacementNamed(
+                                  context, AppRouter.dashboard),
                               child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                  color: isDark
-                                      ? Colors.grey[400]
-                                      : Colors.grey[600],
+                                'Close',
+                                style: GoogleFonts.lexend(
+                                  color: primaryGold,
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
                               ),
                             ),
@@ -88,20 +94,18 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                       alignment: Alignment.center,
                       children: [
                         Container(
-                          width: 96,
-                          height: 96,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
-                            color: isDark
-                                ? Colors.orange.withValues(alpha: 0.1)
-                                : Colors.orange[100],
+                            color: primaryGold.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
+                            border: Border.all(
+                                color: primaryGold.withValues(alpha: 0.2)),
                           ),
-                          child: Icon(
-                            Icons.schedule,
+                          child: const Icon(
+                            Icons.timer_outlined,
                             size: 48,
-                            color: isDark
-                                ? Colors.orange[400]
-                                : Colors.orange[600],
+                            color: primaryGold,
                           ),
                         ),
                         Positioned(
@@ -110,48 +114,50 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                           child: Container(
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: isDark ? bgDark : bgLight,
+                              color: bgColor,
                               shape: BoxShape.circle,
                             ),
                             child: Container(
-                              width: 16,
-                              height: 16,
+                              width: 20,
+                              height: 20,
                               decoration: BoxDecoration(
-                                color: Colors.red[500],
+                                color: Colors.redAccent,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: isDark ? bgDark : bgLight,
+                                  color: bgColor,
                                   width: 2,
                                 ),
                               ),
+                              child: const Icon(Icons.priority_high,
+                                  size: 12, color: Colors.white),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 32),
 
                     // Headlines
                     Text(
-                      'A bit late today!\nHow should we log this?',
+                      'Late Entry Detected',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                        height: 1.2,
-                        color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      style: GoogleFonts.lexend(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        height: 1.1,
+                        color: isDark ? Colors.white : Colors.black,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     Text(
-                      'Scheduled for 8:00 AM • It is now 2:15 PM',
-                      style: TextStyle(
+                      'Log current status to maintain adherence data.',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lexend(
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: isDark ? Colors.grey[400] : Colors.grey[500],
+                        color: Colors.grey,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 48),
 
                     // Options
                     Column(
@@ -159,67 +165,64 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                         _buildOptionCard(
                           isDark: isDark,
                           index: 0,
-                          icon: Icons.update,
+                          icon: Icons.bolt,
                           title: 'I took it just now',
-                          subtitle: '(Adjusting next dose time)',
-                          primaryColor: primaryColor,
-                          surfaceLight: surfaceLight,
-                          surfaceDark: surfaceDark,
+                          subtitle: 'Updates your active concentration loop',
+                          primaryGold: primaryGold,
+                          surfaceColor: surfaceColor,
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
                         _buildOptionCard(
                           isDark: isDark,
                           index: 1,
-                          icon: Icons.do_not_disturb,
+                          icon: Icons.block_flipped,
                           title: 'Skipping this one',
-                          subtitle: '(Safety first - reset for tomorrow)',
-                          primaryColor: primaryColor,
-                          surfaceLight: surfaceLight,
-                          surfaceDark: surfaceDark,
+                          subtitle: 'Safety first • Reset for next window',
+                          primaryGold: primaryGold,
+                          surfaceColor: surfaceColor,
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
                         _buildOptionCard(
                           isDark: isDark,
                           index: 2,
                           icon: Icons.history,
                           title: 'I actually took it on time',
-                          subtitle: '(Just logging it now)',
-                          primaryColor: primaryColor,
-                          surfaceLight: surfaceLight,
-                          surfaceDark: surfaceDark,
+                          subtitle: 'Fixing historical adherence record',
+                          primaryGold: primaryGold,
+                          surfaceColor: surfaceColor,
                         ),
                       ],
                     ),
 
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 32),
 
                     // Safety Tip
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: isDark
-                            ? Colors.blue[900]!.withValues(alpha: 0.2)
-                            : Colors.blue[50],
-                        borderRadius: BorderRadius.circular(12),
+                        color: primaryGold.withValues(alpha: 0.05),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: primaryGold.withValues(alpha: 0.1)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Icon(
-                            Icons.info,
+                            Icons.privacy_tip_outlined,
                             size: 20,
-                            color: primaryColor,
+                            color: primaryGold,
                           ),
-                          const SizedBox(width: 12),
+                          const SizedBox(width: 16),
                           Expanded(
                             child: Text(
-                              'Logging accurately helps us predict when your body is ready for the next dose without stacking effects.',
-                              style: TextStyle(
-                                fontSize: 12,
+                              'Accurate logging ensures your personalized focus predictions remain precise.',
+                              style: GoogleFonts.lexend(
+                                fontSize: 13,
                                 height: 1.4,
                                 color: isDark
-                                    ? Colors.grey[300]
-                                    : const Color(0xFF475569),
+                                    ? Colors.grey[400]
+                                    : Colors.grey[700],
                               ),
                             ),
                           ),
@@ -233,49 +236,45 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
 
             // Footer
             Container(
-              padding: const EdgeInsets.all(24),
-              color: isDark ? bgDark : bgLight,
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 40),
               child: SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 64,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Log the user's decision
                     final decision = _selectedOption == 0
                         ? 'Took medication late'
                         : (_selectedOption == 1
                             ? 'Skipped dose'
                             : 'Took on time');
 
-                    // In a real implementation, this would save to LogRepository
-                    // For now, show confirmation and close
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Logged: $decision'),
-                        backgroundColor: Colors.green,
+                        content: Text('Logged: $decision',
+                            style: GoogleFonts.lexend()),
+                        backgroundColor: primaryGold,
                       ),
                     );
 
-                    // Close the screen after brief delay
                     Future.delayed(const Duration(milliseconds: 500), () {
                       if (context.mounted) {
-                        Navigator.pop(context);
+                        Navigator.pushReplacementNamed(
+                            context, AppRouter.dashboard);
                       }
                     });
-                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    foregroundColor: Colors.white,
+                    backgroundColor: primaryGold,
+                    foregroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28),
+                      borderRadius: BorderRadius.circular(32),
                     ),
                     elevation: 8,
-                    shadowColor: Colors.blue.withValues(alpha: 0.3),
+                    shadowColor: primaryGold.withValues(alpha: 0.4),
                   ),
-                  child: const Text(
-                    'Confirm Log',
-                    style: TextStyle(
+                  child: Text(
+                    'Confirm Decision',
+                    style: GoogleFonts.lexend(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -295,44 +294,51 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
     required IconData icon,
     required String title,
     required String subtitle,
-    required Color primaryColor,
-    required Color surfaceLight,
-    required Color surfaceDark,
+    required Color primaryGold,
+    required Color surfaceColor,
   }) {
     final isSelected = _selectedOption == index;
     final borderColor = isSelected
-        ? primaryColor
-        : (isDark ? Colors.grey[800]! : Colors.grey[200]!);
-    final bgColor = isSelected
-        ? primaryColor.withValues(alpha: isDark ? 0.1 : 0.05)
-        : (isDark ? surfaceDark : surfaceLight);
+        ? primaryGold
+        : (isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200]!);
+    final bgColor =
+        isSelected ? primaryGold.withValues(alpha: 0.05) : surfaceColor;
 
     return InkWell(
       onTap: () => setState(() => _selectedOption = index),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(24),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: bgColor,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: borderColor, width: isSelected ? 2 : 1),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: primaryGold.withValues(alpha: 0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ]
+              : null,
         ),
         child: Row(
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: 48,
+              height: 48,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? primaryColor.withValues(alpha: 0.2)
-                    : (isDark ? Colors.grey[700] : Colors.grey[100]),
-                shape: BoxShape.circle,
+                    ? primaryGold.withValues(alpha: 0.1)
+                    : (isDark
+                        ? Colors.black.withValues(alpha: 0.2)
+                        : Colors.grey[100]),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(
                 icon,
-                color: isSelected
-                    ? primaryColor
-                    : (isDark ? Colors.grey[400] : Colors.grey[500]),
+                color: isSelected ? primaryGold : Colors.grey,
                 size: 24,
               ),
             ),
@@ -343,18 +349,18 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      color: isDark ? Colors.white : Colors.black,
                     ),
                   ),
+                  const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: isDark ? Colors.grey[400] : Colors.grey[500],
+                      color: Colors.grey,
                     ),
                   ),
                 ],
@@ -365,19 +371,17 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
               width: 24,
               height: 24,
               decoration: BoxDecoration(
-                color: isSelected ? primaryColor : Colors.transparent,
+                color: isSelected ? primaryGold : Colors.transparent,
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: isSelected
-                      ? primaryColor
-                      : (isDark ? Colors.grey[600]! : Colors.grey[300]!),
+                      ? primaryGold
+                      : Colors.grey.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
               child: isSelected
-                  ? const Center(
-                      child: CircleAvatar(
-                          radius: 4, backgroundColor: Colors.white))
+                  ? const Icon(Icons.check, size: 14, color: Colors.black)
                   : null,
             ),
           ],

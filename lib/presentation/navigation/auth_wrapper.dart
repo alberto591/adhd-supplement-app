@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
 import '../views/auth/login_screen.dart';
-import '../views/daily_stack_screen.dart';
+import '../views/dashboard_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -19,7 +19,7 @@ class AuthWrapper extends StatelessWidget {
               ),
             );
           case AuthStatus.authenticated:
-            return const DailyStackScreen();
+            return const DashboardScreen();
           case AuthStatus.unauthenticated:
             return const LoginScreen();
         }

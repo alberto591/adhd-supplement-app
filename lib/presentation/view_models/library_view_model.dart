@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/supplement.dart';
+import '../../domain/entities/supplement_stack.dart';
 import '../../domain/repositories/supplement_repository.dart';
+import '../../domain/repositories/stack_repository.dart';
 
 /// View model for the Library/Discovery screen
 /// Manages supplement browsing, search, and filtering
 class LibraryViewModel extends ChangeNotifier {
   final SupplementRepository _supplementRepository;
+  final StackRepository _stackRepository;
+  final String _userId;
 
   // State
   List<Supplement> _allSupplements = [];
@@ -40,7 +44,11 @@ class LibraryViewModel extends ChangeNotifier {
 
   LibraryViewModel({
     required SupplementRepository supplementRepository,
-  }) : _supplementRepository = supplementRepository;
+    required StackRepository stackRepository,
+    required String userId,
+  })  : _supplementRepository = supplementRepository,
+        _stackRepository = stackRepository,
+        _userId = userId;
 
   /// Initialize - load all supplements
   Future<void> initialize() async {
@@ -105,6 +113,78 @@ class LibraryViewModel extends ChangeNotifier {
     } catch (_) {
       return null;
     }
+  }
+
+  /// Add a supplement to a specific stack
+  Future<void> addToStack(Supplement supplement, String stackName) async {
+    _setLoading(true);
+    try {
+      final userStacks = await _stackRepository.getUserStacks(_userId);
+
+      // Try to find existing stack by name
+      SupplementStack? targetStack;
+      try {
+        targetStack = userStacks.firstWhere(
+            (s) => s.name.toLowerCase().contains(stackName.toLowerCase()));
+      } catch (_) {
+        targetStack = null;
+      }
+
+      final now = DateTime.now();
+
+      if (targetStack != null) {
+        // Add to existing stack
+        final newItems = List<StackItem>.from(targetStack.items);
+
+        // Prevent duplicates
+        if (!newItems.any((item) => item.supplementId == supplement.id)) {
+          newItems.add(StackItem(
+            supplementId: supplement.id,
+            order: newItems.length,
+            scheduledTime: _getDefaultTimeForStack(stackName),
+          ));
+        }
+
+        final updatedStack = targetStack.copyWith(
+          items: newItems,
+          updatedAt: now,
+        );
+        await _stackRepository.saveStack(_userId, updatedStack);
+      } else {
+        // Create new stack
+        final newStack = SupplementStack(
+          id: '${_userId}_${stackName.toLowerCase().replaceAll(' ', '_')}_$now',
+          userId: _userId,
+          name: stackName,
+          items: [
+            StackItem(
+              supplementId: supplement.id,
+              order: 0,
+              scheduledTime: _getDefaultTimeForStack(stackName),
+            )
+          ],
+          timeOfDay: stackName.toLowerCase(),
+          createdAt: now,
+          updatedAt: now,
+        );
+        await _stackRepository.saveStack(_userId, newStack);
+      }
+    } catch (e) {
+      _error = 'Failed to add to stack: $e';
+      debugPrint('ERROR in addToStack: $e');
+      rethrow;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  String _getDefaultTimeForStack(String stackName) {
+    final name = stackName.toLowerCase();
+    if (name.contains('morning')) return '08:00';
+    if (name.contains('afternoon')) return '14:00';
+    if (name.contains('evening')) return '20:00';
+    if (name.contains('night')) return '22:00';
+    return '09:00';
   }
 
   // Private helpers

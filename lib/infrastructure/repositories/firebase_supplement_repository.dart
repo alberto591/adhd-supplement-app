@@ -5,16 +5,22 @@ import '../../domain/repositories/supplement_repository.dart';
 class FirebaseSupplementRepository implements SupplementRepository {
   final FirebaseFirestore _firestore;
 
+  // In-memory cache
+  List<Supplement>? _cache;
+
   FirebaseSupplementRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
   @override
   Future<List<Supplement>> getAllSupplements() async {
+    if (_cache != null) return _cache!;
+
     try {
       final snapshot = await _firestore.collection('supplements').get();
-      return snapshot.docs
+      _cache = snapshot.docs
           .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
           .toList();
+      return _cache!;
     } catch (e) {
       throw Exception('Failed to fetch supplements: $e');
     }
@@ -23,13 +29,8 @@ class FirebaseSupplementRepository implements SupplementRepository {
   @override
   Future<List<Supplement>> getSupplementsByCategory(String category) async {
     try {
-      final snapshot = await _firestore
-          .collection('supplements')
-          .where('category', isEqualTo: category)
-          .get();
-      return snapshot.docs
-          .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
-          .toList();
+      final all = await getAllSupplements();
+      return all.where((s) => s.category == category).toList();
     } catch (e) {
       throw Exception('Failed to fetch supplements by category: $e');
     }
@@ -38,10 +39,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
   @override
   Future<List<Supplement>> searchSupplements(String query) async {
     try {
-      final snapshot = await _firestore.collection('supplements').get();
-      final allSupplements = snapshot.docs
-          .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
-          .toList();
+      final allSupplements = await getAllSupplements();
 
       // Simple client-side filtering
       // For production, consider using Algolia or similar search service

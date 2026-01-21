@@ -14,6 +14,11 @@ class _SymptomQuickLogState extends State<SymptomQuickLog> {
 
   @override
   Widget build(BuildContext context) {
+    // Capture theme brightness
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : AppColors.textPrimaryLight;
+    final cardColor = isDark ? AppColors.cardDark : AppColors.cardLight;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -33,10 +38,10 @@ class _SymptomQuickLogState extends State<SymptomQuickLog> {
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
+          Text(
             "How's your mental clarity right now?",
             style: TextStyle(
-              color: Colors.white,
+              color: textColor,
               fontSize: 12,
             ),
           ),
@@ -57,7 +62,7 @@ class _SymptomQuickLogState extends State<SymptomQuickLog> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.accentGreen.withValues(alpha: 0.2)
-                            : AppColors.cardDark,
+                            : cardColor,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: isSelected

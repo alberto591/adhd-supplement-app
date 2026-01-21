@@ -324,6 +324,19 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                             icon: item.icon,
                                             iconColor: item.iconColor,
                                             iconBgColor: item.iconBgColor,
+                                            onTap: () async {
+                                              final supplement =
+                                                  await _supplementRepository
+                                                      .getSupplement(item.id);
+                                              if (!context.mounted) return;
+                                              if (supplement != null) {
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  AppRouter.supplementDetail,
+                                                  arguments: supplement,
+                                                );
+                                              }
+                                            },
                                           );
                                         },
                                       ),

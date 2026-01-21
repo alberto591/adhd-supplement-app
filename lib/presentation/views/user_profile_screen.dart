@@ -23,7 +23,12 @@ class UserProfileScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new,
+              color: isDark ? Colors.white : Colors.black),
+          onPressed: () =>
+              Navigator.pushReplacementNamed(context, AppRouter.dashboard),
+        ),
         title: Text(
           'Settings',
           style: GoogleFonts.lexend(

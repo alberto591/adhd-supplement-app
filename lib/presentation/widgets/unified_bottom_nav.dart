@@ -26,12 +26,6 @@ class UnifiedBottomNav extends StatelessWidget {
         routeName = AppRouter.insights; // "Insights" (SuccessStats)
         break;
       case 3:
-        routeName = AppRouter
-            .scienceHub; // "Library" maps to ScienceHub currently or LibraryScreen if route exists
-        // Wait, app_router might have 'library'. I should check usage in plan.
-        // In LibraryScreen it was AppRouter.scienceHub for "Discover" but "Library" implies the LibraryScreen itself.
-        // Let's assume AppRouter.library exists or should be used.
-        // If LibraryScreen IS the screen, we navigate to it.
         routeName = AppRouter.library;
         break;
       case 4:

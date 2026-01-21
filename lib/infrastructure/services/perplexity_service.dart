@@ -12,7 +12,13 @@ class PerplexityService {
 
   PerplexityService({String? apiKey}) : apiKey = apiKey ?? _defaultApiKey;
 
-  Future<String> search(String query) async {
+  static const String chemistSystemPrompt =
+      'You are "Dr. Alchemist", a PhD medicinal chemist specialized in neuropharmacology. '
+      'You provide deep-dive scientific explanations for ADHD supplements. '
+      'Focus on: molecular mechanisms of action, bioavailability, blood-brain barrier penetration, and chemical stability. '
+      'Use technical but accessible language. Always cite theoretical chemical interactions and metabolic pathways.';
+
+  Future<String> search(String query, {String? systemPrompt}) async {
     try {
       final response = await http.post(
         Uri.parse(baseUrl),
@@ -26,7 +32,7 @@ class PerplexityService {
           'messages': [
             {
               'role': 'system',
-              'content':
+              'content': systemPrompt ??
                   'You are a helpful assistant for an ADHD supplement app. Provide concise, evidence-based information about supplements. Focus on safety, interactions, and benefits for ADHD.'
             },
             {'role': 'user', 'content': query}

@@ -12,6 +12,8 @@ import 'presentation/navigation/auth_wrapper.dart';
 import 'firebase_options.dart';
 import 'domain/repositories/settings_repository.dart';
 import 'infrastructure/services/notification_service.dart';
+import 'infrastructure/services/seeding_service.dart';
+import 'domain/repositories/supplement_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +37,25 @@ void main() async {
     await locator<SettingsRepository>().init();
     // Initialize Notifications
     await locator<NotificationService>().init();
+
+    // RE-ADDED: Run Seeding Script with Timeout to prevent hang
+    debugPrint('Running Seeding Script...');
+    try {
+      await locator<SeedingService>()
+          .seedSupplements()
+          .timeout(const Duration(seconds: 10));
+      debugPrint('Seeding Script Completed.');
+
+      // Background Pre-fetch: Load supplements into cache immediately
+      // We don't await this so it doesn't block startup
+      locator<SupplementRepository>()
+          .getAllSupplements()
+          .then((_) => debugPrint('Background pre-fetch complete'))
+          .catchError((Object e) =>
+              debugPrint('Background pre-fetch failed (ignored): $e'));
+    } catch (e) {
+      debugPrint('Seeding/Pre-fetch timed out or failed (likely offline): $e');
+    }
   } catch (e) {
     debugPrint('Locator/Init setup error: $e');
   }
