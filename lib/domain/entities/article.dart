@@ -26,4 +26,36 @@ class Article {
     required this.content,
     this.relatedArticles = const [],
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'author': author,
+      'authorRole': authorRole,
+      'authorAvatarUrl': authorAvatarUrl,
+      'readTime': readTime,
+      'publishDate': publishDate,
+      'imageUrl': imageUrl,
+      'tldr': tldr,
+      'category': category,
+      'content': content,
+    };
+  }
+
+  factory Article.fromJson(Map<String, dynamic> json) {
+    return Article(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      author: json['author'] as String,
+      authorRole: json['authorRole'] as String,
+      authorAvatarUrl: json['authorAvatarUrl'] as String,
+      readTime: json['readTime'] as String,
+      publishDate: json['publishDate'] as String,
+      imageUrl: json['imageUrl'] as String,
+      tldr: json['tldr'] as String,
+      category: json['category'] as String,
+      content: json['content'] as String,
+    );
+  }
 }

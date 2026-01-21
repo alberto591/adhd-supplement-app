@@ -282,6 +282,7 @@ void main() {
         createdAt: DateTime.now(),
         xp: 0,
         level: 1,
+        unlockedAchievements: const [],
       );
       fakeAuthRepo.currentUser = initialUser;
 
@@ -312,6 +313,18 @@ void main() {
       // Should now be filtered out
       expect(
           viewModel.eveningItems.any((i) => i.supplementId == 'supp1'), false);
+    });
+
+    test('getTimeStatus formatting', () {
+      expect(viewModel.getTimeStatus(null), isNull);
+      expect(viewModel.getTimeStatus('invalid'), isNull);
+
+      final morningStatus = viewModel.getTimeStatus('Morning');
+      expect(morningStatus, isNotNull);
+      expect(morningStatus!.isNotEmpty, true);
+
+      final eveningStatus = viewModel.getTimeStatus('Evening');
+      expect(eveningStatus, isNotNull);
     });
   });
 }

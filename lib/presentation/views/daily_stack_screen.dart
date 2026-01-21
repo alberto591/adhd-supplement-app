@@ -272,34 +272,41 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                           viewModel.isSupplementTaken(
                                               stackItem.supplementId);
 
-                                      return DailyStackItem(
-                                        name: supplement?.name ?? 'Loading...',
-                                        details: stackItem.customDosage ??
-                                            supplement?.defaultDosage ??
-                                            '',
-                                        icon: _getIconForCategory(
-                                            supplement?.category),
-                                        isTaken: isTaken,
-                                        onTap: () async {
+                                      return Dismissible(
+                                        key: Key(
+                                            'dismiss_${stackItem.supplementId}'),
+                                        direction: DismissDirection.startToEnd,
+                                        background: Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 12),
+                                          decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          alignment: Alignment.centerLeft,
+                                          padding:
+                                              const EdgeInsets.only(left: 24),
+                                          child: const Icon(Icons.check,
+                                              color: Colors.white, size: 32),
+                                        ),
+                                        onDismissed: (_) async {
                                           final wasTaken =
                                               viewModel.isSupplementTaken(
                                                   stackItem.supplementId);
 
-                                          // Show celebration animation immediately
+                                          // Show celebration if taking
                                           if (!wasTaken) {
                                             setState(
                                                 () => _showCelebration = true);
                                           }
 
-                                          // Toggle supplement status
+                                          // Toggle status
                                           await viewModel.toggleSupplement(
                                               stackItem.supplementId);
 
-                                          // Keep animation visible for full duration
-                                          if (!wasTaken &&
-                                              viewModel.isSupplementTaken(
-                                                  stackItem.supplementId)) {
-                                            // Animation will auto-clear after 1.5s
+                                          // Keep celebration
+                                          if (!wasTaken) {
                                             Future.delayed(
                                                 const Duration(
                                                     milliseconds: 1500), () {
@@ -310,22 +317,62 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                             });
                                           }
                                         },
-                                        onInfoTap: () {
-                                          final supplement =
-                                              viewModel.getSupplement(
-                                                  stackItem.supplementId);
-                                          if (supplement != null) {
-                                            Navigator.pushNamed(context,
-                                                AppRouter.supplementDetail,
-                                                arguments: supplement);
-                                          }
-                                        },
-                                        onLongPress: () {
-                                          _showItemOptions(
-                                              context,
-                                              supplement?.name ?? 'Item',
-                                              stackItem.supplementId);
-                                        },
+                                        child: DailyStackItem(
+                                          name:
+                                              supplement?.name ?? 'Loading...',
+                                          details: stackItem.customDosage ??
+                                              supplement?.defaultDosage ??
+                                              '',
+                                          icon: _getIconForCategory(
+                                              supplement?.category),
+                                          isTaken: isTaken,
+                                          timeStatus: stackItem.scheduledTime ??
+                                              viewModel.getTimeStatus(
+                                                  stack.timeOfDay),
+                                          onTap: () async {
+                                            // Tap logic duplicates dismiss logic for accessibility
+                                            final wasTaken =
+                                                viewModel.isSupplementTaken(
+                                                    stackItem.supplementId);
+
+                                            if (!wasTaken) {
+                                              setState(() =>
+                                                  _showCelebration = true);
+                                            }
+
+                                            await viewModel.toggleSupplement(
+                                                stackItem.supplementId);
+
+                                            if (!wasTaken &&
+                                                viewModel.isSupplementTaken(
+                                                    stackItem.supplementId)) {
+                                              Future.delayed(
+                                                  const Duration(
+                                                      milliseconds: 1500), () {
+                                                if (mounted) {
+                                                  setState(() =>
+                                                      _showCelebration = false);
+                                                }
+                                              });
+                                            }
+                                          },
+                                          onInfoTap: () {
+                                            final supplement =
+                                                viewModel.getSupplement(
+                                                    stackItem.supplementId);
+                                            if (supplement != null) {
+                                              Navigator.pushNamed(context,
+                                                  AppRouter.supplementDetail,
+                                                  arguments: supplement);
+                                            }
+                                          },
+                                          onLongPress: () {
+                                            _showItemOptions(
+                                                context,
+                                                supplement?.name ?? 'Item',
+                                                stackItem.supplementId);
+                                          },
+                                        ),
                                       );
                                     });
                                   }),

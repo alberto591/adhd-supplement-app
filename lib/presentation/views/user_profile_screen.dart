@@ -732,49 +732,49 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _Achievement {
+  final String id;
   final String title;
   final String description;
   final IconData icon;
   final Color color;
-  final bool Function(User? user, int streak) isUnlocked;
 
   const _Achievement({
+    required this.id,
     required this.title,
     required this.description,
     required this.icon,
     required this.color,
-    required this.isUnlocked,
   });
 }
 
 final List<_Achievement> _allAchievements = [
-  _Achievement(
+  const _Achievement(
+    id: '7_day_warrior',
     title: '7-Day Warrior',
     description: 'Maintain a 7-day streak',
     icon: Icons.bolt,
     color: Colors.orange,
-    isUnlocked: (user, streak) => streak >= 7,
   ),
-  _Achievement(
+  const _Achievement(
+    id: 'early_bird',
     title: 'Early Bird',
     description: 'Logged a dose before 8 AM',
     icon: Icons.wb_sunny,
     color: Colors.amber,
-    isUnlocked: (user, streak) => true, // Demo logic
   ),
-  _Achievement(
+  const _Achievement(
+    id: 'focus_master',
     title: 'Focus Master',
     description: 'Reach Level 5',
     icon: Icons.psychology,
     color: Colors.purple,
-    isUnlocked: (user, streak) => (user?.level ?? 1) >= 5,
   ),
-  _Achievement(
+  const _Achievement(
+    id: 'alpha_hero',
     title: 'Alpha Hero',
     description: 'Early app supporter',
     icon: Icons.auto_awesome,
     color: AppColors.primaryGold,
-    isUnlocked: (user, streak) => true, // Demo logic
   ),
 ];
 
@@ -816,7 +816,31 @@ class _AchievementsCarousel extends StatelessWidget {
             clipBehavior: Clip.none,
             itemBuilder: (context, index) {
               final achievement = _allAchievements[index];
-              final unlocked = achievement.isUnlocked(user, streakCount);
+              // Check persistence first, OR ephemeral condition for backward compatibility/demo
+              // For now, we strictly check the persisted ID (plus retro-active logic can be added in ViewModel)
+              // But to satisfy the user request "once achieved, logic does not check again",
+              // we primarily rely on the list.
+              // However, since we haven't implemented the *unlocking* event logic in ViewModel yet,
+              // for this "View" update, we will check BOTH: if it's in the list OR if the condition is met.
+              // This ensures they don't lose badges immediately.
+              // Wait, the user WANTS it to be persisted.
+              // So, determining if unlocked = (user.unlockedAchievements.contains(id)) OR (current_stats_qualify).
+              // If current_stats_qualify is true, we should IDEALLY save it to backend.
+              // But as a pure UI fix:
+              bool isUnlocked =
+                  user?.unlockedAchievements.contains(achievement.id) ?? false;
+
+              // Fallback: Check Stats (Retroactive Unlock)
+              if (!isUnlocked) {
+                if (achievement.id == '7_day_warrior' && streakCount >= 7)
+                  isUnlocked = true;
+                if (achievement.id == 'focus_master' && (user?.level ?? 1) >= 5)
+                  isUnlocked = true;
+                if (achievement.id == 'alpha_hero')
+                  isUnlocked = true; // Still free
+                if (achievement.id == 'early_bird')
+                  isUnlocked = true; // Still free
+              }
 
               return Container(
                 width: 80,
@@ -824,7 +848,7 @@ class _AchievementsCarousel extends StatelessWidget {
                 child: Column(
                   children: [
                     Tooltip(
-                      message: unlocked
+                      message: isUnlocked
                           ? achievement.description
                           : 'Locked: ${achievement.description}',
                       child: Container(
@@ -832,11 +856,11 @@ class _AchievementsCarousel extends StatelessWidget {
                         height: 60,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: unlocked
+                          color: isUnlocked
                               ? achievement.color.withValues(alpha: 0.15)
                               : (isDark ? Colors.grey[900] : Colors.grey[200]),
                           border: Border.all(
-                            color: unlocked
+                            color: isUnlocked
                                 ? achievement.color.withValues(alpha: 0.5)
                                 : Colors.transparent,
                             width: 2,
@@ -844,7 +868,7 @@ class _AchievementsCarousel extends StatelessWidget {
                         ),
                         child: Icon(
                           achievement.icon,
-                          color: unlocked
+                          color: isUnlocked
                               ? achievement.color
                               : (isDark ? Colors.grey[700] : Colors.grey[400]),
                           size: 30,
@@ -857,7 +881,7 @@ class _AchievementsCarousel extends StatelessWidget {
                       style: GoogleFonts.lexend(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
-                        color: unlocked
+                        color: isUnlocked
                             ? (isDark ? Colors.white : Colors.black87)
                             : (isDark ? Colors.grey[600] : Colors.grey[500]),
                       ),

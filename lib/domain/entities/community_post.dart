@@ -58,4 +58,39 @@ class CommunityPost {
       imageUrl: imageUrl ?? this.imageUrl,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'username': username,
+      'userHandle': userHandle,
+      'postedAt': postedAt.toIso8601String(),
+      'category': category,
+      'title': title,
+      'content': content,
+      'helpfulCount': helpfulCount,
+      'isInsightful': isInsightful,
+      'userColor': userColor.toARGB32(),
+      'userIcon': userIcon.codePoint,
+      'imageUrl': imageUrl,
+    };
+  }
+
+  factory CommunityPost.fromJson(Map<String, dynamic> json) {
+    return CommunityPost(
+      id: json['id'] as String,
+      username: json['username'] as String,
+      userHandle: json['userHandle'] as String,
+      postedAt: DateTime.parse(json['postedAt'] as String),
+      category: json['category'] as String,
+      title: json['title'] as String,
+      content: json['content'] as String,
+      helpfulCount: json['helpfulCount'] as int? ?? 0,
+      isInsightful: json['isInsightful'] as bool? ?? false,
+      userColor: Color(json['userColor'] as int? ?? 0xFF000000),
+      userIcon: IconData(json['userIcon'] as int? ?? 57352,
+          fontFamily: 'MaterialIcons'),
+      imageUrl: json['imageUrl'] as String?,
+    );
+  }
 }

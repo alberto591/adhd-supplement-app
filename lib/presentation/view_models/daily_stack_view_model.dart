@@ -129,6 +129,15 @@ class DailyStackViewModel extends ChangeNotifier {
 
       // Cache supplements for display
       await _cacheSupplements();
+
+      // Check for achievements on load
+      final currentUser = await _authRepository.getCurrentUser();
+      if (_streakCount >= 7) {
+        await unlockAchievement('7_day_warrior');
+      }
+      if ((currentUser?.level ?? 1) >= 5) {
+        await unlockAchievement('focus_master');
+      }
     } catch (e) {
       _error = 'Failed to load daily stack: $e';
       debugPrint(_error);
@@ -171,6 +180,25 @@ class DailyStackViewModel extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint('Failed to update user XP: $e');
+    }
+  }
+
+  /// Unlock an achievement for the user
+  Future<void> unlockAchievement(String achievementId) async {
+    try {
+      final user = await _authRepository.getCurrentUser();
+      if (user != null) {
+        if (!user.unlockedAchievements.contains(achievementId)) {
+          final updatedAchievements =
+              List<String>.from(user.unlockedAchievements)..add(achievementId);
+          final updatedUser =
+              user.copyWith(unlockedAchievements: updatedAchievements);
+          await _authRepository.updateUserProfile(updatedUser);
+          debugPrint('Achievement Unlocked: $achievementId');
+        }
+      }
+    } catch (e) {
+      debugPrint('Failed to unlock achievement: $e');
     }
   }
 
@@ -282,6 +310,43 @@ class DailyStackViewModel extends ChangeNotifier {
     await _logRepository.saveLog(updatedLog);
     _todayLog = updatedLog;
     notifyListeners();
+  }
+
+  /// Get formatted time status string for a given time slots
+  String? getTimeStatus(String? timeOfDay) {
+    if (timeOfDay == null) return null;
+    int targetHour;
+
+    // Normalize string
+    final slot = timeOfDay.toLowerCase();
+
+    if (slot.contains('morning')) {
+      targetHour = 8;
+    } else if (slot.contains('afternoon')) {
+      targetHour = 13;
+    } else if (slot.contains('evening')) {
+      targetHour = 18;
+    } else if (slot.contains('night')) {
+      targetHour = 21;
+    } else {
+      return null;
+    }
+
+    final now = DateTime.now();
+    final target = DateTime(now.year, now.month, now.day, targetHour);
+    final diff = target.difference(now);
+
+    if (diff.isNegative) {
+      // If overdue by more than 4 hours, just say "Today" or simplified status
+      // But user requested "Time Urgency", so "Overdue" is good.
+      if (diff.abs().inHours > 4) return 'Overdue';
+      return 'Overdue by ${diff.abs().inMinutes}m';
+    } else {
+      if (diff.inHours > 0) {
+        return 'in ${diff.inHours}h ${diff.inMinutes % 60}m';
+      }
+      return 'in ${diff.inMinutes}m';
+    }
   }
 
   // Private helpers

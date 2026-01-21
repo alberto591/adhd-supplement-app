@@ -87,12 +87,11 @@ class _FakeSettingsRepository implements SettingsRepository {
 }
 
 class _FakeNotificationService extends NotificationService {
-  int? lastScheduledId;
-  int? lastScheduledHour;
-  int? lastScheduledMinute;
+  final List<int> scheduledIds = [];
+  final Map<int, (int, int)> scheduledTimes = {};
   int scheduleCallCount = 0;
 
-  int? lastCancelledId;
+  final List<int> cancelledIds = [];
   int cancelCallCount = 0;
 
   int? lastShownId;
@@ -108,15 +107,14 @@ class _FakeNotificationService extends NotificationService {
     required int minute,
     int second = 0,
   }) async {
-    lastScheduledId = id;
-    lastScheduledHour = hour;
-    lastScheduledMinute = minute;
+    scheduledIds.add(id);
+    scheduledTimes[id] = (hour, minute);
     scheduleCallCount++;
   }
 
   @override
   Future<void> cancelNotification(int id) async {
-    lastCancelledId = id;
+    cancelledIds.add(id);
     cancelCallCount++;
   }
 
@@ -129,6 +127,14 @@ class _FakeNotificationService extends NotificationService {
     lastShownId = id;
     lastShownTitle = title;
     lastShownBody = body;
+  }
+
+  void clear() {
+    scheduledIds.clear();
+    scheduledTimes.clear();
+    scheduleCallCount = 0;
+    cancelledIds.clear();
+    cancelCallCount = 0;
   }
 }
 
@@ -158,35 +164,42 @@ void main() {
       expect(viewModel.extendedRemindersEnabled, isFalse);
     });
 
-    test('setNudgeModeEnabled true schedules recurring notification', () async {
+    test('setNudgeModeEnabled true schedules multiple notifications', () async {
+      notificationService.clear();
       await viewModel.setNudgeModeEnabled(true);
 
       expect(settingsRepository.nudgeModeEnabled, isTrue);
-      expect(notificationService.scheduleCallCount, 1);
-      expect(notificationService.lastScheduledId, 1000);
-      expect(notificationService.lastCancelledId, isNull);
+      // Expected IDs: 1000 (main), 1001 (warning), 1002 (followup if enabled), 2000 (evening)
+      // In setUp, warningNudgeOption is 'followup', so all 4 should be scheduled
+      expect(notificationService.scheduleCallCount, 4);
+      expect(notificationService.scheduledIds,
+          containsAll([1000, 1001, 1002, 2000]));
+
+      // Verify evening summary time (8 PM)
+      expect(notificationService.scheduledTimes[2000], (20, 0));
     });
 
-    test('setNudgeModeEnabled false cancels notification', () async {
+    test('setNudgeModeEnabled false cancels all notifications', () async {
+      notificationService.clear();
       await viewModel.setNudgeModeEnabled(false);
 
       expect(settingsRepository.nudgeModeEnabled, isFalse);
-      expect(notificationService.cancelCallCount, 1);
-      expect(notificationService.lastCancelledId, 1000);
-      // No new schedule calls when disabling
-      expect(notificationService.scheduleCallCount, 0);
+      expect(notificationService.cancelCallCount, 4);
+      expect(notificationService.cancelledIds,
+          containsAll([1000, 1001, 1002, 2000]));
     });
 
-    test('setNudgeTime updates time and reschedules notification', () async {
+    test('setNudgeTime updates time and reschedules notifications', () async {
       const newTime = TimeOfDay(hour: 7, minute: 15);
+      notificationService.clear();
 
       await viewModel.setNudgeTime(newTime);
 
       expect(viewModel.nudgeTime, newTime);
       expect(settingsRepository.nudgeTime, newTime);
-      expect(notificationService.scheduleCallCount, 1);
-      expect(notificationService.lastScheduledHour, 7);
-      expect(notificationService.lastScheduledMinute, 15);
+      // Should reschedule all
+      expect(notificationService.scheduleCallCount, 4);
+      expect(notificationService.scheduledTimes[1000], (7, 15));
     });
 
     test('setWarningNudgeOption updates setting only', () async {

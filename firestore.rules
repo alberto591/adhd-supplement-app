@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user owns the document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Users collection - users can only read/write their own data
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // Stacks - users can only access their own stacks
+    match /stacks/{stackId} {
+      allow read, write: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Logs - users can only access their own logs
+    match /logs/{logId} {
+      allow read, write: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Streaks - users can only access their own streaks
+    match /streaks/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+    
+    // Symptoms - users can only access their own symptom data
+    match /symptoms/{symptomId} {
+      allow read, write: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Supplements - read-only for all authenticated users (admin writes via console)
+    match /supplements/{supplementId} {
+      allow read: if isAuthenticated();
+      allow write: if false; // Only admin via console
+    }
+    
+    // Articles - read-only for all authenticated users
+    match /articles/{articleId} {
+      allow read: if isAuthenticated();
+      allow write: if false; // Seeded by app or admin
+    }
+    
+    // Community posts - authenticated users can read all, write their own
+    match /community_posts/{postId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // Safety overrides - users can only access their own
+    match /safety_overrides/{overrideId} {
+      allow read, write: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+  }
+}

@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import '../../domain/entities/article.dart';
 import '../../domain/repositories/article_repository.dart';
 
-class MockArticleRepository implements ArticleRepository {
-  final List<Article> _articles = [
-    const Article(
+class FirebaseArticleRepository implements ArticleRepository {
+  final FirebaseFirestore _firestore;
+  static const String _collection = 'articles';
+
+  // Seed data from the old mock repository
+  static const List<Article> _seedArticles = [
+    Article(
       id: '1',
       title: 'The Science of Magnesium & Sleep',
       author: 'Dr. Sarah Chen, PhD',
@@ -26,10 +32,10 @@ The Mechanism of Action
 Magnesium plays a crucial role in regulating neurotransmitters, which send messages throughout the brain and nervous system. It is also involved in the regulation of the hormone melatonin, which guides sleep-wake cycles in your body.
 ''',
     ),
-    const Article(
+    Article(
       id: '2',
       title: 'Vitamin D3 & Focus Regulation',
-      author: 'Dr. Mark Hyman',
+      author: 'Dr. Andrew Huberman',
       authorRole: 'Functional Medicine',
       authorAvatarUrl: 'https://i.pravatar.cc/100?img=12',
       readTime: '3 min read',
@@ -41,7 +47,7 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
       category: 'FOCUS',
       content: 'Vitamin D receptors are widespread in brain tissue...',
     ),
-    const Article(
+    Article(
       id: '3',
       title: 'L-Theanine: The Caffeine Tamer',
       author: 'Andrew Huberman',
@@ -59,31 +65,66 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
     ),
   ];
 
+  FirebaseArticleRepository({FirebaseFirestore? firestore})
+      : _firestore = firestore ?? FirebaseFirestore.instance;
+
   @override
   Future<Article?> getArticle(String id) async {
-    await Future<void>.delayed(const Duration(milliseconds: 300));
     try {
-      return _articles.firstWhere((a) => a.id == id);
-    } catch (_) {
+      final doc = await _firestore.collection(_collection).doc(id).get();
+      if (doc.exists) {
+        return Article.fromJson(doc.data()!);
+      }
+      return null;
+    } catch (e) {
+      debugPrint('Error getting article $id: $e');
       return null;
     }
   }
 
   @override
-  Future<List<Article>> getRelatedArticles(String articleId) async {
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    return _articles.where((a) => a.id != articleId).toList();
+  Future<List<Article>> getArticles() async {
+    try {
+      // 1. Check if empty, if so, seed
+      final snap = await _firestore.collection(_collection).limit(1).get();
+      if (snap.docs.isEmpty) {
+        await _seedArticlesCollection();
+      }
+
+      // 2. Fetch all
+      final querySnap = await _firestore.collection(_collection).get();
+      return querySnap.docs.map((d) => Article.fromJson(d.data())).toList();
+    } catch (e) {
+      debugPrint('Error fetcing articles: $e');
+      return [];
+    }
   }
 
   @override
-  Future<List<Article>> getArticles() async {
-    await Future<void>.delayed(const Duration(milliseconds: 400));
-    return _articles;
+  Future<List<Article>> getRelatedArticles(String articleId) async {
+    // Simple logic: fetch all and exclude current
+    final all = await getArticles();
+    return all.where((a) => a.id != articleId).toList();
   }
 
   @override
   Future<Article?> getArticleOfTheDay() async {
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    return _articles.first;
+    // Logic: Cycle based on day of year, or just random
+    final all = await getArticles();
+    if (all.isEmpty) return null;
+    final dayOfYear = int.parse(
+        "${DateTime.now().year}${DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays}");
+    return all[dayOfYear % all.length];
+  }
+
+  Future<void> _seedArticlesCollection() async {
+    debugPrint('Seeding articles collection...');
+    final batch = _firestore.batch();
+    for (final article in _seedArticles) {
+      final ref = _firestore.collection(_collection).doc(article.id);
+      batch.set(ref, article.toJson()); // Assuming Article has toJson
+    }
+    await batch.commit();
+    debugPrint('Seeding complete.');
   }
 }

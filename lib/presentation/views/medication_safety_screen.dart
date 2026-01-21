@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/medication_option_tile.dart';
+import '../../application/providers/auth_provider.dart';
+import '../navigation/app_router.dart';
 
 class MedicationSafetyScreen extends StatefulWidget {
   const MedicationSafetyScreen({super.key});
@@ -42,17 +45,21 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+        backgroundColor:
+            isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left: 16),
           child: Center(
             child: CircleAvatar(
-              backgroundColor: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200],
+              backgroundColor: isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.grey[200],
               radius: 20,
               child: IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new, size: 16),
@@ -88,7 +95,9 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
                       Text(
                         'STEP 2 OF 5',
                         style: TextStyle(
-                          color: isDark ? const Color(0xFF9DA8B9) : Colors.grey[500],
+                          color: isDark
+                              ? const Color(0xFF9DA8B9)
+                              : Colors.grey[500],
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 1.0,
@@ -109,7 +118,9 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
                     height: 6,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200],
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.1)
+                          : Colors.grey[200],
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: FractionallySizedBox(
@@ -126,10 +137,11 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
                 ],
               ),
             ),
-            
+
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 100), // padding for bottom button
+                padding: const EdgeInsets.fromLTRB(
+                    24, 24, 24, 100), // padding for bottom button
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -143,9 +155,9 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
                         letterSpacing: -0.5,
                       ),
                     ),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     // Info Banner
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -169,7 +181,9 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
                             child: Text(
                               "This helps our Safety Checker ensure your supplements won't interact negatively with your prescriptions.",
                               style: TextStyle(
-                                color: isDark ? const Color(0xFFCBD5E1) : Colors.blueGrey[800],
+                                color: isDark
+                                    ? const Color(0xFFCBD5E1)
+                                    : Colors.blueGrey[800],
                                 fontSize: 13,
                                 height: 1.5,
                               ),
@@ -178,21 +192,22 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 24),
-                    
+
                     // Options List
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: _options.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 12),
                       itemBuilder: (context, index) {
                         final option = _options[index];
                         final title = option['title']!;
                         final subtitle = option['subtitle'];
                         final isSelected = _selectedMedication == title;
-                        
+
                         return MedicationOptionTile(
                           title: title,
                           subtitle: subtitle,
@@ -221,7 +236,9 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
             colors: [
               isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
               isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-              isDark ? AppColors.backgroundDark.withValues(alpha: 0) : AppColors.backgroundLight.withValues(alpha: 0),
+              isDark
+                  ? AppColors.backgroundDark.withValues(alpha: 0)
+                  : AppColors.backgroundLight.withValues(alpha: 0),
             ],
             stops: const [0.0, 0.6, 1.0],
           ),
@@ -230,7 +247,19 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
           width: double.infinity,
           height: 56,
           child: ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/onboarding/stack-setup'),
+            onPressed: () async {
+              final authProvider = context.read<AuthProvider>();
+              final user = authProvider.user;
+              if (user != null) {
+                await authProvider.updateProfile(
+                  user.copyWith(hasCompletedOnboarding: true),
+                );
+              }
+              if (context.mounted) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRouter.dashboard, (route) => false);
+              }
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
@@ -241,7 +270,7 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
               ),
             ),
             child: const Text(
-              'Continue',
+              'Finish Setup',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

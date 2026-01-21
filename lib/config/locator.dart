@@ -46,17 +46,17 @@ import 'package:adhd_supplement_app/application/view_models/persistent_reminders
 import 'package:adhd_supplement_app/application/view_models/focus_buddies_view_model.dart';
 import 'package:adhd_supplement_app/application/view_models/trophy_room_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/gamification_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/mock_gamification_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/repositories/firebase_gamification_repository.dart';
+import '../infrastructure/repositories/firebase_article_repository.dart';
+import '../infrastructure/repositories/firebase_community_repository.dart';
+import '../infrastructure/repositories/firebase_referral_repository.dart';
 import '../application/view_models/article_detail_view_model.dart';
 import '../application/view_models/science_hub_view_model.dart';
 import '../application/view_models/community_view_model.dart';
 import '../application/view_models/pill_matcher_view_model.dart';
 import '../domain/repositories/article_repository.dart';
 import '../domain/repositories/community_repository.dart';
-import '../infrastructure/repositories/mock_article_repository.dart';
-import '../infrastructure/repositories/mock_community_repository.dart';
 import '../domain/repositories/referral_repository.dart';
-import '../infrastructure/repositories/mock_referral_repository.dart';
 // import '../application/view_models/refer_friend_view_model.dart'; // Duplicate
 // import '../application/view_models/refer_friend_view_model.dart'; // Duplicate
 
@@ -97,15 +97,15 @@ void setupLocator() {
   locator.registerLazySingleton<SymptomRepository>(
       () => FirebaseSymptomRepository());
   locator.registerLazySingleton<GamificationRepository>(
-      () => MockGamificationRepository());
+      () => FirebaseGamificationRepository());
   locator.registerLazySingleton<CommunityRepository>(
-      () => MockCommunityRepository());
+      () => FirebaseCommunityRepository());
   locator.registerLazySingleton<SafetyRepository>(
       () => FirebaseSafetyRepository());
   locator.registerLazySingleton<SettingsRepository>(
       () => SharedPrefsSettingsRepository());
   locator.registerLazySingleton<ReferralRepository>(
-      () => MockReferralRepository());
+      () => FirebaseReferralRepository());
 
   // Providers
   locator.registerLazySingleton(() => AuthProvider(locator<AuthRepository>()));
@@ -181,8 +181,8 @@ void setupLocator() {
     ),
   );
   locator.registerLazySingleton<SeedingService>(() => SeedingService());
-  locator
-      .registerLazySingleton<ArticleRepository>(() => MockArticleRepository());
+  locator.registerLazySingleton<ArticleRepository>(
+      () => FirebaseArticleRepository());
 
   locator.registerFactory(
       () => ArticleDetailViewModel(locator<ArticleRepository>()));

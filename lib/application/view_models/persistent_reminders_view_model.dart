@@ -35,14 +35,14 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   Future<void> setNudgeModeEnabled(bool value) async {
     _nudgeModeEnabled = value;
     await _settingsRepository.setNudgeModeEnabled(value);
-    _scheduleOrCancelNotifications();
+    await _scheduleOrCancelNotifications();
     notifyListeners();
   }
 
   Future<void> setNudgeTime(TimeOfDay time) async {
     _nudgeTime = time;
     await _settingsRepository.setNudgeTime(time);
-    _scheduleOrCancelNotifications();
+    await _scheduleOrCancelNotifications();
     notifyListeners();
   }
 
@@ -110,10 +110,20 @@ class PersistentRemindersViewModel extends ChangeNotifier {
       } else {
         await _notificationService.cancelNotification(1002);
       }
+
+      // Evening Summary (20:00) - Always on if Nudge Mode is active
+      await _notificationService.scheduleRecurringNotification(
+        id: 2000,
+        title: 'Daily Summary 🌙',
+        body: 'Tap to see your progress for today!',
+        hour: 20,
+        minute: 0,
+      );
     } else {
       await _notificationService.cancelNotification(1000);
       await _notificationService.cancelNotification(1001);
       await _notificationService.cancelNotification(1002);
+      await _notificationService.cancelNotification(2000);
     }
   }
 

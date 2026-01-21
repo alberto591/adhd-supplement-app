@@ -8,6 +8,7 @@ class User {
   final int level;
   final bool hasCompletedOnboarding;
   final String? adhdType; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
+  final List<String> unlockedAchievements; // IDs of unlocked achievements
 
   const User({
     required this.id,
@@ -19,6 +20,7 @@ class User {
     this.xp = 0,
     this.level = 1,
     this.adhdType,
+    this.unlockedAchievements = const [],
   });
 
   static const Object _unset = Object();
@@ -33,6 +35,7 @@ class User {
     int? xp,
     int? level,
     Object? adhdType = _unset,
+    List<String>? unlockedAchievements,
   }) {
     return User(
       id: id ?? this.id,
@@ -49,6 +52,7 @@ class User {
       level: level ?? this.level,
       adhdType:
           identical(adhdType, _unset) ? this.adhdType : adhdType as String?,
+      unlockedAchievements: unlockedAchievements ?? this.unlockedAchievements,
     );
   }
 
@@ -63,6 +67,7 @@ class User {
       'xp': xp,
       'level': level,
       'adhdType': adhdType,
+      'unlockedAchievements': unlockedAchievements,
     };
   }
 
@@ -77,6 +82,10 @@ class User {
       xp: json['xp'] as int? ?? 0,
       level: json['level'] as int? ?? 1,
       adhdType: json['adhdType'] as String?,
+      unlockedAchievements: (json['unlockedAchievements'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
     );
   }
 }

@@ -19,7 +19,10 @@ class DailyStackItem extends StatelessWidget {
     required this.onTap,
     this.onLongPress,
     this.onInfoTap,
+    this.timeStatus,
   });
+
+  final String? timeStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +128,17 @@ class DailyStackItem extends StatelessWidget {
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
+                            if (timeStatus != null) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                timeStatus!,
+                                style: const TextStyle(
+                                  color: AppColors.primaryGold,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),
