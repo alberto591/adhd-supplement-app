@@ -14,6 +14,7 @@ class Supplement {
   final String? benefitTag; // From Backend Spec v1.0
   final String? shapeIcon; // e.g., "pill", "capsule"
   final String? colorHex; // e.g., "#135BEC"
+  final String status; // 'beneficial', 'avoid', 'neutral'
 
   // Backward compatibility
   String? get iconType => shapeIcon;
@@ -47,6 +48,7 @@ class Supplement {
     this.sideEffects = const [],
     this.interactions = const [],
     this.focusLevel = 3,
+    this.status = 'beneficial',
   });
 
   Supplement copyWith({
@@ -70,6 +72,7 @@ class Supplement {
     List<String>? sideEffects,
     List<String>? interactions,
     int? focusLevel,
+    String? status,
   }) {
     return Supplement(
       id: id ?? this.id,
@@ -92,6 +95,7 @@ class Supplement {
       sideEffects: sideEffects ?? this.sideEffects,
       interactions: interactions ?? this.interactions,
       focusLevel: focusLevel ?? this.focusLevel,
+      status: status ?? this.status,
     );
   }
 
@@ -117,6 +121,7 @@ class Supplement {
       'sideEffects': sideEffects,
       'interactions': interactions,
       'focusLevel': focusLevel,
+      'status': status,
     };
   }
 
@@ -157,6 +162,7 @@ class Supplement {
               .toList() ??
           [],
       focusLevel: json['focusLevel'] as int? ?? 3,
+      status: json['status'] as String? ?? 'beneficial',
     );
   }
 }

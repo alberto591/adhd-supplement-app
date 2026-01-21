@@ -14,6 +14,7 @@ import 'domain/repositories/settings_repository.dart';
 import 'infrastructure/services/notification_service.dart';
 import 'infrastructure/services/seeding_service.dart';
 import 'domain/repositories/supplement_repository.dart';
+import 'application/view_models/theme_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,7 @@ void main() async {
     // Note: On web, this requires firebase_options.dart or manual configuration
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-    );
+    ).timeout(const Duration(seconds: 10));
     debugPrint('Firebase initialized successfully');
   } catch (e) {
     debugPrint('Firebase initialization error: $e');
@@ -34,7 +35,9 @@ void main() async {
   try {
     setupLocator();
     // Initialize Settings
-    await locator<SettingsRepository>().init();
+    await locator<SettingsRepository>()
+        .init()
+        .timeout(const Duration(seconds: 5));
     // Initialize Notifications
     await locator<NotificationService>().init();
 
@@ -79,17 +82,18 @@ class AdhdSupplementApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
             create: (_) => locator<PersistentRemindersViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator<ThemeViewModel>()),
       ],
-      child: MaterialApp(
-        title: 'Daily Stack',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        debugShowCheckedModeBanner: false,
-        // Start with login screen for now
-        // Start with AuthWrapper to determine destination
-        home: const AuthWrapper(),
-        onGenerateRoute: AppRouter.generateRoute,
+      child: Consumer<ThemeViewModel>(
+        builder: (context, themeVM, _) => MaterialApp(
+          title: 'Daily Stack',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeVM.themeMode,
+          debugShowCheckedModeBanner: false,
+          home: const AuthWrapper(),
+          onGenerateRoute: AppRouter.generateRoute,
+        ),
       ),
     );
   }

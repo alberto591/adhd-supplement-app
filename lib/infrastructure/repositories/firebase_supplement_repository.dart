@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/supplement_repository.dart';
@@ -16,13 +17,28 @@ class FirebaseSupplementRepository implements SupplementRepository {
     if (_cache != null) return _cache!;
 
     try {
-      final snapshot = await _firestore.collection('supplements').get();
+      final snapshot = await _firestore
+          .collection('supplements')
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
       _cache = snapshot.docs
           .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
           .toList();
       return _cache!;
     } catch (e) {
-      throw Exception('Failed to fetch supplements: $e');
+      debugPrint('Fetching supplements from cache: $e');
+      try {
+        final snapshot = await _firestore
+            .collection('supplements')
+            .get(const GetOptions(source: Source.cache));
+        _cache = snapshot.docs
+            .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
+            .toList();
+        return _cache!;
+      } catch (cacheErr) {
+        debugPrint('Supplements cache failure: $cacheErr');
+        return _cache ?? [];
+      }
     }
   }
 
@@ -58,11 +74,26 @@ class FirebaseSupplementRepository implements SupplementRepository {
   @override
   Future<Supplement?> getSupplement(String id) async {
     try {
-      final doc = await _firestore.collection('supplements').doc(id).get();
+      final doc = await _firestore
+          .collection('supplements')
+          .doc(id)
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
       if (!doc.exists) return null;
       return Supplement.fromJson({...doc.data()!, 'id': doc.id});
     } catch (e) {
-      throw Exception('Failed to fetch supplement: $e');
+      debugPrint('Fetching supplement $id from cache: $e');
+      try {
+        final doc = await _firestore
+            .collection('supplements')
+            .doc(id)
+            .get(const GetOptions(source: Source.cache));
+        if (!doc.exists) return null;
+        return Supplement.fromJson({...doc.data()!, 'id': doc.id});
+      } catch (cacheErr) {
+        debugPrint('Supplement $id cache failure: $cacheErr');
+        return null;
+      }
     }
   }
 

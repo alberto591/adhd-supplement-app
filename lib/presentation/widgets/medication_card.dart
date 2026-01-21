@@ -58,126 +58,156 @@ class MedicationCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(
+        child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  // Icon
-                  Container(
-                    width: 48, // Slightly smaller than previous design
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: isTaken
-                          ? Colors.grey.withValues(alpha: 0.2)
-                          : iconColor.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      isTaken ? Icons.wb_sunny : icon,
-                      color: isTaken ? Colors.grey : iconColor,
-                      size: 24,
+            // Options button in Top Left
+            if (!isTaken)
+              Positioned(
+                top: 8,
+                left: 8,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onMoreOptions,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: const Icon(
+                      Icons.more_horiz,
+                      color: Colors.grey,
+                      size: 18,
                     ),
                   ),
-                  const SizedBox(width: 16),
-
-                  // Details
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color: isTaken
-                                ? Colors.grey
-                                : (isDark ? Colors.white : Colors.black87),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            decoration:
-                                isTaken ? TextDecoration.lineThrough : null,
-                          ),
+                ),
+              ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      // Icon
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: isTaken
+                              ? Colors.grey.withValues(alpha: 0.2)
+                              : iconColor.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '$dosage • $form',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
+                        child: Icon(
+                          isTaken ? Icons.wb_sunny : icon,
+                          color: isTaken ? Colors.grey : iconColor,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+
+                      // Details
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: TextStyle(
+                                color: isTaken
+                                    ? Colors.grey
+                                    : (isDark ? Colors.white : Colors.black87),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                decoration:
+                                    isTaken ? TextDecoration.lineThrough : null,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '$dosage • $form',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Status Indicator or Action Button
+                      if (isTaken) ...[
+                        const Icon(Icons.check_circle,
+                            color: Color(0xFF4ADE80), size: 24),
+                      ] else if (isUpcoming) ...[
+                        if (statusText != null)
+                          Text(
+                            statusText!,
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                      ] else ...[
+                        // Primary Action: Mark as Taken (Right aligned)
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            debugPrint('Take button HIT for $title');
+                            onTake?.call();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      AppColors.primary.withValues(alpha: 0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.check,
+                                    color: Colors.white, size: 18),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Take',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
-                    ),
+                    ],
                   ),
+                ),
 
-                  // Status Indicator or Menu
-                  if (isTaken || isUpcoming) ...[
-                    if (isTaken)
-                      const Icon(Icons.check_circle,
-                          color: Color(0xFF4ADE80), size: 20)
-                    else if (statusText != null)
-                      Text(
-                        statusText!,
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
+                // Timestamp if taken
+                if (isTaken && statusText != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12, left: 16),
+                    child: Row(
+                      children: [
+                        Text(
+                          statusText!,
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 12),
                         ),
-                      ),
-                  ],
-
-                  // Menu
-                  if (!isTaken) ...[
-                    const SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: onMoreOptions,
-                      child: const Icon(Icons.more_vert,
-                          color: Colors.grey, size: 20),
+                        const Icon(Icons.check, size: 28, color: Colors.white),
+                      ],
                     ),
-                  ]
-                ],
-              ),
+                  ),
+              ],
             ),
-
-            // Action Button (Only if active and not taken)
-            if (!isTaken && !isUpcoming)
-              GestureDetector(
-                onTap: onTake,
-                child: Container(
-                  width: double.infinity,
-                  height: 44,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary, // Blue
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(16)),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    '✓ Mark as Taken',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-
-            // Timestamp if taken
-            if (isTaken && statusText != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12, left: 16),
-                child: Row(
-                  children: [
-                    Text(
-                      statusText!,
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                    const Icon(Icons.check, size: 28, color: Colors.white),
-                  ],
-                ),
-              ),
           ],
         ),
       ),

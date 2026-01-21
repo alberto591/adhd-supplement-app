@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/repositories/log_repository.dart';
@@ -18,13 +19,28 @@ class FirebaseLogRepository implements LogRepository {
           .where('date', isGreaterThanOrEqualTo: start.toIso8601String())
           .where('date', isLessThanOrEqualTo: end.toIso8601String())
           .orderBy('date', descending: true)
-          .get();
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
 
       return snapshot.docs
           .map((doc) => DailyLog.fromJson({...doc.data(), 'id': doc.id}))
           .toList();
     } catch (e) {
-      throw Exception('Failed to fetch logs by date range: $e');
+      debugPrint('Fetching logs from cache (offline): $e');
+      try {
+        final snapshot = await _firestore
+            .collection('logs')
+            .where('userId', isEqualTo: userId)
+            .where('date', isGreaterThanOrEqualTo: start.toIso8601String())
+            .where('date', isLessThanOrEqualTo: end.toIso8601String())
+            .get(const GetOptions(source: Source.cache));
+        return snapshot.docs
+            .map((doc) => DailyLog.fromJson({...doc.data(), 'id': doc.id}))
+            .toList();
+      } catch (cacheErr) {
+        debugPrint('Log cache failure: $cacheErr');
+        return [];
+      }
     }
   }
 
@@ -37,13 +53,29 @@ class FirebaseLogRepository implements LogRepository {
           .where('userId', isEqualTo: userId)
           .where('date', isEqualTo: dateStr)
           .limit(1)
-          .get();
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
 
       if (snapshot.docs.isEmpty) return null;
       return DailyLog.fromJson(
           {...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
     } catch (e) {
-      throw Exception('Failed to fetch log for date: $e');
+      debugPrint('Fetching log for date from cache: $e');
+      try {
+        final dateStr = _dateOnlyString(date);
+        final snapshot = await _firestore
+            .collection('logs')
+            .where('userId', isEqualTo: userId)
+            .where('date', isEqualTo: dateStr)
+            .limit(1)
+            .get(const GetOptions(source: Source.cache));
+        if (snapshot.docs.isEmpty) return null;
+        return DailyLog.fromJson(
+            {...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
+      } catch (cacheErr) {
+        debugPrint('Log date cache failure: $cacheErr');
+        return null;
+      }
     }
   }
 
@@ -51,13 +83,12 @@ class FirebaseLogRepository implements LogRepository {
   Future<void> saveLog(DailyLog log) async {
     try {
       if (log.id.isEmpty) {
-        // Create new log
         await _firestore.collection('logs').add(log.toJson());
       } else {
-        // Update existing log
         await _firestore.collection('logs').doc(log.id).set(log.toJson());
       }
     } catch (e) {
+      debugPrint('Error saving log: $e');
       throw Exception('Failed to save log: $e');
     }
   }
@@ -95,7 +126,8 @@ class FirebaseLogRepository implements LogRepository {
 
       return streak;
     } catch (e) {
-      throw Exception('Failed to calculate streak: $e');
+      debugPrint('Failed to calculate streak (likely offline): $e');
+      return 0;
     }
   }
 

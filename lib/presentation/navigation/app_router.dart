@@ -34,10 +34,8 @@ import '../views/chemist_screen.dart';
 import '../views/focus_buddies_screen.dart';
 import '../views/privacy_settings_screen.dart';
 import '../views/nightly_reflection_screen.dart';
-import '../views/app_appearance_screen.dart';
 import '../views/refer_friend_screen.dart';
 import '../views/insights_screen.dart';
-import '../views/subscription_screen.dart';
 import 'auth_wrapper.dart';
 
 import '../views/daily_symptom_checkin_screen.dart';
@@ -144,7 +142,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const AuthWrapper());
 
       case privacySettings:
-        return MaterialPageRoute(builder: (_) => const PrivacySettingsScreen());
+        return MaterialPageRoute(
+            builder: (_) => PrivacySettingsScreen.withProvider());
 
       case nightlyReflection:
         return MaterialPageRoute(
@@ -236,8 +235,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => FocusBuddiesScreen.withProvider());
 
-      case appAppearance:
-        return MaterialPageRoute(builder: (_) => const AppAppearanceScreen());
+//      case appAppearance:
+//        return MaterialPageRoute(builder: (_) => const AppAppearanceScreen());
       case referFriend:
         return MaterialPageRoute(builder: (_) => const ReferFriendScreen());
       case symptomCheckin:

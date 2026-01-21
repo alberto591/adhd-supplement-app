@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../navigation/app_router.dart';
@@ -6,12 +7,142 @@ import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../application/view_models/persistent_reminders_view_model.dart';
 import '../widgets/unified_bottom_nav.dart';
-
 import 'package:intl/intl.dart';
 import '../../domain/entities/user.dart';
+import '../../application/view_models/theme_view_model.dart';
+import '../view_models/daily_stack_view_model.dart';
+import '../../config/locator.dart';
 
-class UserProfileScreen extends StatelessWidget {
+class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
+
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
+  late DailyStackViewModel _dailyStackViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    final authProvider = context.read<AuthProvider>();
+    final userId = authProvider.user?.id ?? 'demo_user';
+    _dailyStackViewModel = locator.get<DailyStackViewModel>(param1: userId);
+    _dailyStackViewModel.initialize();
+  }
+
+  @override
+  void dispose() {
+    _dailyStackViewModel.dispose();
+    super.dispose();
+  }
+
+  void _showEditProfileDialog(BuildContext context, User? user) {
+    if (user == null) return;
+    final nameController = TextEditingController(text: user.displayName);
+
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Profile'),
+        content: TextField(
+          controller: nameController,
+          decoration: const InputDecoration(
+            labelText: 'Display Name',
+            hintText: 'Enter your name',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final newName = nameController.text.trim();
+              if (newName.isNotEmpty) {
+                final updatedUser = user.copyWith(displayName: newName);
+                await context.read<AuthProvider>().updateProfile(updatedUser);
+                if (context.mounted) Navigator.pop(context);
+              }
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showAdhdTypeDialog(BuildContext context, User? user) {
+    if (user == null) return;
+
+    final types = [
+      'Combined Type',
+      'Predominantly Inattentive',
+      'Predominantly Hyperactive-Impulsive',
+    ];
+
+    String? selectedType = user.adhdType ?? types[0];
+
+    showDialog<void>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('ADHD Diagnosis Type'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: types.map((type) {
+              return RadioListTile<String>(
+                title: Text(type),
+                value: type,
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() => selectedType = value);
+                },
+              );
+            }).toList(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                if (selectedType != null) {
+                  final updatedUser = user.copyWith(adhdType: selectedType);
+                  await context.read<AuthProvider>().updateProfile(updatedUser);
+                  if (context.mounted) Navigator.pop(context);
+                }
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showDisclaimer(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Medical Disclaimer'),
+        content: const SingleChildScrollView(
+          child: Text(
+            'The information provided in this app is for educational and informational purposes only and is not intended as medical advice. \n\nAlways consult with a qualified healthcare professional regarding any medical condition or treatment. \n\nDo not disregard professional medical advice or delay in seeking it because of something you have read in this application.',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,290 +170,257 @@ class UserProfileScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 40),
-        child: Column(
-          children: [
-            // Profile Header
-            Consumer<AuthProvider>(
-              builder: (context, auth, _) => _ProfileHeader(user: auth.user),
-            ),
-
-            const SizedBox(height: 4), // Divider spacing
-
-            // Personal Info Section
-            const _SectionHeader(title: 'Personal Info'),
-            _SettingsGroup(
+      body: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: _dailyStackViewModel),
+        ],
+        child: Consumer<DailyStackViewModel>(
+          builder: (context, viewModel, _) => SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: Column(
               children: [
-                const _SettingsTile(
-                  icon: Icons.psychology,
-                  iconColor: AppColors.primary,
-                  title: 'ADHD Diagnosis',
-                  subtitle: 'Combined Type',
-                  trailing: Icon(Icons.chevron_right, color: Colors.grey),
+                // Profile Header
+                Consumer2<AuthProvider, ThemeViewModel>(
+                  builder: (context, auth, themeVM, _) => _ProfileHeader(
+                    user: auth.user,
+                    streakCount: viewModel.streakCount,
+                    dailyProgress: viewModel.todayProgress,
+                    isDarkMode: themeVM.isDarkMode,
+                    onThemeToggle: () => themeVM.toggleTheme(),
+                    onEditProfile: () =>
+                        _showEditProfileDialog(context, auth.user),
+                  ),
                 ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.medication,
-                  iconColor: AppColors.primary,
-                  title: 'Medications',
-                  subtitle: 'Vyvanse 30mg, Magnesium',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () => Navigator.pushNamed(
-                      context, AppRouter.onboardingMedicationSafety),
-                ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.palette,
-                  iconColor: AppColors.primary,
-                  title: 'Pill Appearance',
-                  subtitle: 'Customize visuals',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.pillMatcher),
-                ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.brush,
-                  iconColor: AppColors.primary,
-                  title: 'App Appearance',
-                  subtitle: 'Icon & Theme',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.appAppearance),
-                ),
-              ],
-            ),
 
-            // Nudge Mode Section
-            const _SectionHeader(title: 'Nudge Mode'),
-            _SettingsGroup(
-              children: [
-                Consumer<PersistentRemindersViewModel>(
-                  builder: (context, viewModel, child) {
-                    return _SettingsTile(
-                      icon: Icons.notifications_active,
+                const SizedBox(height: 4),
+
+                // Health & Medication Section
+                const _SectionHeader(title: 'Health & Medication'),
+                _SettingsGroup(
+                  children: [
+                    Consumer<AuthProvider>(
+                      builder: (context, auth, _) => _SettingsTile(
+                        icon: Icons.psychology,
+                        iconColor: AppColors.primary,
+                        title: 'ADHD Diagnosis',
+                        subtitle: auth.user?.adhdType ?? 'Not set',
+                        trailing:
+                            const Icon(Icons.chevron_right, color: Colors.grey),
+                        onTap: () => _showAdhdTypeDialog(context, auth.user),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.medication,
                       iconColor: AppColors.primary,
-                      title: 'Daily Reminders',
-                      subtitle:
-                          'Gentle nudge at ${viewModel.nudgeTime.format(context)}',
-                      trailing: Switch(
-                        value: viewModel.nudgeModeEnabled,
-                        activeThumbColor: AppColors.primary,
-                        onChanged: (value) =>
-                            viewModel.setNudgeModeEnabled(value),
+                      title: 'Medications & Supplements',
+                      subtitle: viewModel.stacks.isEmpty
+                          ? 'No active stack'
+                          : viewModel.stacks
+                              .expand((s) => s.items)
+                              .map((i) =>
+                                  viewModel
+                                      .getSupplement(i.supplementId)
+                                      ?.name ??
+                                  'Loading...')
+                              .take(3)
+                              .join(', '),
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () => Navigator.pushNamed(
+                          context, AppRouter.onboardingMedicationSafety),
+                    ),
+                  ],
+                ),
+
+                // App Settings Section
+                const _SectionHeader(title: 'App Settings'),
+                _SettingsGroup(
+                  children: [
+                    Consumer<PersistentRemindersViewModel>(
+                      builder: (context, remVM, child) {
+                        return _SettingsTile(
+                          icon: Icons.notifications_active,
+                          iconColor: AppColors.primary,
+                          title: 'Smart Reminders (Nudge)',
+                          subtitle:
+                              'Scheduled for ${remVM.nudgeTime.format(context)}',
+                          trailing: Switch(
+                            value: remVM.nudgeModeEnabled,
+                            activeThumbColor: AppColors.primary,
+                            onChanged: (value) =>
+                                remVM.setNudgeModeEnabled(value),
+                          ),
+                          onTap: () =>
+                              Navigator.pushNamed(context, AppRouter.reminders),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.lock_outline,
+                      iconColor: AppColors.primary,
+                      title: 'Privacy & Security',
+                      subtitle: 'Biometrics & data controls',
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () => Navigator.pushNamed(
+                          context, AppRouter.privacySettings),
+                    ),
+                  ],
+                ),
+
+                // Progress & Community
+                const _SectionHeader(title: 'Progress & Support'),
+                _SettingsGroup(
+                  children: [
+                    _SettingsTile(
+                      icon: Icons.help_outline,
+                      iconColor: AppColors.primaryGold,
+                      title: 'Help Center',
+                      subtitle: 'FAQs, contact & guides',
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () => Navigator.pushNamed(
+                          context, AppRouter.helpAndSupport),
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.description_outlined,
+                      iconColor: Colors.grey,
+                      title: 'Medical Disclaimer',
+                      subtitle: 'Crucial health & usage info',
+                      trailing: const Icon(Icons.open_in_new,
+                          size: 18, color: Colors.grey),
+                      onTap: () => _showDisclaimer(context),
+                    ),
+                  ],
+                ),
+
+                // Developer Tools Section (Debug Only)
+                if (kDebugMode) ...[
+                  const _SectionHeader(title: 'Developer Tools (Debug)'),
+                  _SettingsGroup(
+                    children: [
+                      _SettingsTile(
+                        icon: Icons.monitor_heart,
+                        iconColor: AppColors.primaryGold,
+                        title: 'System Health',
+                        subtitle: 'Check app diagnostics',
+                        trailing:
+                            const Icon(Icons.chevron_right, color: Colors.grey),
+                        onTap: () => Navigator.pushNamed(
+                            context, AppRouter.systemHealth),
                       ),
-                      onTap: () =>
-                          Navigator.pushNamed(context, AppRouter.reminders),
-                    );
-                  },
-                ),
-                const SizedBox(height: 2),
-                const _SettingsTile(
-                  icon: Icons.timer, // auto_timer equivalent
-                  iconColor: AppColors.primary,
-                  title: 'Quiet Hours',
-                  subtitle: '10:00 PM - 7:00 AM',
-                  trailing: Icon(Icons.chevron_right, color: Colors.grey),
-                ),
-              ],
-            ),
+                      const SizedBox(height: 2),
+                      _SettingsTile(
+                        icon: Icons.science,
+                        iconColor: AppColors.primaryGold,
+                        title: 'Science Update',
+                        subtitle: 'Preview update screen',
+                        trailing:
+                            const Icon(Icons.chevron_right, color: Colors.grey),
+                        onTap: () => Navigator.pushNamed(
+                            context, AppRouter.scienceUpdate),
+                      ),
+                      const SizedBox(height: 2),
+                      _SettingsTile(
+                        icon: Icons.code,
+                        iconColor: AppColors.primaryGold,
+                        title: 'Logic Triggers',
+                        subtitle: 'Backend spec handoff',
+                        trailing:
+                            const Icon(Icons.chevron_right, color: Colors.grey),
+                        onTap: () => Navigator.pushNamed(
+                            context, AppRouter.developerHandoff),
+                      ),
+                    ],
+                  ),
+                ],
 
-            // Data & Privacy Section
-            const _SectionHeader(title: 'Data & Privacy'),
-            _SettingsGroup(
-              children: [
-                _SettingsTile(
-                  icon: Icons.shield_outlined,
-                  iconColor: AppColors.primary,
-                  title: 'Privacy & Security',
-                  subtitle: 'Data control & biometric lock',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.privacySettings),
-                ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.calendar_today,
-                  iconColor: AppColors.primary,
-                  title: 'Weekly Review',
-                  subtitle: 'Check your progress',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.weeklyReview),
-                ),
-              ],
-            ),
+                // Logout Button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: TextButton.icon(
+                      onPressed: () async {
+                        final confirm = await showDialog<bool>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Log Out'),
+                            content:
+                                const Text('Are you sure you want to log out?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red),
+                                child: const Text('Log Out'),
+                              ),
+                            ],
+                          ),
+                        );
 
-            // Support Section
-            const _SectionHeader(title: 'Support'),
-            _SettingsGroup(
-              children: [
-                _SettingsTile(
-                  icon: Icons.help_outline,
-                  iconColor: AppColors.primaryGold,
-                  title: 'Help & Support Center',
-                  subtitle: 'FAQs & Contact',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.helpAndSupport),
-                ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.description, // clinical_notes equivalent
-                  iconColor: AppColors.primary,
-                  title: 'Medical Disclaimer',
-                  subtitle: 'Important health information',
-                  trailing: const Icon(Icons.open_in_new,
-                      color: Colors.grey, size: 20),
-                  onTap: () => showDialog<void>(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Medical Disclaimer'),
-                      content: const SingleChildScrollView(
-                        child: Text(
-                          'The information provided in this app is for educational and informational purposes only and is not intended as medical advice. \n\nAlways consult with a qualified healthcare professional regarding any medical condition or treatment. \n\nDo not disregard professional medical advice or delay in seeking it because of something you have read in this application.',
+                        if (confirm == true) {
+                          if (!context.mounted) return;
+                          try {
+                            await Provider.of<AuthProvider>(context,
+                                    listen: false)
+                                .signOut();
+                            if (context.mounted) {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, AppRouter.login, (route) => false);
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Logout failed: $e')),
+                              );
+                            }
+                          }
+                        }
+                      },
+                      icon: Icon(Icons.logout, color: Colors.red[400]),
+                      label: Text(
+                        'Log Out',
+                        style: GoogleFonts.lexend(
+                          color: Colors.red[400],
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Close'),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: isDark
+                            ? Colors.red.withValues(alpha: 0.1)
+                            : Colors.red.withValues(alpha: 0.05),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.shield,
-                  iconColor: AppColors.primary,
-                  title: 'Safety Interactions',
-                  subtitle: 'Check contraindications',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.safetyDetail),
-                ),
-              ],
-            ),
 
-            // Dev Tools Section (Debug Only)
-            const _SectionHeader(title: 'Developer Tools (Debug)'),
-            _SettingsGroup(
-              children: [
-                _SettingsTile(
-                  icon: Icons.monitor_heart,
-                  iconColor: AppColors.primaryGold,
-                  title: 'System Health Hub',
-                  subtitle: 'Test permissions',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.systemHealth),
-                ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.science,
-                  iconColor: AppColors.primaryGold,
-                  title: 'Science Update',
-                  subtitle: 'Preview update screen',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.scienceUpdate),
-                ),
-                const SizedBox(height: 2),
-                _SettingsTile(
-                  icon: Icons.code,
-                  iconColor: AppColors.primaryGold,
-                  title: 'Logic Triggers',
-                  subtitle: 'Backend spec handoff',
-                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AppRouter.developerHandoff),
-                ),
-              ],
-            ),
-
-            // Logout Button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
-              child: SizedBox(
-                width: double.infinity,
-                child: TextButton.icon(
-                  onPressed: () async {
-                    final confirm = await showDialog<bool>(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Log Out'),
-                        content:
-                            const Text('Are you sure you want to log out?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, false),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, true),
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.red),
-                            child: const Text('Log Out'),
-                          ),
-                        ],
-                      ),
-                    );
-
-                    if (confirm == true) {
-                      if (!context.mounted) return;
-                      try {
-                        await Provider.of<AuthProvider>(context, listen: false)
-                            .signOut();
-                        // Navigation handled by AuthWrapper, but ensuring cleanup
-                        if (context.mounted) {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, AppRouter.login, (route) => false);
-                        }
-                      } catch (e) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Logout failed: $e')),
-                          );
-                        }
-                      }
-                    }
-                  },
-                  icon: Icon(Icons.logout, color: Colors.red[400]),
-                  label: Text(
-                    'Log Out',
+                // Version Info
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Version 2.4.1 (102) • Proudly built for focus',
                     style: GoogleFonts.lexend(
-                      color: Colors.red[400],
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: isDark
-                        ? Colors.red.withValues(alpha: 0.1)
-                        : Colors.red.withValues(alpha: 0.05),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      color: isDark ? Colors.grey[600] : Colors.grey[500],
+                      fontSize: 12,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-
-            // Version Info
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Version 2.4.1 (102) • Proudly built for focus',
-                style: GoogleFonts.lexend(
-                  color: isDark ? Colors.grey[600] : Colors.grey[500],
-                  fontSize: 12,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
       bottomNavigationBar: const UnifiedBottomNav(currentIndex: 4),
@@ -332,116 +430,291 @@ class UserProfileScreen extends StatelessWidget {
 
 class _ProfileHeader extends StatelessWidget {
   final User? user;
-  const _ProfileHeader({this.user});
+  final int streakCount;
+  final double dailyProgress;
+  final bool isDarkMode;
+  final VoidCallback onThemeToggle;
+  final VoidCallback onEditProfile;
+
+  const _ProfileHeader({
+    this.user,
+    this.streakCount = 0,
+    this.dailyProgress = 0.0,
+    required this.isDarkMode,
+    required this.onThemeToggle,
+    required this.onEditProfile,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final userName =
+        user?.displayName ?? user?.email.split('@').first ?? 'Focus Hero';
+
+    // XP and Level Logic
+    final xp = user?.xp ?? 0;
+    final level = user?.level ?? 1;
+    final xpToNextLevel = level * 1000;
+    final xpProgress = (xp % xpToNextLevel) / xpToNextLevel;
 
     return Container(
-      padding: const EdgeInsets.all(24),
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: isDark
+              ? [const Color(0xFF1A1F2E), AppColors.backgroundDark]
+              : [const Color(0xFFE8EAF6), AppColors.backgroundLight],
+        ),
+      ),
       child: Column(
         children: [
-          // Avatar
-          Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle, // Tailwind rounded-full/aspect-sq
-              border: Border.all(
-                color: isDark ? Colors.grey[800]! : Colors.white,
-                width: 4,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-              image: const DecorationImage(
-                image: NetworkImage(
-                    'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // Name
-          Text(
-            _getInitials(user),
-            style: GoogleFonts.lexend(
-              color: isDark ? Colors.white : const Color(0xFF111418),
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-
-          // Streak
-          const SizedBox(height: 6),
+          // Top Bar with Theme Toggle
           Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Icon(Icons.local_fire_department,
-                  color: Colors.orange[500], size: 20),
-              const SizedBox(width: 6),
-              Text(
-                '14 Day Streak',
-                style: GoogleFonts.lexend(
-                  color: isDark ? Colors.grey[400] : const Color(0xFF617289),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+              IconButton(
+                icon: Icon(
+                  isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                  color: isDark ? Colors.white70 : Colors.black54,
                 ),
+                onPressed: onThemeToggle,
               ),
             ],
           ),
 
-          const SizedBox(height: 16),
-
-          // App Appearance (Quick Access)
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(context, AppRouter.appAppearance),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: isDark
-                    ? const Color(0xFFF20D93).withValues(alpha: 0.1)
-                    : const Color(0xFFF20D93).withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                    color: const Color(0xFFF20D93).withValues(alpha: 0.3)),
+          // Avatar with Progress Ring
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              // Outer Progress Ring (Daily Completion)
+              SizedBox(
+                width: 140,
+                height: 140,
+                child: CircularProgressIndicator(
+                  value: dailyProgress,
+                  strokeWidth: 6,
+                  backgroundColor: isDark ? Colors.grey[800] : Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    dailyProgress >= 1.0 ? Colors.green : AppColors.primary,
+                  ),
+                ),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.palette, size: 16, color: Color(0xFFF20D93)),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Customize App Icon',
+              // Inner Avatar
+              Container(
+                width: 115,
+                height: 115,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isDark ? Colors.grey[900]! : Colors.white,
+                    width: 4,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.2),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              // Level Badge
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryGold,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                        color: isDark ? Colors.black : Colors.white, width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    'LVL $level',
                     style: GoogleFonts.lexend(
-                      color: const Color(0xFFF20D93),
-                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                       fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ],
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Greeting & Name Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _getGreeting(),
+                          style: GoogleFonts.lexend(
+                            color: isDark
+                                ? Colors.grey[400]
+                                : const Color(0xFF617289),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            _getRank(level).toUpperCase(),
+                            style: GoogleFonts.lexend(
+                              color: AppColors.primary,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      userName,
+                      style: GoogleFonts.lexend(
+                        color: isDark ? Colors.white : const Color(0xFF111418),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.edit_outlined,
+                    size: 20, color: Colors.grey),
+                onPressed: onEditProfile,
+              ),
+            ],
+          ),
+
+          // XP Bar
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Progress to Lvl ${level + 1}',
+                      style: GoogleFonts.lexend(
+                        fontSize: 10,
+                        color: isDark ? Colors.grey[500] : Colors.grey[600],
+                      ),
+                    ),
+                    Text(
+                      '${xp % xpToNextLevel} / $xpToNextLevel XP',
+                      style: GoogleFonts.lexend(
+                        fontSize: 10,
+                        color: isDark ? Colors.grey[500] : Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: LinearProgressIndicator(
+                    value: xpProgress,
+                    minHeight: 6,
+                    backgroundColor:
+                        isDark ? Colors.grey[850] : Colors.grey[200],
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColors.primaryGold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Streak Badge
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.black.withValues(alpha: 0.2)
+                  : Colors.white.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.local_fire_department,
+                    color: Colors.orange[500], size: 18),
+                const SizedBox(width: 6),
+                Text(
+                  '$streakCount Day Streak',
+                  style: GoogleFonts.lexend(
+                    color: isDark ? Colors.white : const Color(0xFF111418),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
 
           // Member Since
-          const SizedBox(height: 4),
+          const SizedBox(height: 12),
           Text(
             'Member since ${_formatDate(user?.createdAt)}',
             style: GoogleFonts.lexend(
-              color: isDark ? Colors.grey[500] : const Color(0xFF94A3B8),
-              fontSize: 14,
+              color: isDark ? Colors.grey[600] : const Color(0xFF94A3B8),
+              fontSize: 12,
             ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Achievements Carousel
+          _AchievementsCarousel(
+            user: user,
+            streakCount: streakCount,
           ),
         ],
       ),
     );
+  }
+
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning,';
+    if (hour < 17) return 'Good Afternoon,';
+    return 'Good Evening,';
   }
 
   String _formatDate(DateTime? date) {
@@ -449,17 +722,157 @@ class _ProfileHeader extends StatelessWidget {
     return DateFormat('MMM yyyy').format(date);
   }
 
-  String _getInitials(User? user) {
-    if (user == null) return 'G';
-    final name = user.displayName;
-    if (name != null && name.isNotEmpty) {
-      return name[0].toUpperCase();
-    }
-    final email = user.email;
-    if (email.isNotEmpty) {
-      return email[0].toUpperCase();
-    }
-    return 'G';
+  String _getRank(int level) {
+    if (level < 5) return 'Novice';
+    if (level < 10) return 'Apprentice';
+    if (level < 20) return 'Focus Adept';
+    if (level < 50) return 'Mental Warrior';
+    return 'Zen Master';
+  }
+}
+
+class _Achievement {
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color color;
+  final bool Function(User? user, int streak) isUnlocked;
+
+  const _Achievement({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.color,
+    required this.isUnlocked,
+  });
+}
+
+final List<_Achievement> _allAchievements = [
+  _Achievement(
+    title: '7-Day Warrior',
+    description: 'Maintain a 7-day streak',
+    icon: Icons.bolt,
+    color: Colors.orange,
+    isUnlocked: (user, streak) => streak >= 7,
+  ),
+  _Achievement(
+    title: 'Early Bird',
+    description: 'Logged a dose before 8 AM',
+    icon: Icons.wb_sunny,
+    color: Colors.amber,
+    isUnlocked: (user, streak) => true, // Demo logic
+  ),
+  _Achievement(
+    title: 'Focus Master',
+    description: 'Reach Level 5',
+    icon: Icons.psychology,
+    color: Colors.purple,
+    isUnlocked: (user, streak) => (user?.level ?? 1) >= 5,
+  ),
+  _Achievement(
+    title: 'Alpha Hero',
+    description: 'Early app supporter',
+    icon: Icons.auto_awesome,
+    color: AppColors.primaryGold,
+    isUnlocked: (user, streak) => true, // Demo logic
+  ),
+];
+
+class _AchievementsCarousel extends StatelessWidget {
+  final User? user;
+  final int streakCount;
+
+  const _AchievementsCarousel({
+    this.user,
+    required this.streakCount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Text(
+            'ACHIEVEMENTS',
+            style: GoogleFonts.lexend(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+              color: isDark ? Colors.grey[500] : Colors.grey[600],
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 100,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: _allAchievements.length,
+            padding: EdgeInsets.zero,
+            clipBehavior: Clip.none,
+            itemBuilder: (context, index) {
+              final achievement = _allAchievements[index];
+              final unlocked = achievement.isUnlocked(user, streakCount);
+
+              return Container(
+                width: 80,
+                margin: const EdgeInsets.only(right: 16),
+                child: Column(
+                  children: [
+                    Tooltip(
+                      message: unlocked
+                          ? achievement.description
+                          : 'Locked: ${achievement.description}',
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: unlocked
+                              ? achievement.color.withValues(alpha: 0.15)
+                              : (isDark ? Colors.grey[900] : Colors.grey[200]),
+                          border: Border.all(
+                            color: unlocked
+                                ? achievement.color.withValues(alpha: 0.5)
+                                : Colors.transparent,
+                            width: 2,
+                          ),
+                        ),
+                        child: Icon(
+                          achievement.icon,
+                          color: unlocked
+                              ? achievement.color
+                              : (isDark ? Colors.grey[700] : Colors.grey[400]),
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      achievement.title,
+                      style: GoogleFonts.lexend(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: unlocked
+                            ? (isDark ? Colors.white : Colors.black87)
+                            : (isDark ? Colors.grey[600] : Colors.grey[500]),
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -523,56 +936,62 @@ class _SettingsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.cardDark : Colors.white,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 2),
+      child: Material(
+        color: isDark ? AppColors.cardDark : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          onTap: onTap,
           borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: iconColor.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(icon, color: iconColor, size: 24),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.lexend(
-                      color: isDark ? Colors.white : const Color(0xFF111418),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: iconColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.lexend(
-                      color:
-                          isDark ? Colors.grey[400] : const Color(0xFF617289),
-                      fontSize: 14,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: Icon(icon, color: iconColor, size: 24),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: GoogleFonts.lexend(
+                          color:
+                              isDark ? Colors.white : const Color(0xFF111418),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.lexend(
+                          color: isDark
+                              ? Colors.grey[400]
+                              : const Color(0xFF617289),
+                          fontSize: 14,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
+                ),
+                if (trailing != null) ...[
+                  const SizedBox(width: 8),
+                  trailing!,
                 ],
-              ),
+              ],
             ),
-            if (trailing != null) ...[
-              const SizedBox(width: 8),
-              trailing!,
-            ],
-          ],
+          ),
         ),
       ),
     );

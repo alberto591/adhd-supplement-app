@@ -78,6 +78,12 @@ class _FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setCrashReportingEnabled(bool enabled) async {}
+
+  @override
+  ThemeMode getThemeMode() => ThemeMode.system;
+
+  @override
+  Future<void> setThemeMode(ThemeMode mode) async {}
 }
 
 class _FakeNotificationService extends NotificationService {

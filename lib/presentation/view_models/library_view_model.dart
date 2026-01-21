@@ -19,8 +19,10 @@ class LibraryViewModel extends ChangeNotifier {
   String? _evidenceStrength;
   bool? _stimulantCompatible;
   String? _form;
+  String _currentStatus = 'beneficial';
   bool _isLoading = false;
   String? _error;
+  bool _isDisposed = false;
 
   // Getters
   List<Supplement> get supplements => _filteredSupplements;
@@ -30,6 +32,7 @@ class LibraryViewModel extends ChangeNotifier {
   String? get evidenceStrength => _evidenceStrength;
   bool? get stimulantCompatible => _stimulantCompatible;
   String? get form => _form;
+  String get currentStatus => _currentStatus;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
@@ -96,6 +99,12 @@ class LibraryViewModel extends ChangeNotifier {
     _applyFilters();
   }
 
+  /// Filter by status (beneficial vs avoid)
+  void filterByStatus(String status) {
+    _currentStatus = status;
+    _applyFilters();
+  }
+
   /// Clear all filters
   void clearFilters() {
     _searchQuery = '';
@@ -103,6 +112,7 @@ class LibraryViewModel extends ChangeNotifier {
     _evidenceStrength = null;
     _stimulantCompatible = null;
     _form = null;
+    _currentStatus = 'beneficial';
     _applyFilters();
   }
 
@@ -191,6 +201,11 @@ class LibraryViewModel extends ChangeNotifier {
 
   void _applyFilters() {
     _filteredSupplements = _allSupplements.where((s) {
+      // Status filter (Primary)
+      if (s.status != _currentStatus) {
+        return false;
+      }
+
       // Category filter
       if (_selectedCategory != null && s.category != _selectedCategory) {
         return false;
@@ -229,6 +244,19 @@ class LibraryViewModel extends ChangeNotifier {
     }).toList();
 
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_isDisposed) {
+      super.notifyListeners();
+    }
   }
 
   void _setLoading(bool loading) {

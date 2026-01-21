@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/repositories/stack_repository.dart';
 import '../../domain/entities/supplement_stack.dart';
@@ -8,7 +9,9 @@ class FirebaseStackRepository implements StackRepository {
   @override
   Future<void> saveStack(String userId, SupplementStack stack) async {
     try {
-      // Use the stack's ID as the document ID instead of a hardcoded 'daily_stack'
+      // Use the stack's ID as the document ID
+      // NOTE: We remove .timeout() here to allow Firestore to queue writes locally
+      // while offline. It will sync automatically when connection returns.
       await _firestore
           .collection('users')
           .doc(userId)
@@ -16,6 +19,9 @@ class FirebaseStackRepository implements StackRepository {
           .doc(stack.id)
           .set(stack.toJson());
     } catch (e) {
+      debugPrint('Error saving stack: $e');
+      // Still throw if it's a permission or structural error,
+      // but Firestore .set() rarely throws when offline.
       throw Exception('Failed to save stack: $e');
     }
   }
@@ -23,17 +29,33 @@ class FirebaseStackRepository implements StackRepository {
   @override
   Future<List<SupplementStack>> getUserStacks(String userId) async {
     try {
+      // Try to get from server with a short timeout
       final snapshot = await _firestore
           .collection('users')
           .doc(userId)
           .collection('stacks')
-          .get();
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
 
       return snapshot.docs
           .map((doc) => SupplementStack.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception('Failed to load user stacks: $e');
+      debugPrint('Fetching stacks from cache (likely offline/slow): $e');
+      // Fallback: Force read from local cache
+      try {
+        final snapshot = await _firestore
+            .collection('users')
+            .doc(userId)
+            .collection('stacks')
+            .get(const GetOptions(source: Source.cache));
+        return snapshot.docs
+            .map((doc) => SupplementStack.fromJson(doc.data()))
+            .toList();
+      } catch (cacheError) {
+        debugPrint('Cache read failed: $cacheError');
+        return [];
+      }
     }
   }
 
@@ -45,14 +67,30 @@ class FirebaseStackRepository implements StackRepository {
           .doc(userId)
           .collection('stacks')
           .doc('daily_stack')
-          .get();
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
 
       if (doc.exists && doc.data() != null) {
         return SupplementStack.fromJson(doc.data()!);
       }
       return null;
     } catch (e) {
-      throw Exception('Failed to load stack: $e');
+      debugPrint('Fetching stack from cache: $e');
+      try {
+        final doc = await _firestore
+            .collection('users')
+            .doc(userId)
+            .collection('stacks')
+            .doc('daily_stack')
+            .get(const GetOptions(source: Source.cache));
+        if (doc.exists && doc.data() != null) {
+          return SupplementStack.fromJson(doc.data()!);
+        }
+        return null;
+      } catch (cacheErr) {
+        debugPrint('Stack cache failure: $cacheErr');
+        return null;
+      }
     }
   }
 }

@@ -21,6 +21,7 @@ class SymptomCheckInViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool _hasCheckedInToday = false;
   String? _error;
+  bool _isDisposed = false;
 
   // Getters
   double get focusLevel => _focusLevel;
@@ -87,7 +88,7 @@ class SymptomCheckInViewModel extends ChangeNotifier {
 
       await _repository.logCheckIn(checkIn);
       _hasCheckedInToday = true;
-      
+
       // Reset form
       _focusLevel = 50.0;
       _energyLevel = 50.0;
@@ -109,7 +110,8 @@ class SymptomCheckInViewModel extends ChangeNotifier {
     try {
       final endDate = DateTime.now();
       final startDate = endDate.subtract(Duration(days: days));
-      return await _repository.getCheckInsByDateRange(_userId, startDate, endDate);
+      return await _repository.getCheckInsByDateRange(
+          _userId, startDate, endDate);
     } catch (e) {
       _error = 'Failed to load check-ins: $e';
       return [];
@@ -124,5 +126,18 @@ class SymptomCheckInViewModel extends ChangeNotifier {
     _notes = null;
     _error = null;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_isDisposed) {
+      super.notifyListeners();
+    }
   }
 }

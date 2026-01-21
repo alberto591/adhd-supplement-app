@@ -25,6 +25,7 @@ class DailyStackViewModel extends ChangeNotifier {
   int _streakCount = 0;
   bool _isLoading = false;
   String? _error;
+  bool _isDisposed = false;
 
   // Time-based slots
   List<StackItem> get morningItems => _getItemsForSlot('morning');
@@ -109,12 +110,18 @@ class DailyStackViewModel extends ChangeNotifier {
     _error = null;
 
     try {
-      // Load in parallel
+      debugPrint('Initializing DailyStackViewModel for user: $_userId');
+      final logicalToday = _getLogicalToday();
+      debugPrint('Logical today determined as: $logicalToday');
+
+      // Load in parallel with timeouts
+      debugPrint('Starting parallel data load (Stacks, Log, Streak)...');
       final results = await Future.wait([
         _stackRepository.getUserStacks(_userId),
-        _logRepository.getLogForDate(_userId, DateTime.now()),
+        _logRepository.getLogForDate(_userId, logicalToday),
         _logRepository.getStreakCount(_userId),
       ]);
+      debugPrint('Parallel data load complete.');
 
       _stacks = results[0] as List<SupplementStack>;
       _todayLog = results[1] as DailyLog?;
@@ -132,6 +139,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
   /// Mark a supplement as taken
   Future<void> markSupplementTaken(String supplementId) async {
+    debugPrint('Marking supplement as taken: $supplementId');
     final now = DateTime.now();
     final entry = LogEntry(
       supplementId: supplementId,
@@ -140,12 +148,17 @@ class DailyStackViewModel extends ChangeNotifier {
     );
 
     await _updateTodayLog(entry);
+    debugPrint('Today log updated for $supplementId');
 
     // Give 10 XP per supplement taken
     await _incrementUserXP(10);
 
     // Cancel any active nudges for this supplement
-    await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+    try {
+      await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+    } catch (e) {
+      debugPrint('Failed to cancel nudges: $e');
+    }
   }
 
   Future<void> _incrementUserXP(int amount) async {
@@ -175,7 +188,11 @@ class DailyStackViewModel extends ChangeNotifier {
     await _updateTodayLog(entry);
 
     // Cancel any active nudges for this supplement
-    await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+    try {
+      await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+    } catch (e) {
+      debugPrint('Failed to cancel nudges: $e');
+    }
   }
 
   /// Toggle a supplement's taken status
@@ -273,8 +290,10 @@ class DailyStackViewModel extends ChangeNotifier {
     // 1. Flatten all stack items
     final allItems = _stacks.expand((s) => s.items).toList();
 
-    // 2. Filter by slot
+    // 2. Filter by slot AND completion (Hide if taken)
     return allItems.where((item) {
+      if (isSupplementTaken(item.supplementId)) return false;
+
       final scheduledTime = item.scheduledTime;
       if (scheduledTime != null) {
         // Parse time: "HH:mm"
@@ -318,7 +337,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
   Future<void> _updateTodayLog(LogEntry entry) async {
     final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
+    final logicalToday = _getLogicalToday();
 
     List<LogEntry> entries;
     if (_todayLog != null) {
@@ -333,32 +352,51 @@ class DailyStackViewModel extends ChangeNotifier {
 
     final log = _todayLog?.copyWith(entries: entries) ??
         DailyLog(
-          id: '${_userId}_${today.toIso8601String()}',
+          id: '${_userId}_${logicalToday.toIso8601String().split('T').first}',
           userId: _userId,
-          date: today,
+          date: logicalToday,
           entries: entries,
           createdAt: now,
         );
 
     try {
-      await _logRepository.saveLog(log);
+      // Update local state and notify immediately for responsiveness
       _todayLog = log;
       notifyListeners();
+
+      // Persist in background
+      await _logRepository.saveLog(log);
     } catch (e) {
       _error = 'Failed to save log: $e';
       notifyListeners();
     }
   }
 
+  DateTime _getLogicalToday() {
+    final now = DateTime.now();
+    if (now.hour < 4) {
+      return DateTime(now.year, now.month, now.day)
+          .subtract(const Duration(days: 1));
+    }
+    return DateTime(now.year, now.month, now.day);
+  }
+
   Future<void> _cacheSupplements() async {
+    debugPrint('Caching supplements...');
     final supplementIds = <String>{};
     for (final stack in _stacks) {
       for (final item in stack.items) {
-        supplementIds.add(item.supplementId);
+        if (!_supplementCache.containsKey(item.supplementId)) {
+          supplementIds.add(item.supplementId);
+        }
       }
     }
 
-    for (final id in supplementIds) {
+    if (supplementIds.isEmpty) return;
+
+    debugPrint('Parallel fetching ${supplementIds.length} supplements...');
+
+    await Future.wait(supplementIds.map((id) async {
       try {
         final supplement = await _supplementRepository.getSupplement(id);
         if (supplement != null) {
@@ -367,6 +405,19 @@ class DailyStackViewModel extends ChangeNotifier {
       } catch (e) {
         debugPrint('Failed to load supplement $id: $e');
       }
+    }));
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_isDisposed) {
+      super.notifyListeners();
     }
   }
 

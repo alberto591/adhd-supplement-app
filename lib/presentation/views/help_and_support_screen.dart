@@ -17,11 +17,11 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
 
   Future<void> _launchEmail() async {
     final String subject =
-        Uri.encodeComponent('$_selectedFeedbackType: ADHD App Feedback');
+        Uri.encodeComponent('$_selectedFeedbackType: FocusStack Feedback');
     final String body = Uri.encodeComponent(_feedbackController.text);
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'support@adhdsupps.com',
+      path: 'support@focusstack.app',
       query: 'subject=$subject&body=$body',
     );
 
@@ -46,7 +46,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     {
       'question': 'How do I add a new supplement?',
       'answer':
-          'Go to the "My Stack" tab, tap the "+" button, and search for your supplement in the library. If you can\'t find it, you can add a custom one.',
+          'Go to the "Library" tab, search for your supplement, then tap "Add to Stack". You can also create custom supplements if needed.',
     },
     {
       'question': 'Can I export my data for my doctor?',
@@ -66,7 +66,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     {
       'question': 'What if I miss a dose?',
       'answer':
-          'Don\'t panic! Check the "Late Dose Triage" tool in the Home screen for safety advice based on the time of day.',
+          'Don\'t worry! You can still log it as "Late" in the Today view. Your streak will be preserved if you have Grace Days available.',
     },
   ];
 
@@ -138,34 +138,6 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                     ),
                   ),
                   contentPadding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-              ),
-              const SizedBox(height: 32),
-
-              // Resources Section (NEW)
-              Text(
-                'RESOURCES',
-                style: GoogleFonts.lexend(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 16),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    _buildResourceCard('Quick Start', Icons.rocket_launch,
-                        Colors.orange, 'https://adhdsupps.com/start'),
-                    const SizedBox(width: 12),
-                    _buildResourceCard('Safety FAQ', Icons.security,
-                        Colors.green, 'https://adhdsupps.com/safety'),
-                    const SizedBox(width: 12),
-                    _buildResourceCard('Watch Tutorials', Icons.play_circle,
-                        Colors.red, 'https://youtube.com/adhdsupps'),
-                  ],
                 ),
               ),
               const SizedBox(height: 32),
@@ -324,40 +296,6 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
               const SizedBox(height: 48),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildResourceCard(
-      String title, IconData icon, Color color, String url) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return GestureDetector(
-      onTap: () => _launchResource(url),
-      child: Container(
-        width: 140,
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: isDark
-              ? color.withValues(alpha: 0.1)
-              : color.withValues(alpha: 0.05),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withValues(alpha: 0.2)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 24),
-            const SizedBox(height: 16),
-            Text(
-              title,
-              style: GoogleFonts.lexend(
-                fontWeight: FontWeight.bold,
-                fontSize: 13,
-                color: isDark ? Colors.white : AppColors.textPrimaryLight,
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -121,6 +121,11 @@ class MockSettingsRepository implements SettingsRepository {
   bool getCrashReportingEnabled() => false;
   @override
   Future<void> setCrashReportingEnabled(bool enabled) async {}
+
+  @override
+  ThemeMode getThemeMode() => ThemeMode.system;
+  @override
+  Future<void> setThemeMode(ThemeMode mode) async {}
 }
 
 void main() {

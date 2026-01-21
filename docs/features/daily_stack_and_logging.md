@@ -1,6 +1,17 @@
 # Daily Stack & Logging System
 
-This document describes the core routine tracking and logging functionality.
+This document covers the safety mechanisms that prevent harmful supplement-medication interactions and identifies substances to avoid.
+
+## 1. Avoid List (Supplement Status)
+The app categorizes supplements into three delivery statuses:
+- **Beneficial**: Recommended and safe for general ADHD support.
+- **Avoid**: Specifically flagged as harmful or ineffective (e.g., Red Dye 40, HFCS).
+- **Neutral**: Supporting items with no significant ADHD impact.
+
+**Safety Enforcement:**
+- **Library Toggles**: Users can switch between "Recommended" and "Avoid List" views.
+- **Visual Warnings**: Avoided items feature red accents and warning icons.
+- **Detail Lock**: The "Add to Stack" functionality is completely disabled for `avoid` items, replaced by a "Risk Profile" card.
 
 ## Overview
 The "Daily Stack" is the heart of the app. Users build routines (Morning, Evening) with supplements, and the app tracks their adherence over time.
@@ -24,6 +35,11 @@ Manages the user's daily routine and intake logging.
 - `toggleSupplement(String supplementId)`: Toggle taken/untaken.
 - `isSupplementTaken(String supplementId)`: Check status.
 - `saveSymptomRatings(Map<String, int> ratings)`: Save mood/focus/energy ratings.
+- `_getLogicalToday()`: Implementation of the **4 AM Rollover Rule**. Treats time before 4 AM as the previous calendar day to accommodate late-night users.
+
+**Dashboard Logic:**
+- **Dynamic Filtering**: Supplements marked as "Taken" are automatically hidden from the Today view to maintain a focused task list.
+- **Feedback Loop**: Mark as taken triggers a system "tick" sound, haptic feedback, and a streak confirmation message.
 
 **Computed Getters:**
 - `todayProgress`: Double from 0.0 to 1.0.

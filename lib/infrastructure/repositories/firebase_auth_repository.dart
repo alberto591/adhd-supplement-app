@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/user.dart';
@@ -101,13 +102,28 @@ class FirebaseAuthRepository implements AuthRepository {
       if (firebaseUser == null) return null;
 
       try {
-        final doc =
-            await _firestore.collection('users').doc(firebaseUser.uid).get();
+        final doc = await _firestore
+            .collection('users')
+            .doc(firebaseUser.uid)
+            .get(const GetOptions(source: Source.serverAndCache))
+            .timeout(const Duration(seconds: 3));
         if (doc.exists) {
           return User.fromJson(doc.data()!);
         }
       } catch (e) {
-        // Fall back to Firebase Auth data
+        // Fall back to local cache if server is slow
+        debugPrint('Firestore server fetch timed out, trying cache: $e');
+        try {
+          final doc = await _firestore
+              .collection('users')
+              .doc(firebaseUser.uid)
+              .get(const GetOptions(source: Source.cache));
+          if (doc.exists) {
+            return User.fromJson(doc.data()!);
+          }
+        } catch (cacheErr) {
+          debugPrint('Firestore cache fetch failed: $cacheErr');
+        }
       }
 
       return _mapFirebaseUser(firebaseUser);
@@ -116,7 +132,10 @@ class FirebaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> updateUserProfile(User user) async {
-    await _firestore.collection('users').doc(user.id).update(user.toJson());
+    await _firestore
+        .collection('users')
+        .doc(user.id)
+        .set(user.toJson(), SetOptions(merge: true));
   }
 
   @override

@@ -1,12 +1,16 @@
-### Name: Affiliate-Link-Generator
+---
+name: affiliate_agent
+description: Searches for and formats affiliate referral links for supplements.
+---
 
-Description: Searches for the best-selling version of a supplement and formats a referral link.
-Goal: Automate the populating of my supplements_data.dart file.
-Instructions:
-When I give you a supplement name, search the web for the top 3 brands on Amazon and iHerb.
+# Goal
+Automate the monetization of supplement recommendations by generating standard, ID-tagged affiliate links.
 
-Extract the current price and the specific product ID.
+# Instructions
+1. Identify the supplement brand and platform (Amazon/iHerb).
+2. Run `python scripts/link_gen.py [brand_name] [product_id] [platform]` to generate the clean affiliate link.
+3. Use this link in the `SupplementModel` `purchaseUrl` field.
 
-Generate a Flutter SupplementModel object including my affiliate tag [YOUR_ID].
-
-Insert it into the code at the end of the allSupplements list.
+# Supported Platforms
+- **Amazon**: Appends `tag=adhdsupps-20`
+- **iHerb**: Appends `rcode=ADHDSUPPS`

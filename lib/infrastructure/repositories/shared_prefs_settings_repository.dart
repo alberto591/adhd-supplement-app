@@ -12,6 +12,7 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   static const String _keyWarningOption =
       'warning_option'; // '15m' or 'followup'
   static const String _keyExtendedEnabled = 'extended_enabled';
+  static const String _keyThemeMode = 'theme_mode';
 
   @override
   Future<void> init() async {
@@ -105,5 +106,16 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   @override
   Future<void> setCrashReportingEnabled(bool enabled) async {
     await _prefs.setBool(_keyCrashReportingEnabled, enabled);
+  }
+
+  @override
+  ThemeMode getThemeMode() {
+    final index = _prefs.getInt(_keyThemeMode) ?? ThemeMode.system.index;
+    return ThemeMode.values[index];
+  }
+
+  @override
+  Future<void> setThemeMode(ThemeMode mode) async {
+    await _prefs.setInt(_keyThemeMode, mode.index);
   }
 }

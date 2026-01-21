@@ -53,83 +53,112 @@ class DailyStackItem extends StatelessWidget {
                   ),
                 ],
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryGold.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(12),
+            // Three-dots options button (Top-Left)
+            if (onLongPress != null)
+              Positioned(
+                top: -8,
+                left: -8,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.more_horiz,
+                    size: 20,
+                    color: isDark ? Colors.white38 : Colors.black26,
                   ),
-                  child: Icon(icon, color: AppColors.primaryGold, size: 22),
+                  onPressed: onLongPress,
                 ),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          name,
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
+              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryGold.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        if (onInfoTap != null) ...[
-                          const SizedBox(width: 4),
-                          GestureDetector(
-                            onTap: onInfoTap,
-                            child: Icon(Icons.info_outline,
-                                size: 14,
-                                color: AppColors.primaryGold
-                                    .withValues(alpha: 0.6)),
-                          ),
-                        ],
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      details,
-                      style: TextStyle(
-                        color: secondaryTextColor,
-                        fontSize: 12,
+                        child:
+                            Icon(icon, color: AppColors.primaryGold, size: 22),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    name,
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                if (onInfoTap != null) ...[
+                                  const SizedBox(width: 4),
+                                  GestureDetector(
+                                    onTap: onInfoTap,
+                                    child: Icon(Icons.info_outline,
+                                        size: 14,
+                                        color: AppColors.primaryGold
+                                            .withValues(alpha: 0.6)),
+                                  ),
+                                ],
+                              ],
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              details,
+                              style: TextStyle(
+                                color: secondaryTextColor,
+                                fontSize: 12,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: onTap,
+                  borderRadius: BorderRadius.circular(99),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.transparent,
+                      border: Border.all(
+                        color: isTaken
+                            ? AppColors.accentGreen.withValues(alpha: 0.4)
+                            : (isDark
+                                ? Colors.white.withValues(alpha: 0.1)
+                                : Colors.black.withValues(alpha: 0.1)),
+                        width: 2,
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
-            InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(99),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isTaken ? Colors.transparent : Colors.transparent,
-                  border: Border.all(
-                    color: isTaken
-                        ? AppColors.accentGreen.withValues(alpha: 0.4)
-                        : (isDark
-                            ? Colors.white.withValues(alpha: 0.1)
-                            : Colors.black.withValues(alpha: 0.1)),
-                    width: 2,
+                    child: isTaken
+                        ? const Center(
+                            child: Icon(Icons.check,
+                                color: AppColors.accentGreen, size: 20))
+                        : null,
                   ),
                 ),
-                child: isTaken
-                    ? const Center(
-                        child: Icon(Icons.check,
-                            color: AppColors.accentGreen, size: 20))
-                    : null,
-              ),
+              ],
             ),
           ],
         ),

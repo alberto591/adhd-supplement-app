@@ -14,7 +14,8 @@ class SeedingService {
         "timeOfDay": "morning",
         "benefits": ["Focus", "Brain Health", "Mood"],
         "evidenceLevel": "high",
-        "notes": "Take with food for better absorption"
+        "notes": "Take with food for better absorption",
+        "status": "beneficial"
       },
       {
         "id": "l-theanine",
@@ -24,7 +25,8 @@ class SeedingService {
         "timeOfDay": "morning",
         "benefits": ["Calm Focus", "Anxiety Reduction"],
         "evidenceLevel": "moderate",
-        "notes": "Synergizes well with caffeine"
+        "notes": "Synergizes well with caffeine",
+        "status": "beneficial"
       },
       {
         "id": "magnesium",
@@ -34,7 +36,8 @@ class SeedingService {
         "timeOfDay": "evening",
         "benefits": ["Sleep", "Relaxation", "Muscle Recovery"],
         "evidenceLevel": "high",
-        "notes": "Take before bed"
+        "notes": "Take before bed",
+        "status": "beneficial"
       },
       {
         "id": "vitamin-d",
@@ -49,7 +52,8 @@ class SeedingService {
         ],
         "evidenceLevel": "high",
         "notes":
-            "Works best when combined with magnesium. Get blood levels tested."
+            "Works best when combined with magnesium. Get blood levels tested.",
+        "status": "beneficial"
       },
       {
         "id": "bacopa-monnieri",
@@ -60,7 +64,8 @@ class SeedingService {
         "benefits": ["Memory", "Anxiety Reduction", "Self-Control"],
         "evidenceLevel": "high",
         "notes":
-            "Use standardized extract (24% bacosides). Takes 8-12 weeks for full effect."
+            "Use standardized extract (24% bacosides). Takes 8-12 weeks for full effect.",
+        "status": "beneficial"
       },
       {
         "id": "zinc",
@@ -70,7 +75,8 @@ class SeedingService {
         "timeOfDay": "any",
         "benefits": ["Impulse Control", "Attention", "Dopamine Metabolism"],
         "evidenceLevel": "moderate",
-        "notes": "Most effective if deficient. Works better with Omega-3s."
+        "notes": "Most effective if deficient. Works better with Omega-3s.",
+        "status": "beneficial"
       },
       {
         "id": "ginkgo-biloba",
@@ -81,7 +87,8 @@ class SeedingService {
         "benefits": ["Inattention Reduction", "Blood Flow", "Concentration"],
         "evidenceLevel": "moderate",
         "notes":
-            "Standardized extract (24% ginkgo flavone). Less effective for hyperactivity."
+            "Standardized extract (24% ginkgo flavone). Less effective for hyperactivity.",
+        "status": "beneficial"
       },
       {
         "id": "iron",
@@ -92,7 +99,8 @@ class SeedingService {
         "benefits": ["Dopamine Synthesis", "Brain Energy"],
         "evidenceLevel": "moderate",
         "notes":
-            "Only supplement if deficiency confirmed. Excess can be harmful."
+            "Only supplement if deficiency confirmed. Excess can be harmful.",
+        "status": "beneficial"
       },
       {
         "id": "citicoline",
@@ -102,7 +110,8 @@ class SeedingService {
         "timeOfDay": "morning",
         "benefits": ["Mental Clarity", "Sustained Attention", "Memory"],
         "evidenceLevel": "moderate",
-        "notes": "Boosts brain energy. Minimal side effects."
+        "notes": "Boosts brain energy. Minimal side effects.",
+        "status": "beneficial"
       },
       {
         "id": "lions-mane",
@@ -112,7 +121,8 @@ class SeedingService {
         "timeOfDay": "morning",
         "benefits": ["Neuroplasticity", "Cognition", "Focus"],
         "evidenceLevel": "moderate",
-        "notes": "Stimulates nerve growth factor (NGF)."
+        "notes": "Stimulates nerve growth factor (NGF).",
+        "status": "beneficial"
       },
       {
         "id": "phosphatidylserine",
@@ -122,7 +132,8 @@ class SeedingService {
         "timeOfDay": "any",
         "benefits": ["Memory Organization", "Attention", "Reasoning"],
         "evidenceLevel": "moderate",
-        "notes": "Cell membrane support. Best from sunflower lecithin."
+        "notes": "Cell membrane support. Best from sunflower lecithin.",
+        "status": "beneficial"
       },
       {
         "id": "saffron",
@@ -133,7 +144,8 @@ class SeedingService {
         "benefits": ["Hyperactivity Reduction", "Mood", "Dopamine Support"],
         "evidenceLevel": "promising",
         "notes":
-            "Standardized extract. Emerging evidence suggests high efficacy."
+            "Standardized extract. Emerging evidence suggests high efficacy.",
+        "status": "beneficial"
       },
       {
         "id": "pycnogenol",
@@ -143,7 +155,8 @@ class SeedingService {
         "timeOfDay": "morning",
         "benefits": ["Attention", "Antioxidant", "Blood Flow"],
         "evidenceLevel": "moderate",
-        "notes": "Natural bioflavonoid. 12 weeks for full effect."
+        "notes": "Natural bioflavonoid. 12 weeks for full effect.",
+        "status": "beneficial"
       },
       {
         "id": "probiotics",
@@ -153,7 +166,35 @@ class SeedingService {
         "timeOfDay": "morning",
         "benefits": ["Gut-Brain Axis", "Emotional Functioning"],
         "evidenceLevel": "moderate",
-        "notes": "Supports microbiome health and neurotransmitter synthesis."
+        "notes": "Supports microbiome health and neurotransmitter synthesis.",
+        "status": "beneficial"
+      },
+      {
+        "id": "red-dye-40",
+        "name": "Red Dye 40 (Allura Red)",
+        "category": "Artificial Color",
+        "description":
+            "Synthetic food dye linked to hyperactivity in children with ADHD.",
+        "sideEffects": ["Increased Hyperactivity", "Hypersensitivity"],
+        "status": "avoid"
+      },
+      {
+        "id": "high-fructose-corn-syrup",
+        "name": "High Fructose Corn Syrup",
+        "category": "Sweetener",
+        "description":
+            "High intake of refined sugars can lead to energy crashes and worsened ADHD symptoms.",
+        "sideEffects": ["Brain Fog", "Energy Crashes", "Irritability"],
+        "status": "avoid"
+      },
+      {
+        "id": "sodium-benzoate",
+        "name": "Sodium Benzoate",
+        "category": "Preservative",
+        "description":
+            "Common preservative in soft drinks that may increase hyperactivity in some children.",
+        "sideEffects": ["Hyperactivity", "Reduced Focus"],
+        "status": "avoid"
       }
     ];
 
@@ -162,17 +203,16 @@ class SeedingService {
       final batch = _firestore.batch();
 
       for (var supplement in supplements) {
-        debugPrint('Adding to batch: ${supplement['name']}');
         final docRef = _firestore
             .collection('supplements')
             .doc(supplement['id'] as String);
         batch.set(docRef, supplement);
       }
 
-      debugPrint('Committing batch...');
+      if (kDebugMode) {
+        debugPrint('Committing seeding batch...');
+      }
       await batch.commit();
-      debugPrint('Batch committed successfully!');
-
       if (kDebugMode) {
         debugPrint('Successfully seeded ${supplements.length} supplements');
       }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/symptom_checkin.dart';
 import '../../domain/repositories/symptom_repository.dart';
@@ -11,20 +12,45 @@ class FirebaseSymptomRepository implements SymptomRepository {
 
   @override
   Future<void> logCheckIn(SymptomCheckIn checkIn) async {
-    await _firestore.collection(_collection).doc(checkIn.id).set(checkIn.toJson());
+    try {
+      await _firestore
+          .collection(_collection)
+          .doc(checkIn.id)
+          .set(checkIn.toJson());
+    } catch (e) {
+      debugPrint('Error logging check-in: $e');
+      throw Exception('Failed to log check-in: $e');
+    }
   }
 
   @override
   Future<List<SymptomCheckIn>> getCheckIns(String userId) async {
-    final snapshot = await _firestore
-        .collection(_collection)
-        .where('userId', isEqualTo: userId)
-        .orderBy('timestamp', descending: true)
-        .get();
+    try {
+      final snapshot = await _firestore
+          .collection(_collection)
+          .where('userId', isEqualTo: userId)
+          .orderBy('timestamp', descending: true)
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
 
-    return snapshot.docs
-        .map((doc) => SymptomCheckIn.fromJson(doc.data()))
-        .toList();
+      return snapshot.docs
+          .map((doc) => SymptomCheckIn.fromJson(doc.data()))
+          .toList();
+    } catch (e) {
+      debugPrint('Fetching check-ins from cache (offline): $e');
+      try {
+        final snapshot = await _firestore
+            .collection(_collection)
+            .where('userId', isEqualTo: userId)
+            .get(const GetOptions(source: Source.cache));
+        return snapshot.docs
+            .map((doc) => SymptomCheckIn.fromJson(doc.data()))
+            .toList();
+      } catch (cacheErr) {
+        debugPrint('Symptom cache failure: $cacheErr');
+        return [];
+      }
+    }
   }
 
   @override
@@ -48,15 +74,33 @@ class FirebaseSymptomRepository implements SymptomRepository {
 
   @override
   Future<SymptomCheckIn?> getLatestCheckIn(String userId) async {
-    final snapshot = await _firestore
-        .collection(_collection)
-        .where('userId', isEqualTo: userId)
-        .orderBy('timestamp', descending: true)
-        .limit(1)
-        .get();
+    try {
+      final snapshot = await _firestore
+          .collection(_collection)
+          .where('userId', isEqualTo: userId)
+          .orderBy('timestamp', descending: true)
+          .limit(1)
+          .get(const GetOptions(source: Source.serverAndCache))
+          .timeout(const Duration(seconds: 3));
 
-    if (snapshot.docs.isEmpty) return null;
-    return SymptomCheckIn.fromJson(snapshot.docs.first.data());
+      if (snapshot.docs.isEmpty) return null;
+      return SymptomCheckIn.fromJson(snapshot.docs.first.data());
+    } catch (e) {
+      debugPrint('Fetching latest check-in from cache: $e');
+      try {
+        final snapshot = await _firestore
+            .collection(_collection)
+            .where('userId', isEqualTo: userId)
+            .orderBy('timestamp', descending: true)
+            .limit(1)
+            .get(const GetOptions(source: Source.cache));
+        if (snapshot.docs.isEmpty) return null;
+        return SymptomCheckIn.fromJson(snapshot.docs.first.data());
+      } catch (cacheErr) {
+        debugPrint('Latest check-in cache failure: $cacheErr');
+        return null;
+      }
+    }
   }
 
   @override
@@ -68,7 +112,8 @@ class FirebaseSymptomRepository implements SymptomRepository {
     final snapshot = await _firestore
         .collection(_collection)
         .where('userId', isEqualTo: userId)
-        .where('timestamp', isGreaterThanOrEqualTo: startOfDay.toIso8601String())
+        .where('timestamp',
+            isGreaterThanOrEqualTo: startOfDay.toIso8601String())
         .where('timestamp', isLessThan: endOfDay.toIso8601String())
         .limit(1)
         .get();

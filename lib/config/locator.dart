@@ -22,7 +22,7 @@ import 'package:adhd_supplement_app/infrastructure/services/fda_interaction_serv
 import 'package:adhd_supplement_app/infrastructure/services/report_pdf_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
-import 'package:adhd_supplement_app/presentation/view_models/history_log_view_model.dart';
+import 'package:adhd_supplement_app/application/view_models/history_log_view_model.dart';
 import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
 import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
 
@@ -64,6 +64,7 @@ import '../application/view_models/refer_friend_view_model.dart';
 import '../application/view_models/nightly_reflection_view_model.dart';
 import '../application/view_models/doctor_export_view_model.dart';
 import '../application/view_models/chemist_view_model.dart';
+import '../application/view_models/theme_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -110,6 +111,9 @@ void setupLocator() {
   locator.registerLazySingleton(() => AuthProvider(locator<AuthRepository>()));
 
   // ViewModels
+  locator.registerLazySingleton(
+      () => ThemeViewModel(locator<SettingsRepository>()));
+
   locator.registerFactory(() => SupplementViewModel(
         locator<SupplementRepository>(),
         locator<UrlService>(),
@@ -158,6 +162,7 @@ void setupLocator() {
   locator.registerFactoryParam<HistoryLogViewModel, String, void>(
     (userId, _) => HistoryLogViewModel(
       logRepository: locator<LogRepository>(),
+      stackRepository: locator<StackRepository>(),
       userId: userId,
     ),
   );

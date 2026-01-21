@@ -28,4 +28,8 @@ abstract class SettingsRepository {
 
   bool getCrashReportingEnabled();
   Future<void> setCrashReportingEnabled(bool enabled);
+
+  // App Settings
+  ThemeMode getThemeMode();
+  Future<void> setThemeMode(ThemeMode mode);
 }

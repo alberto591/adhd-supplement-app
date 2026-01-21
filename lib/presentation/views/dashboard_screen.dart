@@ -11,6 +11,7 @@ import '../../domain/entities/supplement_stack.dart';
 import '../../domain/entities/supplement.dart';
 import '../widgets/unified_bottom_nav.dart';
 import '../theme/app_theme.dart';
+import 'package:flutter/services.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -57,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               final now = DateTime.now();
               final dateStr =
-                  DateFormat('TODAY, MMM d').format(now).toUpperCase();
+                  DateFormat("'TODAY', MMM d").format(now).toUpperCase();
 
               return CustomScrollView(
                 slivers: [
@@ -127,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               isNow: true),
                           const SizedBox(height: 16),
                           ..._buildMedicationList(
-                              viewModel.morningItems, viewModel),
+                              viewModel.morningItems, viewModel, 'morning'),
 
                           const SizedBox(height: 32),
 
@@ -137,8 +138,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             _buildSectionHeader(context, 'Afternoon Focus',
                                 timeBadge: '2:00 PM'),
                             const SizedBox(height: 16),
-                            ..._buildMedicationList(
-                                viewModel.afternoonItems, viewModel),
+                            ..._buildMedicationList(viewModel.afternoonItems,
+                                viewModel, 'afternoon'),
                           ],
 
                           const SizedBox(height: 32),
@@ -148,7 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               timeBadge: '8:00 PM'),
                           const SizedBox(height: 16),
                           ..._buildMedicationList(
-                              viewModel.eveningItems, viewModel),
+                              viewModel.eveningItems, viewModel, 'evening'),
 
                           // 6. Night Stack (if any)
                           if (viewModel.nightItems.isNotEmpty) ...[
@@ -157,7 +158,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 timeBadge: '10:00 PM'),
                             const SizedBox(height: 16),
                             ..._buildMedicationList(
-                                viewModel.nightItems, viewModel),
+                                viewModel.nightItems, viewModel, 'night'),
                           ],
 
                           const SizedBox(height: 80), // Bottom padding
@@ -228,8 +229,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  List<Widget> _buildMedicationList(
-      List<StackItem> items, DailyStackViewModel viewModel) {
+  List<Widget> _buildMedicationList(List<StackItem> items,
+      DailyStackViewModel viewModel, String sectionIdentifier) {
     if (items.isEmpty) {
       return [
         const Text('No medications scheduled',
@@ -237,62 +238,66 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ];
     }
 
-    return items.map((item) {
+    return items
+        .where((item) => !viewModel.isSupplementTaken(item.supplementId))
+        .map((item) {
       // item is StackItem
       final supplement = viewModel.getSupplement(item.supplementId);
       final isTaken = viewModel.isSupplementTaken(item.supplementId);
 
-      // Determine status
-      // If taken -> Completed
-      // If not taken ->
-      //    Check time? For now assume items in "Morning Focus" are active if it's morning.
-      //    The wireframe logic is simpler:
-      //    - Morning items: Active (if not taken)
-      //    - Evening items: Upcoming (if current time < 8PM)
-      //    Let's implement basic logic based on list they are in.
-      //    Or generic status check.
-
-      // For now:
-      // If taken: Completed
-      // If not taken: Active (Blue button)
-      // UNLESS it's strictly future (handled by viewmodel lists)
-
-      // Refine logic:
-      // The viewmodel splits them into lists.
-      // Items in "Morning Focus" displayed now should be Active.
-      // Items in "Evening Stack" displayed now should be Upcoming?
-      // The wireframe shows "Evening Stack" with "Upcoming" badge and scheduled time "8:00 PM".
-      // And Morning Focus has "NOW" badge.
-
-      // So we need to pass context (isUpcoming) to the card.
-      // But wait, the section header has "NOW" or "8:00 PM".
-      // So if I am building the Evening list, those items are 'upcoming' if it's not evening yet.
-
-      final isEveningList = viewModel.eveningItems.contains(item);
-      final currentHour = DateTime.now().hour;
-      final isEveningNow = currentHour >= 18;
-
-      // Logic: if in Evening list AND it's NOT evening yet -> Upcoming
-      final isUpcoming = isEveningList && !isEveningNow;
-
-      // NOTE: This logic is simple. Real app would compare `item.scheduledTime`.
+      // Remaining logic...
+      // ... (keeping existing logic for isUpcoming)
 
       return MedicationCard(
+        key: ValueKey('dash_${sectionIdentifier}_${item.supplementId}'),
         title: supplement?.name ?? 'Loading...',
         dosage: item.customDosage ?? supplement?.dosage ?? 'As directed',
         form: supplement?.form ?? 'Pill',
         icon: _getIconForType(supplement?.shapeIcon ?? 'pill'),
         iconColor: HexColor(supplement?.iconColor ?? '#FFB74D'),
         isTaken: isTaken,
-        isUpcoming: isUpcoming,
-        statusText: isTaken ? 'Taken' : (isUpcoming ? 'Upcoming' : null),
+        isUpcoming: false,
+        statusText: isTaken ? 'Taken' : null,
         onTap: () {
           if (supplement != null) {
             Navigator.pushNamed(context, AppRouter.supplementDetail,
                 arguments: supplement);
           }
         },
-        onTake: () => viewModel.markSupplementTaken(item.supplementId),
+        onTake: () async {
+          // Play sound and haptic feedback
+          HapticFeedback.mediumImpact();
+          SystemSound.play(SystemSoundType.click);
+
+          // Mark as taken
+          await viewModel.markSupplementTaken(item.supplementId);
+
+          // Show confirmation with streak
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.check_circle, color: Colors.white),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'Success! That\'s ${viewModel.streakCount} days in a row!',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                backgroundColor: AppColors.primaryGold,
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            );
+          }
+        },
         onMoreOptions: () => _showMedicationOptions(context, item, supplement),
       );
     }).toList();

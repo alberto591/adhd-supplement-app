@@ -7,6 +7,7 @@ class User {
   final int xp;
   final int level;
   final bool hasCompletedOnboarding;
+  final String? adhdType; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
 
   const User({
     required this.id,
@@ -17,6 +18,7 @@ class User {
     this.hasCompletedOnboarding = false,
     this.xp = 0,
     this.level = 1,
+    this.adhdType,
   });
 
   static const Object _unset = Object();
@@ -30,6 +32,7 @@ class User {
     bool? hasCompletedOnboarding,
     int? xp,
     int? level,
+    Object? adhdType = _unset,
   }) {
     return User(
       id: id ?? this.id,
@@ -44,6 +47,8 @@ class User {
           hasCompletedOnboarding ?? this.hasCompletedOnboarding,
       xp: xp ?? this.xp,
       level: level ?? this.level,
+      adhdType:
+          identical(adhdType, _unset) ? this.adhdType : adhdType as String?,
     );
   }
 
@@ -57,6 +62,7 @@ class User {
       'hasCompletedOnboarding': hasCompletedOnboarding,
       'xp': xp,
       'level': level,
+      'adhdType': adhdType,
     };
   }
 
@@ -70,6 +76,7 @@ class User {
       hasCompletedOnboarding: json['hasCompletedOnboarding'] as bool? ?? false,
       xp: json['xp'] as int? ?? 0,
       level: json['level'] as int? ?? 1,
+      adhdType: json['adhdType'] as String?,
     );
   }
 }

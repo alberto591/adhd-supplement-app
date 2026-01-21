@@ -109,6 +109,117 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       child: Center(child: CircularProgressIndicator()),
                     )
                   else ...[
+                    // Selection Toggle (Recommended vs Avoid)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: Container(
+                        height: 48,
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? AppColors.cardDark
+                              : const Color(0xFFF1F5F9),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.05)
+                                : const Color(0xFFE2E8F0),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () =>
+                                    viewModel.filterByStatus('beneficial'),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        viewModel.currentStatus == 'beneficial'
+                                            ? (isDark
+                                                ? const Color(0xFF2D3748)
+                                                : Colors.white)
+                                            : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow:
+                                        viewModel.currentStatus == 'beneficial'
+                                            ? [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withValues(alpha: 0.05),
+                                                  blurRadius: 4,
+                                                  offset: const Offset(0, 2),
+                                                )
+                                              ]
+                                            : null,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Recommended',
+                                    style: GoogleFonts.lexend(
+                                      fontSize: 13,
+                                      fontWeight: viewModel.currentStatus ==
+                                              'beneficial'
+                                          ? FontWeight.bold
+                                          : FontWeight.w500,
+                                      color: viewModel.currentStatus ==
+                                              'beneficial'
+                                          ? (isDark
+                                              ? Colors.white
+                                              : const Color(0xFF0F172A))
+                                          : Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => viewModel.filterByStatus('avoid'),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: viewModel.currentStatus == 'avoid'
+                                        ? (isDark
+                                            ? const Color(0xFF7F1D1D)
+                                            : const Color(0xFFFEE2E2))
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow:
+                                        viewModel.currentStatus == 'avoid'
+                                            ? [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withValues(alpha: 0.05),
+                                                  blurRadius: 4,
+                                                  offset: const Offset(0, 2),
+                                                )
+                                              ]
+                                            : null,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Avoid List',
+                                    style: GoogleFonts.lexend(
+                                      fontSize: 13,
+                                      fontWeight:
+                                          viewModel.currentStatus == 'avoid'
+                                              ? FontWeight.bold
+                                              : FontWeight.w500,
+                                      color: viewModel.currentStatus == 'avoid'
+                                          ? (isDark
+                                              ? Colors.white
+                                              : const Color(0xFF991B1B))
+                                          : Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
@@ -257,8 +368,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    viewModel.selectedCategory ??
-                                        'All Supplements',
+                                    viewModel.currentStatus == 'avoid'
+                                        ? 'Substances to Avoid'
+                                        : (viewModel.selectedCategory ??
+                                            'All Supplements'),
                                     style: GoogleFonts.lexend(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -579,9 +692,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
           color: isDark ? AppColors.cardDark : Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isGold
-                ? AppColors.primaryGold.withValues(alpha: 0.3)
-                : AppColors.primaryGold.withValues(alpha: 0.05),
+            color: supplement.status == 'avoid'
+                ? (isDark
+                    ? const Color(0xFF7F1D1D).withValues(alpha: 0.5)
+                    : const Color(0xFFFCA5A5))
+                : (isGold
+                    ? AppColors.primaryGold.withValues(alpha: 0.3)
+                    : AppColors.primaryGold.withValues(alpha: 0.05)),
           ),
           boxShadow: [
             BoxShadow(
@@ -638,35 +755,49 @@ class _LibraryScreenState extends State<LibraryScreen> {
             ),
 
             // Focus Level (Stars)
-            Row(
-              children: List.generate(
-                5,
-                (index) => Icon(
-                  index < supplement.focusLevel
-                      ? Icons.star
-                      : Icons.star_border,
-                  color: AppColors.primaryGold,
-                  size: 10, // Slightly smaller to fit 5 stars
+            if (supplement.status != 'avoid')
+              Row(
+                children: List.generate(
+                  5,
+                  (index) => Icon(
+                    index < supplement.focusLevel
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: AppColors.primaryGold,
+                    size: 10, // Slightly smaller to fit 5 stars
+                  ),
                 ),
-              ),
-            ),
+              )
+            else
+              const Icon(Icons.warning_amber_rounded,
+                  color: Color(0xFFEF4444), size: 16),
             const SizedBox(width: 12),
 
-            // Add Button (Compact)
+            // Action Button
             SizedBox(
               height: 32,
               child: ElevatedButton(
-                onPressed: () => _showAddToStackSheet(context, supplement),
+                onPressed: supplement.status == 'avoid'
+                    ? () => Navigator.pushNamed(
+                        context, AppRouter.supplementDetail,
+                        arguments: supplement)
+                    : () => _showAddToStackSheet(context, supplement),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryGold,
-                  foregroundColor: Colors.white,
+                  backgroundColor: supplement.status == 'avoid'
+                      ? (isDark
+                          ? const Color(0xFF991B1B)
+                          : const Color(0xFFFEE2E2))
+                      : AppColors.primaryGold,
+                  foregroundColor: supplement.status == 'avoid'
+                      ? (isDark ? Colors.white : const Color(0xFF991B1B))
+                      : Colors.white,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
                 child: Text(
-                  'ADD',
+                  supplement.status == 'avoid' ? 'WHY?' : 'ADD',
                   style: GoogleFonts.lexend(
                       fontWeight: FontWeight.bold, fontSize: 11),
                 ),
@@ -687,11 +818,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
       width: isSmall ? 32 : 40,
       height: isSmall ? 32 : 60,
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.8),
+        color: supplement.status == 'avoid'
+            ? const Color(0xFFEF4444).withValues(alpha: 0.1)
+            : color.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(isCapsule && !isSmall ? 20 : 8),
         boxShadow: [
           BoxShadow(
-            color: color.withValues(alpha: 0.2),
+            color: supplement.status == 'avoid'
+                ? const Color(0xFFEF4444).withValues(alpha: 0.1)
+                : color.withValues(alpha: 0.2),
             blurRadius: isSmall ? 5 : 15,
             spreadRadius: isSmall ? 1 : 2,
           ),
@@ -699,8 +834,12 @@ class _LibraryScreenState extends State<LibraryScreen> {
       ),
       child: Center(
         child: Icon(
-          isCapsule ? Icons.wb_sunny_outlined : Icons.track_changes,
-          color: Colors.white70,
+          supplement.status == 'avoid'
+              ? Icons.block
+              : (isCapsule ? Icons.wb_sunny_outlined : Icons.track_changes),
+          color: supplement.status == 'avoid'
+              ? const Color(0xFFEF4444)
+              : Colors.white70,
           size: isSmall ? 14 : 20,
         ),
       ),

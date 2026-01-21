@@ -75,23 +75,54 @@ class SupplementDetail extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: primaryGold.withValues(alpha: 0.1),
+                                color: supplement.status == 'avoid'
+                                    ? const Color(0xFFEF4444)
+                                        .withValues(alpha: 0.1)
+                                    : primaryGold.withValues(alpha: 0.1),
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                    color: primaryGold.withValues(alpha: 0.2),
+                                    color: supplement.status == 'avoid'
+                                        ? const Color(0xFFEF4444)
+                                            .withValues(alpha: 0.2)
+                                        : primaryGold.withValues(alpha: 0.2),
                                     width: 2),
                               ),
                               child: Icon(
-                                _getSupplementIcon(supplement.name),
+                                supplement.status == 'avoid'
+                                    ? Icons.block
+                                    : _getSupplementIcon(supplement.name),
                                 size: 48,
-                                color: primaryGold,
+                                color: supplement.status == 'avoid'
+                                    ? const Color(0xFFEF4444)
+                                    : primaryGold,
                               ),
                             ),
                             const SizedBox(height: 16),
-                            _FocusLevelIndicator(
-                              level: supplement.focusLevel,
-                              color: primaryGold,
-                            ),
+                            if (supplement.status != 'avoid')
+                              _FocusLevelIndicator(
+                                level: supplement.focusLevel,
+                                color: primaryGold,
+                              )
+                            else
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.3),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: const Color(0xFFEF4444)
+                                          .withValues(alpha: 0.3)),
+                                ),
+                                child: Text(
+                                  'Clinically Flagged',
+                                  style: GoogleFonts.lexend(
+                                    color: const Color(0xFFEF4444),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -124,15 +155,49 @@ class SupplementDetail extends StatelessWidget {
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
-                                  Text(
-                                    'Premium Supplement',
-                                    style: GoogleFonts.lexend(
-                                      color: primaryGold,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 1.0,
+                                  if (supplement.status == 'avoid') ...[
+                                    const SizedBox(height: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFEF4444)
+                                            .withValues(alpha: 0.1),
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                            color: const Color(0xFFEF4444)
+                                                .withValues(alpha: 0.2)),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(
+                                              Icons.warning_amber_rounded,
+                                              color: Color(0xFFEF4444),
+                                              size: 16),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            'NOT RECOMMENDED FOR ADHD',
+                                            style: GoogleFonts.lexend(
+                                              color: const Color(0xFFEF4444),
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  ] else
+                                    Text(
+                                      'Premium Supplement',
+                                      style: GoogleFonts.lexend(
+                                        color: primaryGold,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.0,
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),
@@ -188,63 +253,75 @@ class SupplementDetail extends StatelessWidget {
                         const SizedBox(height: 40),
 
                         // Action Buttons Section
-                        Row(
-                          children: [
-                            // Add to Stack Button
-                            Expanded(
-                              child: SizedBox(
-                                height: 64,
-                                child: ElevatedButton(
-                                  onPressed: () => _showStackSelection(context),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: primaryGold,
-                                    foregroundColor: Colors.black,
-                                    elevation: 4,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.add_circle_outline,
-                                          size: 24),
-                                      const SizedBox(width: 12),
-                                      Text(
-                                        'Add to Stack',
-                                        style: GoogleFonts.lexend(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                        if (supplement.status != 'avoid')
+                          Row(
+                            children: [
+                              // Add to Stack Button
+                              Expanded(
+                                child: SizedBox(
+                                  height: 64,
+                                  child: ElevatedButton(
+                                    onPressed: () =>
+                                        _showStackSelection(context),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: primaryGold,
+                                      foregroundColor: Colors.black,
+                                      elevation: 4,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(24),
                                       ),
-                                    ],
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.add_circle_outline,
+                                            size: 24),
+                                        const SizedBox(width: 12),
+                                        Text(
+                                          'Add to Stack',
+                                          style: GoogleFonts.lexend(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 16),
-                            // Buy Now Icon Button
-                            Container(
-                              width: 64,
-                              height: 64,
-                              decoration: BoxDecoration(
-                                color: isDark
-                                    ? const Color(0xFF2D2616)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(24),
-                                border: Border.all(
-                                    color: primaryGold.withValues(alpha: 0.2)),
+                              const SizedBox(width: 16),
+                              // Buy Now Icon Button
+                              Container(
+                                width: 64,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color: isDark
+                                      ? const Color(0xFF2D2616)
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(24),
+                                  border: Border.all(
+                                      color:
+                                          primaryGold.withValues(alpha: 0.2)),
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.shopping_bag_outlined,
+                                      color: primaryGold),
+                                  onPressed: () {
+                                    // Referral logic
+                                  },
+                                ),
                               ),
-                              child: IconButton(
-                                icon: const Icon(Icons.shopping_bag_outlined,
-                                    color: primaryGold),
-                                onPressed: () {
-                                  // Referral logic
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          )
+                        else
+                          _InfoCard(
+                            title: 'Risk Profile',
+                            icon: Icons.error_outline,
+                            color: const Color(0xFFEF4444),
+                            content: 'High clinical risk for ADHD',
+                            isDark: isDark,
+                          ),
                         const SizedBox(height: 24),
 
                         // Disclaimer

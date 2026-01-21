@@ -16,6 +16,7 @@ class SafetyViewModel extends ChangeNotifier {
   List<SupplementInteraction> _currentInteractions = [];
   bool _isLoading = false;
   String? _error;
+  bool _isDisposed = false;
 
   List<SupplementInteraction> get currentInteractions => _currentInteractions;
   bool get isLoading => _isLoading;
@@ -71,4 +72,16 @@ class SafetyViewModel extends ChangeNotifier {
   /// Get recommendations for current interactions
   List<String> get recommendations =>
       _currentInteractions.map((i) => i.recommendation).toList();
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_isDisposed) {
+      super.notifyListeners();
+    }
+  }
 }
