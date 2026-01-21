@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class SeedingService {
@@ -222,6 +223,45 @@ class SeedingService {
         debugPrint('Error seeding supplements: $e');
       }
       rethrow;
+    }
+  }
+
+  Future<void> createTestUser(String email, String password) async {
+    try {
+      final auth = FirebaseAuth.instance;
+
+      // Check if user exists by trying to sign in
+      try {
+        await auth.signInWithEmailAndPassword(email: email, password: password);
+        debugPrint('Test user already exists. Skipping creation.');
+        return;
+      } catch (e) {
+        // User likely doesn't exist or wrong password
+        debugPrint(
+            'Test user not found or sign in failed. Attempting to create...');
+      }
+
+      // Create user
+      final credential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (credential.user != null) {
+        // Create user document in Firestore
+        await _firestore.collection('users').doc(credential.user!.uid).set({
+          'id': credential.user!.uid,
+          'email': email,
+          'displayName': 'Test User',
+          'createdAt': FieldValue.serverTimestamp(),
+          'hasCompletedOnboarding': true,
+          'unlockedAchievements': <String>[],
+        });
+        debugPrint('Test user created successfully: $email');
+      }
+    } catch (e) {
+      debugPrint('Failed to create test user: $e');
+      // Don't rethrow to avoid blocking app startup
     }
   }
 }

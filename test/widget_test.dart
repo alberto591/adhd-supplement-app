@@ -64,7 +64,7 @@ void main() {
   });
 
   testWidgets('App builds (smoke test)', (WidgetTester tester) async {
-    await tester.pumpWidget(const AdhdSupplementApp());
+    await tester.pumpWidget(const AdhdSupplementApp(isFirebaseReady: true));
     await tester.pump();
 
     expect(find.byType(MaterialApp), findsOneWidget);
@@ -232,6 +232,7 @@ class _FakeNotificationService implements NotificationService {
     required int hour,
     required int minute,
     int second = 0,
+    bool startFromTomorrow = false,
   }) async {}
   @override
   Future<void> cancelNotification(int id) async {}

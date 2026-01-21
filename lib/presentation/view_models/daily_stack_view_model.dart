@@ -6,6 +6,7 @@ import '../../domain/repositories/stack_repository.dart';
 import '../../domain/repositories/log_repository.dart';
 import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
 
 /// View model for the Daily Stack screen
@@ -14,6 +15,7 @@ class DailyStackViewModel extends ChangeNotifier {
   final StackRepository _stackRepository;
   final LogRepository _logRepository;
   final SupplementRepository _supplementRepository;
+  final SettingsRepository _settingsRepository;
   final NotificationService _notificationService;
   final AuthRepository _authRepository;
   final String _userId;
@@ -94,12 +96,14 @@ class DailyStackViewModel extends ChangeNotifier {
     required StackRepository stackRepository,
     required LogRepository logRepository,
     required SupplementRepository supplementRepository,
+    required SettingsRepository settingsRepository,
     required NotificationService notificationService,
     required AuthRepository authRepository,
     required String userId,
   })  : _stackRepository = stackRepository,
         _logRepository = logRepository,
         _supplementRepository = supplementRepository,
+        _settingsRepository = settingsRepository,
         _notificationService = notificationService,
         _authRepository = authRepository,
         _userId = userId;
@@ -165,6 +169,7 @@ class DailyStackViewModel extends ChangeNotifier {
     // Cancel any active nudges for this supplement
     try {
       await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+      await _checkAndCancelGlobalNudges();
     } catch (e) {
       debugPrint('Failed to cancel nudges: $e');
     }
@@ -218,6 +223,7 @@ class DailyStackViewModel extends ChangeNotifier {
     // Cancel any active nudges for this supplement
     try {
       await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+      await _checkAndCancelGlobalNudges();
     } catch (e) {
       debugPrint('Failed to cancel nudges: $e');
     }
@@ -434,6 +440,90 @@ class DailyStackViewModel extends ChangeNotifier {
     } catch (e) {
       _error = 'Failed to save log: $e';
       notifyListeners();
+    }
+  }
+
+  /// Automatically cancel global reminders if everything is done for the day
+  Future<void> _checkAndCancelGlobalNudges() async {
+    if (_stacks.isEmpty) return;
+
+    // Check if ALL items in ALL stacks are handled (taken or skipped)
+    final allHandled = _stacks.expand((s) => s.items).every((item) {
+      if (_todayLog == null) return false;
+      return _todayLog!.entries.any(
+        (e) =>
+            e.supplementId == item.supplementId &&
+            (e.status == LogStatus.taken || e.status == LogStatus.skipped),
+      );
+    });
+
+    if (allHandled) {
+      debugPrint(
+          'Smart Nudge: All items handled. Skipping remaining nudges for today.');
+      final nudgeTime = _settingsRepository.getNudgeTime();
+      final nudgeEnabled = _settingsRepository.getNudgeModeEnabled();
+      final warningOption = _settingsRepository.getWarningNudgeOption();
+
+      if (!nudgeEnabled) return;
+
+      // 1000: Primary
+      await _notificationService.scheduleRecurringNotification(
+        id: 1000,
+        title: 'Time for your daily stack!',
+        body: 'Keep your streak alive. Take your supplements now.',
+        hour: nudgeTime.hour,
+        minute: nudgeTime.minute,
+        startFromTomorrow: true,
+      );
+
+      // 1001: Warning
+      if (warningOption == '15m' || warningOption == 'followup') {
+        int warningHour = nudgeTime.hour;
+        int warningMinute = nudgeTime.minute + 15;
+        if (warningMinute >= 60) {
+          warningHour = (warningHour + 1) % 24;
+          warningMinute = warningMinute - 60;
+        }
+
+        await _notificationService.scheduleRecurringNotification(
+          id: 1001,
+          title: 'Missed your stack?',
+          body: 'Just a friendly nudge to log your supplements!',
+          hour: warningHour,
+          minute: warningMinute,
+          startFromTomorrow: true,
+        );
+      }
+
+      // 1002: Follow-up
+      if (warningOption == 'followup' ||
+          _settingsRepository.getExtendedRemindersEnabled()) {
+        int secondHour = nudgeTime.hour;
+        int secondMinute = nudgeTime.minute + 30;
+        if (secondMinute >= 60) {
+          secondHour = (secondHour + 1) % 24;
+          secondMinute = secondMinute - 60;
+        }
+
+        await _notificationService.scheduleRecurringNotification(
+          id: 1002,
+          title: 'Still haven\'t logged?',
+          body: 'Consistency is key! tracking helps your doctor help you.',
+          hour: secondHour,
+          minute: secondMinute,
+          startFromTomorrow: true,
+        );
+      }
+
+      // 2000: Evening summary
+      await _notificationService.scheduleRecurringNotification(
+        id: 2000,
+        title: 'Daily Summary 🌙',
+        body: 'Tap to see your progress for today!',
+        hour: 20,
+        minute: 0,
+        startFromTomorrow: true,
+      );
     }
   }
 

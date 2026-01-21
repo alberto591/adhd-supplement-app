@@ -90,18 +90,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           title: const Text('ADHD Diagnosis Type'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: types.map((type) {
-              return RadioListTile<String>(
-                title: Text(type),
-                value: type,
-                groupValue: selectedType,
-                onChanged: (value) {
-                  setState(() => selectedType = value);
-                },
-              );
-            }).toList(),
+          content: RadioGroup<String>(
+            groupValue: selectedType,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() => selectedType = value);
+              }
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: types.map((type) {
+                return RadioListTile<String>(
+                  title: Text(type),
+                  value: type,
+                );
+              }).toList(),
+            ),
           ),
           actions: [
             TextButton(

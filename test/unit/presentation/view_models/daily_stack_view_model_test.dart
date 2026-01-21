@@ -4,6 +4,8 @@ import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:adhd_supplement_app/domain/entities/user.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
 import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
@@ -100,7 +102,8 @@ class FakeNotificationService implements NotificationService {
       required String body,
       required int hour,
       required int minute,
-      int second = 0}) async {}
+      int second = 0,
+      bool startFromTomorrow = false}) async {}
   @override
   Future<void> cancelNotification(int id) async {}
   @override
@@ -160,6 +163,47 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> deleteUser() async {}
 }
 
+class FakeSettingsRepository implements SettingsRepository {
+  @override
+  Future<void> init() async {}
+  @override
+  bool getNudgeModeEnabled() => true;
+  @override
+  Future<void> setNudgeModeEnabled(bool enabled) async {}
+  @override
+  TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setNudgeTime(TimeOfDay time) async {}
+  @override
+  String getWarningNudgeOption() => '15m';
+  @override
+  Future<void> setWarningNudgeOption(String option) async {}
+  @override
+  bool getExtendedRemindersEnabled() => true;
+  @override
+  Future<void> setExtendedRemindersEnabled(bool enabled) async {}
+  @override
+  bool getBiometricLockEnabled() => false;
+  @override
+  Future<void> setBiometricLockEnabled(bool enabled) async {}
+  @override
+  bool getLocalStorageOnly() => false;
+  @override
+  Future<void> setLocalStorageOnly(bool enabled) async {}
+  @override
+  bool getAnalyticsEnabled() => true;
+  @override
+  Future<void> setAnalyticsEnabled(bool enabled) async {}
+  @override
+  bool getCrashReportingEnabled() => true;
+  @override
+  Future<void> setCrashReportingEnabled(bool enabled) async {}
+  @override
+  ThemeMode getThemeMode() => ThemeMode.system;
+  @override
+  Future<void> setThemeMode(ThemeMode mode) async {}
+}
+
 void main() {
   late DailyStackViewModel viewModel;
   late FakeStackRepository fakeStackRepo;
@@ -203,6 +247,7 @@ void main() {
       stackRepository: fakeStackRepo,
       logRepository: fakeLogRepo,
       supplementRepository: fakeSupplementRepo,
+      settingsRepository: FakeSettingsRepository(),
       notificationService: FakeNotificationService(),
       authRepository: fakeAuthRepo,
       userId: userId,

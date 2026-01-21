@@ -210,6 +210,9 @@ class FirebaseAuthRepository implements AuthRepository {
         return 'Password is too weak.';
       case 'invalid-email':
         return 'Invalid email address.';
+      case 'admin-restricted-operation':
+      case 'operation-not-allowed':
+        return 'Anonymous login is disabled. Please enable it in Firebase Console -> Authentication -> Sign-in method.';
       default:
         return e.message ?? 'Authentication failed.';
     }

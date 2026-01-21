@@ -65,6 +65,7 @@ import '../application/view_models/nightly_reflection_view_model.dart';
 import '../application/view_models/doctor_export_view_model.dart';
 import '../application/view_models/chemist_view_model.dart';
 import '../application/view_models/theme_view_model.dart';
+import '../application/view_models/insights_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -131,6 +132,7 @@ void setupLocator() {
       stackRepository: locator<StackRepository>(),
       logRepository: locator<LogRepository>(),
       supplementRepository: locator<SupplementRepository>(),
+      settingsRepository: locator<SettingsRepository>(),
       notificationService: locator<NotificationService>(),
       authRepository: locator<AuthRepository>(),
       userId: userId,
@@ -208,4 +210,11 @@ void setupLocator() {
 
   locator
       .registerFactory(() => ChemistViewModel(locator<PerplexityRepository>()));
+
+  locator.registerFactoryParam<InsightsViewModel, String, void>(
+    (userId, _) => InsightsViewModel(
+      logRepository: locator<LogRepository>(),
+      userId: userId,
+    ),
+  );
 }

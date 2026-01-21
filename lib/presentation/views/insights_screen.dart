@@ -1,31 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'dart:math' as math;
+import '../../config/locator.dart';
+import '../../application/view_models/insights_view_model.dart';
+import '../../application/providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 import '../widgets/unified_bottom_nav.dart';
 
-class InsightsScreen extends StatefulWidget {
+/// The main Insights screen.
+///
+/// Displays the user's current streak and consistency in a gamified, LOW-DOSE information layout.
+///
+/// Key Features:
+/// - **Hero Streak Card**: Prominent display of current streak with ember animation.
+/// - **Consistency Bar**: Visual progress towards the 80% consistency goal.
+/// - **Encouragement**: Dynamic text to boost motivation.
+class InsightsScreen extends StatelessWidget {
   const InsightsScreen({super.key});
 
   @override
-  State<InsightsScreen> createState() => _InsightsScreenState();
+  Widget build(BuildContext context) {
+    // Get UserId from AuthProvider to inject into ViewModel
+    final userId = context.read<AuthProvider>().user?.id ?? '';
+
+    return ChangeNotifierProvider<InsightsViewModel>(
+      create: (_) => locator<InsightsViewModel>(param1: userId),
+      child: const _InsightsContent(),
+    );
+  }
 }
 
-class _InsightsScreenState extends State<InsightsScreen> {
-  String _selectedTimeframe = 'Monthly';
+class _InsightsContent extends StatelessWidget {
+  const _InsightsContent();
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<InsightsViewModel>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     const primaryGold = AppColors.primaryGold;
     const bgLight = AppColors.backgroundPremiumLight;
     const bgDark = AppColors.backgroundPremiumDark;
-    const successGreen = AppColors.accentGreen;
 
     return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
       appBar: AppBar(
-        backgroundColor: (isDark ? bgDark : bgLight).withValues(alpha: 0.8),
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
@@ -37,254 +58,55 @@ class _InsightsScreenState extends State<InsightsScreen> {
           style: GoogleFonts.lexend(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.ios_share),
-            onPressed: () {},
-          ),
-        ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 100),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Segmented Control
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Container(
-                  height: 44,
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.05)
-                        : Colors.black.withValues(alpha: 0.05),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    children: [
-                      _buildSegmentButton('Weekly', isDark, primaryGold),
-                      _buildSegmentButton('Monthly', isDark, primaryGold),
-                      _buildSegmentButton('Yearly', isDark, primaryGold),
-                    ],
-                  ),
-                ),
-              ),
-
-              // Main Chart Card
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.05)
-                        : Colors.white.withValues(alpha: 0.4),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.1)
-                          : Colors.black.withValues(alpha: 0.05),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Header
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'CONSISTENCY VS. FOCUS',
-                                style: GoogleFonts.lexend(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: isDark
-                                      ? Colors.grey[500]
-                                      : Colors.grey[600],
-                                  letterSpacing: 1.2,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Row(
-                                children: [
-                                  Text(
-                                    '85% Avg',
-                                    style: GoogleFonts.lexend(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 6, vertical: 2),
-                                    child: const Row(
-                                      children: [
-                                        Icon(Icons.trending_up,
-                                            color: successGreen, size: 14),
-                                        SizedBox(width: 2),
-                                        Text(
-                                          '+25%',
-                                          style: TextStyle(
-                                            color: successGreen,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              _buildLegendItem('FOCUS SCORE', primaryGold),
-                              const SizedBox(height: 4),
-                              _buildLegendItem(
-                                  'CONSISTENCY', Colors.grey[600]!),
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      // Chart Placeholder
-                      const SizedBox(height: 24),
-                      Container(
-                        height: 180,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: CustomPaint(
-                          painter: ChartPainter(
-                              primaryGold: primaryGold, isDark: isDark),
-                          size: const Size(double.infinity, 180),
-                        ),
-                      ),
-
-                      // Month Labels
-                      const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildMonthLabel('JAN', false),
-                          _buildMonthLabel('FEB', false),
-                          _buildMonthLabel('MAR', false),
-                          _buildMonthLabel('APR', false),
-                          _buildMonthLabel('MAY', false),
-                          _buildMonthLabel('JUN', true, primaryGold),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              // Key Insights Section
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
-                child: Text(
-                  'Key Insights',
-                  style: GoogleFonts.lexend(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white : Colors.black,
-                  ),
-                ),
-              ),
-
-              // Insight Cards
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: viewModel.isLoading
+          ? const Center(child: CircularProgressIndicator(color: primaryGold))
+          : SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildInsightCard(
-                      context,
-                      icon: Icons.bolt,
-                      title: 'Focus Increase',
-                      value: '+25% since starting',
-                      metric: '+5%',
-                      metricLabel: 'vs. last month',
-                      primaryGold: primaryGold,
-                      successGreen: successGreen,
-                      isDark: isDark,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildBestMatchCard(context, primaryGold, isDark),
-                    const SizedBox(height: 16),
-                    _buildStreakCard(
-                        context, primaryGold, successGreen, isDark),
-                  ],
-                ),
-              ),
-
-              // Micro-Trends Section
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 32, 16, 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                    // Encourage Text / Header
                     Text(
-                      'Micro-Trends',
+                      viewModel.encouragementText,
                       style: GoogleFonts.lexend(
-                        fontSize: 18,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: isDark ? Colors.white : Colors.black,
+                        height: 1.2,
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'View All',
-                        style: GoogleFonts.lexend(
-                          color: primaryGold,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Here is your progress so far.',
+                      style: GoogleFonts.lexend(
+                        fontSize: 14,
+                        color: Colors.grey[600],
                       ),
                     ),
-                  ],
-                ),
-              ),
+                    const SizedBox(height: 32),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    _buildMicroTrendItem('Evening Calmness', '+12%',
-                        Colors.blue[400]!, successGreen, isDark),
-                    const SizedBox(height: 12),
-                    _buildMicroTrendItem('Morning Alertness', '+8%',
-                        Colors.purple[400]!, successGreen, isDark),
-                    const SizedBox(height: 12),
-                    _buildMicroTrendItem('Mood Stability', '+15%',
-                        Colors.orange[400]!, successGreen, isDark),
-                    const SizedBox(height: 12),
-                    _buildMicroTrendItem('Sleep Quality', '+22%',
-                        Colors.indigo[400]!, successGreen, isDark),
-                  ],
-                ),
-              ),
+                    // Streak Card (Hero)
+                    _buildStreakHero(
+                        context, viewModel.streakCount, isDark, primaryGold),
+                    const SizedBox(height: 16),
 
-              // Export Button
-              Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
+                    // Consistency Card
+                    _buildConsistencyCard(context, viewModel.consistencyScore,
+                        isDark, primaryGold),
+                    const SizedBox(height: 16),
+
+                    // Export Button
                     SizedBox(
                       width: double.infinity,
                       height: 56,
                       child: ElevatedButton.icon(
                         onPressed: () => Navigator.pushNamed(
                             context, AppRouter.doctorExport),
-                        icon: const Icon(Icons.description),
+                        icon: const Icon(Icons.description_outlined),
                         label: Text('Export Report for Doctor',
                             style: GoogleFonts.lexend(
                               fontSize: 16,
@@ -296,260 +118,84 @@ class _InsightsScreenState extends State<InsightsScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          elevation: 8,
-                          shadowColor: primaryGold.withValues(alpha: 0.3),
+                          elevation: 0,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Includes all correlation data from the last 6 months in PDF format.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: isDark ? Colors.grey[600] : Colors.grey[500],
-                        height: 1.5,
-                      ),
-                    ),
+                    const SizedBox(height: 100), // Bottom padding
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
       bottomNavigationBar: const UnifiedBottomNav(currentIndex: 2),
     );
   }
 
-  Widget _buildSegmentButton(String label, bool isDark, Color primaryGold) {
-    final isSelected = _selectedTimeframe == label;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => setState(() => _selectedTimeframe = label),
-        child: Container(
-          height: 36,
-          decoration: BoxDecoration(
-            color: isSelected
-                ? (isDark ? primaryGold : Colors.white)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: isSelected
-                ? [
-                    BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2))
-                  ]
-                : null,
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: GoogleFonts.lexend(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: isSelected
-                    ? Colors.black
-                    : (isDark ? Colors.grey[500] : Colors.grey[600]),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLegendItem(String label, Color color) {
-    return Row(
-      children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: GoogleFonts.lexend(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey[500],
-            letterSpacing: 0.5,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMonthLabel(String month, bool isActive, [Color? activeColor]) {
-    return Text(
-      month,
-      style: GoogleFonts.lexend(
-        fontSize: 10,
-        fontWeight: FontWeight.bold,
-        color: isActive ? (activeColor ?? Colors.grey) : Colors.grey[600],
-        letterSpacing: 0.5,
-      ),
-    );
-  }
-
-  Widget _buildInsightCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String value,
-    required String metric,
-    required String metricLabel,
-    required Color primaryGold,
-    required Color successGreen,
-    required bool isDark,
-  }) {
+  Widget _buildStreakHero(
+      BuildContext context, int streak, bool isDark, Color primaryGold) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      height: 280, // Fixed height for animation containment
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.05)
-            : Colors.white.withValues(alpha: 0.4),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.black.withValues(alpha: 0.05),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: primaryGold.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: primaryGold, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.lexend(
-                    fontSize: 14,
-                    color: isDark ? Colors.grey[500] : Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  value,
-                  style: GoogleFonts.lexend(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.arrow_upward, color: successGreen, size: 14),
-                  Text(
-                    metric,
-                    style: GoogleFonts.lexend(
-                      color: successGreen,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              Text(
-                metricLabel,
-                style: GoogleFonts.lexend(
-                  fontSize: 10,
-                  color: Colors.grey[500],
-                ),
-              ),
-            ],
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildBestMatchCard(
-      BuildContext context, Color primaryGold, bool isDark) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.05)
-            : Colors.white.withValues(alpha: 0.4),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.black.withValues(alpha: 0.05),
-        ),
-      ),
-      child: Row(
+      child: Stack(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: primaryGold.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
+          // Background Embers
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: const _StreakEmberAnimation(),
             ),
-            child: Icon(Icons.handshake, color: primaryGold, size: 24),
           ),
-          const SizedBox(width: 16),
-          Expanded(
+
+          // Content
+          Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: primaryGold.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: primaryGold.withValues(alpha: 0.2),
+                        blurRadius: 20,
+                        spreadRadius: 5,
+                      )
+                    ],
+                  ),
+                  child: const Text('🔥', style: TextStyle(fontSize: 48)),
+                ),
+                const SizedBox(height: 24),
                 Text(
-                  'Best Supplement Match',
+                  '$streak Day Streak',
                   style: GoogleFonts.lexend(
-                    fontSize: 14,
-                    color: isDark ? Colors.grey[500] : Colors.grey[600],
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : Colors.black,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 8),
                 Text(
-                  'Mg & Omega-3',
+                  'You are building a powerful habit!',
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.lexend(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.grey[600],
                   ),
                 ),
               ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: primaryGold.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: primaryGold.withValues(alpha: 0.2)),
-            ),
-            child: Text(
-              'OPTIMAL',
-              style: GoogleFonts.lexend(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: primaryGold,
-                letterSpacing: 0.5,
-              ),
             ),
           ),
         ],
@@ -557,137 +203,75 @@ class _InsightsScreenState extends State<InsightsScreen> {
     );
   }
 
-  Widget _buildStreakCard(BuildContext context, Color primaryGold,
-      Color successGreen, bool isDark) {
+  Widget _buildConsistencyCard(BuildContext context, double consistency,
+      bool isDark, Color primaryGold) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.05)
-            : Colors.white.withValues(alpha: 0.4),
-        borderRadius: BorderRadius.circular(16),
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.black.withValues(alpha: 0.05),
+              ? Colors.white.withValues(alpha: 0.05)
+              : Colors.transparent,
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: primaryGold.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child:
-                Icon(Icons.local_fire_department, color: primaryGold, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Current Streak',
-                  style: GoogleFonts.lexend(
-                    fontSize: 14,
-                    color: isDark ? Colors.grey[500] : Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  '14 Days',
-                  style: GoogleFonts.lexend(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+          Text(
+            '30-Day Consistency',
+            style: GoogleFonts.lexend(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: isDark ? Colors.white : Colors.black,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.check_circle, color: successGreen, size: 14),
-                  const SizedBox(width: 2),
-                  Text(
-                    '98%',
-                    style: GoogleFonts.lexend(
-                      color: successGreen,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              Text(
-                'Adherence',
-                style: GoogleFonts.lexend(
-                  fontSize: 10,
-                  color: Colors.grey[500],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMicroTrendItem(String label, String value, Color dotColor,
-      Color successGreen, bool isDark) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.05)
-            : Colors.white.withValues(alpha: 0.4),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.black.withValues(alpha: 0.05),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+          const SizedBox(height: 20),
+          Stack(
             children: [
               Container(
-                width: 8,
-                height: 8,
+                height: 24,
+                width: double.infinity,
                 decoration: BoxDecoration(
-                  color: dotColor,
-                  shape: BoxShape.circle,
+                  color: isDark ? Colors.grey[800] : Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              const SizedBox(width: 12),
-              Text(
-                label,
-                style: GoogleFonts.lexend(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return Container(
+                    height: 24,
+                    width: constraints.maxWidth * (consistency / 100),
+                    decoration: BoxDecoration(
+                      color: primaryGold,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  );
+                },
               ),
             ],
           ),
+          const SizedBox(height: 12),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                value,
+                '${consistency.toStringAsFixed(0)}%',
                 style: GoogleFonts.lexend(
-                  fontSize: 14,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
+                  color: primaryGold,
                 ),
               ),
-              const SizedBox(width: 4),
-              Icon(Icons.trending_up, color: successGreen, size: 14),
+              Text(
+                'Target: 80%+',
+                style: GoogleFonts.lexend(
+                  fontSize: 12,
+                  color: Colors.grey[500],
+                ),
+              ),
             ],
           ),
         ],
@@ -696,110 +280,119 @@ class _InsightsScreenState extends State<InsightsScreen> {
   }
 }
 
-// Custom Chart Painter
-class ChartPainter extends CustomPainter {
-  final Color primaryGold;
-  final bool isDark;
+// Local Widget for Ember Animation
+class _StreakEmberAnimation extends StatefulWidget {
+  const _StreakEmberAnimation();
 
-  ChartPainter({required this.primaryGold, required this.isDark});
+  @override
+  State<_StreakEmberAnimation> createState() => _StreakEmberAnimationState();
+}
+
+class _StreakEmberAnimationState extends State<_StreakEmberAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  final List<_Ember> _embers = [];
+  final math.Random _random = math.Random();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10), // Long loop
+    )..repeat();
+
+    // Generate initial embers
+    for (int i = 0; i < 20; i++) {
+      _embers.add(_generateEmber());
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  _Ember _generateEmber() {
+    return _Ember(
+      x: _random.nextDouble(), // 0.0 to 1.0
+      y: _random.nextDouble(), // 0.0 to 1.0 (starts anywhere)
+      speed: 0.05 + _random.nextDouble() * 0.1, // Random speed
+      size: 2.0 + _random.nextDouble() * 4.0, // Random size
+      opacity: 0.1 + _random.nextDouble() * 0.4, // Random opacity
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: _EmberPainter(_embers, _controller.value),
+          size: Size.infinite,
+        );
+      },
+    );
+  }
+}
+
+class _Ember {
+  double x;
+  double y;
+  final double speed;
+  final double size;
+  final double opacity;
+
+  _Ember({
+    required this.x,
+    required this.y,
+    required this.speed,
+    required this.size,
+    required this.opacity,
+  });
+}
+
+class _EmberPainter extends CustomPainter {
+  final List<_Ember> embers;
+  final double animationValue;
+
+  _EmberPainter(this.embers, this.animationValue);
 
   @override
   void paint(Canvas canvas, Size size) {
-    final focusPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 4
-      ..strokeCap = StrokeCap.round
-      ..color = primaryGold;
+    final paint = Paint()..color = AppColors.primaryGold;
 
-    final consistencyPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
-      ..strokeCap = StrokeCap.round
-      ..color = Colors.grey.withValues(alpha: 0.3);
+    for (var ember in embers) {
+      // Simulate movement: Move UP (decrease Y)
+      // We use animationValue to tick, but simple "looping" is better manually or via controller time
+      // Here we just use the controller as a "tick" driver, but update positions logic relative to frame?
+      // Actually, standard CustomPainter animation usually interpolates.
+      // Let's rely on simple interpolation loops:
 
-    // Focus Path (Cubic for smoother feel)
-    final focusPath = Path();
-    focusPath.moveTo(0, size.height * 0.7);
-    focusPath.cubicTo(
-      size.width * 0.2,
-      size.height * 0.4,
-      size.width * 0.4,
-      size.height * 0.9,
-      size.width * 0.6,
-      size.height * 0.2,
-    );
-    focusPath.cubicTo(
-      size.width * 0.8,
-      size.height * 0.1,
-      size.width * 0.9,
-      size.height * 0.4,
-      size.width,
-      size.height * 0.3,
-    );
+      // Calculate y position based on time
+      // Since controller repeats 0->1, we can create a continuous flow
+      // effectiveY = (initialY - (speed * time)) % 1.0
+      // To make them independent, we can't easily use single global time.
+      // So we just "jitter" them based on global time for a simple effect.
 
-    // Consistency Path
-    final consistencyPath = Path();
-    consistencyPath.moveTo(0, size.height * 0.85);
-    consistencyPath.quadraticBezierTo(
-      size.width * 0.3,
-      size.height * 0.7,
-      size.width * 0.6,
-      size.height * 0.8,
-    );
-    consistencyPath.quadraticBezierTo(
-      size.width * 0.9,
-      size.height * 0.75,
-      size.width,
-      size.height * 0.82,
-    );
+      // Better check: Let's assume (y - speed) wraps around 1.0
+      // We animate ember.y in real-time? No, paint shouldn't modify state.
+      // Let's use a deterministic approach based on `animationValue`?
+      // No, that makes them all sync.
 
-    // Draw Gradients under paths
-    final gradientFocus = Path.from(focusPath);
-    gradientFocus.lineTo(size.width, size.height);
-    gradientFocus.lineTo(0, size.height);
-    gradientFocus.close();
+      // Simplified approach: Render based on (ember.y - animationValue * ember.speed * 20) % 1.0
+      double dy = (ember.y - (animationValue * 5 * ember.speed)) % 1.2;
+      // Allow it to go slightly below 0 (upto -0.2) then wrap to 1.0
+      if (dy < -0.1) dy += 1.1; // wrap logic roughly
 
-    final focusGradient = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        primaryGold.withValues(alpha: 0.3),
-        primaryGold.withValues(alpha: 0.0),
-      ],
-    ).createShader(Rect.fromLTRB(0, 0, size.width, size.height));
+      final yPos = size.height * dy;
+      final xPos = size.width * ember.x;
 
-    canvas.drawPath(gradientFocus, Paint()..shader = focusGradient);
-
-    // Draw Lines
-    canvas.drawPath(consistencyPath, consistencyPaint);
-    canvas.drawPath(focusPath, focusPaint);
-
-    // Markers
-    final markerPaint = Paint()
-      ..color = primaryGold
-      ..style = PaintingStyle.fill;
-
-    // Peak marker
-    canvas.drawCircle(
-        Offset(size.width * 0.6, size.height * 0.2), 6, markerPaint);
-
-    // Pulse effect behind peak (static for now, logic matches wireframe animation feel)
-    canvas.drawCircle(
-        Offset(size.width * 0.6, size.height * 0.2),
-        12,
-        Paint()
-          ..color = primaryGold.withValues(alpha: 0.2)
-          ..style = PaintingStyle.fill);
-
-    // Interaction point marker
-    canvas.drawCircle(
-        Offset(size.width * 0.3, size.height * 0.6),
-        4,
-        Paint()
-          ..color = Colors.white
-          ..style = PaintingStyle.fill);
-    canvas.drawCircle(
-        Offset(size.width * 0.3, size.height * 0.6), 4, focusPaint);
+      paint.color = AppColors.primaryGold.withValues(alpha: ember.opacity);
+      canvas.drawCircle(Offset(xPos, yPos), ember.size, paint);
+    }
   }
 
   @override

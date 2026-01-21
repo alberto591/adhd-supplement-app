@@ -106,6 +106,7 @@ class _FakeNotificationService extends NotificationService {
     required int hour,
     required int minute,
     int second = 0,
+    bool startFromTomorrow = false,
   }) async {
     scheduledIds.add(id);
     scheduledTimes[id] = (hour, minute);

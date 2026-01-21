@@ -96,6 +96,7 @@ class NotificationService {
     required int hour,
     required int minute,
     int second = 0,
+    bool startFromTomorrow = false,
   }) async {
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
@@ -123,8 +124,8 @@ class NotificationService {
       second,
     );
 
-    // If the scheduled time is in the past, schedule for tomorrow
-    if (scheduledDate.isBefore(now)) {
+    // If startFromTomorrow is true OR the scheduled time is in the past, schedule for tomorrow
+    if (startFromTomorrow || scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
 
