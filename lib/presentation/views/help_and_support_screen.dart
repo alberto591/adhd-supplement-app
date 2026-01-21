@@ -34,13 +34,6 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     }
   }
 
-  Future<void> _launchResource(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
-      // Fail silently or show error
-    }
-  }
-
   // Dummy FAQ Data
   final List<Map<String, String>> _faqs = [
     {

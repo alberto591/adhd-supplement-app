@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
 import '../../config/locator.dart';
 import '../theme/app_theme.dart';
-import 'package:app_settings/app_settings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SystemHealthScreen extends StatelessWidget {
   const SystemHealthScreen({super.key});
@@ -92,9 +92,12 @@ class SystemHealthScreen extends StatelessWidget {
                           'Restricted. This may prevent reminders from appearing when your phone is locked.',
                       actionLabel: 'Fix Now',
                       iconData: Icons.battery_alert_rounded,
-                      onTap: () {
+                      onTap: () async {
                         // Opens general app settings where users can manage battery optimization
-                        AppSettings.openAppSettings();
+                        final uri = Uri.parse('app-settings:');
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri);
+                        }
                       },
                     ),
 

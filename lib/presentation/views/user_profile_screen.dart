@@ -832,14 +832,19 @@ class _AchievementsCarousel extends StatelessWidget {
 
               // Fallback: Check Stats (Retroactive Unlock)
               if (!isUnlocked) {
-                if (achievement.id == '7_day_warrior' && streakCount >= 7)
+                if (achievement.id == '7_day_warrior' && streakCount >= 7) {
                   isUnlocked = true;
-                if (achievement.id == 'focus_master' && (user?.level ?? 1) >= 5)
+                }
+                if (achievement.id == 'focus_master' &&
+                    (user?.level ?? 1) >= 5) {
                   isUnlocked = true;
-                if (achievement.id == 'alpha_hero')
+                }
+                if (achievement.id == 'alpha_hero') {
                   isUnlocked = true; // Still free
-                if (achievement.id == 'early_bird')
+                }
+                if (achievement.id == 'early_bird') {
                   isUnlocked = true; // Still free
+                }
               }
 
               return Container(

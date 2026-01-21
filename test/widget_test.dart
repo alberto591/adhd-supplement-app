@@ -236,8 +236,6 @@ class _FakeNotificationService implements NotificationService {
   @override
   Future<void> cancelNotification(int id) async {}
   @override
-  Future<void> cancelAll() async {}
-  @override
   Future<void> cancelAllNotifications() async {}
   @override
   Future<void> cancelNudgeSequence(int baseId, int count) async {}

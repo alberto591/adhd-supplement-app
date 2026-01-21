@@ -38,6 +38,10 @@ flutter run
 
 ## Troubleshooting
 - **"Module 'firebase_core' not found"**: Run `pod install` in the `ios` directory again. Update your Podfile `platform :ios` version if needed (uncomment line 2 to specific `platform :ios, '13.0'`).
+- **Duplicate Plist Error**: If you see `Multiple commands produce GoogleService-Info.plist`, ensure there is only one reference to this file in the `project.pbxproj`.
+- **Swift Compiler Errors (app_settings)**: The `app_settings` package can cause Swift version errors. We've switched to `url_launcher` for opening settings to avoid this.
+- **Firebase Swift 6 Incompatibility**: If you see errors like `Cannot find type 'sending' in scope` in Firebase pods, it means the Firebase version is too new for your Xcode/Swift version. We've pinned the versions in `pubspec.yaml` to remain compatible with Swift 5.
+- **Simulators Not Detected**: If `flutter run` doesn't see your simulators, run `sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer` and `sudo xcodebuild -runFirstLaunch`.
 - **Signing Issues**: Open `ios/Runner.xcworkspace` in Xcode. Go to **Runner > Signing & Capabilities** and ensure a Team is selected.
 
 ## Testing the New Data Integration

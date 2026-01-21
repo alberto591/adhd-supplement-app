@@ -12,17 +12,17 @@ dependencies:
   fl_chart: ^0.68.0
   cupertino_icons: ^1.0.6
   
-  # Backend
-  firebase_core: ^3.0.0
-  firebase_auth: ^5.0.0
-  cloud_firestore: ^5.0.0
-  firebase_crashlytics: ^4.0.0
-  firebase_messaging: ^15.0.0
+  # Backend - Downgraded for Swift 5 / Xcode 15.4 compatibility
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.16.0
+  cloud_firestore: ^4.14.0
+  firebase_crashlytics: ^3.4.0
+  firebase_messaging: ^14.7.0
   
   # Utilities
   url_launcher: ^6.2.0
   share_plus: ^9.0.0
-  app_settings: ^5.1.1
+  # app_settings: ^7.0.0  # Temporarily removed due to iOS Swift compiler error
   flutter_local_notifications: ^17.0.0
   timezone: ^0.9.0
   provider: ^6.1.1

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:app_settings/app_settings.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 
@@ -244,9 +244,11 @@ class _NotificationReliabilitySetupScreenState
                     width: double.infinity,
                     height: 64,
                     child: ElevatedButton(
-                      onPressed: () {
-                        AppSettings.openAppSettings(
-                            type: AppSettingsType.notification);
+                      onPressed: () async {
+                        final uri = Uri.parse('app-settings:');
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri);
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryGold,
