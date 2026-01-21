@@ -8,6 +8,7 @@ import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
+import '../../utils/date_utils.dart';
 
 /// View model for the Daily Stack screen
 /// Manages today's stacks, intake status, and progress tracking
@@ -528,12 +529,8 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   DateTime _getLogicalToday() {
-    final now = DateTime.now();
-    if (now.hour < 4) {
-      return DateTime(now.year, now.month, now.day)
-          .subtract(const Duration(days: 1));
-    }
-    return DateTime(now.year, now.month, now.day);
+    // Centralized 4 AM rollover logic
+    return getLogicalDate();
   }
 
   Future<void> _cacheSupplements() async {

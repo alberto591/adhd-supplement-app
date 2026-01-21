@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/repositories/log_repository.dart';
+import '../../utils/date_utils.dart';
 
 class FirebaseLogRepository implements LogRepository {
   final FirebaseFirestore _firestore;
@@ -143,7 +144,8 @@ class FirebaseLogRepository implements LogRepository {
 
   @override
   Stream<DailyLog?> watchTodayLog(String userId) {
-    final today = _dateOnlyString(DateTime.now());
+    // Use logical date (4 AM rollover) instead of raw DateTime.now()
+    final today = getLogicalDateString();
 
     return _firestore
         .collection('logs')
