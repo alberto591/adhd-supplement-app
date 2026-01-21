@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import '../theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../navigation/app_router.dart';
@@ -14,7 +12,6 @@ import '../../domain/entities/user.dart';
 import '../../application/view_models/theme_view_model.dart';
 import '../view_models/daily_stack_view_model.dart';
 import '../../config/locator.dart';
-import '../../infrastructure/services/storage_service.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -75,47 +72,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ],
       ),
     );
-  }
-
-  Future<void> _pickAndUploadPhoto(User user) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 512,
-      maxHeight: 512,
-      imageQuality: 80,
-    );
-
-    if (pickedFile == null) return;
-
-    try {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Uploading photo...')),
-      );
-
-      final storageService = locator<StorageService>();
-      final downloadUrl = await storageService.uploadProfilePhoto(
-        user.id,
-        File(pickedFile.path),
-      );
-
-      final updatedUser = user.copyWith(photoUrl: downloadUrl);
-      if (!mounted) return;
-      await context.read<AuthProvider>().updateProfile(updatedUser);
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profile photo updated!')),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update photo: $e')),
-        );
-      }
-    }
   }
 
   void _showAdhdTypeDialog(BuildContext context, User? user) {
@@ -237,11 +193,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     onThemeToggle: () => themeVM.toggleTheme(),
                     onEditProfile: () =>
                         _showEditProfileDialog(context, auth.user),
-                    onAvatarTap: () {
-                      if (auth.user != null) {
-                        _pickAndUploadPhoto(auth.user!);
-                      }
-                    },
                   ),
                 ),
 
@@ -488,7 +439,6 @@ class _ProfileHeader extends StatelessWidget {
   final bool isDarkMode;
   final VoidCallback onThemeToggle;
   final VoidCallback onEditProfile;
-  final VoidCallback? onAvatarTap;
 
   const _ProfileHeader({
     this.user,
@@ -497,7 +447,6 @@ class _ProfileHeader extends StatelessWidget {
     required this.isDarkMode,
     required this.onThemeToggle,
     required this.onEditProfile,
-    this.onAvatarTap,
   });
 
   @override
@@ -557,58 +506,28 @@ class _ProfileHeader extends StatelessWidget {
                   ),
                 ),
               ),
-              // Inner Avatar - Tappable to change photo
-              GestureDetector(
-                onTap: onAvatarTap,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      width: 115,
-                      height: 115,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: isDark ? Colors.grey[900]! : Colors.white,
-                          width: 4,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.2),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                        image: user?.photoUrl != null
-                            ? DecorationImage(
-                                image: NetworkImage(user!.photoUrl!),
-                                fit: BoxFit.cover,
-                              )
-                            : const DecorationImage(
-                                image: NetworkImage(
-                                    'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw'),
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                    ),
-                    // Camera icon overlay
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: isDark ? Colors.black : Colors.white,
-                              width: 2),
-                        ),
-                        child: const Icon(Icons.camera_alt,
-                            size: 14, color: Colors.white),
-                      ),
+              // Inner Avatar
+              Container(
+                width: 115,
+                height: 115,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isDark ? Colors.grey[900]! : Colors.white,
+                    width: 4,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.2),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
                     ),
                   ],
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               // Level Badge

@@ -20,7 +20,6 @@ import 'package:adhd_supplement_app/infrastructure/services/revenue_cat_billing_
 import 'package:adhd_supplement_app/domain/services/interaction_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/fda_interaction_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/report_pdf_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/storage_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
 import 'package:adhd_supplement_app/application/view_models/history_log_view_model.dart';
@@ -82,7 +81,6 @@ void setupLocator() {
   locator
       .registerLazySingleton<InteractionService>(() => FDAInteractionService());
   locator.registerLazySingleton<ReportPdfService>(() => ReportPdfService());
-  locator.registerLazySingleton<StorageService>(() => StorageService());
 
   // Repositories
   locator.registerLazySingleton<SupplementRepository>(
