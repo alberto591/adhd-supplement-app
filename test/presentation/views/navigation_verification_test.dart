@@ -109,9 +109,6 @@ class MockInsightsViewModel extends ChangeNotifier
   String get encouragementText => "You're doing great!";
 
   @override
-  List<double> get weeklyFocusScores => [];
-
-  @override
   Future<void> loadData() async {}
 }
 
