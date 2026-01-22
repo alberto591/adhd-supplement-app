@@ -9,6 +9,7 @@ import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 import '../widgets/unified_bottom_nav.dart';
 import '../widgets/skeleton_loader.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 /// The main Insights screen.
 ///
@@ -135,6 +136,15 @@ class _InsightsContent extends StatelessWidget {
                     // Consistency Card
                     _buildConsistencyCard(context, viewModel.consistencyScore,
                         isDark, primaryGold),
+                    const SizedBox(height: 16),
+
+                    // Weekly Focus Trends
+                    _buildFocusTrendsCard(context, viewModel.weeklyFocusScores,
+                        isDark, primaryGold),
+                    const SizedBox(height: 16),
+
+                    // Science Hub Nudge
+                    _buildScienceNudge(context, isDark),
                     const SizedBox(height: 16),
 
                     // Export Button
@@ -311,6 +321,179 @@ class _InsightsContent extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFocusTrendsCard(BuildContext context, List<double> focusScores,
+      bool isDark, Color primaryGold) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Weekly Focus Trend',
+                style: GoogleFonts.lexend(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? Colors.white : Colors.black,
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.accentGreen.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  '7-Day View',
+                  style: GoogleFonts.lexend(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.accentGreen,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 32),
+          SizedBox(
+            height: 180,
+            child: LineChart(
+              LineChartData(
+                gridData: const FlGridData(show: false),
+                titlesData: const FlTitlesData(show: false),
+                borderData: FlBorderData(show: false),
+                minX: 0,
+                maxX: 6,
+                minY: 0,
+                maxY: 5,
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: focusScores.asMap().entries.map((e) {
+                      return FlSpot(
+                          e.key.toDouble(), e.value == 0 ? 0.2 : e.value);
+                    }).toList(),
+                    isCurved: true,
+                    gradient: LinearGradient(
+                      colors: [primaryGold, primaryGold.withValues(alpha: 0.5)],
+                    ),
+                    barWidth: 4,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      gradient: LinearGradient(
+                        colors: [
+                          primaryGold.withValues(alpha: 0.2),
+                          primaryGold.withValues(alpha: 0.0),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+                .map((day) => Text(
+                      day,
+                      style: GoogleFonts.lexend(
+                        fontSize: 12,
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ))
+                .toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScienceNudge(BuildContext context, bool isDark) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF2C3E50), const Color(0xFF000000)]
+              : [const Color(0xFFE0EAFC), const Color(0xFFCFDEF3)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.science_outlined, color: AppColors.primaryBlue),
+              const SizedBox(width: 8),
+              Text(
+                'Scientific Insight',
+                style: GoogleFonts.lexend(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryBlue,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Did you know? Magnesium supports over 300 enzymatic reactions in your body, many of which are responsible for neurotransmitter production.',
+            style: GoogleFonts.lexend(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color:
+                  isDark ? Colors.white.withValues(alpha: 0.9) : Colors.black87,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16),
+          TextButton(
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, AppRouter.scienceHub),
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Explore Science Hub',
+                  style: GoogleFonts.lexend(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryBlue,
+                  ),
+                ),
+                const Icon(Icons.arrow_forward,
+                    size: 14, color: AppColors.primaryBlue),
+              ],
+            ),
           ),
         ],
       ),

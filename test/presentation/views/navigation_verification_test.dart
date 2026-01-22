@@ -11,6 +11,10 @@ import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
 import 'package:adhd_supplement_app/domain/entities/user.dart';
 import 'package:adhd_supplement_app/application/view_models/insights_view_model.dart';
 
+import 'package:adhd_supplement_app/domain/entities/faq_item.dart';
+import 'package:adhd_supplement_app/domain/entities/study.dart';
+import 'package:adhd_supplement_app/domain/entities/educational_article.dart';
+
 class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   bool get isLoading => false;
   @override
@@ -48,6 +52,41 @@ class MockScienceHubViewModel extends ChangeNotifier
   Article? get articleOfTheDay => null;
   @override
   List<Article> get articles => [];
+
+  @override
+  String get searchQuery => '';
+  @override
+  bool get isSearching => false;
+  @override
+  void setSearchQuery(String query) {}
+
+  @override
+  List<FaqItem> get faqs => [];
+  @override
+  String get selectedFaqCategory => 'All';
+  @override
+  List<FaqItem> get filteredFaqs => [];
+  @override
+  void setFaqCategory(String category) {}
+
+  @override
+  List<Study> get studies => [];
+  @override
+  String get selectedResearchCategory => 'All';
+  @override
+  List<Study> get filteredStudies => [];
+  @override
+  void setResearchCategory(String category) {}
+
+  @override
+  List<EducationalArticle> get educationalArticles => [];
+  @override
+  String get selectedEduCategory => 'All';
+  @override
+  List<EducationalArticle> get filteredEduArticles => [];
+  @override
+  void setEduCategory(String category) {}
+
   @override
   Future<void> loadData() async {}
 }
@@ -62,6 +101,9 @@ class MockInsightsViewModel extends ChangeNotifier
 
   @override
   double get consistencyScore => 0.85;
+
+  @override
+  List<double> get weeklyFocusScores => [4.0, 5.0, 3.0, 4.0, 5.0, 4.0, 5.0];
 
   @override
   String get encouragementText => "You're doing great!";

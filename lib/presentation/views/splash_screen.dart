@@ -48,22 +48,23 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _initializeApp() async {
     try {
-      // 1. Locator (already setup in main, but good to ensure)
-      // setupLocator(); // main.dart does this now before runApp to ensure providers work.
+      // 0. Seeding (Background - start as soon as Firebase is ready)
+      _runBackgroundSeeding(); // Fire and forget
 
-      // 2. Settings
+      // 1. Settings
       setState(() => _loadingStatus = 'Loading preferences...');
       await locator<SettingsRepository>()
           .init()
           .timeout(const Duration(seconds: 3));
 
-      // 3. Notifications
+      // 2. Notifications
       setState(() => _loadingStatus = 'Setting up reminders...');
-      await locator<NotificationService>().init();
-
-      // 4. Seeding (Background - don't block too long)
-      setState(() => _loadingStatus = 'Checking supplements...');
-      _runBackgroundSeeding(); // Fire and forget (or await briefly)
+      await locator<NotificationService>()
+          .init()
+          .timeout(const Duration(seconds: 5))
+          .catchError((Object e) {
+        AppLogger.w('Notification initialization timed out or failed', e);
+      });
 
       // Minimum splash time for branding impact (optional)
       await Future<void>.delayed(const Duration(milliseconds: 1500));
@@ -86,10 +87,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _runBackgroundSeeding() {
     // This runs in parallel
-    locator<SeedingService>()
-        .seedSupplements()
-        .timeout(const Duration(seconds: 5))
-        .then((_) {
+    final seeding = locator<SeedingService>();
+    seeding.createTestUser('test@daily-stack.com', 'password123');
+
+    seeding.seedSupplements().timeout(const Duration(seconds: 5)).then((_) {
       // Pre-fetch supplements into cache
       locator<SupplementRepository>().getAllSupplements();
     }).catchError((Object e) {

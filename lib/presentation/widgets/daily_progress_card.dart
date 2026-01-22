@@ -51,23 +51,29 @@ class DailyProgressCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Streak
-              Row(
-                children: [
-                  const Text(
-                    "You're on a ",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    "$streakCount-day streak!",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                child: Row(
+                  children: [
+                    const Text(
+                      "You're on a ",
+                      style: TextStyle(fontSize: 16),
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text("🔥", style: TextStyle(fontSize: 16)),
-                ],
+                    Flexible(
+                      child: Text(
+                        "$streakCount-day streak!",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Text("🔥", style: TextStyle(fontSize: 16)),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
 
               // Percentage
               Text(

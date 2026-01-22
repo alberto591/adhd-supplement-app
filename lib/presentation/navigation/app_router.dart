@@ -55,11 +55,13 @@ import '../views/milestone_success_screen.dart';
 import '../views/notification_history_screen.dart';
 import '../views/emergency_contact_screen.dart';
 import '../views/first_stack_success_screen.dart';
+import '../views/educational_article_detail_screen.dart';
 import '../views/supplement_detail.dart';
 import '../views/global_search_screen.dart';
 import '../views/paywall_screen.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_interaction.dart';
+import '../../domain/entities/educational_article.dart';
 
 class AppRouter {
   // Route names
@@ -119,6 +121,7 @@ class AppRouter {
   static const String firstStackSuccess = '/first-stack-success';
   static const String supplementDetail = '/supplement-detail';
   static const String globalSearch = '/global-search';
+  static const String eduArticleDetail = '/edu-article-detail';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -347,6 +350,12 @@ class AppRouter {
 
       case globalSearch:
         return MaterialPageRoute(builder: (_) => const GlobalSearchScreen());
+
+      case eduArticleDetail:
+        final article = settings.arguments as EducationalArticle;
+        return MaterialPageRoute(
+          builder: (_) => EducationalArticleDetailScreen(article: article),
+        );
 
       default:
         return MaterialPageRoute(

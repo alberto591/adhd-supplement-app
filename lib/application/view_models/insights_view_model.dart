@@ -57,12 +57,30 @@ class InsightsViewModel extends ChangeNotifier {
       );
 
       // Simple consistency: Days logged / 30
-      // We count a day as logged if there's any entry
       final daysLogged = logs.length;
       _consistencyScore = (daysLogged / 30) * 100;
       if (_consistencyScore > 100) _consistencyScore = 100;
 
-      // 3. Set Encouragement Text
+      // 3. Calculate Weekly Focus Trends (Last 7 days)
+      _weeklyFocusScores.clear();
+      for (int i = 6; i >= 0; i--) {
+        final date =
+            DateTime(now.year, now.month, now.day).subtract(Duration(days: i));
+
+        // Find log for this specific date
+        // Use where to ensure we get the right type
+        final logsForDate = logs.where((l) =>
+            l.date.year == date.year &&
+            l.date.month == date.month &&
+            l.date.day == date.day);
+
+        final logForDate = logsForDate.isNotEmpty ? logsForDate.first : null;
+
+        // If no log or no focus score, default to 0
+        _weeklyFocusScores.add((logForDate?.focusScore ?? 0).toDouble());
+      }
+
+      // 4. Set Encouragement Text
       _updateEncouragement();
     } catch (e) {
       debugPrint('Error loading insights: $e');

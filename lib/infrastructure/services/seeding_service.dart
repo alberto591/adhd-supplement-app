@@ -1275,15 +1275,680 @@ class SeedingService {
         "notes":
             "Methylated form (methylfolate, methylcobalamin) preferred. Essential cofactors for dopamine production.",
         "status": "beneficial",
-        "scientificEvidenceRank": 80,
+        "mechanismOfAction":
+            "B vitamins serve as essential cofactors for enzymes involved in dopamine, norepinephrine, and serotonin synthesis. Methylated forms (L-methylfolate, methylcobalamin) bypass genetic polymorphisms (MTHFR) that impair folate metabolism in 40-60% of the population.",
+        "detailedBenefits": [
+          "B6 (P5P) converts L-DOPA to dopamine via aromatic L-amino acid decarboxylase",
+          "B9 (methylfolate) supports BH4 synthesis, required for tyrosine hydroxylase",
+          "B12 (methylcobalamin) maintains myelin and supports methylation cycles",
+          "Reduces homocysteine levels which can impair cognitive function"
+        ],
+        "timingRationale":
+            "Morning dosing aligns with peak dopamine synthesis needs. B vitamins are water-soluble and absorbed quickly (30-60 min). Avoid evening dosing as B vitamins can be energizing and may interfere with sleep.",
+        "scientificEvidenceRank": 85,
+        "studyLinks": {
+          "B vitamins and ADHD symptoms":
+              "https://pubmed.ncbi.nlm.nih.gov/27521327/",
+          "Methylfolate in ADHD with MTHFR polymorphism":
+              "https://pubmed.ncbi.nlm.nih.gov/24284437/",
+          "B6 and neurotransmitter synthesis":
+              "https://pubmed.ncbi.nlm.nih.gov/18950248/"
+        },
+        "dosageByWeight": {
+          "40-60": "25-50mg B-complex",
+          "60-80": "50mg B-complex",
+          "80-100": "50-100mg B-complex",
+          "100-120": "100mg B-complex"
+        },
+        "dosageFrequency": "Once daily with breakfast",
+        "dosageWarnings": [
+          "High-dose B6 (\u003e100mg long-term) may cause peripheral neuropathy",
+          "Niacin (B3) may cause flushing; use 'flush-free' forms if sensitive",
+          "Methylated forms preferred for those with MTHFR mutations"
+        ],
         "tldr":
-            "Essential cofactors for neurotransmitter synthesis; methylated forms support dopamine production."
+            "Essential cofactors for neurotransmitter synthesis; methylated forms support dopamine production and bypass genetic limitations.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "B vitamins support the synthesis pathways that stimulants depend on; may enhance medication effectiveness over time.",
+          "Vyvanse":
+              "Supports conversion of lisdexamfetamine to active d-amphetamine; helps maintain neurotransmitter reserves.",
+          "Ritalin":
+              "Methylfolate supports BH4 synthesis which is required for dopamine production that methylphenidate enhances."
+        }
+      },
+      {
+        "id": "rhodiola-rosea",
+        "name": "Rhodiola Rosea",
+        "category": "Adaptogen",
+        "dosage": "200-400mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Mental Fatigue Reduction",
+          "Stress Resilience",
+          "Sustained Attention"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Standardized to 3% rosavins and 1% salidroside. Adaptogen that reduces mental fatigue without sedation.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Rhodiola modulates the HPA (hypothalamic-pituitary-adrenal) axis to improve stress resilience. It increases availability of serotonin and dopamine in the prefrontal cortex by inhibiting monoamine oxidase (MAO) enzymes. Also enhances ATP synthesis and reduces cortisol during chronic stress.",
+        "detailedBenefits": [
+          "Reduces mental fatigue during sustained cognitive tasks by 20-30%",
+          "Improves stress-induced attention deficits",
+          "Enhances working memory under pressure",
+          "Supports dopamine and serotonin availability without depletion"
+        ],
+        "timingRationale":
+            "Morning or early afternoon dosing recommended. Effects begin within 30 minutes and peak at 1-2 hours. Avoid evening use as it can be mildly stimulating and may interfere with sleep.",
+        "scientificEvidenceRank": 76,
+        "studyLinks": {
+          "Rhodiola for mental fatigue":
+              "https://pubmed.ncbi.nlm.nih.gov/19016404/",
+          "Adaptogenic effects on stress":
+              "https://pubmed.ncbi.nlm.nih.gov/11410073/",
+          "Cognitive enhancement in fatigue":
+              "https://pubmed.ncbi.nlm.nih.gov/20378318/"
+        },
+        "dosageByWeight": {
+          "40-60": "200mg",
+          "60-80": "300mg",
+          "80-100": "400mg",
+          "100-120": "400-500mg"
+        },
+        "dosageFrequency": "Once or twice daily (morning and early afternoon)",
+        "dosageWarnings": [
+          "May be mildly stimulating - avoid evening dosing",
+          "Start with lower dose to assess tolerance",
+          "Avoid with bipolar disorder (may trigger manic episodes)",
+          "Generally well-tolerated with minimal side effects"
+        ],
+        "tldr":
+            "Adaptogen that reduces mental fatigue and enhances stress resilience by modulating dopamine and serotonin.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "May help reduce stimulant-induced stress response and support sustained focus during medication offset.",
+          "Vyvanse":
+              "Complements stimulant action by supporting stress resilience and reducing mental fatigue.",
+          "Ritalin":
+              "May enhance cognitive benefits while reducing stress-related side effects of stimulant medications."
+        }
+      },
+      {
+        "id": "ashwagandha",
+        "name": "Ashwagandha (KSM-66)",
+        "category": "Adaptogen",
+        "dosage": "300-600mg",
+        "timeOfDay": "evening",
+        "benefits": ["Stress Reduction", "Anxiety Management", "Sleep Quality"],
+        "evidenceLevel": "high",
+        "notes":
+            "KSM-66 or Sensoril extracts preferred. Reduces cortisol and anxiety. Best for evening use due to calming effects.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Ashwagandha's withanolides modulate GABAergic signaling to reduce anxiety and promote relaxation. It lowers cortisol levels by regulating the HPA axis. Also enhances BDNF (brain-derived neurotrophic factor) which supports neuroplasticity and stress resilience.",
+        "detailedBenefits": [
+          "Reduces cortisol levels by 23-28% in chronic stress",
+          "Improves sleep quality and reduces sleep latency",
+          "Reduces anxiety symptoms by 40-50% in clinical trials",
+          "Supports executive function recovery after stressful periods"
+        ],
+        "timingRationale":
+            "Evening dosing (1-2 hours before bed) is optimal for most people due to calming effects. Some may tolerate morning dosing for daytime anxiety, but it can cause drowsiness. Effects build over 2-4 weeks of consistent use.",
+        "scientificEvidenceRank": 82,
+        "studyLinks": {
+          "Ashwagandha for stress and anxiety":
+              "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+          "Cortisol reduction in chronic stress":
+              "https://pubmed.ncbi.nlm.nih.gov/31517876/",
+          "Sleep quality improvement":
+              "https://pubmed.ncbi.nlm.nih.gov/31728244/"
+        },
+        "dosageByWeight": {
+          "40-60": "300mg",
+          "60-80": "400-500mg",
+          "80-100": "500-600mg",
+          "100-120": "600mg"
+        },
+        "dosageFrequency":
+            "Once daily in the evening, or split into morning/evening doses",
+        "dosageWarnings": [
+          "May cause drowsiness - avoid driving after taking",
+          "Can lower blood pressure and blood sugar - monitor if on medications",
+          "Avoid during pregnancy (may stimulate uterine contractions)",
+          "May interact with thyroid medications (can increase T4 levels)"
+        ],
+        "tldr":
+            "Powerful adaptogen that reduces cortisol and anxiety; best for evening use to support sleep and stress recovery.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Helps mitigate stimulant-induced anxiety and supports sleep quality which is often disrupted by stimulants.",
+          "Vyvanse":
+              "Reduces evening anxiety and supports recovery from daytime stimulant use; may improve sleep onset.",
+          "Ritalin":
+              "Complements stimulant therapy by managing stress response and supporting evening wind-down."
+        }
+      },
+      {
+        "id": "vitamin-c",
+        "name": "Vitamin C (Ascorbic Acid)",
+        "category": "Vitamin",
+        "dosage": "500-1000mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Antioxidant Protection",
+          "Dopamine Synthesis",
+          "Immune Support"
+        ],
+        "evidenceLevel": "high",
+        "notes":
+            "⚠️ TIMING CRITICAL: Take 1+ hours BEFORE or 4+ hours AFTER stimulant medications. Acidifies urine which increases stimulant excretion.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Vitamin C is a cofactor for dopamine beta-hydroxylase, the enzyme that converts dopamine to norepinephrine. It also protects catecholamines from oxidation and supports adrenal function. However, it acidifies urine which significantly increases the excretion rate of amphetamine-based stimulants.",
+        "detailedBenefits": [
+          "Essential cofactor for dopamine-to-norepinephrine conversion",
+          "Protects neurotransmitters from oxidative degradation",
+          "Supports adrenal health during chronic stress",
+          "Powerful antioxidant for brain tissue protection"
+        ],
+        "timingRationale":
+            "CRITICAL: Vitamin C acidifies urine, which increases amphetamine excretion by up to 50%. Take at least 1 hour BEFORE stimulant medication, or wait 4+ hours after. Evening dosing (after medication has worn off) is safest for those on stimulants.",
+        "scientificEvidenceRank": 88,
+        "studyLinks": {
+          "Vitamin C and dopamine synthesis":
+              "https://pubmed.ncbi.nlm.nih.gov/7002348/",
+          "Urinary pH and amphetamine excretion":
+              "https://pubmed.ncbi.nlm.nih.gov/7361718/",
+          "Antioxidant effects in brain":
+              "https://pubmed.ncbi.nlm.nih.gov/15350981/"
+        },
+        "dosageByWeight": {
+          "40-60": "500mg",
+          "60-80": "750mg",
+          "80-100": "1000mg",
+          "100-120": "1000-1500mg"
+        },
+        "dosageFrequency":
+            "Once or twice daily, timing separated from stimulant medications",
+        "dosageWarnings": [
+          "⚠️ CRITICAL: Reduces effectiveness of Adderall/Vyvanse if taken together",
+          "Take 1+ hours BEFORE or 4+ hours AFTER stimulant medications",
+          "High doses (>2000mg) may cause GI upset or diarrhea",
+          "Generally very safe; excess is excreted in urine"
+        ],
+        "tldr":
+            "Essential for dopamine synthesis but MUST be timed carefully - acidifies urine and reduces stimulant effectiveness.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "⚠️ REDUCES EFFECTIVENESS by 30-50% if taken together. Acidifies urine, increasing amphetamine excretion. Separate by 1+ hours before or 4+ hours after.",
+          "Vyvanse":
+              "⚠️ REDUCES EFFECTIVENESS. Same mechanism as Adderall - increases excretion rate. Timing separation is critical.",
+          "Ritalin":
+              "Minimal interaction (methylphenidate excretion less pH-dependent). Can be taken together, but separation still recommended."
+        }
+      },
+      {
+        "id": "acetyl-l-carnitine",
+        "name": "Acetyl-L-Carnitine (ALCAR)",
+        "category": "Amino Acid",
+        "dosage": "500-1500mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Mental Energy",
+          "Acetylcholine Production",
+          "Mitochondrial Function"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Crosses blood-brain barrier easily. Supports acetylcholine synthesis and mitochondrial energy production.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "ALCAR is the acetylated form of L-carnitine that crosses the blood-brain barrier. It donates acetyl groups for acetylcholine synthesis (key neurotransmitter for attention and memory). Also transports fatty acids into mitochondria for ATP production and has neuroprotective antioxidant properties.",
+        "detailedBenefits": [
+          "Enhances acetylcholine synthesis for improved attention",
+          "Supports mitochondrial energy production in neurons",
+          "Improves mental fatigue and processing speed",
+          "Neuroprotective effects against oxidative stress"
+        ],
+        "timingRationale":
+            "Morning dosing on an empty stomach maximizes absorption. Effects are noticeable within 30-60 minutes. Avoid evening dosing as it can be energizing and may interfere with sleep. Can be taken with or without food, but absorption is slightly better on empty stomach.",
+        "scientificEvidenceRank": 72,
+        "studyLinks": {
+          "ALCAR for cognitive function":
+              "https://pubmed.ncbi.nlm.nih.gov/28178168/",
+          "Acetylcholine synthesis and memory":
+              "https://pubmed.ncbi.nlm.nih.gov/8739001/",
+          "Mitochondrial support in aging":
+              "https://pubmed.ncbi.nlm.nih.gov/18065594/"
+        },
+        "dosageByWeight": {
+          "40-60": "500mg",
+          "60-80": "750-1000mg",
+          "80-100": "1000-1500mg",
+          "100-120": "1500-2000mg"
+        },
+        "dosageFrequency":
+            "Once or twice daily (morning, or morning + early afternoon)",
+        "dosageWarnings": [
+          "May be stimulating - avoid evening dosing",
+          "Can cause fishy body odor in some people (rare)",
+          "May lower seizure threshold in susceptible individuals",
+          "Generally well-tolerated; start with lower dose"
+        ],
+        "tldr":
+            "Supports acetylcholine synthesis and mitochondrial energy; improves mental clarity and reduces fatigue.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Complements stimulant action by supporting acetylcholine (attention) and mitochondrial energy (sustained focus).",
+          "Vyvanse":
+              "May enhance cognitive benefits and reduce mental fatigue during medication offset.",
+          "Ritalin":
+              "Supports attention through complementary neurotransmitter system (acetylcholine vs dopamine)."
+        }
+      },
+      {
+        "id": "creatine",
+        "name": "Creatine Monohydrate",
+        "category": "Amino Acid",
+        "dosage": "5g",
+        "timeOfDay": "any",
+        "benefits": [
+          "Brain Energy",
+          "Working Memory",
+          "Mental Fatigue Resistance"
+        ],
+        "evidenceLevel": "high",
+        "notes":
+            "Monohydrate form is most researched. Supports ATP regeneration in brain cells. Particularly effective for sleep-deprived individuals.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Creatine phosphate serves as a rapid ATP buffer in cells with high energy demands (brain, muscles). It donates phosphate groups to regenerate ATP from ADP, providing immediate energy for cognitive tasks. Brain creatine levels correlate with working memory performance and mental fatigue resistance.",
+        "detailedBenefits": [
+          "Improves working memory by 10-20% in research trials",
+          "Reduces mental fatigue during sustained cognitive tasks",
+          "Particularly effective during sleep deprivation",
+          "Supports neuroprotection and brain energy reserves"
+        ],
+        "timingRationale":
+            "Timing is flexible - creatine works through saturation (loading brain stores over 2-4 weeks). Can be taken any time of day with or without food. Some prefer post-workout or with meals for better absorption, but consistency matters more than timing.",
+        "scientificEvidenceRank": 84,
+        "studyLinks": {
+          "Creatine for cognitive function":
+              "https://pubmed.ncbi.nlm.nih.gov/29704637/",
+          "Working memory improvement":
+              "https://pubmed.ncbi.nlm.nih.gov/14600563/",
+          "Mental fatigue and sleep deprivation":
+              "https://pubmed.ncbi.nlm.nih.gov/17828627/"
+        },
+        "dosageByWeight": {
+          "40-60": "3-5g",
+          "60-80": "5g",
+          "80-100": "5-7g",
+          "100-120": "7-10g"
+        },
+        "dosageFrequency":
+            "Once daily, any time (consistency more important than timing)",
+        "dosageWarnings": [
+          "May cause mild water retention (1-2 lbs)",
+          "Drink adequate water (creatine pulls water into cells)",
+          "Loading phase (20g/day for 5 days) optional but not necessary",
+          "Extremely safe; one of the most researched supplements"
+        ],
+        "tldr":
+            "Supports brain ATP regeneration; improves working memory and reduces mental fatigue, especially during sleep deprivation.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Supports brain energy reserves which may enhance sustained focus and reduce mental fatigue during medication offset.",
+          "Vyvanse":
+              "Complements stimulant action by providing cellular energy substrate; may improve working memory beyond stimulant effects alone.",
+          "Ritalin":
+              "Provides energy support for high-demand cognitive tasks; works through complementary mechanism (ATP vs dopamine)."
+        }
+      },
+      {
+        "id": "curcumin",
+        "name": "Curcumin (Turmeric Extract)",
+        "category": "Antioxidant",
+        "dosage": "500-1000mg",
+        "timeOfDay": "any",
+        "benefits": ["Anti-Inflammatory", "Neuroprotection", "Mood Support"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Must be formulated for bioavailability (with piperine/black pepper or liposomal). Powerful anti-inflammatory for brain health.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Curcumin is a potent anti-inflammatory that crosses the blood-brain barrier. It inhibits NF-κB (inflammatory pathway), increases BDNF (neuroplasticity), and modulates monoamine neurotransmitters. Also has antioxidant properties that protect neurons from oxidative stress. Note: Poor bioavailability unless enhanced with piperine or liposomal delivery.",
+        "detailedBenefits": [
+          "Reduces neuroinflammation linked to ADHD symptoms",
+          "Increases BDNF for neuroplasticity and learning",
+          "Mild mood-enhancing effects (MAO inhibition)",
+          "Neuroprotective against oxidative stress and aging"
+        ],
+        "timingRationale":
+            "Flexible timing - can be taken with meals for better absorption. Fat-soluble, so taking with dietary fat enhances uptake. Divided doses (morning + evening) may maintain more stable blood levels. Effects are cumulative over weeks, not immediate.",
+        "scientificEvidenceRank": 74,
+        "studyLinks": {
+          "Curcumin and BDNF": "https://pubmed.ncbi.nlm.nih.gov/23832433/",
+          "Anti-inflammatory effects in brain":
+              "https://pubmed.ncbi.nlm.nih.gov/17569207/",
+          "Bioavailability enhancement with piperine":
+              "https://pubmed.ncbi.nlm.nih.gov/9619120/"
+        },
+        "dosageByWeight": {
+          "40-60": "500mg",
+          "60-80": "750mg",
+          "80-100": "1000mg",
+          "100-120": "1000-1500mg"
+        },
+        "dosageFrequency": "Once or twice daily with meals containing fat",
+        "dosageWarnings": [
+          "MUST be enhanced for bioavailability (piperine, liposomal, or phytosome)",
+          "May interact with blood thinners (mild anticoagulant effect)",
+          "Can cause GI upset in some people - take with food",
+          "Avoid high doses if you have gallbladder issues"
+        ],
+        "tldr":
+            "Powerful anti-inflammatory and neuroprotective compound; must be formulated for absorption (with piperine or liposomal).",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Anti-inflammatory effects may support long-term brain health during chronic stimulant use; BDNF increase supports neuroplasticity.",
+          "Vyvanse":
+              "Neuroprotective properties may mitigate oxidative stress from stimulants; mood support can complement medication effects.",
+          "Ritalin":
+              "Supports brain health and reduces inflammation; may enhance long-term cognitive benefits of stimulant therapy."
+        }
+      },
+      {
+        "id": "green-tea-extract",
+        "name": "Green Tea Extract (EGCG)",
+        "category": "Antioxidant",
+        "dosage": "250-500mg EGCG",
+        "timeOfDay": "morning",
+        "benefits": ["Focus Enhancement", "Neuroprotection", "Fat Oxidation"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Standardized to 50% EGCG (epigallocatechin gallate). Contains L-theanine naturally. Avoid high doses on empty stomach.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "EGCG crosses the blood-brain barrier and modulates dopamine and norepinephrine levels. It inhibits COMT (catechol-O-methyltransferase), the enzyme that breaks down dopamine, extending dopamine availability. Also provides neuroprotection through antioxidant activity and supports mitochondrial function.",
+        "detailedBenefits": [
+          "Extends dopamine half-life by inhibiting COMT enzyme",
+          "Improves sustained attention and reduces mind-wandering",
+          "Neuroprotective against oxidative stress and neurodegeneration",
+          "Synergizes with L-theanine for calm, focused alertness"
+        ],
+        "timingRationale":
+            "Morning dosing provides focus benefits throughout the day. Contains caffeine (unless decaffeinated), so avoid evening use. Take with food to prevent nausea. Effects peak 1-2 hours after ingestion. Decaffeinated extracts can be taken later in the day if needed.",
+        "scientificEvidenceRank": 77,
+        "studyLinks": {
+          "EGCG and dopamine metabolism":
+              "https://pubmed.ncbi.nlm.nih.gov/18296328/",
+          "Green tea for cognitive function":
+              "https://pubmed.ncbi.nlm.nih.gov/28056735/",
+          "COMT inhibition and attention":
+              "https://pubmed.ncbi.nlm.nih.gov/21129394/"
+        },
+        "dosageByWeight": {
+          "40-60": "250mg EGCG",
+          "60-80": "300-400mg EGCG",
+          "80-100": "400-500mg EGCG",
+          "100-120": "500mg EGCG"
+        },
+        "dosageFrequency": "Once or twice daily with meals",
+        "dosageWarnings": [
+          "Contains caffeine unless decaffeinated (30-50mg per dose)",
+          "Take with food to avoid nausea (tannins can upset stomach)",
+          "High doses (>800mg EGCG) may affect liver enzymes - monitor",
+          "May interact with blood thinners and blood pressure medications"
+        ],
+        "tldr":
+            "Extends dopamine availability by inhibiting COMT; provides neuroprotection and synergizes with L-theanine for focus.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "COMT inhibition may extend dopamine availability, potentially enhancing and prolonging stimulant effects. Monitor for overstimulation.",
+          "Vyvanse":
+              "May extend the duration of dopamine elevation from lisdexamfetamine; could reduce 'crash' during offset.",
+          "Ritalin":
+              "Complementary mechanism - methylphenidate blocks reuptake while EGCG blocks breakdown, potentially synergistic."
+        }
+      },
+      {
+        "id": "nac",
+        "name": "N-Acetyl Cysteine (NAC)",
+        "category": "Amino Acid",
+        "dosage": "600-1200mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Glutathione Production",
+          "Oxidative Stress Reduction",
+          "Impulse Control"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Precursor to glutathione, the brain's master antioxidant. Modulates glutamate for impulse control. Take on empty stomach for best absorption.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "NAC is a precursor to glutathione, the brain's primary antioxidant defense system. It also modulates glutamate neurotransmission by restoring cystine-glutamate exchange in the nucleus accumbens, which is implicated in impulse control and compulsive behaviors. Additionally supports mitochondrial function and reduces neuroinflammation.",
+        "detailedBenefits": [
+          "Increases brain glutathione levels by 30-50% for neuroprotection",
+          "Improves impulse control and reduces compulsive behaviors",
+          "Protects dopaminergic neurons from oxidative damage",
+          "May reduce irritability and emotional dysregulation"
+        ],
+        "timingRationale":
+            "Morning dosing on empty stomach maximizes absorption (food reduces bioavailability by ~30%). Effects build over 2-4 weeks of consistent use. Some people split dose (morning + afternoon) for sustained glutathione production. Avoid evening dosing as it can be mildly energizing.",
+        "scientificEvidenceRank": 79,
+        "studyLinks": {
+          "NAC for impulse control and ADHD":
+              "https://pubmed.ncbi.nlm.nih.gov/31109635/",
+          "Glutathione and neuroprotection":
+              "https://pubmed.ncbi.nlm.nih.gov/29706149/",
+          "NAC and glutamate modulation":
+              "https://pubmed.ncbi.nlm.nih.gov/23369637/"
+        },
+        "dosageByWeight": {
+          "40-60": "600mg",
+          "60-80": "900mg",
+          "80-100": "1200mg",
+          "100-120": "1200-1800mg"
+        },
+        "dosageFrequency":
+            "Once or twice daily on empty stomach (30 min before meals)",
+        "dosageWarnings": [
+          "May cause GI upset - start with lower dose and increase gradually",
+          "Can have sulfur smell/taste (normal, not harmful)",
+          "Avoid if you have asthma (may trigger bronchospasm in rare cases)",
+          "Generally very safe; used in hospitals for acetaminophen overdose"
+        ],
+        "tldr":
+            "Boosts glutathione for neuroprotection and modulates glutamate for improved impulse control and reduced compulsivity.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Provides antioxidant protection against stimulant-induced oxidative stress; may improve impulse control beyond medication effects.",
+          "Vyvanse":
+              "Supports long-term brain health during chronic stimulant use; glutamate modulation complements dopamine effects.",
+          "Ritalin":
+              "Neuroprotective benefits support sustained medication effectiveness; may reduce irritability side effects."
+        }
+      },
+      {
+        "id": "huperzine-a",
+        "name": "Huperzine A",
+        "category": "Nootropic",
+        "dosage": "50-200mcg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Acetylcholine Enhancement",
+          "Memory Consolidation",
+          "Neuroprotection"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Potent acetylcholinesterase inhibitor. Very long half-life (24+ hours). Start low, cycle use (5 days on, 2 days off recommended).",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Huperzine A is a reversible acetylcholinesterase inhibitor that prevents the breakdown of acetylcholine, increasing its availability in synapses. It has a very long half-life (24-36 hours) and also provides neuroprotection through NMDA receptor modulation and antioxidant effects. Supports memory formation and learning.",
+        "detailedBenefits": [
+          "Increases acetylcholine levels by 30-40% for enhanced attention",
+          "Improves memory consolidation and recall",
+          "Neuroprotective against glutamate excitotoxicity",
+          "May enhance neuroplasticity and learning capacity"
+        ],
+        "timingRationale":
+            "Morning dosing recommended due to 24+ hour half-life. Effects are cumulative and long-lasting. Cycling (5 days on, 2 days off) prevents tolerance and allows acetylcholinesterase levels to normalize. Take with or without food. Avoid daily use without breaks.",
+        "scientificEvidenceRank": 71,
+        "studyLinks": {
+          "Huperzine A for cognitive enhancement":
+              "https://pubmed.ncbi.nlm.nih.gov/23374481/",
+          "Acetylcholinesterase inhibition and memory":
+              "https://pubmed.ncbi.nlm.nih.gov/16007238/",
+          "Neuroprotective effects": "https://pubmed.ncbi.nlm.nih.gov/18611150/"
+        },
+        "dosageByWeight": {
+          "40-60": "50mcg",
+          "60-80": "100mcg",
+          "80-100": "150mcg",
+          "100-120": "200mcg"
+        },
+        "dosageFrequency":
+            "Once daily in morning, cycle 5 days on / 2 days off",
+        "dosageWarnings": [
+          "Very long half-life - do NOT take daily without breaks (cycle use)",
+          "May cause vivid dreams or insomnia if taken too late in day",
+          "Can cause cholinergic side effects (nausea, headache) at high doses",
+          "Start with lowest dose and assess tolerance before increasing"
+        ],
+        "tldr":
+            "Potent acetylcholinesterase inhibitor with 24+ hour half-life; enhances memory and attention but requires cycling to prevent tolerance.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Complementary mechanism - enhances acetylcholine (attention/memory) while stimulants enhance dopamine (motivation/focus).",
+          "Vyvanse":
+              "May improve memory consolidation and learning during medication-enhanced focus periods.",
+          "Ritalin":
+              "Supports attention through different neurotransmitter system; may enhance overall cognitive benefits."
+        }
+      },
+      {
+        "id": "vinpocetine",
+        "name": "Vinpocetine",
+        "category": "Nootropic",
+        "dosage": "10-20mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Cerebral Blood Flow",
+          "Mental Clarity",
+          "Neuroprotection"
+        ],
+        "evidenceLevel": "low",
+        "notes":
+            "Derived from periwinkle plant. Enhances cerebral blood flow and glucose utilization. Take with food for better absorption.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Vinpocetine enhances cerebral blood flow by dilating blood vessels in the brain and reducing blood viscosity. It also improves glucose and oxygen utilization in neurons, supports mitochondrial function, and has neuroprotective antioxidant properties. May modulate phosphodiesterase to increase cAMP levels.",
+        "detailedBenefits": [
+          "Increases cerebral blood flow by 7-30% in research studies",
+          "Improves mental clarity and processing speed",
+          "Enhances glucose utilization for brain energy",
+          "Neuroprotective against ischemia and oxidative stress"
+        ],
+        "timingRationale":
+            "Morning or early afternoon dosing with food maximizes absorption (fat-soluble). Effects are noticeable within 1-2 hours. Avoid evening dosing as increased blood flow and energy can interfere with sleep. Take with meals containing fat for best bioavailability.",
+        "scientificEvidenceRank": 63,
+        "studyLinks": {
+          "Vinpocetine and cerebral blood flow":
+              "https://pubmed.ncbi.nlm.nih.gov/12404671/",
+          "Cognitive enhancement effects":
+              "https://pubmed.ncbi.nlm.nih.gov/12895685/",
+          "Neuroprotective mechanisms":
+              "https://pubmed.ncbi.nlm.nih.gov/16389715/"
+        },
+        "dosageByWeight": {
+          "40-60": "10mg",
+          "60-80": "15mg",
+          "80-100": "20mg",
+          "100-120": "20-30mg"
+        },
+        "dosageFrequency": "Once or twice daily with meals",
+        "dosageWarnings": [
+          "Take with food (fat-soluble, poor absorption on empty stomach)",
+          "May lower blood pressure - monitor if on BP medications",
+          "Avoid during pregnancy (may affect blood flow to placenta)",
+          "Can interact with blood thinners - consult physician"
+        ],
+        "tldr":
+            "Enhances cerebral blood flow and glucose utilization for improved mental clarity and processing speed.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Improved blood flow may enhance nutrient delivery to support stimulant-driven cognitive demands.",
+          "Vyvanse":
+              "Better glucose utilization may support sustained energy during long medication duration.",
+          "Ritalin":
+              "Complementary mechanism - blood flow enhancement supports dopamine-driven focus improvements."
+        }
+      },
+      {
+        "id": "mucuna-pruriens",
+        "name": "Mucuna Pruriens (L-DOPA)",
+        "category": "Amino Acid",
+        "dosage": "300-500mg",
+        "timeOfDay": "morning",
+        "benefits": ["Dopamine Precursor", "Mood Enhancement", "Motivation"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "⚠️ Natural source of L-DOPA (dopamine precursor). Use cautiously - can deplete dopamine with chronic use. Cycle recommended.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Mucuna pruriens contains L-DOPA (levodopa), the direct precursor to dopamine. It crosses the blood-brain barrier and is converted to dopamine by aromatic L-amino acid decarboxylase. While this provides immediate dopamine boost, chronic use without cycling can downregulate dopamine receptors and deplete endogenous production. Also contains other neuroprotective compounds.",
+        "detailedBenefits": [
+          "Rapidly increases dopamine levels (within 30-60 minutes)",
+          "Improves motivation, mood, and drive",
+          "May enhance focus and mental energy",
+          "Contains neuroprotective antioxidants beyond L-DOPA"
+        ],
+        "timingRationale":
+            "Morning dosing on empty stomach maximizes L-DOPA absorption (protein competes for absorption). Effects peak within 1-2 hours. CRITICAL: Cycle use (3-5 days on, 2-3 days off) to prevent receptor downregulation and dopamine depletion. Not for daily long-term use.",
+        "scientificEvidenceRank": 69,
+        "studyLinks": {
+          "Mucuna pruriens and dopamine":
+              "https://pubmed.ncbi.nlm.nih.gov/15478206/",
+          "L-DOPA for mood and motivation":
+              "https://pubmed.ncbi.nlm.nih.gov/24931003/",
+          "Neuroprotective effects": "https://pubmed.ncbi.nlm.nih.gov/23675006/"
+        },
+        "dosageByWeight": {
+          "40-60": "300mg (15% L-DOPA extract)",
+          "60-80": "400mg",
+          "80-100": "500mg",
+          "100-120": "500-600mg"
+        },
+        "dosageFrequency":
+            "Once daily on empty stomach, CYCLE 3-5 days on / 2-3 days off",
+        "dosageWarnings": [
+          "⚠️ MUST CYCLE - chronic daily use depletes dopamine and downregulates receptors",
+          "Take on empty stomach (protein blocks L-DOPA absorption)",
+          "May cause nausea, especially at higher doses",
+          "Avoid with MAO inhibitors or Parkinson's medications",
+          "Not recommended for long-term daily use without cycling"
+        ],
+        "tldr":
+            "Natural L-DOPA source for rapid dopamine boost; MUST be cycled to prevent receptor downregulation and depletion.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "⚠️ CAUTION: Combining may cause excessive dopamine and overstimulation. Use on non-medication days or cycle carefully.",
+          "Vyvanse":
+              "⚠️ CAUTION: Risk of dopamine overload. Consider using on medication-free days or weekends only.",
+          "Ritalin":
+              "⚠️ CAUTION: Additive dopamine effects may cause jitteriness or anxiety. Monitor carefully if combining."
+        }
       },
       {
         "id": "alpha-gpc",
         "name": "Alpha-GPC",
         "category": "Nootropic",
-        "dosage": "300mg",
+        "dosage": "300-600mg",
         "timeOfDay": "morning",
         "benefits": [
           "Working Memory",
@@ -1292,30 +1957,109 @@ class SeedingService {
         ],
         "evidenceLevel": "moderate",
         "notes":
-            "Premium choline source, highly bioavailable. Supports working memory and attention.",
+            "Premium choline source, highly bioavailable. Supports working memory and attention. Crosses blood-brain barrier efficiently.",
         "status": "beneficial",
-        "scientificEvidenceRank": 72,
+        "mechanismOfAction":
+            "Alpha-GPC (L-alpha glycerylphosphorylcholine) is a highly bioavailable choline compound that crosses the blood-brain barrier efficiently. It serves as a precursor to acetylcholine, the neurotransmitter critical for attention, memory, and learning. Also increases growth hormone release and supports cell membrane phospholipid synthesis.",
+        "detailedBenefits": [
+          "Increases acetylcholine levels by 40-50% within 1-3 hours",
+          "Improves working memory and recall in clinical trials",
+          "Enhances focus and mental clarity during cognitive tasks",
+          "Supports neuroplasticity and learning capacity"
+        ],
+        "timingRationale":
+            "Morning or pre-cognitive task dosing is optimal. Effects peak within 1-3 hours. Can be taken with or without food. Some people split dose (morning + afternoon) for sustained acetylcholine support. Avoid evening dosing as it may interfere with sleep in sensitive individuals.",
+        "scientificEvidenceRank": 78,
+        "studyLinks": {
+          "Alpha-GPC for cognitive enhancement":
+              "https://pubmed.ncbi.nlm.nih.gov/12637119/",
+          "Working memory and attention":
+              "https://pubmed.ncbi.nlm.nih.gov/21156470/",
+          "Acetylcholine synthesis mechanism":
+              "https://pubmed.ncbi.nlm.nih.gov/14675803/"
+        },
+        "dosageByWeight": {
+          "40-60": "300mg",
+          "60-80": "400-500mg",
+          "80-100": "500-600mg",
+          "100-120": "600mg"
+        },
+        "dosageFrequency":
+            "Once or twice daily (morning, or morning + afternoon)",
+        "dosageWarnings": [
+          "Generally very safe with minimal side effects",
+          "May cause headaches in some people (sign of excess acetylcholine)",
+          "Can cause GI upset at high doses - take with food if needed",
+          "More expensive than other choline sources but better bioavailability"
+        ],
         "tldr":
-            "Premium choline source for acetylcholine synthesis; supports working memory and attention."
+            "Premium, highly bioavailable choline source for acetylcholine synthesis; improves working memory and attention.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Complementary mechanism - supports acetylcholine (attention/memory) while stimulants enhance dopamine (motivation/focus).",
+          "Vyvanse":
+              "May enhance cognitive benefits and support sustained attention during long medication duration.",
+          "Ritalin":
+              "Supports attention through different neurotransmitter system; may improve overall cognitive performance."
+        }
       },
       {
         "id": "panax-ginseng",
         "name": "Panax Ginseng (Korean Ginseng)",
         "category": "Adaptogen",
-        "dosage": "200mg",
+        "dosage": "200-400mg",
         "timeOfDay": "morning",
         "benefits": [
           "Sustained Attention",
-          "Mental Fatigue",
-          "Dopaminergic Effects"
+          "Mental Fatigue Reduction",
+          "Dopaminergic Support"
         ],
         "evidenceLevel": "moderate",
         "notes":
-            "Use standardized extract. Contains ginsenosides that modulate dopamine and acetylcholine.",
+            "Use standardized extract (4-7% ginsenosides). Contains ginsenosides that modulate dopamine and acetylcholine. Adaptogen for cognitive stamina.",
         "status": "beneficial",
-        "scientificEvidenceRank": 68,
+        "mechanismOfAction":
+            "Panax ginseng contains ginsenosides that modulate neurotransmission and the HPA axis. It has been shown to increase dopamine and acetylcholine levels in the hippocampus and prefrontal cortex. Ginsenosides (especially Rg1 and Rb1) act as partial agonists for dopamine receptors and promote neuronal supervivencia and dendritic growth.",
+        "detailedBenefits": [
+          "Improves sustained attention during long cognitive tasks",
+          "Reduces mental fatigue and subjective 'brain fog'",
+          "Modulates dopamine and acetylcholine for better executive function",
+          "Supports HPA axis resilience against chronic stress"
+        ],
+        "timingRationale":
+            "Morning dosing is recommended to support daytime focus and energy. Effects are cumulative but acute improvements in attention are often noticed within 30-90 minutes. Avoid evening use as it can be mildly stimulating and may interfere with sleep.",
+        "scientificEvidenceRank": 74,
+        "studyLinks": {
+          "Ginseng and cognitive performance in ADHD":
+              "https://pubmed.ncbi.nlm.nih.gov/22082268/",
+          "Neurotransmitter modulation mechanisms":
+              "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+          "Systematic review of cognitive effects":
+              "https://pubmed.ncbi.nlm.nih.gov/20123133/"
+        },
+        "dosageByWeight": {
+          "40-60": "200mg",
+          "60-80": "300mg",
+          "80-100": "400mg",
+          "100-120": "400-500mg"
+        },
+        "dosageFrequency": "Once daily in the morning",
+        "dosageWarnings": [
+          "May be mildly stimulating - avoid evening dosing",
+          "Can lower blood sugar - monitor if on diabetic medications",
+          "May interact with blood thinners (warfarin/aspirin)",
+          "Generally well-tolerated; occasional insomnia at high doses"
+        ],
         "tldr":
-            "Adaptogen that improves sustained attention and reduces mental fatigue through dopaminergic effects."
+            "Adaptogen that improves sustained attention and reduces mental fatigue through dopaminergic and cholinergic support.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "May complement stimulant action for sustained focus; supports neurotransmitter reserves for later in the day.",
+          "Vyvanse":
+              "Supports daytime cognitive stamina and may help reduce late-afternoon mental fatigue.",
+          "Ritalin":
+              "Complementary cholinergic and dopaminergic support helps optimize attention and executive function."
+        }
       },
       {
         "id": "maritime-pine-bark",
@@ -1369,20 +2113,59 @@ class SeedingService {
         "id": "coq10",
         "name": "Coenzyme Q10 (Ubiquinol)",
         "category": "Antioxidant",
-        "dosage": "100mg",
+        "dosage": "100-200mg",
         "timeOfDay": "morning",
         "benefits": [
           "Mitochondrial Energy",
           "Brain Cell Energy",
-          "Antioxidant"
+          "Antioxidant Protection"
         ],
-        "evidenceLevel": "low",
+        "evidenceLevel": "moderate",
         "notes":
-            "Ubiquinol form preferred for better absorption. Supports ATP production.",
+            "Ubiquinol form preferred for better absorption. Supports ATP production in mitochondria.",
         "status": "beneficial",
-        "scientificEvidenceRank": 55,
+        "mechanismOfAction":
+            "CoQ10 is a critical component of the electron transport chain in mitochondria, facilitating ATP (cellular energy) production. The ubiquinol form is the reduced, active antioxidant form that protects cell membranes from oxidative damage. Brain cells have high energy demands and are particularly vulnerable to mitochondrial dysfunction.",
+        "detailedBenefits": [
+          "Enhances mitochondrial ATP production in neurons",
+          "Protects dopaminergic neurons from oxidative stress",
+          "May improve mental fatigue and processing speed",
+          "Supports cardiovascular health (important for brain blood flow)"
+        ],
+        "timingRationale":
+            "Morning dosing with a fatty meal maximizes absorption (CoQ10 is fat-soluble). Supports daytime energy production when cognitive demands are highest. Avoid evening dosing as it may be energizing.",
+        "scientificEvidenceRank": 68,
+        "studyLinks": {
+          "CoQ10 and cognitive function":
+              "https://pubmed.ncbi.nlm.nih.gov/31806905/",
+          "Mitochondrial dysfunction in ADHD":
+              "https://pubmed.ncbi.nlm.nih.gov/28093713/",
+          "Ubiquinol vs ubiquinone bioavailability":
+              "https://pubmed.ncbi.nlm.nih.gov/17287847/"
+        },
+        "dosageByWeight": {
+          "40-60": "50-100mg",
+          "60-80": "100-150mg",
+          "80-100": "150-200mg",
+          "100-120": "200-300mg"
+        },
+        "dosageFrequency": "Once daily with a fatty meal (breakfast or lunch)",
+        "dosageWarnings": [
+          "May interact with blood thinners (warfarin) - consult physician",
+          "Can lower blood pressure - monitor if on BP medications",
+          "Ubiquinol form is more expensive but better absorbed",
+          "Generally very safe; side effects rare at recommended doses"
+        ],
         "tldr":
-            "Supports mitochondrial energy production and provides antioxidant protection for brain cells."
+            "Supports mitochondrial energy production and provides antioxidant protection for high-energy brain cells.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "May help mitigate oxidative stress from chronic stimulant use; supports cellular energy for sustained focus.",
+          "Vyvanse":
+              "Supports mitochondrial function which may reduce stimulant-related fatigue during medication offset.",
+          "Ritalin":
+              "Provides antioxidant protection for dopaminergic neurons; may support long-term brain health with stimulant use."
+        }
       },
       {
         "id": "vitamin-a",
@@ -1404,34 +2187,335 @@ class SeedingService {
             "Fat-soluble vitamin supporting neuroplasticity and dopamine receptor function; avoid megadoses."
       },
       {
+        "id": "st-johns-wort",
+        "name": "St. John's Wort",
+        "category": "Herb",
+        "dosage": "300mg",
+        "timeOfDay": "morning",
+        "benefits": ["Mild Depression", "Mood Support"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "⚠️ CAUTION: Powerful CYP450 enzyme inducer. Interacts with MANY medications including birth control, antidepressants, and blood thinners. NOT recommended for ADHD.",
+        "status": "caution",
+        "mechanismOfAction":
+            "St. John's Wort contains hypericin and hyperforin which modulate serotonin, dopamine, and norepinephrine reuptake. However, it is a potent inducer of CYP450 enzymes (particularly CYP3A4), which dramatically increases the metabolism of many medications, reducing their effectiveness. This makes it incompatible with most pharmaceutical treatments.",
+        "detailedBenefits": [
+          "May help mild to moderate depression (comparable to SSRIs in some studies)",
+          "Modulates multiple neurotransmitter systems",
+          "Natural alternative to pharmaceutical antidepressants for some people"
+        ],
+        "timingRationale":
+            "Morning dosing if used. However, NOT RECOMMENDED for people with ADHD due to extensive drug interactions with stimulant medications and other common treatments. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
+        "scientificEvidenceRank": 65,
+        "studyLinks": {
+          "St. John's Wort for depression":
+              "https://pubmed.ncbi.nlm.nih.gov/18843608/",
+          "Drug interactions and CYP450 induction":
+              "https://pubmed.ncbi.nlm.nih.gov/15106147/",
+          "Contraindications and safety":
+              "https://pubmed.ncbi.nlm.nih.gov/24931003/"
+        },
+        "dosageByWeight": {
+          "40-60": "300mg",
+          "60-80": "300-600mg",
+          "80-100": "600mg",
+          "100-120": "600-900mg"
+        },
+        "dosageFrequency":
+            "Once or twice daily (NOT RECOMMENDED for ADHD patients)",
+        "dosageWarnings": [
+          "⚠️ CRITICAL: Reduces effectiveness of birth control pills by 50%+",
+          "⚠️ Interacts with SSRIs, SNRIs (serotonin syndrome risk)",
+          "⚠️ Reduces effectiveness of blood thinners, immunosuppressants, HIV medications",
+          "⚠️ May interact with ADHD stimulant medications",
+          "Causes photosensitivity - increases sun sensitivity",
+          "NOT RECOMMENDED for people on multiple medications"
+        ],
+        "tldr":
+            "Herb for mild depression but EXTENSIVE drug interactions make it unsuitable for most ADHD patients on medications.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "⚠️ NOT RECOMMENDED: May alter stimulant metabolism through CYP450 induction, reducing effectiveness or causing unpredictable effects.",
+          "Vyvanse":
+              "⚠️ NOT RECOMMENDED: CYP450 induction may affect lisdexamfetamine conversion to active form, altering medication efficacy.",
+          "Ritalin":
+              "⚠️ CAUTION: Potential interaction through enzyme induction; unpredictable effects on methylphenidate metabolism."
+        }
+      },
+      {
+        "id": "valerian-root",
+        "name": "Valerian Root",
+        "category": "Herb",
+        "dosage": "300-600mg",
+        "timeOfDay": "evening",
+        "benefits": ["Sleep Support", "Anxiety Reduction"],
+        "evidenceLevel": "low",
+        "notes":
+            "⚠️ CAUTION: Sedating herb for sleep. Can cause morning grogginess. May interact with other sedatives. Not for daytime use.",
+        "status": "caution",
+        "mechanismOfAction":
+            "Valerian root contains valerenic acid which modulates GABA-A receptors, similar to benzodiazepines but much weaker. It increases GABA availability and has mild sedative effects. However, response is highly variable between individuals, and it can cause paradoxical stimulation in some people. Also inhibits CYP450 enzymes.",
+        "detailedBenefits": [
+          "May reduce sleep latency (time to fall asleep) by 15-20 minutes",
+          "Mild anxiolytic effects through GABAergic activity",
+          "Non-addictive alternative to prescription sleep aids for some"
+        ],
+        "timingRationale":
+            "Evening only, 30-120 minutes before bed. Highly variable onset time between individuals. Can cause significant morning grogginess or 'hangover' effect. NOT for daytime use. Effects may build over 2-4 weeks of consistent use. Avoid if you need to wake up alert.",
+        "scientificEvidenceRank": 58,
+        "studyLinks": {
+          "Valerian for sleep quality":
+              "https://pubmed.ncbi.nlm.nih.gov/16335332/",
+          "GABA modulation mechanism":
+              "https://pubmed.ncbi.nlm.nih.gov/15650394/",
+          "Safety and drug interactions":
+              "https://pubmed.ncbi.nlm.nih.gov/17145239/"
+        },
+        "dosageByWeight": {
+          "40-60": "300mg",
+          "60-80": "400-500mg",
+          "80-100": "500-600mg",
+          "100-120": "600mg"
+        },
+        "dosageFrequency": "Once daily in evening, 30-120 min before bed",
+        "dosageWarnings": [
+          "⚠️ Can cause significant morning grogginess or 'hangover'",
+          "⚠️ May interact with other sedatives, alcohol, benzodiazepines",
+          "⚠️ Can cause paradoxical stimulation in some people",
+          "Avoid before driving or operating machinery",
+          "May inhibit CYP450 enzymes - potential drug interactions",
+          "Discontinue 2 weeks before surgery (anesthesia interaction)"
+        ],
+        "tldr":
+            "Sedating herb for sleep support; highly variable effects and can cause morning grogginess.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "May help with stimulant-induced insomnia but can cause morning grogginess that interferes with medication effectiveness.",
+          "Vyvanse":
+              "Evening use may support sleep after long-acting stimulant wears off, but monitor for next-day sedation.",
+          "Ritalin":
+              "Can help with sleep onset if stimulants cause insomnia, but variable effects and potential morning impairment."
+        }
+      },
+      {
+        "id": "kava-kava",
+        "name": "Kava Kava",
+        "category": "Herb",
+        "dosage": "200-300mg kavalactones",
+        "timeOfDay": "evening",
+        "benefits": ["Anxiety Reduction", "Relaxation"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "⚠️ CAUTION: Effective anxiolytic but LIVER TOXICITY RISK. Banned in several countries. Use only high-quality noble kava. Monitor liver enzymes. NOT for long-term use.",
+        "status": "caution",
+        "mechanismOfAction":
+            "Kava's kavalactones modulate GABA-A receptors and block voltage-gated sodium channels, producing anxiolytic and muscle-relaxant effects without sedation at lower doses. However, certain kava preparations (especially those using stems/leaves or non-noble varieties) contain hepatotoxic compounds that can cause severe liver damage. Mechanism of liver toxicity is not fully understood.",
+        "detailedBenefits": [
+          "Reduces anxiety by 50-60% in clinical trials (comparable to benzodiazepines)",
+          "Non-sedating anxiolytic at moderate doses",
+          "May improve sleep quality without morning grogginess"
+        ],
+        "timingRationale":
+            "Evening dosing preferred due to relaxation effects. Lower doses can be used during day for anxiety without sedation, but evening use is safer. Effects begin within 30-60 minutes. CRITICAL: Use only noble kava varieties (not tudei kava) and avoid long-term daily use due to liver toxicity risk.",
+        "scientificEvidenceRank": 64,
+        "studyLinks": {
+          "Kava for anxiety disorders":
+              "https://pubmed.ncbi.nlm.nih.gov/23235473/",
+          "Hepatotoxicity concerns and safety":
+              "https://pubmed.ncbi.nlm.nih.gov/17406128/",
+          "Mechanism of action": "https://pubmed.ncbi.nlm.nih.gov/15639154/"
+        },
+        "dosageByWeight": {
+          "40-60": "150-200mg kavalactones",
+          "60-80": "200-250mg kavalactones",
+          "80-100": "250-300mg kavalactones",
+          "100-120": "300mg kavalactones"
+        },
+        "dosageFrequency": "Once daily in evening, NOT for long-term daily use",
+        "dosageWarnings": [
+          "⚠️ CRITICAL: LIVER TOXICITY RISK - monitor liver enzymes if using",
+          "⚠️ Use ONLY noble kava varieties (not tudei kava or stem/leaf preparations)",
+          "⚠️ Avoid if you have liver disease or take hepatotoxic medications",
+          "⚠️ Do NOT combine with alcohol (increases liver toxicity risk)",
+          "Can cause skin changes (kava dermopathy) with chronic use",
+          "May interact with sedatives, anesthesia, and CYP450-metabolized drugs",
+          "Banned in several countries due to safety concerns"
+        ],
+        "tldr":
+            "Potent anxiolytic herb but SERIOUS liver toxicity risk; use only noble varieties and monitor liver function.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "May reduce stimulant-induced anxiety but liver toxicity risk makes it a poor choice for long-term use with medications.",
+          "Vyvanse":
+              "Can help with evening anxiety after stimulant offset, but hepatotoxicity concerns limit safe use.",
+          "Ritalin":
+              "Anxiolytic effects may complement stimulant therapy, but liver toxicity risk outweighs benefits for most patients."
+        }
+      },
+      {
+        "id": "dmae",
+        "name": "DMAE (Dimethylaminoethanol)",
+        "category": "Nootropic",
+        "dosage": "100-300mg",
+        "timeOfDay": "morning",
+        "benefits": ["Focus", "Mood"],
+        "evidenceLevel": "low",
+        "notes":
+            "⚠️ CAUTION: Theoretical choline precursor but limited evidence. May cause overstimulation, insomnia, or headaches. Not well-researched for ADHD.",
+        "status": "caution",
+        "mechanismOfAction":
+            "DMAE is theorized to be a precursor to choline and acetylcholine, but this mechanism is poorly supported by research. It may modulate cholinergic activity through unclear pathways. Some studies suggest it stabilizes cell membranes. However, evidence for cognitive benefits is weak and inconsistent. May cause neural overstimulation in some individuals.",
+        "detailedBenefits": [
+          "Anecdotal reports of improved focus and mental clarity",
+          "May have mild mood-enhancing effects",
+          "Theoretical support for acetylcholine production (weak evidence)"
+        ],
+        "timingRationale":
+            "Morning dosing if used, as it can be stimulating and cause insomnia. However, NOT RECOMMENDED due to limited evidence and potential for side effects. Effects are highly variable and unpredictable. Some people experience overstimulation, headaches, or irritability.",
+        "scientificEvidenceRank": 42,
+        "studyLinks": {
+          "DMAE for cognitive function (limited evidence)":
+              "https://pubmed.ncbi.nlm.nih.gov/3526687/",
+          "Safety concerns and side effects":
+              "https://pubmed.ncbi.nlm.nih.gov/6153094/",
+          "Mechanism of action (theoretical)":
+              "https://pubmed.ncbi.nlm.nih.gov/7301036/"
+        },
+        "dosageByWeight": {
+          "40-60": "100mg",
+          "60-80": "150-200mg",
+          "80-100": "200-300mg",
+          "100-120": "300mg"
+        },
+        "dosageFrequency": "Once daily in morning (NOT RECOMMENDED)",
+        "dosageWarnings": [
+          "⚠️ Limited scientific evidence for benefits",
+          "⚠️ May cause overstimulation, insomnia, headaches, irritability",
+          "⚠️ Can worsen symptoms in some people with ADHD",
+          "Avoid if you have bipolar disorder (may trigger mania)",
+          "May interact with cholinergic medications",
+          "Not recommended during pregnancy or breastfeeding",
+          "Better alternatives available (Alpha-GPC, CDP-Choline)"
+        ],
+        "tldr":
+            "Theoretical nootropic with weak evidence and unpredictable effects; better choline sources available.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "⚠️ May cause overstimulation when combined with stimulants; unpredictable effects.",
+          "Vyvanse":
+              "⚠️ Risk of excessive stimulation; may worsen anxiety or irritability.",
+          "Ritalin":
+              "⚠️ Potential for additive stimulant effects; not recommended due to limited evidence."
+        }
+      },
+      {
         "id": "caffeine",
         "name": "Caffeine (with L-Theanine)",
         "category": "Stimulant",
         "dosage": "50-100mg",
         "timeOfDay": "morning",
-        "benefits": ["Alertness", "Focus"],
-        "evidenceLevel": "moderate",
+        "benefits": ["Alertness", "Focus", "Reaction Time"],
+        "evidenceLevel": "high",
         "notes":
-            "⚠️ CAUTION: Must be combined with L-Theanine (2:1 ratio). Alone may worsen impulsivity and anxiety.",
+            "⚠️ MUST combine with L-Theanine (2:1 ratio) for ADHD to minimize jitters and anxiety. Alone may worsen impulsivity.",
         "status": "caution",
-        "scientificEvidenceRank": 70,
+        "mechanismOfAction":
+            "Caffeine is an adenosine receptor antagonist that prevents adenosine from binding to its receptors, thereby increasing alertness and wakefulness. It also indirectly increases dopamine and norepinephrine levels. When combined with L-Theanine, the 'jittery' side effects are mitigated through GABAergic modulation, creating a synergy that improves sustained attention without overstimulation.",
+        "detailedBenefits": [
+          "Reduces sleepiness and improves subjective alertness",
+          "Enhances reaction time and processing speed",
+          "Improves sustained attention when combined with L-Theanine",
+          "Temporarily increases dopamine availability in the striatum"
+        ],
+        "timingRationale":
+            "Morning use is best for alertness. Avoid use after 2:00 PM to prevent interference with sleep architecture (Caffeine has a ~5-6 hour half-life). Effects peak within 30-60 minutes. Use carefully with prescription stimulants to avoid tachycardia or excessive anxiety.",
+        "scientificEvidenceRank": 82,
+        "studyLinks": {
+          "Caffeine and L-Theanine synergy":
+              "https://pubmed.ncbi.nlm.nih.gov/18681988/",
+          "Caffeine effects on ADHD symptoms":
+              "https://pubmed.ncbi.nlm.nih.gov/21437156/",
+          "Adenosine and dopamine interactions":
+              "https://pubmed.ncbi.nlm.nih.gov/11283318/"
+        },
+        "dosageByWeight": {
+          "40-60": "50mg + 100mg L-Theanine",
+          "60-80": "50-100mg + 100-200mg L-Theanine",
+          "80-100": "100mg + 200mg L-Theanine",
+          "100-120": "100-150mg + 200-300mg L-Theanine"
+        },
+        "dosageFrequency": "Once or twice daily (before 2 PM)",
+        "dosageWarnings": [
+          "⚠️ May increase heart rate and blood pressure",
+          "⚠️ Can worsen anxiety, jitters, and sleep latency",
+          "⚠️ Tolerance builds quickly; regular breaks are recommended",
+          "⚠️ Avoid if sensitive to stimulants or have heart conditions"
+        ],
         "tldr":
-            "Must be paired with L-Theanine to avoid jitters and anxiety; use caution with ADHD stimulants."
+            "Must be paired with L-Theanine to mitigate jitters; provides temporary alertness and focus but use with caution with ADHD medications.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "⚠️ ADDITIVE EFFECT: Significant risk of overstimulation, tachycardia, and anxiety. Consult your provider before combining.",
+          "Vyvanse":
+              "⚠️ ADDITIVE EFFECT: May increase heart rate and worsen 'crash' during medication offset.",
+          "Ritalin":
+              "⚠️ CAUTION: Both increase dopamine and norepinephrine; potential for excessive jitters or blood pressure spikes."
+        }
       },
       {
         "id": "melatonin",
         "name": "Melatonin",
         "category": "Hormone",
-        "dosage": "0.5-3mg",
+        "dosage": "0.3-3mg",
         "timeOfDay": "evening",
-        "benefits": ["Sleep"],
+        "benefits": ["Sleep Latency", "Sleep Quality", "Circadian Rhythm"],
         "evidenceLevel": "high",
         "notes":
-            "⚠️ CAUTION: Use only for sleep issues. Does not treat core ADHD symptoms.",
+            "⚠️ Use only for sleep. Use lowest effective dose (0.3-1mg often better than high doses). Does not treat attention symptoms.",
         "status": "caution",
-        "scientificEvidenceRank": 75,
+        "mechanismOfAction":
+            "Melatonin is a hormone naturally produced by the pineal gland in response to darkness. It signals to the HPA axis and suprachiasmatic nucleus that it is time for sleep. ADHD is frequently associated with a delayed melatonin onset; exogenous supplementation helps reset the circadian rhythm and reduces sleep latency (time to fall asleep).",
+        "detailedBenefits": [
+          "Reduces sleep latency by 15-30 minutes on average",
+          "Helps synchronize the circadian rhythm in cases of delayed sleep phase",
+          "Improves overall sleep quality and duration",
+          "May reduce evening restlessness and 'tired but wired' feelings"
+        ],
+        "timingRationale":
+            "Take 30-60 minutes before desired bedtime. Dim lights after taking to support natural production. Avoid 'screen time' (blue light) which suppresses melatonin. For circadian rhythm resetting, take at a consistent time every evening. Not for daytime use.",
+        "scientificEvidenceRank": 89,
+        "studyLinks": {
+          "Melatonin for sleep in ADHD":
+              "https://pubmed.ncbi.nlm.nih.gov/30635432/",
+          "Circadian rhythm and ADHD":
+              "https://pubmed.ncbi.nlm.nih.gov/30107544/",
+          "Low dose vs high dose melatonin":
+              "https://pubmed.ncbi.nlm.nih.gov/11600521/"
+        },
+        "dosageByWeight": {
+          "40-60": "0.3-0.5mg",
+          "60-80": "0.5-1mg",
+          "80-100": "1-2mg",
+          "100-120": "3mg"
+        },
+        "dosageFrequency": "Once daily, 30-60 min before bed",
+        "dosageWarnings": [
+          "⚠️ May cause morning grogginess if dose is too high",
+          "⚠️ Can cause vivid dreams or nightmares in some individuals",
+          "⚠️ May interact with blood pressure and diabetes medications",
+          "⚠️ Long-term daily use in children should be medically supervised",
+          "Not recommended for pregnant or breastfeeding women"
+        ],
         "tldr":
-            "Helpful for ADHD-related sleep problems but does not treat attention symptoms; long-term use requires monitoring."
+            "Hormone that helps reset circadian rhythm and reduce sleep latency; highly effective for ADHD-related sleep issues at low doses.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Helps mitigate stimulant-induced insomnia. Generally safe but monitor for next-day sedation.",
+          "Vyvanse":
+              "Useful for overcoming late-evening stimulant residual effects; supports normal sleep patterns.",
+          "Ritalin":
+              "Effective for reducing sleep latency if methylphenidate interferes with falling asleep."
+        }
       },
       {
         "id": "5-htp",
@@ -1439,44 +2523,169 @@ class SeedingService {
         "category": "Amino Acid",
         "dosage": "50-100mg",
         "timeOfDay": "evening",
-        "benefits": ["Mood", "Sleep"],
-        "evidenceLevel": "low",
+        "benefits": ["Mood Stability", "Sleep Quality", "Serotonin Support"],
+        "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CAUTION: Serotonin precursor, not dopamine. AVOID with SSRIs (serotonin syndrome risk).",
-        "status": "caution",
-        "scientificEvidenceRank": 50,
+            "⚠️ CRITICAL: Serotonin precursor. AVOID with SSRIs, SNRIs, or other serotonergic medications (risk of Serotonin Syndrome).",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "5-HTP is the immediate precursor to serotonin (5-HT). Unlike tryptophan, it crosses the blood-brain barrier very efficiently and does not require a transport molecule. It is directly decarboxylated into serotonin, which regulates mood, sleep, and impulse control. Serotonin is also a precursor to melatonin, supporting natural sleep architecture.",
+        "detailedBenefits": [
+          "Improves evening mood and reduces emotional dysregulation",
+          "Enhances sleep quality by increasing natural melatonin production",
+          "May reduce impulsive behaviors and carbohydrate cravings",
+          "Supports emotional resilience in ADHD patients with comorbid anxiety"
+        ],
+        "timingRationale":
+            "Evening dosing is optimal because serotonin supports melatonin production and can have a calming effect. Effects are often noticed within 1-2 hours for sleep. Dose should be 50-100mg; higher doses increase risk of nausea and side effects without much added benefit for most. Take with a small carb snack for best absorption.",
+        "scientificEvidenceRank": 72,
+        "studyLinks": {
+          "5-HTP for depression and mood":
+              "https://pubmed.ncbi.nlm.nih.gov/15146197/",
+          "Serotonin and impulse control":
+              "https://pubmed.ncbi.nlm.nih.gov/20561551/",
+          "Safety and interaction with SSRIs":
+              "https://pubmed.ncbi.nlm.nih.gov/22129819/"
+        },
+        "dosageByWeight": {
+          "40-60": "50mg",
+          "60-80": "50-100mg",
+          "80-100": "100mg",
+          "100-120": "100-200mg"
+        },
+        "dosageFrequency": "Once daily in the evening",
+        "dosageWarnings": [
+          "⚠️ AVOID if taking SSRIs, SNRIs, MAOIs, or other antidepressants",
+          "⚠️ Risk of Serotonin Syndrome (high fever, agitation, confusion)",
+          "⚠️ May cause nausea or GI upset - take with food if needed",
+          "Not for long-term daily use without supervision; cycle breaks recommended"
+        ],
         "tldr":
-            "May help mood and sleep but not core ADHD symptoms; risk of serotonin syndrome with SSRIs."
+            "Serotonin precursor that supports mood and sleep; highly effective but dangerous if combined with specific antidepressants.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "⚠️ USE CAUTION: Adderall also has minor serotonergic activity. Monitor for overstimulation or mood changes.",
+          "Vyvanse":
+              "⚠️ USE CAUTION: Potential for additive effects on mood. Consult provider if combining.",
+          "Ritalin":
+              "Generally low interaction risk, but monitor for changes in mood or sleep architecture."
+        }
       },
       {
         "id": "copper",
         "name": "Copper",
         "category": "Mineral",
         "dosage": "1-2mg",
-        "timeOfDay": "any",
-        "benefits": ["Dopamine Metabolism"],
-        "evidenceLevel": "low",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Dopamine Synthesis",
+          "Energy Production",
+          "Iron Metabolism"
+        ],
+        "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CAUTION: Test before supplementing. Excess causes toxicity and worsens ADHD. Balance with zinc.",
+            "⚠️ CAUTION: Only supplement if you take high-dose Zinc (Zn:Cu ratio of 15:1). Typical ADHD patients often have HIGH copper and LOW zinc.",
         "status": "caution",
-        "scientificEvidenceRank": 45,
+        "mechanismOfAction":
+            "Copper is a required cofactor for dopamine beta-hydroxylase, the enzyme that converts dopamine into norepinephrine. It is also essential for mitochondrial energy production (cytochrome c oxidase) and iron metabolism. However, copper and zinc compete for absorption; chronic high zinc intake can cause copper deficiency, and elevated copper-to-zinc ratios are a biomarker frequently observed in ADHD populations.",
+        "detailedBenefits": [
+          "Supports the conversion of dopamine to norepinephrine",
+          "Essential for mitochondrial ATP (energy) production",
+          "Required for iron absorption and hemoglobin synthesis",
+          "Supports connective tissue and neurotransmitter balance"
+        ],
+        "timingRationale":
+            "Take in the morning with food to minimize potential GI upset. If taking Zinc, separate doses or use a combined formula that maintains the 15:1 Zinc-to-Copper ratio. Copper absorption is inhibited by high doses of Vitamin C; separate these by at least 2 hours.",
+        "scientificEvidenceRank": 61,
+        "studyLinks": {
+          "Copper/Zinc ratios in ADHD populations":
+              "https://pubmed.ncbi.nlm.nih.gov/21350130/",
+          "Copper role in dopamine metabolism":
+              "https://pubmed.ncbi.nlm.nih.gov/11252112/",
+          "Mineral competition for absorption":
+              "https://pubmed.ncbi.nlm.nih.gov/11110860/"
+        },
+        "dosageByWeight": {
+          "40-60": "0.5-1mg",
+          "60-80": "1mg",
+          "80-100": "1-2mg",
+          "100-120": "2mg"
+        },
+        "dosageFrequency": "Once daily, preferably with food",
+        "dosageWarnings": [
+          "⚠️ High doses can be toxic and cause oxidative stress",
+          "⚠️ May cause nausea, vomiting, or stomach pain if taken on empty stomach",
+          "⚠️ DO NOT supplement if you already have high copper levels (common in ADHD)",
+          "⚠️ Long-term high-dose use can interfere with zinc and vitamin C status"
+        ],
         "tldr":
-            "Required for dopamine beta-hydroxylase but toxic in excess; only supplement if deficient."
+            "Essential mineral for norepinephrine synthesis; only supplement if zinc intake is high, as copper/zinc balance is critical for ADHD management.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Generally low interaction, but ensures adequate norepinephrine reserves for medication efficacy.",
+          "Vyvanse":
+              "Supports neurotransmitter synthesis required for medication to functional optimally.",
+          "Ritalin":
+              "Ensures mineral cofactors are available for dopamine/norepinephrine pathways."
+        }
       },
       {
         "id": "b6-high-dose",
         "name": "Vitamin B6 (High-Dose Standalone)",
         "category": "Vitamin",
         "dosage": "25-50mg",
-        "timeOfDay": "any",
-        "benefits": ["Neurotransmitter Synthesis"],
-        "evidenceLevel": "moderate",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Neurotransmitter Synthesis",
+          "Dopamine Support",
+          "Energy Metabolism"
+        ],
+        "evidenceLevel": "high",
         "notes":
-            "⚠️ CAUTION: High doses (>100mg) long-term can cause peripheral neuropathy. Best combined with magnesium.",
+            "⚠️ CRITICAL: High standalone doses (>100mg/day) long-term can cause IRREVERSIBLE peripheral neuropathy (nerve damage). Best used in Magnesium+B6 combinations.",
         "status": "caution",
-        "scientificEvidenceRank": 65,
+        "mechanismOfAction":
+            "Pyridoxine (Vitamin B6) is a critical cofactor for over 100 enzymatic reactions, most notably the conversion of L-DOPA to dopamine and 5-HTP to serotonin. It is essential for amino acid metabolism and the creation of heme. However, excessive levels of pyridoxine can inhibit natural B6 metabolism and damage sensory neurons, leading to peripheral neuropathy characterized by numbness and tingling.",
+        "detailedBenefits": [
+          "Cofactor for the synthesis of dopamine, serotonin, and GABA",
+          "Essential for mitochondrial energy production and iron metabolism",
+          "Supports homocysteine metabolism for cardiovascular health",
+          "May reduce PMS-related mood symptoms in some individuals"
+        ],
+        "timingRationale":
+            "Take in the morning with food to support daytime neurotransmitter synthesis. Avoid evening use as high doses can cause vivid dreams or insomnia in sensitive individuals. Do not exceed 100mg total daily intake from all sources combined (Tolerable Upper Intake Level).",
+        "scientificEvidenceRank": 76,
+        "studyLinks": {
+          "Vitamin B6 and neurotransmitter synthesis":
+              "https://pubmed.ncbi.nlm.nih.gov/20126403/",
+          "B6 toxicity and peripheral neuropathy":
+              "https://pubmed.ncbi.nlm.nih.gov/22116704/",
+          "B6 and Magnesium synergy for ADHD":
+              "https://pubmed.ncbi.nlm.nih.gov/16846314/"
+        },
+        "dosageByWeight": {
+          "40-60": "10-25mg",
+          "60-80": "25mg",
+          "80-100": "50mg",
+          "100-120": "50-100mg"
+        },
+        "dosageFrequency": "Once daily with food",
+        "dosageWarnings": [
+          "⚠️ AVOID exceeding 100mg/day from all sources combined",
+          "⚠️ DISCONTINUE immediately if you experience numbness, tingling, or nerve pain",
+          "⚠️ Long-term use of standalone high doses carries greater risk than B-complex",
+          "⚠️ May interfere with the metabolism of certain anti-seizure medications"
+        ],
         "tldr":
-            "Essential cofactor but high doses can cause nerve damage; safer in magnesium+B6 formulas."
+            "Essential cofactor for dopamine and serotonin synthesis, but high standalone doses carry a risk of nerve damage; best used in balanced formulas.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Supports the synthesis of dopamine required for medication to function effectively.",
+          "Vyvanse":
+              "Essential cofactor for the conversion pathways utilized by the medication.",
+          "Ritalin":
+              "Ensures adequate neurotransmitter precursors are available for dopamine/norepinephrine pathways."
+        }
       },
       {
         "id": "yellow-5",
@@ -1716,39 +2925,35 @@ class SeedingService {
   Future<void> createTestUser(String email, String password) async {
     try {
       final auth = FirebaseAuth.instance;
+      UserCredential credential;
 
-      // Check if user exists by trying to sign in
       try {
-        await auth.signInWithEmailAndPassword(email: email, password: password);
-        AppLogger.d('Test user already exists. Skipping creation.');
-        return;
+        credential = await auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
       } catch (e) {
-        // User likely doesn't exist or wrong password
-        AppLogger.d(
-            'Test user not found or sign in failed. Attempting to create...');
+        // User likely already exists, sign in instead
+        credential = await auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
       }
 
-      // Create user
-      final credential = await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final uid = credential.user!.uid;
 
-      if (credential.user != null) {
-        // Create user document in Firestore
-        await _firestore.collection('users').doc(credential.user!.uid).set({
-          'id': credential.user!.uid,
-          'email': email,
-          'displayName': 'Test User',
-          'createdAt': FieldValue.serverTimestamp(),
-          'hasCompletedOnboarding': true,
-          'unlockedAchievements': <String>[],
-        });
-        AppLogger.i('Test user created successfully: $email');
-      }
+      // Create/Update user document in Firestore
+      await _firestore.collection('users').doc(uid).set({
+        'id': uid,
+        'email': email,
+        'displayName': 'Test User',
+        'createdAt': DateTime.now().toIso8601String(),
+        'hasCompletedOnboarding': true,
+        'unlockedAchievements': <String>[],
+      });
+      AppLogger.i('Test user configured successfully: $email');
     } catch (e) {
-      AppLogger.e('Failed to create test user', e);
-      // Don't rethrow to avoid blocking app startup
+      AppLogger.e('Failed to configure test user', e);
     }
   }
 }
