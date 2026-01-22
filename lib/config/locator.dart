@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
 import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
@@ -73,7 +74,10 @@ import '../application/view_models/global_search_view_model.dart';
 
 final locator = GetIt.instance;
 
-void setupLocator() {
+Future<void> setupLocator() async {
+  // SharedPreferences
+  final prefs = await SharedPreferences.getInstance();
+
   // Services
   locator
       .registerLazySingleton<BillingService>(() => RevenueCatBillingService());
@@ -112,7 +116,7 @@ void setupLocator() {
   locator.registerLazySingleton<SafetyRepository>(
       () => FirebaseSafetyRepository());
   locator.registerLazySingleton<SettingsRepository>(
-      () => SharedPrefsSettingsRepository());
+      () => SharedPrefsSettingsRepository(prefs));
   locator.registerLazySingleton<ReferralRepository>(
       () => FirebaseReferralRepository());
 

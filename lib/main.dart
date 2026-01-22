@@ -47,7 +47,7 @@ void main() async {
   // Setup Dependency Injection only if Firebase is ready OR if we can handle the lack of it
   if (firebaseInitialized) {
     try {
-      setupLocator();
+      await setupLocator();
       // Services will be initialized in SplashScreen to improve startup time
     } catch (e) {
       AppLogger.e('Locator/Init setup error', e);

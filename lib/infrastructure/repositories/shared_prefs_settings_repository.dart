@@ -3,14 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/repositories/settings_repository.dart';
 
 class SharedPrefsSettingsRepository implements SettingsRepository {
-  late SharedPreferences _prefs;
+  final SharedPreferences _prefs;
+
+  SharedPrefsSettingsRepository(this._prefs);
 
   // Keys
   static const String _keyNudgeEnabled = 'nudge_enabled';
   static const String _keyNudgeHour = 'nudge_hour';
   static const String _keyNudgeMinute = 'nudge_minute';
-  static const String _keyWarningOption =
-      'warning_option'; // '15m' or 'followup'
+  static const String _keyWarningOption = 'warning_option';
   static const String _keyExtendedEnabled = 'extended_enabled';
   static const String _keyThemeMode = 'theme_mode';
   static const String _keyReducedMotion = 'reduced_motion_enabled';
@@ -19,7 +20,7 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+    // Already initialized via constructor in this implementation
   }
 
   @override
