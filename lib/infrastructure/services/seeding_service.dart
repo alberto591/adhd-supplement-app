@@ -995,6 +995,693 @@ class SeedingService {
         },
         "tldr":
             "Improves immune health but can interfere with the absorption and effectiveness of stimulant medications."
+      },
+      {
+        "id": "l-tyrosine",
+        "name": "L-Tyrosine",
+        "category": "Amino Acid",
+        "dosage": "500mg",
+        "timeOfDay": "morning",
+        "benefits": ["Dopamine Precursor", "Stress Resilience", "Acute Focus"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Building block for dopamine, norepinephrine, and epinephrine. Best for acute stress situations rather than chronic daily use due to tolerance.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Converts to L-DOPA via tyrosine hydroxylase enzyme, then to dopamine. Supports catecholamine synthesis under stress conditions when demand exceeds supply.",
+        "detailedBenefits": [
+          "Improves cognitive performance under acute stress",
+          "Supports dopamine production when depleted",
+          "May enhance working memory during demanding tasks",
+          "Provides building blocks for stress hormone synthesis"
+        ],
+        "timingRationale":
+            "Take on empty stomach before demanding tasks for maximum absorption. Competes with other amino acids for transport, so avoid taking with protein meals.",
+        "scientificEvidenceRank": 65,
+        "studyLinks": {
+          "Tyrosine for cognitive performance":
+              "https://pubmed.ncbi.nlm.nih.gov/25797188/",
+          "Stress and working memory":
+              "https://pubmed.ncbi.nlm.nih.gov/10688423/"
+        },
+        "dosageByWeight": {
+          "40-60": "500-1000mg",
+          "60-80": "1000-1500mg",
+          "80-100": "1500-2000mg",
+          "100-120": "2000mg"
+        },
+        "dosageFrequency":
+            "Once or split doses before demanding tasks (not daily)",
+        "dosageWarnings": [
+          "Take on empty stomach for best absorption",
+          "Tolerance develops within 6 weeks with daily use",
+          "Not recommended for chronic daily supplementation",
+          "Take separately from ADHD stimulants (competes for absorption)"
+        ],
+        "tldr":
+            "Dopamine precursor amino acid; best for acute stress situations rather than daily use due to tolerance.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Take 2+ hours apart from medication (competes for absorption). Works synergistically with iron and B6 (cofactors for conversion).",
+          "Vyvanse":
+              "Separate timing from medication. May provide additional dopamine support during high-stress periods.",
+          "Ritalin":
+              "Avoid taking simultaneously. Best used on days off medication or hours apart."
+        },
+        "contraindications": [
+          "People with hyperthyroidism (tyrosine is a thyroid hormone precursor)",
+          "Those taking MAO inhibitors",
+          "Individuals with melanoma (theoretical risk)",
+          "Pregnant or breastfeeding women"
+        ],
+        "sideEffects": [
+          "Rare: headache or nausea at high doses",
+          "Possible: irritability or anxiety if overstimulated",
+          "Tolerance develops quickly with daily use",
+          "Generally safe at recommended doses"
+        ]
+      },
+      {
+        "id": "rhodiola-rosea",
+        "name": "Rhodiola Rosea",
+        "category": "Adaptogen",
+        "dosage": "200mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Mental Fatigue Reduction",
+          "Stress Adaptation",
+          "Sustained Attention"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Adaptogenic herb that balances neurotransmitters while regulating cortisol. Use standardized extract (3% rosavins, 1% salidroside).",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Increases dopamine, serotonin, and norepinephrine availability while modulating stress response. Enhances mental energy without depleting reserves like stimulants.",
+        "detailedBenefits": [
+          "Reduces mental fatigue by 30-40% in clinical trials",
+          "Improves sustained attention and task management",
+          "Balances stress hormone (cortisol) levels",
+          "Supports cognitive performance under chronic stress"
+        ],
+        "timingRationale":
+            "Morning dosing aligns with natural cortisol rhythm. Effects build over 1-2 weeks. Avoid evening use as it may interfere with sleep.",
+        "scientificEvidenceRank": 72,
+        "studyLinks": {
+          "Rhodiola for mental fatigue":
+              "https://pubmed.ncbi.nlm.nih.gov/11081987/",
+          "Cognitive performance under stress":
+              "https://pubmed.ncbi.nlm.nih.gov/19016404/"
+        },
+        "dosageByWeight": {
+          "40-60": "200-300mg",
+          "60-80": "300-400mg",
+          "80-100": "400-600mg",
+          "100-120": "600mg"
+        },
+        "dosageFrequency": "Once daily in the morning",
+        "dosageWarnings": [
+          "Start with 200mg to assess tolerance",
+          "May cause mild stimulation - avoid if overstimulated",
+          "Do not take in evening (may interfere with sleep)",
+          "Effects build over 1-2 weeks of consistent use"
+        ],
+        "tldr":
+            "Adaptogenic herb that reduces mental fatigue and increases neurotransmitter levels; supports stress resilience.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Generally safe but may enhance stimulating effects. Monitor for overstimulation. Start with lower dose.",
+          "Vyvanse":
+              "May provide complementary stress support. Watch for combined stimulant effects.",
+          "Ritalin":
+              "Safe combination for most. Rhodiola's adaptogenic properties may reduce stress from stimulants."
+        },
+        "contraindications": [
+          "People with bipolar disorder (may trigger manic episodes)",
+          "Those taking MAO inhibitors",
+          "Pregnant or breastfeeding women (insufficient safety data)"
+        ],
+        "sideEffects": [
+          "Rare: mild jitteriness or overstimulation",
+          "Possible: dry mouth or dizziness",
+          "Very rare: agitation in bipolar individuals",
+          "Generally well-tolerated at recommended doses"
+        ]
+      },
+      {
+        "id": "alcar",
+        "name": "Acetyl-L-Carnitine (ALCAR)",
+        "category": "Amino Acid",
+        "dosage": "500mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Brain Energy",
+          "Acetylcholine Support",
+          "Inattentive-Type ADHD"
+        ],
+        "evidenceLevel": "high",
+        "notes":
+            "Crosses blood-brain barrier to enhance mitochondrial energy and increase dopamine. Multi-site trials show significant benefit specifically for inattentive subtype, NOT combined type.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Enhances mitochondrial energy production and crosses blood-brain barrier to increase dopamine levels and amino acids needed for brain development. Supports acetylcholine synthesis.",
+        "detailedBenefits": [
+          "Reduces inattentive symptoms by 20-30% in clinical trials",
+          "Enhances brain energy metabolism",
+          "May reduce irritability and headaches from medications",
+          "Supports cognitive processing speed"
+        ],
+        "timingRationale":
+            "Morning and early afternoon dosing provides sustained cognitive support. Take with or without food. Split dosing improves consistency of effects.",
+        "scientificEvidenceRank": 78,
+        "studyLinks": {
+          "ALCAR for ADHD inattentive type":
+              "https://pubmed.ncbi.nlm.nih.gov/17444943/",
+          "Brain energy metabolism": "https://pubmed.ncbi.nlm.nih.gov/18065594/"
+        },
+        "dosageByWeight": {
+          "40-60": "500-1000mg",
+          "60-80": "1000mg",
+          "80-100": "1000-1500mg",
+          "100-120": "1500mg"
+        },
+        "dosageFrequency": "Twice daily (morning and early afternoon)",
+        "dosageWarnings": [
+          "Higher doses (>2000mg) may cause fishy body odor",
+          "May increase energy - avoid late afternoon doses if affects sleep",
+          "Most effective for inattentive type, not combined type ADHD",
+          "Start with 500mg to assess tolerance"
+        ],
+        "tldr":
+            "Supports brain energy and acetylcholine; particularly beneficial for inattentive-type ADHD (not combined type).",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Safe combination. May reduce medication side effects like irritability and headache.",
+          "Vyvanse":
+              "Complementary for sustained energy and focus. No contraindications.",
+          "Ritalin":
+              "Safe to combine with methylphenidate. May enhance medication effectiveness for inattentive symptoms."
+        },
+        "contraindications": [
+          "People with seizure disorders (theoretical risk)",
+          "Those with thyroid hormone issues (may increase thyroid activity)",
+          "Individuals with fishy body odor (TMAU condition)"
+        ],
+        "sideEffects": [
+          "Occasional: fishy body odor at high doses (>2000mg)",
+          "Rare: mild GI upset or nausea",
+          "Possible: increased energy/restlessness",
+          "Generally well-tolerated at recommended doses"
+        ]
+      },
+      {
+        "id": "nac",
+        "name": "N-Acetyl Cysteine (NAC)",
+        "category": "Amino Acid",
+        "dosage": "600mg",
+        "timeOfDay": "any",
+        "benefits": [
+          "Impulse Control",
+          "Oxidative Stress",
+          "Glutamate Regulation"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Powerful antioxidant and glutamate modulator. Precursor to glutathione (master antioxidant). Particularly beneficial for impulse control.",
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Precursor to glutathione (master cellular antioxidant). Modulates glutamate signaling in prefrontal cortex by restoring cystine-glutamate exchange. Reduces oxidative stress and neuroinflammation.",
+        "detailedBenefits": [
+          "Supports impulse control and reduces compulsive behaviors",
+          "Protects brain cells from oxidative damage",
+          "Regulates glutamate (main excitatory neurotransmitter)",
+          "May reduce stimulant-induced oxidative stress"
+        ],
+        "timingRationale":
+            "Can be taken any time of day wit or without food. Split dosing (morning and afternoon) may provide more consistent effects than single dose.",
+        "scientificEvidenceRank": 70,
+        "studyLinks": {
+          "NAC for impulse control":
+              "https://pubmed.ncbi.nlm.nih.gov/26424423/",
+          "Glutamate modulation": "https://pubmed.ncbi.nlm.nih.gov/24200314/"
+        },
+        "dosageByWeight": {
+          "40-60": "600mg",
+          "60-80": "600-1200mg",
+          "80-100": "1200-1800mg",
+          "100-120": "1800mg"
+        },
+        "dosageFrequency": "1-3 times daily (split into 2-3 doses)",
+        "dosageWarnings": [
+          "Start with 600mg once daily to assess tolerance",
+          "May cause mild GI upset - take with food if needed",
+          "High doses (>1800mg) should be under medical supervision",
+          "Has distinctive sulfur smell (normal)"
+        ],
+        "tldr":
+            "Powerful antioxidant that modulates glutamate and supports impulse control; reduces oxidative stress.",
+        "adhdMedInteractions": {
+          "Adderall":
+              "Safe combination. May enhance medication effectiveness by reducing oxidative stress from stimulant use.",
+          "Vyvanse":
+              "Complementary antioxidant protection. No contraindications.",
+          "Ritalin":
+              "Safe with all ADHD medications. Provides neuroprotective benefits."
+        },
+        "contraindications": [
+          "People with asthma (may trigger bronchospasm in rare cases)",
+          "Those with bleeding disorders (theoretical risk)",
+          "Pregnant or breastfeeding women (consult physician)"
+        ],
+        "sideEffects": [
+          "Common: sulfur smell/taste (normal, not harmful)",
+          "Occasional: mild nausea or GI upset (take with food)",
+          "Rare: skin rash or allergic reaction",
+          "Generally safe and well-tolerated"
+        ]
+      },
+      {
+        "id": "b-complex",
+        "name": "Vitamin B Complex (Methylated)",
+        "category": "Vitamin",
+        "dosage": "50mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Neurotransmitter Synthesis",
+          "Energy Production",
+          "Methylation Support"
+        ],
+        "evidenceLevel": "high",
+        "notes":
+            "Methylated form (methylfolate, methylcobalamin) preferred. Essential cofactors for dopamine production.",
+        "status": "beneficial",
+        "scientificEvidenceRank": 80,
+        "tldr":
+            "Essential cofactors for neurotransmitter synthesis; methylated forms support dopamine production."
+      },
+      {
+        "id": "alpha-gpc",
+        "name": "Alpha-GPC",
+        "category": "Nootropic",
+        "dosage": "300mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Working Memory",
+          "Acetylcholine Production",
+          "Mental Clarity"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Premium choline source, highly bioavailable. Supports working memory and attention.",
+        "status": "beneficial",
+        "scientificEvidenceRank": 72,
+        "tldr":
+            "Premium choline source for acetylcholine synthesis; supports working memory and attention."
+      },
+      {
+        "id": "panax-ginseng",
+        "name": "Panax Ginseng (Korean Ginseng)",
+        "category": "Adaptogen",
+        "dosage": "200mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Sustained Attention",
+          "Mental Fatigue",
+          "Dopaminergic Effects"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Use standardized extract. Contains ginsenosides that modulate dopamine and acetylcholine.",
+        "status": "beneficial",
+        "scientificEvidenceRank": 68,
+        "tldr":
+            "Adaptogen that improves sustained attention and reduces mental fatigue through dopaminergic effects."
+      },
+      {
+        "id": "maritime-pine-bark",
+        "name": "Maritime Pine Bark Extract",
+        "category": "Antioxidant",
+        "dosage": "1mg/kg",
+        "timeOfDay": "morning",
+        "benefits": ["Hyperactivity Reduction", "Attention", "Blood Flow"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Similar to Pycnogenol. Contains proanthocyanidins for antioxidant and blood flow benefits.",
+        "status": "beneficial",
+        "scientificEvidenceRank": 73,
+        "tldr":
+            "Antioxidant-rich extract that reduces hyperactivity and improves attention through enhanced blood flow."
+      },
+      {
+        "id": "phosphatidylcholine",
+        "name": "Phosphatidylcholine",
+        "category": "Lipid",
+        "dosage": "420mg",
+        "timeOfDay": "any",
+        "benefits": [
+          "Cell Membrane Support",
+          "Acetylcholine Production",
+          "Neuronal Structure"
+        ],
+        "evidenceLevel": "moderate",
+        "notes": "Provides choline and supports cell membrane fluidity.",
+        "status": "beneficial",
+        "scientificEvidenceRank": 65,
+        "tldr":
+            "Cell membrane phospholipid supporting neuronal structure and acetylcholine production."
+      },
+      {
+        "id": "vitamin-e",
+        "name": "Vitamin E (Mixed Tocopherols)",
+        "category": "Vitamin",
+        "dosage": "200 IU",
+        "timeOfDay": "any",
+        "benefits": ["Antioxidant", "Membrane Protection", "Omega-3 Support"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Mixed tocopherols preferred. Protects omega-3 fats from oxidation.",
+        "status": "beneficial",
+        "scientificEvidenceRank": 60,
+        "tldr":
+            "Fat-soluble antioxidant that protects brain membranes; works synergistically with omega-3s."
+      },
+      {
+        "id": "coq10",
+        "name": "Coenzyme Q10 (Ubiquinol)",
+        "category": "Antioxidant",
+        "dosage": "100mg",
+        "timeOfDay": "morning",
+        "benefits": [
+          "Mitochondrial Energy",
+          "Brain Cell Energy",
+          "Antioxidant"
+        ],
+        "evidenceLevel": "low",
+        "notes":
+            "Ubiquinol form preferred for better absorption. Supports ATP production.",
+        "status": "beneficial",
+        "scientificEvidenceRank": 55,
+        "tldr":
+            "Supports mitochondrial energy production and provides antioxidant protection for brain cells."
+      },
+      {
+        "id": "vitamin-a",
+        "name": "Vitamin A (Retinol)",
+        "category": "Vitamin",
+        "dosage": "2500 IU",
+        "timeOfDay": "any",
+        "benefits": [
+          "Neuroplasticity",
+          "Dopamine Receptor Function",
+          "Gene Expression"
+        ],
+        "evidenceLevel": "moderate",
+        "notes":
+            "Supports dopamine receptor sensitivity. Avoid megadoses (toxic above 10,000 IU daily long-term).",
+        "status": "beneficial",
+        "scientificEvidenceRank": 62,
+        "tldr":
+            "Fat-soluble vitamin supporting neuroplasticity and dopamine receptor function; avoid megadoses."
+      },
+      {
+        "id": "caffeine",
+        "name": "Caffeine (with L-Theanine)",
+        "category": "Stimulant",
+        "dosage": "50-100mg",
+        "timeOfDay": "morning",
+        "benefits": ["Alertness", "Focus"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "⚠️ CAUTION: Must be combined with L-Theanine (2:1 ratio). Alone may worsen impulsivity and anxiety.",
+        "status": "caution",
+        "scientificEvidenceRank": 70,
+        "tldr":
+            "Must be paired with L-Theanine to avoid jitters and anxiety; use caution with ADHD stimulants."
+      },
+      {
+        "id": "melatonin",
+        "name": "Melatonin",
+        "category": "Hormone",
+        "dosage": "0.5-3mg",
+        "timeOfDay": "evening",
+        "benefits": ["Sleep"],
+        "evidenceLevel": "high",
+        "notes":
+            "⚠️ CAUTION: Use only for sleep issues. Does not treat core ADHD symptoms.",
+        "status": "caution",
+        "scientificEvidenceRank": 75,
+        "tldr":
+            "Helpful for ADHD-related sleep problems but does not treat attention symptoms; long-term use requires monitoring."
+      },
+      {
+        "id": "5-htp",
+        "name": "5-HTP (5-Hydroxytryptophan)",
+        "category": "Amino Acid",
+        "dosage": "50-100mg",
+        "timeOfDay": "evening",
+        "benefits": ["Mood", "Sleep"],
+        "evidenceLevel": "low",
+        "notes":
+            "⚠️ CAUTION: Serotonin precursor, not dopamine. AVOID with SSRIs (serotonin syndrome risk).",
+        "status": "caution",
+        "scientificEvidenceRank": 50,
+        "tldr":
+            "May help mood and sleep but not core ADHD symptoms; risk of serotonin syndrome with SSRIs."
+      },
+      {
+        "id": "copper",
+        "name": "Copper",
+        "category": "Mineral",
+        "dosage": "1-2mg",
+        "timeOfDay": "any",
+        "benefits": ["Dopamine Metabolism"],
+        "evidenceLevel": "low",
+        "notes":
+            "⚠️ CAUTION: Test before supplementing. Excess causes toxicity and worsens ADHD. Balance with zinc.",
+        "status": "caution",
+        "scientificEvidenceRank": 45,
+        "tldr":
+            "Required for dopamine beta-hydroxylase but toxic in excess; only supplement if deficient."
+      },
+      {
+        "id": "b6-high-dose",
+        "name": "Vitamin B6 (High-Dose Standalone)",
+        "category": "Vitamin",
+        "dosage": "25-50mg",
+        "timeOfDay": "any",
+        "benefits": ["Neurotransmitter Synthesis"],
+        "evidenceLevel": "moderate",
+        "notes":
+            "⚠️ CAUTION: High doses (>100mg) long-term can cause peripheral neuropathy. Best combined with magnesium.",
+        "status": "caution",
+        "scientificEvidenceRank": 65,
+        "tldr":
+            "Essential cofactor but high doses can cause nerve damage; safer in magnesium+B6 formulas."
+      },
+      {
+        "id": "yellow-5",
+        "name": "Yellow 5 (Tartrazine / E102)",
+        "category": "Artificial Color",
+        "description":
+            "Synthetic food dye linked to increased hyperactivity. Part of 'Southampton Six' dyes triggering EU warnings.",
+        "status": "avoid",
+        "scientificEvidenceRank": 73,
+        "tldr":
+            "Artificial yellow dye linked to hyperactivity in children; avoid in candy, cereals, sodas.",
+        "notes":
+            "⚠️ AVOID: Found in candy, cereals, soft drinks, chips, pickles, mustard, some medications."
+      },
+      {
+        "id": "yellow-6",
+        "name": "Yellow 6 (Sunset Yellow / E110)",
+        "category": "Artificial Color",
+        "description":
+            "Synthetic dye shown to increase hyperactive behavior in controlled trials.",
+        "status": "avoid",
+        "scientificEvidenceRank": 72,
+        "tldr":
+            "Orange food dye that worsens hyperactivity; avoid in sodas and baked goods.",
+        "notes":
+            "⚠️ AVOID: Found in orange-colored foods, sodas, baked goods, candy, gelatin desserts."
+      },
+      {
+        "id": "red-3",
+        "name": "Red 3 (Erythrosine / E127)",
+        "category": "Artificial Color",
+        "description":
+            "Associated with thyroid disruption and behavioral effects.",
+        "status": "avoid",
+        "scientificEvidenceRank": 70,
+        "tldr":
+            "Red dye with thyroid and behavioral concerns; avoid in cherries and candy.",
+        "notes":
+            "⚠️ AVOID: Found in maraschino cherries, candy, some medications."
+      },
+      {
+        "id": "blue-1",
+        "name": "Blue 1 (Brilliant Blue / E133)",
+        "category": "Artificial Color",
+        "description":
+            "Synthetic dye identified as not adequately protected by FDA guidelines for children's behavioral health.",
+        "status": "avoid",
+        "scientificEvidenceRank": 68,
+        "tldr":
+            "Blue dye linked to behavioral issues; avoid in beverages and candy.",
+        "notes": "⚠️ AVOID: Found in beverages, candy, baked goods, ice cream."
+      },
+      {
+        "id": "blue-2",
+        "name": "Blue 2 (Indigo Carmine / E132)",
+        "category": "Artificial Color",
+        "description":
+            "Synthetic color linked to behavioral issues in children with ADHD or sensitivities.",
+        "status": "avoid",
+        "scientificEvidenceRank": 67,
+        "tldr":
+            "Blue dye associated with hyperactivity; avoid in candy and beverages.",
+        "notes": "⚠️ AVOID: Found in candy, beverages, pet foods."
+      },
+      {
+        "id": "carmoisine",
+        "name": "Carmoisine (E122)",
+        "category": "Artificial Color",
+        "description":
+            "Southampton Study dye contributing to increased hyperactivity when combined with sodium benzoate.",
+        "status": "avoid",
+        "scientificEvidenceRank": 71,
+        "tldr": "Red dye from Southampton study; avoid in jams and drinks.",
+        "notes":
+            "⚠️ AVOID: Found in jams, desserts, drinks (more common in UK/EU)."
+      },
+      {
+        "id": "quinoline-yellow",
+        "name": "Quinoline Yellow (E104)",
+        "category": "Artificial Color",
+        "description":
+            "One of six Southampton study dyes showing significant hyperactivity effects.",
+        "status": "avoid",
+        "scientificEvidenceRank": 69,
+        "tldr":
+            "Yellow dye from Southampton study; avoid in smoked fish and medications.",
+        "notes":
+            "⚠️ AVOID: Found in smoked fish, Scotch eggs, some medications."
+      },
+      {
+        "id": "allura-red",
+        "name": "Allura Red (E129)",
+        "category": "Artificial Color",
+        "description":
+            "Increased Global Hyperactivity scores in Southampton study (effect size d=0.12-0.2).",
+        "status": "avoid",
+        "scientificEvidenceRank": 74,
+        "tldr":
+            "Red dye with proven hyperactivity effects; avoid in sodas and cereals.",
+        "notes":
+            "⚠️ AVOID: Found in soft drinks, children's medications, candy, cereals."
+      },
+      {
+        "id": "aspartame",
+        "name": "Aspartame (E951)",
+        "category": "Artificial Sweetener",
+        "description":
+            "Chronic consumption may affect dopamine system. Individual sensitivities vary - some report brain fog.",
+        "status": "avoid",
+        "scientificEvidenceRank": 58,
+        "tldr":
+            "Artificial sweetener with potential dopamine effects; individual sensitivity varies.",
+        "notes":
+            "⚠️ LIMIT/AVOID: Found in diet sodas, sugar-free gum, yogurts, tabletop sweeteners."
+      },
+      {
+        "id": "sucralose",
+        "name": "Sucralose",
+        "category": "Artificial Sweetener",
+        "description":
+            "May disrupt gut microbiome (affecting gut-brain axis). Anecdotal reports of worsened ADHD symptoms.",
+        "status": "avoid",
+        "scientificEvidenceRank": 55,
+        "tldr":
+            "Artificial sweetener that may disrupt gut-brain axis; anecdotal ADHD symptom worsening.",
+        "notes":
+            "⚠️ LIMIT/AVOID: Found in diet products, protein shakes, sugar-free desserts."
+      },
+      {
+        "id": "msg",
+        "name": "Monosodium Glutamate (MSG / E621)",
+        "category": "Flavor Enhancer",
+        "description":
+            "Some individuals report increased hyperactivity after consumption. May affect neurotransmitter activity in sensitive individuals.",
+        "status": "avoid",
+        "scientificEvidenceRank": 52,
+        "tldr":
+            "Flavor enhancer with mixed evidence; some report behavioral changes.",
+        "notes":
+            "⚠️ LIMIT: Found in fast food, chips, instant noodles, frozen meals, restaurant food."
+      },
+      {
+        "id": "bht",
+        "name": "Butylated Hydroxytoluene (BHT / E321)",
+        "category": "Preservative",
+        "description":
+            "Synthetic preservative with potential neurotoxic effects at high exposure. May contribute to oxidative stress.",
+        "status": "avoid",
+        "scientificEvidenceRank": 60,
+        "tldr":
+            "Synthetic preservative with potential neurotoxic effects; avoid in cereals and snacks.",
+        "notes":
+            "⚠️ AVOID: Found in cereals, snack foods, chewing gum, some cosmetics."
+      },
+      {
+        "id": "potassium-benzoate",
+        "name": "Potassium Benzoate (E212)",
+        "category": "Preservative",
+        "description":
+            "Similar mechanism to sodium benzoate. May amplify hyperactivity with synthetic food dyes.",
+        "status": "avoid",
+        "scientificEvidenceRank": 66,
+        "tldr":
+            "Preservative similar to sodium benzoate; amplifies hyperactivity with dyes.",
+        "notes":
+            "⚠️ AVOID: Found in soft drinks, fruit juices, pickles, condiments."
+      },
+      {
+        "id": "refined-sugar",
+        "name": "Excessive Refined Sugar",
+        "category": "Dietary Factor",
+        "description":
+            "Chronic excessive intake may downregulate D2 dopamine receptors. Blood sugar crashes cause brain fog and worsen attention.",
+        "status": "avoid",
+        "scientificEvidenceRank": 63,
+        "tldr":
+            "Chronic excess may reduce dopamine signaling; blood sugar crashes worsen focus.",
+        "notes":
+            "⚠️ LIMIT: Focus on low-glycemic alternatives to avoid crashes."
+      },
+      {
+        "id": "trans-fats",
+        "name": "Trans Fats (Partially Hydrogenated Oils)",
+        "category": "Dietary Fat",
+        "description":
+            "Interferes with omega-3 incorporation into brain membranes. Pro-inflammatory and counteracts omega-3 benefits.",
+        "status": "avoid",
+        "scientificEvidenceRank": 76,
+        "tldr":
+            "Harmful fats that interfere with omega-3 brain benefits; avoid fried foods and margarine.",
+        "notes":
+            "⚠️ AVOID: Found in fried foods, baked goods, margarine, some processed snacks."
+      },
+      {
+        "id": "alcohol",
+        "name": "Alcohol",
+        "category": "Substance",
+        "description":
+            "Depletes B vitamins, disrupts sleep, impairs dopamine regulation, and worsens executive function.",
+        "status": "avoid",
+        "scientificEvidenceRank": 80,
+        "tldr":
+            "Depletes vitamins, disrupts sleep and dopamine; check liquid supplements for alcohol content.",
+        "notes":
+            "⚠️ LIMIT/AVOID: Check liquid medications and supplements for alcohol bases."
       }
     ];
 
