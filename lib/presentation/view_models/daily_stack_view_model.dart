@@ -10,7 +10,7 @@ import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
-import '../../utils/date_utils.dart';
+import '../../domain/services/analytics_service.dart';
 
 /// View model for the Daily Stack screen
 /// Manages today's stacks, intake status, and progress tracking
@@ -21,6 +21,7 @@ class DailyStackViewModel extends ChangeNotifier {
   final SettingsRepository _settingsRepository;
   final NotificationService _notificationService;
   final AuthRepository _authRepository;
+  final AnalyticsService _analyticsService;
   final String _userId;
 
   // State
@@ -102,6 +103,7 @@ class DailyStackViewModel extends ChangeNotifier {
     required SettingsRepository settingsRepository,
     required NotificationService notificationService,
     required AuthRepository authRepository,
+    required AnalyticsService analyticsService,
     required String userId,
   })  : _stackRepository = stackRepository,
         _logRepository = logRepository,
@@ -109,6 +111,7 @@ class DailyStackViewModel extends ChangeNotifier {
         _settingsRepository = settingsRepository,
         _notificationService = notificationService,
         _authRepository = authRepository,
+        _analyticsService = analyticsService,
         _userId = userId;
 
   /// Initialize the view model - load stacks, today's log, and streak
@@ -162,9 +165,16 @@ class DailyStackViewModel extends ChangeNotifier {
       supplementId: supplementId,
       takenAt: now,
       status: LogStatus.taken,
+      confidenceScore: 5, // Default to high certainty for manual logs
     );
 
     await _updateTodayLog(entry);
+
+    await _analyticsService.logEvent('dose_logged', parameters: {
+      'supplement_id': supplementId,
+      'status': 'taken',
+    });
+
     AppLogger.d('Today log updated for $supplementId');
 
     // Give 10 XP per supplement taken
@@ -203,6 +213,11 @@ class DailyStackViewModel extends ChangeNotifier {
           final updatedUser =
               user.copyWith(unlockedAchievements: updatedAchievements);
           await _authRepository.updateUserProfile(updatedUser);
+
+          await _analyticsService.logEvent('achievement_unlocked', parameters: {
+            'achievement_id': achievementId,
+          });
+
           AppLogger.d('Achievement Unlocked: $achievementId');
         }
       }
@@ -533,8 +548,13 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   DateTime _getLogicalToday() {
-    // Centralized 4 AM rollover logic
-    return getLogicalDate();
+    // Centralized 4 AM rollover logic from date_utils.dart
+    final now = DateTime.now();
+    if (now.hour < 4) {
+      return DateTime(now.year, now.month, now.day)
+          .subtract(const Duration(days: 1));
+    }
+    return DateTime(now.year, now.month, now.day);
   }
 
   Future<void> _cacheSupplements() async {

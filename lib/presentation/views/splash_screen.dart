@@ -78,6 +78,9 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         Navigator.of(context).pushReplacementNamed(AppRouter.home);
       }
+    } finally {
+      // Cancel any pending timers
+      _controller.stop();
     }
   }
 

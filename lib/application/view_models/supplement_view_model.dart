@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
+import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 
 class SupplementViewModel extends ChangeNotifier {
   final SupplementRepository _repository;
   final UrlService _urlService;
+  final AnalyticsService _analyticsService;
 
-  SupplementViewModel(this._repository, this._urlService) {
+  SupplementViewModel(
+      this._repository, this._urlService, this._analyticsService) {
     _fetchSupplements();
   }
 
@@ -37,6 +40,11 @@ class SupplementViewModel extends ChangeNotifier {
 
   Future<void> onReferralClicked(Supplement supplement) async {
     await _repository.trackReferralClick(supplement.id);
+    await _analyticsService.logEvent('referral_clicked', parameters: {
+      'supplement_id': supplement.id,
+      'supplement_name': supplement.name,
+      'category': supplement.category,
+    });
     await _urlService.launchReferral(supplement.referralUrl);
   }
 }

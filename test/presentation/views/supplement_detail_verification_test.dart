@@ -7,18 +7,17 @@ import 'package:adhd_supplement_app/presentation/view_models/library_view_model.
 import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
 import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
 import 'package:adhd_supplement_app/domain/entities/user.dart';
 
 class MockLibraryViewModel extends Mock implements LibraryViewModel {}
 
 class MockAuthProvider extends Mock implements AuthProvider {
   @override
-  User? get user => const User(
+  User? get user => User(
       id: 'test_user',
       email: 'test@example.com',
       displayName: 'Test',
-      createdAt: null);
+      createdAt: DateTime.parse('2023-01-01'));
 }
 
 void main() {
@@ -34,7 +33,7 @@ void main() {
 
   testWidgets('SupplementDetailScreen displays rich intelligence data',
       (WidgetTester tester) async {
-    final supplement = Supplement(
+    const supplement = Supplement(
       id: 'test-id',
       name: 'Test Supplement',
       category: 'Test Category',
@@ -49,11 +48,11 @@ void main() {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          Provider<AuthProvider>(
+          ChangeNotifierProvider<AuthProvider>(
             create: (_) => MockAuthProvider(),
           ),
         ],
-        child: MaterialApp(
+        child: const MaterialApp(
           home: SupplementDetail(supplement: supplement),
         ),
       ),

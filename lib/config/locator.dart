@@ -20,6 +20,8 @@ import 'package:adhd_supplement_app/infrastructure/services/revenue_cat_billing_
 import 'package:adhd_supplement_app/domain/services/interaction_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/fda_interaction_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/report_pdf_service.dart';
+import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/firebase_analytics_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
 import 'package:adhd_supplement_app/application/view_models/history_log_view_model.dart';
@@ -67,6 +69,7 @@ import '../application/view_models/doctor_export_view_model.dart';
 import '../application/view_models/chemist_view_model.dart';
 import '../application/view_models/theme_view_model.dart';
 import '../application/view_models/insights_view_model.dart';
+import '../application/view_models/global_search_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -84,6 +87,8 @@ void setupLocator() {
       .registerLazySingleton<InteractionService>(() => FDAInteractionService());
 
   locator.registerLazySingleton<ReportPdfService>(() => ReportPdfService());
+  locator.registerLazySingleton<AnalyticsService>(
+      () => FirebaseAnalyticsService());
 
   // Repositories
   locator.registerLazySingleton<SupplementRepository>(
@@ -121,6 +126,7 @@ void setupLocator() {
   locator.registerFactory(() => SupplementViewModel(
         locator<SupplementRepository>(),
         locator<UrlService>(),
+        locator<AnalyticsService>(),
       ));
 
   locator.registerFactory(() => PersistentRemindersViewModel(
@@ -138,6 +144,7 @@ void setupLocator() {
       settingsRepository: locator<SettingsRepository>(),
       notificationService: locator<NotificationService>(),
       authRepository: locator<AuthRepository>(),
+      analyticsService: locator<AnalyticsService>(),
       userId: userId,
     ),
   );
@@ -219,6 +226,14 @@ void setupLocator() {
   locator.registerFactoryParam<InsightsViewModel, String, void>(
     (userId, _) => InsightsViewModel(
       logRepository: locator<LogRepository>(),
+      userId: userId,
+    ),
+  );
+
+  locator.registerFactoryParam<GlobalSearchViewModel, String, void>(
+    (userId, _) => GlobalSearchViewModel(
+      supplementRepository: locator<SupplementRepository>(),
+      stackRepository: locator<StackRepository>(),
       userId: userId,
     ),
   );

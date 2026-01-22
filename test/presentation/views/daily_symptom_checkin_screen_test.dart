@@ -64,11 +64,11 @@ void main() {
 
     // Verify labels
     expect(find.text('Focus: 😫 to 🤩'), findsOneWidget);
-    expect(find.text('Energy: 🥱 to ⚡️'), findsOneWidget);
-    expect(find.text('Mood: 😔 to 😊'), findsOneWidget);
+    expect(find.text('Energy: 🥱 to ⚡'), findsOneWidget);
+    expect(find.text('Mood: 😢 to 😊'), findsOneWidget);
 
     // Verify Log Check-in button
-    expect(find.text('Log Check-in'), findsOneWidget);
+    expect(find.text('Save Check-in'), findsOneWidget);
   });
 
   testWidgets('Interacting with sliders updates values',

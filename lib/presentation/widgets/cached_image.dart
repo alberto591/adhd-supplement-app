@@ -1,15 +1,39 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'skeleton_loader.dart';
 
 class CachedImage extends StatelessWidget {
+  /// The URL of the image to display.
   final String imageUrl;
+
+  /// Optional width for the image.
   final double? width;
+
+  /// Optional height for the image.
   final double? height;
+
+  /// How the image should be inscribed into the box.
+  /// Defaults to [BoxFit.cover].
   final BoxFit? fit;
+
+  /// The border radius for the image.
+  /// Defaults to 0.
   final double borderRadius;
+
+  /// Optional custom placeholder to show while loading.
+  /// If null, [SkeletonLoader] is used.
   final Widget? placeholder;
+
+  /// Optional custom widget to show on error.
   final Widget? errorWidget;
 
+  /// A wrapper around [CachedNetworkImage] with ADHD-friendly loading states.
+  ///
+  /// This widget provides:
+  /// - Automatic [SkeletonLoader] shimmer while loading.
+  /// - Optional [borderRadius] with [ClipRRect].
+  /// - Consistent error state handling.
+  /// - 300ms fade-in transition for reduced visual jar.
   const CachedImage({
     super.key,
     required this.imageUrl,
@@ -44,21 +68,10 @@ class CachedImage extends StatelessWidget {
   }
 
   Widget _buildPlaceholder(BuildContext context) {
-    // Simple colored box with shimmer-like feel (or just grey for now until Skeleton is ready)
-    return Container(
-      width: width,
-      height: height,
-      color: Colors.grey[200],
-      child: const Center(
-        child: SizedBox(
-          width: 20,
-          height: 20,
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-            color: Colors.grey,
-          ),
-        ),
-      ),
+    return SkeletonLoader(
+      width: width ?? double.infinity,
+      height: height ?? 200, // Reasonable default for placeholders
+      borderRadius: borderRadius,
     );
   }
 

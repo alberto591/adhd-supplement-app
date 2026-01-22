@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../domain/services/billing_service.dart';
+import '../../domain/services/analytics_service.dart';
 import '../../config/locator.dart';
 
 class SubscriptionViewModel extends ChangeNotifier {
   final BillingService _billingService = locator<BillingService>();
+  final AnalyticsService _analyticsService = locator<AnalyticsService>();
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -31,6 +33,9 @@ class SubscriptionViewModel extends ChangeNotifier {
           await _billingService.purchaseSubscription(planId: planId);
       if (success) {
         _isSubscribed = true;
+        await _analyticsService.logEvent('subscription_purchased', parameters: {
+          'plan_id': planId,
+        });
       } else {
         _error = 'Purchase failed. Please try again.';
       }

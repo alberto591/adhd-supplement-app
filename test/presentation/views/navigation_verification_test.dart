@@ -7,12 +7,42 @@ import 'package:adhd_supplement_app/presentation/views/science_hub_screen.dart';
 import 'package:adhd_supplement_app/application/view_models/science_hub_view_model.dart';
 import 'package:adhd_supplement_app/presentation/widgets/unified_bottom_nav.dart';
 import 'package:adhd_supplement_app/domain/entities/article.dart';
+import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
+import 'package:adhd_supplement_app/domain/entities/user.dart';
+import 'package:adhd_supplement_app/application/view_models/insights_view_model.dart';
+
+class MockAuthProvider extends ChangeNotifier implements AuthProvider {
+  bool get isLoading => false;
+  @override
+  String? get errorMessage => null;
+  @override
+  bool get isAuthenticated => true;
+  @override
+  AuthStatus get status => AuthStatus.authenticated;
+  @override
+  User? get user => User(
+        id: 'test-user',
+        email: 'test@example.com',
+        displayName: 'Test User',
+        createdAt: DateTime.parse('2023-01-01'),
+      );
+  @override
+  Future<void> signIn(String email, String password) async {}
+  @override
+  Future<void> signUp(
+      String email, String password, String displayName) async {}
+  @override
+  Future<void> signOut() async {}
+  @override
+  Future<void> signInAnonymously() async {}
+  @override
+  Future<void> updateProfile(User user) async {}
+}
 
 class MockScienceHubViewModel extends ChangeNotifier
     implements ScienceHubViewModel {
   @override
   bool get isLoading => false;
-  @override
   String? get error => null;
   @override
   Article? get articleOfTheDay => null;
@@ -22,11 +52,25 @@ class MockScienceHubViewModel extends ChangeNotifier
   Future<void> loadData() async {}
 }
 
-class MockInsightsViewModel extends ChangeNotifier {
+class MockInsightsViewModel extends ChangeNotifier
+    implements InsightsViewModel {
+  @override
+  bool get isLoading => false;
+
+  @override
   int get streakCount => 7;
-  double get dailyProgress => 0.85;
-  double get consistencyRate => 0.85;
-  List<dynamic> get weeklyStats => [];
+
+  @override
+  double get consistencyScore => 0.85;
+
+  @override
+  String get encouragementText => "You're doing great!";
+
+  @override
+  List<double> get weeklyFocusScores => [];
+
+  @override
+  Future<void> loadData() async {}
 }
 
 void main() {
@@ -34,15 +78,20 @@ void main() {
     locator.reset();
     locator
         .registerFactory<ScienceHubViewModel>(() => MockScienceHubViewModel());
+    locator.registerFactory<InsightsViewModel>(() => MockInsightsViewModel());
   });
 
   testWidgets('InsightsScreen renders and has correct bottom nav index',
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: ChangeNotifierProvider<MockInsightsViewModel>(
-          create: (_) => MockInsightsViewModel(),
-          child: const InsightsScreen(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<AuthProvider>(
+            create: (_) => MockAuthProvider(),
+          ),
+        ],
+        child: const MaterialApp(
+          home: InsightsScreen(),
         ),
       ),
     );
@@ -58,8 +107,15 @@ void main() {
   testWidgets('ScienceHubScreen renders without crashing',
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: ScienceHubScreen(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<AuthProvider>(
+            create: (_) => MockAuthProvider(),
+          ),
+        ],
+        child: const MaterialApp(
+          home: ScienceHubScreen(),
+        ),
       ),
     );
     await tester.pump();

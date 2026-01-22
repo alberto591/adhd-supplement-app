@@ -98,19 +98,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: isDark
-                                      ? const Color(0xFF1A1F2E)
-                                      : Colors.grey[200],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(Icons.settings_outlined),
-                                  color: isDark ? Colors.white : Colors.black54,
-                                  onPressed: () => Navigator.pushNamed(
-                                      context, AppRouter.profile),
-                                ),
+                              Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: isDark
+                                          ? const Color(0xFF1A1F2E)
+                                          : Colors.grey[200],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.search),
+                                      color: isDark
+                                          ? Colors.white
+                                          : Colors.black54,
+                                      onPressed: () => Navigator.pushNamed(
+                                          context, AppRouter.globalSearch),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: isDark
+                                          ? const Color(0xFF1A1F2E)
+                                          : Colors.grey[200],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.settings_outlined),
+                                      color: isDark
+                                          ? Colors.white
+                                          : Colors.black54,
+                                      onPressed: () => Navigator.pushNamed(
+                                          context, AppRouter.profile),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

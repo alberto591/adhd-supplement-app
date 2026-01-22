@@ -32,6 +32,20 @@ class Supplement {
   final List<String> interactions;
   final int focusLevel; // 1-5 scale for ADHD focus improvement
 
+  String get formattedReferralUrl {
+    if (referralUrl.isEmpty) return '';
+    final uri = Uri.parse(referralUrl);
+    final params = Map<String, String>.from(uri.queryParameters);
+
+    if (uri.host.contains('amazon.com')) {
+      params['tag'] = 'adhdsupps-20';
+    } else if (uri.host.contains('iherb.com')) {
+      params['rcode'] = 'ADHDSUPPS';
+    }
+
+    return uri.replace(queryParameters: params).toString();
+  }
+
   const Supplement({
     required this.id,
     required this.name,

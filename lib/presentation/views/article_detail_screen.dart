@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/article_detail_view_model.dart';
 import '../theme/app_theme.dart';
 import '../../domain/entities/article.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import '../widgets/cached_image.dart';
 
 class ArticleDetailScreen extends StatefulWidget {
+  /// Detailed view for a science hub article.
+  ///
+  /// Features:
+  /// - Sliver-based parallax header with article image.
+  /// - TL;DR Summary card for quick scanning (ADHD-friendly).
+  /// - Author profiles and related reading suggestions.
+  /// - Consistent loading/error states using [ArticleDetailViewModel].
   final String articleId;
 
   const ArticleDetailScreen({
@@ -101,13 +109,9 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      CachedNetworkImage(
+                      CachedImage(
                         imageUrl: article.imageUrl,
                         fit: BoxFit.cover,
-                        placeholder: (_, __) =>
-                            Container(color: Colors.grey[200]),
-                        errorWidget: (_, __, ___) =>
-                            Container(color: Colors.grey),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -332,17 +336,11 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
         ),
         child: Row(
           children: [
-            Container(
+            CachedImage(
               width: 48,
               height: 48,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(article.imageUrl),
-                    fit: BoxFit.cover,
-                    onError: (_, __) {},
-                  )),
+              imageUrl: article.imageUrl,
+              borderRadius: 8,
             ),
             const SizedBox(width: 16),
             Expanded(

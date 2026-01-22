@@ -440,7 +440,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                                         : Colors.grey[300],
                                     onChanged: _updateFontScale,
                                   ),
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [

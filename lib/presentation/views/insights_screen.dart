@@ -8,6 +8,7 @@ import '../../application/providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 import '../widgets/unified_bottom_nav.dart';
+import '../widgets/skeleton_loader.dart';
 
 /// The main Insights screen.
 ///
@@ -60,7 +61,44 @@ class _InsightsContent extends StatelessWidget {
         centerTitle: true,
       ),
       body: viewModel.isLoading
-          ? const Center(child: CircularProgressIndicator(color: primaryGold))
+          ? const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header skeleton
+                  SkeletonLoader(
+                    height: 28,
+                    width: 200,
+                    borderRadius: 8,
+                  ),
+                  SizedBox(height: 8),
+                  SkeletonLoader(
+                    height: 16,
+                    width: 150,
+                    borderRadius: 6,
+                  ),
+                  SizedBox(height: 32),
+                  // Streak hero skeleton
+                  SkeletonLoader(
+                    height: 280,
+                    borderRadius: 24,
+                  ),
+                  SizedBox(height: 16),
+                  // Consistency card skeleton
+                  SkeletonLoader(
+                    height: 180,
+                    borderRadius: 24,
+                  ),
+                  SizedBox(height: 16),
+                  // Export button skeleton
+                  SkeletonLoader(
+                    height: 56,
+                    borderRadius: 16,
+                  ),
+                ],
+              ),
+            )
           : SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(

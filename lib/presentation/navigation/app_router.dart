@@ -56,6 +56,8 @@ import '../views/notification_history_screen.dart';
 import '../views/emergency_contact_screen.dart';
 import '../views/first_stack_success_screen.dart';
 import '../views/supplement_detail.dart';
+import '../views/global_search_screen.dart';
+import '../views/paywall_screen.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_interaction.dart';
 
@@ -97,6 +99,7 @@ class AppRouter {
   static const String referFriend = '/refer-friend';
   static const String successStats = '/success-stats';
   static const String subscription = '/subscription';
+  static const String paywall = '/paywall';
   static const String symptomCheckin = '/symptom-checkin';
   static const String quickSetup = '/quick-setup';
   static const String notificationReliability = '/notification-reliability';
@@ -115,6 +118,7 @@ class AppRouter {
   static const String notificationHistory = '/notification-history';
   static const String firstStackSuccess = '/first-stack-success';
   static const String supplementDetail = '/supplement-detail';
+  static const String globalSearch = '/global-search';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -248,6 +252,9 @@ class AppRouter {
 
 //      case appAppearance:
 //        return MaterialPageRoute(builder: (_) => const AppAppearanceScreen());
+      case subscription:
+      case paywall:
+        return MaterialPageRoute(builder: (_) => const PaywallScreen());
       case referFriend:
         return MaterialPageRoute(builder: (_) => const ReferFriendScreen());
       case symptomCheckin:
@@ -337,6 +344,9 @@ class AppRouter {
                       locator<LibraryViewModel>(param1: userId)..initialize(),
                   child: SupplementDetail(supplement: supplement),
                 ));
+
+      case globalSearch:
+        return MaterialPageRoute(builder: (_) => const GlobalSearchScreen());
 
       default:
         return MaterialPageRoute(

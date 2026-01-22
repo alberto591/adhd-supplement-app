@@ -3,6 +3,7 @@ import 'package:adhd_supplement_app/application/view_models/supplement_view_mode
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
+import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 
 class MockSupplementRepository implements SupplementRepository {
   bool _shouldThrow = false;
@@ -72,15 +73,30 @@ class MockUrlService extends UrlService {
   }
 }
 
+class MockAnalyticsService implements AnalyticsService {
+  @override
+  Future<void> logEvent(String name,
+      {Map<String, dynamic>? parameters}) async {}
+  @override
+  Future<void> logScreenView(String screenName) async {}
+  @override
+  Future<void> setUserId(String userId) async {}
+  @override
+  Future<void> setUserProperty(String name, String value) async {}
+}
+
 void main() {
   late MockSupplementRepository mockRepository;
   late MockUrlService mockUrlService;
+  late MockAnalyticsService mockAnalyticsService;
   late SupplementViewModel viewModel;
 
   setUp(() {
     mockRepository = MockSupplementRepository();
     mockUrlService = MockUrlService();
-    viewModel = SupplementViewModel(mockRepository, mockUrlService);
+    mockAnalyticsService = MockAnalyticsService();
+    viewModel = SupplementViewModel(
+        mockRepository, mockUrlService, mockAnalyticsService);
   });
 
   group('SupplementViewModel', () {
@@ -121,7 +137,8 @@ void main() {
       mockRepository.setSupplements([]);
 
       // Create new view model to trigger fetch
-      final newViewModel = SupplementViewModel(mockRepository, mockUrlService);
+      final newViewModel = SupplementViewModel(
+          mockRepository, mockUrlService, mockAnalyticsService);
 
       // Immediately check loading state (before async completes)
       expect(newViewModel.isLoading, true);
@@ -134,7 +151,8 @@ void main() {
     test('should handle repository errors', () async {
       mockRepository.setShouldThrow(true);
 
-      final newViewModel = SupplementViewModel(mockRepository, mockUrlService);
+      final newViewModel = SupplementViewModel(
+          mockRepository, mockUrlService, mockAnalyticsService);
 
       await Future<void>.delayed(const Duration(milliseconds: 200));
 

@@ -9,10 +9,12 @@ class DailySymptomCheckinScreen extends StatefulWidget {
   const DailySymptomCheckinScreen({super.key});
 
   @override
-  State<DailySymptomCheckinScreen> createState() => _DailySymptomCheckinScreenState();
+  State<DailySymptomCheckinScreen> createState() =>
+      _DailySymptomCheckinScreenState();
 }
 
-class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> with SingleTickerProviderStateMixin {
+class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _celebrationController;
   Timer? _debounceTimer;
   late TextEditingController _notesController;
@@ -27,20 +29,16 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
     _notesController = TextEditingController();
   }
 
-  void _initNotes() {
-    // Post-frame to access context/provider safely if needed
-  }
-
   void _onNotesChanged(String value, SymptomCheckInViewModel viewModel) {
     viewModel.setNotes(value);
-    
+
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(seconds: 2), () async {
       final success = await viewModel.submitCheckIn(isAutoSave: true);
       if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Draft saved'),
+          const SnackBar(
+            content: Text('Draft saved'),
             backgroundColor: AppColors.primaryGold,
           ),
         );
@@ -49,12 +47,16 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
   }
 
   void _submitCheckIn(BuildContext context) async {
-    final viewModel = Provider.of<SymptomCheckInViewModel>(context, listen: false);
+    final viewModel =
+        Provider.of<SymptomCheckInViewModel>(context, listen: false);
+    final navigator = Navigator.of(context);
     final success = await viewModel.submitCheckIn();
     if (success && mounted) {
       _celebrationController.forward();
       Future.delayed(const Duration(seconds: 1), () {
-        Navigator.of(context).pop();
+        if (mounted) {
+          navigator.pop();
+        }
       });
     }
   }
@@ -72,7 +74,8 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -95,7 +98,9 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
                       'State of Body & Mind',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lexend(
-                        color: isDark ? Colors.white : AppColors.backgroundPremiumDark,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.backgroundPremiumDark,
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
                         height: 1.1,
@@ -147,14 +152,17 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
 
               // Notes Section
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Notes (Optional)',
                       style: GoogleFonts.lexend(
-                        color: isDark ? Colors.white : AppColors.backgroundPremiumDark,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.backgroundPremiumDark,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -162,10 +170,14 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
                     const SizedBox(height: 8),
                     Container(
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.white.withOpacity(0.05) : Colors.grey[100],
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.05)
+                            : Colors.grey[100],
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[300]!,
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.grey[300]!,
                         ),
                       ),
                       child: TextField(
@@ -178,13 +190,17 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
                             fontSize: 14,
                           ),
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
                         ),
                         style: GoogleFonts.lexend(
                           color: isDark ? Colors.white : Colors.black,
                           fontSize: 14,
                         ),
-                        onChanged: (value) => _onNotesChanged(value, Provider.of<SymptomCheckInViewModel>(context, listen: false)),
+                        onChanged: (value) => _onNotesChanged(
+                            value,
+                            Provider.of<SymptomCheckInViewModel>(context,
+                                listen: false)),
                       ),
                     ),
                   ],
@@ -210,7 +226,8 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(32),
                               ),
-                              shadowColor: AppColors.primaryGold.withOpacity(0.3),
+                              shadowColor:
+                                  AppColors.primaryGold.withValues(alpha: 0.3),
                               elevation: 8,
                             ),
                             child: viewModel.isLoading
@@ -233,7 +250,8 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
                           child: Text(
                             'Skip for now',
                             style: GoogleFonts.lexend(
-                              color: isDark ? Colors.grey[400] : Colors.grey[600],
+                              color:
+                                  isDark ? Colors.grey[400] : Colors.grey[600],
                               fontSize: 14,
                             ),
                           ),
@@ -250,7 +268,8 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
     );
   }
 
-  Widget _buildSlider(BuildContext context, {
+  Widget _buildSlider(
+    BuildContext context, {
     required String label,
     required double value,
     required ValueChanged<double> onChanged,
@@ -276,7 +295,7 @@ class _DailySymptomCheckinScreenState extends State<DailySymptomCheckinScreen> w
               activeTrackColor: AppColors.primaryGold,
               inactiveTrackColor: isDark ? Colors.grey[700] : Colors.grey[300],
               thumbColor: AppColors.primaryGold,
-              overlayColor: AppColors.primaryGold.withOpacity(0.2),
+              overlayColor: AppColors.primaryGold.withValues(alpha: 0.2),
               overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
             ),
             child: Slider(

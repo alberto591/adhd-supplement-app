@@ -26,6 +26,8 @@ import 'package:adhd_supplement_app/application/view_models/theme_view_model.dar
 import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
+import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 
 void main() {
   setUp(() {
@@ -33,7 +35,11 @@ void main() {
     locator.reset();
 
     locator.registerFactory<SupplementViewModel>(
-      () => SupplementViewModel(_FakeSupplementRepository(), UrlService()),
+      () => SupplementViewModel(
+        _FakeSupplementRepository(),
+        UrlService(),
+        _FakeAnalyticsService(),
+      ),
     );
 
     locator.registerLazySingleton<AuthRepository>(() => _FakeAuthRepository());
@@ -55,17 +61,24 @@ void main() {
     locator.registerFactory<ThemeViewModel>(
       () => ThemeViewModel(locator<SettingsRepository>()),
     );
+    locator.registerLazySingleton<NotificationService>(
+        () => _FakeNotificationService());
+    locator
+        .registerLazySingleton<AnalyticsService>(() => _FakeAnalyticsService());
+    locator.registerLazySingleton<SeedingService>(() => _FakeSeedingService());
+    locator.registerLazySingleton<SupplementRepository>(
+        () => _FakeSupplementRepository());
     locator.registerFactory<PersistentRemindersViewModel>(
       () => PersistentRemindersViewModel(
         locator<SettingsRepository>(),
-        _FakeNotificationService(),
+        locator<NotificationService>(),
       ),
     );
   });
 
   testWidgets('App builds (smoke test)', (WidgetTester tester) async {
     await tester.pumpWidget(const AdhdSupplementApp(isFirebaseReady: true));
-    await tester.pump();
+    await tester.pumpAndSettle(const Duration(milliseconds: 2000));
 
     expect(find.byType(MaterialApp), findsOneWidget);
   });
@@ -176,22 +189,22 @@ class _FakeSettingsRepository implements SettingsRepository {
   String getWarningNudgeOption() => '15m';
   @override
   Future<void> setWarningNudgeOption(String option) async {}
-  
+
   @override
   bool getReducedMotionEnabled() => false;
-  
+
   @override
   Future<void> setReducedMotionEnabled(bool enabled) async {}
-  
+
   @override
   bool getHapticFeedbackEnabled() => true;
-  
+
   @override
   Future<void> setHapticFeedbackEnabled(bool enabled) async {}
-  
+
   @override
   double getFontSizeScale() => 1.0;
-  
+
   @override
   Future<void> setFontSizeScale(double scale) async {}
 
@@ -276,4 +289,24 @@ class _FakeNotificationService implements NotificationService {
     required String body,
     int maxNudges = 12,
   }) async {}
+}
+
+class _FakeSeedingService implements SeedingService {
+  @override
+  Future<void> seedSupplements() async {}
+
+  @override
+  Future<void> createTestUser(String email, String password) async {}
+}
+
+class _FakeAnalyticsService implements AnalyticsService {
+  @override
+  Future<void> logEvent(String name,
+      {Map<String, dynamic>? parameters}) async {}
+  @override
+  Future<void> logScreenView(String screenName) async {}
+  @override
+  Future<void> setUserId(String userId) async {}
+  @override
+  Future<void> setUserProperty(String name, String value) async {}
 }

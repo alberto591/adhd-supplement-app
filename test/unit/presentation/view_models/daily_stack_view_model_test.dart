@@ -13,6 +13,8 @@ import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
+
 // Fakes for cleaner manual testing without mockito's "when" null-safety issues
 class FakeStackRepository implements StackRepository {
   List<SupplementStack> stacks = [];
@@ -163,6 +165,18 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> deleteUser() async {}
 }
 
+class FakeAnalyticsService implements AnalyticsService {
+  @override
+  Future<void> logEvent(String name,
+      {Map<String, dynamic>? parameters}) async {}
+  @override
+  Future<void> logScreenView(String screenName) async {}
+  @override
+  Future<void> setUserId(String userId) async {}
+  @override
+  Future<void> setUserProperty(String name, String value) async {}
+}
+
 class FakeSettingsRepository implements SettingsRepository {
   @override
   Future<void> init() async {}
@@ -214,10 +228,10 @@ class FakeSettingsRepository implements SettingsRepository {
   double getFontSizeScale() => 1.0;
   @override
   Future<void> setFontSizeScale(double scale) async {}
-
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   late DailyStackViewModel viewModel;
   late FakeStackRepository fakeStackRepo;
   late FakeLogRepository fakeLogRepo;
@@ -263,6 +277,7 @@ void main() {
       settingsRepository: FakeSettingsRepository(),
       notificationService: FakeNotificationService(),
       authRepository: fakeAuthRepo,
+      analyticsService: FakeAnalyticsService(),
       userId: userId,
     );
   });

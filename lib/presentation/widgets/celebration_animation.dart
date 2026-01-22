@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../../config/locator.dart';
 import '../../application/view_models/theme_view_model.dart';
 import 'package:provider/provider.dart';
 

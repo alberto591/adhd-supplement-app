@@ -62,54 +62,50 @@ class PersistentRemindersViewModel extends ChangeNotifier {
     // 1000 is the ID for the daily reminder
     // 1001 is the ID for the warning/follow-up nudge
     if (_nudgeModeEnabled) {
+      // Soft Nudge (+5m)
+      int softHour = _nudgeTime.hour;
+      int softMinute = _nudgeTime.minute + 5;
+      if (softMinute >= 60) {
+        softHour = (softHour + 1) % 24;
+        softMinute = softMinute - 60;
+      }
       await _notificationService.scheduleRecurringNotification(
         id: 1000,
-        title: 'Time for your daily stack!',
+        title: 'Time for your daily stack! (Soft Nudge)',
         body: 'Keep your streak alive. Take your supplements now.',
-        hour: _nudgeTime.hour,
-        minute: _nudgeTime.minute,
+        hour: softHour,
+        minute: softMinute,
       );
 
-      // Warning Nudge (15m before or after - assume after for "missed")
-      if (_warningNudgeOption == '15m' || _warningNudgeOption == 'followup') {
-        int warningHour = _nudgeTime.hour;
-        int warningMinute = _nudgeTime.minute + 15;
-        if (warningMinute >= 60) {
-          warningHour = (warningHour + 1) % 24;
-          warningMinute = warningMinute - 60;
-        }
-
-        await _notificationService.scheduleRecurringNotification(
-          id: 1001,
-          title: 'Missed your stack?',
-          body: 'Just a friendly nudge to log your supplements!',
-          hour: warningHour,
-          minute: warningMinute,
-        );
-      } else {
-        await _notificationService.cancelNotification(1001);
+      // Medium Nudge (+15m)
+      int mediumHour = _nudgeTime.hour;
+      int mediumMinute = _nudgeTime.minute + 15;
+      if (mediumMinute >= 60) {
+        mediumHour = (mediumHour + 1) % 24;
+        mediumMinute = mediumMinute - 60;
       }
+      await _notificationService.scheduleRecurringNotification(
+        id: 1001,
+        title: 'Missed your stack? (Medium Nudge)',
+        body: 'Just a friendly nudge to log your supplements!',
+        hour: mediumHour,
+        minute: mediumMinute,
+      );
 
-      // Follow-up / Extended Logic (Scheduling additional nudges)
-      if (_warningNudgeOption == 'followup' || _extendedRemindersEnabled) {
-        // Schedule a second nudge +30m
-        int secondHour = _nudgeTime.hour;
-        int secondMinute = _nudgeTime.minute + 30;
-        if (secondMinute >= 60) {
-          secondHour = (secondHour + 1) % 24;
-          secondMinute = secondMinute - 60;
-        }
-
-        await _notificationService.scheduleRecurringNotification(
-          id: 1002,
-          title: 'Still haven\'t logged?',
-          body: 'Consistency is key! tracking helps your doctor help you.',
-          hour: secondHour,
-          minute: secondMinute,
-        );
-      } else {
-        await _notificationService.cancelNotification(1002);
+      // CRITICAL Alert (+30m)
+      int criticalHour = _nudgeTime.hour;
+      int criticalMinute = _nudgeTime.minute + 30;
+      if (criticalMinute >= 60) {
+        criticalHour = (criticalHour + 1) % 24;
+        criticalMinute = criticalMinute - 60;
       }
+      await _notificationService.scheduleRecurringNotification(
+        id: 1002,
+        title: 'STILL HAVEN\'T LOGGED? (CRITICAL)',
+        body: 'Consistency is key! Tracking helps your doctor help you.',
+        hour: criticalHour,
+        minute: criticalMinute,
+      );
 
       // Evening Summary (20:00) - Always on if Nudge Mode is active
       await _notificationService.scheduleRecurringNotification(
