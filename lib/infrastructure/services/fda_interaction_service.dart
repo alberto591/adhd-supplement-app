@@ -1,4 +1,5 @@
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
+import 'package:adhd_supplement_app/domain/entities/medication.dart';
 import 'package:adhd_supplement_app/domain/services/interaction_service.dart';
 import 'package:adhd_supplement_app/domain/services/safety_guard.dart';
 import 'package:adhd_supplement_app/domain/services/adhd_interaction_guard.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:adhd_supplement_app/domain/services/safety_guard.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
+import 'package:adhd_supplement_app/domain/entities/medication.dart';
 
 void main() {
   group('SafetyGuard', () {
@@ -17,6 +18,30 @@ void main() {
       type: MedicationType.antidepressant,
       dosageMg: 10,
     );
+
+    group('Medication.fromName', () {
+      test('should detect stimulant medications', () {
+        final med = Medication.fromName('Adderall XR', dosage: 20);
+        expect(med.type, MedicationType.stimulant);
+        expect(med.name, 'Adderall XR');
+        expect(med.dosageMg, 20);
+      });
+
+      test('should detect non-stimulant medications', () {
+        final med = Medication.fromName('Strattera');
+        expect(med.type, MedicationType.nonStimulant);
+      });
+
+      test('should detect antidepressant medications', () {
+        final med = Medication.fromName('Zoloft');
+        expect(med.type, MedicationType.antidepressant);
+      });
+
+      test('should default to other for unknown medications', () {
+        final med = Medication.fromName('Melatonin');
+        expect(med.type, MedicationType.other);
+      });
+    });
 
     test('isOnStimulants returns true if user takes stimulants', () {
       final guard = SafetyGuard([stimulantMed, antidepressantMed]);
@@ -94,6 +119,32 @@ void main() {
       final warnings = guard.checkSupplement(magnesium);
 
       expect(warnings, isEmpty);
+    });
+
+    test('checkSupplement flags supplement-specific interactions', () {
+      final guard = SafetyGuard([stimulantMed]);
+      const lTheanine = Supplement(
+        id: 's4',
+        name: 'L-Theanine',
+        category: 'Nootropics',
+        benefits: ['Calm focus'],
+        dosage: '200mg',
+        form: 'Capsule',
+        defaultDosage: '200mg',
+        shapeIcon: 'capsule',
+        colorHex: '#FFFFFF',
+        adhdMedInteractions: {
+          'Adderall':
+              'Can reduce jitters but may decrease stimulant potency for some users.',
+        },
+      );
+
+      final warnings = guard.checkSupplement(lTheanine);
+
+      expect(warnings, isNotEmpty);
+      expect(warnings.any((w) => w.description.contains('reduce jitters')),
+          isTrue);
+      expect(warnings.first.title, contains('Clinical Interaction'));
     });
 
     test('getHighestSeverity prioritizes danger over others', () {

@@ -69,6 +69,9 @@ class SafetyGuard { ... }
 class ADHDInteractionGuard { ... }
 ```
 
+### 7. Interactive Calculators (Logic Separation)
+Weight-based dosage logic is encapsulated within the `DosageCalculatorCard` but driven by clinical ranges in the `Supplement` entity.
+
 ### 6. Command/Action Pattern (Dashboard)
 Decoupling long-press and menu actions from screen builds.
 ```dart
@@ -91,13 +94,16 @@ Standardized `UnifiedBottomNav` used across 5 root screens to prevent navigation
 4. **Library** -> ScienceHub/Discovery
 5. **Profile** -> UserProfile
 
+### 3. Safety-First Contrast
+Critical medication interactions use high-contrast red alerts (`#EF4444`) to ensure immediate recognition, while synergy notes use blue/amber.
+
 ## Key Domain Entities
 | Entity | Purpose |
 |--------|---------|
 | `Supplement` | Catalog item with benefits, dosage, interactions |
 | `SupplementStack` | User's grouped supplements (Morning, Evening) |
 | `DailyLog` | Daily intake record with timestamps |
-| `User` | User profile with XP, Level, and preferences |
+| `User` | Profile with XP, Level, and `currentMedication` |
 | `NightlyReflection` | Evening focus and sleep readiness data |
 | `Report` | PDF-generated summary for clinicians |
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adhd_supplement_app/domain/services/safety_guard.dart';
+import 'package:adhd_supplement_app/domain/entities/medication.dart';
 
 /// Widget that displays a safety warning popup dialog
 class SafetyWarningPopup {
@@ -11,7 +12,7 @@ class SafetyWarningPopup {
     if (warnings.isEmpty) return true;
 
     final highestSeverity = SafetyGuard.getHighestSeverity(warnings);
-    
+
     final result = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -108,10 +109,12 @@ class _WarningDialog extends StatelessWidget {
               constraints: const BoxConstraints(maxHeight: 300),
               child: SingleChildScrollView(
                 child: Column(
-                  children: warnings.map((warning) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: _WarningCard(warning: warning),
-                  )).toList(),
+                  children: warnings
+                      .map((warning) => Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: _WarningCard(warning: warning),
+                          ))
+                      .toList(),
                 ),
               ),
             ),

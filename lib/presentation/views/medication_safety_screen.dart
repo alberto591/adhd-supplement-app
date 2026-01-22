@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/medication_option_tile.dart';
 import '../../application/providers/auth_provider.dart';
+import '../../domain/entities/medication.dart';
 import '../navigation/app_router.dart';
 
 class MedicationSafetyScreen extends StatefulWidget {
@@ -251,8 +252,17 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
               final authProvider = context.read<AuthProvider>();
               final user = authProvider.user;
               if (user != null) {
+                final medication = (_selectedMedication == null ||
+                        _selectedMedication ==
+                            'None / I don\'t take medication')
+                    ? null
+                    : Medication.fromName(_selectedMedication!);
+
                 await authProvider.updateProfile(
-                  user.copyWith(hasCompletedOnboarding: true),
+                  user.copyWith(
+                    hasCompletedOnboarding: true,
+                    currentMedication: medication,
+                  ),
                 );
               }
               if (context.mounted) {

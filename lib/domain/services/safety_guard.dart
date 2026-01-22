@@ -5,55 +5,7 @@
 library;
 
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-
-/// Represents a user's current medication
-class Medication {
-  final String id;
-  final String name;
-  final MedicationType type;
-  final double dosageMg;
-
-  const Medication({
-    required this.id,
-    required this.name,
-    required this.type,
-    required this.dosageMg,
-  });
-}
-
-enum MedicationType {
-  stimulant, // Adderall, Ritalin, Vyvanse, etc.
-  nonStimulant, // Strattera, Wellbutrin, etc.
-  antidepressant, // SSRIs, SNRIs
-  other,
-}
-
-/// Severity level for interaction warnings
-enum WarningSeverity {
-  info, // Educational, no action needed
-  caution, // Consider timing separation
-  warning, // Consult doctor recommended
-  danger, // Do not combine without medical supervision
-}
-
-/// Represents an interaction warning
-class InteractionWarning {
-  final String supplementName;
-  final String medicationName;
-  final WarningSeverity severity;
-  final String title;
-  final String description;
-  final String recommendation;
-
-  const InteractionWarning({
-    required this.supplementName,
-    required this.medicationName,
-    required this.severity,
-    required this.title,
-    required this.description,
-    required this.recommendation,
-  });
-}
+import 'package:adhd_supplement_app/domain/entities/medication.dart';
 
 /// Safety Guard class for checking supplement-medication interactions
 class SafetyGuard {
@@ -162,6 +114,7 @@ class SafetyGuard {
     final warnings = <InteractionWarning>[];
     final supplementName = supplement.name.toLowerCase();
 
+    // 1. Check dynamic rules from _interactionRules
     for (final medication in _userMedications) {
       for (final rule in _interactionRules) {
         if (_matchesRule(supplementName, medication, rule)) {
@@ -173,6 +126,32 @@ class SafetyGuard {
             description: rule.description,
             recommendation: rule.recommendation,
           ));
+        }
+      }
+    }
+
+    // 2. Check supplement's structured data (adhdMedInteractions)
+    if (supplement.adhdMedInteractions != null) {
+      for (final medication in _userMedications) {
+        final medNameLower = medication.name.toLowerCase();
+        for (final entry in supplement.adhdMedInteractions!.entries) {
+          if (medNameLower.contains(entry.key.toLowerCase())) {
+            // Check if already exist to avoid duplicate
+            final exists = warnings.any((w) =>
+                w.medicationName.toLowerCase() == medNameLower &&
+                w.description == entry.value);
+
+            if (!exists) {
+              warnings.add(InteractionWarning(
+                supplementName: supplement.name,
+                medicationName: medication.name,
+                severity: WarningSeverity.warning,
+                title: 'Clinical Interaction Alert',
+                description: entry.value,
+                recommendation: 'Consult your doctor before combining.',
+              ));
+            }
+          }
         }
       }
     }

@@ -1,5 +1,5 @@
 import '../entities/supplement.dart';
-import 'safety_guard.dart';
+import '../entities/medication.dart';
 
 abstract class InteractionService {
   /// Check if a supplement interacts with any of the user's medications.

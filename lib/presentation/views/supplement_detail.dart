@@ -7,6 +7,10 @@ import '../../domain/entities/supplement.dart';
 import '../view_models/library_view_model.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
 import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
+import '../widgets/dosage_calculator_card.dart';
+import '../../domain/services/safety_guard.dart';
+import '../../domain/entities/medication.dart';
+import '../widgets/medication_safety_alert.dart';
 
 /// ADHD-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
@@ -20,7 +24,17 @@ class SupplementDetail extends StatelessWidget {
     final authProvider = context.read<AuthProvider>();
     final userId = authProvider.user?.id ?? '';
     // Use a fresh ViewModel for this screen
-    final viewModel = locator.get<LibraryViewModel>(param1: userId);
+    final libraryViewModel = locator.get<LibraryViewModel>(param1: userId);
+
+    // Safety logic for ADHD medications
+    final user = authProvider.user;
+    final userMedication = user?.currentMedication;
+    List<InteractionWarning> safetyWarnings = [];
+
+    if (userMedication != null) {
+      final guard = SafetyGuard([userMedication]);
+      safetyWarnings = guard.checkSupplement(supplement);
+    }
 
     const primaryGold = AppColors.primaryGold;
     const bgDark = AppColors.backgroundPremiumDark;
@@ -28,7 +42,7 @@ class SupplementDetail extends StatelessWidget {
     final bgColor = isDark ? bgDark : AppColors.backgroundPremiumLight;
 
     return ChangeNotifierProvider<LibraryViewModel>.value(
-      value: viewModel,
+      value: libraryViewModel,
       child: Scaffold(
         backgroundColor: bgColor,
         body: Builder(
@@ -203,7 +217,64 @@ class SupplementDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
+
+                        // Medication Safety Alert
+                        if (safetyWarnings.isNotEmpty)
+                          MedicationSafetyAlert(
+                            warnings: safetyWarnings,
+                            isDark: isDark,
+                          ),
+
+                        // TL;DR Banner
+                        if (supplement.tldr != null) ...[
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: primaryGold.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                  color: primaryGold.withValues(alpha: 0.2)),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(Icons.bolt,
+                                    color: primaryGold, size: 20),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'FOR BUSY MINDS (TL;DR)',
+                                        style: GoogleFonts.lexend(
+                                          color: primaryGold,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        supplement.tldr!,
+                                        style: GoogleFonts.lexend(
+                                          color: isDark
+                                              ? Colors.white
+                                              : Colors.black87,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                        ],
 
                         // Description
                         Text(
@@ -286,9 +357,16 @@ class SupplementDetail extends StatelessWidget {
                         ],
 
                         // Dosage Section
-                        if ((supplement.dosage ?? supplement.defaultDosage)
+                        if (supplement.dosageByWeight != null) ...[
+                          DosageCalculatorCard(
+                            supplement: supplement,
+                            isDark: isDark,
+                          ),
+                          const SizedBox(height: 16),
+                        ] else if ((supplement.dosage ??
+                                    supplement.defaultDosage)
                                 ?.isNotEmpty ==
-                            true)
+                            true) ...[
                           _InfoCard(
                             title: 'Optimal Dosage',
                             icon: Icons.timer_outlined,
@@ -298,7 +376,8 @@ class SupplementDetail extends StatelessWidget {
                                 '',
                             isDark: isDark,
                           ),
-                        const SizedBox(height: 16),
+                          const SizedBox(height: 16),
+                        ],
 
                         // Side Effects Section
                         if (supplement.sideEffects.isNotEmpty)

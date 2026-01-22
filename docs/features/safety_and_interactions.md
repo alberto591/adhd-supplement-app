@@ -14,6 +14,7 @@ A comprehensive rule-based engine for detecting supplement-medication interactio
 
 **Key Classes:**
 - `Medication`: Represents the user's ADHD medication (e.g., Adderall, Vyvanse).
+    - `Medication.fromName(String name)`: Static helper to create medication typed data from simple strings (used in onboarding).
 - `MedicationType`: Enum categorizing medications (`stimulant`, `nonStimulant`, `antidepressant`).
 - `InteractionWarning`: A structured warning with severity, message, recommendation.
 - `WarningSeverity`: Enum (`info`, `caution`, `warning`, `danger`).
@@ -27,6 +28,9 @@ A comprehensive rule-based engine for detecting supplement-medication interactio
 |-----------------|------------|----------|--------|
 | Stimulant | Vitamin C | Caution | Acidic supplements increase medication excretion. |
 | SSRI | St. John's Wort | Danger | Risk of Serotonin Syndrome. |
+
+**3. Supplement-Driven Interactions**
+In addition to global rules, the system checks the `adhdMedInteractions` map on each `Supplement` entity for clinical-specific notes tailored to a user's exact prescription.
 
 ### 2. `ADHDInteractionGuard` (Domain Service)
 **Location**: `lib/domain/services/adhd_interaction_guard.dart`
@@ -58,6 +62,7 @@ Manages state for safety-related screens (overrides, triage).
 - `SafetyOverrideConfirmationScreen`: "I understand the risks" override flow.
 - `LateDoseTriageScreen`: Decision tree for "Should I still take this dose?" scenarios.
 - `SafetyGuardWidget`: Inline widget for the on-demand interaction checker.
+- `MedicationSafetyAlert`: High-contrast alert card displayed on the Supplement Detail screen when an interaction is detected with the user's profile med.
 
 ## ADR Reference
 See [ADR-001: Safety First Architecture](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/adrs/001-safety-first-architecture.md).

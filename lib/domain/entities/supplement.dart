@@ -21,6 +21,36 @@ class Supplement {
   final int? scientificEvidenceRank; // 1-100 score
   final Map<String, String> studyLinks; // title: url
 
+  // Phase 1 Enhancements: Dosage Intelligence
+  final Map<String, String>?
+      dosageByWeight; // weight range: dosage (e.g., "50-70kg": "300mg")
+  final String? dosageFrequency; // "Once daily", "Twice daily", etc.
+  final String? bestTimeToTake; // "With breakfast", "30 min before bed"
+  final List<String>? dosageWarnings; // Special population warnings
+
+  // Phase 1 Enhancements: Interaction & Safety
+  final List<String>? contraindications; // Medical conditions to avoid
+  final List<String>? drugInteractions; // Specific medications
+  final Map<String, String>?
+      adhdMedInteractions; // ADHD med: interaction description
+  final String? pregnancyCategory; // Safety during pregnancy
+  final bool requiresPrescription; // Legal status
+
+  // Phase 1 Enhancements: Evidence & Research
+  final String? metaAnalysisSummary; // Summary of research consensus
+  final int? participantCount; // Total across all studies
+  final String? lastReviewedDate; // When evidence was updated
+
+  // Phase 1 Enhancements: User Experience
+  final double? communityRating; // 1-5 stars from app users
+  final int? reviewCount;
+
+  // Phase 1 Enhancements: Comparison & FAQs
+  final List<String>? similarSupplements; // IDs of alternatives
+  final String? comparisonSummary; // Why this vs. alternatives
+  final Map<String, String>? faqs; // question: answer
+  final String? tldr; // One-sentence summary for skimmers
+
   // Backward compatibility
   String? get iconType => shapeIcon;
   String? get iconColor => colorHex;
@@ -73,6 +103,25 @@ class Supplement {
     this.timingRationale,
     this.scientificEvidenceRank,
     this.studyLinks = const {},
+    // Phase 1 fields
+    this.dosageByWeight,
+    this.dosageFrequency,
+    this.bestTimeToTake,
+    this.dosageWarnings,
+    this.contraindications,
+    this.drugInteractions,
+    this.adhdMedInteractions,
+    this.pregnancyCategory,
+    this.requiresPrescription = false,
+    this.metaAnalysisSummary,
+    this.participantCount,
+    this.lastReviewedDate,
+    this.communityRating,
+    this.reviewCount,
+    this.similarSupplements,
+    this.comparisonSummary,
+    this.faqs,
+    this.tldr,
   });
 
   Supplement copyWith({
@@ -102,6 +151,25 @@ class Supplement {
     String? timingRationale,
     int? scientificEvidenceRank,
     Map<String, String>? studyLinks,
+    // Phase 1 fields
+    Map<String, String>? dosageByWeight,
+    String? dosageFrequency,
+    String? bestTimeToTake,
+    List<String>? dosageWarnings,
+    List<String>? contraindications,
+    List<String>? drugInteractions,
+    Map<String, String>? adhdMedInteractions,
+    String? pregnancyCategory,
+    bool? requiresPrescription,
+    String? metaAnalysisSummary,
+    int? participantCount,
+    String? lastReviewedDate,
+    double? communityRating,
+    int? reviewCount,
+    List<String>? similarSupplements,
+    String? comparisonSummary,
+    Map<String, String>? faqs,
+    String? tldr,
   }) {
     return Supplement(
       id: id ?? this.id,
@@ -131,6 +199,25 @@ class Supplement {
       scientificEvidenceRank:
           scientificEvidenceRank ?? this.scientificEvidenceRank,
       studyLinks: studyLinks ?? this.studyLinks,
+      // Phase 1 fields
+      dosageByWeight: dosageByWeight ?? this.dosageByWeight,
+      dosageFrequency: dosageFrequency ?? this.dosageFrequency,
+      bestTimeToTake: bestTimeToTake ?? this.bestTimeToTake,
+      dosageWarnings: dosageWarnings ?? this.dosageWarnings,
+      contraindications: contraindications ?? this.contraindications,
+      drugInteractions: drugInteractions ?? this.drugInteractions,
+      adhdMedInteractions: adhdMedInteractions ?? this.adhdMedInteractions,
+      pregnancyCategory: pregnancyCategory ?? this.pregnancyCategory,
+      requiresPrescription: requiresPrescription ?? this.requiresPrescription,
+      metaAnalysisSummary: metaAnalysisSummary ?? this.metaAnalysisSummary,
+      participantCount: participantCount ?? this.participantCount,
+      lastReviewedDate: lastReviewedDate ?? this.lastReviewedDate,
+      communityRating: communityRating ?? this.communityRating,
+      reviewCount: reviewCount ?? this.reviewCount,
+      similarSupplements: similarSupplements ?? this.similarSupplements,
+      comparisonSummary: comparisonSummary ?? this.comparisonSummary,
+      faqs: faqs ?? this.faqs,
+      tldr: tldr ?? this.tldr,
     );
   }
 
@@ -162,6 +249,25 @@ class Supplement {
       'timingRationale': timingRationale,
       'scientificEvidenceRank': scientificEvidenceRank,
       'studyLinks': studyLinks,
+      // Phase 1 fields
+      'dosageByWeight': dosageByWeight,
+      'dosageFrequency': dosageFrequency,
+      'bestTimeToTake': bestTimeToTake,
+      'dosageWarnings': dosageWarnings,
+      'contraindications': contraindications,
+      'drugInteractions': drugInteractions,
+      'adhdMedInteractions': adhdMedInteractions,
+      'pregnancyCategory': pregnancyCategory,
+      'requiresPrescription': requiresPrescription,
+      'metaAnalysisSummary': metaAnalysisSummary,
+      'participantCount': participantCount,
+      'lastReviewedDate': lastReviewedDate,
+      'communityRating': communityRating,
+      'reviewCount': reviewCount,
+      'similarSupplements': similarSupplements,
+      'comparisonSummary': comparisonSummary,
+      'faqs': faqs,
+      'tldr': tldr,
     };
   }
 
@@ -214,6 +320,40 @@ class Supplement {
             (k, v) => MapEntry(k, v as String),
           ) ??
           {},
+      // Phase 1 fields
+      dosageByWeight: (json['dosageByWeight'] as Map<String, dynamic>?)?.map(
+        (k, v) => MapEntry(k, v as String),
+      ),
+      dosageFrequency: json['dosageFrequency'] as String?,
+      bestTimeToTake: json['bestTimeToTake'] as String?,
+      dosageWarnings: (json['dosageWarnings'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      contraindications: (json['contraindications'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      drugInteractions: (json['drugInteractions'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      adhdMedInteractions:
+          (json['adhdMedInteractions'] as Map<String, dynamic>?)?.map(
+        (k, v) => MapEntry(k, v as String),
+      ),
+      pregnancyCategory: json['pregnancyCategory'] as String?,
+      requiresPrescription: json['requiresPrescription'] as bool? ?? false,
+      metaAnalysisSummary: json['metaAnalysisSummary'] as String?,
+      participantCount: json['participantCount'] as int?,
+      lastReviewedDate: json['lastReviewedDate'] as String?,
+      communityRating: (json['communityRating'] as num?)?.toDouble(),
+      reviewCount: json['reviewCount'] as int?,
+      similarSupplements: (json['similarSupplements'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      comparisonSummary: json['comparisonSummary'] as String?,
+      faqs: (json['faqs'] as Map<String, dynamic>?)?.map(
+        (k, v) => MapEntry(k, v as String),
+      ),
+      tldr: json['tldr'] as String?,
     );
   }
 }

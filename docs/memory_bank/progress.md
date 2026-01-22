@@ -22,11 +22,17 @@
 - [x] **Const Optimization**: Massive UI performance audit.
 - [x] **Trend Logic**: 14-day rolling historical comparison.
 
+### Phase 12: Supplement Intelligence (Season 2 Foundation)
+- [x] **Dosage Logic**: Automated weight-based calculation widget.
+- [x] **Medication Safety**: High-contrast interaction alerts for ADHD meds.
+- [x] **TL;DR Generation**: Concise one-sentence summaries for busy minds.
+- [x] **Data Refactor**: Syncing `Supplement` entity with clinical metadata.
+
 ---
 
 ## 🔧 In Progress
 
-**None - Project Season 1 Complete.**
+**None - Project Season 1 & Early Season 2 Complete.**
 
 ---
 

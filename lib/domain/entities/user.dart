@@ -1,3 +1,5 @@
+import 'package:adhd_supplement_app/domain/entities/medication.dart';
+
 class User {
   final String id;
   final String email;
@@ -8,6 +10,7 @@ class User {
   final int level;
   final bool hasCompletedOnboarding;
   final String? adhdType; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
+  final Medication? currentMedication;
   final List<String> unlockedAchievements; // IDs of unlocked achievements
 
   const User({
@@ -20,6 +23,7 @@ class User {
     this.xp = 0,
     this.level = 1,
     this.adhdType,
+    this.currentMedication,
     this.unlockedAchievements = const [],
   });
 
@@ -35,6 +39,7 @@ class User {
     int? xp,
     int? level,
     Object? adhdType = _unset,
+    Object? currentMedication = _unset,
     List<String>? unlockedAchievements,
   }) {
     return User(
@@ -52,6 +57,9 @@ class User {
       level: level ?? this.level,
       adhdType:
           identical(adhdType, _unset) ? this.adhdType : adhdType as String?,
+      currentMedication: identical(currentMedication, _unset)
+          ? this.currentMedication
+          : currentMedication as Medication?,
       unlockedAchievements: unlockedAchievements ?? this.unlockedAchievements,
     );
   }
@@ -67,6 +75,7 @@ class User {
       'xp': xp,
       'level': level,
       'adhdType': adhdType,
+      'currentMedication': currentMedication?.toJson(),
       'unlockedAchievements': unlockedAchievements,
     };
   }
@@ -82,6 +91,10 @@ class User {
       xp: json['xp'] as int? ?? 0,
       level: json['level'] as int? ?? 1,
       adhdType: json['adhdType'] as String?,
+      currentMedication: json['currentMedication'] != null
+          ? Medication.fromJson(
+              json['currentMedication'] as Map<String, dynamic>)
+          : null,
       unlockedAchievements: (json['unlockedAchievements'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
