@@ -1,5 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../../config/locator.dart';
+import '../../application/view_models/theme_view_model.dart';
+import 'package:provider/provider.dart';
 
 /// Celebration animation that plays when a supplement is marked as taken
 class CelebrationAnimation extends StatefulWidget {
@@ -28,6 +31,21 @@ class _CelebrationAnimationState extends State<CelebrationAnimation>
       vsync: this,
     );
 
+    // Check for reduced motion
+    final settingsRepo = Provider.of<ThemeViewModel>(context, listen: false);
+    final reduceMotion = settingsRepo.reducedMotion;
+    // Also check system setting (this might need to happen in build or verify here)
+    // Accessing mediaQuery in initState is unsafe unless we wait for post-frame,
+    // but celebration usually happens on user action.
+
+    if (reduceMotion) {
+      // Don't animate, just complete immediately
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onComplete();
+      });
+      return;
+    }
+
     // Generate particles
     for (int i = 0; i < 50; i++) {
       _particles.add(_Particle(
@@ -41,7 +59,7 @@ class _CelebrationAnimationState extends State<CelebrationAnimation>
     }
 
     _controller.forward().then((_) {
-      widget.onComplete();
+      if (mounted) widget.onComplete();
     });
   }
 

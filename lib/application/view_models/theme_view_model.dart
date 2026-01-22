@@ -20,4 +20,23 @@ class ThemeViewModel extends ChangeNotifier {
     await _settingsRepository.setThemeMode(mode);
     notifyListeners();
   }
+
+  double get fontScale => _settingsRepository.getFontSizeScale();
+  bool get reducedMotion => _settingsRepository.getReducedMotionEnabled();
+  bool get hapticEnabled => _settingsRepository.getHapticFeedbackEnabled();
+
+  Future<void> updateFontScale(double scale) async {
+    await _settingsRepository.setFontSizeScale(scale);
+    notifyListeners();
+  }
+
+  Future<void> updateReducedMotion(bool enabled) async {
+    await _settingsRepository.setReducedMotionEnabled(enabled);
+    notifyListeners();
+  }
+
+  Future<void> updateHapticEnabled(bool enabled) async {
+    await _settingsRepository.setHapticFeedbackEnabled(enabled);
+    notifyListeners();
+  }
 }

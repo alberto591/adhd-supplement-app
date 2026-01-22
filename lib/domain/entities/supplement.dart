@@ -15,6 +15,11 @@ class Supplement {
   final String? shapeIcon; // e.g., "pill", "capsule"
   final String? colorHex; // e.g., "#135BEC"
   final String status; // 'beneficial', 'avoid', 'neutral'
+  final String? mechanismOfAction;
+  final List<String> detailedBenefits;
+  final String? timingRationale;
+  final int? scientificEvidenceRank; // 1-100 score
+  final Map<String, String> studyLinks; // title: url
 
   // Backward compatibility
   String? get iconType => shapeIcon;
@@ -49,6 +54,11 @@ class Supplement {
     this.interactions = const [],
     this.focusLevel = 3,
     this.status = 'beneficial',
+    this.mechanismOfAction,
+    this.detailedBenefits = const [],
+    this.timingRationale,
+    this.scientificEvidenceRank,
+    this.studyLinks = const {},
   });
 
   Supplement copyWith({
@@ -73,6 +83,11 @@ class Supplement {
     List<String>? interactions,
     int? focusLevel,
     String? status,
+    String? mechanismOfAction,
+    List<String>? detailedBenefits,
+    String? timingRationale,
+    int? scientificEvidenceRank,
+    Map<String, String>? studyLinks,
   }) {
     return Supplement(
       id: id ?? this.id,
@@ -96,6 +111,12 @@ class Supplement {
       interactions: interactions ?? this.interactions,
       focusLevel: focusLevel ?? this.focusLevel,
       status: status ?? this.status,
+      mechanismOfAction: mechanismOfAction ?? this.mechanismOfAction,
+      detailedBenefits: detailedBenefits ?? this.detailedBenefits,
+      timingRationale: timingRationale ?? this.timingRationale,
+      scientificEvidenceRank:
+          scientificEvidenceRank ?? this.scientificEvidenceRank,
+      studyLinks: studyLinks ?? this.studyLinks,
     );
   }
 
@@ -122,6 +143,11 @@ class Supplement {
       'interactions': interactions,
       'focusLevel': focusLevel,
       'status': status,
+      'mechanismOfAction': mechanismOfAction,
+      'detailedBenefits': detailedBenefits,
+      'timingRationale': timingRationale,
+      'scientificEvidenceRank': scientificEvidenceRank,
+      'studyLinks': studyLinks,
     };
   }
 
@@ -163,6 +189,17 @@ class Supplement {
           [],
       focusLevel: json['focusLevel'] as int? ?? 3,
       status: json['status'] as String? ?? 'beneficial',
+      mechanismOfAction: json['mechanismOfAction'] as String?,
+      detailedBenefits: (json['detailedBenefits'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      timingRationale: json['timingRationale'] as String?,
+      scientificEvidenceRank: json['scientificEvidenceRank'] as int?,
+      studyLinks: (json['studyLinks'] as Map<String, dynamic>?)?.map(
+            (k, v) => MapEntry(k, v as String),
+          ) ??
+          {},
     );
   }
 }

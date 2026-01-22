@@ -176,6 +176,24 @@ class _FakeSettingsRepository implements SettingsRepository {
   String getWarningNudgeOption() => '15m';
   @override
   Future<void> setWarningNudgeOption(String option) async {}
+  
+  @override
+  bool getReducedMotionEnabled() => false;
+  
+  @override
+  Future<void> setReducedMotionEnabled(bool enabled) async {}
+  
+  @override
+  bool getHapticFeedbackEnabled() => true;
+  
+  @override
+  Future<void> setHapticFeedbackEnabled(bool enabled) async {}
+  
+  @override
+  double getFontSizeScale() => 1.0;
+  
+  @override
+  Future<void> setFontSizeScale(double scale) async {}
 
   @override
   bool getExtendedRemindersEnabled() => true;

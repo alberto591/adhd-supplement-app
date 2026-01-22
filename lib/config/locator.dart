@@ -39,6 +39,7 @@ import 'package:adhd_supplement_app/application/view_models/privacy_view_model.d
 import 'package:adhd_supplement_app/application/view_models/notification_history_view_model.dart';
 // import 'package:adhd_supplement_app/application/view_models/streak_view_model.dart'; // Unused
 import 'package:adhd_supplement_app/infrastructure/services/streak_service.dart';
+import 'package:adhd_supplement_app/application/services/haptic_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
@@ -77,9 +78,11 @@ void setupLocator() {
   locator
       .registerLazySingleton<NotificationService>(() => NotificationService());
   locator.registerLazySingleton<StreakService>(() => StreakService());
+  locator.registerLazySingleton<HapticService>(() => HapticService());
 
   locator
       .registerLazySingleton<InteractionService>(() => FDAInteractionService());
+
   locator.registerLazySingleton<ReportPdfService>(() => ReportPdfService());
 
   // Repositories

@@ -216,15 +216,74 @@ class SupplementDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 32),
 
-                        // Benefits Section
+                        // Intelligence Grid (Mechanism & Timing)
+                        if (supplement.mechanismOfAction != null ||
+                            supplement.timingRationale != null)
+                          Column(
+                            children: [
+                              if (supplement.mechanismOfAction != null)
+                                _InfoCard(
+                                  title: 'Mechanism of Action',
+                                  icon: Icons.science_outlined,
+                                  color: Colors.blue,
+                                  isDark: isDark,
+                                  child: Text(
+                                    supplement.mechanismOfAction!,
+                                    style: GoogleFonts.lexend(
+                                      color: isDark
+                                          ? Colors.grey[300]
+                                          : Colors.grey[800],
+                                      fontSize: 15,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ),
+                              const SizedBox(height: 16),
+                              if (supplement.timingRationale != null)
+                                _InfoCard(
+                                  title: 'Timing Strategy',
+                                  icon: Icons.access_time_filled,
+                                  color: Colors.purple,
+                                  isDark: isDark,
+                                  child: Text(
+                                    supplement.timingRationale!,
+                                    style: GoogleFonts.lexend(
+                                      color: isDark
+                                          ? Colors.grey[300]
+                                          : Colors.grey[800],
+                                      fontSize: 15,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ),
+                              const SizedBox(height: 32),
+                            ],
+                          ),
+
+                        // Enhanced Benefits Section
                         _SectionCard(
-                          title: 'Core Benefits',
-                          icon: Icons.bolt,
+                          title: 'ADHD Specific Benefits',
+                          icon: Icons.psychology,
                           color: primaryGold,
-                          items: supplement.benefits,
+                          items: supplement.detailedBenefits.isNotEmpty
+                              ? supplement.detailedBenefits
+                              : supplement.benefits,
                           isDark: isDark,
                         ),
                         const SizedBox(height: 16),
+
+                        // Scientific Evidence
+                        if (supplement.studyLinks.isNotEmpty) ...[
+                          _SectionCard(
+                            title: 'Scientific Evidence',
+                            icon: Icons.auto_stories,
+                            color: Colors.teal,
+                            items: supplement.studyLinks.keys.toList(),
+                            isLink: true,
+                            isDark: isDark,
+                          ),
+                          const SizedBox(height: 16),
+                        ],
 
                         // Dosage Section
                         if ((supplement.dosage ?? supplement.defaultDosage)
@@ -533,6 +592,7 @@ class _SectionCard extends StatelessWidget {
   final Color color;
   final List<String> items;
   final bool isDark;
+  final bool isLink;
 
   const _SectionCard({
     required this.title,
@@ -540,6 +600,7 @@ class _SectionCard extends StatelessWidget {
     required this.color,
     required this.items,
     required this.isDark,
+    this.isLink = false,
   });
 
   @override
@@ -547,7 +608,7 @@ class _SectionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF2D2616) : Colors.white, // ブラウン調のダーク
+        color: isDark ? const Color(0xFF2D2616) : Colors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: color.withValues(alpha: 0.1),
@@ -568,9 +629,8 @@ class _SectionCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                    color: color.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10)),
                 child: Icon(icon, color: color, size: 20),
               ),
               const SizedBox(width: 12),
@@ -590,25 +650,35 @@ class _SectionCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: Container(
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: color,
-                          shape: BoxShape.circle,
+                    if (!isLink)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Container(
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                          ),
                         ),
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Icon(Icons.link, size: 16, color: color),
                       ),
-                    ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         item,
                         style: GoogleFonts.lexend(
-                          color: isDark ? Colors.grey[400] : Colors.grey[700],
+                          color: isLink
+                              ? Colors.blue[400]
+                              : (isDark ? Colors.grey[400] : Colors.grey[700]),
                           fontSize: 15,
                           height: 1.4,
+                          decoration: isLink ? TextDecoration.underline : null,
+                          decorationColor: Colors.blue[400],
                         ),
                       ),
                     ),
@@ -625,16 +695,18 @@ class _InfoCard extends StatelessWidget {
   final String title;
   final IconData icon;
   final Color color;
-  final String content;
+  final Widget? child;
+  final String? content;
   final bool isDark;
 
   const _InfoCard({
     required this.title,
     required this.icon,
     required this.color,
-    required this.content,
+    this.child,
+    this.content,
     required this.isDark,
-  });
+  }) : assert(child != null || content != null);
 
   @override
   Widget build(BuildContext context) {
@@ -648,6 +720,7 @@ class _InfoCard extends StatelessWidget {
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.all(12),
@@ -655,7 +728,7 @@ class _InfoCard extends StatelessWidget {
               color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(icon, color: color, size: 28),
+            child: Icon(icon, color: color, size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -671,15 +744,16 @@ class _InfoCard extends StatelessWidget {
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  content,
-                  style: GoogleFonts.lexend(
-                    color: isDark ? Colors.white : Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                const SizedBox(height: 8),
+                child ??
+                    Text(
+                      content!,
+                      style: GoogleFonts.lexend(
+                        color: isDark ? Colors.white : Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
               ],
             ),
           ),

@@ -21,6 +21,7 @@ class SymptomCheckInViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool _hasCheckedInToday = false;
   String? _error;
+  String? _currentSessionId;
   bool _isDisposed = false;
 
   // Getters
@@ -70,14 +71,17 @@ class SymptomCheckInViewModel extends ChangeNotifier {
   }
 
   /// Submit the check-in
-  Future<bool> submitCheckIn() async {
+  Future<bool> submitCheckIn({bool isAutoSave = false}) async {
     try {
-      _isLoading = true;
+      if (!isAutoSave) _isLoading = true;
       _error = null;
       notifyListeners();
 
+      // Use existing session ID or create new
+      _currentSessionId ??= const Uuid().v4();
+
       final checkIn = SymptomCheckIn(
-        id: const Uuid().v4(),
+        id: _currentSessionId!,
         userId: _userId,
         timestamp: DateTime.now(),
         focusLevel: _focusLevel.round(),
@@ -89,18 +93,21 @@ class SymptomCheckInViewModel extends ChangeNotifier {
       await _repository.logCheckIn(checkIn);
       _hasCheckedInToday = true;
 
-      // Reset form
-      _focusLevel = 50.0;
-      _energyLevel = 50.0;
-      _moodLevel = 50.0;
-      _notes = null;
+      if (!isAutoSave) {
+        // Reset form only on final submit
+        _focusLevel = 50.0;
+        _energyLevel = 50.0;
+        _moodLevel = 50.0;
+        _notes = null;
+        _currentSessionId = null;
+      }
 
       return true;
     } catch (e) {
       _error = 'Failed to submit check-in: $e';
       return false;
     } finally {
-      _isLoading = false;
+      if (!isAutoSave) _isLoading = false;
       notifyListeners();
     }
   }
@@ -124,6 +131,7 @@ class SymptomCheckInViewModel extends ChangeNotifier {
     _energyLevel = 50.0;
     _moodLevel = 50.0;
     _notes = null;
+    _currentSessionId = null;
     _error = null;
     notifyListeners();
   }

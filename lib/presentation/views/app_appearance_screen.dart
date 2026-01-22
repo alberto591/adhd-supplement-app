@@ -3,6 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../theme/app_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../domain/repositories/settings_repository.dart';
+import '../../config/locator.dart';
+import '../../application/view_models/theme_view_model.dart';
+import 'package:provider/provider.dart';
 
 class AppAppearanceScreen extends StatefulWidget {
   const AppAppearanceScreen({super.key});
@@ -14,6 +18,9 @@ class AppAppearanceScreen extends StatefulWidget {
 class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
   String _selectedWallpaper = 'Nature';
   String _selectedIcon = 'Dopamine Hit';
+  bool _reducedMotion = false;
+  bool _hapticEnabled = true;
+  double _fontScale = 1.0;
 
   @override
   void initState() {
@@ -23,16 +30,39 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
 
   Future<void> _loadPreferences() async {
     final prefs = await SharedPreferences.getInstance();
+    final settingsRepo = locator<SettingsRepository>();
+
     if (!mounted) return;
     setState(() {
       _selectedWallpaper = prefs.getString('appearance_wallpaper') ?? 'Nature';
       _selectedIcon = prefs.getString('appearance_icon') ?? 'Dopamine Hit';
+      _reducedMotion = settingsRepo.getReducedMotionEnabled();
+      _hapticEnabled = settingsRepo.getHapticFeedbackEnabled();
+      _fontScale = settingsRepo.getFontSizeScale();
     });
   }
 
   Future<void> _savePreference(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
+  }
+
+  Future<void> _toggleReducedMotion(bool value) async {
+    await Provider.of<ThemeViewModel>(context, listen: false)
+        .updateReducedMotion(value);
+    setState(() => _reducedMotion = value);
+  }
+
+  Future<void> _toggleHaptic(bool value) async {
+    await Provider.of<ThemeViewModel>(context, listen: false)
+        .updateHapticEnabled(value);
+    setState(() => _hapticEnabled = value);
+  }
+
+  Future<void> _updateFontScale(double value) async {
+    await Provider.of<ThemeViewModel>(context, listen: false)
+        .updateFontScale(value);
+    setState(() => _fontScale = value);
   }
 
   @override
@@ -301,6 +331,134 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                           _buildIconCard('Dopamine Hit', 'Burst of energy',
                               Icons.bolt, isDark),
                         ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Accessibility Header
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'Accessibility & Sensory',
+                        style: GoogleFonts.lexend(
+                          color:
+                              isDark ? Colors.white : const Color(0xFF111418),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Accessibility Controls
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: isDark ? Colors.grey[900] : Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                              color: isDark
+                                  ? Colors.grey[800]!
+                                  : Colors.grey[200]!),
+                        ),
+                        child: Column(
+                          children: [
+                            SwitchListTile(
+                              title: Text('Reduced Motion',
+                                  style: GoogleFonts.lexend(
+                                    color: isDark ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  )),
+                              subtitle: Text('Minimize animations & flashing',
+                                  style: GoogleFonts.lexend(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  )),
+                              value: _reducedMotion,
+                              activeThumbColor: primaryGold,
+                              onChanged: _toggleReducedMotion,
+                            ),
+                            Divider(
+                                height: 1,
+                                color: isDark
+                                    ? Colors.grey[800]
+                                    : Colors.grey[200]),
+                            SwitchListTile(
+                              title: Text('Haptic Feedback',
+                                  style: GoogleFonts.lexend(
+                                    color: isDark ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  )),
+                              subtitle: Text('Vibrate on interactions',
+                                  style: GoogleFonts.lexend(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  )),
+                              value: _hapticEnabled,
+                              activeThumbColor: primaryGold,
+                              onChanged: _toggleHaptic,
+                            ),
+                            Divider(
+                                height: 1,
+                                color: isDark
+                                    ? Colors.grey[800]
+                                    : Colors.grey[200]),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Font Size Scaling',
+                                          style: GoogleFonts.lexend(
+                                            color: isDark
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                      Text('${(_fontScale * 100).toInt()}%',
+                                          style: GoogleFonts.lexend(
+                                            color: primaryGold,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                    ],
+                                  ),
+                                  Slider(
+                                    value: _fontScale,
+                                    min: 0.8,
+                                    max: 1.4,
+                                    divisions: 6,
+                                    activeColor: primaryGold,
+                                    inactiveColor: isDark
+                                        ? Colors.grey[700]
+                                        : Colors.grey[300],
+                                    onChanged: _updateFontScale,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Aa',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey)),
+                                      Text('Aa',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.grey)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 

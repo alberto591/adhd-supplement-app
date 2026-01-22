@@ -9,6 +9,7 @@ class NightlyReflectionViewModel extends ChangeNotifier {
 
   bool _isLoading = false;
   bool _isSaving = false;
+  bool _isAutoSaving = false;
   double _focusValue = 0.5;
   bool _isSleepReady = true;
   final TextEditingController _journalController = TextEditingController();
@@ -21,6 +22,7 @@ class NightlyReflectionViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
   bool get isSaving => _isSaving;
+  bool get isAutoSaving => _isAutoSaving;
   double get focusValue => _focusValue;
   bool get isSleepReady => _isSleepReady;
   TextEditingController get journalController => _journalController;
@@ -66,8 +68,12 @@ class NightlyReflectionViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> saveReflection() async {
-    _isSaving = true;
+  Future<bool> saveReflection({bool isAutoSave = false}) async {
+    if (isAutoSave) {
+      _isAutoSaving = true;
+    } else {
+      _isSaving = true;
+    }
     notifyListeners();
 
     try {
@@ -100,7 +106,11 @@ class NightlyReflectionViewModel extends ChangeNotifier {
       debugPrint('Error saving reflection: $e');
       return false;
     } finally {
-      _isSaving = false;
+      if (isAutoSave) {
+        _isAutoSaving = false;
+      } else {
+        _isSaving = false;
+      }
       notifyListeners();
     }
   }

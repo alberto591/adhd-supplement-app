@@ -13,6 +13,9 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
       'warning_option'; // '15m' or 'followup'
   static const String _keyExtendedEnabled = 'extended_enabled';
   static const String _keyThemeMode = 'theme_mode';
+  static const String _keyReducedMotion = 'reduced_motion_enabled';
+  static const String _keyHapticFeedback = 'haptic_feedback_enabled';
+  static const String _keyFontSizeScale = 'font_size_scale';
 
   @override
   Future<void> init() async {
@@ -117,5 +120,35 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   @override
   Future<void> setThemeMode(ThemeMode mode) async {
     await _prefs.setInt(_keyThemeMode, mode.index);
+  }
+
+  @override
+  bool getReducedMotionEnabled() {
+    return _prefs.getBool(_keyReducedMotion) ?? false;
+  }
+
+  @override
+  Future<void> setReducedMotionEnabled(bool enabled) async {
+    await _prefs.setBool(_keyReducedMotion, enabled);
+  }
+
+  @override
+  bool getHapticFeedbackEnabled() {
+    return _prefs.getBool(_keyHapticFeedback) ?? true;
+  }
+
+  @override
+  Future<void> setHapticFeedbackEnabled(bool enabled) async {
+    await _prefs.setBool(_keyHapticFeedback, enabled);
+  }
+
+  @override
+  double getFontSizeScale() {
+    return _prefs.getDouble(_keyFontSizeScale) ?? 1.0;
+  }
+
+  @override
+  Future<void> setFontSizeScale(double scale) async {
+    await _prefs.setDouble(_keyFontSizeScale, scale);
   }
 }

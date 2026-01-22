@@ -32,4 +32,14 @@ abstract class SettingsRepository {
   // App Settings
   ThemeMode getThemeMode();
   Future<void> setThemeMode(ThemeMode mode);
+
+  // Accessibility Settings
+  bool getReducedMotionEnabled();
+  Future<void> setReducedMotionEnabled(bool enabled);
+
+  bool getHapticFeedbackEnabled();
+  Future<void> setHapticFeedbackEnabled(bool enabled);
+
+  double getFontSizeScale();
+  Future<void> setFontSizeScale(double scale);
 }

@@ -34,11 +34,6 @@ These features are already in the app (no action needed):
 - [ ] Gate all `HapticFeedback` calls behind preference
 - **Effort**: Small | **Impact**: Medium
 
-### 1.3 High Contrast Theme
-- [ ] Create `AppTheme.highContrastTheme` with pure black/white
-- [ ] Add theme selector: Light / Dark / High Contrast
-- **Effort**: Medium | **Impact**: High for visual sensitivity
-
 ### 1.4 Font Size Customization
 - [ ] Add font scale slider in AppAppearanceScreen (1.0x–1.5x)
 - [ ] Apply via `MediaQuery.textScaleFactorOf` wrapper
@@ -67,11 +62,7 @@ These features are already in the app (no action needed):
 
 ## ♿ Level 3: Accessibility
 
-### 3.1 Semantic Labels Audit
-- [ ] Add `Semantics` wrappers to all IconButtons
-- [ ] Add `semanticLabel` to all `Icon` widgets
-- [ ] Test with TalkBack/VoiceOver
-- **Effort**: Medium | **Impact**: Critical for screen reader users
+
 
 ### 3.2 Focus Order Management
 - [ ] Define `FocusNode` chains for forms
@@ -83,10 +74,6 @@ These features are already in the app (no action needed):
 - [ ] Fix any undersized buttons in SettingsTiles
 - **Effort**: Small | **Impact**: High
 
-### 3.4 Color Blindness Safe Palette
-- [ ] Review red/green usage in charts
-- [ ] Add pattern/icon differentiation for status
-- **Effort**: Small | **Impact**: Medium
 
 ---
 
@@ -113,11 +100,6 @@ These features are already in the app (no action needed):
 ### 4.4 Notification Quiet Hours
 - [ ] Add quiet hours time range in Settings
 - [ ] Suppress non-critical notifications during range
-- **Effort**: Small | **Impact**: Medium
-
-### 4.5 Task Time Estimates
-- [ ] Add "~X min" labels to onboarding steps
-- [ ] Show estimated time on complex forms
 - **Effort**: Small | **Impact**: Medium
 
 ---

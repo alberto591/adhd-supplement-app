@@ -17,7 +17,23 @@ class SeedingService {
         "benefits": ["Focus", "Brain Health", "Mood"],
         "evidenceLevel": "high",
         "notes": "Take with food for better absorption",
-        "status": "beneficial"
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Increases cell membrane permeability, enhances dopamine receptor density, and reduces neuroinflammation.",
+        "detailedBenefits": [
+          "Improves working memory by 15% in clinical trials",
+          "Reduces impulsivity and emotional dysregulation",
+          "Supports long-term neuroprotection"
+        ],
+        "timingRationale":
+            "Fat-soluble nutrients require dietary fat for absorption. Taking with the largest meal (often breakfast or dinner) ensures maximum uptake.",
+        "scientificEvidenceRank": 92,
+        "studyLinks": {
+          "Omega-3 fatty acids for ADHD":
+              "https://pubmed.ncbi.nlm.nih.gov/21961774/",
+          "EPA vs DHA efficacy comparision":
+              "https://pubmed.ncbi.nlm.nih.gov/31336652/"
+        }
       },
       {
         "id": "l-theanine",
@@ -28,7 +44,23 @@ class SeedingService {
         "benefits": ["Calm Focus", "Anxiety Reduction"],
         "evidenceLevel": "moderate",
         "notes": "Synergizes well with caffeine",
-        "status": "beneficial"
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Increases alpha brain wave activity (associated with relaxed alertness) and boosts GABA levels without sedation.",
+        "detailedBenefits": [
+          "Reduces jitteriness from stimulant medications",
+          "Improves selective attention during stressful tasks",
+          "Promotes relaxation without drowsiness"
+        ],
+        "timingRationale":
+            "Best taken 30-60 minutes before focus work. Its half-life is ~3 hours, so re-dosing might be needed for long days.",
+        "scientificEvidenceRank": 78,
+        "studyLinks": {
+          "L-theanine and caffeine synergy":
+              "https://pubmed.ncbi.nlm.nih.gov/18681988/",
+          "Effects on stress and cognition":
+              "https://pubmed.ncbi.nlm.nih.gov/31623400/"
+        }
       },
       {
         "id": "magnesium",
@@ -39,7 +71,23 @@ class SeedingService {
         "benefits": ["Sleep", "Relaxation", "Muscle Recovery"],
         "evidenceLevel": "high",
         "notes": "Take before bed",
-        "status": "beneficial"
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Regulates NMDA receptors (calming excitotoxicity) and influences melatonin production for sleep regulation.",
+        "detailedBenefits": [
+          "Reduces evening restlessness and physical hyperactivity",
+          "Improves sleep quality and onset latency",
+          "buffers against stimulant-induced tolerance"
+        ],
+        "timingRationale":
+            "Has a calming effect on the nervous system, making it ideal for the pre-sleep stack to support wind-down.",
+        "scientificEvidenceRank": 85,
+        "studyLinks": {
+          "Magnesium in ADHD children":
+              "https://pubmed.ncbi.nlm.nih.gov/24065783/",
+          "Sleep and magnesium correlation":
+              "https://pubmed.ncbi.nlm.nih.gov/23853635/"
+        }
       },
       {
         "id": "vitamin-d",
@@ -55,7 +103,23 @@ class SeedingService {
         "evidenceLevel": "high",
         "notes":
             "Works best when combined with magnesium. Get blood levels tested.",
-        "status": "beneficial"
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Acts as a neurosteroid hormone regulating synthesis of serotonin and dopamine. Crucial for nerve growth factor.",
+        "detailedBenefits": [
+          "Correcting deficiency can significantly improve attention scores",
+          "Supports overall mood stability and seasonal resilience",
+          "Enhances structural neuroplasticity"
+        ],
+        "timingRationale":
+            "Vitamin D can suppress melatonin production, so it should be taken in the morning to align with circadian rhythm.",
+        "scientificEvidenceRank": 88,
+        "studyLinks": {
+          "Vitamin D and ADHD symptoms":
+              "https://pubmed.ncbi.nlm.nih.gov/29457224/",
+          "Neurosteroid effects of Vitamin D":
+              "https://pubmed.ncbi.nlm.nih.gov/28582844/"
+        }
       },
       {
         "id": "bacopa-monnieri",
@@ -78,7 +142,23 @@ class SeedingService {
         "benefits": ["Impulse Control", "Attention", "Dopamine Metabolism"],
         "evidenceLevel": "moderate",
         "notes": "Most effective if deficient. Works better with Omega-3s.",
-        "status": "beneficial"
+        "status": "beneficial",
+        "mechanismOfAction":
+            "Cofactor for dopamine transporter (DAT) regulation and melatonin synthesis.",
+        "detailedBenefits": [
+          "Reduces hyperactivity marks in zinc-deficient individuals",
+          "Enhances the effectiveness of stimulant medications",
+          "Supports immune function and gut health"
+        ],
+        "timingRationale":
+            "Can cause nausea on an empty stomach. Take with a solid meal, preferably lunch or dinner.",
+        "scientificEvidenceRank": 75,
+        "studyLinks": {
+          "Zinc sulfate in ADHD treatment":
+              "https://pubmed.ncbi.nlm.nih.gov/14687872/",
+          "Zinc co-treatment with stimulants":
+              "https://pubmed.ncbi.nlm.nih.gov/21309642/"
+        }
       },
       {
         "id": "ginkgo-biloba",

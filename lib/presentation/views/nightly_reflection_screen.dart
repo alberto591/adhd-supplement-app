@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 import '../../config/locator.dart';
 import '../../application/view_models/nightly_reflection_view_model.dart';
 import '../navigation/app_router.dart';
@@ -15,6 +16,27 @@ class NightlyReflectionScreen extends StatefulWidget {
 
 class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
   NightlyReflectionViewModel? _viewModel;
+  Timer? _debounceTimer;
+
+  void _onJournalChanged() {
+    if (_viewModel == null) return;
+
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(seconds: 2), () async {
+      final success = await _viewModel!.saveReflection(isAutoSave: true);
+      if (success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Reflection saved'),
+            backgroundColor: Color(0xFF7F06F9), // primaryPurple
+            duration: Duration(milliseconds: 1000),
+            behavior: SnackBarBehavior.floating,
+            width: 200,
+          ),
+        );
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -27,9 +49,19 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
         setState(() {
           _viewModel = locator<NightlyReflectionViewModel>(param1: userId);
         });
-        _viewModel?.loadTodayReflection();
+        _viewModel?.loadTodayReflection().then((_) {
+          // Add listener after loading initial data
+          _viewModel?.journalController.addListener(_onJournalChanged);
+        });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    _viewModel?.journalController.removeListener(_onJournalChanged);
+    super.dispose();
   }
 
   @override

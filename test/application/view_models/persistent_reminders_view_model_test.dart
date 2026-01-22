@@ -17,6 +17,24 @@ class _FakeSettingsRepository implements SettingsRepository {
     this.warningNudgeOption = '15m',
     this.extendedRemindersEnabled = true,
   }) : nudgeTime = nudgeTime ?? const TimeOfDay(hour: 8, minute: 0);
+  
+  @override
+  bool getReducedMotionEnabled() => false;
+  
+  @override
+  Future<void> setReducedMotionEnabled(bool enabled) async {}
+  
+  @override
+  bool getHapticFeedbackEnabled() => true;
+  
+  @override
+  Future<void> setHapticFeedbackEnabled(bool enabled) async {}
+  
+  @override
+  double getFontSizeScale() => 1.0;
+  
+  @override
+  Future<void> setFontSizeScale(double scale) async {}
 
   @override
   Future<void> init() async {}

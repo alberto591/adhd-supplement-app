@@ -179,7 +179,7 @@ class FakeSettingsRepository implements SettingsRepository {
   @override
   Future<void> setWarningNudgeOption(String option) async {}
   @override
-  bool getExtendedRemindersEnabled() => true;
+  bool getExtendedRemindersEnabled() => false;
   @override
   Future<void> setExtendedRemindersEnabled(bool enabled) async {}
   @override
@@ -202,6 +202,19 @@ class FakeSettingsRepository implements SettingsRepository {
   ThemeMode getThemeMode() => ThemeMode.system;
   @override
   Future<void> setThemeMode(ThemeMode mode) async {}
+  @override
+  bool getReducedMotionEnabled() => false;
+  @override
+  Future<void> setReducedMotionEnabled(bool enabled) async {}
+  @override
+  bool getHapticFeedbackEnabled() => true;
+  @override
+  Future<void> setHapticFeedbackEnabled(bool enabled) async {}
+  @override
+  double getFontSizeScale() => 1.0;
+  @override
+  Future<void> setFontSizeScale(double scale) async {}
+
 }
 
 void main() {

@@ -112,6 +112,15 @@ class AdhdSupplementApp extends StatelessWidget {
             ];
           },
           onGenerateRoute: AppRouter.generateRoute,
+          builder: (context, child) {
+            final scale = themeVM.fontScale;
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: TextScaler.linear(scale),
+              ),
+              child: child!,
+            );
+          },
         ),
       ),
     );
