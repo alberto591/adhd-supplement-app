@@ -56,7 +56,8 @@ void main() {
     await tester.pumpWidget(createScreen());
 
     // Verify header
-    expect(find.text('How are you feeling?'), findsOneWidget);
+    expect(find.text('State of Body & Mind'), findsOneWidget);
+    expect(find.text('How are you feeling at this moment?'), findsOneWidget);
 
     // Verify sliders exist
     expect(find.byType(Slider), findsNWidgets(3));
@@ -66,8 +67,8 @@ void main() {
     expect(find.text('Energy: 🥱 to ⚡️'), findsOneWidget);
     expect(find.text('Mood: 😔 to 😊'), findsOneWidget);
 
-    // Verify Done button
-    expect(find.text('Done'), findsOneWidget);
+    // Verify Log Check-in button
+    expect(find.text('Log Check-in'), findsOneWidget);
   });
 
   testWidgets('Interacting with sliders updates values',

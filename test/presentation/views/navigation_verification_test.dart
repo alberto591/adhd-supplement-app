@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:provider/provider.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
 import 'package:adhd_supplement_app/presentation/views/insights_screen.dart';
 import 'package:adhd_supplement_app/presentation/views/science_hub_screen.dart';
@@ -12,15 +12,21 @@ class MockScienceHubViewModel extends ChangeNotifier
     implements ScienceHubViewModel {
   @override
   bool get isLoading => false;
-
+  @override
+  String? get error => null;
   @override
   Article? get articleOfTheDay => null;
-
   @override
   List<Article> get articles => [];
-
   @override
   Future<void> loadData() async {}
+}
+
+class MockInsightsViewModel extends ChangeNotifier {
+  int get streakCount => 7;
+  double get dailyProgress => 0.85;
+  double get consistencyRate => 0.85;
+  List<dynamic> get weeklyStats => [];
 }
 
 void main() {
@@ -32,30 +38,31 @@ void main() {
 
   testWidgets('InsightsScreen renders and has correct bottom nav index',
       (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: InsightsScreen()));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ChangeNotifierProvider<MockInsightsViewModel>(
+          create: (_) => MockInsightsViewModel(),
+          child: const InsightsScreen(),
+        ),
+      ),
+    );
+    await tester.pump();
 
-    // Verify Title
-    // expect(find.text('Insights'), findsOneWidget);
-
-    // Verify UnifiedBottomNav
     final navFinder = find.byType(UnifiedBottomNav);
     expect(navFinder, findsOneWidget);
 
-    // Verify Index
     final nav = tester.widget<UnifiedBottomNav>(navFinder);
-    expect(nav.currentIndex, 2);
+    expect(nav.currentIndex, 4); // Insights is now part of Profile
   });
 
   testWidgets('ScienceHubScreen renders without crashing',
       (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: ScienceHubScreen()));
-    await tester.pump(); // Single pump to start build
-
-    // Verify the screen started building (app bar should be present)
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: ScienceHubScreen(),
+      ),
+    );
+    await tester.pump();
     expect(find.byType(Scaffold), findsOneWidget);
-
-    // Note: Full pumpAndSettle() causes issues with network images in tests
-    // The screen builds correctly in the actual app
   });
 }
