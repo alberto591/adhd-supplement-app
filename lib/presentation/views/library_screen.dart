@@ -447,7 +447,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             },
           ),
         ),
-        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 3),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 2),
       ),
     );
   }

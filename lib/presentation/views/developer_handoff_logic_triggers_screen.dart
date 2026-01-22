@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
   const DeveloperHandoffLogicTriggersScreen({super.key});
@@ -127,7 +128,7 @@ class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: borderColor),
                           image: const DecorationImage(
-                            image: NetworkImage(
+                            image: CachedNetworkImageProvider(
                                 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800'),
                             fit: BoxFit.cover,
                             opacity: 0.3,

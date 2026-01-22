@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class RecoveryHeaderCard extends StatelessWidget {
   const RecoveryHeaderCard({super.key});
@@ -20,7 +21,7 @@ class RecoveryHeaderCard extends StatelessWidget {
           ),
         ],
         image: const DecorationImage(
-          image: NetworkImage(
+          image: CachedNetworkImageProvider(
             'https://lh3.googleusercontent.com/aida-public/AB6AXuAURUrlhNHu4EDNycDi82Ij5LgIPR7s7c4Vj1Bt6wns5I8xZtAp9gNFxwRJ1HsSczt3j1CmWn68Kp2EAtowHesRmYDvJsSQp6bXOHE50KV6wQYeyuiq48rD2Fly57YxH7mOzMOEvFExbn1YhfLkEtBy7YwWydZYjoGP-k5vwNkpNK0UGYeIvSDDsCoYvz2_PNxJ8c4jVi8QgcXXTrCqJxcGh5xT0f0hkH0h9QNUs54LbsNQyCRd8B-Rv0nZb8eBegm8HO0dga1kPI4',
           ),
           fit: BoxFit.cover,

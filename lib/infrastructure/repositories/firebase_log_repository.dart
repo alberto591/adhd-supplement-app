@@ -7,6 +7,9 @@ import '../../utils/date_utils.dart';
 class FirebaseLogRepository implements LogRepository {
   final FirebaseFirestore _firestore;
 
+  // In-memory cache: "userId_dateStr" -> DailyLog
+  final Map<String, DailyLog> _memoryCache = {};
+
   FirebaseLogRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
@@ -49,6 +52,14 @@ class FirebaseLogRepository implements LogRepository {
   Future<DailyLog?> getLogForDate(String userId, DateTime date) async {
     try {
       final dateStr = _dateOnlyString(date);
+      final cacheKey = '${userId}_$dateStr';
+
+      // 1. Check Memory Cache
+      if (_memoryCache.containsKey(cacheKey)) {
+        debugPrint('Returning log from memory cache (0ms)');
+        return _memoryCache[cacheKey];
+      }
+
       final snapshot = await _firestore
           .collection('logs')
           .where('userId', isEqualTo: userId)
@@ -58,8 +69,13 @@ class FirebaseLogRepository implements LogRepository {
           .timeout(const Duration(seconds: 3));
 
       if (snapshot.docs.isEmpty) return null;
-      return DailyLog.fromJson(
+
+      final log = DailyLog.fromJson(
           {...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
+
+      // Update Cache
+      _memoryCache[cacheKey] = log;
+      return log;
     } catch (e) {
       debugPrint('Fetching log for date from cache: $e');
       try {
@@ -85,9 +101,19 @@ class FirebaseLogRepository implements LogRepository {
     try {
       if (log.id.isEmpty) {
         await _firestore.collection('logs').add(log.toJson());
+        // Update cache with new ID if needed (though we need userId to key it)
+        // Ideally we know userId from the log.
       } else {
         await _firestore.collection('logs').doc(log.id).set(log.toJson());
       }
+
+      // Update Memory Cache
+      // log.date is a DateTime or String? It's DateTime in DailyLog entity usually.
+      // We need userId. DailyLog usually implies a user or we pass it.
+      // DailyLog entity has userId.
+      final dateStr = _dateOnlyString(log.date);
+      final cacheKey = '${log.userId}_$dateStr';
+      _memoryCache[cacheKey] = log;
     } catch (e) {
       debugPrint('Error saving log: $e');
       throw Exception('Failed to save log: $e');

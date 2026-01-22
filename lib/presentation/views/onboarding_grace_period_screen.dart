@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class OnboardingGracePeriodScreen extends StatelessWidget {
   const OnboardingGracePeriodScreen({super.key});
@@ -8,9 +9,10 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -22,7 +24,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
               radius: 20,
               child: IconButton(
                 icon: Icon(
-                  Icons.arrow_back_ios_new, 
+                  Icons.arrow_back_ios_new,
                   color: isDark ? Colors.white : Colors.black,
                   size: 16,
                 ),
@@ -93,7 +95,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -113,7 +115,8 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                             height: 280,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: AppColors.primary.withValues(alpha: isDark ? 0.2 : 0.1),
+                              color: AppColors.primary
+                                  .withValues(alpha: isDark ? 0.2 : 0.1),
                             ),
                           ),
                           // Image
@@ -123,7 +126,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               image: const DecorationImage(
-                                image: NetworkImage(
+                                image: CachedNetworkImageProvider(
                                   'https://lh3.googleusercontent.com/aida-public/AB6AXuCEKRevVdokOjFtFZvmgLdF8d_XggCSOWA8CgNp72pCfqV2jX6lj0_jbLWDth-3k1BnGNUfDRUeeAeFykEbYysmc9A13Np-e9ONWM9CenQ1GC24jycAAAO5-XUXbgBa-0XYdBSc9RiUUQ8Nq1w5Pt8BypRIx5aNyG0YdAueulirzo_SS9maP3ft_L8N9NbEujaoXx95tSu9QHJCY83pqpHW6ivG1APvJBPKJttkqNyhqG9TF0v3C8BB3GoSW28sOnf3HuA4OJCTRAQ',
                                 ),
                                 fit: BoxFit.contain,
@@ -139,9 +142,9 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     Text(
                       'Life happens.\nWe\'ve got you.',
                       textAlign: TextAlign.center,
@@ -152,9 +155,9 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                         height: 1.1,
                       ),
                     ),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
@@ -173,7 +176,9 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          TextSpan(text: '. If you miss a dose, your streak doesn\'t reset. Our heart icon saves your flame so you can pick up right where you left off—no shame, just progress.'),
+                          TextSpan(
+                              text:
+                                  '. If you miss a dose, your streak doesn\'t reset. Our heart icon saves your flame so you can pick up right where you left off—no shame, just progress.'),
                         ],
                       ),
                     ),
@@ -181,7 +186,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Bottom Action
             Padding(
               padding: const EdgeInsets.all(24),
@@ -190,7 +195,8 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(context, AppRouter.onboardingGoals),
+                      onPressed: () => Navigator.pushNamed(
+                          context, AppRouter.onboardingGoals),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,

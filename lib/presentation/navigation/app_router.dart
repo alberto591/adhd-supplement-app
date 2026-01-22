@@ -6,6 +6,7 @@ import '../../application/view_models/symptom_checkin_viewmodel.dart';
 import '../../application/view_models/safety_view_model.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/signup_screen.dart';
+import '../views/splash_screen.dart';
 import '../views/daily_stack_screen.dart';
 import '../views/dashboard_screen.dart';
 // import '../views/insights_screen.dart';
@@ -60,6 +61,7 @@ import '../../domain/entities/supplement_interaction.dart';
 
 class AppRouter {
   // Route names
+  static const String splash = '/splash';
   static const String login = '/login';
   static const String signup = '/signup';
   static const String onboardingGracePeriod = '/onboarding/grace-period';
@@ -116,6 +118,15 @@ class AppRouter {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case splash:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return MaterialPageRoute(
+          builder: (_) => SplashScreen(
+            isFirebaseReady: (args['isFirebaseReady'] as bool?) ?? true,
+            initError: args['initError'] as String?,
+          ),
+        );
+
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
 

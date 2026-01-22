@@ -10,13 +10,9 @@ import 'application/providers/auth_provider.dart';
 import 'application/view_models/supplement_view_model.dart';
 import 'application/view_models/safety_view_model.dart';
 import 'application/view_models/persistent_reminders_view_model.dart';
-import 'presentation/navigation/auth_wrapper.dart';
 import 'firebase_options.dart';
-import 'domain/repositories/settings_repository.dart';
-import 'infrastructure/services/notification_service.dart';
-import 'infrastructure/services/seeding_service.dart';
-import 'domain/repositories/supplement_repository.dart';
 import 'application/view_models/theme_view_model.dart';
+import 'utils/logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +27,7 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     firebaseInitialized = true;
-    debugPrint('Firebase initialized successfully');
+    AppLogger.i('Firebase initialized successfully');
 
     // Initialize Crashlytics (disabled in debug mode)
     if (!kDebugMode) {
@@ -44,7 +40,7 @@ void main() async {
       };
     }
   } catch (e) {
-    debugPrint('Firebase initialization error: $e');
+    AppLogger.e('Firebase initialization error', e);
     initializationError = e.toString();
   }
 
@@ -52,41 +48,9 @@ void main() async {
   if (firebaseInitialized) {
     try {
       setupLocator();
-      // Initialize Settings
-      await locator<SettingsRepository>()
-          .init()
-          .timeout(const Duration(seconds: 5));
-      // Initialize Notifications
-      await locator<NotificationService>().init();
-
-      // RE-ADDED: Run Seeding Script with Timeout to prevent hang
-      debugPrint('Running Seeding Script...');
-      try {
-        await locator<SeedingService>()
-            .seedSupplements()
-            .timeout(const Duration(seconds: 10));
-        debugPrint('Seeding Script Completed.');
-
-        // Background Pre-fetch: Load supplements into cache immediately
-        // We don't await this so it doesn't block startup
-        locator<SupplementRepository>()
-            .getAllSupplements()
-            .then((_) => debugPrint('Background pre-fetch complete'))
-            .catchError((Object e) =>
-                debugPrint('Background pre-fetch failed (ignored): $e'));
-      } catch (e) {
-        debugPrint(
-            'Seeding/Pre-fetch timed out or failed (likely offline): $e');
-      }
-
-      // Automatically create test user in debug mode
-      if (kDebugMode) {
-        debugPrint('Debug mode detected: Ensuring test user exists...');
-        await locator<SeedingService>()
-            .createTestUser('test@test.com', 'password123');
-      }
+      // Services will be initialized in SplashScreen to improve startup time
     } catch (e) {
-      debugPrint('Locator/Init setup error: $e');
+      AppLogger.e('Locator/Init setup error', e);
       initializationError ??= 'Setup error: $e';
     }
   }
@@ -135,9 +99,18 @@ class AdhdSupplementApp extends StatelessWidget {
           title: 'Daily Stack',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          themeMode: themeVM.themeMode,
-          debugShowCheckedModeBanner: false,
-          home: const AuthWrapper(),
+          initialRoute: AppRouter.splash,
+          onGenerateInitialRoutes: (initialRoute) {
+            return [
+              AppRouter.generateRoute(RouteSettings(
+                name: AppRouter.splash,
+                arguments: {
+                  'isFirebaseReady': isFirebaseReady,
+                  'initError': initError,
+                },
+              )),
+            ];
+          },
           onGenerateRoute: AppRouter.generateRoute,
         ),
       ),

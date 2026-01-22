@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SafetyDetailScreen extends StatelessWidget {
   const SafetyDetailScreen({super.key});
@@ -134,7 +135,7 @@ class SafetyDetailScreen extends StatelessWidget {
                   color: isDark ? Colors.grey[800] : Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   image: const DecorationImage(
-                    image: NetworkImage(
+                    image: CachedNetworkImageProvider(
                         'https://lh3.googleusercontent.com/aida-public/AB6AXuB-adbbLnJNcnGxGmQL1P9ncwbUp45axu7D2yFB-m-2uxE0VVb2Ok6VSu3GxQMCr7fzx5DI4qjoc3qVpw9EdO730wePvqFf-gABNDQZkgQNjOp58eMDVPnJOEbn15qMvbUUkwsVcLeFyitO02G8w3k9PGnBx-zZn7OMu_-km7q9jCq6AJq7OmnAm0prExDvYUo1K0FC5HArZK3u31Pm8Q51h0l9qmMxw9EXnkQpZB7uSmBljuhjilgoZ6GMlsjo7IKpKYBf9Houiak'),
                     fit: BoxFit.cover,
                   ),

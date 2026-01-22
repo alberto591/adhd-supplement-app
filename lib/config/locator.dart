@@ -183,8 +183,10 @@ void setupLocator() {
     ),
   );
   locator.registerLazySingleton<SeedingService>(() => SeedingService());
-  locator.registerLazySingleton<ArticleRepository>(
-      () => FirebaseArticleRepository());
+  locator
+      .registerLazySingleton<ArticleRepository>(() => FirebaseArticleRepository(
+            perplexityService: locator<PerplexityService>(),
+          ));
 
   locator.registerFactory(
       () => ArticleDetailViewModel(locator<ArticleRepository>()));

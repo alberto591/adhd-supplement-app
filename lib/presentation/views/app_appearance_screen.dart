@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../theme/app_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class AppAppearanceScreen extends StatefulWidget {
   const AppAppearanceScreen({super.key});
@@ -128,7 +129,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                               offset: const Offset(0, 10)),
                         ],
                         image: DecorationImage(
-                          image: const NetworkImage(
+                          image: const CachedNetworkImageProvider(
                               'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ-nxTxmGSXL3P2fZ-MUFeVo5aYTAjTQm5PuIca3EV9pqLy2l7UcW28rMGc5ojaEyhYC0m0dRzptKCWhTyp5JM33LMfothoqg2xhPz7icCMqLjtFOGCtumUW1-TUWbZ46KrCYP4TRkpcqoGXIh_iBVOsf-p-zHFjEL0b2t8x3o11MNM2tKYi8A8Xeib6ctj8PBXEHM8O9J9rOpXM9kizznS_woimoNpyke-cn54Fk516Jpcd7L5u-HZvor1piFvRXtRLOV8DjovrI'),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class WeeklyWinCard extends StatelessWidget {
   final int streakDays;
@@ -40,7 +41,7 @@ class WeeklyWinCard extends StatelessWidget {
             height: 180,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(
+                image: CachedNetworkImageProvider(
                     'https://lh3.googleusercontent.com/aida-public/AB6AXuBVHwiwS1N_25BZq-s9mst15_yTJ3Q5L6iPXcYO0Bu_OIvXgxn8kQO59NMvTSavE0lfm6LvA2feUBmgEDKZ1K9ZAatHyNEMo0gZ8f1gwDHFZ_srI1vgF8EDij1FH72nHK58LCPl4Uwav0gFLXyx21fN6_G92_1AJAoZ2UqPVEZdyW7qbRoFhqZJvy0RnYxXKsJecug_KFQy5CSzNqvcHtekORwj3IXyN50ors8BcKTtvDx6UZvEh9YDWNnw925k7Gc_0drgYIdA_hM'),
                 fit: BoxFit.cover,
               ),

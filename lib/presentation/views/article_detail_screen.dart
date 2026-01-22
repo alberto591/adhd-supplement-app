@@ -4,6 +4,7 @@ import '../../config/locator.dart';
 import '../../application/view_models/article_detail_view_model.dart';
 import '../theme/app_theme.dart';
 import '../../domain/entities/article.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ArticleDetailScreen extends StatefulWidget {
   final String articleId;
@@ -100,10 +101,12 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        article.imageUrl,
+                      CachedNetworkImage(
+                        imageUrl: article.imageUrl,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) =>
+                        placeholder: (_, __) =>
+                            Container(color: Colors.grey[200]),
+                        errorWidget: (_, __, ___) =>
                             Container(color: Colors.grey),
                       ),
                       Container(
@@ -185,8 +188,8 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                       children: [
                         CircleAvatar(
                           radius: 16,
-                          backgroundImage:
-                              NetworkImage(article.authorAvatarUrl),
+                          backgroundImage: CachedNetworkImageProvider(
+                              article.authorAvatarUrl),
                         ),
                         const SizedBox(width: 12),
                         Column(
@@ -336,7 +339,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(8),
                   image: DecorationImage(
-                    image: NetworkImage(article.imageUrl),
+                    image: CachedNetworkImageProvider(article.imageUrl),
                     fit: BoxFit.cover,
                     onError: (_, __) {},
                   )),

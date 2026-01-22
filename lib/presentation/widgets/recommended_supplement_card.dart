@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class RecommendedSupplementCard extends StatelessWidget {
   final String title;
@@ -22,14 +23,16 @@ class RecommendedSupplementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1C2027) : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? Colors.grey[800]!.withValues(alpha: 0.5) : Colors.grey[100]!,
+          color: isDark
+              ? Colors.grey[800]!.withValues(alpha: 0.5)
+              : Colors.grey[100]!,
         ),
         boxShadow: [
           BoxShadow(
@@ -60,8 +63,10 @@ class RecommendedSupplementCard extends StatelessWidget {
                       child: Text(
                         title,
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF111713),
-                          fontSize: 16, // Adjusted to match visual hierarchy better
+                          color:
+                              isDark ? Colors.white : const Color(0xFF111713),
+                          fontSize:
+                              16, // Adjusted to match visual hierarchy better
                           fontWeight: FontWeight.bold,
                           letterSpacing: -0.5,
                         ),
@@ -79,7 +84,7 @@ class RecommendedSupplementCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Action Button
                 InkWell(
                   onTap: onActionTap,
@@ -88,7 +93,11 @@ class RecommendedSupplementCard extends StatelessWidget {
                     height: 40,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: isAdded ? AppColors.primary : (isDark ? const Color(0xFF282F39) : Colors.grey[200]),
+                      color: isAdded
+                          ? AppColors.primary
+                          : (isDark
+                              ? const Color(0xFF282F39)
+                              : Colors.grey[200]),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -96,14 +105,20 @@ class RecommendedSupplementCard extends StatelessWidget {
                       children: [
                         Icon(
                           isAdded ? Icons.check_circle : Icons.add_circle,
-                          color: isAdded ? Colors.white : (isDark ? Colors.grey[300] : Colors.grey[700]),
+                          color: isAdded
+                              ? Colors.white
+                              : (isDark ? Colors.grey[300] : Colors.grey[700]),
                           size: 18,
                         ),
                         const SizedBox(width: 8),
                         Text(
                           isAdded ? 'Keep' : 'Add',
                           style: TextStyle(
-                            color: isAdded ? Colors.white : (isDark ? Colors.grey[300] : Colors.grey[700]),
+                            color: isAdded
+                                ? Colors.white
+                                : (isDark
+                                    ? Colors.grey[300]
+                                    : Colors.grey[700]),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
@@ -115,9 +130,9 @@ class RecommendedSupplementCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           const SizedBox(width: 16),
-          
+
           // Image Side
           Container(
             width: 100,
@@ -126,11 +141,13 @@ class RecommendedSupplementCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               color: isDark ? const Color(0xFF282F39) : Colors.grey[100],
               image: DecorationImage(
-                image: NetworkImage(imageUrl),
+                image: CachedNetworkImageProvider(imageUrl),
                 fit: BoxFit.cover,
                 // Apply optional filters if needed according to design, e.g. opacity for unselected
                 // opacity: isAdded ? 1.0 : 0.5, // Wireframe suggests opacity change for unselected
-                colorFilter: isAdded ? null : const ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                colorFilter: isAdded
+                    ? null
+                    : const ColorFilter.mode(Colors.grey, BlendMode.saturation),
               ),
             ),
           ),

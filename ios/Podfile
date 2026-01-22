@@ -1,5 +1,8 @@
 platform :ios, '13.0'
 
+# Optimizations
+install! 'cocoapods', :disable_input_output_paths => true, :generate_multiple_pod_projects => true
+
 # CocoaPods analytics disables sending stats
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 

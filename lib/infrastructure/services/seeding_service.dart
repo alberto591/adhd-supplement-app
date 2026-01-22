@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import '../../utils/logger.dart';
 
 class SeedingService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -200,7 +201,8 @@ class SeedingService {
     ];
 
     try {
-      debugPrint('Starting seeding process for ${supplements.length} items...');
+      AppLogger.i(
+          'Starting seeding process for ${supplements.length} items...');
       final batch = _firestore.batch();
 
       for (var supplement in supplements) {
@@ -211,16 +213,16 @@ class SeedingService {
       }
 
       if (kDebugMode) {
-        debugPrint('Committing seeding batch...');
+        AppLogger.d('Committing seeding batch...');
       }
       await batch.commit();
       if (kDebugMode) {
-        debugPrint('Successfully seeded ${supplements.length} supplements');
+        AppLogger.i('Successfully seeded ${supplements.length} supplements');
       }
     } catch (e) {
-      debugPrint('CRITICAL FAILURE in SeedingService: $e');
+      AppLogger.e('CRITICAL FAILURE in SeedingService', e);
       if (kDebugMode) {
-        debugPrint('Error seeding supplements: $e');
+        AppLogger.e('Error seeding supplements', e);
       }
       rethrow;
     }
@@ -233,11 +235,11 @@ class SeedingService {
       // Check if user exists by trying to sign in
       try {
         await auth.signInWithEmailAndPassword(email: email, password: password);
-        debugPrint('Test user already exists. Skipping creation.');
+        AppLogger.d('Test user already exists. Skipping creation.');
         return;
       } catch (e) {
         // User likely doesn't exist or wrong password
-        debugPrint(
+        AppLogger.d(
             'Test user not found or sign in failed. Attempting to create...');
       }
 
@@ -257,10 +259,10 @@ class SeedingService {
           'hasCompletedOnboarding': true,
           'unlockedAchievements': <String>[],
         });
-        debugPrint('Test user created successfully: $email');
+        AppLogger.i('Test user created successfully: $email');
       }
     } catch (e) {
-      debugPrint('Failed to create test user: $e');
+      AppLogger.e('Failed to create test user', e);
       // Don't rethrow to avoid blocking app startup
     }
   }

@@ -6,6 +6,9 @@ import '../../domain/entities/supplement_stack.dart';
 class FirebaseStackRepository implements StackRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // In-memory cache: userId -> List<SupplementStack>
+  final Map<String, List<SupplementStack>> _cache = {};
+
   @override
   Future<void> saveStack(String userId, SupplementStack stack) async {
     try {
@@ -18,6 +21,16 @@ class FirebaseStackRepository implements StackRepository {
           .collection('stacks')
           .doc(stack.id)
           .set(stack.toJson());
+
+      // Update cache instantly
+      final currentStacks = _cache[userId] ?? [];
+      final index = currentStacks.indexWhere((s) => s.id == stack.id);
+      if (index >= 0) {
+        currentStacks[index] = stack;
+      } else {
+        currentStacks.add(stack);
+      }
+      _cache[userId] = currentStacks;
     } catch (e) {
       debugPrint('Error saving stack: $e');
       // Still throw if it's a permission or structural error,
@@ -29,7 +42,13 @@ class FirebaseStackRepository implements StackRepository {
   @override
   Future<List<SupplementStack>> getUserStacks(String userId) async {
     try {
-      // Try to get from server with a short timeout
+      // 1. Check in-memory cache first (Instant load)
+      if (_cache.containsKey(userId) && _cache[userId]!.isNotEmpty) {
+        debugPrint('Returning stacks from memory cache (0ms)');
+        return _cache[userId]!;
+      }
+
+      // 2. Try to get from server with a short timeout
       final snapshot = await _firestore
           .collection('users')
           .doc(userId)
@@ -37,9 +56,14 @@ class FirebaseStackRepository implements StackRepository {
           .get(const GetOptions(source: Source.serverAndCache))
           .timeout(const Duration(seconds: 3));
 
-      return snapshot.docs
+      final stacks = snapshot.docs
           .map((doc) => SupplementStack.fromJson(doc.data()))
           .toList();
+
+      // 3. Update cache
+      _cache[userId] = stacks;
+
+      return stacks;
     } catch (e) {
       debugPrint('Fetching stacks from cache (likely offline/slow): $e');
       // Fallback: Force read from local cache

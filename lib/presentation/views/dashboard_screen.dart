@@ -12,6 +12,7 @@ import '../../domain/entities/supplement.dart';
 import '../widgets/unified_bottom_nav.dart';
 import '../theme/app_theme.dart';
 import 'package:flutter/services.dart';
+import '../widgets/skeleton_loader.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -49,7 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Consumer<DailyStackViewModel>(
             builder: (context, viewModel, child) {
               if (viewModel.isLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return _buildSkeleton(context);
               }
 
               if (viewModel.error != null) {
@@ -404,4 +405,44 @@ class HexColor extends Color {
   }
 
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+}
+
+Widget _buildSkeleton(BuildContext context) {
+  return const SingleChildScrollView(
+    child: Padding(
+      padding: EdgeInsets.all(24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SkeletonLoader(height: 16, width: 100),
+                  SizedBox(height: 8),
+                  SkeletonLoader(height: 32, width: 200),
+                ],
+              ),
+              SkeletonLoader(height: 40, width: 40, borderRadius: 20),
+            ],
+          ),
+          SizedBox(height: 32),
+          SkeletonLoader(height: 120, borderRadius: 16),
+          SizedBox(height: 32),
+          SkeletonLoader(height: 24, width: 150),
+          SizedBox(height: 16),
+          SkeletonLoader(height: 80, borderRadius: 16),
+          SizedBox(height: 12),
+          SkeletonLoader(height: 80, borderRadius: 16),
+          SizedBox(height: 32),
+          SkeletonLoader(height: 24, width: 150),
+          SizedBox(height: 16),
+          SkeletonLoader(height: 80, borderRadius: 16),
+        ],
+      ),
+    ),
+  );
 }

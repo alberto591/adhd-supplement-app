@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'dart:io' show Platform;
 import '../../domain/services/billing_service.dart';
+import '../../utils/logger.dart';
 
 class RevenueCatBillingService implements BillingService {
   // Keys should ideally be loaded from environment variables or a secure config
@@ -25,10 +25,10 @@ class RevenueCatBillingService implements BillingService {
       }
 
       _isInitialized = true;
-      debugPrint('RevenueCat initialized successfully');
+      AppLogger.i('RevenueCat initialized successfully');
       return true;
     } catch (e) {
-      debugPrint('Failed to initialize RevenueCat: $e');
+      AppLogger.e('Failed to initialize RevenueCat', e);
       return false;
     }
   }
@@ -41,7 +41,7 @@ class RevenueCatBillingService implements BillingService {
       // "pro" is the entitlement identifier in RevenueCat
       return customerInfo.entitlements.all['pro']?.isActive ?? false;
     } catch (e) {
-      debugPrint('Error checking entitlement: $e');
+      AppLogger.e('Error checking entitlement', e);
       return false;
     }
   }
@@ -52,7 +52,7 @@ class RevenueCatBillingService implements BillingService {
       await Purchases.restorePurchases();
       return true;
     } catch (e) {
-      debugPrint('Error restoring purchases: $e');
+      AppLogger.e('Error restoring purchases', e);
       return false;
     }
   }
@@ -86,7 +86,7 @@ class RevenueCatBillingService implements BillingService {
         throw Exception('No offerings available for plan: $planId');
       }
     } catch (e) {
-      debugPrint('Purchase failed: $e');
+      AppLogger.e('Purchase failed', e);
       return false;
     }
   }

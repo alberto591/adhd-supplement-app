@@ -23,10 +23,10 @@ class UnifiedBottomNav extends StatelessWidget {
         routeName = AppRouter.dailyStack; // "Stacks"
         break;
       case 2:
-        routeName = AppRouter.insights; // "Insights" (SuccessStats)
+        routeName = AppRouter.library;
         break;
       case 3:
-        routeName = AppRouter.library;
+        routeName = AppRouter.scienceHub; // "Hub"
         break;
       case 4:
         routeName = AppRouter.profile;
@@ -87,9 +87,8 @@ class UnifiedBottomNav extends StatelessWidget {
               _buildNavItem(
                 context,
                 index: 2,
-                icon: Icons
-                    .monitor_heart, // 'monitoring' roughly maps to this or insights
-                label: 'Insights',
+                icon: Icons.auto_stories,
+                label: 'Library', // Moved to 3rd position (index 2)
                 isSelected: currentIndex == 2,
                 primaryColor: primaryColor,
                 unselectedColor: unselectedColor,
@@ -97,9 +96,8 @@ class UnifiedBottomNav extends StatelessWidget {
               _buildNavItem(
                 context,
                 index: 3,
-                icon: Icons
-                    .auto_stories, // 'menu_book' or 'local_library' also works
-                label: 'Library',
+                icon: Icons.science_outlined,
+                label: 'Hub', // Moved to 4th position (index 3)
                 isSelected: currentIndex == 3,
                 primaryColor: primaryColor,
                 unselectedColor: unselectedColor,

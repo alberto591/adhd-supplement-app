@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import '../../utils/logger.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/entities/supplement.dart';
@@ -115,18 +117,18 @@ class DailyStackViewModel extends ChangeNotifier {
     _error = null;
 
     try {
-      debugPrint('Initializing DailyStackViewModel for user: $_userId');
+      AppLogger.i('Initializing DailyStackViewModel for user: $_userId');
       final logicalToday = _getLogicalToday();
-      debugPrint('Logical today determined as: $logicalToday');
+      AppLogger.d('Logical today determined as: $logicalToday');
 
       // Load in parallel with timeouts
-      debugPrint('Starting parallel data load (Stacks, Log, Streak)...');
+      AppLogger.d('Starting parallel data load (Stacks, Log, Streak)...');
       final results = await Future.wait([
         _stackRepository.getUserStacks(_userId),
         _logRepository.getLogForDate(_userId, logicalToday),
         _logRepository.getStreakCount(_userId),
       ]);
-      debugPrint('Parallel data load complete.');
+      AppLogger.d('Parallel data load complete.');
 
       _stacks = results[0] as List<SupplementStack>;
       _todayLog = results[1] as DailyLog?;
@@ -145,7 +147,7 @@ class DailyStackViewModel extends ChangeNotifier {
       }
     } catch (e) {
       _error = 'Failed to load daily stack: $e';
-      debugPrint(_error);
+      AppLogger.e(_error!);
     } finally {
       _setLoading(false);
     }
@@ -153,7 +155,8 @@ class DailyStackViewModel extends ChangeNotifier {
 
   /// Mark a supplement as taken
   Future<void> markSupplementTaken(String supplementId) async {
-    debugPrint('Marking supplement as taken: $supplementId');
+    AppLogger.d('Marking supplement as taken: $supplementId');
+    HapticFeedback.mediumImpact();
     final now = DateTime.now();
     final entry = LogEntry(
       supplementId: supplementId,
@@ -162,7 +165,7 @@ class DailyStackViewModel extends ChangeNotifier {
     );
 
     await _updateTodayLog(entry);
-    debugPrint('Today log updated for $supplementId');
+    AppLogger.d('Today log updated for $supplementId');
 
     // Give 10 XP per supplement taken
     await _incrementUserXP(10);
@@ -182,10 +185,10 @@ class DailyStackViewModel extends ChangeNotifier {
       if (user != null) {
         final updatedUser = user.copyWith(xp: user.xp + amount);
         await _authRepository.updateUserProfile(updatedUser);
-        debugPrint('XP Added: $amount. Total: ${updatedUser.xp}');
+        AppLogger.d('XP Added: $amount. Total: ${updatedUser.xp}');
       }
     } catch (e) {
-      debugPrint('Failed to update user XP: $e');
+      AppLogger.e('Failed to update user XP', e);
     }
   }
 
@@ -200,17 +203,18 @@ class DailyStackViewModel extends ChangeNotifier {
           final updatedUser =
               user.copyWith(unlockedAchievements: updatedAchievements);
           await _authRepository.updateUserProfile(updatedUser);
-          debugPrint('Achievement Unlocked: $achievementId');
+          AppLogger.d('Achievement Unlocked: $achievementId');
         }
       }
     } catch (e) {
-      debugPrint('Failed to unlock achievement: $e');
+      AppLogger.e('Failed to unlock achievement', e);
     }
   }
 
   /// Mark a supplement as skipped
   Future<void> markSupplementSkipped(String supplementId,
       {String? reason}) async {
+    HapticFeedback.lightImpact();
     final now = DateTime.now();
     final entry = LogEntry(
       supplementId: supplementId,
@@ -459,7 +463,7 @@ class DailyStackViewModel extends ChangeNotifier {
     });
 
     if (allHandled) {
-      debugPrint(
+      AppLogger.d(
           'Smart Nudge: All items handled. Skipping remaining nudges for today.');
       final nudgeTime = _settingsRepository.getNudgeTime();
       final nudgeEnabled = _settingsRepository.getNudgeModeEnabled();
@@ -534,7 +538,7 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   Future<void> _cacheSupplements() async {
-    debugPrint('Caching supplements...');
+    AppLogger.d('Caching supplements...');
     final supplementIds = <String>{};
     for (final stack in _stacks) {
       for (final item in stack.items) {
@@ -546,7 +550,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
     if (supplementIds.isEmpty) return;
 
-    debugPrint('Parallel fetching ${supplementIds.length} supplements...');
+    AppLogger.d('Parallel fetching ${supplementIds.length} supplements...');
 
     await Future.wait(supplementIds.map((id) async {
       try {
@@ -555,7 +559,7 @@ class DailyStackViewModel extends ChangeNotifier {
           _supplementCache[id] = supplement;
         }
       } catch (e) {
-        debugPrint('Failed to load supplement $id: $e');
+        AppLogger.e('Failed to load supplement $id', e);
       }
     }));
   }

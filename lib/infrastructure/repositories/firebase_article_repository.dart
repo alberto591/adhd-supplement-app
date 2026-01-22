@@ -3,8 +3,12 @@ import 'package:flutter/foundation.dart';
 import '../../domain/entities/article.dart';
 import '../../domain/repositories/article_repository.dart';
 
+import '../services/perplexity_service.dart';
+import '../../utils/logger.dart';
+
 class FirebaseArticleRepository implements ArticleRepository {
   final FirebaseFirestore _firestore;
+  final PerplexityService? _perplexityService;
   static const String _collection = 'articles';
 
   // Seed data from the old mock repository
@@ -65,8 +69,11 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
     ),
   ];
 
-  FirebaseArticleRepository({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+  FirebaseArticleRepository({
+    FirebaseFirestore? firestore,
+    PerplexityService? perplexityService,
+  })  : _firestore = firestore ?? FirebaseFirestore.instance,
+        _perplexityService = perplexityService;
 
   @override
   Future<Article?> getArticle(String id) async {
@@ -109,12 +116,72 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
 
   @override
   Future<Article?> getArticleOfTheDay() async {
-    // Logic: Cycle based on day of year, or just random
-    final all = await getArticles();
-    if (all.isEmpty) return null;
-    final dayOfYear = int.parse(
-        "${DateTime.now().year}${DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays}");
-    return all[dayOfYear % all.length];
+    try {
+      // 1. Determine Today's ID: "daily_YYYY-MM-DD"
+      final now = DateTime.now();
+      final dailyId = 'daily_${now.year}-${now.month}-${now.day}';
+
+      // 2. Check Cache (Firestore)
+      final doc = await _firestore.collection(_collection).doc(dailyId).get();
+      if (doc.exists) {
+        AppLogger.d('Found cached Daily Article: $dailyId');
+        return Article.fromJson(doc.data()!);
+      }
+
+      // 3. If missing, Generate New via Perplexity
+      if (_perplexityService != null) {
+        AppLogger.i('Generating new Daily Article via AI: $dailyId');
+        try {
+          final articleData = await _perplexityService!.generateDailyArticle();
+
+          // Add ID and dates
+          articleData['id'] = dailyId;
+          articleData['publishDate'] =
+              '${_getMonth(now.month)} ${now.day}, ${now.year}';
+
+          final newArticle = Article.fromJson(articleData);
+
+          // 4. Save to Firestore (Cache it for everyone else today)
+          await _firestore
+              .collection(_collection)
+              .doc(dailyId)
+              .set(newArticle.toJson());
+
+          return newArticle;
+        } catch (e) {
+          AppLogger.e('Failed to generate daily article', e);
+          // Fallback to old rotation logic below
+        }
+      }
+
+      // Fallback: Cycle existing articles
+      final all = await getArticles();
+      if (all.isEmpty) return null;
+      final dayOfYear = int.parse(
+          "${DateTime.now().year}${DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays}");
+      return all[dayOfYear % all.length];
+    } catch (e) {
+      AppLogger.e('Error getting article of the day', e);
+      return null;
+    }
+  }
+
+  String _getMonth(int month) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    return months[month - 1];
   }
 
   Future<void> _seedArticlesCollection() async {

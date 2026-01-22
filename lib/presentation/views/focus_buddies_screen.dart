@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../application/view_models/focus_buddies_view_model.dart';
 import '../../config/locator.dart';
@@ -309,7 +310,7 @@ class _FocusBuddiesScreenState extends State<FocusBuddiesScreen> {
                     width: 4,
                   ),
                   image: DecorationImage(
-                    image: NetworkImage(imageUrl),
+                    image: CachedNetworkImageProvider(imageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),

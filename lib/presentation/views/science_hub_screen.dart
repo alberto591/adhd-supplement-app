@@ -7,6 +7,8 @@ import '../../domain/entities/article.dart';
 import '../navigation/app_router.dart';
 import '../theme/app_theme.dart';
 import '../widgets/unified_bottom_nav.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import '../widgets/skeleton_loader.dart';
 
 class ScienceHubScreen extends StatefulWidget {
   const ScienceHubScreen({super.key});
@@ -39,7 +41,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
         body: Consumer<ScienceHubViewModel>(
           builder: (context, viewModel, child) {
             if (viewModel.isLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return _buildSkeleton(context, isDark);
             }
             return CustomScrollView(
               slivers: [
@@ -137,7 +139,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             image: DecorationImage(
-              image: NetworkImage(article.imageUrl),
+              image: CachedNetworkImageProvider(article.imageUrl),
               fit: BoxFit.cover,
             ),
             boxShadow: [
@@ -462,7 +464,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
-                  image: NetworkImage(imageUrl),
+                  image: CachedNetworkImageProvider(imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -702,6 +704,52 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
               ),
               const Icon(Icons.arrow_forward_ios,
                   color: AppColors.primaryGold, size: 16),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSkeleton(BuildContext context, bool isDark) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              // AppBar placeholder
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SkeletonLoader(height: 40, width: 40, borderRadius: 20),
+                  SkeletonLoader(height: 24, width: 120),
+                  SkeletonLoader(height: 40, width: 40, borderRadius: 20),
+                ],
+              ),
+              const SizedBox(height: 24),
+              // Article of the day hero
+              const SkeletonLoader(height: 380, borderRadius: 16),
+              const SizedBox(height: 24),
+              // Categories
+              Row(
+                children: List.generate(
+                    3,
+                    (index) => const Padding(
+                          padding: EdgeInsets.only(right: 12),
+                          child: SkeletonLoader(
+                              height: 40, width: 100, borderRadius: 20),
+                        )),
+              ),
+              const SizedBox(height: 24),
+              // Research list
+              const SkeletonLoader(height: 24, width: 200),
+              const SizedBox(height: 16),
+              const SkeletonLoader(height: 140, borderRadius: 16),
+              const SizedBox(height: 16),
+              const SkeletonLoader(height: 140, borderRadius: 16),
             ],
           ),
         ),

@@ -52,4 +52,65 @@ class PerplexityService {
       throw Exception('Perplexity API Error: $e');
     }
   }
+
+  Future<Map<String, dynamic>> generateDailyArticle() async {
+    const systemPrompt = '''
+You are an expert neuroscientist and medical editor for an ADHD supplement app.
+Generate a high-quality, engaging, and scientifically accurate daily article about a specific supplement, habit, or neuroscience concept relevant to ADHD.
+The output MUST be a valid JSON object with the following fields:
+- "title": Catchy but accurate title.
+- "tldr": A 1-sentence summary.
+- "content": A 3-paragaph markdown string. Use headers like ## Mechanism.
+- "readTime": e.g. "3 min read".
+- "category": One of: "SCIENCE", "FOCUS", "STACKS", "LIFESTYLE".
+- "author": "Dr. AI-chemist" or a relevant persona.
+- "authorRole": "AI Research Assistant".
+- "imageUrl": Use this placeholder: "https://lh3.googleusercontent.com/aida-public/AB6AXuBU--sRRznt8V4_LL2a5ujTHNk9rP0Xfbqxtqu4GlgYlIPx8O8ZNNStUXqhe0xIDArDIlj-KwbtO4NEwA4dZ9U2izDpLB-W5F8jbkHhMkC1QGNl-r1J6HRMdajFNAydymNsc8pfMLcYFPcSXkEWVeMRqVXbvDLIesZYQ_L6Pj45Xugs3zW-q2n38u7Q3YzkcA-jSUn2IrYiKPpjeUw4Xc7PqTM3lgp4fUsPSrJwlz1BP2NXFjeE2wIeQdpOZj68yNwsy_UFhn-bsKE"
+- "authorAvatarUrl": "https://i.pravatar.cc/100?img=11"
+
+Do not include markdown code blocks (like ```json) in the response, just the raw JSON.
+''';
+
+    final prompt =
+        'Generate the daily article for ${DateTime.now().toIso8601String()}. Focus on something different than standard Magnesium or Caffeine if possible, maybe a lesser known nootropic or behavioral protocol.';
+
+    try {
+      final response = await http.post(
+        Uri.parse(baseUrl),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'model': 'sonar-reasoning-pro',
+          'messages': [
+            {'role': 'system', 'content': systemPrompt},
+            {'role': 'user', 'content': prompt}
+          ],
+          'max_tokens': 2000,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final content = data['choices'][0]['message']['content'] as String;
+
+        // Clean up markdown code blocks if present
+        final cleanJson =
+            content.replaceAll('```json', '').replaceAll('```', '').trim();
+
+        try {
+          return jsonDecode(cleanJson) as Map<String, dynamic>;
+        } catch (e) {
+          throw Exception('Failed to parse AI response as JSON: $content');
+        }
+      } else {
+        throw Exception(
+            'Failed to load daily article: ${response.statusCode} - ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Perplexity API Error: $e');
+    }
+  }
 }

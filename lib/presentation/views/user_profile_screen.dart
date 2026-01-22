@@ -12,6 +12,7 @@ import '../../domain/entities/user.dart';
 import '../../application/view_models/theme_view_model.dart';
 import '../view_models/daily_stack_view_model.dart';
 import '../../config/locator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -279,6 +280,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 _SettingsGroup(
                   children: [
                     _SettingsTile(
+                      icon: Icons.monitor_heart,
+                      iconColor: Colors.purple,
+                      title: 'Insights',
+                      subtitle: 'Your streaks & consistency',
+                      onTap: () => Navigator.pushReplacementNamed(
+                          context, AppRouter.insights),
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
                       icon: Icons.help_outline,
                       iconColor: AppColors.primaryGold,
                       title: 'Help Center',
@@ -524,7 +536,7 @@ class _ProfileHeader extends StatelessWidget {
                     ),
                   ],
                   image: const DecorationImage(
-                    image: NetworkImage(
+                    image: CachedNetworkImageProvider(
                         'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw'),
                     fit: BoxFit.cover,
                   ),

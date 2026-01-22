@@ -28,7 +28,7 @@ class InsightsViewModel extends ChangeNotifier {
   // For the chart - focused on simplified monthly view for now
   // We could expand this to be a list of daily focus scores if needed
   // but for V1 we keep it simple as per "Rule of One" / Low Cognitive Load
-  List<double> _weeklyFocusScores = [];
+  final List<double> _weeklyFocusScores = [];
   List<double> get weeklyFocusScores => _weeklyFocusScores;
 
   InsightsViewModel({
