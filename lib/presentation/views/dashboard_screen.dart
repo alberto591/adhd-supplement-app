@@ -270,15 +270,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ];
     }
 
-    return items
-        .where((item) => !viewModel.isSupplementTaken(item.supplementId))
-        .map((item) {
+    return items.map((item) {
       // item is StackItem
       final supplement = viewModel.getSupplement(item.supplementId);
       final isTaken = viewModel.isSupplementTaken(item.supplementId);
+      final isSkipped = viewModel.isSupplementSkipped(item.supplementId);
+      final isSnoozed = viewModel.isSupplementSnoozed(item.supplementId);
+      final timeStatus = viewModel.getItemTimeStatus(item);
 
-      // Remaining logic...
-      // ... (keeping existing logic for isUpcoming)
+      String? statusText;
+      Color? statusColor;
+
+      if (isTaken) {
+        statusText = 'Taken';
+      } else if (isSkipped) {
+        statusText = 'Skipped';
+        statusColor = Colors.grey;
+      } else if (isSnoozed) {
+        statusText = 'Snoozed';
+        statusColor = const Color(0xFF448AFF); // Blue
+      } else if (timeStatus != null && timeStatus.contains('Overdue')) {
+        statusText = timeStatus;
+        statusColor = const Color(0xFFFF5252); // Red
+      } else if (timeStatus != null) {
+        statusText = timeStatus;
+      }
 
       return MedicationCard(
         key: ValueKey('dash_${sectionIdentifier}_${item.supplementId}'),
@@ -288,8 +304,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         icon: _getIconForType(supplement?.shapeIcon ?? 'pill'),
         iconColor: HexColor(supplement?.iconColor ?? '#FFB74D'),
         isTaken: isTaken,
+        isSkipped: isSkipped,
         isUpcoming: false,
-        statusText: isTaken ? 'Taken' : null,
+        statusText: statusText,
+        statusColor: statusColor,
         onTap: () {
           if (supplement != null) {
             Navigator.pushNamed(context, AppRouter.supplementDetail,

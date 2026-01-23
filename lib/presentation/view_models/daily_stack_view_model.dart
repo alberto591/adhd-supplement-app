@@ -32,6 +32,7 @@ class DailyStackViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   bool _isDisposed = false;
+  final Set<String> _snoozedSupplements = {};
 
   // Time-based slots
   List<StackItem> get morningItems => _getItemsForSlot('morning');
@@ -45,13 +46,20 @@ class DailyStackViewModel extends ChangeNotifier {
   int get streakCount => _streakCount;
   bool get isLoading => _isLoading;
   String? get error => _error;
+  Set<String> get snoozedSupplements => _snoozedSupplements;
 
   /// Get dynamic greeting based on time of day
   String get greeting {
     final hour = DateTime.now().hour;
-    if (hour >= 5 && hour < 12) return 'Good Morning';
-    if (hour >= 12 && hour < 17) return 'Good Afternoon';
-    if (hour >= 17 && hour < 21) return 'Good Evening';
+    if (hour >= 5 && hour < 12) {
+      return 'Good Morning';
+    }
+    if (hour >= 12 && hour < 17) {
+      return 'Good Afternoon';
+    }
+    if (hour >= 17 && hour < 21) {
+      return 'Good Evening';
+    }
     return 'Good Night';
   }
 
@@ -83,14 +91,18 @@ class DailyStackViewModel extends ChangeNotifier {
     int completedStacks = 0;
     for (final stack in _stacks) {
       final allTaken = stack.items.every((item) {
-        if (_todayLog == null) return false;
+        if (_todayLog == null) {
+          return false;
+        }
         return _todayLog!.entries.any(
           (e) =>
               e.supplementId == item.supplementId &&
               e.status == LogStatus.taken,
         );
       });
-      if (allTaken && stack.items.isNotEmpty) completedStacks++;
+      if (allTaken && stack.items.isNotEmpty) {
+        completedStacks++;
+      }
     }
 
     return '$completedStacks of ${_stacks.length} stacks completed';
@@ -140,6 +152,8 @@ class DailyStackViewModel extends ChangeNotifier {
       // Cache supplements for display
       await _cacheSupplements();
 
+      _snoozedSupplements.clear();
+
       // Check for achievements on load
       final currentUser = await _authRepository.getCurrentUser();
       if (_streakCount >= 7) {
@@ -158,6 +172,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
   /// Mark a supplement as taken
   Future<void> markSupplementTaken(String supplementId) async {
+    _snoozedSupplements.remove(supplementId);
     AppLogger.d('Marking supplement as taken: $supplementId');
     HapticFeedback.mediumImpact();
     final now = DateTime.now();
@@ -229,6 +244,7 @@ class DailyStackViewModel extends ChangeNotifier {
   /// Mark a supplement as skipped
   Future<void> markSupplementSkipped(String supplementId,
       {String? reason}) async {
+    _snoozedSupplements.remove(supplementId);
     HapticFeedback.lightImpact();
     final now = DateTime.now();
     final entry = LogEntry(
@@ -279,7 +295,12 @@ class DailyStackViewModel extends ChangeNotifier {
       title: 'Time for ${supplement.name}',
       body: 'Snoozed for 5 minutes. Don\'t forget your focus stack!',
     );
+    _snoozedSupplements.add(supplementId);
     notifyListeners();
+  }
+
+  bool isSupplementSnoozed(String supplementId) {
+    return _snoozedSupplements.contains(supplementId);
   }
 
   /// Check if a supplement has been taken today
@@ -287,6 +308,14 @@ class DailyStackViewModel extends ChangeNotifier {
     if (_todayLog == null) return false;
     return _todayLog!.entries.any(
       (e) => e.supplementId == supplementId && e.status == LogStatus.taken,
+    );
+  }
+
+  /// Check if a supplement has been skipped today
+  bool isSupplementSkipped(String supplementId) {
+    if (_todayLog == null) return false;
+    return _todayLog!.entries.any(
+      (e) => e.supplementId == supplementId && e.status == LogStatus.skipped,
     );
   }
 
@@ -338,6 +367,50 @@ class DailyStackViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Get formatted time status string for a given item
+  String? getItemTimeStatus(StackItem item) {
+    final supplement = _supplementCache[item.supplementId];
+    String? timeStr = item.scheduledTime;
+
+    // If no specific scheduled time, use the slot default
+    if (timeStr == null && supplement?.timeOfDay != null) {
+      final slot = supplement!.timeOfDay!.toLowerCase();
+      if (slot.contains('morning')) {
+        timeStr = "08:00";
+      } else if (slot.contains('afternoon')) {
+        timeStr = "13:00";
+      } else if (slot.contains('evening')) {
+        timeStr = "18:00";
+      } else if (slot.contains('night')) {
+        timeStr = "21:00";
+      }
+    }
+
+    if (timeStr == null) return null;
+
+    try {
+      final now = DateTime.now();
+      final parts = timeStr.split(':');
+      final target = DateTime(now.year, now.month, now.day, int.parse(parts[0]),
+          int.parse(parts[1]));
+      final diff = target.difference(now);
+
+      if (diff.isNegative) {
+        if (diff.abs().inHours > 4) {
+          return 'Overdue';
+        }
+        return 'Overdue by ${diff.abs().inMinutes}m';
+      } else {
+        if (diff.inHours > 0) {
+          return 'in ${diff.inHours}h ${diff.inMinutes % 60}m';
+        }
+        return 'in ${diff.inMinutes}m';
+      }
+    } catch (_) {
+      return null;
+    }
+  }
+
   /// Get formatted time status string for a given time slots
   String? getTimeStatus(String? timeOfDay) {
     if (timeOfDay == null) return null;
@@ -365,7 +438,9 @@ class DailyStackViewModel extends ChangeNotifier {
     if (diff.isNegative) {
       // If overdue by more than 4 hours, just say "Today" or simplified status
       // But user requested "Time Urgency", so "Overdue" is good.
-      if (diff.abs().inHours > 4) return 'Overdue';
+      if (diff.abs().inHours > 4) {
+        return 'Overdue';
+      }
       return 'Overdue by ${diff.abs().inMinutes}m';
     } else {
       if (diff.inHours > 0) {
@@ -383,8 +458,6 @@ class DailyStackViewModel extends ChangeNotifier {
 
     // 2. Filter by slot AND completion (Hide if taken)
     return allItems.where((item) {
-      if (isSupplementTaken(item.supplementId)) return false;
-
       final scheduledTime = item.scheduledTime;
       if (scheduledTime != null) {
         // Parse time: "HH:mm"
@@ -484,7 +557,9 @@ class DailyStackViewModel extends ChangeNotifier {
       final nudgeEnabled = _settingsRepository.getNudgeModeEnabled();
       final warningOption = _settingsRepository.getWarningNudgeOption();
 
-      if (!nudgeEnabled) return;
+      if (!nudgeEnabled) {
+        return;
+      }
 
       // 1000: Primary
       await _notificationService.scheduleRecurringNotification(

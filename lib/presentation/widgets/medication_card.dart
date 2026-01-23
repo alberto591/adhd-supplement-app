@@ -9,7 +9,9 @@ class MedicationCard extends StatelessWidget {
       icon; // In real app, this might come from asset path derived from type
   final Color iconColor;
   final String? statusText; // "Taken at 8:30 AM" or "Upcoming"
+  final Color? statusColor;
   final bool isTaken;
+  final bool isSkipped;
   final bool isUpcoming;
   final VoidCallback? onTake;
   final VoidCallback? onMoreOptions;
@@ -23,7 +25,9 @@ class MedicationCard extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     this.statusText,
+    this.statusColor,
     this.isTaken = false,
+    this.isSkipped = false,
     this.isUpcoming = false,
     this.onTake,
     this.onMoreOptions,
@@ -58,95 +62,110 @@ class MedicationCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Stack(
+        child: Column(
           children: [
-            // Options button in Top Left
-            if (!isTaken)
-              Positioned(
-                top: 8,
-                left: 8,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: onMoreOptions,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(
-                      Icons.more_horiz,
-                      color: Colors.grey,
-                      size: 18,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  // Options button in Far Left
+                  if (!isTaken)
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: onMoreOptions,
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: Icon(
+                          Icons.more_vert,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+
+                  // Icon
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: (isTaken || isSkipped)
+                          ? Colors.grey.withValues(alpha: 0.2)
+                          : iconColor.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      isTaken
+                          ? Icons.wb_sunny
+                          : (isSkipped ? Icons.block : icon),
+                      color: (isTaken || isSkipped) ? Colors.grey : iconColor,
+                      size: 24,
                     ),
                   ),
-                ),
-              ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      // Icon
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: isTaken
-                              ? Colors.grey.withValues(alpha: 0.2)
-                              : iconColor.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
+                  const SizedBox(width: 16),
+
+                  // Details
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            color: (isTaken || isSkipped)
+                                ? Colors.grey
+                                : (isDark ? Colors.white : Colors.black87),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            decoration: (isTaken || isSkipped)
+                                ? TextDecoration.lineThrough
+                                : null,
+                          ),
                         ),
-                        child: Icon(
-                          isTaken ? Icons.wb_sunny : icon,
-                          color: isTaken ? Colors.grey : iconColor,
-                          size: 24,
+                        const SizedBox(height: 4),
+                        Text(
+                          '$dosage • $form',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Status Indicator or Action Button
+                  if (isTaken) ...[
+                    const Icon(Icons.check_circle,
+                        color: Color(0xFF4ADE80), size: 24),
+                  ] else if (isSkipped) ...[
+                    const Icon(Icons.block, color: Colors.grey, size: 24),
+                  ] else if (isUpcoming) ...[
+                    if (statusText != null)
+                      Text(
+                        statusText!,
+                        style: TextStyle(
+                          color: statusColor ?? Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(width: 16),
-
-                      // Details
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
+                  ] else ...[
+                    // Primary Action: Mark as Taken
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        if (statusText != null && !isTaken && !isSkipped)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Text(
+                              statusText!,
                               style: TextStyle(
-                                color: isTaken
-                                    ? Colors.grey
-                                    : (isDark ? Colors.white : Colors.black87),
-                                fontSize: 16,
+                                color: statusColor ?? Colors.grey,
+                                fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                decoration:
-                                    isTaken ? TextDecoration.lineThrough : null,
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '$dosage • $form',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Status Indicator or Action Button
-                      if (isTaken) ...[
-                        const Icon(Icons.check_circle,
-                            color: Color(0xFF4ADE80), size: 24),
-                      ] else if (isUpcoming) ...[
-                        if (statusText != null)
-                          Text(
-                            statusText!,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                      ] else ...[
-                        // Primary Action: Mark as Taken (Right aligned)
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () {
@@ -187,27 +206,28 @@ class MedicationCard extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ],
-                  ),
-                ),
-
-                // Timestamp if taken
-                if (isTaken && statusText != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12, left: 16),
-                    child: Row(
-                      children: [
-                        Text(
-                          statusText!,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        ),
-                        const Icon(Icons.check, size: 28, color: Colors.white),
-                      ],
                     ),
-                  ),
-              ],
+                  ],
+                ],
+              ),
             ),
+
+            // Timestamp if taken or skipped
+            if ((isTaken || isSkipped) && statusText != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
+                child: Row(
+                  children: [
+                    Text(
+                      statusText!,
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
+                    const Spacer(),
+                    Icon(isTaken ? Icons.check : Icons.block,
+                        size: 16, color: Colors.grey),
+                  ],
+                ),
+              ),
           ],
         ),
       ),
