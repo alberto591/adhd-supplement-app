@@ -30,6 +30,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
     super.initState();
     _viewModel = locator<ScienceHubViewModel>();
     _viewModel.loadData();
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -61,14 +63,16 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (!viewModel.isSearching && viewModel.articleOfTheDay != null)
+                        if (!viewModel.isSearching &&
+                            viewModel.articleOfTheDay != null)
                           _buildArticleOfTheDay(context, isDark, primaryBlue,
                               viewModel.articleOfTheDay!),
                         if (!viewModel.isSearching)
                           _buildCategories(isDark, primaryBlue),
                         if (viewModel.isSearching)
                           _buildSearchResultsHeader(viewModel),
-                        if (viewModel.articles.isNotEmpty && !viewModel.isSearching)
+                        if (viewModel.articles.isNotEmpty &&
+                            !viewModel.isSearching)
                           _buildEvidenceBasedResearch(
                               context, isDark, primaryBlue, viewModel.articles),
                         _buildResearchLibrary(
@@ -145,8 +149,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                 : Colors.black.withValues(alpha: 0.05),
             shape: BoxShape.circle,
           ),
-          child:
-              Icon(Icons.arrow_back_ios_new, size: 16, color: isDark ? Colors.white : Colors.black),
+          child: Icon(Icons.arrow_back_ios_new,
+              size: 16, color: isDark ? Colors.white : Colors.black),
         ),
         onPressed: () => Navigator.pop(context),
       ),

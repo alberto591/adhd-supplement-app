@@ -18,6 +18,7 @@ class SeedingService {
         "evidenceLevel": "high",
         "notes": "Take with food for better absorption",
         "status": "beneficial",
+        "focusLevel": 4,
         "mechanismOfAction":
             "Increases cell membrane permeability, enhances dopamine receptor density, and reduces neuroinflammation.",
         "detailedBenefits": [

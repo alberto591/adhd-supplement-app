@@ -11,6 +11,9 @@ import '../widgets/dosage_calculator_card.dart';
 import '../../domain/services/safety_guard.dart';
 import '../../domain/entities/medication.dart';
 import '../widgets/medication_safety_alert.dart';
+import '../../domain/repositories/supplement_repository.dart';
+import '../../infrastructure/services/url_service.dart';
+import '../../domain/services/analytics_service.dart';
 
 /// ADHD-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
@@ -447,6 +450,7 @@ class SupplementDetail extends StatelessWidget {
                                       color: primaryGold),
                                   onPressed: () {
                                     // Referral logic
+                                    _openReferralLink(context, supplement);
                                   },
                                 ),
                               ),
@@ -606,6 +610,36 @@ class SupplementDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _openReferralLink(BuildContext context, Supplement supplement) async {
+    try {
+      // Get services from locator
+      final supplementRepository = locator.get<SupplementRepository>();
+      final urlService = locator.get<UrlService>();
+      final analyticsService = locator.get<AnalyticsService>();
+
+      // Track referral click
+      await supplementRepository.trackReferralClick(supplement.id);
+      
+      // Log analytics event
+      await analyticsService.logEvent('referral_clicked', parameters: {
+        'supplement_id': supplement.id,
+        'supplement_name': supplement.name,
+        'category': supplement.category,
+      });
+
+      // Open referral link
+      await urlService.launchReferral(supplement.referralUrl);
+    } catch (e) {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to open referral link: $e'),
+          backgroundColor: const Color(0xFFEF4444),
+        ),
+      );
+    }
   }
 
   IconData _getSupplementIcon(String name) {

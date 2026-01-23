@@ -58,14 +58,14 @@ class DailyStackItem extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            // Three-dots options button (Top-Left)
+            // Three-dots options button (Left side)
             if (onLongPress != null)
               Positioned(
-                top: -8,
+                top: 8,
                 left: -8,
                 child: IconButton(
                   icon: Icon(
-                    Icons.more_horiz,
+                    Icons.more_vert,
                     size: 20,
                     color: isDark ? Colors.white38 : Colors.black26,
                   ),
