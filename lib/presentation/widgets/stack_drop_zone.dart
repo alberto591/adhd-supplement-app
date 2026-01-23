@@ -26,12 +26,14 @@ class StackDropZone extends StatefulWidget {
   final List<LibraryItemData> currentItems;
   final void Function(String) onItemDropped;
   final void Function(int) onItemRemoved;
+  final void Function(int, int)? onReorder;
 
   const StackDropZone({
     super.key,
     required this.currentItems,
     required this.onItemDropped,
     required this.onItemRemoved,
+    this.onReorder,
   });
 
   @override
@@ -116,19 +118,26 @@ class _StackDropZoneState extends State<StackDropZone> {
                           ],
                         ),
                       )
-                    else
-                      ...widget.currentItems.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final item = entry.value;
-                        return StackItemCard(
-                          name: item.name,
-                          dosage: item.dosage,
-                          icon: item.icon,
-                          iconColor: item.iconColor,
-                          iconBgColor: item.iconBgColor,
-                          onRemove: () => widget.onItemRemoved(index),
-                        );
-                      }),
+                    else ...[
+                      ReorderableListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: widget.currentItems.length,
+                        onReorder: widget.onReorder ?? (oldIndex, newIndex) {},
+                        itemBuilder: (context, index) {
+                          final item = widget.currentItems[index];
+                          return StackItemCard(
+                            key: ValueKey(item.id),
+                            name: item.name,
+                            dosage: item.dosage,
+                            icon: item.icon,
+                            iconColor: item.iconColor,
+                            iconBgColor: item.iconBgColor,
+                            onRemove: () => widget.onItemRemoved(index),
+                          );
+                        },
+                      ),
+                    ],
 
                     // Drop Target Indicator at bottom
                     if (widget.currentItems.isNotEmpty)

@@ -28,6 +28,9 @@ import '../view_models/library_view_model.dart';
 import '../views/home_widgets_preview_screen.dart';
 import '../views/doctor_export_screen.dart';
 import '../views/history_log_screen.dart';
+import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
+import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
+import 'package:adhd_supplement_app/presentation/view_models/stack_builder_view_model.dart';
 import '../views/community_screen.dart';
 import '../views/trophy_room_screen.dart';
 import '../views/science_hub_screen.dart';
@@ -190,8 +193,19 @@ class AppRouter {
             final authProvider =
                 Provider.of<AuthProvider>(context, listen: false);
             final userId = authProvider.user?.id ?? '';
-            return ChangeNotifierProvider(
-              create: (_) => locator<SafetyViewModel>(param1: userId),
+            final safetyVM = locator<SafetyViewModel>(param1: userId);
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider.value(value: safetyVM),
+                ChangeNotifierProvider(
+                  create: (_) => StackBuilderViewModel(
+                    stackRepository: locator<StackRepository>(),
+                    supplementRepository: locator<SupplementRepository>(),
+                    safetyViewModel: safetyVM,
+                    userId: userId,
+                  )..initialize(),
+                ),
+              ],
               child: const StackBuilderScreen(),
             );
           },

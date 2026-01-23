@@ -71,6 +71,7 @@ import '../application/view_models/chemist_view_model.dart';
 import '../application/view_models/theme_view_model.dart';
 import '../application/view_models/insights_view_model.dart';
 import '../application/view_models/global_search_view_model.dart';
+import '../presentation/view_models/stack_builder_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -238,6 +239,15 @@ Future<void> setupLocator() async {
     (userId, _) => GlobalSearchViewModel(
       supplementRepository: locator<SupplementRepository>(),
       stackRepository: locator<StackRepository>(),
+      userId: userId,
+    ),
+  );
+
+  locator.registerFactoryParam<StackBuilderViewModel, String, void>(
+    (userId, _) => StackBuilderViewModel(
+      stackRepository: locator<StackRepository>(),
+      supplementRepository: locator<SupplementRepository>(),
+      safetyViewModel: locator<SafetyViewModel>(param1: userId),
       userId: userId,
     ),
   );

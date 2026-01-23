@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
-import 'cloud_sync_screen.dart';
 import '../widgets/stack_drop_zone.dart';
 import '../widgets/library_item.dart';
 import '../widgets/safety_alert_banner.dart';
 import '../../application/view_models/safety_view_model.dart';
-import '../../domain/repositories/supplement_repository.dart';
-import '../../config/locator.dart';
 import '../navigation/app_router.dart';
 
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
-import '../../application/providers/auth_provider.dart';
+import '../view_models/stack_builder_view_model.dart';
 
 class StackBuilderScreen extends StatefulWidget {
   const StackBuilderScreen({super.key});
@@ -22,98 +17,57 @@ class StackBuilderScreen extends StatefulWidget {
 }
 
 class _StackBuilderScreenState extends State<StackBuilderScreen> {
-  late final SupplementRepository _supplementRepository;
-  late final StackRepository _stackRepository; // Add repository
-  List<LibraryItemData> _libraryItems = [];
-  final List<LibraryItemData> _currentStack = [];
-  bool _isLoading = true;
-  String? _errorMessage;
-
-  @override
-  void initState() {
-    super.initState();
-    _supplementRepository = locator<SupplementRepository>();
-    _stackRepository = locator<StackRepository>(); // Init repository
-    _loadSupplements();
+  // Helper to map supplements to library items
+  List<LibraryItemData> _getLibraryItemData(StackBuilderViewModel viewModel) {
+    return viewModel.availableSupplements.map((s) {
+      return LibraryItemData(
+        id: s.id,
+        name: s.name,
+        dosage: s.defaultDosage ?? '',
+        icon: _getIconForCategory(s.category),
+        iconColor: _getColorForCategory(s.category),
+        iconBgColor: _getColorForCategory(s.category).withValues(alpha: 0.1),
+      );
+    }).toList();
   }
 
-  Future<void> _loadSupplements() async {
-    try {
-      final supplements = await _supplementRepository.getAllSupplements();
-      setState(() {
-        _libraryItems = supplements
-            .map((s) => LibraryItemData(
-                  id: s.id,
-                  name: s.name,
-                  dosage: s.defaultDosage ?? '',
-                  icon: _getIconForCategory(s.category),
-                  iconColor: _getColorForCategory(s.category),
-                  iconBgColor:
-                      _getColorForCategory(s.category).withValues(alpha: 0.1),
-                ))
-            .toList();
+  // Helper to map stack items to library items for the drop zone
+  List<LibraryItemData> _getCurrentStackData(StackBuilderViewModel viewModel) {
+    if (viewModel.currentStack == null) return [];
 
-        // Removed mock data initialization
-        _isLoading = false;
-      });
-      _checkInteractions();
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _errorMessage =
-              'Error loading supplements: $e\n\n(This is expected in demo mode without real Firebase config)';
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  // ... (keep _checkInteractions, _handleItemDropped, etc.)
-
-  Future<void> _saveStack() async {
-    setState(() => _isLoading = true);
-    try {
-      final authProvider = context.read<AuthProvider>();
-      final userId = authProvider.user?.id;
-
-      if (userId == null) {
-        throw Exception('User not logged in');
-      }
-
-      final stackItems = _currentStack.asMap().entries.map((entry) {
-        return StackItem(
-          supplementId: entry.value.id,
-          customDosage: entry.value.dosage,
-          order: entry.key,
-        );
-      }).toList();
-
-      final stack = SupplementStack(
-        id: 'daily_stack',
-        userId: userId,
-        name: 'Morning Focus Stack',
-        items: stackItems,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
+    return viewModel.currentStack!.items.map((item) {
+      final s = viewModel.availableSupplements.firstWhere(
+        (supp) => supp.id == item.supplementId,
+        orElse: () =>
+            throw Exception('Supplement not found for ${item.supplementId}'),
       );
 
-      await _stackRepository.saveStack(userId, stack);
+      return LibraryItemData(
+        id: s.id,
+        name: s.name,
+        dosage: item.customDosage ?? s.defaultDosage ?? '',
+        icon: _getIconForCategory(s.category),
+        iconColor: _getColorForCategory(s.category),
+        iconBgColor: _getColorForCategory(s.category).withValues(alpha: 0.1),
+      );
+    }).toList();
+  }
 
-      if (mounted) {
+  Future<void> _handleSave(StackBuilderViewModel viewModel) async {
+    final success = await viewModel.saveStack();
+    if (mounted) {
+      if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Stack saved successfully!'),
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.pop(context); // Go back to dashboard/previous screen
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() => _isLoading = false);
+        Navigator.pop(context);
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error saving stack: $e'),
+            content: Text(viewModel.error ?? 'Error saving stack'),
             backgroundColor: Colors.red,
           ),
         );
@@ -121,27 +75,11 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     }
   }
 
-  void _checkInteractions() {
-    final ids = _currentStack.map((item) => item.id).toList();
-    context.read<SafetyViewModel>().checkInteractions(ids);
-  }
-
-  void _handleItemDropped(String itemName) {
-    final item =
-        _libraryItems.firstWhere((element) => element.name == itemName);
-    setState(() {
-      if (!_currentStack.any((s) => s.id == item.id)) {
-        _currentStack.add(item);
-      }
-    });
-    _checkInteractions();
-  }
-
-  void _handleItemRemoved(int index) {
-    setState(() {
-      _currentStack.removeAt(index);
-    });
-    _checkInteractions();
+  void _handleItemDropped(StackBuilderViewModel viewModel, String itemName) {
+    final supplement = viewModel.availableSupplements.firstWhere(
+      (s) => s.name == itemName,
+    );
+    viewModel.addItem(supplement);
   }
 
   IconData _getIconForCategory(String category) {
@@ -180,12 +118,16 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     final bgColor =
         isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
     final safetyViewModel = context.watch<SafetyViewModel>();
+    final viewModel = context.watch<StackBuilderViewModel>();
+
+    final libraryItems = _getLibraryItemData(viewModel);
+    final currentStackData = _getCurrentStackData(viewModel);
 
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
-        child: _isLoading
-            ? const CloudSyncScreen()
+        child: viewModel.isLoading
+            ? const Center(child: CircularProgressIndicator())
             : Stack(
                 children: [
                   Column(
@@ -213,8 +155,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                   ),
                             ),
                             TextButton(
-                              onPressed: _isLoading ? null : _saveStack,
-                              child: _isLoading
+                              onPressed: viewModel.isLoading
+                                  ? null
+                                  : () => _handleSave(viewModel),
+                              child: viewModel.isLoading
                                   ? const SizedBox(
                                       width: 20,
                                       height: 20,
@@ -235,14 +179,25 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                       ),
 
                       Expanded(
-                        child: _errorMessage != null
+                        child: viewModel.error != null
                             ? Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
-                                  child: Text(
-                                    _errorMessage!,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(color: Colors.red),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        viewModel.error!,
+                                        textAlign: TextAlign.center,
+                                        style:
+                                            const TextStyle(color: Colors.red),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      ElevatedButton(
+                                        onPressed: () => viewModel.initialize(),
+                                        child: const Text('Retry'),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               )
@@ -250,6 +205,28 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    // Slot Selector
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 8),
+                                      child: Row(
+                                        children: [
+                                          _buildSlotTab(
+                                              'morning', viewModel, isDark),
+                                          const SizedBox(width: 8),
+                                          _buildSlotTab(
+                                              'afternoon', viewModel, isDark),
+                                          const SizedBox(width: 8),
+                                          _buildSlotTab(
+                                              'evening', viewModel, isDark),
+                                          const SizedBox(width: 8),
+                                          _buildSlotTab(
+                                              'night', viewModel, isDark),
+                                        ],
+                                      ),
+                                    ),
+
                                     // Safety Alert Banner (Dynamic)
                                     if (safetyViewModel
                                         .currentInteractions.isNotEmpty)
@@ -313,11 +290,11 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 16),
                                         scrollDirection: Axis.horizontal,
-                                        itemCount: _libraryItems.length,
+                                        itemCount: libraryItems.length,
                                         separatorBuilder: (context, index) =>
                                             const SizedBox(width: 12),
                                         itemBuilder: (context, index) {
-                                          final item = _libraryItems[index];
+                                          final item = libraryItems[index];
                                           return LibraryItem(
                                             name: item.name,
                                             dosage: item.dosage,
@@ -325,17 +302,15 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                             iconColor: item.iconColor,
                                             iconBgColor: item.iconBgColor,
                                             onTap: () async {
-                                              final supplement =
-                                                  await _supplementRepository
-                                                      .getSupplement(item.id);
-                                              if (!context.mounted) return;
-                                              if (supplement != null) {
-                                                Navigator.pushNamed(
-                                                  context,
-                                                  AppRouter.supplementDetail,
-                                                  arguments: supplement,
-                                                );
-                                              }
+                                              final supplement = viewModel
+                                                  .availableSupplements
+                                                  .firstWhere(
+                                                      (s) => s.id == item.id);
+                                              Navigator.pushNamed(
+                                                context,
+                                                AppRouter.supplementDetail,
+                                                arguments: supplement,
+                                              );
                                             },
                                           );
                                         },
@@ -355,7 +330,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Morning Focus Stack',
+                                                viewModel.currentStack?.name ??
+                                                    '${viewModel.selectedSlot.capitalize()} Stack',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headlineSmall
@@ -369,9 +345,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                     ),
                                               ),
                                               const SizedBox(height: 2),
-                                              const Text(
-                                                'Routine for 08:00 AM',
-                                                style: TextStyle(
+                                              Text(
+                                                'Routine for ${viewModel.selectedSlot.capitalize()}',
+                                                style: const TextStyle(
                                                   color: AppColors
                                                       .textSecondaryDark,
                                                   fontSize: 12,
@@ -395,9 +371,14 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16),
                                       child: StackDropZone(
-                                        currentItems: _currentStack,
-                                        onItemDropped: _handleItemDropped,
-                                        onItemRemoved: _handleItemRemoved,
+                                        currentItems: currentStackData,
+                                        onItemDropped: (name) =>
+                                            _handleItemDropped(viewModel, name),
+                                        onItemRemoved: (index) =>
+                                            viewModel.removeItem(index),
+                                        onReorder: (oldIndex, newIndex) =>
+                                            viewModel.reorderItems(
+                                                oldIndex, newIndex),
                                       ),
                                     ),
 
@@ -410,7 +391,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Total Items: ${_currentStack.length}',
+                                            'Total Items: ${viewModel.currentStack?.items.length ?? 0}',
                                             style: const TextStyle(
                                               color:
                                                   AppColors.textSecondaryDark,
@@ -515,6 +496,32 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                   ),
                 ],
               ),
+      ),
+    );
+  }
+
+  Widget _buildSlotTab(
+      String slot, StackBuilderViewModel viewModel, bool isDark) {
+    final isSelected = viewModel.selectedSlot == slot;
+    return GestureDetector(
+      onTap: () => viewModel.selectSlot(slot),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary
+              : (isDark ? Colors.grey[800] : Colors.grey[200]),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          slot.capitalize(),
+          style: TextStyle(
+            color: isSelected
+                ? Colors.white
+                : (isDark ? Colors.white70 : Colors.black87),
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
       ),
     );
   }
