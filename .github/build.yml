@@ -24,16 +24,19 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Clean and Install Pods
+      - name: Deep Clean and Install Pods
         run: |
           flutter clean
           flutter pub get
           cd ios
-          # Force a fresh pod state to apply the -G fix
+          # Kill existing lock files and pods
           rm -rf Pods
           rm -rf Podfile.lock
+          rm -rf .bundle
+          # Reset CocoaPods cache entirely
           pod cache clean --all
-          pod install --repo-update
+          pod repo update
+          pod install
           cd ..
 
       - name: Build iOS (.app)
