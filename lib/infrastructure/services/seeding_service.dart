@@ -978,26 +978,6 @@ class SeedingService {
             "⚠️ AVOID: Check labels for 'sodium benzoate', 'E211', or 'benzoate of soda'. Common in soft drinks, fruit juices, pickles, and condiments. Often combined with artificial colors (amplifies effects)."
       },
       {
-        "id": "vitamin-c",
-        "name": "Vitamin C (Ascorbic Acid)",
-        "category": "Vitamin",
-        "dosage": "500-1000mg",
-        "timeOfDay": "evening",
-        "benefits": ["Immunity", "Antioxidant"],
-        "evidenceLevel": "low",
-        "status": "neutral",
-        "adhdMedInteractions": {
-          "Adderall":
-              "CRITICAL: Vitamin C increases urinary acidity, which causes amphetamines to be flushed from your system significantly faster.",
-          "Vyvanse":
-              "Vitamin C can lower the effectiveness of your medication if taken within 1-2 hours of your dose.",
-          "Dexedrine":
-              "Reduces blood levels of the medication. Do not take within 2 hours of your medication dose."
-        },
-        "tldr":
-            "Improves immune health but can interfere with the absorption and effectiveness of stimulant medications."
-      },
-      {
         "id": "l-tyrosine",
         "name": "L-Tyrosine",
         "category": "Amino Acid",
@@ -1060,73 +1040,6 @@ class SeedingService {
           "Possible: irritability or anxiety if overstimulated",
           "Tolerance develops quickly with daily use",
           "Generally safe at recommended doses"
-        ]
-      },
-      {
-        "id": "rhodiola-rosea",
-        "name": "Rhodiola Rosea",
-        "category": "Adaptogen",
-        "dosage": "200mg",
-        "timeOfDay": "morning",
-        "benefits": [
-          "Mental Fatigue Reduction",
-          "Stress Adaptation",
-          "Sustained Attention"
-        ],
-        "evidenceLevel": "moderate",
-        "notes":
-            "Adaptogenic herb that balances neurotransmitters while regulating cortisol. Use standardized extract (3% rosavins, 1% salidroside).",
-        "status": "beneficial",
-        "mechanismOfAction":
-            "Increases dopamine, serotonin, and norepinephrine availability while modulating stress response. Enhances mental energy without depleting reserves like stimulants.",
-        "detailedBenefits": [
-          "Reduces mental fatigue by 30-40% in clinical trials",
-          "Improves sustained attention and task management",
-          "Balances stress hormone (cortisol) levels",
-          "Supports cognitive performance under chronic stress"
-        ],
-        "timingRationale":
-            "Morning dosing aligns with natural cortisol rhythm. Effects build over 1-2 weeks. Avoid evening use as it may interfere with sleep.",
-        "scientificEvidenceRank": 72,
-        "studyLinks": {
-          "Rhodiola for mental fatigue":
-              "https://pubmed.ncbi.nlm.nih.gov/11081987/",
-          "Cognitive performance under stress":
-              "https://pubmed.ncbi.nlm.nih.gov/19016404/"
-        },
-        "dosageByWeight": {
-          "40-60": "200-300mg",
-          "60-80": "300-400mg",
-          "80-100": "400-600mg",
-          "100-120": "600mg"
-        },
-        "dosageFrequency": "Once daily in the morning",
-        "dosageWarnings": [
-          "Start with 200mg to assess tolerance",
-          "May cause mild stimulation - avoid if overstimulated",
-          "Do not take in evening (may interfere with sleep)",
-          "Effects build over 1-2 weeks of consistent use"
-        ],
-        "tldr":
-            "Adaptogenic herb that reduces mental fatigue and increases neurotransmitter levels; supports stress resilience.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Generally safe but may enhance stimulating effects. Monitor for overstimulation. Start with lower dose.",
-          "Vyvanse":
-              "May provide complementary stress support. Watch for combined stimulant effects.",
-          "Ritalin":
-              "Safe combination for most. Rhodiola's adaptogenic properties may reduce stress from stimulants."
-        },
-        "contraindications": [
-          "People with bipolar disorder (may trigger manic episodes)",
-          "Those taking MAO inhibitors",
-          "Pregnant or breastfeeding women (insufficient safety data)"
-        ],
-        "sideEffects": [
-          "Rare: mild jitteriness or overstimulation",
-          "Possible: dry mouth or dizziness",
-          "Very rare: agitation in bipolar individuals",
-          "Generally well-tolerated at recommended doses"
         ]
       },
       {
@@ -1374,7 +1287,18 @@ class SeedingService {
               "Complements stimulant action by supporting stress resilience and reducing mental fatigue.",
           "Ritalin":
               "May enhance cognitive benefits while reducing stress-related side effects of stimulant medications."
-        }
+        },
+        "contraindications": [
+          "People with bipolar disorder (may trigger manic episodes)",
+          "Those taking MAO inhibitors",
+          "Pregnant or breastfeeding women (insufficient safety data)"
+        ],
+        "sideEffects": [
+          "Rare: mild jitteriness or overstimulation",
+          "Possible: dry mouth or dizziness",
+          "Very rare: agitation in bipolar individuals",
+          "Generally well-tolerated at recommended doses"
+        ]
       },
       {
         "id": "ashwagandha",
@@ -1772,7 +1696,18 @@ class SeedingService {
               "Supports long-term brain health during chronic stimulant use; glutamate modulation complements dopamine effects.",
           "Ritalin":
               "Neuroprotective benefits support sustained medication effectiveness; may reduce irritability side effects."
-        }
+        },
+        "contraindications": [
+          "People with asthma (may trigger bronchospasm in rare cases)",
+          "Those with bleeding disorders (theoretical risk)",
+          "Pregnant or breastfeeding women (consult physician)"
+        ],
+        "sideEffects": [
+          "Common: sulfur smell/taste (normal, not harmful)",
+          "Occasional: mild nausea or GI upset (take with food)",
+          "Rare: skin rash or allergic reaction",
+          "Generally safe and well-tolerated"
+        ]
       },
       {
         "id": "huperzine-a",
