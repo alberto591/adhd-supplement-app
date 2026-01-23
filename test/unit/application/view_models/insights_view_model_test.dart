@@ -90,6 +90,70 @@ void main() {
       expect(viewModel.consistencyScore, 100.0);
     });
 
+    test('calculates weekly focus trends correctly', () async {
+      // Arrange
+      final now = DateTime.now();
+      final todayMidnight = DateTime(now.year, now.month, now.day);
+
+      // Mock logs for today (score 4) and yesterday (score 5)
+      final logs = [
+        DailyLog(
+          id: 'today',
+          date: todayMidnight,
+          userId: userId,
+          entries: [],
+          createdAt: now,
+          focusScore: 4,
+        ),
+        DailyLog(
+          id: 'yesterday',
+          date: todayMidnight.subtract(const Duration(days: 1)),
+          userId: userId,
+          entries: [],
+          createdAt: now,
+          focusScore: 5,
+        ),
+      ];
+
+      when(mockLogRepository.getStreakCount(userId)).thenAnswer((_) async => 2);
+      when(mockLogRepository.getLogsByDateRange(userId, any, any))
+          .thenAnswer((_) async => logs);
+
+      // Act
+      await viewModel.loadData();
+
+      // Assert
+      expect(viewModel.weeklyFocusScores.length, 7);
+      // Index 6 is today, 5 is yesterday
+      expect(viewModel.weeklyFocusScores[6], 4.0);
+      expect(viewModel.weeklyFocusScores[5], 5.0);
+      expect(viewModel.weeklyFocusScores[0], 0.0); // 6 days ago (no log)
+    });
+
+    test('updates encouragement correctly according to streak', () async {
+      // Arrange
+      final streaks = [0, 2, 5, 10, 20, 35];
+      final expectedSubstrings = [
+        'journey', // Start your journey
+        'great start',
+        'momentum',
+        'on fire',
+        'Consistency',
+        'Unstoppable'
+      ];
+
+      for (var i = 0; i < streaks.length; i++) {
+        when(mockLogRepository.getStreakCount(userId))
+            .thenAnswer((_) async => streaks[i]);
+
+        await viewModel.loadData();
+
+        expect(viewModel.encouragementText.toLowerCase(),
+            contains(expectedSubstrings[i].toLowerCase()),
+            reason: 'Failed for streak ${streaks[i]}');
+      }
+    });
+
     test('handles error gracefully', () async {
       // Arrange
       when(mockLogRepository.getStreakCount(userId)) // Correct method name

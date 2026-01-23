@@ -20,7 +20,9 @@ import 'package:fl_chart/fl_chart.dart';
 /// - **Consistency Bar**: Visual progress towards the 80% consistency goal.
 /// - **Encouragement**: Dynamic text to boost motivation.
 class InsightsScreen extends StatelessWidget {
-  const InsightsScreen({super.key});
+  final InsightsViewModel? viewModel;
+
+  const InsightsScreen({super.key, this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class InsightsScreen extends StatelessWidget {
     final userId = context.read<AuthProvider>().user?.id ?? '';
 
     return ChangeNotifierProvider<InsightsViewModel>(
-      create: (_) => locator<InsightsViewModel>(param1: userId),
+      create: (_) => viewModel ?? locator<InsightsViewModel>(param1: userId),
       child: const _InsightsContent(),
     );
   }
@@ -62,42 +64,45 @@ class _InsightsContent extends StatelessWidget {
         centerTitle: true,
       ),
       body: viewModel.isLoading
-          ? const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header skeleton
-                  SkeletonLoader(
-                    height: 28,
-                    width: 200,
-                    borderRadius: 8,
-                  ),
-                  SizedBox(height: 8),
-                  SkeletonLoader(
-                    height: 16,
-                    width: 150,
-                    borderRadius: 6,
-                  ),
-                  SizedBox(height: 32),
-                  // Streak hero skeleton
-                  SkeletonLoader(
-                    height: 280,
-                    borderRadius: 24,
-                  ),
-                  SizedBox(height: 16),
-                  // Consistency card skeleton
-                  SkeletonLoader(
-                    height: 180,
-                    borderRadius: 24,
-                  ),
-                  SizedBox(height: 16),
-                  // Export button skeleton
-                  SkeletonLoader(
-                    height: 56,
-                    borderRadius: 16,
-                  ),
-                ],
+          ? const SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header skeleton
+                    SkeletonLoader(
+                      height: 28,
+                      width: 200,
+                      borderRadius: 8,
+                    ),
+                    SizedBox(height: 8),
+                    SkeletonLoader(
+                      height: 16,
+                      width: 150,
+                      borderRadius: 6,
+                    ),
+                    SizedBox(height: 32),
+                    // Streak hero skeleton
+                    SkeletonLoader(
+                      height: 280,
+                      borderRadius: 24,
+                    ),
+                    SizedBox(height: 16),
+                    // Consistency card skeleton
+                    SkeletonLoader(
+                      height: 180,
+                      borderRadius: 24,
+                    ),
+                    SizedBox(height: 16),
+                    // Export button skeleton
+                    SkeletonLoader(
+                      height: 56,
+                      borderRadius: 16,
+                    ),
+                  ],
+                ),
               ),
             )
           : SingleChildScrollView(

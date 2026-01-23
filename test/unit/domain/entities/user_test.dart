@@ -10,6 +10,17 @@ void main() {
       createdAt: DateTime(2023, 1, 1),
     );
 
+    test('should copyWith level and xp correctly', () {
+      final updatedUser = baseUser.copyWith(
+        level: 10,
+        xp: 2500,
+      );
+
+      expect(updatedUser.level, 10);
+      expect(updatedUser.xp, 2500);
+      expect(updatedUser.email, baseUser.email);
+    });
+
     test('should copyWith unlockedAchievements correctly', () {
       final updatedUser = baseUser.copyWith(
         unlockedAchievements: ['badge_1', 'badge_2'],

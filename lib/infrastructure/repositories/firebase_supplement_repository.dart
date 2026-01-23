@@ -20,7 +20,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
       final snapshot = await _firestore
           .collection('supplements')
           .get(const GetOptions(source: Source.serverAndCache))
-          .timeout(const Duration(seconds: 3));
+          .timeout(const Duration(seconds: 10));
       _cache = snapshot.docs
           .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
           .toList();
@@ -78,7 +78,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
           .collection('supplements')
           .doc(id)
           .get(const GetOptions(source: Source.serverAndCache))
-          .timeout(const Duration(seconds: 3));
+          .timeout(const Duration(seconds: 10));
       if (!doc.exists) return null;
       return Supplement.fromJson({...doc.data()!, 'id': doc.id});
     } catch (e) {

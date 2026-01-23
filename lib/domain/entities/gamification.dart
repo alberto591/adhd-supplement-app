@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
+enum BadgeTier { bronze, silver, gold }
+
 class GamificationBadge {
   final String id;
   final String title;
   final String subtitle;
-  final IconData icon; // Storing IconData for now as per current UI usage
+  final IconData icon;
   final Color color;
   final bool isEarned;
   final DateTime? earnedDate;
-  final bool isLocked; // UI has lock state logic
+  final bool isLocked;
+  final BadgeTier tier;
+  final double progress; // 0.0 to 1.0
+  final int targetValue; // Actual count needed to unlock
+  final int currentValue; // User's current count
+  final int xpReward;
 
   const GamificationBadge({
     required this.id,
@@ -19,6 +26,11 @@ class GamificationBadge {
     this.isEarned = false,
     this.earnedDate,
     this.isLocked = true,
+    this.tier = BadgeTier.bronze,
+    this.progress = 0.0,
+    this.targetValue = 1,
+    this.currentValue = 0,
+    this.xpReward = 100,
   });
 
   GamificationBadge copyWith({
@@ -30,6 +42,11 @@ class GamificationBadge {
     bool? isEarned,
     DateTime? earnedDate,
     bool? isLocked,
+    BadgeTier? tier,
+    double? progress,
+    int? targetValue,
+    int? currentValue,
+    int? xpReward,
   }) {
     return GamificationBadge(
       id: id ?? this.id,
@@ -40,6 +57,11 @@ class GamificationBadge {
       isEarned: isEarned ?? this.isEarned,
       earnedDate: earnedDate ?? this.earnedDate,
       isLocked: isLocked ?? this.isLocked,
+      tier: tier ?? this.tier,
+      progress: progress ?? this.progress,
+      targetValue: targetValue ?? this.targetValue,
+      currentValue: currentValue ?? this.currentValue,
+      xpReward: xpReward ?? this.xpReward,
     );
   }
 }

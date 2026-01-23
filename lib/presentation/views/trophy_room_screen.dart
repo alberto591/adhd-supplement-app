@@ -371,6 +371,7 @@ class TrophyRoomScreen extends StatelessWidget {
             children: badges
                 .map((badge) => _buildTrophyCard(
                       isDark,
+                      primary: primary,
                       badge: badge,
                     ))
                 .toList(),
@@ -380,7 +381,8 @@ class TrophyRoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTrophyCard(bool isDark, {required GamificationBadge badge}) {
+  Widget _buildTrophyCard(bool isDark,
+      {required Color primary, required GamificationBadge badge}) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -465,7 +467,7 @@ class TrophyRoomScreen extends StatelessWidget {
                   ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             Text(
               badge.title,
               textAlign: TextAlign.center,
@@ -491,6 +493,55 @@ class TrophyRoomScreen extends StatelessWidget {
                 fontStyle: badge.isLocked ? FontStyle.italic : FontStyle.normal,
               ),
             ),
+            const SizedBox(height: 12),
+            if (badge.isLocked) ...[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: badge.progress,
+                  backgroundColor: isDark
+                      ? Colors.white.withValues(alpha: 0.1)
+                      : Colors.black.withValues(alpha: 0.05),
+                  valueColor: AlwaysStoppedAnimation<Color>(badge.color),
+                  minHeight: 4,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '${badge.currentValue}/${badge.targetValue}',
+                style: GoogleFonts.lexend(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.5)
+                      : Colors.black.withValues(alpha: 0.5),
+                  fontSize: 10,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '+${badge.xpReward} XP',
+                style: GoogleFonts.lexend(
+                  color: primary,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ] else ...[
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: badge.color.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  badge.tier.name.toUpperCase(),
+                  style: GoogleFonts.lexend(
+                    color: badge.color,
+                    fontSize: 8,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
