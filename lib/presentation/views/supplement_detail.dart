@@ -355,6 +355,8 @@ class SupplementDetail extends StatelessWidget {
                             items: supplement.studyLinks.keys.toList(),
                             isLink: true,
                             isDark: isDark,
+                            onItemTap: (title) => _openScientificLink(
+                                context, title, supplement.studyLinks[title]!),
                           ),
                           const SizedBox(height: 16),
                         ],
@@ -612,7 +614,8 @@ class SupplementDetail extends StatelessWidget {
     );
   }
 
-  Future<void> _openReferralLink(BuildContext context, Supplement supplement) async {
+  Future<void> _openReferralLink(
+      BuildContext context, Supplement supplement) async {
     try {
       // Get services from locator
       final supplementRepository = locator.get<SupplementRepository>();
@@ -621,7 +624,7 @@ class SupplementDetail extends StatelessWidget {
 
       // Track referral click
       await supplementRepository.trackReferralClick(supplement.id);
-      
+
       // Log analytics event
       await analyticsService.logEvent('referral_clicked', parameters: {
         'supplement_id': supplement.id,
@@ -632,10 +635,38 @@ class SupplementDetail extends StatelessWidget {
       // Open referral link
       await urlService.launchReferral(supplement.referralUrl);
     } catch (e) {
+      if (!context.mounted) return;
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to open referral link: $e'),
+          backgroundColor: const Color(0xFFEF4444),
+        ),
+      );
+    }
+  }
+
+  Future<void> _openScientificLink(
+      BuildContext context, String title, String url) async {
+    try {
+      final urlService = locator.get<UrlService>();
+      final analyticsService = locator.get<AnalyticsService>();
+
+      // Log analytics event
+      await analyticsService.logEvent('scientific_link_clicked', parameters: {
+        'supplement_id': supplement.id,
+        'supplement_name': supplement.name,
+        'study_title': title,
+        'url': url,
+      });
+
+      // Open link
+      await urlService.launchUri(url);
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Could not open study: $e'),
           backgroundColor: const Color(0xFFEF4444),
         ),
       );
@@ -706,6 +737,7 @@ class _SectionCard extends StatelessWidget {
   final List<String> items;
   final bool isDark;
   final bool isLink;
+  final ValueChanged<String>? onItemTap;
 
   const _SectionCard({
     required this.title,
@@ -714,6 +746,7 @@ class _SectionCard extends StatelessWidget {
     required this.items,
     required this.isDark,
     this.isLink = false,
+    this.onItemTap,
   });
 
   @override
@@ -782,16 +815,24 @@ class _SectionCard extends StatelessWidget {
                       ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: Text(
-                        item,
-                        style: GoogleFonts.lexend(
-                          color: isLink
-                              ? Colors.blue[400]
-                              : (isDark ? Colors.grey[400] : Colors.grey[700]),
-                          fontSize: 15,
-                          height: 1.4,
-                          decoration: isLink ? TextDecoration.underline : null,
-                          decorationColor: Colors.blue[400],
+                      child: GestureDetector(
+                        onTap: isLink && onItemTap != null
+                            ? () => onItemTap!(item)
+                            : null,
+                        child: Text(
+                          item,
+                          style: GoogleFonts.lexend(
+                            color: isLink
+                                ? Colors.blue[400]
+                                : (isDark
+                                    ? Colors.grey[400]
+                                    : Colors.grey[700]),
+                            fontSize: 15,
+                            height: 1.4,
+                            decoration:
+                                isLink ? TextDecoration.underline : null,
+                            decorationColor: Colors.blue[400],
+                          ),
                         ),
                       ),
                     ),

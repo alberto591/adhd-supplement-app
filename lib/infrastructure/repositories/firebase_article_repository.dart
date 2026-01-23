@@ -21,8 +21,7 @@ class FirebaseArticleRepository implements ArticleRepository {
       authorAvatarUrl: 'https://i.pravatar.cc/100?img=5',
       readTime: '4 min read',
       publishDate: 'Oct 24, 2023',
-      imageUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBU--sRRznt8V4_LL2a5ujTHNk9rP0Xfbqxtqu4GlgYlIPx8O8ZNNStUXqhe0xIDArDIlj-KwbtO4NEwA4dZ9U2izDpLB-W5F8jbkHhMkC1QGNl-r1J6HRMdajFNAydymNsc8pfMLcYFPcSXkEWVeMRqVXbvDLIesZYQ_L6Pj45Xugs3zW-q2n38u7Q3YzkcA-jSUn2IrYiKPpjeUw4Xc7PqTM3lgp4fUsPSrJwlz1BP2NXFjeE2wIeQdpOZj68yNwsy_UFhn-bsKE',
+      imageUrl: 'assets/images/magnesium_science.png',
       tldr:
           'Magnesium Glycinate helps regulate neurotransmitters GABA and Melatonin, promoting deeper REM cycles without morning grogginess.',
       category: 'SCIENCE',
@@ -44,8 +43,7 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
       authorAvatarUrl: 'https://i.pravatar.cc/100?img=12',
       readTime: '3 min read',
       publishDate: 'Nov 02, 2023',
-      imageUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBU--sRRznt8V4_LL2a5ujTHNk9rP0Xfbqxtqu4GlgYlIPx8O8ZNNStUXqhe0xIDArDIlj-KwbtO4NEwA4dZ9U2izDpLB-W5F8jbkHhMkC1QGNl-r1J6HRMdajFNAydymNsc8pfMLcYFPcSXkEWVeMRqVXbvDLIesZYQ_L6Pj45Xugs3zW-q2n38u7Q3YzkcA-jSUn2IrYiKPpjeUw4Xc7PqTM3lgp4fUsPSrJwlz1BP2NXFjeE2wIeQdpOZj68yNwsy_UFhn-bsKE', // Placeholder
+      imageUrl: 'assets/images/vitamin_d_focus.png', // Placeholder
       tldr:
           'Vitamin D3 is crucial for dopamine production. Low levels are linked to executive dysfunction.',
       category: 'FOCUS',
@@ -59,8 +57,7 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
       authorAvatarUrl: 'https://i.pravatar.cc/100?img=3',
       readTime: '5 min read',
       publishDate: 'Sep 15, 2023',
-      imageUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBU--sRRznt8V4_LL2a5ujTHNk9rP0Xfbqxtqu4GlgYlIPx8O8ZNNStUXqhe0xIDArDIlj-KwbtO4NEwA4dZ9U2izDpLB-W5F8jbkHhMkC1QGNl-r1J6HRMdajFNAydymNsc8pfMLcYFPcSXkEWVeMRqVXbvDLIesZYQ_L6Pj45Xugs3zW-q2n38u7Q3YzkcA-jSUn2IrYiKPpjeUw4Xc7PqTM3lgp4fUsPSrJwlz1BP2NXFjeE2wIeQdpOZj68yNwsy_UFhn-bsKE', // Placeholder
+      imageUrl: 'assets/images/theanine_calm.png', // Placeholder
       tldr:
           'L-Theanine promotes alpha brain waves, smoothing out the jitters from caffeine.',
       category: 'STACKS',

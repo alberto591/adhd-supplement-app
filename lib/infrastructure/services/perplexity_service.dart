@@ -65,7 +65,7 @@ The output MUST be a valid JSON object with the following fields:
 - "category": One of: "SCIENCE", "FOCUS", "STACKS", "LIFESTYLE".
 - "author": "Dr. AI-chemist" or a relevant persona.
 - "authorRole": "AI Research Assistant".
-- "imageUrl": Use this placeholder: "https://lh3.googleusercontent.com/aida-public/AB6AXuBU--sRRznt8V4_LL2a5ujTHNk9rP0Xfbqxtqu4GlgYlIPx8O8ZNNStUXqhe0xIDArDIlj-KwbtO4NEwA4dZ9U2izDpLB-W5F8jbkHhMkC1QGNl-r1J6HRMdajFNAydymNsc8pfMLcYFPcSXkEWVeMRqVXbvDLIesZYQ_L6Pj45Xugs3zW-q2n38u7Q3YzkcA-jSUn2IrYiKPpjeUw4Xc7PqTM3lgp4fUsPSrJwlz1BP2NXFjeE2wIeQdpOZj68yNwsy_UFhn-bsKE"
+- "imageUrl": "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=1600" // Fallback gradient/abstract
 - "authorAvatarUrl": "https://i.pravatar.cc/100?img=11"
 
 Do not include markdown code blocks (like ```json) in the response, just the raw JSON.

@@ -94,8 +94,8 @@ class _ReferFriendScreenState extends State<ReferFriendScreen> {
                                 border: Border.all(
                                     color: primaryGold.withValues(alpha: 0.2)),
                                 image: const DecorationImage(
-                                  image: NetworkImage(
-                                    'https://lh3.googleusercontent.com/aida-public/AB6AXuBU--sRRznt8V4_LL2a5ujTHNk9rP0Xfbqxtqu4GlgYlIPx8O8ZNNStUXqhe0xIDArDIlj-KwbtO4NEwA4dZ9U2izDpLB-W5F8jbkHhMkC1QGNl-r1J6HRMdajFNAydymNsc8pfMLcYFPcSXkEWVeMRqVXbvDLIesZYQ_L6Pj45Xugs3zW-q2n38u7Q3YzkcA-jSUn2IrYiKPpjeUw4Xc7PqTM3lgp4fUsPSrJwlz1BP2NXFjeE2wIeQdpOZj68yNwsy_UFhn-bsKE',
+                                  image: AssetImage(
+                                    'assets/images/referral_hero.png',
                                   ),
                                   fit: BoxFit.cover,
                                   colorFilter: ColorFilter.mode(

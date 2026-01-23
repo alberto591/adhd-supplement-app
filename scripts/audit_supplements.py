@@ -54,7 +54,8 @@ def audit_supplements():
         '"timingRationale"',
         '"dosageByWeight"',
         '"tldr"',
-        '"adhdMedInteractions"'
+        '"adhdMedInteractions"',
+        '"focusLevel"'
     ]
     
     for block in blocks:

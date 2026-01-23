@@ -152,7 +152,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
           child: Icon(Icons.arrow_back_ios_new,
               size: 16, color: isDark ? Colors.white : Colors.black),
         ),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () =>
+            Navigator.pushReplacementNamed(context, AppRouter.dashboard),
       ),
       title: Text(
         'Science Hub',

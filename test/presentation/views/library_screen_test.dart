@@ -30,7 +30,8 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<User> signUpWithEmail(String email, String password, String displayName) async {
+  Future<User> signUpWithEmail(
+      String email, String password, String displayName) async {
     throw UnimplementedError();
   }
 
@@ -65,7 +66,7 @@ void main() {
     // Mock SharedPreferences
     SharedPreferences.setMockInitialValues({});
   });
-  
+
   setUp(() async {
     // Initialize the locator with test dependencies
     await setupLocator();
@@ -75,14 +76,13 @@ void main() {
         () => const MockSupplementRepository());
     // Replace Firebase stack repository with mock
     locator.unregister<StackRepository>();
-    locator.registerLazySingleton<StackRepository>(
-        () => MockStackRepository());
+    locator.registerLazySingleton<StackRepository>(() => MockStackRepository());
   });
 
   Widget createScreen() {
     // Create a simple mock AuthRepository without platform dependencies
     final mockAuthRepo = MockAuthRepository();
-    
+
     // Create AuthProvider with mock repository
     final authProvider = AuthProvider(mockAuthRepo);
 
@@ -90,15 +90,15 @@ void main() {
       providers: [
         ChangeNotifierProvider.value(value: authProvider),
       ],
-      child: MaterialApp(
-        home: const LibraryScreen(),
+      child: const MaterialApp(
+        home: LibraryScreen(),
       ),
     );
   }
 
   testWidgets('LibraryScreen renders correctly', (WidgetTester tester) async {
     await tester.pumpWidget(createScreen());
-    
+
     // Wait for view model to initialize and load data
     await tester.pumpAndSettle(const Duration(milliseconds: 600));
 

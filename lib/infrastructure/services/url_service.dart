@@ -7,4 +7,11 @@ class UrlService {
       throw Exception('Could not launch $url');
     }
   }
+
+  Future<void> launchUri(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.platformDefault)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 }
