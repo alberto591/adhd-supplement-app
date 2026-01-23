@@ -1,7 +1,7 @@
 name: Flutter Build
 
 on:
-  workflow_dispatch: # This is the ONLY trigger now.
+  workflow_dispatch: # This is the ONLY trigger.
 
 jobs:
   build:
@@ -21,25 +21,24 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Deep Clean and Install Pods
+      - name: Deep Clean and Force Pods
         run: |
           flutter clean
           flutter pub get
           cd ios
           rm -rf Pods
           rm -rf Podfile.lock
-          rm -rf .bundle
+          rm -f .bundle
           pod cache clean --all
           pod repo update
           pod install
           cd ..
 
       - name: Build iOS (.app)
+        # We set the environment variable right before the command
         run: |
-          # We use the extra-flag to pass the deployment target to xcodebuild
-          flutter build ios --release --no-codesign \
-            --extra-gen-snapshot-options="--no-precompiled-ios" \
-            --xcconfig-flags="IPHONEOS_DEPLOYMENT_TARGET=26.0"
+          export IPHONEOS_DEPLOYMENT_TARGET=26.0
+          flutter build ios --release --no-codesign --extra-gen-snapshot-options="--no-precompiled-ios"
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
