@@ -1,15 +1,10 @@
 name: Flutter Build
 
-workflow_dispatch: # This enables the manual "Run workflow" button
-  # (Optional) You can leave the push trigger commented out for future use:
+on:
+  workflow_dispatch: # This allows you to click the manual "Run workflow" button
+  # The push section below is commented out so it won't run automatically
   # push:
-  #   branches: [ main ]
-
-# on:
-#   push:
-#     branches: [ main, master ]
-#   pull_request:
-#     branches: [ main, master ]
+  #   branches: [ main, master ]
 
 jobs:
   build:
@@ -29,16 +24,21 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Install Pods
+      - name: Clean and Install Pods
         run: |
+          flutter clean
+          flutter pub get
           cd ios
-          pod install
+          # Force a fresh pod state to apply the -G fix
+          rm -rf Pods
+          rm -rf Podfile.lock
+          pod cache clean --all
+          pod install --repo-update
           cd ..
 
       - name: Build iOS (.app)
         run: flutter build ios --release --no-codesign
 
-      # Optional: Upload build artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
