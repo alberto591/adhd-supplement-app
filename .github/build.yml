@@ -1,10 +1,7 @@
 name: Flutter Build
 
 on:
-  workflow_dispatch: # This allows you to click the manual "Run workflow" button
-  # The push section below is commented out so it won't run automatically
-  # push:
-  #   branches: [ main, master ]
+  workflow_dispatch: # This is the ONLY trigger now.
 
 jobs:
   build:
@@ -29,11 +26,9 @@ jobs:
           flutter clean
           flutter pub get
           cd ios
-          # Kill existing lock files and pods
           rm -rf Pods
           rm -rf Podfile.lock
           rm -rf .bundle
-          # Reset CocoaPods cache entirely
           pod cache clean --all
           pod repo update
           pod install
