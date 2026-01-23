@@ -36,18 +36,19 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
     target.build_configurations.each do |config|
-      # 2. FORCE iOS 26 on every single dependency
+      # Force iOS 26 on every single dependency
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '26.0'
-      config.build_settings['SWIFT_VERSION'] = '5.0'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
 
-      # 3. THE "G-FLAG" EXTERMINATOR
-      # We clear these specific fields because this is where legacy plugins hide the -G flag
+      # KILL THE -G ERROR: Wipe the legacy flag strings entirely
       config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'NO'
-      config.build_settings['COMPILER_FLAGS'] = nil
       
       if config.build_settings['OTHER_CFLAGS']
         config.build_settings['OTHER_CFLAGS'] = config.build_settings['OTHER_CFLAGS'].gsub('-GCC_WARN_INHIBIT_ALL_WARNINGS', '')
+      end
+
+      if config.build_settings['COMPILER_FLAGS']
+        config.build_settings['COMPILER_FLAGS'] = nil
       end
     end
   end

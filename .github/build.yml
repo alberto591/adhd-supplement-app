@@ -35,7 +35,11 @@ jobs:
           cd ..
 
       - name: Build iOS (.app)
-        run: flutter build ios --release --no-codesign
+        run: |
+          # We use the extra-flag to pass the deployment target to xcodebuild
+          flutter build ios --release --no-codesign \
+            --extra-gen-snapshot-options="--no-precompiled-ios" \
+            --xcconfig-flags="IPHONEOS_DEPLOYMENT_TARGET=26.0"
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
