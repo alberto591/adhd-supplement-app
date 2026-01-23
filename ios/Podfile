@@ -43,20 +43,20 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
     
     target.build_configurations.each do |config|
-      # 1. Force all pods to iOS 13.0 to match your project
+      # 1. Standardizing environment
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      
-      # 2. Keep your Swift 5 fix
       config.build_settings['SWIFT_VERSION'] = '5.0'
-
-      # 3. AGGRESSIVE FIX: Completely clear problematic compiler flags
-      # This removes the "-G" issue by clearing legacy warning suppression
-      if config.build_settings['COMPILER_FLAGS']
-        config.build_settings['COMPILER_FLAGS'] = nil
-      end
-
-      # 4. Disable Bitcode for modern Xcode 16 standards
       config.build_settings['ENABLE_BITCODE'] = 'NO'
+
+      # 2. SURGICAL FIX: Strip the problematic -G flag specifically
+      if config.build_settings['OTHER_CFLAGS']
+        config.build_settings['OTHER_CFLAGS'].gsub!('-GCC_WARN_INHIBIT_ALL_WARNINGS', '')
+      end
+      
+      # 3. SECONDARY FIX: Clear COMPILER_FLAGS if they contain the legacy warning flag
+      if config.build_settings['COMPILER_FLAGS'] && config.build_settings['COMPILER_FLAGS'].include?('-GCC_WARN_INHIBIT_ALL_WARNINGS')
+         config.build_settings['COMPILER_FLAGS'] = nil
+      end
     end
   end
 end
