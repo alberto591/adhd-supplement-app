@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../../utils/logger.dart';
 import 'package:intl/intl.dart';
 import '../../domain/repositories/log_repository.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -64,7 +65,7 @@ class DoctorExportViewModel extends ChangeNotifier {
       _calculateStats();
     } catch (e) {
       _error = 'Failed to load report data: $e';
-      debugPrint(_error);
+      AppLogger.e(_error ?? 'Failed to load report data');
     } finally {
       _setLoading(false);
     }

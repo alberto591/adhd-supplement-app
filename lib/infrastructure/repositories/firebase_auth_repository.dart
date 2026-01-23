@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../utils/logger.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
@@ -112,7 +112,7 @@ class FirebaseAuthRepository implements AuthRepository {
         }
       } catch (e) {
         // Fall back to local cache if server is slow
-        debugPrint('Firestore server fetch timed out, trying cache: $e');
+        AppLogger.w('Firestore server fetch timed out, trying cache', e);
         try {
           final doc = await _firestore
               .collection('users')
@@ -122,7 +122,7 @@ class FirebaseAuthRepository implements AuthRepository {
             return User.fromJson(doc.data()!);
           }
         } catch (cacheErr) {
-          debugPrint('Firestore cache fetch failed: $cacheErr');
+          AppLogger.e('Firestore cache fetch failed', cacheErr);
         }
       }
 

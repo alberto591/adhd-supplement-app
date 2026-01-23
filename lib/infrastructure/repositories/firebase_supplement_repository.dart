@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/supplement_repository.dart';
+import '../../utils/logger.dart';
 
 class FirebaseSupplementRepository implements SupplementRepository {
   final FirebaseFirestore _firestore;
@@ -26,7 +26,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
           .toList();
       return _cache!;
     } catch (e) {
-      debugPrint('Fetching supplements from cache: $e');
+      AppLogger.w('Fetching supplements from cache', e);
       try {
         final snapshot = await _firestore
             .collection('supplements')
@@ -36,7 +36,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
             .toList();
         return _cache!;
       } catch (cacheErr) {
-        debugPrint('Supplements cache failure: $cacheErr');
+        AppLogger.e('Supplements cache failure', cacheErr);
         return _cache ?? [];
       }
     }
@@ -82,7 +82,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
       if (!doc.exists) return null;
       return Supplement.fromJson({...doc.data()!, 'id': doc.id});
     } catch (e) {
-      debugPrint('Fetching supplement $id from cache: $e');
+      AppLogger.w('Fetching supplement $id from cache', e);
       try {
         final doc = await _firestore
             .collection('supplements')
@@ -91,7 +91,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
         if (!doc.exists) return null;
         return Supplement.fromJson({...doc.data()!, 'id': doc.id});
       } catch (cacheErr) {
-        debugPrint('Supplement $id cache failure: $cacheErr');
+        AppLogger.e('Supplement $id cache failure', cacheErr);
         return null;
       }
     }
@@ -114,9 +114,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
         'timestamp': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      // Log error but don't block user
-      // Log error but don't block user
-      // print('Error tracking referral click: $e');
+      AppLogger.e('Error tracking referral click', e);
     }
   }
 }

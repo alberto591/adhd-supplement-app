@@ -10,6 +10,9 @@ abstract class SettingsRepository {
   TimeOfDay getNudgeTime();
   Future<void> setNudgeTime(TimeOfDay time);
 
+  TimeOfDay getSlotTime(String slot);
+  Future<void> setSlotTime(String slot, TimeOfDay time);
+
   String getWarningNudgeOption();
   Future<void> setWarningNudgeOption(String option);
 

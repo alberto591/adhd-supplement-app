@@ -24,6 +24,8 @@ void main() {
         .thenReturn(const TimeOfDay(hour: 8, minute: 0));
     when(mockSettingsRepository.getWarningNudgeOption()).thenReturn('15m');
     when(mockSettingsRepository.getExtendedRemindersEnabled()).thenReturn(true);
+    when(mockSettingsRepository.getSlotTime(any))
+        .thenReturn(const TimeOfDay(hour: 8, minute: 0));
   });
 
   group('PersistentRemindersViewModel', () {
@@ -86,7 +88,7 @@ void main() {
         title: anyNamed('title'),
         body: anyNamed('body'),
         hour: 9,
-        minute: 30,
+        minute: 35,
       )).called(1);
     });
 

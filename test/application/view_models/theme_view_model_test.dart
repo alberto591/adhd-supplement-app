@@ -18,62 +18,66 @@ class MockSettingsRepository implements SettingsRepository {
   }
 
   // Other methods not needed for this test
-  
+
   @override
   bool getNudgeModeEnabled() => false;
   @override
   Future<void> setNudgeModeEnabled(bool enabled) async {}
-  
+
   @override
   TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
   @override
   Future<void> setNudgeTime(TimeOfDay time) async {}
-  
+
   @override
   String getWarningNudgeOption() => '15m';
   @override
   Future<void> setWarningNudgeOption(String option) async {}
-  
+
+  @override
+  TimeOfDay getSlotTime(String slot) => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {}
+
   @override
   bool getExtendedRemindersEnabled() => false;
   @override
   Future<void> setExtendedRemindersEnabled(bool enabled) async {}
-  
+
   @override
   bool getBiometricLockEnabled() => false;
   @override
   Future<void> setBiometricLockEnabled(bool enabled) async {}
-  
+
   @override
   bool getLocalStorageOnly() => false;
   @override
   Future<void> setLocalStorageOnly(bool enabled) async {}
-  
+
   @override
   bool getAnalyticsEnabled() => true;
   @override
   Future<void> setAnalyticsEnabled(bool enabled) async {}
-  
+
   @override
   bool getCrashReportingEnabled() => true;
   @override
   Future<void> setCrashReportingEnabled(bool enabled) async {}
-  
+
   @override
   bool getReducedMotionEnabled() => false;
   @override
   Future<void> setReducedMotionEnabled(bool enabled) async {}
-  
+
   @override
   bool getHapticFeedbackEnabled() => true;
   @override
   Future<void> setHapticFeedbackEnabled(bool enabled) async {}
-  
+
   @override
   double getFontSizeScale() => 1.0;
   @override
   Future<void> setFontSizeScale(double scale) async {}
-
 }
 
 void main() {

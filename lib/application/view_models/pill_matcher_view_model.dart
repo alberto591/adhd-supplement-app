@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:image_picker/image_picker.dart';
+import '../../utils/logger.dart';
 import '../../presentation/theme/app_theme.dart';
 import '../../presentation/widgets/pill_preview_widget.dart';
 
@@ -54,7 +55,7 @@ class PillMatcherViewModel extends ChangeNotifier {
         await _analyzeImage(image.path);
       }
     } catch (e) {
-      debugPrint('Error picking image: $e');
+      AppLogger.e('Error picking image', e);
       // In a real app, handle permission errors etc
     }
   }
@@ -66,7 +67,7 @@ class PillMatcherViewModel extends ChangeNotifier {
         await _analyzeImage(image.path);
       }
     } catch (e) {
-      debugPrint('Error picking image: $e');
+      AppLogger.e('Error picking image', e);
     }
   }
 

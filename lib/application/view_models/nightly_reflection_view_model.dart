@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/repositories/log_repository.dart';
+import '../../utils/logger.dart';
 // import 'package:uuid/uuid.dart';
 
 class NightlyReflectionViewModel extends ChangeNotifier {
@@ -61,7 +62,7 @@ class NightlyReflectionViewModel extends ChangeNotifier {
         // could map to custom logic or ignore for MVP reload
       }
     } catch (e) {
-      debugPrint('Error loading reflection: $e');
+      AppLogger.e('Error loading reflection', e);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -103,7 +104,7 @@ class NightlyReflectionViewModel extends ChangeNotifier {
       await _logRepository.saveLog(updatedLog);
       return true;
     } catch (e) {
-      debugPrint('Error saving reflection: $e');
+      AppLogger.e('Error saving reflection', e);
       return false;
     } finally {
       if (isAutoSave) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/article.dart';
 import '../../domain/repositories/article_repository.dart';
+import '../../utils/logger.dart';
 
 /// ViewModel managing the state for a single article's detailed view.
 ///
@@ -41,7 +42,7 @@ class ArticleDetailViewModel extends ChangeNotifier {
         _relatedArticles = await _repository.getRelatedArticles(id);
       }
     } catch (e) {
-      debugPrint('Error loading article: $e');
+      AppLogger.e('Error loading article', e);
       // Potential extension: Set an error message state
     } finally {
       _isLoading = false;

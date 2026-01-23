@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/repositories/stack_repository.dart';
 import '../../domain/entities/supplement_stack.dart';
+import '../../utils/logger.dart';
 
 class FirebaseStackRepository implements StackRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -32,7 +32,7 @@ class FirebaseStackRepository implements StackRepository {
       }
       _cache[userId] = currentStacks;
     } catch (e) {
-      debugPrint('Error saving stack: $e');
+      AppLogger.e('Error saving stack', e);
       // Still throw if it's a permission or structural error,
       // but Firestore .set() rarely throws when offline.
       throw Exception('Failed to save stack: $e');
@@ -44,7 +44,7 @@ class FirebaseStackRepository implements StackRepository {
     try {
       // 1. Check in-memory cache first (Instant load)
       if (_cache.containsKey(userId) && _cache[userId]!.isNotEmpty) {
-        debugPrint('Returning stacks from memory cache (0ms)');
+        AppLogger.d('Returning stacks from memory cache (0ms)');
         return _cache[userId]!;
       }
 
@@ -65,7 +65,7 @@ class FirebaseStackRepository implements StackRepository {
 
       return stacks;
     } catch (e) {
-      debugPrint('Fetching stacks from cache (likely offline/slow): $e');
+      AppLogger.w('Fetching stacks from cache (likely offline/slow)', e);
       // Fallback: Force read from local cache
       try {
         final snapshot = await _firestore
@@ -77,7 +77,7 @@ class FirebaseStackRepository implements StackRepository {
             .map((doc) => SupplementStack.fromJson(doc.data()))
             .toList();
       } catch (cacheError) {
-        debugPrint('Cache read failed: $cacheError');
+        AppLogger.e('Cache read failed', cacheError);
         return [];
       }
     }
@@ -99,7 +99,7 @@ class FirebaseStackRepository implements StackRepository {
       }
       return null;
     } catch (e) {
-      debugPrint('Fetching stack from cache: $e');
+      AppLogger.w('Fetching stack from cache', e);
       try {
         final doc = await _firestore
             .collection('users')
@@ -112,7 +112,7 @@ class FirebaseStackRepository implements StackRepository {
         }
         return null;
       } catch (cacheErr) {
-        debugPrint('Stack cache failure: $cacheErr');
+        AppLogger.e('Stack cache failure', cacheErr);
         return null;
       }
     }

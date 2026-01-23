@@ -14,6 +14,7 @@ import 'package:adhd_supplement_app/infrastructure/services/notification_service
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
+import 'package:adhd_supplement_app/infrastructure/services/sound_service.dart';
 
 // Fakes for cleaner manual testing without mockito's "when" null-safety issues
 class FakeStackRepository implements StackRepository {
@@ -177,6 +178,13 @@ class FakeAnalyticsService implements AnalyticsService {
   Future<void> setUserProperty(String name, String value) async {}
 }
 
+class FakeSoundService implements SoundService {
+  @override
+  Future<void> playSuccess() async {}
+  @override
+  Future<void> dispose() async {}
+}
+
 class FakeSettingsRepository implements SettingsRepository {
   @override
   Future<void> init() async {}
@@ -188,6 +196,24 @@ class FakeSettingsRepository implements SettingsRepository {
   TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
   @override
   Future<void> setNudgeTime(TimeOfDay time) async {}
+  @override
+  TimeOfDay getSlotTime(String slot) {
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        return const TimeOfDay(hour: 8, minute: 0);
+      case 'afternoon':
+        return const TimeOfDay(hour: 13, minute: 0);
+      case 'evening':
+        return const TimeOfDay(hour: 18, minute: 0);
+      case 'night':
+        return const TimeOfDay(hour: 21, minute: 0);
+      default:
+        return const TimeOfDay(hour: 8, minute: 0);
+    }
+  }
+
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {}
   @override
   String getWarningNudgeOption() => '15m';
   @override
@@ -278,6 +304,7 @@ void main() {
       notificationService: FakeNotificationService(),
       authRepository: fakeAuthRepo,
       analyticsService: FakeAnalyticsService(),
+      soundService: FakeSoundService(),
       userId: userId,
     );
   });
@@ -382,6 +409,59 @@ void main() {
           viewModel.eveningItems.any((i) => i.supplementId == 'supp1'), true);
 
       await viewModel.markSupplementTaken('supp1');
+
+      // Should now be filtered out
+      expect(
+          viewModel.eveningItems.any((i) => i.supplementId == 'supp1'), false);
+    });
+
+    test('markSupplementSkipped marks as skipped and updates log', () async {
+      fakeStackRepo.stacks = [testStack];
+      fakeSupplementRepo.supplements['supp1'] = testSupplement;
+
+      await viewModel.initialize();
+      expect(viewModel.isSupplementSkipped('supp1'), false);
+
+      await viewModel.markSupplementSkipped('supp1', reason: 'Forgot');
+
+      expect(viewModel.isSupplementSkipped('supp1'), true);
+      expect(fakeLogRepo.lastSavedLog, isNotNull);
+      expect(
+          fakeLogRepo.lastSavedLog!.entries.any((e) =>
+              e.supplementId == 'supp1' && e.status == LogStatus.skipped),
+          true);
+    });
+
+    test('toggleSupplement unskips a skipped supplement', () async {
+      fakeStackRepo.stacks = [testStack];
+      fakeSupplementRepo.supplements['supp1'] = testSupplement;
+
+      await viewModel.initialize();
+
+      // First skip it
+      await viewModel.markSupplementSkipped('supp1');
+      expect(viewModel.isSupplementSkipped('supp1'), true);
+
+      // Now toggle it (should unskip)
+      await viewModel.toggleSupplement('supp1');
+
+      expect(viewModel.isSupplementSkipped('supp1'), false);
+      expect(viewModel.isSupplementTaken('supp1'), false);
+      expect(
+          fakeLogRepo.lastSavedLog!.entries
+              .any((e) => e.supplementId == 'supp1'),
+          false);
+    });
+
+    test('skipped items are hidden from pending lists', () async {
+      fakeStackRepo.stacks = [testStack];
+      fakeSupplementRepo.supplements['supp1'] = testSupplement;
+
+      await viewModel.initialize();
+      expect(
+          viewModel.eveningItems.any((i) => i.supplementId == 'supp1'), true);
+
+      await viewModel.markSupplementSkipped('supp1');
 
       // Should now be filtered out
       expect(

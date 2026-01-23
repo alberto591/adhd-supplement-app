@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/supplement_repository.dart';
+import '../../utils/logger.dart';
 
 class MockSupplementRepository implements SupplementRepository {
   const MockSupplementRepository(); // Added const constructor
@@ -105,6 +105,6 @@ class MockSupplementRepository implements SupplementRepository {
   Future<void> trackReferralClick(String supplementId) async {
     // In production, this would write to Firestore
     // In a real app, this would log to analytics
-    debugPrint('Tracked referral click for: $supplementId');
+    AppLogger.d('Tracked referral click for: $supplementId');
   }
 }

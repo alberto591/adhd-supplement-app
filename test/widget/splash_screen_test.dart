@@ -14,6 +14,59 @@ import 'package:adhd_supplement_app/presentation/navigation/app_router.dart';
 class MockSettingsRepository extends Mock implements SettingsRepository {
   @override
   Future<void> init() async => Future.value();
+
+  @override
+  bool getNudgeModeEnabled() => true;
+  @override
+  Future<void> setNudgeModeEnabled(bool? enabled) async {}
+  @override
+  TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setNudgeTime(TimeOfDay? time) async {}
+  @override
+  TimeOfDay getSlotTime(String? slot) => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setSlotTime(String? slot, TimeOfDay? time) async {}
+  @override
+  String getWarningNudgeOption() => '15m';
+  @override
+  Future<void> setWarningNudgeOption(String? option) async {}
+  @override
+  bool getExtendedRemindersEnabled() => true;
+  @override
+  Future<void> setExtendedRemindersEnabled(bool? enabled) async {}
+  @override
+  bool getBiometricLockEnabled() => false;
+  @override
+  Future<void> setBiometricLockEnabled(bool? enabled) async {}
+  @override
+  bool getLocalStorageOnly() => false;
+  @override
+  Future<void> setLocalStorageOnly(bool? enabled) async {}
+  @override
+  bool getAnalyticsEnabled() => true;
+  @override
+  Future<void> setAnalyticsEnabled(bool? enabled) async {}
+  @override
+  bool getCrashReportingEnabled() => true;
+  @override
+  Future<void> setCrashReportingEnabled(bool? enabled) async {}
+  @override
+  ThemeMode getThemeMode() => ThemeMode.system;
+  @override
+  Future<void> setThemeMode(ThemeMode? mode) async {}
+  @override
+  bool getReducedMotionEnabled() => false;
+  @override
+  Future<void> setReducedMotionEnabled(bool? enabled) async {}
+  @override
+  bool getHapticFeedbackEnabled() => true;
+  @override
+  Future<void> setHapticFeedbackEnabled(bool? enabled) async {}
+  @override
+  double getFontSizeScale() => 1.0;
+  @override
+  Future<void> setFontSizeScale(double? scale) async {}
 }
 
 class MockNotificationService extends Mock implements NotificationService {
@@ -24,6 +77,9 @@ class MockNotificationService extends Mock implements NotificationService {
 class MockSeedingService extends Mock implements SeedingService {
   @override
   Future<void> seedSupplements() async => Future.value();
+  @override
+  Future<void> createTestUser(String email, String password) async =>
+      Future.value();
 }
 
 class MockSupplementRepository extends Mock implements SupplementRepository {
@@ -81,7 +137,7 @@ void main() {
     // Note: depending on microtask scheduling, it might be fast.
 
     await tester.pump(const Duration(milliseconds: 100));
-    expect(find.text('Checking supplements...'), findsOneWidget);
+    expect(find.text('Setting up reminders...'), findsOneWidget);
 
     // Wait for the specific delay in SplashScreen (1500ms)
     // We already pumped 200ms. Pump remaining + buffer.

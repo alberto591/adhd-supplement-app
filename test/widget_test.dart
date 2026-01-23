@@ -186,6 +186,25 @@ class _FakeSettingsRepository implements SettingsRepository {
   Future<void> setNudgeTime(TimeOfDay time) async {}
 
   @override
+  TimeOfDay getSlotTime(String slot) {
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        return const TimeOfDay(hour: 8, minute: 0);
+      case 'afternoon':
+        return const TimeOfDay(hour: 13, minute: 0);
+      case 'evening':
+        return const TimeOfDay(hour: 18, minute: 0);
+      case 'night':
+        return const TimeOfDay(hour: 21, minute: 0);
+      default:
+        return const TimeOfDay(hour: 8, minute: 0);
+    }
+  }
+
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {}
+
+  @override
   String getWarningNudgeOption() => '15m';
   @override
   Future<void> setWarningNudgeOption(String option) async {}

@@ -41,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
         // Navigate to onboarding
         Navigator.pushNamedAndRemoveUntil(
           context,
-          AppRouter.onboardingGoals,
+          AppRouter.onboardingMedicalDisclaimer,
           (route) => false,
         );
       }

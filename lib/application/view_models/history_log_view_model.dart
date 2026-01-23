@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/repositories/log_repository.dart';
+import '../../utils/logger.dart';
 import '../../domain/repositories/stack_repository.dart';
 import '../../config/locator.dart';
 
@@ -114,7 +115,7 @@ class HistoryLogViewModel extends ChangeNotifier {
       _recentLogs.sort((a, b) => b.date.compareTo(a.date)); // Most recent first
     } catch (e) {
       _error = 'Failed to load history: $e';
-      debugPrint(_error);
+      AppLogger.e(_error ?? 'Failed to load history');
     } finally {
       _setLoading(false);
     }

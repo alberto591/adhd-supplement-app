@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/logger.dart';
 import '../theme/app_theme.dart';
 
 class MedicationCard extends StatelessWidget {
@@ -169,7 +170,7 @@ class MedicationCard extends StatelessWidget {
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () {
-                            debugPrint('Take button HIT for $title');
+                            AppLogger.d('Take button HIT for $title');
                             onTake?.call();
                           },
                           child: Container(

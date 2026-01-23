@@ -100,6 +100,38 @@ class MockSettingsRepository extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
+  _i2.TimeOfDay getSlotTime(String? slot) => (super.noSuchMethod(
+        Invocation.method(
+          #getSlotTime,
+          [slot],
+        ),
+        returnValue: _FakeTimeOfDay_0(
+          this,
+          Invocation.method(
+            #getSlotTime,
+            [slot],
+          ),
+        ),
+      ) as _i2.TimeOfDay);
+
+  @override
+  _i4.Future<void> setSlotTime(
+    String? slot,
+    _i2.TimeOfDay? time,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setSlotTime,
+          [
+            slot,
+            time,
+          ],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
   String getWarningNudgeOption() => (super.noSuchMethod(
         Invocation.method(
           #getWarningNudgeOption,

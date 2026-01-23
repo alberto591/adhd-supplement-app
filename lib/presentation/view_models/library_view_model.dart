@@ -3,6 +3,7 @@ import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/stack_repository.dart';
+import '../../utils/logger.dart';
 
 /// View model for the Library/Discovery screen
 /// Manages supplement browsing, search, and filtering
@@ -63,7 +64,7 @@ class LibraryViewModel extends ChangeNotifier {
       _applyFilters();
     } catch (e) {
       _error = 'Failed to load supplements: $e';
-      debugPrint(_error);
+      AppLogger.e(_error ?? 'Failed to load supplements');
     } finally {
       _setLoading(false);
     }
@@ -181,7 +182,7 @@ class LibraryViewModel extends ChangeNotifier {
       }
     } catch (e) {
       _error = 'Failed to add to stack: $e';
-      debugPrint('ERROR in addToStack: $e');
+      AppLogger.e('ERROR in addToStack', e);
       rethrow;
     } finally {
       _setLoading(false);

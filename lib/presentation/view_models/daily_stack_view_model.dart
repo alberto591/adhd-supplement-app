@@ -10,6 +10,7 @@ import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
+import '../../infrastructure/services/sound_service.dart';
 import '../../domain/services/analytics_service.dart';
 
 /// View model for the Daily Stack screen
@@ -22,6 +23,7 @@ class DailyStackViewModel extends ChangeNotifier {
   final NotificationService _notificationService;
   final AuthRepository _authRepository;
   final AnalyticsService _analyticsService;
+  final SoundService _soundService;
   final String _userId;
 
   // State
@@ -40,6 +42,14 @@ class DailyStackViewModel extends ChangeNotifier {
   List<StackItem> get eveningItems => _getItemsForSlot('evening');
   List<StackItem> get nightItems => _getItemsForSlot('night');
 
+  /// Get all items that were skipped today
+  List<StackItem> get skippedItems {
+    return _stacks
+        .expand((stack) => stack.items)
+        .where((item) => isSupplementSkipped(item.supplementId))
+        .toList();
+  }
+
   // Getters
   List<SupplementStack> get stacks => _stacks;
   DailyLog? get todayLog => _todayLog;
@@ -47,6 +57,22 @@ class DailyStackViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
   Set<String> get snoozedSupplements => _snoozedSupplements;
+
+  /// Get all items that are pending (neither taken nor skipped)
+  List<StackItem> get pendingItems {
+    return _stacks
+        .expand((stack) => stack.items)
+        .where((item) =>
+            !isSupplementTaken(item.supplementId) &&
+            !isSupplementSkipped(item.supplementId))
+        .toList();
+  }
+
+  /// Whether there are any skipped items today
+  bool get hasSkippedItems {
+    return _stacks
+        .any((s) => s.items.any((i) => isSupplementSkipped(i.supplementId)));
+  }
 
   /// Get dynamic greeting based on time of day
   String get greeting {
@@ -116,6 +142,7 @@ class DailyStackViewModel extends ChangeNotifier {
     required NotificationService notificationService,
     required AuthRepository authRepository,
     required AnalyticsService analyticsService,
+    required SoundService soundService,
     required String userId,
   })  : _stackRepository = stackRepository,
         _logRepository = logRepository,
@@ -124,6 +151,7 @@ class DailyStackViewModel extends ChangeNotifier {
         _notificationService = notificationService,
         _authRepository = authRepository,
         _analyticsService = analyticsService,
+        _soundService = soundService,
         _userId = userId;
 
   /// Initialize the view model - load stacks, today's log, and streak
@@ -175,6 +203,7 @@ class DailyStackViewModel extends ChangeNotifier {
     _snoozedSupplements.remove(supplementId);
     AppLogger.d('Marking supplement as taken: $supplementId');
     HapticFeedback.mediumImpact();
+    _soundService.playSuccess();
     final now = DateTime.now();
     final entry = LogEntry(
       supplementId: supplementId,
@@ -200,7 +229,7 @@ class DailyStackViewModel extends ChangeNotifier {
       await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
       await _checkAndCancelGlobalNudges();
     } catch (e) {
-      debugPrint('Failed to cancel nudges: $e');
+      AppLogger.e('Failed to cancel nudges', e);
     }
   }
 
@@ -261,25 +290,18 @@ class DailyStackViewModel extends ChangeNotifier {
       await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
       await _checkAndCancelGlobalNudges();
     } catch (e) {
-      debugPrint('Failed to cancel nudges: $e');
+      AppLogger.e('Failed to cancel nudges', e);
     }
   }
 
-  /// Toggle a supplement's taken status
+  /// Toggle a supplement's taken/skipped status (removes from log if already handled)
   Future<void> toggleSupplement(String supplementId) async {
     final isTaken = isSupplementTaken(supplementId);
-    if (isTaken) {
-      // Remove the entry (undo)
-      if (_todayLog != null) {
-        final updatedEntries = _todayLog!.entries
-            .where((e) => e.supplementId != supplementId)
-            .toList();
+    final isSkipped = isSupplementSkipped(supplementId);
 
-        final updatedLog = _todayLog!.copyWith(entries: updatedEntries);
-        await _logRepository.saveLog(updatedLog);
-        _todayLog = updatedLog;
-        notifyListeners();
-      }
+    if (isTaken || isSkipped) {
+      // Remove the entry (undo / unskip)
+      await _deleteFromTodayLog(supplementId);
     } else {
       await markSupplementTaken(supplementId);
     }
@@ -418,18 +440,11 @@ class DailyStackViewModel extends ChangeNotifier {
 
     // Normalize string
     final slot = timeOfDay.toLowerCase();
-
-    if (slot.contains('morning')) {
-      targetHour = 8;
-    } else if (slot.contains('afternoon')) {
-      targetHour = 13;
-    } else if (slot.contains('evening')) {
-      targetHour = 18;
-    } else if (slot.contains('night')) {
-      targetHour = 21;
-    } else {
+    if (!['morning', 'afternoon', 'evening', 'night'].contains(slot)) {
       return null;
     }
+    final targetTime = _settingsRepository.getSlotTime(slot);
+    targetHour = targetTime.hour;
 
     final now = DateTime.now();
     final target = DateTime(now.year, now.month, now.day, targetHour);
@@ -458,6 +473,10 @@ class DailyStackViewModel extends ChangeNotifier {
 
     // 2. Filter by slot AND completion (Hide if taken)
     return allItems.where((item) {
+      if (isSupplementTaken(item.supplementId) ||
+          isSupplementSkipped(item.supplementId)) {
+        return false;
+      }
       final scheduledTime = item.scheduledTime;
       if (scheduledTime != null) {
         // Parse time: "HH:mm"
@@ -532,6 +551,26 @@ class DailyStackViewModel extends ChangeNotifier {
       await _logRepository.saveLog(log);
     } catch (e) {
       _error = 'Failed to save log: $e';
+      notifyListeners();
+    }
+  }
+
+  /// Remove an entry from today's log for a specific supplement
+  Future<void> _deleteFromTodayLog(String supplementId) async {
+    if (_todayLog == null) return;
+
+    final updatedEntries = _todayLog!.entries
+        .where((e) => e.supplementId != supplementId)
+        .toList();
+
+    final updatedLog = _todayLog!.copyWith(entries: updatedEntries);
+
+    try {
+      _todayLog = updatedLog;
+      notifyListeners();
+      await _logRepository.saveLog(updatedLog);
+    } catch (e) {
+      _error = 'Failed to update log: $e';
       notifyListeners();
     }
   }

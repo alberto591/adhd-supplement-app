@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/logger.dart';
 import '../../domain/entities/article.dart';
 import '../../domain/entities/faq_item.dart';
 import '../../domain/entities/study.dart';
@@ -121,7 +122,7 @@ class ScienceHubViewModel extends ChangeNotifier {
       _loadStudies();
       _loadEducationalArticles();
     } catch (e) {
-      debugPrint('Error loading science hub data: $e');
+      AppLogger.e('Error loading science hub data', e);
     }
 
     _isLoading = false;

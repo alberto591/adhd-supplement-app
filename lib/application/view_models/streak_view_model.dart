@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../../utils/logger.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/entities/streak.dart';
 import '../../domain/repositories/streak_repository.dart';
@@ -125,7 +126,7 @@ class StreakViewModel extends ChangeNotifier {
 
     try {
       await _streakRepository.saveStreak(_currentStreak!);
-      debugPrint(
+      AppLogger.d(
           'Streak saved successfully for user: ${_currentStreak!.userId}');
     } catch (e) {
       _error = e.toString();

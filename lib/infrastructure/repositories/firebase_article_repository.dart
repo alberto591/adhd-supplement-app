@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import '../../domain/entities/article.dart';
 import '../../domain/repositories/article_repository.dart';
 
@@ -81,7 +80,7 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
       }
       return null;
     } catch (e) {
-      debugPrint('Error getting article $id: $e');
+      AppLogger.e('Error getting article $id', e);
       return null;
     }
   }
@@ -99,7 +98,7 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
       final querySnap = await _firestore.collection(_collection).get();
       return querySnap.docs.map((d) => Article.fromJson(d.data())).toList();
     } catch (e) {
-      debugPrint('Error fetcing articles: $e');
+      AppLogger.e('Error fetching articles', e);
       return [];
     }
   }
@@ -182,13 +181,13 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
   }
 
   Future<void> _seedArticlesCollection() async {
-    debugPrint('Seeding articles collection...');
+    AppLogger.i('Seeding articles collection...');
     final batch = _firestore.batch();
     for (final article in _seedArticles) {
       final ref = _firestore.collection(_collection).doc(article.id);
       batch.set(ref, article.toJson()); // Assuming Article has toJson
     }
     await batch.commit();
-    debugPrint('Seeding complete.');
+    AppLogger.i('Seeding articles complete.');
   }
 }

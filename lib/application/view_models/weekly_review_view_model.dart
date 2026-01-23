@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/repositories/log_repository.dart';
+import '../../utils/logger.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../config/locator.dart';
 
@@ -46,7 +47,7 @@ class WeeklyReviewViewModel extends ChangeNotifier {
       _calculateStreak();
       _calculateFocusImprovement();
     } catch (e) {
-      debugPrint('Error fetching weekly stats: $e');
+      AppLogger.e('Error fetching weekly stats', e);
     } finally {
       _isLoading = false;
       notifyListeners();

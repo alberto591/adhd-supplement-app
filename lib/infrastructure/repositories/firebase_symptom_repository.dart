@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/symptom_checkin.dart';
 import '../../domain/repositories/symptom_repository.dart';
+import '../../utils/logger.dart';
 
 class FirebaseSymptomRepository implements SymptomRepository {
   final FirebaseFirestore _firestore;
@@ -18,7 +18,7 @@ class FirebaseSymptomRepository implements SymptomRepository {
           .doc(checkIn.id)
           .set(checkIn.toJson());
     } catch (e) {
-      debugPrint('Error logging check-in: $e');
+      AppLogger.e('Error logging check-in', e);
       throw Exception('Failed to log check-in: $e');
     }
   }
@@ -37,7 +37,7 @@ class FirebaseSymptomRepository implements SymptomRepository {
           .map((doc) => SymptomCheckIn.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      debugPrint('Fetching check-ins from cache (offline): $e');
+      AppLogger.w('Fetching check-ins from cache (offline)', e);
       try {
         final snapshot = await _firestore
             .collection(_collection)
@@ -47,7 +47,7 @@ class FirebaseSymptomRepository implements SymptomRepository {
             .map((doc) => SymptomCheckIn.fromJson(doc.data()))
             .toList();
       } catch (cacheErr) {
-        debugPrint('Symptom cache failure: $cacheErr');
+        AppLogger.e('Symptom cache failure', cacheErr);
         return [];
       }
     }
@@ -86,7 +86,7 @@ class FirebaseSymptomRepository implements SymptomRepository {
       if (snapshot.docs.isEmpty) return null;
       return SymptomCheckIn.fromJson(snapshot.docs.first.data());
     } catch (e) {
-      debugPrint('Fetching latest check-in from cache: $e');
+      AppLogger.w('Fetching latest check-in from cache', e);
       try {
         final snapshot = await _firestore
             .collection(_collection)
@@ -97,7 +97,7 @@ class FirebaseSymptomRepository implements SymptomRepository {
         if (snapshot.docs.isEmpty) return null;
         return SymptomCheckIn.fromJson(snapshot.docs.first.data());
       } catch (cacheErr) {
-        debugPrint('Latest check-in cache failure: $cacheErr');
+        AppLogger.e('Latest check-in cache failure', cacheErr);
         return null;
       }
     }

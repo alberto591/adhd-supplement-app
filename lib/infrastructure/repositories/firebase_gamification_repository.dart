@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/gamification.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/gamification_repository.dart';
+import '../../utils/logger.dart';
 
 class FirebaseGamificationRepository implements GamificationRepository {
   final FirebaseFirestore _firestore;
@@ -89,7 +90,7 @@ class FirebaseGamificationRepository implements GamificationRepository {
         badges: badges,
       );
     } catch (e) {
-      debugPrint('Error fetching gamification profile: $e');
+      AppLogger.e('Error fetching gamification profile', e);
       rethrow;
     }
   }

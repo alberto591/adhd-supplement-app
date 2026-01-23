@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../domain/entities/community_post.dart';
 import '../../domain/repositories/community_repository.dart';
+import '../../utils/logger.dart';
 
 class FirebaseCommunityRepository implements CommunityRepository {
   final FirebaseFirestore _firestore;
@@ -83,7 +84,7 @@ class FirebaseCommunityRepository implements CommunityRepository {
         return normalizedCategory.contains(normalizedFilter);
       }).toList();
     } catch (e) {
-      debugPrint('Error fetching posts: $e');
+      AppLogger.e('Error fetching community posts', e);
       return [];
     }
   }
@@ -118,7 +119,7 @@ class FirebaseCommunityRepository implements CommunityRepository {
   }
 
   Future<void> _seedPostsCollection() async {
-    debugPrint('Seeding community posts...');
+    AppLogger.i('Seeding community posts collection...');
     final batch = _firestore.batch();
     for (final post in _seedPosts) {
       final ref = _firestore.collection(_collection).doc(post.id);

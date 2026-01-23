@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../../utils/logger.dart';
 import '../../domain/repositories/log_repository.dart';
 
 /// ViewModel for the Insights Screen.
@@ -83,7 +84,7 @@ class InsightsViewModel extends ChangeNotifier {
       // 4. Set Encouragement Text
       _updateEncouragement();
     } catch (e) {
-      debugPrint('Error loading insights: $e');
+      AppLogger.e('Error loading insights', e);
     } finally {
       _isLoading = false;
       notifyListeners();

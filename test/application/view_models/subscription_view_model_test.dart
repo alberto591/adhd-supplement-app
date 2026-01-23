@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:adhd_supplement_app/application/view_models/subscription_view_model.dart';
 import 'package:adhd_supplement_app/domain/services/billing_service.dart';
+import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
 
 class MockBillingServiceForTest implements BillingService {
@@ -47,24 +48,45 @@ class MockBillingServiceForTest implements BillingService {
   }
 }
 
+class MockAnalyticsService implements AnalyticsService {
+  @override
+  Future<void> logEvent(String name,
+      {Map<String, dynamic>? parameters}) async {}
+  @override
+  Future<void> logScreenView(String screenName) async {}
+  @override
+  Future<void> setUserId(String userId) async {}
+  @override
+  Future<void> setUserProperty(String name, String value) async {}
+}
+
 void main() {
   late MockBillingServiceForTest mockBillingService;
+  late MockAnalyticsService mockAnalyticsService;
 
   setUp(() {
     // Clear any existing registrations
     if (locator.isRegistered<BillingService>()) {
       locator.unregister<BillingService>();
     }
+    if (locator.isRegistered<AnalyticsService>()) {
+      locator.unregister<AnalyticsService>();
+    }
 
-    // Register mock service
+    // Register mocks
     mockBillingService = MockBillingServiceForTest();
+    mockAnalyticsService = MockAnalyticsService();
     locator.registerLazySingleton<BillingService>(() => mockBillingService);
+    locator.registerLazySingleton<AnalyticsService>(() => mockAnalyticsService);
   });
 
   tearDown(() {
     // Clean up GetIt
     if (locator.isRegistered<BillingService>()) {
       locator.unregister<BillingService>();
+    }
+    if (locator.isRegistered<AnalyticsService>()) {
+      locator.unregister<AnalyticsService>();
     }
   });
 

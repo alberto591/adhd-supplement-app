@@ -59,6 +59,7 @@ import '../views/notification_history_screen.dart';
 import '../views/emergency_contact_screen.dart';
 import '../views/first_stack_success_screen.dart';
 import '../views/educational_article_detail_screen.dart';
+import '../views/medical_disclaimer_screen.dart';
 import '../views/supplement_detail.dart';
 import '../views/global_search_screen.dart';
 import '../views/paywall_screen.dart';
@@ -72,6 +73,8 @@ class AppRouter {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String onboardingGracePeriod = '/onboarding/grace-period';
+  static const String onboardingMedicalDisclaimer =
+      '/onboarding/medical-disclaimer';
   static const String onboardingMedicationSafety =
       '/onboarding/medication-safety';
   static const String onboardingGoals = '/onboarding/goals';
@@ -142,6 +145,10 @@ class AppRouter {
 
       case signup:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
+
+      case onboardingMedicalDisclaimer:
+        return MaterialPageRoute(
+            builder: (_) => const MedicalDisclaimerScreen());
 
       case onboardingGracePeriod:
         return MaterialPageRoute(

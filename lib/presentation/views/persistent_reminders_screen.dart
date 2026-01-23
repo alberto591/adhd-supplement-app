@@ -44,6 +44,42 @@ class _PersistentRemindersContent extends StatelessWidget {
     }
   }
 
+  Future<void> _selectSlotTime(BuildContext context,
+      PersistentRemindersViewModel viewModel, String slot) async {
+    TimeOfDay initialTime;
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        initialTime = viewModel.morningTime;
+        break;
+      case 'afternoon':
+        initialTime = viewModel.afternoonTime;
+        break;
+      case 'evening':
+        initialTime = viewModel.eveningTime;
+        break;
+      case 'night':
+        initialTime = viewModel.nightTime;
+        break;
+      default:
+        initialTime = const TimeOfDay(hour: 8, minute: 0);
+    }
+
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: initialTime,
+      builder: (context, child) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return Theme(
+          data: isDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      await viewModel.setSlotTime(slot, picked);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -229,6 +265,53 @@ class _PersistentRemindersContent extends StatelessWidget {
                       ),
                     ),
                   ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 32),
+            Text(
+              'Slot Schedule',
+              style: TextStyle(
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Customize target times for your routines. This affects "Overdue" status in the dashboard.',
+              style: TextStyle(
+                color: isDark ? Colors.grey[400] : Colors.grey[500],
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Slot Time Settings
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF1E242E) : Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDark ? Colors.grey[800]! : Colors.grey[200]!,
+                ),
+              ),
+              child: Column(
+                children: [
+                  _buildSlotTimeRow(context, viewModel, 'Morning',
+                      viewModel.morningTime, Icons.wb_sunny_outlined),
+                  const Divider(),
+                  _buildSlotTimeRow(context, viewModel, 'Afternoon',
+                      viewModel.afternoonTime, Icons.sunny),
+                  const Divider(),
+                  _buildSlotTimeRow(context, viewModel, 'Evening',
+                      viewModel.eveningTime, Icons.wb_twilight),
+                  const Divider(),
+                  _buildSlotTimeRow(context, viewModel, 'Night',
+                      viewModel.nightTime, Icons.bedtime_outlined),
                 ],
               ),
             ),
@@ -427,6 +510,47 @@ class _PersistentRemindersContent extends StatelessWidget {
                     ? const Icon(Icons.check, color: Colors.white, size: 14)
                     : null,
               ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSlotTimeRow(
+      BuildContext context,
+      PersistentRemindersViewModel viewModel,
+      String label,
+      TimeOfDay time,
+      IconData icon) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return InkWell(
+      onTap: () => _selectSlotTime(context, viewModel, label),
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.primary, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: isDark ? Colors.white : const Color(0xFF0F172A),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Text(
+              time.format(context),
+              style: const TextStyle(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),

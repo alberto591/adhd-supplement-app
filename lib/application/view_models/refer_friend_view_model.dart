@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/logger.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../domain/entities/referral.dart';
 import '../../domain/repositories/referral_repository.dart';
@@ -21,7 +22,7 @@ class ReferFriendViewModel extends ChangeNotifier {
     try {
       _referralData = await _referralRepository.getReferralData();
     } catch (e) {
-      debugPrint('Error loading referral data: $e');
+      AppLogger.e('Error loading referral data', e);
     } finally {
       _isLoading = false;
       notifyListeners();

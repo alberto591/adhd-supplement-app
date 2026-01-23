@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../../utils/logger.dart';
 import '../../domain/entities/community_post.dart';
 import '../../domain/repositories/community_repository.dart';
 
@@ -33,7 +34,7 @@ class CommunityViewModel extends ChangeNotifier {
       _posts = await _repository.getPosts(category: _selectedFilter);
     } catch (e) {
       if (kDebugMode) {
-        print('Error loading posts: $e');
+        AppLogger.e('Error loading posts', e);
       }
     } finally {
       _isLoading = false;

@@ -47,6 +47,36 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   }
 
   @override
+  TimeOfDay getSlotTime(String slot) {
+    final hour = _prefs.getInt('slot_${slot}_hour');
+    final minute = _prefs.getInt('slot_${slot}_minute');
+
+    if (hour != null && minute != null) {
+      return TimeOfDay(hour: hour, minute: minute);
+    }
+
+    // Default times
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        return const TimeOfDay(hour: 8, minute: 0);
+      case 'afternoon':
+        return const TimeOfDay(hour: 13, minute: 0);
+      case 'evening':
+        return const TimeOfDay(hour: 18, minute: 0);
+      case 'night':
+        return const TimeOfDay(hour: 21, minute: 0);
+      default:
+        return const TimeOfDay(hour: 8, minute: 0);
+    }
+  }
+
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {
+    await _prefs.setInt('slot_${slot}_hour', time.hour);
+    await _prefs.setInt('slot_${slot}_minute', time.minute);
+  }
+
+  @override
   String getWarningNudgeOption() {
     return _prefs.getString(_keyWarningOption) ?? '15m';
   }

@@ -14,6 +14,7 @@ import 'package:adhd_supplement_app/application/view_models/insights_view_model.
 import 'package:adhd_supplement_app/domain/entities/faq_item.dart';
 import 'package:adhd_supplement_app/domain/entities/study.dart';
 import 'package:adhd_supplement_app/domain/entities/educational_article.dart';
+import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 
 class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   bool get isLoading => false;
@@ -112,12 +113,20 @@ class MockInsightsViewModel extends ChangeNotifier
   Future<void> loadData() async {}
 }
 
+class MockUrlService implements UrlService {
+  @override
+  Future<void> launchReferral(String url) async {}
+  @override
+  Future<void> launchUri(String url) async {}
+}
+
 void main() {
   setUp(() {
     locator.reset();
     locator
         .registerFactory<ScienceHubViewModel>(() => MockScienceHubViewModel());
     locator.registerFactory<InsightsViewModel>(() => MockInsightsViewModel());
+    locator.registerLazySingleton<UrlService>(() => MockUrlService());
   });
 
   testWidgets('InsightsScreen renders and has correct bottom nav index',
@@ -140,7 +149,7 @@ void main() {
     expect(navFinder, findsOneWidget);
 
     final nav = tester.widget<UnifiedBottomNav>(navFinder);
-    expect(nav.currentIndex, 4); // Insights is now part of Profile
+    expect(nav.currentIndex, 4); // Insights is now index 4 (Profile)
   });
 
   testWidgets('ScienceHubScreen renders without crashing',

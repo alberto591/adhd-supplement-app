@@ -18,10 +18,20 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   String _warningNudgeOption = '15m'; // '15m' or 'followup'
   bool _extendedRemindersEnabled = true;
 
+  TimeOfDay _morningTime = const TimeOfDay(hour: 8, minute: 0);
+  TimeOfDay _afternoonTime = const TimeOfDay(hour: 13, minute: 0);
+  TimeOfDay _eveningTime = const TimeOfDay(hour: 18, minute: 0);
+  TimeOfDay _nightTime = const TimeOfDay(hour: 21, minute: 0);
+
   bool get nudgeModeEnabled => _nudgeModeEnabled;
   TimeOfDay get nudgeTime => _nudgeTime;
   String get warningNudgeOption => _warningNudgeOption;
   bool get extendedRemindersEnabled => _extendedRemindersEnabled;
+
+  TimeOfDay get morningTime => _morningTime;
+  TimeOfDay get afternoonTime => _afternoonTime;
+  TimeOfDay get eveningTime => _eveningTime;
+  TimeOfDay get nightTime => _nightTime;
 
   void _loadSettings() {
     _nudgeModeEnabled = _settingsRepository.getNudgeModeEnabled();
@@ -29,6 +39,12 @@ class PersistentRemindersViewModel extends ChangeNotifier {
     _warningNudgeOption = _settingsRepository.getWarningNudgeOption();
     _extendedRemindersEnabled =
         _settingsRepository.getExtendedRemindersEnabled();
+
+    _morningTime = _settingsRepository.getSlotTime('morning');
+    _afternoonTime = _settingsRepository.getSlotTime('afternoon');
+    _eveningTime = _settingsRepository.getSlotTime('evening');
+    _nightTime = _settingsRepository.getSlotTime('night');
+
     notifyListeners();
   }
 
@@ -55,6 +71,25 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   Future<void> setExtendedRemindersEnabled(bool value) async {
     _extendedRemindersEnabled = value;
     await _settingsRepository.setExtendedRemindersEnabled(value);
+    notifyListeners();
+  }
+
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        _morningTime = time;
+        break;
+      case 'afternoon':
+        _afternoonTime = time;
+        break;
+      case 'evening':
+        _eveningTime = time;
+        break;
+      case 'night':
+        _nightTime = time;
+        break;
+    }
+    await _settingsRepository.setSlotTime(slot, time);
     notifyListeners();
   }
 

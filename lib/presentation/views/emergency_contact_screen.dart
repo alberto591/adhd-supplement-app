@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../utils/logger.dart';
 import '../theme/app_theme.dart';
 
 class EmergencyContactScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class EmergencyContactScreen extends StatelessWidget {
       await launchUrl(launchUri);
     } else {
       // In a real app, show error dialog
-      debugPrint('Could not launch $launchUri');
+      AppLogger.e('Could not launch $launchUri');
     }
   }
 

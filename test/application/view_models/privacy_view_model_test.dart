@@ -93,25 +93,30 @@ class MockSettingsRepository implements SettingsRepository {
   Future<void> setNudgeTime(TimeOfDay time) async {}
 
   @override
+  TimeOfDay getSlotTime(String slot) => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {}
+
+  @override
   String getWarningNudgeOption() => 'none';
   @override
   Future<void> setWarningNudgeOption(String option) async {}
-  
+
   @override
   bool getReducedMotionEnabled() => false;
-  
+
   @override
   Future<void> setReducedMotionEnabled(bool enabled) async {}
-  
+
   @override
   bool getHapticFeedbackEnabled() => true;
-  
+
   @override
   Future<void> setHapticFeedbackEnabled(bool enabled) async {}
-  
+
   @override
   double getFontSizeScale() => 1.0;
-  
+
   @override
   Future<void> setFontSizeScale(double scale) async {}
 

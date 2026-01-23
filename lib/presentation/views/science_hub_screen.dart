@@ -7,6 +7,7 @@ import '../../domain/entities/article.dart';
 import '../../domain/entities/faq_item.dart';
 import '../../domain/entities/study.dart';
 import '../../domain/entities/educational_article.dart';
+import '../../infrastructure/services/url_service.dart';
 import '../navigation/app_router.dart';
 import '../theme/app_theme.dart';
 import '../widgets/unified_bottom_nav.dart';
@@ -24,6 +25,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
   late ScienceHubViewModel _viewModel;
   bool _isSearchVisible = false;
   final TextEditingController _searchController = TextEditingController();
+  final UrlService _urlService = locator<UrlService>();
 
   @override
   void initState() {
@@ -803,6 +805,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                 study: study,
                 isDark: isDark,
                 primary: primary,
+                urlService: _urlService,
               )),
         ],
       ),
@@ -1243,11 +1246,13 @@ class _StudyCard extends StatefulWidget {
   final Study study;
   final bool isDark;
   final Color primary;
+  final UrlService urlService;
 
   const _StudyCard({
     required this.study,
     required this.isDark,
     required this.primary,
+    required this.urlService,
   });
 
   @override
@@ -1400,10 +1405,8 @@ class _StudyCardState extends State<_StudyCard> {
                     ),
                     const SizedBox(height: 12),
                     InkWell(
-                      onTap: () {
-                        // In a real app, use url_launcher
-                        debugPrint('Launching: ${widget.study.pubmedUrl}');
-                      },
+                      onTap: () =>
+                          widget.urlService.launchUri(widget.study.pubmedUrl),
                       child: Row(
                         children: [
                           Icon(Icons.launch, color: widget.primary, size: 16),

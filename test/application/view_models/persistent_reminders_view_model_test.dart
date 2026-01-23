@@ -16,23 +16,33 @@ class _FakeSettingsRepository implements SettingsRepository {
     TimeOfDay? nudgeTime,
     this.warningNudgeOption = '15m',
     this.extendedRemindersEnabled = true,
-  }) : nudgeTime = nudgeTime ?? const TimeOfDay(hour: 8, minute: 0);
-  
+    Map<String, TimeOfDay>? slotTimes,
+  })  : nudgeTime = nudgeTime ?? const TimeOfDay(hour: 8, minute: 0),
+        slotTimes = slotTimes ??
+            {
+              'morning': const TimeOfDay(hour: 8, minute: 0),
+              'afternoon': const TimeOfDay(hour: 13, minute: 0),
+              'evening': const TimeOfDay(hour: 18, minute: 0),
+              'night': const TimeOfDay(hour: 21, minute: 0),
+            };
+
+  Map<String, TimeOfDay> slotTimes;
+
   @override
   bool getReducedMotionEnabled() => false;
-  
+
   @override
   Future<void> setReducedMotionEnabled(bool enabled) async {}
-  
+
   @override
   bool getHapticFeedbackEnabled() => true;
-  
+
   @override
   Future<void> setHapticFeedbackEnabled(bool enabled) async {}
-  
+
   @override
   double getFontSizeScale() => 1.0;
-  
+
   @override
   Future<void> setFontSizeScale(double scale) async {}
 
@@ -57,6 +67,15 @@ class _FakeSettingsRepository implements SettingsRepository {
 
   @override
   String getWarningNudgeOption() => warningNudgeOption;
+
+  @override
+  TimeOfDay getSlotTime(String slot) =>
+      slotTimes[slot.toLowerCase()] ?? const TimeOfDay(hour: 8, minute: 0);
+
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {
+    slotTimes[slot.toLowerCase()] = time;
+  }
 
   @override
   Future<void> setWarningNudgeOption(String option) async {
@@ -216,9 +235,8 @@ void main() {
 
       expect(viewModel.nudgeTime, newTime);
       expect(settingsRepository.nudgeTime, newTime);
-      // Should reschedule all
-      expect(notificationService.scheduleCallCount, 4);
-      expect(notificationService.scheduledTimes[1000], (7, 15));
+      // Verify main nudge is at newTime + 5m (Soft Nudge logic)
+      expect(notificationService.scheduledTimes[1000], (7, 20));
     });
 
     test('setWarningNudgeOption updates setting only', () async {
@@ -247,6 +265,26 @@ void main() {
       expect(notificationService.lastShownId, 999);
       expect(notificationService.lastShownTitle, isNotEmpty);
       expect(notificationService.lastShownBody, isNotEmpty);
+    });
+
+    test('loads slot times from repository', () {
+      expect(viewModel.morningTime, const TimeOfDay(hour: 8, minute: 0));
+      expect(viewModel.afternoonTime, const TimeOfDay(hour: 13, minute: 0));
+      expect(viewModel.eveningTime, const TimeOfDay(hour: 18, minute: 0));
+      expect(viewModel.nightTime, const TimeOfDay(hour: 21, minute: 0));
+    });
+
+    test('setSlotTime updates state and repository', () async {
+      const newMorningTime = TimeOfDay(hour: 7, minute: 30);
+      const newNightTime = TimeOfDay(hour: 22, minute: 0);
+
+      await viewModel.setSlotTime('morning', newMorningTime);
+      await viewModel.setSlotTime('night', newNightTime);
+
+      expect(viewModel.morningTime, newMorningTime);
+      expect(settingsRepository.getSlotTime('morning'), newMorningTime);
+      expect(viewModel.nightTime, newNightTime);
+      expect(settingsRepository.getSlotTime('night'), newNightTime);
     });
   });
 }

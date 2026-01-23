@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/repositories/log_repository.dart';
 import '../../utils/date_utils.dart';
+import '../../utils/logger.dart';
 
 class FirebaseLogRepository implements LogRepository {
   final FirebaseFirestore _firestore;
@@ -30,7 +30,7 @@ class FirebaseLogRepository implements LogRepository {
           .map((doc) => DailyLog.fromJson({...doc.data(), 'id': doc.id}))
           .toList();
     } catch (e) {
-      debugPrint('Fetching logs from cache (offline): $e');
+      AppLogger.w('Fetching logs from cache (offline)', e);
       try {
         final snapshot = await _firestore
             .collection('logs')
@@ -42,7 +42,7 @@ class FirebaseLogRepository implements LogRepository {
             .map((doc) => DailyLog.fromJson({...doc.data(), 'id': doc.id}))
             .toList();
       } catch (cacheErr) {
-        debugPrint('Log cache failure: $cacheErr');
+        AppLogger.e('Log cache failure', cacheErr);
         return [];
       }
     }
@@ -56,7 +56,7 @@ class FirebaseLogRepository implements LogRepository {
 
       // 1. Check Memory Cache
       if (_memoryCache.containsKey(cacheKey)) {
-        debugPrint('Returning log from memory cache (0ms)');
+        AppLogger.d('Returning log from memory cache (0ms)');
         return _memoryCache[cacheKey];
       }
 
@@ -77,7 +77,7 @@ class FirebaseLogRepository implements LogRepository {
       _memoryCache[cacheKey] = log;
       return log;
     } catch (e) {
-      debugPrint('Fetching log for date from cache: $e');
+      AppLogger.w('Fetching log for date from cache', e);
       try {
         final dateStr = _dateOnlyString(date);
         final snapshot = await _firestore
@@ -90,7 +90,7 @@ class FirebaseLogRepository implements LogRepository {
         return DailyLog.fromJson(
             {...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
       } catch (cacheErr) {
-        debugPrint('Log date cache failure: $cacheErr');
+        AppLogger.e('Log date cache failure', cacheErr);
         return null;
       }
     }
@@ -115,7 +115,7 @@ class FirebaseLogRepository implements LogRepository {
       final cacheKey = '${log.userId}_$dateStr';
       _memoryCache[cacheKey] = log;
     } catch (e) {
-      debugPrint('Error saving log: $e');
+      AppLogger.e('Error saving log', e);
       throw Exception('Failed to save log: $e');
     }
   }
@@ -153,7 +153,7 @@ class FirebaseLogRepository implements LogRepository {
 
       return streak;
     } catch (e) {
-      debugPrint('Failed to calculate streak (likely offline): $e');
+      AppLogger.w('Failed to calculate streak (likely offline)', e);
       return 0;
     }
   }

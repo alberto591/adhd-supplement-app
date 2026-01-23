@@ -346,6 +346,8 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                     return stack.items
                                         .where((item) =>
                                             !viewModel.isSupplementTaken(
+                                                item.supplementId) &&
+                                            !viewModel.isSupplementSkipped(
                                                 item.supplementId))
                                         .map((stackItem) {
                                       final supplement =
@@ -358,7 +360,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                       return Dismissible(
                                         key: Key(
                                             'dismiss_${stackItem.supplementId}'),
-                                        direction: DismissDirection.startToEnd,
+                                        direction: DismissDirection.horizontal,
                                         background: Container(
                                           margin:
                                               const EdgeInsets.only(bottom: 12),
@@ -373,23 +375,45 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                           child: const Icon(Icons.check,
                                               color: Colors.white, size: 32),
                                         ),
-                                        onDismissed: (_) async {
+                                        secondaryBackground: Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 12),
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          alignment: Alignment.centerRight,
+                                          padding:
+                                              const EdgeInsets.only(right: 24),
+                                          child: const Icon(Icons.close,
+                                              color: Colors.white, size: 32),
+                                        ),
+                                        onDismissed: (direction) async {
                                           final wasTaken =
                                               viewModel.isSupplementTaken(
                                                   stackItem.supplementId);
 
-                                          // Show celebration if taking
-                                          if (!wasTaken) {
-                                            setState(
-                                                () => _showCelebration = true);
+                                          if (direction ==
+                                              DismissDirection.startToEnd) {
+                                            // Mark as taken
+                                            if (!wasTaken) {
+                                              setState(() =>
+                                                  _showCelebration = true);
+                                            }
+                                            await viewModel.toggleSupplement(
+                                                stackItem.supplementId);
+                                          } else {
+                                            // Mark as skipped
+                                            await viewModel
+                                                .markSupplementSkipped(
+                                                    stackItem.supplementId);
                                           }
 
-                                          // Toggle status
-                                          await viewModel.toggleSupplement(
-                                              stackItem.supplementId);
-
-                                          // Keep celebration
-                                          if (!wasTaken) {
+                                          // Cleanup celebration if we showed it
+                                          if (direction ==
+                                                  DismissDirection.startToEnd &&
+                                              !wasTaken) {
                                             Future.delayed(
                                                 const Duration(
                                                     milliseconds: 1500), () {
@@ -417,8 +441,11 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                             final wasTaken =
                                                 viewModel.isSupplementTaken(
                                                     stackItem.supplementId);
+                                            final isSkipped =
+                                                viewModel.isSupplementSkipped(
+                                                    stackItem.supplementId);
 
-                                            if (!wasTaken) {
+                                            if (!wasTaken && !isSkipped) {
                                               setState(() =>
                                                   _showCelebration = true);
                                             }
@@ -427,6 +454,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                                 stackItem.supplementId);
 
                                             if (!wasTaken &&
+                                                !isSkipped &&
                                                 viewModel.isSupplementTaken(
                                                     stackItem.supplementId)) {
                                               Future.delayed(
@@ -459,6 +487,51 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                       );
                                     });
                                   }),
+
+                                  // Skipped Items Section
+                                  if (viewModel.hasSkippedItems) ...[
+                                    const SizedBox(height: 32),
+                                    Text(
+                                      "Skipped Today",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: secondaryTextColor,
+                                            fontSize: 16,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    ...viewModel.skippedItems.map((stackItem) {
+                                      final supplement =
+                                          viewModel.getSupplement(
+                                              stackItem.supplementId);
+                                      return DailyStackItem(
+                                        name: supplement?.name ?? 'Item',
+                                        details: stackItem.customDosage ??
+                                            supplement?.defaultDosage ??
+                                            '',
+                                        icon: _getIconForCategory(
+                                            supplement?.category),
+                                        isTaken: false,
+                                        isSkipped: true,
+                                        timeStatus: 'Skipped',
+                                        onTap: () async {
+                                          // Unskip by toggling
+                                          await viewModel.toggleSupplement(
+                                              stackItem.supplementId);
+                                        },
+                                        onInfoTap: () {
+                                          if (supplement != null) {
+                                            Navigator.pushNamed(context,
+                                                AppRouter.supplementDetail,
+                                                arguments: supplement);
+                                          }
+                                        },
+                                      );
+                                    }),
+                                  ],
 
                                   // Fallback if no stacks
                                   if (viewModel.stacks.isEmpty)
