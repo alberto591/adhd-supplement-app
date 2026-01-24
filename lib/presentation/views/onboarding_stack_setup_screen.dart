@@ -595,10 +595,9 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                     await auth.updateProfile(
                         user.copyWith(hasCompletedOnboarding: true));
                   }
-                  if (mounted) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, AppRouter.dashboard, (route) => false);
-                  }
+                  if (!context.mounted) return;
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, AppRouter.dashboard, (route) => false);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryGold,

@@ -3,6 +3,7 @@ import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/stack_repository.dart';
+import '../../domain/repositories/settings_repository.dart';
 import '../../utils/logger.dart';
 
 /// View model for the Library/Discovery screen
@@ -10,6 +11,7 @@ import '../../utils/logger.dart';
 class LibraryViewModel extends ChangeNotifier {
   final SupplementRepository _supplementRepository;
   final StackRepository _stackRepository;
+  final SettingsRepository _settingsRepository;
   final String _userId;
 
   // State
@@ -49,9 +51,11 @@ class LibraryViewModel extends ChangeNotifier {
   LibraryViewModel({
     required SupplementRepository supplementRepository,
     required StackRepository stackRepository,
+    required SettingsRepository settingsRepository,
     required String userId,
   })  : _supplementRepository = supplementRepository,
         _stackRepository = stackRepository,
+        _settingsRepository = settingsRepository,
         _userId = userId;
 
   /// Initialize - load all supplements
@@ -249,18 +253,11 @@ class LibraryViewModel extends ChangeNotifier {
 
   String _getDefaultTimeForStack(String stackName) {
     final slot = _getNormalizedSlot(stackName);
-    switch (slot) {
-      case 'morning':
-        return '08:00';
-      case 'afternoon':
-        return '14:00';
-      case 'evening':
-        return '20:00';
-      case 'night':
-        return '22:00';
-      default:
-        return '09:00';
+    if (['morning', 'afternoon', 'evening', 'night'].contains(slot)) {
+      final time = _settingsRepository.getSlotTime(slot);
+      return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
     }
+    return '09:00';
   }
 
   // Private helpers

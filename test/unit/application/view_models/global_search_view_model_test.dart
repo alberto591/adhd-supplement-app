@@ -60,7 +60,8 @@ void main() {
           ),
         ];
 
-        when(mockSupplementRepository.searchSupplements('omega'))
+        when(mockSupplementRepository.searchSupplements('omega',
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => List<Supplement>.from(supplements));
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => <SupplementStack>[]);
@@ -95,7 +96,8 @@ void main() {
 
       test('should cancel previous search when new query is entered', () async {
         // Arrange
-        when(mockSupplementRepository.searchSupplements(any))
+        when(mockSupplementRepository.searchSupplements(any,
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => <Supplement>[]);
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => <SupplementStack>[]);
@@ -111,14 +113,19 @@ void main() {
         await Future<void>.delayed(const Duration(milliseconds: 400));
 
         // Assert - should only search once for final query
-        verify(mockSupplementRepository.searchSupplements('omega')).called(1);
-        verifyNever(mockSupplementRepository.searchSupplements('om'));
-        verifyNever(mockSupplementRepository.searchSupplements('ome'));
+        verify(mockSupplementRepository.searchSupplements('omega',
+                userId: testUserId))
+            .called(1);
+        verifyNever(mockSupplementRepository.searchSupplements('om',
+            userId: anyNamed('userId')));
+        verifyNever(mockSupplementRepository.searchSupplements('ome',
+            userId: anyNamed('userId')));
       });
 
       test('should trim whitespace from query', () async {
         // Arrange
-        when(mockSupplementRepository.searchSupplements('omega'))
+        when(mockSupplementRepository.searchSupplements('omega',
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => <Supplement>[]);
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => <SupplementStack>[]);
@@ -129,7 +136,9 @@ void main() {
 
         // Assert
         expect(viewModel.query, 'omega');
-        verify(mockSupplementRepository.searchSupplements('omega')).called(1);
+        verify(mockSupplementRepository.searchSupplements('omega',
+                userId: testUserId))
+            .called(1);
       });
     });
 
@@ -157,7 +166,8 @@ void main() {
           ),
         ];
 
-        when(mockSupplementRepository.searchSupplements('focus'))
+        when(mockSupplementRepository.searchSupplements('focus',
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => <Supplement>[]);
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => List<SupplementStack>.from(stacks));
@@ -173,7 +183,8 @@ void main() {
 
       test('should handle search errors gracefully', () async {
         // Arrange
-        when(mockSupplementRepository.searchSupplements(any))
+        when(mockSupplementRepository.searchSupplements(any,
+                userId: anyNamed('userId')))
             .thenThrow(Exception('Network error'));
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => <SupplementStack>[]);
@@ -216,7 +227,8 @@ void main() {
           ),
         ];
 
-        when(mockSupplementRepository.searchSupplements('mag'))
+        when(mockSupplementRepository.searchSupplements('mag',
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => List<Supplement>.from(supplements));
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => List<SupplementStack>.from(stacks));
@@ -226,7 +238,9 @@ void main() {
         await Future<void>.delayed(const Duration(milliseconds: 400));
 
         // Assert - both should be called
-        verify(mockSupplementRepository.searchSupplements('mag')).called(1);
+        verify(mockSupplementRepository.searchSupplements('mag',
+                userId: testUserId))
+            .called(1);
         verify(mockStackRepository.getUserStacks(testUserId)).called(1);
         expect(viewModel.supplementResults, supplements);
         expect(viewModel.stackResults.length,
@@ -251,7 +265,8 @@ void main() {
           ),
         ];
 
-        when(mockSupplementRepository.searchSupplements(any))
+        when(mockSupplementRepository.searchSupplements(any,
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => List<Supplement>.from(supplements));
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => <SupplementStack>[]);
@@ -278,7 +293,8 @@ void main() {
           ),
         ];
 
-        when(mockSupplementRepository.searchSupplements(any))
+        when(mockSupplementRepository.searchSupplements(any,
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => <Supplement>[]);
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => List<SupplementStack>.from(stacks));
@@ -293,7 +309,8 @@ void main() {
 
       test('isEmpty should be true when query exists but no results', () async {
         // Arrange
-        when(mockSupplementRepository.searchSupplements(any))
+        when(mockSupplementRepository.searchSupplements(any,
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => <Supplement>[]);
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => <SupplementStack>[]);
@@ -314,7 +331,8 @@ void main() {
     group('clear', () {
       test('should reset all state', () async {
         // Arrange - set up some state
-        when(mockSupplementRepository.searchSupplements(any))
+        when(mockSupplementRepository.searchSupplements(any,
+                userId: anyNamed('userId')))
             .thenAnswer((_) async => <Supplement>[]);
         when(mockStackRepository.getUserStacks(testUserId))
             .thenAnswer((_) async => <SupplementStack>[]);
@@ -343,7 +361,8 @@ void main() {
         await Future<void>.delayed(const Duration(milliseconds: 400));
 
         // Assert - search should not have been called
-        verifyNever(mockSupplementRepository.searchSupplements(any));
+        verifyNever(mockSupplementRepository.searchSupplements(any,
+            userId: anyNamed('userId')));
       });
     });
 
@@ -363,7 +382,8 @@ void main() {
         await Future<void>.delayed(const Duration(milliseconds: 400));
 
         // Assert - search should not have been called
-        verifyNever(mockSupplementRepository.searchSupplements(any));
+        verifyNever(mockSupplementRepository.searchSupplements(any,
+            userId: anyNamed('userId')));
       });
     });
   });

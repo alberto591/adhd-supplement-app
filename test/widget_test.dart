@@ -28,6 +28,7 @@ import 'package:adhd_supplement_app/infrastructure/services/notification_service
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
 import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
+import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 
 void main() {
   setUp(() {
@@ -42,9 +43,10 @@ void main() {
       ),
     );
 
+    locator.registerLazySingleton<BillingService>(() => _FakeBillingService());
     locator.registerLazySingleton<AuthRepository>(() => _FakeAuthRepository());
     locator.registerFactory<AuthProvider>(
-      () => AuthProvider(locator<AuthRepository>()),
+      () => AuthProvider(locator<AuthRepository>(), locator<BillingService>()),
     );
 
     locator
@@ -345,4 +347,19 @@ class _FakeAnalyticsService implements AnalyticsService {
   Future<void> setUserId(String userId) async {}
   @override
   Future<void> setUserProperty(String name, String value) async {}
+}
+
+class _FakeBillingService implements BillingService {
+  @override
+  Future<bool> initialize() async => true;
+  @override
+  Future<bool> get isSubscribed async => false;
+  @override
+  Future<bool> purchaseSubscription({required String planId}) async => true;
+  @override
+  Future<bool> restorePurchases() async => true;
+  @override
+  Future<bool> hasEntitlement(String entitlementId) async => false;
+  @override
+  Future<List<String>> getEntitlements() async => [];
 }

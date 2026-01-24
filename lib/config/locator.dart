@@ -189,6 +189,7 @@ void _setupViewModels() {
     (userId, _) => LibraryViewModel(
       supplementRepository: locator<SupplementRepository>(),
       stackRepository: locator<StackRepository>(),
+      settingsRepository: locator<SettingsRepository>(),
       userId: userId,
     ),
   );

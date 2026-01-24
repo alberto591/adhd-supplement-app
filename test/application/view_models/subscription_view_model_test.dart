@@ -46,6 +46,16 @@ class MockBillingServiceForTest implements BillingService {
     _isSubscribed = true;
     return true;
   }
+
+  @override
+  Future<bool> hasEntitlement(String entitlementId) async {
+    return _isSubscribed;
+  }
+
+  @override
+  Future<List<String>> getEntitlements() async {
+    return _isSubscribed ? ['pro'] : [];
+  }
 }
 
 class MockAnalyticsService implements AnalyticsService {

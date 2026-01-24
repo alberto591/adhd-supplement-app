@@ -1,7 +1,4 @@
 import '../../domain/services/billing_service.dart';
-import '../../application/view_models/subscription_view_model.dart';
-import '../../application/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 class MockBillingService implements BillingService {
   bool _isSubscribed = false;

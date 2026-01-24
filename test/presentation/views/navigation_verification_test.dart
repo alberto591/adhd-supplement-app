@@ -42,6 +42,15 @@ class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   Future<void> signInAnonymously() async {}
   @override
   Future<void> updateProfile(User user) async {}
+
+  @override
+  bool canAccess(String entitlementId) => true;
+
+  @override
+  Future<void> refreshEntitlements() async {}
+
+  @override
+  bool get isPremium => true;
 }
 
 class MockScienceHubViewModel extends ChangeNotifier

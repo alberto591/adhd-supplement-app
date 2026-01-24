@@ -10,6 +10,7 @@ import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/mock_supplement_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/mock_stack_repository.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Simple mock AuthRepository that doesn't use plugins
@@ -83,8 +84,8 @@ void main() {
     // Create a simple mock AuthRepository without platform dependencies
     final mockAuthRepo = MockAuthRepository();
 
-    // Create AuthProvider with mock repository
-    final authProvider = AuthProvider(mockAuthRepo);
+    // Create AuthProvider with mock repository and locator-provided billing service
+    final authProvider = AuthProvider(mockAuthRepo, locator<BillingService>());
 
     return MultiProvider(
       providers: [

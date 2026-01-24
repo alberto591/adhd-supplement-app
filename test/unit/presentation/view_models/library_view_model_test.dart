@@ -4,6 +4,8 @@ import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:flutter/material.dart';
 
 // Fakes for cleaner testing
 class FakeSupplementRepository implements SupplementRepository {
@@ -83,6 +85,95 @@ class FakeStackRepository implements StackRepository {
       Stream.value(stacks);
 }
 
+class FakeSettingsRepository implements SettingsRepository {
+  @override
+  Future<void> init() async {}
+
+  @override
+  bool getNudgeModeEnabled() => true;
+  @override
+  Future<void> setNudgeModeEnabled(bool enabled) async {}
+
+  @override
+  TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setNudgeTime(TimeOfDay time) async {}
+
+  @override
+  TimeOfDay getSlotTime(String slot) {
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        return const TimeOfDay(hour: 8, minute: 0);
+      case 'afternoon':
+        return const TimeOfDay(hour: 13, minute: 0);
+      case 'evening':
+        return const TimeOfDay(hour: 18, minute: 0);
+      case 'night':
+        return const TimeOfDay(hour: 21, minute: 0);
+      default:
+        return const TimeOfDay(hour: 8, minute: 0);
+    }
+  }
+
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {}
+
+  @override
+  String getWarningNudgeOption() => '15m';
+  @override
+  Future<void> setWarningNudgeOption(String option) async {}
+
+  @override
+  bool getExtendedRemindersEnabled() => true;
+  @override
+  Future<void> setExtendedRemindersEnabled(bool enabled) async {}
+
+  @override
+  bool getBiometricLockEnabled() => false;
+  @override
+  Future<void> setBiometricLockEnabled(bool enabled) async {}
+
+  @override
+  bool getLocalStorageOnly() => true;
+  @override
+  Future<void> setLocalStorageOnly(bool enabled) async {}
+
+  @override
+  bool getAnalyticsEnabled() => false;
+  @override
+  Future<void> setAnalyticsEnabled(bool enabled) async {}
+
+  @override
+  bool getCrashReportingEnabled() => false;
+  @override
+  Future<void> setCrashReportingEnabled(bool enabled) async {}
+
+  @override
+  ThemeMode getThemeMode() => ThemeMode.system;
+  @override
+  Future<void> setThemeMode(ThemeMode mode) async {}
+
+  @override
+  bool getReducedMotionEnabled() => false;
+  @override
+  Future<void> setReducedMotionEnabled(bool enabled) async {}
+
+  @override
+  bool getHapticFeedbackEnabled() => true;
+  @override
+  Future<void> setHapticFeedbackEnabled(bool enabled) async {}
+
+  @override
+  double getFontSizeScale() => 1.0;
+  @override
+  Future<void> setFontSizeScale(double scale) async {}
+
+  @override
+  bool hasAcceptedDisclaimer() => true;
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
+}
+
 void main() {
   late LibraryViewModel viewModel;
   late FakeSupplementRepository fakeSupplementRepo;
@@ -115,6 +206,7 @@ void main() {
     viewModel = LibraryViewModel(
       supplementRepository: fakeSupplementRepo,
       stackRepository: fakeStackRepo,
+      settingsRepository: FakeSettingsRepository(),
       userId: userId,
     );
   });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/subscription_view_model.dart';
+import '../../application/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class PaywallScreen extends StatelessWidget {

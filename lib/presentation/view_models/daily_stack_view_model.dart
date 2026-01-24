@@ -511,14 +511,21 @@ class DailyStackViewModel extends ChangeNotifier {
     // If no specific scheduled time, use the slot default
     if (timeStr == null && supplement?.timeOfDay != null) {
       final slot = supplement!.timeOfDay!.toLowerCase();
+      String? normalizedSlot;
       if (slot.contains('morning')) {
-        timeStr = "08:00";
+        normalizedSlot = 'morning';
       } else if (slot.contains('afternoon')) {
-        timeStr = "13:00";
+        normalizedSlot = 'afternoon';
       } else if (slot.contains('evening')) {
-        timeStr = "18:00";
+        normalizedSlot = 'evening';
       } else if (slot.contains('night')) {
-        timeStr = "21:00";
+        normalizedSlot = 'night';
+      }
+
+      if (normalizedSlot != null) {
+        final time = _settingsRepository.getSlotTime(normalizedSlot);
+        timeStr =
+            '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
       }
     }
 
@@ -550,7 +557,6 @@ class DailyStackViewModel extends ChangeNotifier {
   /// Get formatted time status string for a given time slots
   String? getTimeStatus(String? timeOfDay) {
     if (timeOfDay == null) return null;
-    int targetHour;
 
     // Normalize string
     final slot = timeOfDay.toLowerCase();
@@ -558,10 +564,10 @@ class DailyStackViewModel extends ChangeNotifier {
       return null;
     }
     final targetTime = _settingsRepository.getSlotTime(slot);
-    targetHour = targetTime.hour;
 
     final now = DateTime.now();
-    final target = DateTime(now.year, now.month, now.day, targetHour);
+    final target = DateTime(
+        now.year, now.month, now.day, targetTime.hour, targetTime.minute);
     final diff = target.difference(now);
 
     if (diff.isNegative) {
@@ -588,6 +594,12 @@ class DailyStackViewModel extends ChangeNotifier {
       // Check if stack matches requested slot
       if (stack.timeOfDay?.toLowerCase() == slot.toLowerCase()) {
         for (final item in stack.items) {
+          // Filter out already taken or skipped items
+          if (isSupplementTaken(item.supplementId) ||
+              isSupplementSkipped(item.supplementId)) {
+            continue;
+          }
+
           // Check if already in list (for multi-stack duplicates, though rare)
           final exists = items.any((i) => i.supplementId == item.supplementId);
           if (!exists) {
