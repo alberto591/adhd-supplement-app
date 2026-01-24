@@ -10,6 +10,7 @@ import '../widgets/celebration_animation.dart';
 import '../widgets/skeleton_loader.dart';
 import '../navigation/app_router.dart';
 import '../view_models/daily_stack_view_model.dart';
+import '../../domain/entities/supplement_stack.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../application/view_models/safety_view_model.dart';
 import '../../config/locator.dart';
@@ -324,7 +325,30 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   ),
 
                                   // Up Next
-                                  const UpNextCard(),
+                                  if (viewModel.upcomingStack != null)
+                                    UpNextCard(
+                                      title: viewModel.upcomingStack!['title']
+                                          as String,
+                                      subtitle: viewModel
+                                          .upcomingStack!['subtitle'] as String,
+                                      timeLabel:
+                                          (viewModel.upcomingStack!['time']
+                                                  as TimeOfDay)
+                                              .format(context),
+                                      itemCount: (viewModel
+                                              .upcomingStack!['items'] as List)
+                                          .length,
+                                      onTakeAll: () async {
+                                        // Logic to take all items in this slot
+                                        final items = viewModel
+                                            .upcomingStack!['items'] as List;
+                                        for (final dynamic item in items) {
+                                          final stackItem = item as StackItem;
+                                          await viewModel.markSupplementTaken(
+                                              stackItem.supplementId);
+                                        }
+                                      },
+                                    ),
                                   const SizedBox(height: 32),
 
                                   // Stack Details Header

@@ -8,21 +8,51 @@ import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
 // Fakes for cleaner testing
 class FakeSupplementRepository implements SupplementRepository {
   List<Supplement> supplements = [];
+  List<Supplement> savedCustomSupplements = [];
 
   @override
-  Future<List<Supplement>> getAllSupplements() async => supplements;
+  Future<List<Supplement>> getAllSupplements({String? userId}) async {
+    return [...supplements, ...savedCustomSupplements];
+  }
 
   @override
-  Future<Supplement?> getSupplement(String id) async =>
-      supplements.firstWhere((s) => s.id == id);
+  Future<Supplement?> getSupplement(String id, {String? userId}) async {
+    try {
+      return [...supplements, ...savedCustomSupplements]
+          .firstWhere((s) => s.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
 
   @override
-  Future<List<Supplement>> searchSupplements(String query) async => [];
+  Future<List<Supplement>> searchSupplements(String query,
+      {String? userId}) async {
+    final all = await getAllSupplements(userId: userId);
+    return all
+        .where((s) => s.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
+
   @override
-  Future<List<Supplement>> getSupplementsByCategory(String category) async =>
+  Future<List<Supplement>> getSupplementsByCategory(String category,
+          {String? userId}) async =>
       [];
+
   @override
-  Stream<List<Supplement>> watchSupplements() => Stream.value([]);
+  Stream<List<Supplement>> watchSupplements({String? userId}) =>
+      Stream.value([]);
+
+  @override
+  Future<void> saveCustomSupplement(Supplement supplement) async {
+    savedCustomSupplements.add(supplement);
+  }
+
+  @override
+  Future<void> deleteCustomSupplement(String id, String userId) async {
+    savedCustomSupplements.removeWhere((s) => s.id == id);
+  }
+
   @override
   Future<void> trackReferralClick(String supplementId) async {}
 }
@@ -159,6 +189,36 @@ void main() {
       viewModel.clearFilters();
       expect(viewModel.currentStatus, 'beneficial');
       expect(viewModel.supplements.first.status, 'beneficial');
+    });
+
+    test('createCustomSupplement adds to list and maintains status', () async {
+      fakeSupplementRepo.supplements = [beneficialSupp];
+      await viewModel.initialize();
+      expect(viewModel.supplements.length, 1);
+
+      await viewModel.createCustomSupplement(
+        name: 'My Tea',
+        category: 'Herbal',
+        dosage: '1 cup',
+      );
+
+      // Should have 2 now
+      expect(viewModel.supplements.length, 2);
+      expect(viewModel.supplements.any((s) => s.name == 'My Tea'), true);
+      expect(
+          viewModel.supplements.firstWhere((s) => s.name == 'My Tea').isCustom,
+          true);
+    });
+
+    test('deleteCustomSupplement removes from list', () async {
+      final custom = beneficialSupp.copyWith(id: 'custom1', isCustom: true);
+      fakeSupplementRepo.savedCustomSupplements = [custom];
+      await viewModel.initialize();
+      expect(viewModel.supplements.length, 1);
+
+      await viewModel.deleteCustomSupplement('custom1');
+
+      expect(viewModel.supplements.isEmpty, true);
     });
   });
 }

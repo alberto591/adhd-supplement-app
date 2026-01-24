@@ -57,9 +57,10 @@ See [Onboarding & Setup](onboarding_and_setup.md) for initial stack creation.
 Browse and search the supplement catalog.
 
 **Features:**
-- Search bar (real-time filtering).
+- Search bar (real-time filtering, user-aware).
 - Category filters (Focus, Sleep, Energy, etc.).
 - Supplement cards showing benefits and dosage.
+- **Custom Supplements**: "Add Custom" Floating Action Button; private items marked with **CUSTOM** badge; delete support.
 - "Add to Stack" quick action.
 
 **Data:**

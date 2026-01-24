@@ -135,23 +135,33 @@ class _FakeAuthRepository implements AuthRepository {
 
 class _FakeSupplementRepository implements SupplementRepository {
   @override
-  Future<List<Supplement>> getAllSupplements() async => [];
+  Future<List<Supplement>> getAllSupplements({String? userId}) async => [];
 
   @override
-  Future<Supplement?> getSupplement(String id) async => null;
+  Future<Supplement?> getSupplement(String id, {String? userId}) async => null;
 
   @override
-  Future<List<Supplement>> getSupplementsByCategory(String category) async =>
+  Future<List<Supplement>> getSupplementsByCategory(String category,
+          {String? userId}) async =>
       [];
 
   @override
-  Future<List<Supplement>> searchSupplements(String query) async => [];
+  Future<List<Supplement>> searchSupplements(String query,
+          {String? userId}) async =>
+      [];
+
+  @override
+  Future<void> saveCustomSupplement(Supplement supplement) async {}
+
+  @override
+  Future<void> deleteCustomSupplement(String id, String userId) async {}
 
   @override
   Future<void> trackReferralClick(String supplementId) async {}
 
   @override
-  Stream<List<Supplement>> watchSupplements() => const Stream.empty();
+  Stream<List<Supplement>> watchSupplements({String? userId}) =>
+      const Stream.empty();
 }
 
 class _FakeSafetyRepository implements SafetyRepository {
@@ -256,6 +266,12 @@ class _FakeSettingsRepository implements SettingsRepository {
   ThemeMode getThemeMode() => ThemeMode.system;
   @override
   Future<void> setThemeMode(ThemeMode mode) async {}
+
+  @override
+  bool hasAcceptedDisclaimer() => true;
+
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
 }
 
 class _FakeNotificationService implements NotificationService {
@@ -289,13 +305,14 @@ class _FakeNotificationService implements NotificationService {
   @override
   Future<void> cancelAllNotifications() async {}
   @override
-  Future<void> cancelNudgeSequence(int baseId, int count) async {}
+  Future<void> cancelAllSupplementNudges(String supplementId,
+      [int maxNudges = 12]) async {}
   @override
   Future<List<PendingNotificationRequest>> getPendingNotifications() async =>
       [];
   @override
   Future<void> schedulePersistentNudge({
-    required int baseId,
+    required String supplementId,
     required String title,
     required String body,
     required DateTime initialTime,
@@ -303,7 +320,7 @@ class _FakeNotificationService implements NotificationService {
   }) async {}
   @override
   Future<void> snoozePersistentNudge({
-    required int baseId,
+    required String supplementId,
     required String title,
     required String body,
     int maxNudges = 12,

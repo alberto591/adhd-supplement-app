@@ -70,18 +70,33 @@ class FakeSupplementRepository implements SupplementRepository {
   final Map<String, Supplement> supplements = {};
 
   @override
-  Future<Supplement?> getSupplement(String id) async => supplements[id];
+  Future<Supplement?> getSupplement(String id, {String? userId}) async =>
+      supplements[id];
 
   @override
-  Future<List<Supplement>> searchSupplements(String query) async => [];
-  @override
-  Future<List<Supplement>> getSupplementsByCategory(String category) async =>
+  Future<List<Supplement>> searchSupplements(String query,
+          {String? userId}) async =>
       [];
+
   @override
-  Stream<List<Supplement>> watchSupplements() => Stream.value([]);
+  Future<List<Supplement>> getSupplementsByCategory(String category,
+          {String? userId}) async =>
+      [];
+
   @override
-  Future<List<Supplement>> getAllSupplements() async =>
+  Stream<List<Supplement>> watchSupplements({String? userId}) =>
+      Stream.value([]);
+
+  @override
+  Future<List<Supplement>> getAllSupplements({String? userId}) async =>
       supplements.values.toList();
+
+  @override
+  Future<void> saveCustomSupplement(Supplement supplement) async {}
+
+  @override
+  Future<void> deleteCustomSupplement(String id, String userId) async {}
+
   @override
   Future<void> trackReferralClick(String supplementId) async {}
 }
@@ -116,19 +131,20 @@ class FakeNotificationService implements NotificationService {
       [];
   @override
   Future<void> schedulePersistentNudge(
-      {required int baseId,
+      {required String supplementId,
       required String title,
       required String body,
       required DateTime initialTime,
       int maxNudges = 12}) async {}
   @override
   Future<void> snoozePersistentNudge(
-      {required int baseId,
+      {required String supplementId,
       required String title,
       required String body,
       int maxNudges = 12}) async {}
   @override
-  Future<void> cancelNudgeSequence(int baseId, int count) async {}
+  Future<void> cancelAllSupplementNudges(String supplementId,
+      [int maxNudges = 12]) async {}
 }
 
 class FakeAuthRepository implements AuthRepository {
@@ -254,6 +270,12 @@ class FakeSettingsRepository implements SettingsRepository {
   double getFontSizeScale() => 1.0;
   @override
   Future<void> setFontSizeScale(double scale) async {}
+
+  @override
+  bool hasAcceptedDisclaimer() => true;
+
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
 }
 
 void main() {
@@ -279,14 +301,26 @@ void main() {
     focusLevel: 3,
   );
 
-  final testStack = SupplementStack(
-    id: 'stack1',
+  final morningStack = SupplementStack(
+    id: 'stack_morning',
+    userId: userId,
+    name: 'Morning Routine',
+    items: [
+      const StackItem(supplementId: 'supp2', order: 1, scheduledTime: '08:00'),
+    ],
+    timeOfDay: 'morning',
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  );
+
+  final eveningStack = SupplementStack(
+    id: 'stack_evening',
     userId: userId,
     name: 'Evening Routine',
     items: [
       const StackItem(supplementId: 'supp1', order: 1, scheduledTime: '20:00'),
-      const StackItem(supplementId: 'supp2', order: 2, scheduledTime: '08:00'),
     ],
+    timeOfDay: 'evening',
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   );
@@ -311,7 +345,7 @@ void main() {
 
   group('DailyStackViewModel Tests (with Fakes)', () {
     test('initialize loads data and caches supplements', () async {
-      fakeStackRepo.stacks = [testStack];
+      fakeStackRepo.stacks = [morningStack, eveningStack];
       fakeLogRepo.streakCount = 5;
       fakeSupplementRepo.supplements['supp1'] = testSupplement;
       fakeSupplementRepo.supplements['supp2'] =
@@ -319,7 +353,7 @@ void main() {
 
       await viewModel.initialize();
 
-      expect(viewModel.stacks.length, 1);
+      expect(viewModel.stacks.length, 2);
       expect(viewModel.streakCount, 5);
       expect(viewModel.getSupplement('supp1'), isNotNull);
       expect(viewModel.morningItems.length, 1);
@@ -327,7 +361,7 @@ void main() {
     });
 
     test('todayProgress calculates correctly', () async {
-      fakeStackRepo.stacks = [testStack];
+      fakeStackRepo.stacks = [morningStack, eveningStack];
       fakeLogRepo.todayLog = DailyLog(
         id: 'log1',
         userId: userId,
@@ -348,7 +382,7 @@ void main() {
     });
 
     test('toggleSupplement marks as taken and updates log', () async {
-      fakeStackRepo.stacks = [testStack];
+      fakeStackRepo.stacks = [morningStack, eveningStack];
       fakeSupplementRepo.supplements['supp1'] = testSupplement;
       fakeSupplementRepo.supplements['supp2'] = testSupplement;
 
@@ -401,7 +435,7 @@ void main() {
     });
 
     test('items are hidden from lists after being taken', () async {
-      fakeStackRepo.stacks = [testStack];
+      fakeStackRepo.stacks = [morningStack, eveningStack];
       fakeSupplementRepo.supplements['supp1'] = testSupplement;
 
       await viewModel.initialize();
@@ -416,7 +450,7 @@ void main() {
     });
 
     test('markSupplementSkipped marks as skipped and updates log', () async {
-      fakeStackRepo.stacks = [testStack];
+      fakeStackRepo.stacks = [morningStack, eveningStack];
       fakeSupplementRepo.supplements['supp1'] = testSupplement;
 
       await viewModel.initialize();
@@ -433,7 +467,7 @@ void main() {
     });
 
     test('toggleSupplement unskips a skipped supplement', () async {
-      fakeStackRepo.stacks = [testStack];
+      fakeStackRepo.stacks = [morningStack, eveningStack];
       fakeSupplementRepo.supplements['supp1'] = testSupplement;
 
       await viewModel.initialize();
@@ -454,7 +488,7 @@ void main() {
     });
 
     test('skipped items are hidden from pending lists', () async {
-      fakeStackRepo.stacks = [testStack];
+      fakeStackRepo.stacks = [morningStack, eveningStack];
       fakeSupplementRepo.supplements['supp1'] = testSupplement;
 
       await viewModel.initialize();
@@ -478,6 +512,45 @@ void main() {
 
       final eveningStatus = viewModel.getTimeStatus('Evening');
       expect(eveningStatus, isNotNull);
+    });
+
+    test('categorizes items into afternoon and night slots', () async {
+      final afternoonStack = SupplementStack(
+        id: 'stack2',
+        userId: userId,
+        name: 'Afternoon Routine',
+        items: [
+          const StackItem(supplementId: 'supp3', order: 1),
+        ],
+        timeOfDay: 'afternoon',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+
+      final nightStack = SupplementStack(
+        id: 'stack3',
+        userId: userId,
+        name: 'Night Routine',
+        items: [
+          const StackItem(supplementId: 'supp4', order: 1),
+        ],
+        timeOfDay: 'night',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+
+      fakeStackRepo.stacks = [afternoonStack, nightStack];
+      fakeSupplementRepo.supplements['supp3'] =
+          testSupplement.copyWith(id: 'supp3', name: 'Vit D');
+      fakeSupplementRepo.supplements['supp4'] =
+          testSupplement.copyWith(id: 'supp4', name: 'ZMA');
+
+      await viewModel.initialize();
+
+      expect(viewModel.afternoonItems.length, 1);
+      expect(viewModel.afternoonItems.first.supplementId, 'supp3');
+      expect(viewModel.nightItems.length, 1);
+      expect(viewModel.nightItems.first.supplementId, 'supp4');
     });
   });
 }

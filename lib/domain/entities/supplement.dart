@@ -20,6 +20,8 @@ class Supplement {
   final String? timingRationale;
   final int? scientificEvidenceRank; // 1-100 score
   final Map<String, String> studyLinks; // title: url
+  final String? userId; // Owner of the supplement (null for global)
+  final bool isCustom; // Whether this is a user-created supplement
 
   // Phase 1 Enhancements: Dosage Intelligence
   final Map<String, String>?
@@ -122,6 +124,8 @@ class Supplement {
     this.comparisonSummary,
     this.faqs,
     this.tldr,
+    this.userId,
+    this.isCustom = false,
   });
 
   Supplement copyWith({
@@ -170,6 +174,8 @@ class Supplement {
     String? comparisonSummary,
     Map<String, String>? faqs,
     String? tldr,
+    String? userId,
+    bool? isCustom,
   }) {
     return Supplement(
       id: id ?? this.id,
@@ -218,6 +224,8 @@ class Supplement {
       comparisonSummary: comparisonSummary ?? this.comparisonSummary,
       faqs: faqs ?? this.faqs,
       tldr: tldr ?? this.tldr,
+      userId: userId ?? this.userId,
+      isCustom: isCustom ?? this.isCustom,
     );
   }
 
@@ -268,6 +276,8 @@ class Supplement {
       'comparisonSummary': comparisonSummary,
       'faqs': faqs,
       'tldr': tldr,
+      'userId': userId,
+      'isCustom': isCustom,
     };
   }
 
@@ -354,6 +364,8 @@ class Supplement {
         (k, v) => MapEntry(k, v as String),
       ),
       tldr: json['tldr'] as String?,
+      userId: json['userId'] as String?,
+      isCustom: json['isCustom'] as bool? ?? false,
     );
   }
 }

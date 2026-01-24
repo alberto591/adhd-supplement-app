@@ -121,6 +121,12 @@ class _FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setThemeMode(ThemeMode mode) async {}
+
+  @override
+  bool hasAcceptedDisclaimer() => true;
+
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
 }
 
 class _FakeNotificationService extends NotificationService {

@@ -165,4 +165,12 @@ class PersistentRemindersViewModel extends ChangeNotifier {
       body: 'This is how your daily nudge will look and sound.',
     );
   }
+
+  Future<void> clearAllNotifications() async {
+    await _notificationService.cancelAllNotifications();
+    // Reschedule recurring ones if nudge mode is on
+    if (_nudgeModeEnabled) {
+      await _scheduleOrCancelNotifications();
+    }
+  }
 }

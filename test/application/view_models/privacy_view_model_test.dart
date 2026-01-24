@@ -149,6 +149,12 @@ class MockSettingsRepository implements SettingsRepository {
   ThemeMode getThemeMode() => ThemeMode.system;
   @override
   Future<void> setThemeMode(ThemeMode mode) async {}
+
+  @override
+  bool hasAcceptedDisclaimer() => true;
+
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
 }
 
 void main() {

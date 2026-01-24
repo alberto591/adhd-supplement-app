@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 
 import '../widgets/unified_bottom_nav.dart';
+import '../widgets/custom_supplement_form.dart';
 import '../view_models/library_view_model.dart';
 import '../../config/locator.dart';
 import '../../domain/entities/supplement.dart';
@@ -448,6 +449,44 @@ class _LibraryScreenState extends State<LibraryScreen> {
           ),
         ),
         bottomNavigationBar: const UnifiedBottomNav(currentIndex: 2),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _showCustomSupplementForm(context),
+          backgroundColor: AppColors.primaryGold,
+          foregroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: const Icon(Icons.add_task),
+        ),
+      ),
+    );
+  }
+
+  void _showCustomSupplementForm(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => CustomSupplementForm(
+        onSave: (name, category, dosage, timeOfDay, benefits) async {
+          final messenger = ScaffoldMessenger.of(context);
+          try {
+            await _viewModel.createCustomSupplement(
+              name: name,
+              category: category,
+              dosage: dosage,
+              timeOfDay: timeOfDay,
+              benefits: benefits,
+            );
+            messenger.showSnackBar(
+              const SnackBar(content: Text('Custom supplement created!')),
+            );
+          } catch (e) {
+            messenger.showSnackBar(
+              SnackBar(content: Text('Failed to create: $e')),
+            );
+          }
+        },
       ),
     );
   }
@@ -503,6 +542,31 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   );
                   viewModel
                       .addToStack(supplement, 'Morning Stack')
+                      .catchError((Object e) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text('Error syncing: $e')),
+                    );
+                  });
+                },
+              ),
+              const SizedBox(height: 12),
+              _buildStackOption(
+                context,
+                '☀️ Afternoon Stack',
+                'Sustained focus and energy',
+                () {
+                  Navigator.pop(context);
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.showSnackBar(
+                    SnackBar(
+                      backgroundColor: AppColors.primaryGold,
+                      content: Text(
+                          'Added ${supplement.name} to Afternoon Stack',
+                          style: const TextStyle(color: Colors.black)),
+                    ),
+                  );
+                  viewModel
+                      .addToStack(supplement, 'Afternoon Stack')
                       .catchError((Object e) {
                     messenger.showSnackBar(
                       SnackBar(content: Text('Error syncing: $e')),
@@ -739,6 +803,25 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         const Icon(Icons.verified,
                             color: AppColors.primaryGold, size: 14),
                       ],
+                      if (supplement.isCustom) ...[
+                        const SizedBox(width: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryGold.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            'CUSTOM',
+                            style: GoogleFonts.lexend(
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryGold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                   Text(
@@ -753,6 +836,26 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 ],
               ),
             ),
+
+            // Delete button for custom items
+            if (supplement.isCustom)
+              IconButton(
+                icon: const Icon(Icons.delete_outline,
+                    size: 18, color: Colors.grey),
+                onPressed: () async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  try {
+                    await _viewModel.deleteCustomSupplement(supplement.id);
+                    messenger.showSnackBar(
+                      const SnackBar(content: Text('Supplement deleted')),
+                    );
+                  } catch (e) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text('Delete failed: $e')),
+                    );
+                  }
+                },
+              ),
 
             // Focus Level (Stars)
             if (supplement.status != 'avoid')

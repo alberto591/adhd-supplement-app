@@ -14,7 +14,7 @@ class MockSupplementRepository implements SupplementRepository {
       _supplements = supplements;
 
   @override
-  Future<List<Supplement>> getAllSupplements() async {
+  Future<List<Supplement>> getAllSupplements({String? userId}) async {
     if (_shouldThrow) {
       throw Exception('Repository error');
     }
@@ -23,12 +23,14 @@ class MockSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Future<List<Supplement>> getSupplementsByCategory(String category) async {
+  Future<List<Supplement>> getSupplementsByCategory(String category,
+      {String? userId}) async {
     return _supplements.where((s) => s.category == category).toList();
   }
 
   @override
-  Future<List<Supplement>> searchSupplements(String query) async {
+  Future<List<Supplement>> searchSupplements(String query,
+      {String? userId}) async {
     return _supplements
         .where((s) =>
             s.name.toLowerCase().contains(query.toLowerCase()) ||
@@ -38,7 +40,7 @@ class MockSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Future<Supplement?> getSupplement(String id) async {
+  Future<Supplement?> getSupplement(String id, {String? userId}) async {
     try {
       return _supplements.firstWhere((s) => s.id == id);
     } catch (e) {
@@ -47,9 +49,15 @@ class MockSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Stream<List<Supplement>> watchSupplements() {
+  Stream<List<Supplement>> watchSupplements({String? userId}) {
     return Stream.value(_supplements);
   }
+
+  @override
+  Future<void> saveCustomSupplement(Supplement supplement) async {}
+
+  @override
+  Future<void> deleteCustomSupplement(String id, String userId) async {}
 
   @override
   Future<void> trackReferralClick(String supplementId) async {

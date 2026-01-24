@@ -24,9 +24,11 @@ class LibraryItemData {
 
 class StackDropZone extends StatefulWidget {
   final List<LibraryItemData> currentItems;
-  final void Function(String) onItemDropped;
+  final void Function(String) onItemDropped; // Now receives ID
   final void Function(int) onItemRemoved;
   final void Function(int, int)? onReorder;
+  final void Function(int)? onItemTap;
+  final String instructionText;
 
   const StackDropZone({
     super.key,
@@ -34,6 +36,8 @@ class StackDropZone extends StatefulWidget {
     required this.onItemDropped,
     required this.onItemRemoved,
     this.onReorder,
+    this.onItemTap,
+    this.instructionText = 'Drag supplements here to build your routine.',
   });
 
   @override
@@ -107,7 +111,7 @@ class _StackDropZoneState extends State<StackDropZone> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Drag supplements here to build your morning routine.',
+                              widget.instructionText,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: AppColors.textSecondaryDark
@@ -134,6 +138,9 @@ class _StackDropZoneState extends State<StackDropZone> {
                             iconColor: item.iconColor,
                             iconBgColor: item.iconBgColor,
                             onRemove: () => widget.onItemRemoved(index),
+                            onTap: widget.onItemTap != null
+                                ? () => widget.onItemTap!(index)
+                                : null,
                           );
                         },
                       ),

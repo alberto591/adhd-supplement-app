@@ -71,8 +71,10 @@ Manages the supplement discovery/search library.
 
 **Key Methods:**
 - `initialize()`: Load all supplements.
-- `search(String query)`: Remote search.
+- `search(String query)`: Remote search (User-aware).
 - `filterByCategory(String? category)`: Local filter.
+- `createCustomSupplement(...)`: Add a private user supplement.
+- `deleteCustomSupplement(...)`: Remove a private user supplement.
 - `clearFilters()`: Reset.
 - `getSupplement(String id)`: Fetch by ID.
 
@@ -88,7 +90,8 @@ Manages the supplement discovery/search library.
 ## Repositories (Domain Ports)
 - `StackRepository`: CRUD for user stacks.
 - `LogRepository`: Stores daily logs, streak calculation.
-- `SupplementRepository`: Fetches supplement catalog.
+- `SupplementRepository`: Fetches supplement catalog (Global + User-specific).
+- **Custom Supplements**: Stored per-user in Firestore (`/users/{uid}/custom_supplements`).
 
 ## Firebase Implementations (Infrastructure)
 - `FirebaseStackRepository`

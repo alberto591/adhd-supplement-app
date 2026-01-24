@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/stack_drop_zone.dart';
 import '../widgets/library_item.dart';
@@ -59,8 +60,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Stack saved successfully!'),
-            backgroundColor: Colors.green,
+            content: Text('Routine optimization active! 🎉'),
+            backgroundColor: AppColors.primary,
           ),
         );
         Navigator.pop(context);
@@ -75,9 +76,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     }
   }
 
-  void _handleItemDropped(StackBuilderViewModel viewModel, String itemName) {
+  void _handleItemDropped(
+      StackBuilderViewModel viewModel, String supplementId) {
     final supplement = viewModel.availableSupplements.firstWhere(
-      (s) => s.name == itemName,
+      (s) => s.id == supplementId,
     );
     viewModel.addItem(supplement);
   }
@@ -166,7 +168,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           strokeWidth: 2),
                                     )
                                   : const Text(
-                                      'Save',
+                                      'Activate Routine',
                                       style: TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.bold,
@@ -212,17 +214,17 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           horizontal: 16, vertical: 8),
                                       child: Row(
                                         children: [
-                                          _buildSlotTab(
-                                              'morning', viewModel, isDark),
+                                          _buildSlotTab('morning', '🌅',
+                                              viewModel, isDark),
+                                          const SizedBox(width: 8),
+                                          _buildSlotTab('afternoon', '☀️',
+                                              viewModel, isDark),
+                                          const SizedBox(width: 8),
+                                          _buildSlotTab('evening', '🌇',
+                                              viewModel, isDark),
                                           const SizedBox(width: 8),
                                           _buildSlotTab(
-                                              'afternoon', viewModel, isDark),
-                                          const SizedBox(width: 8),
-                                          _buildSlotTab(
-                                              'evening', viewModel, isDark),
-                                          const SizedBox(width: 8),
-                                          _buildSlotTab(
-                                              'night', viewModel, isDark),
+                                              'night', '🌙', viewModel, isDark),
                                         ],
                                       ),
                                     ),
@@ -246,7 +248,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                         ),
                                       ),
 
-                                    // Library Section
+                                    // Library Section Header
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16, vertical: 8),
@@ -283,6 +285,54 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                       ),
                                     ),
 
+                                    // Search Bar for Library
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 8),
+                                      child: Container(
+                                        height: 44,
+                                        decoration: BoxDecoration(
+                                          color: isDark
+                                              ? AppColors.cardDark
+                                              : Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                            color: isDark
+                                                ? Colors.white
+                                                    .withValues(alpha: 0.1)
+                                                : Colors.grey[300]!,
+                                          ),
+                                        ),
+                                        child: TextField(
+                                          onChanged: (v) =>
+                                              viewModel.updateSearchQuery(v),
+                                          decoration: InputDecoration(
+                                            hintText: 'Search supplements...',
+                                            hintStyle: TextStyle(
+                                              fontSize: 14,
+                                              color: isDark
+                                                  ? Colors.white54
+                                                  : Colors.grey,
+                                            ),
+                                            prefixIcon: const Icon(Icons.search,
+                                                size: 20,
+                                                color: AppColors.primary),
+                                            border: InputBorder.none,
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 10),
+                                          ),
+                                          style: TextStyle(
+                                            color: isDark
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
                                     // Horizontal Library List
                                     SizedBox(
                                       height: 120,
@@ -296,6 +346,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                         itemBuilder: (context, index) {
                                           final item = libraryItems[index];
                                           return LibraryItem(
+                                            id: item.id,
                                             name: item.name,
                                             dosage: item.dosage,
                                             icon: item.icon,
@@ -360,7 +411,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                 color:
                                                     AppColors.textSecondaryDark,
                                                 size: 18),
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                _showEditStackMetaDialog(
+                                                    context, viewModel),
                                           ),
                                         ],
                                       ),
@@ -372,13 +425,18 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           horizontal: 16),
                                       child: StackDropZone(
                                         currentItems: currentStackData,
-                                        onItemDropped: (name) =>
-                                            _handleItemDropped(viewModel, name),
+                                        instructionText:
+                                            'Drag supplements here to build your ${viewModel.selectedSlot.toLowerCase()} routine.',
+                                        onItemDropped: (id) =>
+                                            _handleItemDropped(viewModel, id),
                                         onItemRemoved: (index) =>
                                             viewModel.removeItem(index),
                                         onReorder: (oldIndex, newIndex) =>
                                             viewModel.reorderItems(
                                                 oldIndex, newIndex),
+                                        onItemTap: (index) =>
+                                            _showEditDosageSheet(
+                                                context, viewModel, index),
                                       ),
                                     ),
 
@@ -500,8 +558,178 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     );
   }
 
+  void _showEditDosageSheet(
+      BuildContext context, StackBuilderViewModel viewModel, int index) {
+    if (viewModel.currentStack == null) return;
+    final item = viewModel.currentStack!.items[index];
+    final supplement = viewModel.availableSupplements.firstWhere(
+      (s) => s.id == item.supplementId,
+      orElse: () => throw Exception('Supplement not found'),
+    );
+
+    final dosageController = TextEditingController(
+        text: item.customDosage ?? supplement.defaultDosage);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          left: 24,
+          right: 24,
+          top: 24,
+        ),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E242E) : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Customize ${supplement.name}',
+              style: GoogleFonts.lexend(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : Colors.black,
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: dosageController,
+              autofocus: true,
+              style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              decoration: InputDecoration(
+                labelText: 'Dosage Instructions',
+                labelStyle: const TextStyle(color: AppColors.primary),
+                hintText: 'e.g., 500mg once daily',
+                hintStyle:
+                    TextStyle(color: isDark ? Colors.white38 : Colors.grey),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: isDark ? Colors.white24 : Colors.grey[300]!,
+                  ),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primary),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  viewModel.updateItemDosage(
+                      item.supplementId, dosageController.text);
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('Update Reward',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showEditStackMetaDialog(
+      BuildContext context, StackBuilderViewModel viewModel) {
+    if (viewModel.currentStack == null) return;
+
+    final nameController =
+        TextEditingController(text: viewModel.currentStack!.name);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          left: 24,
+          right: 24,
+          top: 24,
+        ),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E242E) : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Edit Routine Details',
+              style: GoogleFonts.lexend(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : Colors.black,
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: nameController,
+              autofocus: true,
+              style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              decoration: InputDecoration(
+                labelText: 'Routine Name',
+                labelStyle: const TextStyle(color: AppColors.primary),
+                hintText: 'e.g., Pre-Workout, Early Bird',
+                hintStyle:
+                    TextStyle(color: isDark ? Colors.white38 : Colors.grey),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: isDark ? Colors.white24 : Colors.grey[300]!,
+                  ),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primary),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  viewModel.updateStackMeta(nameController.text);
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('Save Details',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildSlotTab(
-      String slot, StackBuilderViewModel viewModel, bool isDark) {
+      String slot, String emoji, StackBuilderViewModel viewModel, bool isDark) {
     final isSelected = viewModel.selectedSlot == slot;
     return GestureDetector(
       onTap: () => viewModel.selectSlot(slot),
@@ -513,14 +741,20 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
               : (isDark ? Colors.grey[800] : Colors.grey[200]),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Text(
-          slot.capitalize(),
-          style: TextStyle(
-            color: isSelected
-                ? Colors.white
-                : (isDark ? Colors.white70 : Colors.black87),
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          ),
+        child: Row(
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 14)),
+            const SizedBox(width: 6),
+            Text(
+              slot.capitalize(),
+              style: TextStyle(
+                color: isSelected
+                    ? Colors.white
+                    : (isDark ? Colors.white70 : Colors.black87),
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
+          ],
         ),
       ),
     );

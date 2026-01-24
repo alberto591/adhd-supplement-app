@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class UpNextCard extends StatelessWidget {
-  const UpNextCard({super.key});
+  final String title;
+  final String subtitle;
+  final String timeLabel;
+  final int itemCount;
+  final VoidCallback? onTakeAll;
+
+  const UpNextCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.timeLabel,
+    required this.itemCount,
+    this.onTakeAll,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +45,9 @@ class UpNextCard extends StatelessWidget {
                   color: AppColors.primaryGold.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text(
-                  'Evening Focus',
-                  style: TextStyle(
+                child: Text(
+                  title,
+                  style: const TextStyle(
                     color: AppColors.primaryGold,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -90,9 +103,9 @@ class UpNextCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'EVENING STACK',
-                      style: TextStyle(
+                    Text(
+                      title.toUpperCase(),
+                      style: const TextStyle(
                         color: AppColors.primaryGold,
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -100,23 +113,23 @@ class UpNextCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      'Night Recovery',
-                      style: TextStyle(
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.schedule,
+                        const Icon(Icons.schedule,
                             color: Color(0xFF9DB9A8), size: 14),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         Text(
-                          '8:00 PM • 3 Supplements',
-                          style: TextStyle(
+                          '$timeLabel • $itemCount Supplements',
+                          style: const TextStyle(
                             color: Color(0xFF9DB9A8),
                             fontSize: 14,
                           ),
@@ -127,7 +140,7 @@ class UpNextCard extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: onTakeAll,
                         icon: const Icon(Icons.done_all, size: 20),
                         label: const Text('Mark all as Taken'),
                         style: ElevatedButton.styleFrom(

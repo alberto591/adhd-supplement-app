@@ -84,7 +84,33 @@ class MockSeedingService extends Mock implements SeedingService {
 
 class MockSupplementRepository extends Mock implements SupplementRepository {
   @override
-  Future<List<Supplement>> getAllSupplements() async => [];
+  Future<List<Supplement>> getAllSupplements({String? userId}) async => [];
+
+  @override
+  Future<Supplement?> getSupplement(String id, {String? userId}) async => null;
+
+  @override
+  Future<List<Supplement>> getSupplementsByCategory(String category,
+          {String? userId}) async =>
+      [];
+
+  @override
+  Future<List<Supplement>> searchSupplements(String query,
+          {String? userId}) async =>
+      [];
+
+  @override
+  Stream<List<Supplement>> watchSupplements({String? userId}) =>
+      const Stream.empty();
+
+  @override
+  Future<void> saveCustomSupplement(Supplement supplement) async {}
+
+  @override
+  Future<void> deleteCustomSupplement(String id, String userId) async {}
+
+  @override
+  Future<void> trackReferralClick(String supplementId) async {}
 }
 
 void main() {

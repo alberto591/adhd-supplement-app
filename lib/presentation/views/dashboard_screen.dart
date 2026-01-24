@@ -153,7 +153,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                           // 3. Morning Focus
                           _buildSectionHeader(context, 'Morning Focus',
-                              isNow: true),
+                              timeBadge: viewModel
+                                  .getSlotTime('morning')
+                                  .format(context),
+                              isNow: viewModel.greeting == 'Good Morning'),
                           const SizedBox(height: 16),
                           ..._buildMedicationList(
                               viewModel.morningItems, viewModel, 'morning'),
@@ -164,7 +167,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           if (viewModel.afternoonItems.isNotEmpty) ...[
                             const SizedBox(height: 32),
                             _buildSectionHeader(context, 'Afternoon Focus',
-                                timeBadge: '2:00 PM'),
+                                timeBadge: viewModel
+                                    .getSlotTime('afternoon')
+                                    .format(context),
+                                isNow: viewModel.greeting == 'Good Afternoon'),
                             const SizedBox(height: 16),
                             ..._buildMedicationList(viewModel.afternoonItems,
                                 viewModel, 'afternoon'),
@@ -174,7 +180,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                           // 5. Evening Stack
                           _buildSectionHeader(context, 'Evening Stack',
-                              timeBadge: '8:00 PM'),
+                              timeBadge: viewModel
+                                  .getSlotTime('evening')
+                                  .format(context),
+                              isNow: viewModel.greeting == 'Good Evening'),
                           const SizedBox(height: 16),
                           ..._buildMedicationList(
                               viewModel.eveningItems, viewModel, 'evening'),
@@ -183,7 +192,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           if (viewModel.nightItems.isNotEmpty) ...[
                             const SizedBox(height: 32),
                             _buildSectionHeader(context, 'Night Stack',
-                                timeBadge: '10:00 PM'),
+                                timeBadge: viewModel
+                                    .getSlotTime('night')
+                                    .format(context),
+                                isNow: viewModel.greeting == 'Good Night'),
                             const SizedBox(height: 16),
                             ..._buildMedicationList(
                                 viewModel.nightItems, viewModel, 'night'),

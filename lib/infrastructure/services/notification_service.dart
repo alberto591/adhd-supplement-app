@@ -154,10 +154,26 @@ class NotificationService {
     return await _notificationsPlugin.pendingNotificationRequests();
   }
 
-  /// Schedule a sequence of 5-minute nudges for a specific stack/event
-  /// [baseId] is used to generate a unique sequence (e.g., baseId, baseId+1, ...)
+  /// Internal helper to generate a safe 32-bit unique ID for a supplement's nudge sequence
+  /// We use an offset of 5000 to avoid collisions with global reminders (1000-2999)
+  int _getNudgeId(String supplementId, int index) {
+    // Generate a stable base integer from the supplement ID string
+    // Using a simple hash that fits in safe signed 32-bit integer range
+    int hash = 0;
+    for (int i = 0; i < supplementId.length; i++) {
+      hash = 31 * hash + supplementId.codeUnitAt(i);
+      hash = hash & 0x7FFFFFFF; // Maintain positive 31-bit range
+    }
+
+    // Final ID = RangeBase (5000) + (SuppHash MOD 1000000) * 20 (Max nudges space) + Index
+    // This gives us space for ~100,000 unique supplements with 20 nudges each
+    // while staying well under the 2.1B max for 32-bit ints.
+    return 5000 + ((hash % 100000) * 20) + index;
+  }
+
+  /// Schedule a sequence of 5-minute nudges for a specific supplement
   Future<void> schedulePersistentNudge({
-    required int baseId,
+    required String supplementId,
     required String title,
     required String body,
     required DateTime initialTime,
@@ -168,7 +184,7 @@ class NotificationService {
       if (nudgeTime.isBefore(DateTime.now())) continue;
 
       await scheduleNotification(
-        id: baseId + i,
+        id: _getNudgeId(supplementId, i),
         title: i == 0 ? title : '$title (Reminder $i)',
         body: body,
         scheduledDate: nudgeTime,
@@ -178,14 +194,14 @@ class NotificationService {
 
   /// Snooze a persistent nudge by canceling current ones and rescheduling starting in 5m
   Future<void> snoozePersistentNudge({
-    required int baseId,
+    required String supplementId,
     required String title,
     required String body,
     int maxNudges = 12,
   }) async {
-    await cancelNudgeSequence(baseId, maxNudges);
+    await cancelAllSupplementNudges(supplementId, maxNudges);
     await schedulePersistentNudge(
-      baseId: baseId,
+      supplementId: supplementId,
       title: title,
       body: body,
       initialTime: DateTime.now().add(const Duration(minutes: 5)),
@@ -193,10 +209,11 @@ class NotificationService {
     );
   }
 
-  /// Cancel all notifications in a nudge sequence
-  Future<void> cancelNudgeSequence(int baseId, int count) async {
-    for (int i = 0; i < count; i++) {
-      await _notificationsPlugin.cancel(baseId + i);
+  /// Cancel all notifications in a nudge sequence for a specific supplement
+  Future<void> cancelAllSupplementNudges(String supplementId,
+      [int maxNudges = 12]) async {
+    for (int i = 0; i < maxNudges; i++) {
+      await _notificationsPlugin.cancel(_getNudgeId(supplementId, i));
     }
   }
 }

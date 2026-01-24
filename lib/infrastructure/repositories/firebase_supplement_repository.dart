@@ -6,46 +6,91 @@ import '../../utils/logger.dart';
 class FirebaseSupplementRepository implements SupplementRepository {
   final FirebaseFirestore _firestore;
 
-  // In-memory cache
-  List<Supplement>? _cache;
+  // In-memory cache: "userId" (or "global") -> List<Supplement>
+  final Map<String, List<Supplement>> _userCache = {};
 
   FirebaseSupplementRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
   @override
-  Future<List<Supplement>> getAllSupplements() async {
-    if (_cache != null) return _cache!;
+  Future<List<Supplement>> getAllSupplements({String? userId}) async {
+    final cacheKey = userId ?? 'global';
+    if (_userCache.containsKey(cacheKey)) return _userCache[cacheKey]!;
 
     try {
-      final snapshot = await _firestore
+      // 1. Fetch Global Supplements
+      final globalSnapshot = await _firestore
           .collection('supplements')
           .get(const GetOptions(source: Source.serverAndCache))
           .timeout(const Duration(seconds: 10));
-      _cache = snapshot.docs
+
+      final globalSupps = globalSnapshot.docs
           .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
           .toList();
-      return _cache!;
+
+      List<Supplement> results = globalSupps;
+
+      // 2. Fetch Custom Supplements if userId provided
+      if (userId != null) {
+        final customSnapshot = await _firestore
+            .collection('users')
+            .doc(userId)
+            .collection('custom_supplements')
+            .get(const GetOptions(source: Source.serverAndCache));
+
+        final customSupps = customSnapshot.docs
+            .map((doc) => Supplement.fromJson({
+                  ...doc.data(),
+                  'id': doc.id,
+                  'userId': userId,
+                  'isCustom': true,
+                }))
+            .toList();
+
+        results = [...globalSupps, ...customSupps];
+      }
+
+      _userCache[cacheKey] = results;
+      return results;
     } catch (e) {
-      AppLogger.w('Fetching supplements from cache', e);
+      AppLogger.w('Fetching supplements failed, falling back to cache', e);
       try {
-        final snapshot = await _firestore
+        final globalSnapshot = await _firestore
             .collection('supplements')
             .get(const GetOptions(source: Source.cache));
-        _cache = snapshot.docs
+        final globalSupps = globalSnapshot.docs
             .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
             .toList();
-        return _cache!;
+
+        if (userId == null) return globalSupps;
+
+        final customSnapshot = await _firestore
+            .collection('users')
+            .doc(userId)
+            .collection('custom_supplements')
+            .get(const GetOptions(source: Source.cache));
+        final customSupps = customSnapshot.docs
+            .map((doc) => Supplement.fromJson({
+                  ...doc.data(),
+                  'id': doc.id,
+                  'userId': userId,
+                  'isCustom': true,
+                }))
+            .toList();
+
+        return [...globalSupps, ...customSupps];
       } catch (cacheErr) {
         AppLogger.e('Supplements cache failure', cacheErr);
-        return _cache ?? [];
+        return _userCache[cacheKey] ?? [];
       }
     }
   }
 
   @override
-  Future<List<Supplement>> getSupplementsByCategory(String category) async {
+  Future<List<Supplement>> getSupplementsByCategory(String category,
+      {String? userId}) async {
     try {
-      final all = await getAllSupplements();
+      final all = await getAllSupplements(userId: userId);
       return all.where((s) => s.category == category).toList();
     } catch (e) {
       throw Exception('Failed to fetch supplements by category: $e');
@@ -53,12 +98,11 @@ class FirebaseSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Future<List<Supplement>> searchSupplements(String query) async {
+  Future<List<Supplement>> searchSupplements(String query,
+      {String? userId}) async {
     try {
-      final allSupplements = await getAllSupplements();
+      final allSupplements = await getAllSupplements(userId: userId);
 
-      // Simple client-side filtering
-      // For production, consider using Algolia or similar search service
       final lowerQuery = query.toLowerCase();
       return allSupplements.where((supplement) {
         return supplement.name.toLowerCase().contains(lowerQuery) ||
@@ -72,38 +116,106 @@ class FirebaseSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Future<Supplement?> getSupplement(String id) async {
+  Future<Supplement?> getSupplement(String id, {String? userId}) async {
+    // Check all segments if userId provided, otherwise just global
     try {
+      // Try global first
       final doc = await _firestore
           .collection('supplements')
           .doc(id)
           .get(const GetOptions(source: Source.serverAndCache))
-          .timeout(const Duration(seconds: 10));
-      if (!doc.exists) return null;
-      return Supplement.fromJson({...doc.data()!, 'id': doc.id});
-    } catch (e) {
-      AppLogger.w('Fetching supplement $id from cache', e);
-      try {
-        final doc = await _firestore
-            .collection('supplements')
-            .doc(id)
-            .get(const GetOptions(source: Source.cache));
-        if (!doc.exists) return null;
+          .timeout(const Duration(seconds: 5));
+
+      if (doc.exists) {
         return Supplement.fromJson({...doc.data()!, 'id': doc.id});
-      } catch (cacheErr) {
-        AppLogger.e('Supplement $id cache failure', cacheErr);
-        return null;
       }
+
+      // If not global and userId provided, try custom
+      if (userId != null) {
+        final customDoc = await _firestore
+            .collection('users')
+            .doc(userId)
+            .collection('custom_supplements')
+            .doc(id)
+            .get();
+
+        if (customDoc.exists) {
+          return Supplement.fromJson({
+            ...customDoc.data()!,
+            'id': customDoc.id,
+            'userId': userId,
+            'isCustom': true,
+          });
+        }
+      }
+
+      return null;
+    } catch (e) {
+      AppLogger.w('Fetching supplement $id from cache failed', e);
+      return null;
     }
   }
 
   @override
-  Stream<List<Supplement>> watchSupplements() {
+  Stream<List<Supplement>> watchSupplements({String? userId}) {
+    // This is more complex because we need to combine two streams
+    // For simplicity in Phase 1, we return the global stream
+    // and let UI refresh after custom adds.
     return _firestore.collection('supplements').snapshots().map(
           (snapshot) => snapshot.docs
               .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
               .toList(),
         );
+  }
+
+  @override
+  Future<void> saveCustomSupplement(Supplement supplement) async {
+    if (supplement.userId == null) {
+      throw Exception('UserId is required to save a custom supplement');
+    }
+
+    try {
+      final data = supplement.toJson();
+      if (supplement.id.isEmpty) {
+        await _firestore
+            .collection('users')
+            .doc(supplement.userId)
+            .collection('custom_supplements')
+            .add(data);
+      } else {
+        await _firestore
+            .collection('users')
+            .doc(supplement.userId)
+            .collection('custom_supplements')
+            .doc(supplement.id)
+            .set(data);
+      }
+
+      // Invalidate cache
+      _userCache.remove(supplement.userId);
+      _userCache.remove('global');
+    } catch (e) {
+      AppLogger.e('Error saving custom supplement', e);
+      throw Exception('Failed to save custom supplement: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteCustomSupplement(String id, String userId) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('custom_supplements')
+          .doc(id)
+          .delete();
+
+      // Invalidate cache
+      _userCache.remove(userId);
+    } catch (e) {
+      AppLogger.e('Error deleting custom supplement', e);
+      throw Exception('Failed to delete custom supplement: $e');
+    }
   }
 
   @override

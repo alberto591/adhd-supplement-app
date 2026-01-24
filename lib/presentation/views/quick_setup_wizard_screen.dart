@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import '../widgets/medical_disclaimer_widget.dart';
+import '../../domain/repositories/settings_repository.dart';
 
 class QuickSetupWizardScreen extends StatefulWidget {
   const QuickSetupWizardScreen({super.key});
@@ -10,9 +13,12 @@ class QuickSetupWizardScreen extends StatefulWidget {
 }
 
 class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
-  int _currentStep = 0;
+  int _currentStep = -1; // Start at -1 for Disclaimer
+  bool _disclaimerAccepted = false;
   String? _selectedGoal;
   String? _selectedStack;
+
+  final _settingsRepo = GetIt.instance<SettingsRepository>();
 
   final List<Map<String, dynamic>> _goals = [
     {'title': 'Mental Clarity', 'icon': Icons.auto_awesome},
@@ -45,7 +51,15 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
     if (_currentStep < 2) {
       setState(() => _currentStep++);
     } else {
-      // Complete setup
+      _completeSetup();
+    }
+  }
+
+  Future<void> _completeSetup() async {
+    // Persist disclaimer acceptance
+    await _settingsRepo.setAcceptedDisclaimer(true);
+
+    if (mounted) {
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRouter.dashboard,
@@ -55,11 +69,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
   }
 
   void _skipSetup() {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AppRouter.dashboard,
-      (route) => false,
-    );
+    _completeSetup();
   }
 
   @override
@@ -101,19 +111,25 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(
                 children: [
-                  for (int i = 0; i < 3; i++) ...[
+                  for (int i = -1; i < 3; i++) ...[
                     Expanded(
                       child: Container(
-                        height: 4,
-                        decoration: BoxDecoration(
-                          color: i <= _currentStep
-                              ? AppColors.accentGreen
-                              : (isDark ? Colors.grey[800] : Colors.grey[200]),
-                          borderRadius: BorderRadius.circular(2),
-                        ),
+                        height: i == -1
+                            ? 0
+                            : 4, // Hide bar for disclaimer if preferred, or show it
+                        decoration: i == -1
+                            ? null
+                            : BoxDecoration(
+                                color: i <= _currentStep
+                                    ? AppColors.accentGreen
+                                    : (isDark
+                                        ? Colors.grey[800]
+                                        : Colors.grey[200]),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
                       ),
                     ),
-                    if (i < 2) const SizedBox(width: 8),
+                    if (i < 2 && i != -1) const SizedBox(width: 8),
                   ],
                 ],
               ),
@@ -158,6 +174,8 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
 
   bool _canProceed() {
     switch (_currentStep) {
+      case -1:
+        return _disclaimerAccepted;
       case 0:
         return _selectedGoal != null;
       case 1:
@@ -171,6 +189,12 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
 
   Widget _buildStepContent(bool isDark) {
     switch (_currentStep) {
+      case -1:
+        return MedicalDisclaimerWidget(
+          isDark: isDark,
+          isChecked: _disclaimerAccepted,
+          onChecked: (v) => setState(() => _disclaimerAccepted = v ?? false),
+        );
       case 0:
         return _buildGoalSelection(isDark);
       case 1:

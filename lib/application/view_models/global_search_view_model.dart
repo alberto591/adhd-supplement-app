@@ -142,7 +142,7 @@ class GlobalSearchViewModel extends ChangeNotifier {
     try {
       // Search supplements and stacks in parallel
       final results = await Future.wait([
-        _supplementRepository.searchSupplements(_query),
+        _supplementRepository.searchSupplements(_query, userId: _userId),
         _stackRepository.getUserStacks(_userId),
       ]);
 

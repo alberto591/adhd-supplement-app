@@ -28,13 +28,20 @@ class StackBuilderViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   String _selectedSlot = 'morning';
+  String _searchQuery = '';
 
   // Getters
-  List<Supplement> get availableSupplements => _availableSupplements;
+  List<Supplement> get availableSupplements => _searchQuery.isEmpty
+      ? _availableSupplements
+      : _availableSupplements
+          .where(
+              (s) => s.name.toLowerCase().contains(_searchQuery.toLowerCase()))
+          .toList();
   SupplementStack? get currentStack => _currentStack;
   bool get isLoading => _isLoading;
   String? get error => _error;
   String get selectedSlot => _selectedSlot;
+  String get searchQuery => _searchQuery;
 
   Future<void> initialize() async {
     _setLoading(true);
@@ -42,7 +49,8 @@ class StackBuilderViewModel extends ChangeNotifier {
 
     try {
       // Load all available supplements
-      _availableSupplements = await _supplementRepository.getAllSupplements();
+      _availableSupplements =
+          await _supplementRepository.getAllSupplements(userId: _userId);
 
       // Load existing stacks for this user
       final stacks = await _stackRepository.getUserStacks(_userId);
@@ -55,6 +63,11 @@ class StackBuilderViewModel extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
+  }
+
+  void updateSearchQuery(String query) {
+    _searchQuery = query;
+    notifyListeners();
   }
 
   void _updateCurrentStackFromList(List<SupplementStack> stacks) {
@@ -109,6 +122,32 @@ class StackBuilderViewModel extends ChangeNotifier {
         _currentStack!.copyWith(items: updatedItems, updatedAt: DateTime.now());
 
     _checkInteractions();
+    notifyListeners();
+  }
+
+  void updateItemDosage(String supplementId, String dosage) {
+    if (_currentStack == null) return;
+
+    final updatedItems = _currentStack!.items.map((item) {
+      if (item.supplementId == supplementId) {
+        return item.copyWith(customDosage: dosage);
+      }
+      return item;
+    }).toList();
+
+    _currentStack =
+        _currentStack!.copyWith(items: updatedItems, updatedAt: DateTime.now());
+    notifyListeners();
+  }
+
+  void updateStackMeta(String name, {String? timeOfDay}) {
+    if (_currentStack == null) return;
+
+    _currentStack = _currentStack!.copyWith(
+      name: name,
+      timeOfDay: timeOfDay ?? _currentStack!.timeOfDay,
+      updatedAt: DateTime.now(),
+    );
     notifyListeners();
   }
 

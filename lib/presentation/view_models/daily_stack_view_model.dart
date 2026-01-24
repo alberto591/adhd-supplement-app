@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../utils/logger.dart';
 import '../../domain/entities/supplement_stack.dart';
@@ -41,6 +41,47 @@ class DailyStackViewModel extends ChangeNotifier {
   List<StackItem> get afternoonItems => _getItemsForSlot('afternoon');
   List<StackItem> get eveningItems => _getItemsForSlot('evening');
   List<StackItem> get nightItems => _getItemsForSlot('night');
+
+  /// Get the data for the "Up Next" routine card
+  Map<String, dynamic>? get upcomingStack {
+    if (morningItems.isNotEmpty) {
+      return {
+        'slot': 'morning',
+        'title': 'Morning Focus',
+        'subtitle': 'Daily Startup',
+        'time': _settingsRepository.getSlotTime('morning'),
+        'items': morningItems,
+      };
+    }
+    if (afternoonItems.isNotEmpty) {
+      return {
+        'slot': 'afternoon',
+        'title': 'Afternoon Focus',
+        'subtitle': 'Mid-day Boost',
+        'time': _settingsRepository.getSlotTime('afternoon'),
+        'items': afternoonItems,
+      };
+    }
+    if (eveningItems.isNotEmpty) {
+      return {
+        'slot': 'evening',
+        'title': 'Evening Stack',
+        'subtitle': 'Sundown Support',
+        'time': _settingsRepository.getSlotTime('evening'),
+        'items': eveningItems,
+      };
+    }
+    if (nightItems.isNotEmpty) {
+      return {
+        'slot': 'night',
+        'title': 'Night Stack',
+        'subtitle': 'Rest & Recovery',
+        'time': _settingsRepository.getSlotTime('night'),
+        'items': nightItems,
+      };
+    }
+    return null;
+  }
 
   /// Get all items that were skipped today
   List<StackItem> get skippedItems {
@@ -132,6 +173,11 @@ class DailyStackViewModel extends ChangeNotifier {
     }
 
     return '$completedStacks of ${_stacks.length} stacks completed';
+  }
+
+  /// Get the target time for a specific slot
+  TimeOfDay getSlotTime(String slot) {
+    return _settingsRepository.getSlotTime(slot);
   }
 
   DailyStackViewModel({
@@ -226,7 +272,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
     // Cancel any active nudges for this supplement
     try {
-      await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+      await _notificationService.cancelAllSupplementNudges(supplementId);
       await _checkAndCancelGlobalNudges();
     } catch (e) {
       AppLogger.e('Failed to cancel nudges', e);
@@ -287,7 +333,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
     // Cancel any active nudges for this supplement
     try {
-      await _notificationService.cancelNudgeSequence(supplementId.hashCode, 12);
+      await _notificationService.cancelAllSupplementNudges(supplementId);
       await _checkAndCancelGlobalNudges();
     } catch (e) {
       AppLogger.e('Failed to cancel nudges', e);
@@ -313,7 +359,7 @@ class DailyStackViewModel extends ChangeNotifier {
     if (supplement == null) return;
 
     await _notificationService.snoozePersistentNudge(
-      baseId: supplementId.hashCode,
+      supplementId: supplementId,
       title: 'Time for ${supplement.name}',
       body: 'Snoozed for 5 minutes. Don\'t forget your focus stack!',
     );
@@ -468,54 +514,21 @@ class DailyStackViewModel extends ChangeNotifier {
   // Private helpers
 
   List<StackItem> _getItemsForSlot(String slot) {
-    // 1. Flatten all stack items
-    final allItems = _stacks.expand((s) => s.items).toList();
+    final List<StackItem> items = [];
 
-    // 2. Filter by slot AND completion (Hide if taken)
-    return allItems.where((item) {
-      if (isSupplementTaken(item.supplementId) ||
-          isSupplementSkipped(item.supplementId)) {
-        return false;
+    for (final stack in _stacks) {
+      // Check if stack matches requested slot
+      if (stack.timeOfDay?.toLowerCase() == slot.toLowerCase()) {
+        for (final item in stack.items) {
+          if (!isSupplementTaken(item.supplementId) &&
+              !isSupplementSkipped(item.supplementId)) {
+            items.add(item);
+          }
+        }
       }
-      final scheduledTime = item.scheduledTime;
-      if (scheduledTime != null) {
-        // Parse time: "HH:mm"
-        try {
-          final parts = scheduledTime.split(':');
-          final hour = int.parse(parts[0]);
-          if (slot == 'morning') return hour < 12;
-          if (slot == 'afternoon') return hour >= 12 && hour < 18;
-          if (slot == 'evening') return hour >= 18 && hour < 21;
-          if (slot == 'night') return hour >= 21;
-        } catch (_) {}
-      }
+    }
 
-      // Fallback to supplement's default timeOfDay (if cached) or stack's timeOfDay
-      // Currently using stack's timeOfDay as proxy or just all in 'morning' for now if undefined
-      // But prompt logic suggests "Morning Focus" and "Evening Stack" groups.
-
-      // Let's assume for now, if no time is set:
-      // - First stack is morning
-      // - Or rely on `Supplement.timeOfDay`
-
-      final supplement = _supplementCache[item.supplementId];
-      final timeOfDay = supplement?.timeOfDay?.toLowerCase() ?? 'morning';
-
-      if (slot == 'morning') {
-        return timeOfDay.contains('morning');
-      }
-      if (slot == 'afternoon') {
-        return timeOfDay.contains('afternoon');
-      }
-      if (slot == 'evening') {
-        return timeOfDay.contains('evening');
-      }
-      if (slot == 'night') {
-        return timeOfDay.contains('night') || timeOfDay.contains('bed');
-      }
-
-      return false;
-    }).toList();
+    return items;
   }
 
   Future<void> _updateTodayLog(LogEntry entry) async {
@@ -591,73 +604,12 @@ class DailyStackViewModel extends ChangeNotifier {
 
     if (allHandled) {
       AppLogger.d(
-          'Smart Nudge: All items handled. Skipping remaining nudges for today.');
-      final nudgeTime = _settingsRepository.getNudgeTime();
-      final nudgeEnabled = _settingsRepository.getNudgeModeEnabled();
-      final warningOption = _settingsRepository.getWarningNudgeOption();
+          'Smart Nudge: All items handled. Canceling all remaining nudges for today.');
 
-      if (!nudgeEnabled) {
-        return;
-      }
-
-      // 1000: Primary
-      await _notificationService.scheduleRecurringNotification(
-        id: 1000,
-        title: 'Time for your daily stack!',
-        body: 'Keep your streak alive. Take your supplements now.',
-        hour: nudgeTime.hour,
-        minute: nudgeTime.minute,
-        startFromTomorrow: true,
-      );
-
-      // 1001: Warning
-      if (warningOption == '15m' || warningOption == 'followup') {
-        int warningHour = nudgeTime.hour;
-        int warningMinute = nudgeTime.minute + 15;
-        if (warningMinute >= 60) {
-          warningHour = (warningHour + 1) % 24;
-          warningMinute = warningMinute - 60;
-        }
-
-        await _notificationService.scheduleRecurringNotification(
-          id: 1001,
-          title: 'Missed your stack?',
-          body: 'Just a friendly nudge to log your supplements!',
-          hour: warningHour,
-          minute: warningMinute,
-          startFromTomorrow: true,
-        );
-      }
-
-      // 1002: Follow-up
-      if (warningOption == 'followup' ||
-          _settingsRepository.getExtendedRemindersEnabled()) {
-        int secondHour = nudgeTime.hour;
-        int secondMinute = nudgeTime.minute + 30;
-        if (secondMinute >= 60) {
-          secondHour = (secondHour + 1) % 24;
-          secondMinute = secondMinute - 60;
-        }
-
-        await _notificationService.scheduleRecurringNotification(
-          id: 1002,
-          title: 'Still haven\'t logged?',
-          body: 'Consistency is key! tracking helps your doctor help you.',
-          hour: secondHour,
-          minute: secondMinute,
-          startFromTomorrow: true,
-        );
-      }
-
-      // 2000: Evening summary
-      await _notificationService.scheduleRecurringNotification(
-        id: 2000,
-        title: 'Daily Summary 🌙',
-        body: 'Tap to see your progress for today!',
-        hour: 20,
-        minute: 0,
-        startFromTomorrow: true,
-      );
+      // Cancel all global nudge notifications for today
+      await _notificationService.cancelNotification(1000);
+      await _notificationService.cancelNotification(1001);
+      await _notificationService.cancelNotification(1002);
     }
   }
 
@@ -688,7 +640,8 @@ class DailyStackViewModel extends ChangeNotifier {
 
     await Future.wait(supplementIds.map((id) async {
       try {
-        final supplement = await _supplementRepository.getSupplement(id);
+        final supplement =
+            await _supplementRepository.getSupplement(id, userId: _userId);
         if (supplement != null) {
           _supplementCache[id] = supplement;
         }

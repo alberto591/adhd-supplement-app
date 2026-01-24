@@ -37,51 +37,96 @@ class MockSupplementRepository extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i4.Supplement>> getAllSupplements() => (super.noSuchMethod(
+  _i3.Future<List<_i4.Supplement>> getAllSupplements({String? userId}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getAllSupplements,
           [],
+          {#userId: userId},
         ),
         returnValue: _i3.Future<List<_i4.Supplement>>.value(<_i4.Supplement>[]),
       ) as _i3.Future<List<_i4.Supplement>>);
 
   @override
-  _i3.Future<List<_i4.Supplement>> getSupplementsByCategory(String? category) =>
+  _i3.Future<List<_i4.Supplement>> getSupplementsByCategory(
+    String? category, {
+    String? userId,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #getSupplementsByCategory,
           [category],
+          {#userId: userId},
         ),
         returnValue: _i3.Future<List<_i4.Supplement>>.value(<_i4.Supplement>[]),
       ) as _i3.Future<List<_i4.Supplement>>);
 
   @override
-  _i3.Future<List<_i4.Supplement>> searchSupplements(String? query) =>
+  _i3.Future<List<_i4.Supplement>> searchSupplements(
+    String? query, {
+    String? userId,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #searchSupplements,
           [query],
+          {#userId: userId},
         ),
         returnValue: _i3.Future<List<_i4.Supplement>>.value(<_i4.Supplement>[]),
       ) as _i3.Future<List<_i4.Supplement>>);
 
   @override
-  _i3.Future<_i4.Supplement?> getSupplement(String? id) => (super.noSuchMethod(
+  _i3.Future<_i4.Supplement?> getSupplement(
+    String? id, {
+    String? userId,
+  }) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getSupplement,
           [id],
+          {#userId: userId},
         ),
         returnValue: _i3.Future<_i4.Supplement?>.value(),
       ) as _i3.Future<_i4.Supplement?>);
 
   @override
-  _i3.Stream<List<_i4.Supplement>> watchSupplements() => (super.noSuchMethod(
+  _i3.Stream<List<_i4.Supplement>> watchSupplements({String? userId}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #watchSupplements,
           [],
+          {#userId: userId},
         ),
         returnValue: _i3.Stream<List<_i4.Supplement>>.empty(),
       ) as _i3.Stream<List<_i4.Supplement>>);
+
+  @override
+  _i3.Future<void> saveCustomSupplement(_i4.Supplement? supplement) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveCustomSupplement,
+          [supplement],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> deleteCustomSupplement(
+    String? id,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteCustomSupplement,
+          [
+            id,
+            userId,
+          ],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> trackReferralClick(String? supplementId) =>

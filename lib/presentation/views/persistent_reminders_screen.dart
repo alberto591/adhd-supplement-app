@@ -356,19 +356,53 @@ class _PersistentRemindersContent extends StatelessWidget {
               isRadio: false, // Checkbox behavior
             ),
 
+            // Timeline Widget
+            const NudgeTimelineWidget(),
+
             const SizedBox(height: 32),
             Text(
-              'Visual Nudge Timeline',
+              'Notification Health',
               style: TextStyle(
                 color: isDark ? Colors.white : const Color(0xFF0F172A),
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 8),
+            Text(
+              'If reminders are behaving unexpectedly, use the button below to purge all active alerts and reset your schedule.',
+              style: TextStyle(
+                color: isDark ? Colors.grey[400] : Colors.grey[500],
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
             const SizedBox(height: 16),
 
-            // Timeline Widget
-            const NudgeTimelineWidget(),
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  viewModel.clearAllNotifications();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('All notifications cleared & reset.'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.cleaning_services, size: 20),
+                label: const Text('Clear All My Alarms'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.redAccent,
+                  side: const BorderSide(color: Colors.redAccent, width: 1.5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+            ),
 
             const SizedBox(height: 40),
 

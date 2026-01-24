@@ -459,7 +459,7 @@ class MockNotificationService extends _i1.Mock
 
   @override
   _i4.Future<void> schedulePersistentNudge({
-    required int? baseId,
+    required String? supplementId,
     required String? title,
     required String? body,
     required DateTime? initialTime,
@@ -470,7 +470,7 @@ class MockNotificationService extends _i1.Mock
           #schedulePersistentNudge,
           [],
           {
-            #baseId: baseId,
+            #supplementId: supplementId,
             #title: title,
             #body: body,
             #initialTime: initialTime,
@@ -483,7 +483,7 @@ class MockNotificationService extends _i1.Mock
 
   @override
   _i4.Future<void> snoozePersistentNudge({
-    required int? baseId,
+    required String? supplementId,
     required String? title,
     required String? body,
     int? maxNudges = 12,
@@ -493,7 +493,7 @@ class MockNotificationService extends _i1.Mock
           #snoozePersistentNudge,
           [],
           {
-            #baseId: baseId,
+            #supplementId: supplementId,
             #title: title,
             #body: body,
             #maxNudges: maxNudges,
@@ -504,16 +504,16 @@ class MockNotificationService extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> cancelNudgeSequence(
-    int? baseId,
-    int? count,
-  ) =>
+  _i4.Future<void> cancelAllSupplementNudges(
+    String? supplementId, [
+    int? maxNudges = 12,
+  ]) =>
       (super.noSuchMethod(
         Invocation.method(
-          #cancelNudgeSequence,
+          #cancelAllSupplementNudges,
           [
-            baseId,
-            count,
+            supplementId,
+            maxNudges,
           ],
         ),
         returnValue: _i4.Future<void>.value(),

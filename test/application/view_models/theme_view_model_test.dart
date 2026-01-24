@@ -78,6 +78,12 @@ class MockSettingsRepository implements SettingsRepository {
   double getFontSizeScale() => 1.0;
   @override
   Future<void> setFontSizeScale(double scale) async {}
+
+  @override
+  bool hasAcceptedDisclaimer() => true;
+
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
 }
 
 void main() {

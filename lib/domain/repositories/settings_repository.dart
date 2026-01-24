@@ -45,4 +45,8 @@ abstract class SettingsRepository {
 
   double getFontSizeScale();
   Future<void> setFontSizeScale(double scale);
+
+  // Compliance
+  bool hasAcceptedDisclaimer();
+  Future<void> setAcceptedDisclaimer(bool accepted);
 }

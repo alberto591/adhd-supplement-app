@@ -8,6 +8,7 @@ class StackItemCard extends StatefulWidget {
   final Color iconColor;
   final Color iconBgColor;
   final VoidCallback onRemove;
+  final VoidCallback? onTap;
 
   const StackItemCard({
     super.key,
@@ -17,6 +18,7 @@ class StackItemCard extends StatefulWidget {
     required this.iconColor,
     required this.iconBgColor,
     required this.onRemove,
+    this.onTap,
   });
 
   @override
@@ -56,7 +58,6 @@ class _StackItemCardState extends State<StackItemCard>
         ).animate(_animation),
         child: Container(
           margin: const EdgeInsets.only(bottom: 8),
-          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: AppColors.cardDark,
             borderRadius: BorderRadius.circular(12),
@@ -69,59 +70,82 @@ class _StackItemCardState extends State<StackItemCard>
               ),
             ],
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+          child: InkWell(
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: widget.iconBgColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(widget.icon, color: widget.iconColor, size: 20),
-                  ),
-                  const SizedBox(width: 12),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Text(
-                          widget.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: widget.iconBgColor,
+                            borderRadius: BorderRadius.circular(8),
                           ),
+                          child: Icon(widget.icon,
+                              color: widget.iconColor, size: 20),
                         ),
-                        Text(
-                          widget.dosage,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: AppColors.textSecondaryDark,
-                            fontSize: 12,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      widget.dosage.isEmpty
+                                          ? 'No dosage set'
+                                          : widget.dosage,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: AppColors.textSecondaryDark,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  if (widget.onTap != null) ...[
+                                    const SizedBox(width: 4),
+                                    const Icon(Icons.edit_outlined,
+                                        size: 12, color: AppColors.primary),
+                                  ],
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
+                  IconButton(
+                    onPressed: widget.onRemove,
+                    icon: const Icon(Icons.remove_circle_outline,
+                        color: AppColors.textSecondaryDark, size: 20),
+                    style: IconButton.styleFrom(
+                      hoverColor: Colors.red.withValues(alpha: 0.1),
+                      highlightColor: Colors.red.withValues(alpha: 0.2),
+                    ),
+                  ),
                 ],
               ),
-              IconButton(
-                onPressed: widget.onRemove,
-                icon: const Icon(Icons.remove_circle_outline,
-                    color: AppColors.textSecondaryDark, size: 20),
-                style: IconButton.styleFrom(
-                  hoverColor: Colors.red.withValues(alpha: 0.1),
-                  highlightColor: Colors.red.withValues(alpha: 0.2),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

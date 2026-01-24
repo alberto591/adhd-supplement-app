@@ -17,6 +17,7 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   static const String _keyReducedMotion = 'reduced_motion_enabled';
   static const String _keyHapticFeedback = 'haptic_feedback_enabled';
   static const String _keyFontSizeScale = 'font_size_scale';
+  static const String _keyAcceptedDisclaimer = 'accepted_medical_disclaimer';
 
   @override
   Future<void> init() async {
@@ -181,5 +182,15 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   @override
   Future<void> setFontSizeScale(double scale) async {
     await _prefs.setDouble(_keyFontSizeScale, scale);
+  }
+
+  @override
+  bool hasAcceptedDisclaimer() {
+    return _prefs.getBool(_keyAcceptedDisclaimer) ?? false;
+  }
+
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {
+    await _prefs.setBool(_keyAcceptedDisclaimer, accepted);
   }
 }

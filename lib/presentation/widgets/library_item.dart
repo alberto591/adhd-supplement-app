@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class LibraryItem extends StatelessWidget {
+  final String id;
   final String name;
   final String dosage;
   final IconData icon;
@@ -11,6 +12,7 @@ class LibraryItem extends StatelessWidget {
 
   const LibraryItem({
     super.key,
+    required this.id,
     required this.name,
     required this.dosage,
     required this.icon,
@@ -23,7 +25,7 @@ class LibraryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // We wrap in Draggable used for drag-and-drop
     return Draggable<String>(
-      data: name,
+      data: id,
       feedback: Transform.scale(
         scale: 1.05,
         child: Material(

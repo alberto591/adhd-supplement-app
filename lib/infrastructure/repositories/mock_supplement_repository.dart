@@ -6,7 +6,7 @@ class MockSupplementRepository implements SupplementRepository {
   const MockSupplementRepository(); // Added const constructor
 
   @override
-  Future<List<Supplement>> getAllSupplements() async {
+  Future<List<Supplement>> getAllSupplements({String? userId}) async {
     await Future<void>.delayed(
         const Duration(milliseconds: 500)); // Simulate net lag
     return const [
@@ -69,8 +69,8 @@ class MockSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Future<Supplement?> getSupplement(String id) async {
-    final supplements = await getAllSupplements();
+  Future<Supplement?> getSupplement(String id, {String? userId}) async {
+    final supplements = await getAllSupplements(userId: userId);
     try {
       return supplements.firstWhere((s) => s.id == id);
     } catch (_) {
@@ -79,14 +79,16 @@ class MockSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Future<List<Supplement>> getSupplementsByCategory(String category) async {
-    final supplements = await getAllSupplements();
+  Future<List<Supplement>> getSupplementsByCategory(String category,
+      {String? userId}) async {
+    final supplements = await getAllSupplements(userId: userId);
     return supplements.where((s) => s.category == category).toList();
   }
 
   @override
-  Future<List<Supplement>> searchSupplements(String query) async {
-    final supplements = await getAllSupplements();
+  Future<List<Supplement>> searchSupplements(String query,
+      {String? userId}) async {
+    final supplements = await getAllSupplements(userId: userId);
     final lowerQuery = query.toLowerCase();
     return supplements.where((s) {
       return s.name.toLowerCase().contains(lowerQuery) ||
@@ -96,9 +98,19 @@ class MockSupplementRepository implements SupplementRepository {
   }
 
   @override
-  Stream<List<Supplement>> watchSupplements() async* {
-    final supplements = await getAllSupplements();
+  Stream<List<Supplement>> watchSupplements({String? userId}) async* {
+    final supplements = await getAllSupplements(userId: userId);
     yield supplements;
+  }
+
+  @override
+  Future<void> saveCustomSupplement(Supplement supplement) async {
+    AppLogger.d('Mock: Saved custom supplement ${supplement.name}');
+  }
+
+  @override
+  Future<void> deleteCustomSupplement(String id, String userId) async {
+    AppLogger.d('Mock: Deleted custom supplement $id for user $userId');
   }
 
   @override
