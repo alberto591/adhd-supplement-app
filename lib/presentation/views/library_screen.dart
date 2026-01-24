@@ -961,109 +961,109 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 
   void _showFiltersDrawer(BuildContext context) {
-    final viewModel = context.read<LibraryViewModel>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.75,
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.backgroundDark : Colors.white,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-        ),
-        child: Column(
-          children: [
-            const SizedBox(height: 12),
-            Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(2),
+      builder: (context) => Consumer<LibraryViewModel>(
+        builder: (context, viewModel, child) => Container(
+          height: MediaQuery.of(context).size.height * 0.75,
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.backgroundDark : Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 12),
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-            ),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(24),
-                children: [
-                  Text(
-                    'Advanced Filters',
-                    style: GoogleFonts.lexend(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(24),
+                  children: [
+                    Text(
+                      'Advanced Filters',
+                      style: GoogleFonts.lexend(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 32),
-                  _buildFilterSection(
-                    'Evidence Strength',
-                    ['High', 'Moderate', 'Low'],
-                    viewModel.evidenceStrength,
-                    (val) => viewModel.filterByEvidence(val),
-                    isDark,
-                  ),
-                  const SizedBox(height: 24),
-                  _buildFilterSection(
-                    'Stimulant Compatible',
-                    ['Safe', 'Caution'],
-                    viewModel.stimulantCompatible == null
-                        ? null
-                        : (viewModel.stimulantCompatible! ? 'Safe' : 'Caution'),
-                    (val) => viewModel.filterByStimulant(val == 'Safe'),
-                    isDark,
-                  ),
-                  const SizedBox(height: 24),
-                  _buildFilterSection(
-                    'Form',
-                    ['Capsule', 'Tablet', 'Liquid', 'Powder'],
-                    viewModel.form,
-                    (val) => viewModel.filterByForm(val),
-                    isDark,
-                  ),
-                  const SizedBox(height: 40),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            viewModel.clearFilters();
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Clear All',
-                            style: GoogleFonts.lexend(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
+                    const SizedBox(height: 32),
+                    _buildFilterSection(
+                      'Evidence Strength',
+                      ['High', 'Moderate', 'Low'],
+                      viewModel.evidenceStrength,
+                      (val) => viewModel.filterByEvidence(val),
+                      isDark,
+                    ),
+                    const SizedBox(height: 24),
+                    _buildFilterSection(
+                      'Stimulant Compatible',
+                      ['Safe', 'Caution'],
+                      viewModel.stimulantCompatible == null
+                          ? null
+                          : (viewModel.stimulantCompatible! ? 'Safe' : 'Caution'),
+                      (val) => viewModel.filterByStimulant(val == 'Safe'),
+                      isDark,
+                    ),
+                    const SizedBox(height: 24),
+                    _buildFilterSection(
+                      'Form',
+                      ['Capsule', 'Tablet', 'Liquid', 'Powder'],
+                      viewModel.form,
+                      (val) => viewModel.filterByForm(val),
+                      isDark,
+                    ),
+                    const SizedBox(height: 40),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              viewModel.clearFilters();
+                            },
+                            child: Text(
+                              'Clear All',
+                              style: GoogleFonts.lexend(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryGold,
-                            foregroundColor: Colors.black,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.pop(context),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryGold,
+                              foregroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            child: Text(
+                              'Show Results',
+                              style:
+                                  GoogleFonts.lexend(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          child: Text(
-                            'Show Results',
-                            style:
-                                GoogleFonts.lexend(fontWeight: FontWeight.bold),
-                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

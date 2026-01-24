@@ -477,8 +477,13 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                         if (!isCollapsed) ...[
                                           if (stack.items.isEmpty)
                                             const Padding(
-                                              padding: EdgeInsets.symmetric(vertical: 8),
-                                              child: Text('   (No items in this stack)', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 8),
+                                              child: Text(
+                                                  '   (No items in this stack)',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey)),
                                             ),
                                           ...stack.items
                                               .where((item) =>
@@ -488,7 +493,8 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                                       .isSupplementSkipped(
                                                           item.supplementId))
                                               .map((stackItem) {
-                                            debugPrint('RENDERING item ${stackItem.supplementId} in stack ${stack.name}');
+                                            debugPrint(
+                                                'RENDERING item ${stackItem.supplementId} in stack ${stack.name}');
                                             final supplement =
                                                 viewModel.getSupplement(
                                                     stackItem.supplementId);
@@ -649,13 +655,13 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                                           'Item',
                                                       stackItem.supplementId);
                                                 },
-                                            ),
-                                          );
+                                              ),
+                                            );
                                           }),
+                                        ],
                                       ],
-                                    ],
-                                  );
-                                }),
+                                    );
+                                  }),
 
                                   // Skipped Items Section
                                   if (viewModel.hasSkippedItems) ...[

@@ -51,45 +51,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Consumer<SubscriptionViewModel>(
-                builder: (context, viewModel, _) {
-              return TextButton(
-                onPressed: viewModel.isLoading
-                    ? null
-                    : () async {
-                        await viewModel.restorePurchases();
-                        if (!mounted) return;
-
-                        if (viewModel.isSubscribed) {
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Purchases Restored!')));
-
-                          if (!mounted) return;
-                          Future.delayed(const Duration(seconds: 1), () {
-                            if (mounted) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.pop(context);
-                            }
-                          });
-                        }
-                      },
-                child: Text(
-                  'Restore',
-                  style: GoogleFonts.lexend(
-                    color: AppColors.primaryGold,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              );
-            }),
-          ),
-        ],
       ),
       body:
           Consumer<SubscriptionViewModel>(builder: (context, viewModel, child) {

@@ -90,10 +90,12 @@ class DailyStackViewModel extends ChangeNotifier {
   /// Helper to get slot from stack name (internal consistency)
   String _getSlotFromName(String name) {
     final lower = name.toLowerCase();
-    if (lower.contains('morning') || lower.contains('startup'))
+    if (lower.contains('morning') || lower.contains('startup')) {
       return 'morning';
-    if (lower.contains('afternoon') || lower.contains('boost'))
+    }
+    if (lower.contains('afternoon') || lower.contains('boost')) {
       return 'afternoon';
+    }
     if (lower.contains('evening')) return 'evening';
     if (lower.contains('night') || lower.contains('recovery')) return 'night';
     return lower;

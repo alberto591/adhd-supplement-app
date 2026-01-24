@@ -88,7 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      '${viewModel.greeting}, Alex', // Name hardcoded as per spec "Good Morning, Alex" - ideally from AuthProvider
+                                      viewModel.greeting, // Only show time-based greeting
                                       style: TextStyle(
                                         color: isDark
                                             ? Colors.white
