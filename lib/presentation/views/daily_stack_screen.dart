@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../theme/app_theme.dart';
-import '../../utils/supplement_ui_helper.dart';
-import '../widgets/up_next_card.dart';
-import '../widgets/daily_stack_item.dart';
-import '../widgets/symptom_quick_log.dart';
-import '../widgets/symptom_check_in_modal.dart';
-import '../widgets/celebration_animation.dart';
-import '../widgets/skeleton_loader.dart';
-import '../navigation/app_router.dart';
-import '../view_models/daily_stack_view_model.dart';
-import '../../domain/entities/supplement_stack.dart';
-import '../../application/providers/auth_provider.dart';
-import '../../application/view_models/safety_view_model.dart';
-import '../../config/locator.dart';
+import 'package:adhd_supplement_app/presentation/theme/app_theme.dart';
+import 'package:adhd_supplement_app/utils/supplement_ui_helper.dart';
+import 'package:adhd_supplement_app/presentation/widgets/up_next_card.dart';
+import 'package:adhd_supplement_app/presentation/widgets/daily_progress_card.dart';
+import 'package:adhd_supplement_app/presentation/widgets/celebration_animation.dart';
+import 'package:adhd_supplement_app/presentation/widgets/medication_card.dart';
+import 'package:adhd_supplement_app/presentation/widgets/skeleton_loader.dart';
+import 'package:adhd_supplement_app/presentation/widgets/unified_bottom_nav.dart';
+import 'package:adhd_supplement_app/presentation/navigation/app_router.dart';
+import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
+import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
+import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
+import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
+import 'package:adhd_supplement_app/config/locator.dart';
 
 class DailyStackScreen extends StatefulWidget {
   const DailyStackScreen({super.key});
@@ -32,7 +32,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
     super.initState();
     // Get userId from AuthProvider
     final authProvider = context.read<AuthProvider>();
-    final userId = authProvider.user?.id ?? 'demo_user';
+    final userId = authProvider.user?.id ?? '';
 
     // Create ViewModel instances
     _viewModel = locator.get<DailyStackViewModel>(param1: userId);
@@ -203,70 +203,98 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                     children: [
                       Column(
                         children: [
-                          // Top App Bar
+                          // Dashboard-style Header
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 12),
                             child: Row(
                               children: [
-                                GestureDetector(
-                                  onTap: () => Navigator.pushReplacementNamed(
-                                      context, AppRouter.dashboard),
-                                  child: Icon(Icons.arrow_back_ios_new,
-                                      color: iconColor, size: 24),
-                                ),
+                                // Greeting & Date
                                 Expanded(
-                                  child: Text(
-                                    'Daily Stack',
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        DateTime.now()
+                                            .toString()
+                                            .split(' ')[0]
+                                            .toUpperCase(), // Simple today string
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 10,
                                           fontWeight: FontWeight.bold,
-                                          color: textColor,
+                                          letterSpacing: 1.2,
                                         ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        viewModel.greeting,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: textColor,
+                                            ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () => Navigator.pushNamed(
-                                      context, AppRouter.nightlyReflection),
-                                  child: Icon(Icons.nightlight_round,
-                                      color: iconColor, size: 24),
-                                ),
-                                const SizedBox(width: 16),
-                                Consumer<AuthProvider>(
-                                  builder: (context, auth, _) {
-                                    final isPremium =
-                                        auth.canAccess('stack_builder');
-                                    return Stack(
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        GestureDetector(
+
+                                // Actions
+                                Row(
+                                  children: [
+                                    Consumer<AuthProvider>(
+                                      builder: (context, auth, _) {
+                                        final isPremium =
+                                            auth.canAccess('stack_builder');
+                                        return GestureDetector(
                                           onTap: () => Navigator.pushNamed(
                                               context, AppRouter.stackBuilder),
-                                          child: Icon(
-                                              Icons.auto_awesome_mosaic_rounded,
-                                              color: iconColor,
-                                              size: 24),
-                                        ),
-                                        if (!isPremium)
-                                          Positioned(
-                                            top: -4,
-                                            right: -4,
-                                            child: Container(
-                                              padding: const EdgeInsets.all(2),
-                                              decoration: const BoxDecoration(
-                                                color: AppColors.primaryGold,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: const Icon(Icons.lock,
-                                                  size: 8, color: Colors.black),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: isDark
+                                                  ? const Color(0xFF1A1F2E)
+                                                  : Colors.grey[200],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              children: [
+                                                const Icon(
+                                                    Icons.auto_awesome_mosaic,
+                                                    color:
+                                                        AppColors.primaryGold,
+                                                    size: 20),
+                                                if (!isPremium)
+                                                  Positioned(
+                                                    top: -4,
+                                                    right: -4,
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: AppColors
+                                                            .primaryGold,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: const Icon(
+                                                          Icons.lock,
+                                                          size: 8,
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                              ],
                                             ),
                                           ),
-                                      ],
-                                    );
-                                  },
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -279,389 +307,114 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Progress Section
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 24),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Today's Progress",
-                                              style: TextStyle(
-                                                color: textColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Text(
-                                              "${(viewModel.todayProgress * 100).round()}%",
-                                              style: const TextStyle(
-                                                color: AppColors.primaryGold,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Stack(
-                                          children: [
-                                            Container(
-                                              height: 10,
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.primaryGold
-                                                    .withValues(alpha: 0.2),
-                                                borderRadius:
-                                                    BorderRadius.circular(999),
-                                              ),
-                                            ),
-                                            Container(
-                                              height: 10,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  viewModel.todayProgress,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.primaryGold,
-                                                borderRadius:
-                                                    BorderRadius.circular(999),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Text(
-                                          viewModel.progressText,
-                                          style: TextStyle(
-                                            color: isDark
-                                                ? const Color(0xFF9DB9A8)
-                                                : Colors.grey[600],
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  // 2. Daily Progress Section
+                                  DailyProgressCard(
+                                    streakCount: viewModel.streakCount,
+                                    progress: viewModel.todayProgress,
+                                    isDark: isDark,
                                   ),
-
-                                  // Up Next
-                                  if (viewModel.upcomingStack != null)
-                                    UpNextCard(
-                                      title: viewModel.upcomingStack!['title']
-                                          as String,
-                                      subtitle: viewModel
-                                          .upcomingStack!['subtitle'] as String,
-                                      timeLabel:
-                                          (viewModel.upcomingStack!['time']
-                                                  as TimeOfDay)
-                                              .format(context),
-                                      itemCount: (viewModel
-                                              .upcomingStack!['items'] as List)
-                                          .length,
-                                      onTakeAll: () async {
-                                        // Logic to take all items in this slot
-                                        final items = viewModel
-                                            .upcomingStack!['items'] as List;
-                                        for (final dynamic item in items) {
-                                          final stackItem = item as StackItem;
-                                          await viewModel.markSupplementTaken(
-                                              stackItem.supplementId);
-                                        }
-                                      },
-                                    ),
                                   const SizedBox(height: 32),
 
-                                  // Stack Details Header
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Stack Details",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: textColor,
-                                              fontSize: 18,
-                                            ),
-                                      ),
-                                      TextButton.icon(
-                                        onPressed: viewModel.toggleAllExpansion,
-                                        icon: Icon(
-                                          viewModel.allCollapsed
-                                              ? Icons.unfold_more
-                                              : Icons.unfold_less,
-                                          size: 18,
-                                          color: AppColors.primaryGold,
-                                        ),
-                                        label: Text(
-                                          viewModel.allCollapsed
-                                              ? "Expand All"
-                                              : "Collapse All",
-                                          style: const TextStyle(
-                                            color: AppColors.primaryGold,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 12),
+                                  // 3. Up Next Section (Dynamic)
+                                  _buildUpNextSection(viewModel, isDark),
+                                  const SizedBox(height: 32),
 
-                                  // Stack Items - grouped by stack with expansion
-                                  ...viewModel.stacks.map((stack) {
-                                    final isCollapsed = viewModel
-                                        .collapsedStackIds
-                                        .contains(stack.id);
+                                  // 4. Slots Section
+                                  // Morning Slot
+                                  if (viewModel.morningItems.isNotEmpty)
+                                    _buildSlotSection(
+                                        context,
+                                        'Morning',
+                                        viewModel.morningItems,
+                                        isDark,
+                                        textColor,
+                                        secondaryTextColor),
 
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Individual Stack Header/Toggle
-                                        GestureDetector(
-                                          onTap: () => viewModel
-                                              .toggleStackExpansion(stack.id),
-                                          behavior: HitTestBehavior.opaque,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 12, top: 8),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 4,
-                                                  height: 16,
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.primaryGold
-                                                        .withValues(alpha: 0.5),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            2),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  stack.name,
-                                                  style: TextStyle(
-                                                    color: textColor.withValues(
-                                                        alpha: 0.8),
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    letterSpacing: 0.5,
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                Icon(
-                                                  isCollapsed
-                                                      ? Icons
-                                                          .keyboard_arrow_down
-                                                      : Icons.keyboard_arrow_up,
+                                  // Afternoon Slot
+                                  if (viewModel.afternoonItems.isNotEmpty)
+                                    _buildSlotSection(
+                                        context,
+                                        'Afternoon',
+                                        viewModel.afternoonItems,
+                                        isDark,
+                                        textColor,
+                                        secondaryTextColor),
+
+                                  // Evening Slot
+                                  if (viewModel.eveningItems.isNotEmpty)
+                                    _buildSlotSection(
+                                        context,
+                                        'Evening',
+                                        viewModel.eveningItems,
+                                        isDark,
+                                        textColor,
+                                        secondaryTextColor),
+
+                                  // Night Slot
+                                  if (viewModel.nightItems.isNotEmpty)
+                                    _buildSlotSection(
+                                        context,
+                                        'Night',
+                                        viewModel.nightItems,
+                                        isDark,
+                                        textColor,
+                                        secondaryTextColor),
+
+                                  if (viewModel.morningItems.isEmpty &&
+                                      viewModel.afternoonItems.isEmpty &&
+                                      viewModel.eveningItems.isEmpty &&
+                                      viewModel.nightItems.isEmpty) ...[
+                                    if (viewModel.stacks.isEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 32),
+                                        child: Center(
+                                          child: Column(
+                                            children: [
+                                              Icon(Icons.add_circle_outline,
                                                   color: secondaryTextColor,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                                  size: 48),
+                                              const SizedBox(height: 16),
+                                              Text(
+                                                'No stacks configured',
+                                                style: TextStyle(
+                                                    color: secondaryTextColor,
+                                                    fontSize: 16),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              ElevatedButton(
+                                                onPressed: () =>
+                                                    Navigator.pushNamed(context,
+                                                        AppRouter.stackBuilder),
+                                                child:
+                                                    const Text('Create Stack'),
+                                              ),
+                                            ],
                                           ),
                                         ),
-
-                                        // Items in this stack
-                                        if (!isCollapsed) ...[
-                                          if (stack.items.isEmpty)
-                                            const Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 8),
-                                              child: Text(
-                                                  '   (No items in this stack)',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.grey)),
-                                            ),
-                                          ...stack.items
-                                              .where((item) =>
-                                                  !viewModel.isSupplementTaken(
-                                                      item.supplementId) &&
-                                                  !viewModel
-                                                      .isSupplementSkipped(
-                                                          item.supplementId))
-                                              .map((stackItem) {
-                                            debugPrint(
-                                                'RENDERING item ${stackItem.supplementId} in stack ${stack.name}');
-                                            final supplement =
-                                                viewModel.getSupplement(
-                                                    stackItem.supplementId);
-                                            final isTaken =
-                                                viewModel.isSupplementTaken(
-                                                    stackItem.supplementId);
-
-                                            return Dismissible(
-                                              key: Key(
-                                                  'dismiss_${stack.id}_${stackItem.supplementId}'),
-                                              direction:
-                                                  DismissDirection.horizontal,
-                                              background: Container(
-                                                margin: const EdgeInsets.only(
-                                                    bottom: 12),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                ),
-                                                alignment: Alignment.centerLeft,
-                                                padding: const EdgeInsets.only(
-                                                    left: 24),
-                                                child: const Icon(Icons.check,
-                                                    color: Colors.white,
-                                                    size: 32),
+                                      )
+                                    else
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 40),
+                                        child: Center(
+                                          child: Column(
+                                            children: [
+                                              Icon(Icons.done_all,
+                                                  color: Colors.green
+                                                      .withValues(alpha: 0.5),
+                                                  size: 48),
+                                              const SizedBox(height: 16),
+                                              Text(
+                                                'All stacks completed for today!',
+                                                style: TextStyle(
+                                                    color: secondaryTextColor),
                                               ),
-                                              secondaryBackground: Container(
-                                                margin: const EdgeInsets.only(
-                                                    bottom: 12),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey,
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                ),
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                padding: const EdgeInsets.only(
-                                                    right: 24),
-                                                child: const Icon(Icons.close,
-                                                    color: Colors.white,
-                                                    size: 32),
-                                              ),
-                                              onDismissed: (direction) async {
-                                                final wasTaken =
-                                                    viewModel.isSupplementTaken(
-                                                        stackItem.supplementId);
-
-                                                if (direction ==
-                                                    DismissDirection
-                                                        .startToEnd) {
-                                                  // Mark as taken
-                                                  if (!wasTaken) {
-                                                    setState(() =>
-                                                        _showCelebration =
-                                                            true);
-                                                  }
-                                                  await viewModel
-                                                      .toggleSupplement(
-                                                          stackItem
-                                                              .supplementId);
-                                                } else {
-                                                  // Mark as skipped
-                                                  await viewModel
-                                                      .markSupplementSkipped(
-                                                          stackItem
-                                                              .supplementId);
-                                                }
-
-                                                // Cleanup celebration if we showed it
-                                                if (direction ==
-                                                        DismissDirection
-                                                            .startToEnd &&
-                                                    !wasTaken) {
-                                                  Future.delayed(
-                                                      const Duration(
-                                                          milliseconds: 1500),
-                                                      () {
-                                                    if (mounted) {
-                                                      setState(() =>
-                                                          _showCelebration =
-                                                              false);
-                                                    }
-                                                  });
-                                                }
-                                              },
-                                              child: DailyStackItem(
-                                                name: supplement?.name ??
-                                                    'Loading...',
-                                                details: stackItem
-                                                        .customDosage ??
-                                                    supplement?.defaultDosage ??
-                                                    '',
-                                                icon: SupplementUIHelper
-                                                    .getIconForCategory(
-                                                        supplement?.category ??
-                                                            ''),
-                                                isTaken: isTaken,
-                                                timeStatus:
-                                                    stackItem.scheduledTime ??
-                                                        viewModel.getTimeStatus(
-                                                            stack.timeOfDay),
-                                                onTap: () async {
-                                                  // Tap logic duplicates dismiss logic for accessibility
-                                                  final wasTaken = viewModel
-                                                      .isSupplementTaken(
-                                                          stackItem
-                                                              .supplementId);
-                                                  final isSkipped = viewModel
-                                                      .isSupplementSkipped(
-                                                          stackItem
-                                                              .supplementId);
-
-                                                  if (!wasTaken && !isSkipped) {
-                                                    setState(() =>
-                                                        _showCelebration =
-                                                            true);
-                                                  }
-
-                                                  await viewModel
-                                                      .toggleSupplement(
-                                                          stackItem
-                                                              .supplementId);
-
-                                                  if (!wasTaken &&
-                                                      !isSkipped &&
-                                                      viewModel.isSupplementTaken(
-                                                          stackItem
-                                                              .supplementId)) {
-                                                    Future.delayed(
-                                                        const Duration(
-                                                            milliseconds: 1500),
-                                                        () {
-                                                      if (mounted) {
-                                                        setState(() =>
-                                                            _showCelebration =
-                                                                false);
-                                                      }
-                                                    });
-                                                  }
-                                                },
-                                                onInfoTap: () {
-                                                  final supplement = viewModel
-                                                      .getSupplement(stackItem
-                                                          .supplementId);
-                                                  if (supplement != null) {
-                                                    Navigator.pushNamed(
-                                                        context,
-                                                        AppRouter
-                                                            .supplementDetail,
-                                                        arguments: supplement);
-                                                  }
-                                                },
-                                                onLongPress: () {
-                                                  _showItemOptions(
-                                                      context,
-                                                      supplement?.name ??
-                                                          'Item',
-                                                      stackItem.supplementId);
-                                                },
-                                              ),
-                                            );
-                                          }),
-                                        ],
-                                      ],
-                                    );
-                                  }),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                  ],
 
                                   // Skipped Items Section
                                   if (viewModel.hasSkippedItems) ...[
@@ -682,108 +435,36 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                       final supplement =
                                           viewModel.getSupplement(
                                               stackItem.supplementId);
-                                      return DailyStackItem(
-                                        name: supplement?.name ?? 'Item',
-                                        details: stackItem.customDosage ??
+                                      return MedicationCard(
+                                        key: ValueKey(
+                                            'med_skipped_${stackItem.supplementId}'),
+                                        title: supplement?.name ?? 'Item',
+                                        dosage: stackItem.customDosage ??
                                             supplement?.defaultDosage ??
                                             '',
+                                        form: supplement?.form ?? 'Pill',
                                         icon: SupplementUIHelper
-                                            .getIconForCategory(
+                                            .getIconForSupplement(
+                                                supplement?.name ?? '',
                                                 supplement?.category ?? ''),
+                                        iconColor: Color(int.parse(
+                                            (supplement?.colorHex ?? '#D4A411')
+                                                .replaceFirst('#', '0xFF'))),
                                         isTaken: false,
                                         isSkipped: true,
-                                        timeStatus: 'Skipped',
+                                        statusText: 'Skipped',
                                         onTap: () async {
                                           // Unskip by toggling
                                           await viewModel.toggleSupplement(
                                               stackItem.supplementId);
                                         },
-                                        onInfoTap: () {
-                                          if (supplement != null) {
-                                            Navigator.pushNamed(context,
-                                                AppRouter.supplementDetail,
-                                                arguments: supplement);
-                                          }
-                                        },
+                                        onMoreOptions: () => _showItemOptions(
+                                            context,
+                                            supplement?.name ?? 'Supplement',
+                                            stackItem.supplementId),
                                       );
                                     }),
                                   ],
-
-                                  // Fallback if no stacks
-                                  if (viewModel.stacks.isEmpty)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 32),
-                                      child: Center(
-                                        child: Column(
-                                          children: [
-                                            Icon(Icons.add_circle_outline,
-                                                color: secondaryTextColor,
-                                                size: 48),
-                                            const SizedBox(height: 16),
-                                            Text(
-                                              'No stacks configured',
-                                              style: TextStyle(
-                                                  color: secondaryTextColor,
-                                                  fontSize: 16),
-                                            ),
-                                            const SizedBox(height: 8),
-                                            ElevatedButton(
-                                              onPressed: () =>
-                                                  Navigator.pushNamed(context,
-                                                      AppRouter.stackBuilder),
-                                              child: const Text('Create Stack'),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-
-                                  const SizedBox(height: 24),
-
-                                  // View Insights Button
-                                  Consumer<AuthProvider>(
-                                    builder: (context, auth, _) {
-                                      final isPremium = auth.canAccess('pro');
-                                      return SizedBox(
-                                        width: double.infinity,
-                                        child: OutlinedButton(
-                                          onPressed: () => Navigator.pushNamed(
-                                              context, AppRouter.insights),
-                                          style: OutlinedButton.styleFrom(
-                                            foregroundColor:
-                                                AppColors.primaryGold,
-                                            side: const BorderSide(
-                                                color: AppColors.primaryGold),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Icon(Icons.insights,
-                                                  size: 20),
-                                              const SizedBox(width: 8),
-                                              const Text('View Insights'),
-                                              if (!isPremium) ...[
-                                                const SizedBox(width: 8),
-                                                const Icon(Icons.lock,
-                                                    size: 14),
-                                              ],
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-
-                                  const SizedBox(height: 24),
-                                  const SymptomQuickLog(),
                                 ],
                               ),
                             ),
@@ -812,22 +493,8 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
               ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _showCheckInModal,
-          backgroundColor: AppColors.primaryGold,
-          child: const Icon(Icons.check, color: AppColors.backgroundDark),
-        ),
-        // bottomNavigationBar: const UnifiedBottomNav(currentIndex: 1),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 0),
       ),
-    );
-  }
-
-  void _showCheckInModal() {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => const SymptomCheckInModal(),
     );
   }
 
@@ -899,6 +566,198 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSlotSection(
+    BuildContext context,
+    String title,
+    List<StackItem> items,
+    bool isDark,
+    Color textColor,
+    Color secondaryTextColor,
+  ) {
+    if (items.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16, top: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 4,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryGold.withValues(alpha: 0.6),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    title.toUpperCase(),
+                    style: TextStyle(
+                      color: textColor.withValues(alpha: 0.8),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '• ${items.length} ${items.length == 1 ? 'item' : 'items'}',
+                    style: TextStyle(
+                      color: secondaryTextColor,
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
+              TextButton(
+                onPressed: () async {
+                  for (final item in items) {
+                    await _viewModel.markSupplementTaken(item.supplementId);
+                  }
+                  if (mounted) {
+                    setState(() => _showCelebration = true);
+                  }
+                },
+                style: TextButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: const Text(
+                  'Mark all as taken',
+                  style: TextStyle(
+                    color: AppColors.primaryGold,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        ...items.map((stackItem) {
+          final supplement = _viewModel.getSupplement(stackItem.supplementId);
+          final isTaken = _viewModel.isSupplementTaken(stackItem.supplementId);
+
+          return Dismissible(
+            key: Key('dismiss_${title}_${stackItem.supplementId}'),
+            direction: DismissDirection.horizontal,
+            background: Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 24),
+              child: const Icon(Icons.check, color: Colors.white, size: 32),
+            ),
+            secondaryBackground: Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 24),
+              child: const Icon(Icons.close, color: Colors.white, size: 32),
+            ),
+            onDismissed: (direction) async {
+              if (direction == DismissDirection.startToEnd) {
+                if (!isTaken) {
+                  setState(() => _showCelebration = true);
+                }
+                await _viewModel.toggleSupplement(stackItem.supplementId);
+              } else {
+                await _viewModel.markSupplementSkipped(stackItem.supplementId);
+              }
+            },
+            child: MedicationCard(
+              key: ValueKey('med_${title}_${stackItem.supplementId}'),
+              title: supplement?.name ?? 'Loading...',
+              dosage: stackItem.customDosage ?? supplement?.defaultDosage ?? '',
+              form: supplement?.form ?? 'Pill',
+              icon: SupplementUIHelper.getIconForSupplement(
+                  supplement?.name ?? '', supplement?.category ?? ''),
+              iconColor: Color(int.parse((supplement?.colorHex ?? '#D4A411')
+                  .replaceFirst('#', '0xFF'))),
+              isTaken: isTaken,
+              statusText: isTaken
+                  ? 'Taken'
+                  : stackItem.scheduledTime ??
+                      _viewModel.getItemTimeStatus(stackItem),
+              onTake: () =>
+                  _viewModel.markSupplementTaken(stackItem.supplementId),
+              onMoreOptions: () => _showItemOptions(context,
+                  supplement?.name ?? 'Supplement', stackItem.supplementId),
+              onTap: () {
+                if (supplement != null) {
+                  Navigator.pushNamed(context, AppRouter.supplementDetail,
+                      arguments: supplement);
+                }
+              },
+            ),
+          );
+        }),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildUpNextSection(DailyStackViewModel viewModel, bool isDark) {
+    // Determine which slot is next
+    final now = DateTime.now();
+    final hour = now.hour;
+
+    String slot;
+    List<StackItem> items;
+    String timeLabel;
+
+    if (hour < 11) {
+      slot = 'Morning';
+      items = viewModel.morningItems;
+      timeLabel = 'Before 11:00 AM';
+    } else if (hour < 16) {
+      slot = 'Afternoon';
+      items = viewModel.afternoonItems;
+      timeLabel = 'Before 4:00 PM';
+    } else if (hour < 21) {
+      slot = 'Evening';
+      items = viewModel.eveningItems;
+      timeLabel = 'Before 9:00 PM';
+    } else {
+      slot = 'Night';
+      items = viewModel.nightItems;
+      timeLabel = 'Before Bed';
+    }
+
+    // Filter out taken items for the "Up Next" card
+    final pendingItems = items
+        .where((i) => !viewModel.isSupplementTaken(i.supplementId))
+        .toList();
+
+    if (pendingItems.isEmpty) return const SizedBox.shrink();
+
+    return UpNextCard(
+      title: slot,
+      subtitle: slot == 'Morning' ? 'Start your day' : 'Stay on track',
+      timeLabel: timeLabel,
+      itemCount: pendingItems.length,
+      onTakeAll: () async {
+        for (final item in pendingItems) {
+          await viewModel.markSupplementTaken(item.supplementId);
+        }
+        setState(() => _showCelebration = true);
+      },
     );
   }
 }

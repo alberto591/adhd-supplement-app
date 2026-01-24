@@ -27,7 +27,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   void initState() {
     super.initState();
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final userId = authProvider.user?.id ?? 'demo_user';
+    final userId = authProvider.user?.id ?? '';
     _viewModel = locator.get<LibraryViewModel>(param1: userId);
     _viewModel.initialize();
 
@@ -272,7 +272,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                       context,
                                       Icons.all_inclusive,
                                       'All',
-                                      viewModel.selectedCategory == null,
+                                      viewModel.selectedCategories.isEmpty,
                                       primaryGold,
                                       () => viewModel.filterByCategory(null),
                                     ),
@@ -286,8 +286,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                           SupplementUIHelper.getIconForCategory(
                                               category),
                                           category,
-                                          viewModel.selectedCategory ==
-                                              category,
+                                          viewModel.selectedCategories
+                                              .contains(category),
                                           primaryGold,
                                           () => viewModel
                                               .filterByCategory(category),
@@ -950,7 +950,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
         child: Icon(
           supplement.status == 'avoid'
               ? Icons.block
-              : (isCapsule ? Icons.wb_sunny_outlined : Icons.track_changes),
+              : SupplementUIHelper.getIconForSupplement(
+                  supplement.name, supplement.category),
           color: supplement.status == 'avoid'
               ? const Color(0xFFEF4444)
               : Colors.white70,
@@ -967,102 +968,119 @@ class _LibraryScreenState extends State<LibraryScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => Consumer<LibraryViewModel>(
-        builder: (context, viewModel, child) => Container(
-          height: MediaQuery.of(context).size.height * 0.75,
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.backgroundDark : Colors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-          ),
-          child: Column(
-            children: [
-              const SizedBox(height: 12),
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
+      builder: (context) => ChangeNotifierProvider.value(
+        value: _viewModel,
+        child: Consumer<LibraryViewModel>(
+          builder: (context, viewModel, child) => Container(
+            height: MediaQuery.of(context).size.height * 0.75,
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.backgroundDark : Colors.white,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(32)),
+            ),
+            child: Column(
+              children: [
+                const SizedBox(height: 12),
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(24),
-                  children: [
-                    Text(
-                      'Advanced Filters',
-                      style: GoogleFonts.lexend(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    _buildFilterSection(
-                      'Evidence Strength',
-                      ['High', 'Moderate', 'Low'],
-                      viewModel.evidenceStrength,
-                      (val) => viewModel.filterByEvidence(val),
-                      isDark,
-                    ),
-                    const SizedBox(height: 24),
-                    _buildFilterSection(
-                      'Stimulant Compatible',
-                      ['Safe', 'Caution'],
-                      viewModel.stimulantCompatible == null
-                          ? null
-                          : (viewModel.stimulantCompatible! ? 'Safe' : 'Caution'),
-                      (val) => viewModel.filterByStimulant(val == 'Safe'),
-                      isDark,
-                    ),
-                    const SizedBox(height: 24),
-                    _buildFilterSection(
-                      'Form',
-                      ['Capsule', 'Tablet', 'Liquid', 'Powder'],
-                      viewModel.form,
-                      (val) => viewModel.filterByForm(val),
-                      isDark,
-                    ),
-                    const SizedBox(height: 40),
-                    Row(
+                Expanded(
+                  child: Consumer<LibraryViewModel>(
+                    builder: (context, viewModel, child) => ListView(
+                      padding: const EdgeInsets.all(24),
                       children: [
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {
-                              viewModel.clearFilters();
-                            },
-                            child: Text(
-                              'Clear All',
-                              style: GoogleFonts.lexend(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                        Text(
+                          'Advanced Filters',
+                          style: GoogleFonts.lexend(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => Navigator.pop(context),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryGold,
-                              foregroundColor: Colors.black,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                        const SizedBox(height: 32),
+                        _buildFilterSectionMulti(
+                          'Categories',
+                          viewModel.categories,
+                          viewModel.selectedCategories,
+                          (val) => viewModel.filterByCategory(val),
+                          isDark,
+                        ),
+                        const SizedBox(height: 24),
+                        _buildFilterSection(
+                          'Evidence Strength',
+                          ['High', 'Moderate', 'Low'],
+                          viewModel.evidenceStrength,
+                          (val) => viewModel.filterByEvidence(val),
+                          isDark,
+                        ),
+                        const SizedBox(height: 24),
+                        _buildFilterSection(
+                          'Stimulant Compatible',
+                          ['Safe', 'Caution'],
+                          viewModel.stimulantCompatible == null
+                              ? null
+                              : (viewModel.stimulantCompatible!
+                                  ? 'Safe'
+                                  : 'Caution'),
+                          (val) => viewModel.filterByStimulant(val == 'Safe'),
+                          isDark,
+                        ),
+                        const SizedBox(height: 24),
+                        _buildFilterSection(
+                          'Form',
+                          ['Capsule', 'Tablet', 'Liquid', 'Powder'],
+                          viewModel.form,
+                          (val) => viewModel.filterByForm(val),
+                          isDark,
+                        ),
+                        const SizedBox(height: 40),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {
+                                  viewModel.clearFilters();
+                                },
+                                child: Text(
+                                  'Clear All',
+                                  style: GoogleFonts.lexend(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
-                            child: Text(
-                              'Show Results',
-                              style:
-                                  GoogleFonts.lexend(fontWeight: FontWeight.bold),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryGold,
+                                  foregroundColor: Colors.black,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Show Results',
+                                  style: GoogleFonts.lexend(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -1099,12 +1117,12 @@ class _LibraryScreenState extends State<LibraryScreen> {
               onTap: () => onSelect(option),
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? AppColors.primaryGold
                       : (isDark ? Colors.white12 : Colors.grey[100]),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isSelected
                         ? AppColors.primaryGold
@@ -1114,7 +1132,67 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 child: Text(
                   option,
                   style: GoogleFonts.lexend(
-                    fontSize: 13,
+                    fontSize: 12,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                    color: isSelected
+                        ? Colors.black
+                        : (isDark ? Colors.white70 : Colors.grey[700]),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFilterSectionMulti(
+    String title,
+    List<String> options,
+    List<String> selectedValues,
+    void Function(String) onSelect,
+    bool isDark,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title.toUpperCase(),
+          style: GoogleFonts.lexend(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+            color: AppColors.primaryGold.withValues(alpha: 0.7),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: options.map((option) {
+            final isSelected = selectedValues
+                .any((v) => v.toLowerCase() == option.toLowerCase());
+            return GestureDetector(
+              onTap: () => onSelect(option),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppColors.primaryGold
+                      : (isDark ? Colors.white12 : Colors.grey[100]),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColors.primaryGold
+                        : (isDark ? Colors.white24 : Colors.grey[300]!),
+                  ),
+                ),
+                child: Text(
+                  option,
+                  style: GoogleFonts.lexend(
+                    fontSize: 12,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                     color: isSelected
                         ? Colors.black

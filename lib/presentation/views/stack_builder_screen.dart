@@ -26,7 +26,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
         id: s.id,
         name: s.name,
         dosage: s.defaultDosage ?? '',
-        icon: SupplementUIHelper.getIconForCategory(s.category),
+        icon: SupplementUIHelper.getIconForSupplement(s.name, s.category),
         iconColor: SupplementUIHelper.getColorForCategory(s.category),
         iconBgColor: SupplementUIHelper.getColorForCategory(s.category)
             .withValues(alpha: 0.1),
@@ -49,7 +49,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
         id: s.id,
         name: s.name,
         dosage: item.customDosage ?? s.defaultDosage ?? '',
-        icon: SupplementUIHelper.getIconForCategory(s.category),
+        icon: SupplementUIHelper.getIconForSupplement(s.name, s.category),
         iconColor: SupplementUIHelper.getColorForCategory(s.category),
         iconBgColor: SupplementUIHelper.getColorForCategory(s.category)
             .withValues(alpha: 0.1),

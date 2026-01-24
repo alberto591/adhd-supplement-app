@@ -265,13 +265,14 @@ void main() {
       viewModel.filterByCategory('Mineral');
       expect(viewModel.supplements.length, 1);
 
-      // Beneficial + Additive (Magnesium is Mineral)
+      // Deselect Mineral, then select Additive
+      viewModel.filterByCategory('Mineral'); // Deselect
       viewModel.filterByCategory('Additive');
       expect(viewModel.supplements.isEmpty, true);
 
       // Avoid + Additive
       viewModel.filterByStatus('avoid');
-      viewModel.filterByCategory('Additive');
+      // Additive is already selected from previous step
       expect(viewModel.supplements.length, 1);
     });
 
@@ -315,6 +316,25 @@ void main() {
       await viewModel.deleteCustomSupplement('custom1');
 
       expect(viewModel.supplements.isEmpty, true);
+    });
+
+    test('filterByForm works correctly', () async {
+      fakeSupplementRepo.supplements = [
+        beneficialSupp.copyWith(id: 'supp1', form: 'Capsule'),
+        beneficialSupp.copyWith(id: 'supp2', form: 'Tablet'),
+      ];
+      await viewModel.initialize();
+
+      viewModel.filterByForm('Capsule');
+      expect(viewModel.supplements.length, 1);
+      expect(viewModel.supplements.first.form, 'Capsule');
+
+      viewModel.filterByForm('Tablet');
+      expect(viewModel.supplements.length, 1);
+      expect(viewModel.supplements.first.form, 'Tablet');
+
+      viewModel.filterByForm(null);
+      expect(viewModel.supplements.length, 2);
     });
   });
 }

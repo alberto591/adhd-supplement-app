@@ -56,7 +56,8 @@ class SeedingService {
               "Supports brain health and helps smooth out potential side effects of stimulants.",
           "Ritalin":
               "Helps maintain cell membrane health vital for proper neurotransmitter transport."
-        }
+        },
+        "form": "Capsule"
       },
       {
         "id": "l-theanine",
@@ -100,7 +101,8 @@ class SeedingService {
           "100-120": "400mg"
         },
         "tldr":
-            "Promotes 'calm focus' by increasing alpha brain waves and smoothing out stimulant side effects."
+            "Promotes 'calm focus' by increasing alpha brain waves and smoothing out stimulant side effects.",
+        "form": "Capsule"
       },
       {
         "id": "magnesium",
@@ -165,7 +167,8 @@ class SeedingService {
           "Loose stools if dose exceeds tolerance (typically >500mg)",
           "Rare: mild drowsiness if taken during the day",
           "Very rare: nausea if taken on empty stomach"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "vitamin-d",
@@ -303,7 +306,8 @@ class SeedingService {
           "Rare: fatigue or increased bowel movements",
           "Very rare: dry mouth or muscle fatigue",
           "Generally well-tolerated with food"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "zinc",
@@ -369,7 +373,8 @@ class SeedingService {
           "Metallic taste in mouth (occasional)",
           "Copper deficiency if high doses used long-term (>50mg for months)",
           "Rare: stomach cramps or diarrhea"
-        ]
+        ],
+        "form": "Tablet"
       },
       {
         "id": "ginkgo-biloba",
@@ -437,7 +442,8 @@ class SeedingService {
           "GI upset or nausea if taken on empty stomach",
           "Rare: dizziness or allergic skin reactions",
           "Very rare: increased bleeding or bruising (stop immediately)"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "iron",
@@ -509,7 +515,8 @@ class SeedingService {
           "Reduce dose or switch to bisglycinate form if GI upset occurs",
           "Rare: severe nausea or vomiting (stop immediately)",
           "Overdose risk: keep away from children"
-        ]
+        ],
+        "form": "Tablet"
       },
       {
         "id": "citicoline",
@@ -576,7 +583,8 @@ class SeedingService {
           "Occasional: digestive upset if taken on empty stomach",
           "Very rare: insomnia if taken late in the day",
           "Generally one of the safest nootropics available"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "lions-mane",
@@ -708,7 +716,8 @@ class SeedingService {
           "Rare: mild GI upset or insomnia (if taken late)",
           "Very rare: headache at high doses (>300mg)",
           "Generally well-tolerated with minimal side effects"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "saffron",
@@ -775,7 +784,8 @@ class SeedingService {
           "Very rare: dizziness or dry mouth",
           "Generally well-tolerated at recommended doses",
           "No significant side effects in most clinical trials"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "pycnogenol",
@@ -915,7 +925,8 @@ class SeedingService {
           "Rare: allergic reaction to specific strains",
           "Very rare: infection in immunocompromised individuals",
           "Generally well-tolerated with minimal side effects"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "red-dye-40",
@@ -927,7 +938,7 @@ class SeedingService {
         "focusLevel": 1,
         "mechanismOfAction":
             "Artificial dyes have been shown to trigger histamine release and may interfere with zinc metabolism. Zinc is a critical cofactor for neurotransmitter synthesis; its depletion can directly worsen hyperactivity and impulsivity in ADHD-sensitive individuals.",
-        "detailedBenefits": <String>[],
+        "detailedBenefits": [],
         "timingRationale":
             "AVOID: Consumption should be eliminated to avoid behavioral flares.",
         "scientificEvidenceRank": 75,
@@ -959,7 +970,8 @@ class SeedingService {
               "Avoid: Can trigger behavioral flares that mask medication efficacy.",
           "Ritalin":
               "Compromises impulse control, directly opposing the therapeutic goals of stimulant treatment."
-        }
+        },
+        "form": "Liquid/Food Additive"
       },
       {
         "id": "high-fructose-corn-syrup",
@@ -971,7 +983,7 @@ class SeedingService {
         "focusLevel": 1,
         "mechanismOfAction":
             "HFCS induces rapid insulin release leading to significant blood sugar fluctuations. The subsequent hypoglycemic 'crash' can temporarily deplete neurotransmitter reserves and cause intense brain fog, irritability, and worsened impulsivity in ADHD individuals.",
-        "detailedBenefits": <String>[],
+        "detailedBenefits": [],
         "timingRationale":
             "AVOID: Consumption leads to neuro-energetic instability.",
         "scientificEvidenceRank": 70,
@@ -1003,7 +1015,8 @@ class SeedingService {
               "May cause erratic energy levels that make medication focus feel inconsistent.",
           "Ritalin":
               "Directly opposes the calming of hyperactivity due to blood sugar spikes."
-        }
+        },
+        "form": "Liquid/Food Additive"
       },
       {
         "id": "sodium-benzoate",
@@ -1015,7 +1028,7 @@ class SeedingService {
         "focusLevel": 1,
         "mechanismOfAction":
             "Sodium benzoate (E211) can cross the blood-brain barrier and has been shown to increase hyperactivity in its own right. It may interfere with mitochondrial function and potentially induce oxidative stress in the hippocampus.",
-        "detailedBenefits": <String>[],
+        "detailedBenefits": [],
         "timingRationale":
             "AVOID: Preservative with recognized behavioral impact.",
         "scientificEvidenceRank": 68,
@@ -1047,7 +1060,8 @@ class SeedingService {
               "Avoid: Can trigger erratic behavioral responses that interfere with medication effect.",
           "Ritalin":
               "Directly opposes the therapeutic target of reducing hyperactivity."
-        }
+        },
+        "form": "Liquid/Food Additive"
       },
       {
         "id": "l-tyrosine",
@@ -1113,7 +1127,8 @@ class SeedingService {
           "Possible: irritability or anxiety if overstimulated",
           "Tolerance develops quickly with daily use",
           "Generally safe at recommended doses"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "b-complex",
@@ -1171,7 +1186,8 @@ class SeedingService {
               "Supports conversion of lisdexamfetamine to active d-amphetamine; helps maintain neurotransmitter reserves.",
           "Ritalin":
               "Methylfolate supports BH4 synthesis which is required for dopamine production that methylphenidate enhances."
-        }
+        },
+        "form": "Capsule"
       },
       {
         "id": "rhodiola-rosea",
@@ -1241,7 +1257,8 @@ class SeedingService {
           "Possible: dry mouth or dizziness",
           "Very rare: agitation in bipolar individuals",
           "Generally well-tolerated at recommended doses"
-        ]
+        ],
+        "form": "Capsule"
       },
       {
         "id": "ashwagandha",

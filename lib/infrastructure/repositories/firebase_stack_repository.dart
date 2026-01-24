@@ -19,14 +19,7 @@ class FirebaseStackRepository implements StackRepository {
   @override
   Future<void> saveStack(String userId, SupplementStack stack) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('stacks')
-          .doc(stack.id)
-          .set(stack.toJson());
-
-      // Update cache instantly
+      // Update cache instantly (Optimistic Update)
       final currentStacks = List<SupplementStack>.from(_cache[userId] ?? []);
       final index = currentStacks.indexWhere((s) => s.id == stack.id);
       if (index >= 0) {
@@ -36,10 +29,18 @@ class FirebaseStackRepository implements StackRepository {
       }
       _cache[userId] = currentStacks;
 
-      // Broadcast update to stream
+      // Broadcast update to stream immediately
       AppLogger.d(
-          'Broadcasting UPDATED stacks for $userId: ${currentStacks.length} stacks');
+          'Optimistic Broadcast: UPDATED stacks for $userId: ${currentStacks.length} stacks');
       _stackUpdateController.add({userId: currentStacks});
+
+      // Persist to Firestore in background
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('stacks')
+          .doc(stack.id)
+          .set(stack.toJson());
     } catch (e) {
       AppLogger.e('Error saving stack', e);
       throw Exception('Failed to save stack: $e');
@@ -113,7 +114,10 @@ class FirebaseStackRepository implements StackRepository {
       if (!controller.isClosed) controller.add(stacks);
     });
 
-    controller.onCancel = () => subscription.cancel();
+    controller.onCancel = () {
+      subscription.cancel();
+      controller.close();
+    };
     return controller.stream;
   }
 }

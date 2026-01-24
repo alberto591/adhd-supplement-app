@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../theme/app_theme.dart';
-import '../../domain/entities/supplement.dart';
-
-import '../view_models/library_view_model.dart';
+import 'package:adhd_supplement_app/presentation/theme/app_theme.dart';
+import 'package:adhd_supplement_app/domain/entities/supplement.dart';
+import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
 import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import '../widgets/dosage_calculator_card.dart';
-import '../../domain/services/safety_guard.dart';
-import '../../domain/entities/medication.dart';
-import '../widgets/medication_safety_alert.dart';
-import '../../domain/repositories/supplement_repository.dart';
-import '../../infrastructure/services/url_service.dart';
-import '../../domain/services/analytics_service.dart';
+import 'package:adhd_supplement_app/presentation/widgets/dosage_calculator_card.dart';
+import 'package:adhd_supplement_app/domain/services/safety_guard.dart';
+import 'package:adhd_supplement_app/domain/entities/medication.dart';
+import 'package:adhd_supplement_app/presentation/widgets/medication_safety_alert.dart';
+import 'package:adhd_supplement_app/utils/supplement_ui_helper.dart';
 
 /// ADHD-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
@@ -107,7 +104,8 @@ class SupplementDetail extends StatelessWidget {
                               child: Icon(
                                 supplement.status == 'avoid'
                                     ? Icons.block
-                                    : _getSupplementIcon(supplement.name),
+                                    : SupplementUIHelper.getIconForSupplement(
+                                        supplement.name, supplement.category),
                                 size: 48,
                                 color: supplement.status == 'avoid'
                                     ? const Color(0xFFEF4444)
@@ -346,20 +344,17 @@ class SupplementDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
 
-                        // Scientific Evidence
+                        /* // Scientific Evidence
                         if (supplement.studyLinks.isNotEmpty) ...[
                           _SectionCard(
-                            title: 'Scientific Evidence',
-                            icon: Icons.auto_stories,
-                            color: Colors.teal,
-                            items: supplement.studyLinks.keys.toList(),
-                            isLink: true,
+                            title: 'Scientific Studies',
+                            icon: Icons.science_outlined,
+                            color: Colors.blue[400]!,
+                            items: supplement.scientificStudies ?? [],
                             isDark: isDark,
-                            onItemTap: (title) => _openScientificLink(
-                                context, title, supplement.studyLinks[title]!),
                           ),
                           const SizedBox(height: 16),
-                        ],
+                        ], */
 
                         // Dosage Section
                         if (supplement.dosageByWeight != null) ...[
@@ -433,7 +428,7 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              // Only show shopping button for non-custom supplements
+                              /* // Only show shopping button for non-custom supplements
                               if (!supplement.isCustom) ...[
                                 const SizedBox(width: 16),
                                 // Buy Now Icon Button
@@ -450,7 +445,8 @@ class SupplementDetail extends StatelessWidget {
                                             primaryGold.withValues(alpha: 0.2)),
                                   ),
                                   child: IconButton(
-                                    icon: const Icon(Icons.shopping_bag_outlined,
+                                    icon: const Icon(
+                                        Icons.shopping_bag_outlined,
                                         color: primaryGold),
                                     onPressed: () {
                                       // Referral logic
@@ -458,7 +454,7 @@ class SupplementDetail extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                              ],
+                              ], */
                             ],
                           )
                         else
@@ -524,46 +520,77 @@ class SupplementDetail extends StatelessWidget {
 
     showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true, // Allow it to expand if needed
       backgroundColor: Colors.transparent,
       builder: (sheetContext) => Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
           border:
               Border.all(color: AppColors.primaryGold.withValues(alpha: 0.1)),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Add to Daily Stack',
-              style: GoogleFonts.lexend(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primaryGold,
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  margin: const EdgeInsets.only(bottom: 24),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Select which time slot to add ${supplement.name} to.',
-              style: GoogleFonts.lexend(color: Colors.grey, fontSize: 14),
-            ),
-            const SizedBox(height: 24),
-            _buildStackOption(context, '🌅 Morning Stack',
-                'Best for focus and energy', 'Morning Stack', viewModel),
-            const SizedBox(height: 12),
-            _buildStackOption(context, '☀️ Afternoon Stack',
-                'Mid-day mental boost', 'Afternoon Stack', viewModel),
-            const SizedBox(height: 12),
-            _buildStackOption(context, '🌇 Evening Stack',
-                'For relaxation and recovery', 'Evening Stack', viewModel),
-            const SizedBox(height: 12),
-            _buildStackOption(context, '🌙 Night Stack', 'Sleep support',
-                'Night Stack', viewModel),
-            const SizedBox(height: 32),
-          ],
+              Text(
+                'Add to Daily Stack',
+                style: GoogleFonts.lexend(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryGold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Select which time slot to add ${supplement.name} to.',
+                style: GoogleFonts.lexend(color: Colors.grey, fontSize: 14),
+              ),
+              const SizedBox(height: 24),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildStackOption(
+                          context,
+                          '🌅 Morning Stack',
+                          'Best for focus and energy',
+                          'Morning Stack',
+                          viewModel),
+                      const SizedBox(height: 12),
+                      _buildStackOption(context, '☀️ Afternoon Stack',
+                          'Mid-day mental boost', 'Afternoon Stack', viewModel),
+                      const SizedBox(height: 12),
+                      _buildStackOption(
+                          context,
+                          '🌇 Evening Stack',
+                          'For relaxation and recovery',
+                          'Evening Stack',
+                          viewModel),
+                      const SizedBox(height: 12),
+                      _buildStackOption(context, '🌙 Night Stack',
+                          'Sleep support', 'Night Stack', viewModel),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );
@@ -619,75 +646,6 @@ class SupplementDetail extends StatelessWidget {
       ),
     );
   }
-
-  Future<void> _openReferralLink(
-      BuildContext context, Supplement supplement) async {
-    try {
-      // Get services from locator
-      final supplementRepository = locator.get<SupplementRepository>();
-      final urlService = locator.get<UrlService>();
-      final analyticsService = locator.get<AnalyticsService>();
-
-      // Track referral click
-      await supplementRepository.trackReferralClick(supplement.id);
-
-      // Log analytics event
-      await analyticsService.logEvent('referral_clicked', parameters: {
-        'supplement_id': supplement.id,
-        'supplement_name': supplement.name,
-        'category': supplement.category,
-      });
-
-      // Open referral link
-      await urlService.launchReferral(supplement.referralUrl);
-    } catch (e) {
-      if (!context.mounted) return;
-      // Show error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to open referral link: $e'),
-          backgroundColor: const Color(0xFFEF4444),
-        ),
-      );
-    }
-  }
-
-  Future<void> _openScientificLink(
-      BuildContext context, String title, String url) async {
-    try {
-      final urlService = locator.get<UrlService>();
-      final analyticsService = locator.get<AnalyticsService>();
-
-      // Log analytics event
-      await analyticsService.logEvent('scientific_link_clicked', parameters: {
-        'supplement_id': supplement.id,
-        'supplement_name': supplement.name,
-        'study_title': title,
-        'url': url,
-      });
-
-      // Open link using robust in-app browser with service-level fallback
-      await urlService.launchInAppBrowser(url);
-    } catch (e) {
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Could not open study: $e'),
-          backgroundColor: const Color(0xFFEF4444),
-        ),
-      );
-    }
-  }
-
-  IconData _getSupplementIcon(String name) {
-    name = name.toLowerCase();
-    if (name.contains('omega') || name.contains('fish')) return Icons.water;
-    if (name.contains('magnesium')) return Icons.nightlight_round;
-    if (name.contains('zinc')) return Icons.shield;
-    if (name.contains('vitamin')) return Icons.wb_sunny;
-    if (name.contains('focus') || name.contains('caffeine')) return Icons.bolt;
-    return Icons.medication;
-  }
 }
 
 class _FocusLevelIndicator extends StatelessWidget {
@@ -742,8 +700,6 @@ class _SectionCard extends StatelessWidget {
   final Color color;
   final List<String> items;
   final bool isDark;
-  final bool isLink;
-  final ValueChanged<String>? onItemTap;
 
   const _SectionCard({
     required this.title,
@@ -751,8 +707,6 @@ class _SectionCard extends StatelessWidget {
     required this.color,
     required this.items,
     required this.isDark,
-    this.isLink = false,
-    this.onItemTap,
   });
 
   @override
@@ -760,16 +714,17 @@ class _SectionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF2D2616) : Colors.white,
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: color.withValues(alpha: 0.1),
+          color: color.withValues(alpha: 0.15),
+          width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: color.withValues(alpha: 0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -802,43 +757,25 @@ class _SectionCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (!isLink)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Container(
-                          width: 6,
-                          height: 6,
-                          decoration: BoxDecoration(
-                            color: color,
-                            shape: BoxShape.circle,
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Container(
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
                         ),
-                      )
-                    else
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Icon(Icons.link, size: 16, color: color),
                       ),
+                    ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: GestureDetector(
-                        onTap: isLink && onItemTap != null
-                            ? () => onItemTap!(item)
-                            : null,
-                        child: Text(
-                          item,
-                          style: GoogleFonts.lexend(
-                            color: isLink
-                                ? Colors.blue[400]
-                                : (isDark
-                                    ? Colors.grey[400]
-                                    : Colors.grey[700]),
-                            fontSize: 15,
-                            height: 1.4,
-                            decoration:
-                                isLink ? TextDecoration.underline : null,
-                            decorationColor: Colors.blue[400],
-                          ),
+                      child: Text(
+                        item,
+                        style: GoogleFonts.lexend(
+                          color: isDark ? Colors.grey[400] : Colors.grey[700],
+                          fontSize: 15,
+                          height: 1.4,
                         ),
                       ),
                     ),

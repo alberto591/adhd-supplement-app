@@ -8,7 +8,6 @@ import '../views/auth/login_screen.dart';
 import '../views/auth/signup_screen.dart';
 import '../views/splash_screen.dart';
 import '../views/daily_stack_screen.dart';
-import '../views/dashboard_screen.dart';
 // import '../views/insights_screen.dart';
 import '../views/level_up_screen.dart';
 import '../views/library_screen.dart';
@@ -185,18 +184,12 @@ class AppRouter {
             builder: (_) => const EmergencyContactScreen());
 
       case dashboard:
-        return MaterialPageRoute(builder: (_) => const DashboardScreen());
+        return MaterialPageRoute(builder: (_) => const DailyStackScreen());
 
       case insights:
       case successStats:
         return MaterialPageRoute(
           builder: (context) {
-            final authProvider =
-                Provider.of<AuthProvider>(context, listen: false);
-
-            if (!authProvider.canAccess('pro')) {
-              return const PaywallScreen(returnTo: insights);
-            }
             return const InsightsScreen();
           },
         );
@@ -214,7 +207,7 @@ class AppRouter {
               return const PaywallScreen(returnTo: stackBuilder);
             }
 
-            final userId = authProvider.user?.id ?? 'demo_user';
+            final userId = authProvider.user?.id ?? '';
             final safetyVM = locator<SafetyViewModel>(param1: userId);
             return MultiProvider(
               providers: [

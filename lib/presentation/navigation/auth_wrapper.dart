@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
 import '../views/auth/login_screen.dart';
 import '../views/medical_disclaimer_screen.dart';
-import '../views/dashboard_screen.dart';
+import '../views/daily_stack_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -23,7 +23,7 @@ class AuthWrapper extends StatelessWidget {
             if (auth.user?.hasCompletedOnboarding == false) {
               return const MedicalDisclaimerScreen();
             }
-            return const DashboardScreen();
+            return const DailyStackScreen();
           case AuthStatus.unauthenticated:
             return const LoginScreen();
         }

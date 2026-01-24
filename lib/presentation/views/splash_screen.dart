@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../../config/locator.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
-import '../../infrastructure/services/seeding_service.dart';
-import '../../domain/repositories/supplement_repository.dart';
 import '../../utils/logger.dart';
 import '../navigation/app_router.dart';
 import '../theme/app_theme.dart';
@@ -48,8 +46,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _initializeApp() async {
     try {
-      // 0. Seeding (Background - start as soon as Firebase is ready)
-      _runBackgroundSeeding(); // Fire and forget
+      // 0. Seeding (Disabled for production)
+      // _runBackgroundSeeding();
 
       // 1. Settings
       setState(() => _loadingStatus = 'Loading preferences...');
@@ -83,19 +81,6 @@ class _SplashScreenState extends State<SplashScreen>
       // Cancel any pending timers
       _controller.stop();
     }
-  }
-
-  void _runBackgroundSeeding() {
-    // This runs in parallel
-    final seeding = locator<SeedingService>();
-    seeding.createTestUser('test@daily-stack.com', 'password123');
-
-    seeding.seedSupplements().timeout(const Duration(seconds: 5)).then((_) {
-      // Pre-fetch supplements into cache
-      locator<SupplementRepository>().getAllSupplements();
-    }).catchError((Object e) {
-      AppLogger.w('Background task warning', e);
-    });
   }
 
   @override

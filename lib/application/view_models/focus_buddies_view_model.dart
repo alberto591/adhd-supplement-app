@@ -12,7 +12,7 @@ class FocusBuddiesViewModel extends ChangeNotifier {
 
   FocusBuddiesViewModel(this._authRepository, this._logRepository);
 
-  // Mock data for now, would come from SocialRepository
+  // Placeholder data until SocialRepository is integrated
   final double _teamGoalProgress = 0.75;
   final int _sharedGoalDays = 6;
   final int _totalDaysGoal = 8;

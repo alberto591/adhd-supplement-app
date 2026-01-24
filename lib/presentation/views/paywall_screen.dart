@@ -68,12 +68,12 @@ class PaywallScreen extends StatelessWidget {
           }
         },
       ),
-      actions: [
+      /* actions: [
         TextButton(
           onPressed: () {}, // Restore purchase logic
           child: const Text('Restore'),
         ),
-      ],
+      ], */
     );
   }
 
@@ -90,7 +90,7 @@ class PaywallScreen extends StatelessWidget {
           child: const Text(
             'COMING IN VERSION 2.0',
             style: TextStyle(
-              color: Colors.amber,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 12,
             ),

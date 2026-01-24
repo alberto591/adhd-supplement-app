@@ -3,16 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:provider/provider.dart';
-import 'config/locator.dart';
-import 'presentation/theme/app_theme.dart';
-import 'presentation/navigation/app_router.dart';
-import 'application/providers/auth_provider.dart';
-import 'application/view_models/supplement_view_model.dart';
-import 'application/view_models/safety_view_model.dart';
-import 'application/view_models/persistent_reminders_view_model.dart';
-import 'firebase_options.dart';
-import 'application/view_models/theme_view_model.dart';
-import 'utils/logger.dart';
+import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:adhd_supplement_app/presentation/theme/app_theme.dart';
+import 'package:adhd_supplement_app/presentation/navigation/app_router.dart';
+import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
+import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
+import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
+import 'package:adhd_supplement_app/application/view_models/persistent_reminders_view_model.dart';
+import 'package:adhd_supplement_app/firebase_options.dart';
+import 'package:adhd_supplement_app/application/view_models/theme_view_model.dart';
+import 'package:adhd_supplement_app/utils/logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,9 +86,9 @@ class AdhdSupplementApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<SupplementViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<AuthProvider>()),
         ChangeNotifierProxyProvider<AuthProvider, SafetyViewModel>(
-          create: (_) => locator<SafetyViewModel>(param1: 'demo_user'),
+          create: (_) => locator<SafetyViewModel>(param1: ''),
           update: (_, auth, previous) =>
-              locator<SafetyViewModel>(param1: auth.user?.id ?? 'demo_user'),
+              locator<SafetyViewModel>(param1: auth.user?.id ?? ''),
         ),
         ChangeNotifierProvider(
             create: (_) => locator<PersistentRemindersViewModel>()),
@@ -98,7 +98,7 @@ class AdhdSupplementApp extends StatelessWidget {
         builder: (context, themeVM, _) => MaterialApp(
           title: 'Daily Stack',
           theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.light,
           initialRoute: AppRouter.splash,
           onGenerateInitialRoutes: (initialRoute) {
             return [

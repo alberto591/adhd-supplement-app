@@ -18,23 +18,23 @@ class LibraryViewModel extends ChangeNotifier {
   List<Supplement> _allSupplements = [];
   List<Supplement> _filteredSupplements = [];
   String _searchQuery = '';
-  String? _selectedCategory;
-  String? _evidenceStrength;
-  bool? _stimulantCompatible;
-  String? _form;
+  List<String> _selectedCategories = [];
+  List<String> _selectedEvidenceLevels = [];
+  List<String> _selectedStimulantStatus = [];
+  List<String> _selectedForms = [];
   String _currentStatus = 'beneficial';
   bool _isLoading = false;
-  String? _error;
+  String? _error = '';
   bool _isDisposed = false;
 
   // Getters
   List<Supplement> get supplements => _filteredSupplements;
   List<Supplement> get allSupplements => _allSupplements;
   String get searchQuery => _searchQuery;
-  String? get selectedCategory => _selectedCategory;
-  String? get evidenceStrength => _evidenceStrength;
-  bool? get stimulantCompatible => _stimulantCompatible;
-  String? get form => _form;
+  List<String> get selectedCategories => _selectedCategories;
+  List<String> get selectedEvidenceLevels => _selectedEvidenceLevels;
+  List<String> get selectedStimulantStatus => _selectedStimulantStatus;
+  List<String> get selectedForms => _selectedForms;
   String get currentStatus => _currentStatus;
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -127,27 +127,47 @@ class LibraryViewModel extends ChangeNotifier {
     _applyFilters();
   }
 
-  /// Filter by category
+  /// Filter by category (toggles selection)
   void filterByCategory(String? category) {
-    _selectedCategory = category;
+    if (category == null) {
+      _selectedCategories = [];
+    } else {
+      if (_selectedCategories.contains(category)) {
+        _selectedCategories.remove(category);
+      } else {
+        _selectedCategories.add(category);
+      }
+    }
     _applyFilters();
   }
 
-  /// Filter by evidence strength
-  void filterByEvidence(String? strength) {
-    _evidenceStrength = strength;
+  /// Filter by evidence strength (Multi-select)
+  void filterByEvidence(String strength) {
+    if (_selectedEvidenceLevels.contains(strength)) {
+      _selectedEvidenceLevels.remove(strength);
+    } else {
+      _selectedEvidenceLevels.add(strength);
+    }
     _applyFilters();
   }
 
-  /// Filter by stimulant compatibility
-  void filterByStimulant(bool? compatible) {
-    _stimulantCompatible = compatible;
+  /// Filter by stimulant compatibility (Multi-select)
+  void filterByStimulant(String status) {
+    if (_selectedStimulantStatus.contains(status)) {
+      _selectedStimulantStatus.remove(status);
+    } else {
+      _selectedStimulantStatus.add(status);
+    }
     _applyFilters();
   }
 
-  /// Filter by form
-  void filterByForm(String? form) {
-    _form = form;
+  /// Filter by form (Multi-select)
+  void filterByForm(String form) {
+    if (_selectedForms.contains(form)) {
+      _selectedForms.remove(form);
+    } else {
+      _selectedForms.add(form);
+    }
     _applyFilters();
   }
 
@@ -160,10 +180,10 @@ class LibraryViewModel extends ChangeNotifier {
   /// Clear all filters
   void clearFilters() {
     _searchQuery = '';
-    _selectedCategory = null;
-    _evidenceStrength = null;
-    _stimulantCompatible = null;
-    _form = null;
+    _selectedCategories = [];
+    _selectedEvidenceLevels = [];
+    _selectedStimulantStatus = [];
+    _selectedForms = [];
     _currentStatus = 'beneficial';
     _applyFilters();
   }
@@ -277,28 +297,43 @@ class LibraryViewModel extends ChangeNotifier {
         return false;
       }
 
-      // Category filter
-      if (_selectedCategory != null && s.category != _selectedCategory) {
+      // Category filter (Multi-select)
+      if (_selectedCategories.isNotEmpty &&
+          !_selectedCategories.contains(s.category)) {
         return false;
       }
 
-      // Evidence filter
-      if (_evidenceStrength != null &&
-          s.evidenceLevel?.toLowerCase() != _evidenceStrength!.toLowerCase()) {
-        return false;
+      // Evidence filter (Multi-select)
+      if (_selectedEvidenceLevels.isNotEmpty) {
+        if (s.evidenceLevel == null ||
+            !_selectedEvidenceLevels.any(
+                (e) => e.toLowerCase() == s.evidenceLevel!.toLowerCase())) {
+          return false;
+        }
       }
 
-      // Stimulant compatibility filter
-      if (_stimulantCompatible != null) {
-        // Assume isPrescription = stimulant for now, or just true if matches
-        // In wireframe "Stimulant Compatible" might mean isPrescription == false
-        if (_stimulantCompatible! && s.isPrescription) return false;
-        if (!_stimulantCompatible! && !s.isPrescription) return false;
+      // Stimulant compatibility filter (Multi-select: "Safe", "Caution")
+      if (_selectedStimulantStatus.isNotEmpty) {
+        final hasInteractions = s.adhdMedInteractions?.isNotEmpty ?? false;
+        final isSafe = !s.isPrescription && !hasInteractions;
+        final isCaution = s.isPrescription || hasInteractions;
+
+        bool matchesSafe = _selectedStimulantStatus.contains('Safe') && isSafe;
+        bool matchesCaution =
+            _selectedStimulantStatus.contains('Caution') && isCaution;
+
+        if (!matchesSafe && !matchesCaution) {
+          return false;
+        }
       }
 
-      // Form filter
-      if (_form != null && s.form?.toLowerCase() != _form!.toLowerCase()) {
-        return false;
+      // Form filter (Multi-select)
+      if (_selectedForms.isNotEmpty) {
+        if (s.form == null ||
+            !_selectedForms
+                .any((f) => f.toLowerCase() == s.form!.toLowerCase())) {
+          return false;
+        }
       }
 
       // Search filter (local)

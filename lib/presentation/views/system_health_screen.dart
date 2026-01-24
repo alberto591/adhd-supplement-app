@@ -173,7 +173,43 @@ class SystemHealthScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 16),
+
+                    // Repair Library Data Card
+                    _buildCriticalCard(
+                      isDark: isDark,
+                      surfaceColor: surfaceColor,
+                      dangerColor:
+                          primaryColor, // Use gold for "Warning/Info" level
+                      textPrimary: textPrimary,
+                      textSecondary: textSecondary,
+                      title: 'Library Intelligence',
+                      subtitle:
+                          'If filters in the supplement library are returning no results, your local data might be missing "Form" metadata.',
+                      actionLabel: 'Refresh Library Data',
+                      iconData: Icons.library_books_rounded,
+                      onTap: () async {
+                        try {
+                          final seedingService = locator<SeedingService>();
+                          await seedingService.seedSupplements();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Library intelligence updated!'),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Update failed: $e')),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),

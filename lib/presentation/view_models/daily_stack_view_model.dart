@@ -269,15 +269,9 @@ class DailyStackViewModel extends ChangeNotifier {
           _stackRepository.watchUserStacks(_userId).listen((updatedStacks) {
         AppLogger.i(
             'REACTIVE UPDATE: Received ${updatedStacks.length} stacks for user $_userId');
-        for (var s in updatedStacks) {
-          AppLogger.d(
-              ' - Stack: ${s.name} (slot: ${s.timeOfDay}, items: ${s.items.length})');
-        }
         _stacks = List.from(updatedStacks);
-        notifyListeners(); // Immediate feedback
+        notifyListeners(); // Notify immediately so UI shows new cards (even if loading supps)
         _cacheSupplements().then((_) {
-          AppLogger.d(
-              'Supplement cache refreshed after reactive update. Current cache size: ${_supplementCache.length}');
           notifyListeners();
         });
       });
@@ -479,8 +473,26 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   /// Get supplement details from cache
-  Supplement? getSupplement(String supplementId) {
-    return _supplementCache[supplementId];
+  Supplement? getSupplement(String id) {
+    final cached = _supplementCache[id];
+    if (cached != null) return cached;
+
+    // Trigger an async load but return null for now to avoid blocking
+    // The UI will rebuild when the cache is populated
+    _loadSupplementSilently(id);
+    return null;
+  }
+
+  Future<void> _loadSupplementSilently(String id) async {
+    try {
+      final s = await _supplementRepository.getSupplement(id, userId: _userId);
+      if (s != null) {
+        _supplementCache[id] = s;
+        notifyListeners();
+      }
+    } catch (e) {
+      AppLogger.e('Error loading supplement $id silently', e);
+    }
   }
 
   /// Save symptom ratings for today

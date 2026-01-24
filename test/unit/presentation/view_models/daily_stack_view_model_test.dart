@@ -106,6 +106,8 @@ class FakeSupplementRepository implements SupplementRepository {
 }
 
 class FakeNotificationService implements NotificationService {
+  List<String> canceledSupplementNudges = [];
+
   @override
   Future<void> init() async {}
   @override
@@ -148,7 +150,9 @@ class FakeNotificationService implements NotificationService {
       int maxNudges = 12}) async {}
   @override
   Future<void> cancelAllSupplementNudges(String supplementId,
-      [int maxNudges = 12]) async {}
+      [int maxNudges = 12]) async {
+    canceledSupplementNudges.add(supplementId);
+  }
 }
 
 class FakeAuthRepository implements AuthRepository {
@@ -289,6 +293,7 @@ void main() {
   late FakeLogRepository fakeLogRepo;
   late FakeSupplementRepository fakeSupplementRepo;
   late FakeAuthRepository fakeAuthRepo;
+  late FakeNotificationService fakeNotificationService;
   const String userId = 'test-user';
 
   const testSupplement = Supplement(
@@ -334,12 +339,13 @@ void main() {
     fakeLogRepo = FakeLogRepository();
     fakeSupplementRepo = FakeSupplementRepository();
     fakeAuthRepo = FakeAuthRepository();
+    fakeNotificationService = FakeNotificationService();
     viewModel = DailyStackViewModel(
       stackRepository: fakeStackRepo,
       logRepository: fakeLogRepo,
       supplementRepository: fakeSupplementRepo,
       settingsRepository: FakeSettingsRepository(),
-      notificationService: FakeNotificationService(),
+      notificationService: fakeNotificationService,
       authRepository: fakeAuthRepo,
       analyticsService: FakeAnalyticsService(),
       soundService: FakeSoundService(),
@@ -413,7 +419,7 @@ void main() {
       expect(validGreetings.contains(viewModel.greeting), true);
     });
 
-    test('markSupplementTaken increments user XP', () async {
+    test('markSupplementTaken increments user XP and cancels nudges', () async {
       final initialUser = User(
         id: userId,
         email: 'test@example.com',
@@ -428,6 +434,8 @@ void main() {
 
       expect(fakeAuthRepo.lastUpdatedUser, isNotNull);
       expect(fakeAuthRepo.lastUpdatedUser!.xp, 10);
+      expect(
+          fakeNotificationService.canceledSupplementNudges, contains('supp1'));
     });
 
     test('logical today respects 4 AM rollover (Before 4 AM)', () async {

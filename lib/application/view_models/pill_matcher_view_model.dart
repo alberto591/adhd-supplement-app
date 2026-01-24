@@ -78,8 +78,8 @@ class PillMatcherViewModel extends ChangeNotifier {
     // SImulate AI Analysis delay
     await Future<void>.delayed(const Duration(seconds: 2));
 
-    // Mock "Analysis Result" - randomizing for demo effect
-    // In a real app, this would send image to backend
+    // Simulation Result - randomizing for visualization effect
+    // In a real app, this would send image to the computer vision backend
     final random = Random();
     _selectedShape = PillShape.values[random.nextInt(PillShape.values.length)];
     _selectedColor = presetColors[random.nextInt(presetColors.length)];

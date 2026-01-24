@@ -50,8 +50,9 @@ The app uses a custom design system with specific color palettes for different m
 To accommodate users with ADHD, the app follows specific UI/UX patterns:
 - **Low Friction**: Multi-step actions are collapsed into single gestures (e.g., Swipe-to-take).
 - **Time Anchoring**: Abstract slots are converted to relative countdowns to solve time blindness.
-- **Aggressive Persistency**: Reminders use nudge sequences (multi-stage) rather than single alerts.
-- **Progress Preservation**: 4:00 AM rollover ensures streaks aren't broken by late-night productivity/insomnia.
+- **Aggressive Persistency**: Reminders use a standardized **3-Step Nudge Sequence** (+5m Soft, +15m Medium, +30m CRITICAL) to overcome time blindness.
+- **Progress Preservation**: 4:00 AM rollover ensures streaks aren't broken by late-night productivity/insomnia (The "Logical Today" principle).
+- **Self-Repairing Data**: Built-in "Library Intelligence" refresh mechanism in System Health to recover from metadata sync issues.
 
 ## Development
 

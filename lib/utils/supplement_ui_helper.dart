@@ -4,21 +4,49 @@ class SupplementUIHelper {
   static IconData getIconForCategory(String category) {
     switch (category.toLowerCase()) {
       case 'essential fatty acids':
+      case 'omega-3':
         return Icons.water_drop;
       case 'mineral':
-        return Icons.science;
+        return Icons.layers;
       case 'vitamin':
         return Icons.wb_sunny;
       case 'nootropic':
-        return Icons
-            .psychology; // Changed from Icons.spa to psychology for focus
+        return Icons.psychology;
       case 'herbal':
         return Icons.spa;
       case 'medication':
-        return Icons.medical_services;
+        return Icons.medication;
+      case 'stimulant':
+        return Icons.bolt;
       default:
         return Icons.local_pharmacy;
     }
+  }
+
+  static IconData getIconForSupplement(String name, String category) {
+    final lowerName = name.toLowerCase();
+
+    // Specific supplement icons
+    if (lowerName.contains('omega') || lowerName.contains('fish oil')) {
+      return Icons.water;
+    }
+    if (lowerName.contains('magnesium')) return Icons.nightlight_round;
+    if (lowerName.contains('zinc')) return Icons.shield;
+    if (lowerName.contains('vitamin d')) return Icons.wb_sunny;
+    if (lowerName.contains('vitamin b') ||
+        lowerName.contains('b12') ||
+        lowerName.contains('b-complex')) {
+      return Icons.energy_savings_leaf;
+    }
+    if (lowerName.contains('caffeine') || lowerName.contains('coffee')) {
+      return Icons.coffee;
+    }
+    if (lowerName.contains('l-theanine')) return Icons.self_improvement;
+    if (lowerName.contains('iron')) return Icons.fitness_center;
+    if (lowerName.contains('probiotic')) return Icons.biotech;
+
+    // Fallback to category
+    return getIconForCategory(category);
   }
 
   static Color getColorForCategory(String category) {

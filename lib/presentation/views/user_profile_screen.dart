@@ -214,27 +214,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         onTap: () => _showAdhdTypeDialog(context, auth.user),
                       ),
                     ),
-                    const SizedBox(height: 2),
-                    _SettingsTile(
-                      icon: Icons.medication,
-                      iconColor: AppColors.primary,
-                      title: 'Medications & Supplements',
-                      subtitle: viewModel.stacks.isEmpty
-                          ? 'No active stack'
-                          : viewModel.stacks
-                              .expand((s) => s.items)
-                              .map((i) =>
-                                  viewModel
-                                      .getSupplement(i.supplementId)
-                                      ?.name ??
-                                  'Loading...')
-                              .take(3)
-                              .join(', '),
-                      trailing:
-                          const Icon(Icons.chevron_right, color: Colors.grey),
-                      onTap: () => Navigator.pushNamed(
-                          context, AppRouter.onboardingMedicationSafety),
-                    ),
                   ],
                 ),
 
