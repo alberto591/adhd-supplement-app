@@ -32,6 +32,10 @@ class FakeStackRepository implements StackRepository {
 
   @override
   Future<void> saveStack(String userId, SupplementStack stack) async {}
+
+  @override
+  Stream<List<SupplementStack>> watchUserStacks(String userId) =>
+      Stream.value(stacks);
 }
 
 class FakeLogRepository implements LogRepository {
@@ -551,6 +555,92 @@ void main() {
       expect(viewModel.afternoonItems.first.supplementId, 'supp3');
       expect(viewModel.nightItems.length, 1);
       expect(viewModel.nightItems.first.supplementId, 'supp4');
+    });
+
+    group('Expansion Logic', () {
+      test('toggleStackExpansion adds/removes stack IDs', () {
+        expect(viewModel.collapsedStackIds.isEmpty, true);
+
+        viewModel.toggleStackExpansion('stack1');
+        expect(viewModel.collapsedStackIds.contains('stack1'), true);
+
+        viewModel.toggleStackExpansion('stack1');
+        expect(viewModel.collapsedStackIds.contains('stack1'), false);
+      });
+
+      test('toggleAllExpansion collapses both dynamic and slot IDs', () async {
+        final stack1 = SupplementStack(
+          id: 'stack1',
+          userId: userId,
+          name: 'Morning Stack',
+          items: [const StackItem(supplementId: 'supp1', order: 1)],
+          timeOfDay: 'morning',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+        fakeStackRepo.stacks = [stack1];
+        await viewModel.initialize();
+
+        expect(viewModel.allCollapsed, false);
+
+        viewModel.toggleAllExpansion();
+        expect(viewModel.allCollapsed, true);
+
+        // Should contain database ID
+        expect(viewModel.collapsedStackIds.contains('stack1'), true);
+        // Should contain Dashboard slot IDs
+        expect(viewModel.collapsedStackIds.contains('morning'), true);
+        expect(viewModel.collapsedStackIds.contains('night'), true);
+
+        viewModel.toggleAllExpansion();
+        expect(viewModel.allCollapsed, false);
+        expect(viewModel.collapsedStackIds.isEmpty, true);
+      });
+    });
+
+    group('Progress Calculation', () {
+      test('todayProgress handles duplicate supplements and skipped items',
+          () async {
+        final stack1 = SupplementStack(
+          id: 'stack1',
+          userId: userId,
+          name: 'Morning Stack',
+          items: [const StackItem(supplementId: 'supp1', order: 1)],
+          timeOfDay: 'morning',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+        final stack2 = SupplementStack(
+          id: 'stack2',
+          userId: userId,
+          name: 'Evening Stack',
+          items: [
+            const StackItem(supplementId: 'supp1', order: 1), // DUPLICATE
+            const StackItem(supplementId: 'supp2', order: 1),
+          ],
+          timeOfDay: 'evening',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        fakeStackRepo.stacks = [stack1, stack2];
+        await viewModel.initialize();
+
+        // totalDistinct = 2 (supp1, supp2)
+
+        expect(viewModel.todayProgress, 0.0);
+
+        // Take supp1
+        await viewModel.markSupplementTaken('supp1');
+        // supp1 handled (1 of 2)
+        expect(viewModel.todayProgress, 0.5);
+
+        // Skip supp2
+        await viewModel.markSupplementSkipped('supp2');
+        // supp2 handled (2 of 2)
+        expect(viewModel.todayProgress, 1.0);
+        expect(viewModel.progressText, '2 of 2 stacks completed');
+      });
     });
   });
 }

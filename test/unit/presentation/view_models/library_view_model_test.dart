@@ -77,6 +77,10 @@ class FakeStackRepository implements StackRepository {
 
   @override
   Future<SupplementStack?> getStack(String userId) async => null;
+
+  @override
+  Stream<List<SupplementStack>> watchUserStacks(String userId) =>
+      Stream.value(stacks);
 }
 
 void main() {

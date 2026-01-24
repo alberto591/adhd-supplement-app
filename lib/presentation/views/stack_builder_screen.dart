@@ -7,7 +7,8 @@ import '../widgets/library_item.dart';
 import '../widgets/safety_alert_banner.dart';
 import '../../application/view_models/safety_view_model.dart';
 import '../navigation/app_router.dart';
-
+import '../widgets/stack_presets_modal.dart';
+import '../../utils/supplement_ui_helper.dart';
 import '../view_models/stack_builder_view_model.dart';
 
 class StackBuilderScreen extends StatefulWidget {
@@ -25,9 +26,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
         id: s.id,
         name: s.name,
         dosage: s.defaultDosage ?? '',
-        icon: _getIconForCategory(s.category),
-        iconColor: _getColorForCategory(s.category),
-        iconBgColor: _getColorForCategory(s.category).withValues(alpha: 0.1),
+        icon: SupplementUIHelper.getIconForCategory(s.category),
+        iconColor: SupplementUIHelper.getColorForCategory(s.category),
+        iconBgColor: SupplementUIHelper.getColorForCategory(s.category)
+            .withValues(alpha: 0.1),
       );
     }).toList();
   }
@@ -47,9 +49,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
         id: s.id,
         name: s.name,
         dosage: item.customDosage ?? s.defaultDosage ?? '',
-        icon: _getIconForCategory(s.category),
-        iconColor: _getColorForCategory(s.category),
-        iconBgColor: _getColorForCategory(s.category).withValues(alpha: 0.1),
+        icon: SupplementUIHelper.getIconForCategory(s.category),
+        iconColor: SupplementUIHelper.getColorForCategory(s.category),
+        iconBgColor: SupplementUIHelper.getColorForCategory(s.category)
+            .withValues(alpha: 0.1),
       );
     }).toList();
   }
@@ -82,36 +85,6 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
       (s) => s.id == supplementId,
     );
     viewModel.addItem(supplement);
-  }
-
-  IconData _getIconForCategory(String category) {
-    switch (category.toLowerCase()) {
-      case 'essential fatty acids':
-        return Icons.water_drop;
-      case 'mineral':
-        return Icons.science;
-      case 'vitamin':
-        return Icons.wb_sunny;
-      case 'nootropic':
-        return Icons.spa;
-      default:
-        return Icons.local_pharmacy;
-    }
-  }
-
-  Color _getColorForCategory(String category) {
-    switch (category.toLowerCase()) {
-      case 'essential fatty acids':
-        return Colors.blue[400]!;
-      case 'mineral':
-        return Colors.purple[400]!;
-      case 'vitamin':
-        return Colors.amber[400]!;
-      case 'nootropic':
-        return Colors.green[400]!;
-      default:
-        return Colors.blueGrey;
-    }
   }
 
   @override
@@ -153,28 +126,41 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                   .titleLarge
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: isDark ? Colors.white : Colors.black,
+                                    color: isDark
+                                        ? Colors.white
+                                        : AppColors.textPrimaryLight,
                                   ),
                             ),
-                            TextButton(
-                              onPressed: viewModel.isLoading
-                                  ? null
-                                  : () => _handleSave(viewModel),
-                              child: viewModel.isLoading
-                                  ? const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                          strokeWidth: 2),
-                                    )
-                                  : const Text(
-                                      'Activate Routine',
-                                      style: TextStyle(
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.auto_awesome,
+                                      color: AppColors.primaryGold),
+                                  onPressed: () =>
+                                      _showPresetsSheet(context, viewModel),
+                                  tooltip: 'Archetype Presets',
+                                ),
+                                TextButton(
+                                  onPressed: viewModel.isLoading
+                                      ? null
+                                      : () => _handleSave(viewModel),
+                                  child: viewModel.isLoading
+                                      ? const SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(
+                                              strokeWidth: 2),
+                                        )
+                                      : const Text(
+                                          'Save',
+                                          style: TextStyle(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -229,6 +215,30 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                       ),
                                     ),
 
+                                    // Stack Profile Visualization (The "Why")
+                                    if (viewModel.currentStack != null &&
+                                        viewModel
+                                            .currentStack!.items.isNotEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            _buildBenefitIndicator(
+                                                'FOCUS',
+                                                Icons.psychology,
+                                                AppColors.primary,
+                                                0.8),
+                                            _buildBenefitIndicator('ENERGIZE',
+                                                Icons.bolt, Colors.amber, 0.6),
+                                            _buildBenefitIndicator('CALM',
+                                                Icons.spa, Colors.green, 0.7),
+                                          ],
+                                        ),
+                                      ),
+
                                     // Safety Alert Banner (Dynamic)
                                     if (safetyViewModel
                                         .currentInteractions.isNotEmpty)
@@ -265,7 +275,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                   fontWeight: FontWeight.bold,
                                                   color: isDark
                                                       ? Colors.white
-                                                      : Colors.black,
+                                                      : AppColors
+                                                          .textPrimaryLight,
                                                 ),
                                           ),
                                           TextButton(
@@ -439,6 +450,48 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                 context, viewModel, index),
                                       ),
                                     ),
+
+                                    // Real-time Intelligence Logic
+                                    if (viewModel.stackInsight != null)
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: AnimatedContainer(
+                                          duration:
+                                              const Duration(milliseconds: 400),
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primaryGold
+                                                .withValues(alpha: 0.1),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            border: Border.all(
+                                                color: AppColors.primaryGold
+                                                    .withValues(alpha: 0.2)),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.lightbulb,
+                                                  color: AppColors.primaryGold,
+                                                  size: 20),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                child: Text(
+                                                  viewModel.stackInsight!,
+                                                  style: TextStyle(
+                                                    color: isDark
+                                                        ? Colors.white
+                                                            .withValues(
+                                                                alpha: 0.9)
+                                                        : Colors.black87,
+                                                    fontSize: 13,
+                                                    height: 1.4,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
 
                                     // Footer Stats
                                     Padding(
@@ -733,13 +786,19 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     final isSelected = viewModel.selectedSlot == slot;
     return GestureDetector(
       onTap: () => viewModel.selectSlot(slot),
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary
-              : (isDark ? Colors.grey[800] : Colors.grey[200]),
+              : (isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.grey[200]),
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? AppColors.primary : Colors.transparent,
+          ),
         ),
         child: Row(
           children: [
@@ -752,10 +811,58 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                     ? Colors.white
                     : (isDark ? Colors.white70 : Colors.black87),
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: 13,
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildBenefitIndicator(
+      String label, IconData icon, Color color, double level) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.1),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: color, size: 20),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: GoogleFonts.lexend(
+            fontSize: 9,
+            fontWeight: FontWeight.bold,
+            color: color.withValues(alpha: 0.8),
+            letterSpacing: 0.5,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showPresetsSheet(
+      BuildContext context, StackBuilderViewModel viewModel) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => StackPresetsModal(
+        onSelect: (archetype) {
+          viewModel.applyPreset(archetype);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Applied ${archetype.capitalize()} preset! ✨'),
+              backgroundColor: AppColors.primary,
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        },
       ),
     );
   }

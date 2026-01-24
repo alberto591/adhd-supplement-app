@@ -35,14 +35,33 @@ class RevenueCatBillingService implements BillingService {
 
   @override
   Future<bool> get isSubscribed async {
+    return hasEntitlement('pro');
+  }
+
+  @override
+  Future<bool> hasEntitlement(String entitlementId) async {
     if (!_isInitialized) await initialize();
     try {
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-      // "pro" is the entitlement identifier in RevenueCat
-      return customerInfo.entitlements.all['pro']?.isActive ?? false;
+      return customerInfo.entitlements.all[entitlementId]?.isActive ?? false;
     } catch (e) {
-      AppLogger.e('Error checking entitlement', e);
+      AppLogger.e('Error checking entitlement: $entitlementId', e);
       return false;
+    }
+  }
+
+  @override
+  Future<List<String>> getEntitlements() async {
+    if (!_isInitialized) await initialize();
+    try {
+      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+      return customerInfo.entitlements.all.values
+          .where((e) => e.isActive)
+          .map((e) => e.identifier)
+          .toList();
+    } catch (e) {
+      AppLogger.e('Error fetching all entitlements', e);
+      return [];
     }
   }
 

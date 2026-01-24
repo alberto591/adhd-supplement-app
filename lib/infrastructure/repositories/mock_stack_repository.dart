@@ -16,4 +16,9 @@ class MockStackRepository implements StackRepository {
   Future<List<SupplementStack>> getUserStacks(String userId) async {
     return []; // Return empty list
   }
+
+  @override
+  Stream<List<SupplementStack>> watchUserStacks(String userId) async* {
+    yield [];
+  }
 }

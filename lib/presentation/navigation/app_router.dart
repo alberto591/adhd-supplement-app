@@ -199,7 +199,12 @@ class AppRouter {
           builder: (context) {
             final authProvider =
                 Provider.of<AuthProvider>(context, listen: false);
-            final userId = authProvider.user?.id ?? '';
+
+            if (!authProvider.canAccess('stack_builder')) {
+              return const PaywallScreen(returnTo: stackBuilder);
+            }
+
+            final userId = authProvider.user?.id ?? 'demo_user';
             final safetyVM = locator<SafetyViewModel>(param1: userId);
             return MultiProvider(
               providers: [
@@ -286,7 +291,7 @@ class AppRouter {
           builder: (context) {
             final authProvider =
                 Provider.of<AuthProvider>(context, listen: false);
-            final userId = authProvider.user?.id ?? '';
+            final userId = authProvider.user?.id ?? 'demo_user';
             return ChangeNotifierProvider(
               create: (_) => locator<SymptomCheckInViewModel>(param1: userId),
               child: const DailySymptomCheckinScreen(),
@@ -361,7 +366,7 @@ class AppRouter {
       case supplementDetail:
         final supplement = settings.arguments as Supplement;
         final authProvider = locator<AuthProvider>();
-        final userId = authProvider.user?.id ?? '';
+        final userId = authProvider.user?.id ?? 'demo_user';
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider(
                   create: (_) =>

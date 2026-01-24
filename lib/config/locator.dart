@@ -76,8 +76,15 @@ import 'package:adhd_supplement_app/presentation/view_models/stack_builder_view_
 final locator = GetIt.instance;
 
 Future<void> setupLocator() async {
-  // 1. Core Services
   final prefs = await SharedPreferences.getInstance();
+
+  _setupCore(prefs);
+  _setupInfrastructure(prefs);
+  _setupApplication();
+  _setupViewModels();
+}
+
+void _setupCore(SharedPreferences prefs) {
   locator.registerLazySingleton<SettingsRepository>(
       () => SharedPrefsSettingsRepository(prefs));
   locator.registerLazySingleton<HapticService>(() => HapticService());
@@ -85,8 +92,10 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<UrlService>(() => UrlService());
   locator.registerLazySingleton<ReportPdfService>(() => ReportPdfService());
   locator.registerLazySingleton<SeedingService>(() => SeedingService());
+}
 
-  // 2. Infrastructure Services
+void _setupInfrastructure(SharedPreferences prefs) {
+  // Services
   locator
       .registerLazySingleton<BillingService>(() => RevenueCatBillingService());
   locator.registerLazySingleton<AnalyticsService>(
@@ -98,13 +107,14 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<StreakService>(() => StreakService());
   locator.registerLazySingleton<PerplexityService>(() => PerplexityService());
 
-  // 3. Infrastructure Repositories
+  // Repositories
   locator.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepository());
   locator.registerLazySingleton<SupplementRepository>(
       () => FirebaseSupplementRepository());
   locator
       .registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
-  locator.registerLazySingleton<LogRepository>(() => FirebaseLogRepository());
+  locator.registerLazySingleton<LogRepository>(
+      () => FirebaseLogRepository(prefs: prefs));
   locator.registerLazySingleton<SymptomRepository>(
       () => FirebaseSymptomRepository());
   locator.registerLazySingleton<StreakRepository>(
@@ -123,12 +133,14 @@ Future<void> setupLocator() async {
       () => FirebaseReferralRepository());
   locator.registerLazySingleton<PerplexityRepository>(
       () => PerplexityRepositoryImpl(locator<PerplexityService>()));
+}
 
-  // 4. Application Layer (AuthProvider)
-  locator.registerLazySingleton(() => AuthProvider(locator<AuthRepository>()));
+void _setupApplication() {
+  locator.registerLazySingleton(
+      () => AuthProvider(locator<AuthRepository>(), locator<BillingService>()));
+}
 
-  // 5. ViewModels
-
+void _setupViewModels() {
   // Singleton ViewModels
   locator.registerLazySingleton(
       () => ThemeViewModel(locator<SettingsRepository>()));

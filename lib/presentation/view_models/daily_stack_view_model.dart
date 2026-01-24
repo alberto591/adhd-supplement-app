@@ -12,6 +12,7 @@ import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
 import '../../infrastructure/services/sound_service.dart';
 import '../../domain/services/analytics_service.dart';
+import 'dart:async';
 
 /// View model for the Daily Stack screen
 /// Manages today's stacks, intake status, and progress tracking
@@ -35,6 +36,9 @@ class DailyStackViewModel extends ChangeNotifier {
   String? _error;
   bool _isDisposed = false;
   final Set<String> _snoozedSupplements = {};
+  final Set<String> _collapsedStackIds = {};
+  bool _allCollapsed = false;
+  StreamSubscription<List<SupplementStack>>? _stackSubscription;
 
   // Time-based slots
   List<StackItem> get morningItems => _getItemsForSlot('morning');
@@ -98,6 +102,8 @@ class DailyStackViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
   Set<String> get snoozedSupplements => _snoozedSupplements;
+  Set<String> get collapsedStackIds => _collapsedStackIds;
+  bool get allCollapsed => _allCollapsed;
 
   /// Get all items that are pending (neither taken nor skipped)
   List<StackItem> get pendingItems {
@@ -134,21 +140,27 @@ class DailyStackViewModel extends ChangeNotifier {
   double get todayProgress {
     if (_stacks.isEmpty) return 0.0;
 
-    int totalItems = 0;
+    // Get unique supplement IDs across all stacks
+    final scheduledSupps =
+        _stacks.expand((s) => s.items.map((i) => i.supplementId)).toSet();
+    final totalDistinct = scheduledSupps.length;
+
+    if (totalDistinct == 0) return 0.0;
+
     int completedItems = 0;
-
-    for (final stack in _stacks) {
-      totalItems += stack.items.length;
-    }
-
     if (_todayLog != null) {
       for (final entry in _todayLog!.entries) {
-        if (entry.status == LogStatus.taken) completedItems++;
+        // Only count if it's one of the supplements we actually have scheduled today
+        if (scheduledSupps.contains(entry.supplementId)) {
+          if (entry.status == LogStatus.taken ||
+              entry.status == LogStatus.skipped) {
+            completedItems++;
+          }
+        }
       }
     }
 
-    if (totalItems == 0) return 0.0;
-    return completedItems / totalItems;
+    return completedItems / totalDistinct;
   }
 
   /// Get count of completed stacks vs total
@@ -157,17 +169,18 @@ class DailyStackViewModel extends ChangeNotifier {
 
     int completedStacks = 0;
     for (final stack in _stacks) {
-      final allTaken = stack.items.every((item) {
-        if (_todayLog == null) {
-          return false;
-        }
+      if (stack.items.isEmpty) continue;
+
+      final allHandled = stack.items.every((item) {
+        if (_todayLog == null) return false;
         return _todayLog!.entries.any(
           (e) =>
               e.supplementId == item.supplementId &&
-              e.status == LogStatus.taken,
+              (e.status == LogStatus.taken || e.status == LogStatus.skipped),
         );
       });
-      if (allTaken && stack.items.isNotEmpty) {
+
+      if (allHandled) {
         completedStacks++;
       }
     }
@@ -205,6 +218,12 @@ class DailyStackViewModel extends ChangeNotifier {
     _setLoading(true);
     _error = null;
 
+    if (_userId.isEmpty) {
+      _error = 'User not authenticated';
+      _setLoading(false);
+      return;
+    }
+
     try {
       AppLogger.i('Initializing DailyStackViewModel for user: $_userId');
       final logicalToday = _getLogicalToday();
@@ -223,8 +242,22 @@ class DailyStackViewModel extends ChangeNotifier {
       _todayLog = results[1] as DailyLog?;
       _streakCount = results[2] as int;
 
+      // Notify immediately so UI shows structure (with "Loading..." for missing supplements)
+      notifyListeners();
+
       // Cache supplements for display
       await _cacheSupplements();
+      notifyListeners();
+
+      // Listen for future updates
+      _stackSubscription?.cancel();
+      _stackSubscription =
+          _stackRepository.watchUserStacks(_userId).listen((updatedStacks) {
+        AppLogger.i('Reactive Update: Stacks refreshed from repository.');
+        _stacks = List.from(updatedStacks);
+        notifyListeners(); // Immediate feedback
+        _cacheSupplements().then((_) => notifyListeners()); // Refined feedback
+      });
 
       _snoozedSupplements.clear();
 
@@ -351,6 +384,41 @@ class DailyStackViewModel extends ChangeNotifier {
     } else {
       await markSupplementTaken(supplementId);
     }
+  }
+
+  /// Toggle expansion state of a stack
+  void toggleStackExpansion(String stackId) {
+    if (_collapsedStackIds.contains(stackId)) {
+      _collapsedStackIds.remove(stackId);
+    } else {
+      _collapsedStackIds.add(stackId);
+    }
+
+    // Update allCollapsed state
+    if (_collapsedStackIds.length == _stacks.length) {
+      _allCollapsed = true;
+    } else if (_collapsedStackIds.isEmpty) {
+      _allCollapsed = false;
+    }
+
+    notifyListeners();
+  }
+
+  /// Toggle expansion for ALL stacks
+  void toggleAllExpansion() {
+    if (_allCollapsed) {
+      _collapsedStackIds.clear();
+      _allCollapsed = false;
+    } else {
+      // Add all dynamic stack IDs
+      for (final stack in _stacks) {
+        _collapsedStackIds.add(stack.id);
+      }
+      // Also add standard dashboard slot IDs to ensure Dashboard collapses too
+      _collapsedStackIds.addAll(['morning', 'afternoon', 'evening', 'night']);
+      _allCollapsed = true;
+    }
+    notifyListeners();
   }
 
   /// Snooze a persistent nudge for a supplement
@@ -520,8 +588,9 @@ class DailyStackViewModel extends ChangeNotifier {
       // Check if stack matches requested slot
       if (stack.timeOfDay?.toLowerCase() == slot.toLowerCase()) {
         for (final item in stack.items) {
-          if (!isSupplementTaken(item.supplementId) &&
-              !isSupplementSkipped(item.supplementId)) {
+          // Check if already in list (for multi-stack duplicates, though rare)
+          final exists = items.any((i) => i.supplementId == item.supplementId);
+          if (!exists) {
             items.add(item);
           }
         }
@@ -628,7 +697,8 @@ class DailyStackViewModel extends ChangeNotifier {
     final supplementIds = <String>{};
     for (final stack in _stacks) {
       for (final item in stack.items) {
-        if (!_supplementCache.containsKey(item.supplementId)) {
+        if (!_supplementCache.containsKey(item.supplementId) &&
+            item.supplementId.isNotEmpty) {
           supplementIds.add(item.supplementId);
         }
       }
@@ -654,6 +724,7 @@ class DailyStackViewModel extends ChangeNotifier {
   @override
   void dispose() {
     _isDisposed = true;
+    _stackSubscription?.cancel();
     super.dispose();
   }
 

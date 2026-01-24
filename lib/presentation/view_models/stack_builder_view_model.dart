@@ -74,7 +74,7 @@ class StackBuilderViewModel extends ChangeNotifier {
     _currentStack = stacks.firstWhere(
       (s) => s.timeOfDay?.toLowerCase() == _selectedSlot.toLowerCase(),
       orElse: () => SupplementStack(
-        id: 'new_${_selectedSlot}_stack',
+        id: '${_selectedSlot.toLowerCase()}_routine',
         userId: _userId,
         name: '${_selectedSlot.capitalize()} Stack',
         items: [],
@@ -201,6 +201,80 @@ class StackBuilderViewModel extends ChangeNotifier {
       return false;
     } finally {
       _setLoading(false);
+    }
+  }
+
+  /// Returns real-time expert insights based on the current stack items.
+  String? get stackInsight {
+    if (_currentStack == null || _currentStack!.items.isEmpty) return null;
+
+    final ids = _currentStack!.items.map((i) => i.supplementId).toList();
+
+    // Synergy: L-Theanine + Caffeine
+    if (ids.contains('caffeine') && ids.contains('l-theanine')) {
+      return 'Synergy Detected: L-Theanine significantly reduces potential "jitters" from Caffeine while maintaining focus. 🧠✨';
+    }
+
+    // Synergy: Magnesium + Vitamin D3
+    if (ids.contains('magnesium') && ids.contains('vitamin-d')) {
+      return 'Optimization: Magnesium is a cofactor for Vitamin D metabolism. This pair ensures maximum efficiency for bone and brain health. 🦴⚡';
+    }
+
+    // Synergy: Zinc + Copper (Preventing deficiency)
+    if (ids.contains('zinc') && !ids.contains('copper')) {
+      return 'Tip: High Zinc intake can deplete Copper levels. Consider adding a small amount of Copper if identifying long-term Zinc use.';
+    }
+
+    // Generic Tip based on count
+    if (ids.length >= 4) {
+      return 'Expert Tip: You have a robust stack. Remember to "cycle" certain nootropics to maintain receptor sensitivity.';
+    }
+
+    return 'Building a great routine! Each item here supports your ADHD cognitive profile.';
+  }
+
+  /// Applies a pre-configured stack archetype.
+  void applyPreset(String archetype) {
+    if (_currentStack == null) return;
+
+    List<StackItem> presetItems = [];
+
+    switch (archetype.toLowerCase()) {
+      case 'student':
+        presetItems = const [
+          StackItem(
+              supplementId: 'l-theanine', customDosage: '200mg', order: 0),
+          StackItem(supplementId: 'caffeine', customDosage: '100mg', order: 1),
+          StackItem(supplementId: 'omega-3', customDosage: '1000mg', order: 2),
+        ];
+        break;
+      case 'creative':
+        presetItems = const [
+          StackItem(supplementId: 'magnesium', customDosage: '200mg', order: 0),
+          StackItem(
+              supplementId: 'vitamin-d', customDosage: '2000iu', order: 1),
+          StackItem(
+              supplementId: 'lions-mane', customDosage: '500mg', order: 2),
+        ];
+        break;
+      case 'executive':
+        presetItems = const [
+          StackItem(
+              supplementId: 'rhodiola-rosea', customDosage: '300mg', order: 0),
+          StackItem(
+              supplementId: 'bacopa-monnieri', customDosage: '300mg', order: 1),
+          StackItem(supplementId: 'zinc', customDosage: '15mg', order: 2),
+        ];
+        break;
+    }
+
+    if (presetItems.isNotEmpty) {
+      _currentStack = _currentStack!.copyWith(
+        items: presetItems,
+        updatedAt: DateTime.now(),
+      );
+      _checkInteractions();
+      notifyListeners();
     }
   }
 

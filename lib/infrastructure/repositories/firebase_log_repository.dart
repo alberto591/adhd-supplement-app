@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/daily_log.dart';
 import '../../domain/repositories/log_repository.dart';
@@ -6,12 +8,18 @@ import '../../utils/logger.dart';
 
 class FirebaseLogRepository implements LogRepository {
   final FirebaseFirestore _firestore;
+  final SharedPreferences? _prefs;
 
   // In-memory cache: "userId_dateStr" -> DailyLog
   final Map<String, DailyLog> _memoryCache = {};
 
-  FirebaseLogRepository({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+  // Local storage key prefix
+  static const String _spPrefix = 'log_cache_';
+
+  FirebaseLogRepository(
+      {FirebaseFirestore? firestore, SharedPreferences? prefs})
+      : _firestore = firestore ?? FirebaseFirestore.instance,
+        _prefs = prefs;
 
   @override
   Future<List<DailyLog>> getLogsByDateRange(
@@ -60,6 +68,22 @@ class FirebaseLogRepository implements LogRepository {
         return _memoryCache[cacheKey];
       }
 
+      // 2. Check SharedPreferences Cache (Survivability through restarts)
+      if (_prefs != null) {
+        final localData = _prefs!.getString('$_spPrefix$cacheKey');
+        if (localData != null) {
+          try {
+            final log = DailyLog.fromJson(
+                jsonDecode(localData) as Map<String, dynamic>);
+            _memoryCache[cacheKey] = log;
+            AppLogger.d('Returning log from local SharedPreferences (5ms)');
+            return log;
+          } catch (e) {
+            AppLogger.w('Failed to decode local log cache', e);
+          }
+        }
+      }
+
       final snapshot = await _firestore
           .collection('logs')
           .where('userId', isEqualTo: userId)
@@ -73,8 +97,8 @@ class FirebaseLogRepository implements LogRepository {
       final log = DailyLog.fromJson(
           {...snapshot.docs.first.data(), 'id': snapshot.docs.first.id});
 
-      // Update Cache
-      _memoryCache[cacheKey] = log;
+      // Update Caches
+      _updateLocalCache(cacheKey, log);
       return log;
     } catch (e) {
       AppLogger.w('Fetching log for date from cache', e);
@@ -98,25 +122,29 @@ class FirebaseLogRepository implements LogRepository {
 
   @override
   Future<void> saveLog(DailyLog log) async {
+    final dateStr = _dateOnlyString(log.date);
+    final cacheKey = '${log.userId}_$dateStr';
+
+    // 1. Immediate local persistence for maximum reliability
+    _updateLocalCache(cacheKey, log);
+
     try {
       if (log.id.isEmpty) {
         await _firestore.collection('logs').add(log.toJson());
-        // Update cache with new ID if needed (though we need userId to key it)
-        // Ideally we know userId from the log.
       } else {
         await _firestore.collection('logs').doc(log.id).set(log.toJson());
       }
-
-      // Update Memory Cache
-      // log.date is a DateTime or String? It's DateTime in DailyLog entity usually.
-      // We need userId. DailyLog usually implies a user or we pass it.
-      // DailyLog entity has userId.
-      final dateStr = _dateOnlyString(log.date);
-      final cacheKey = '${log.userId}_$dateStr';
-      _memoryCache[cacheKey] = log;
     } catch (e) {
-      AppLogger.e('Error saving log', e);
-      throw Exception('Failed to save log: $e');
+      AppLogger.e('Error saving log to Firestore', e);
+      // We don't throw here if we have local persistence, as it satisfies the immediate need
+      // but we log it for debug.
+    }
+  }
+
+  void _updateLocalCache(String key, DailyLog log) {
+    _memoryCache[key] = log;
+    if (_prefs != null) {
+      _prefs!.setString('$_spPrefix$key', jsonEncode(log.toJson()));
     }
   }
 

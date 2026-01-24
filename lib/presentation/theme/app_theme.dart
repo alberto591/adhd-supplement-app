@@ -31,6 +31,17 @@ class AppColors {
   // Accents
   static const Color accentGreen = Color(0xFF0BDA1D);
   static const Color warningAmber = Color(0xFFFFC107);
+
+  // Semantic Tokens
+  static Color cardBackground(bool isDark) =>
+      isDark ? const Color(0xFF2D2616) : Colors.white;
+  static Color borderColor(bool isDark) =>
+      isDark ? Colors.white.withValues(alpha: 0.05) : const Color(0xFFE2E8F0);
+  static Color dividerColor(bool isDark) =>
+      isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFF1F5F9);
+  static Color textTertiary(bool isDark) => isDark
+      ? const Color(0xFF94A3B8).withValues(alpha: 0.7)
+      : Colors.grey[500]!;
 }
 
 class AppTheme {
@@ -49,6 +60,18 @@ class AppTheme {
         bodyColor: AppColors.textPrimaryLight,
         displayColor: AppColors.textPrimaryLight,
       ),
+      dividerTheme: DividerThemeData(
+        color: AppColors.dividerColor(false),
+        thickness: 1,
+      ),
+      cardTheme: CardThemeData(
+        color: AppColors.cardBackground(false),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: AppColors.borderColor(false)),
+        ),
+      ),
     );
   }
 
@@ -66,6 +89,18 @@ class AppTheme {
       textTheme: GoogleFonts.lexendTextTheme().apply(
         bodyColor: AppColors.textPrimaryDark,
         displayColor: AppColors.textPrimaryDark,
+      ),
+      dividerTheme: DividerThemeData(
+        color: AppColors.dividerColor(true),
+        thickness: 1,
+      ),
+      cardTheme: CardThemeData(
+        color: AppColors.cardBackground(true),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: AppColors.borderColor(true)),
+        ),
       ),
     );
   }

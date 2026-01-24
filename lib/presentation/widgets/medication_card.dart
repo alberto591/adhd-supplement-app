@@ -86,8 +86,8 @@ class MedicationCard extends StatelessWidget {
 
                   // Icon
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: 40.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
                       color: (isTaken || isSkipped)
                           ? Colors.grey.withValues(alpha: 0.2)
@@ -99,10 +99,10 @@ class MedicationCard extends StatelessWidget {
                           ? Icons.wb_sunny
                           : (isSkipped ? Icons.block : icon),
                       color: (isTaken || isSkipped) ? Colors.grey : iconColor,
-                      size: 24,
+                      size: 20.0,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 12),
 
                   // Details
                   Expanded(

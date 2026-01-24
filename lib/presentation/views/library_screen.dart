@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
-
+import '../../utils/supplement_ui_helper.dart';
 import '../widgets/unified_bottom_nav.dart';
 import '../widgets/custom_supplement_form.dart';
+import '../widgets/skeleton_loader.dart';
 import '../view_models/library_view_model.dart';
 import '../../config/locator.dart';
 import '../../domain/entities/supplement.dart';
@@ -26,7 +27,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   void initState() {
     super.initState();
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final userId = authProvider.user?.id ?? '';
+    final userId = authProvider.user?.id ?? 'demo_user';
     _viewModel = locator.get<LibraryViewModel>(param1: userId);
     _viewModel.initialize();
 
@@ -46,17 +47,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     const primaryGold = AppColors.primaryGold;
-    const bgLight = AppColors.backgroundPremiumLight;
-    const bgDark = AppColors.backgroundPremiumDark;
-    const cardBgLight = AppColors.cardLight;
-    const cardBgDark = AppColors.cardDark;
-    const borderColorLight = Color(0xFFE2E8F0);
-    const borderColorDark = Color(0xFF1E293B);
+    final bgColor =
+        isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
 
     return ChangeNotifierProvider.value(
       value: _viewModel,
       child: Scaffold(
-        backgroundColor: isDark ? bgDark : bgLight,
+        backgroundColor: bgColor,
         body: SafeArea(
           child: Consumer<LibraryViewModel>(
             builder: (context, viewModel, child) {
@@ -106,8 +103,39 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
                   // Loading State
                   if (viewModel.isLoading && viewModel.supplements.isEmpty)
-                    const Expanded(
-                      child: Center(child: CircularProgressIndicator()),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            const SkeletonLoader(
+                                height: 52, borderRadius: 16), // Search bar
+                            const SizedBox(height: 24),
+                            Row(
+                              children: List.generate(
+                                  3,
+                                  (index) => const Padding(
+                                        padding: EdgeInsets.only(right: 8),
+                                        child: SkeletonLoader(
+                                            width: 80,
+                                            height: 36,
+                                            borderRadius: 18),
+                                      )),
+                            ),
+                            const SizedBox(height: 32),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: 5,
+                                itemBuilder: (context, index) => const Padding(
+                                  padding: EdgeInsets.only(bottom: 12),
+                                  child: SkeletonLoader(
+                                      height: 80, borderRadius: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     )
                   else ...[
                     // Selection Toggle (Recommended vs Avoid)
@@ -118,14 +146,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         height: 48,
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: isDark
-                              ? AppColors.cardDark
-                              : const Color(0xFFF1F5F9),
+                          color: AppColors.cardBackground(isDark),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.05)
-                                : const Color(0xFFE2E8F0),
+                            color: AppColors.borderColor(isDark),
                           ),
                         ),
                         child: Row(
@@ -264,7 +288,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                             const EdgeInsets.only(right: 8),
                                         child: _buildFilterChip(
                                           context,
-                                          _getIconForCategory(category),
+                                          SupplementUIHelper.getIconForCategory(
+                                              category),
                                           category,
                                           viewModel.selectedCategory ==
                                               category,
@@ -289,13 +314,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                     child: Container(
                                       height: 52,
                                       decoration: BoxDecoration(
-                                        color: isDark
-                                            ? AppColors.cardDark
-                                            : Colors.white,
+                                        color: AppColors.cardBackground(isDark),
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
-                                          color: AppColors.primaryGold
-                                              .withValues(alpha: 0.1),
+                                          color: AppColors.borderColor(isDark),
                                         ),
                                         boxShadow: [
                                           BoxShadow(
@@ -408,7 +430,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                       Text(
                                         'No supplements found',
                                         style: GoogleFonts.lexend(
-                                            color: Colors.grey, fontSize: 16),
+                                            color:
+                                                AppColors.textTertiary(isDark),
+                                            fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -428,10 +452,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                         context,
                                         supplement: supplement,
                                         isDark: isDark,
-                                        cardBgLight: cardBgLight,
-                                        cardBgDark: cardBgDark,
-                                        borderColorLight: borderColorLight,
-                                        borderColorDark: borderColorDark,
                                       ),
                                     );
                                   }).toList(),
@@ -500,7 +520,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
       backgroundColor: Colors.transparent,
       builder: (sheetContext) => Container(
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1C2633) : Colors.white,
+          color: AppColors.cardBackground(isDark),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         padding: const EdgeInsets.all(24),
@@ -739,10 +759,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
     BuildContext context, {
     required Supplement supplement,
     required bool isDark,
-    required Color cardBgLight,
-    required Color cardBgDark,
-    required Color borderColorLight,
-    required Color borderColorDark,
   }) {
     final isGold = supplement.evidenceLevel?.toLowerCase() == 'high';
 
@@ -753,7 +769,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.cardDark : Colors.white,
+          color: AppColors.cardBackground(isDark),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: supplement.status == 'avoid'
@@ -1116,23 +1132,5 @@ class _LibraryScreenState extends State<LibraryScreen> {
         ),
       ],
     );
-  }
-
-  IconData _getIconForCategory(String category) {
-    switch (category.toLowerCase()) {
-      case 'cognitive':
-      case 'focus':
-        return Icons.psychology;
-      case 'sleep':
-        return Icons.bedtime;
-      case 'energy':
-        return Icons.bolt;
-      case 'mood':
-        return Icons.favorite;
-      case 'relaxation':
-        return Icons.spa;
-      default:
-        return Icons.medication;
-    }
   }
 }

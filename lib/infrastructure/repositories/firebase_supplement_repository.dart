@@ -119,18 +119,18 @@ class FirebaseSupplementRepository implements SupplementRepository {
   Future<Supplement?> getSupplement(String id, {String? userId}) async {
     // Check all segments if userId provided, otherwise just global
     try {
-      // Try global first
+      // 1. Try global first with server/cache
       final doc = await _firestore
           .collection('supplements')
           .doc(id)
           .get(const GetOptions(source: Source.serverAndCache))
           .timeout(const Duration(seconds: 5));
 
-      if (doc.exists) {
+      if (doc.exists && doc.data() != null) {
         return Supplement.fromJson({...doc.data()!, 'id': doc.id});
       }
 
-      // If not global and userId provided, try custom
+      // 2. If not global and userId provided, try custom
       if (userId != null) {
         final customDoc = await _firestore
             .collection('users')
@@ -139,7 +139,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
             .doc(id)
             .get();
 
-        if (customDoc.exists) {
+        if (customDoc.exists && customDoc.data() != null) {
           return Supplement.fromJson({
             ...customDoc.data()!,
             'id': customDoc.id,
@@ -151,8 +151,42 @@ class FirebaseSupplementRepository implements SupplementRepository {
 
       return null;
     } catch (e) {
-      AppLogger.w('Fetching supplement $id from cache failed', e);
-      return null;
+      AppLogger.w(
+          'Fetching supplement $id from server failed, trying cache', e);
+      try {
+        // Fallback: Force read from local cache
+        final cachedDoc = await _firestore
+            .collection('supplements')
+            .doc(id)
+            .get(const GetOptions(source: Source.cache));
+
+        if (cachedDoc.exists && cachedDoc.data() != null) {
+          return Supplement.fromJson(
+              {...cachedDoc.data()!, 'id': cachedDoc.id});
+        }
+
+        if (userId != null) {
+          final cachedCustomDoc = await _firestore
+              .collection('users')
+              .doc(userId)
+              .collection('custom_supplements')
+              .doc(id)
+              .get(const GetOptions(source: Source.cache));
+
+          if (cachedCustomDoc.exists && cachedCustomDoc.data() != null) {
+            return Supplement.fromJson({
+              ...cachedCustomDoc.data()!,
+              'id': cachedCustomDoc.id,
+              'userId': userId,
+              'isCustom': true,
+            });
+          }
+        }
+        return null;
+      } catch (cacheError) {
+        AppLogger.e('Supplement cache lookup failed for $id', cacheError);
+        return null;
+      }
     }
   }
 

@@ -118,6 +118,8 @@ class MockUrlService implements UrlService {
   Future<void> launchReferral(String url) async {}
   @override
   Future<void> launchUri(String url) async {}
+  @override
+  Future<void> launchInAppBrowser(String url) async {}
 }
 
 void main() {

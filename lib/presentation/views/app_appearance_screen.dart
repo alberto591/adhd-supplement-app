@@ -79,8 +79,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: bgColor,
-        foregroundColor:
-            isDark ? Colors.white : Colors.black, // Adjust based on background
+        foregroundColor: isDark ? Colors.white : AppColors.textPrimaryLight,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -101,7 +100,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
             Text(
               'App Appearance',
               style: GoogleFonts.lexend(
-                color: isDark ? Colors.white : const Color(0xFF111418),
+                color: isDark ? Colors.white : AppColors.textPrimaryLight,
                 fontSize: 18,
                 fontWeight: FontWeight.w900, // Extrabold
               ),
@@ -109,7 +108,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
             Text(
               'Make it yours',
               style: GoogleFonts.lexend(
-                color: isDark ? Colors.grey[400] : Colors.grey[500],
+                color: AppColors.textTertiary(isDark),
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),
@@ -132,8 +131,9 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                       child: Text(
                         'Preview on Home Screen',
                         style: GoogleFonts.lexend(
-                          color:
-                              isDark ? Colors.white : const Color(0xFF111418),
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.textPrimaryLight,
                           fontSize: 22,
                           fontWeight: FontWeight.w900,
                         ),
@@ -148,10 +148,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                         color: Colors.grey[800],
                         borderRadius: BorderRadius.circular(24),
                         border: Border.all(
-                            color: isDark
-                                ? const Color(0xFF1E293B)
-                                : const Color(0xFF0F172A),
-                            width: 4),
+                            color: AppColors.borderColor(isDark), width: 4),
                         boxShadow: [
                           BoxShadow(
                               color: Colors.black.withValues(alpha: 0.4),
@@ -359,10 +356,8 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                         decoration: BoxDecoration(
                           color: isDark ? Colors.grey[900] : Colors.white,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                              color: isDark
-                                  ? Colors.grey[800]!
-                                  : Colors.grey[200]!),
+                          border:
+                              Border.all(color: AppColors.borderColor(isDark)),
                         ),
                         child: Column(
                           children: [

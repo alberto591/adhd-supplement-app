@@ -8,7 +8,8 @@ class SupplementCard extends StatelessWidget {
   final String benefit;
   final int rating; // 0-5
   final List<String> tags;
-  final String imageUrl; // For scaffold we might just use colors or placeholders if net image fails
+  final String
+      imageUrl; // For scaffold we might just use colors or placeholders if net image fails
   final Color imagePlaceholderColor;
 
   const SupplementCard({
@@ -26,14 +27,14 @@ class SupplementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1c2633) : Colors.white,
+        color: AppColors.cardBackground(isDark),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? Colors.grey[800]! : Colors.grey[200]!,
+          color: AppColors.borderColor(isDark),
         ),
         boxShadow: [
           BoxShadow(
@@ -57,28 +58,33 @@ class SupplementCard extends StatelessWidget {
               children: [
                 if (imageUrl.isNotEmpty)
                   Image.network(
-                    imageUrl, 
+                    imageUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (ctx, err, stack) => Container(color: imagePlaceholderColor),
+                    errorBuilder: (ctx, err, stack) =>
+                        Container(color: imagePlaceholderColor),
                   ),
-                
+
                 // Gradient Overlay
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.transparent, Colors.black.withValues(alpha: 0.6)],
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withValues(alpha: 0.6)
+                      ],
                     ),
                   ),
                 ),
-                
+
                 // High Evidence Tag
                 Positioned(
                   left: 16,
                   bottom: 16,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(4),
@@ -97,7 +103,7 @@ class SupplementCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -125,7 +131,9 @@ class SupplementCard extends StatelessWidget {
                           Text(
                             title,
                             style: TextStyle(
-                              color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                              color: isDark
+                                  ? Colors.white
+                                  : AppColors.textPrimaryLight,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -138,25 +146,26 @@ class SupplementCard extends StatelessWidget {
                         return Icon(
                           Icons.star,
                           size: 16,
-                          color: index < rating ? Colors.amber : Colors.grey[400],
+                          color:
+                              index < rating ? Colors.amber : Colors.grey[400],
                         );
                       }),
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 8),
                 Text(
                   description,
                   style: TextStyle(
-                    color: isDark ? const Color(0xFF9da8b9) : Colors.grey[600],
+                    color: AppColors.textTertiary(isDark),
                     fontSize: 14,
                     height: 1.5,
                   ),
                 ),
-                
+
                 const SizedBox(height: 12),
-                
+
                 // Tags
                 Wrap(
                   spacing: 16,
@@ -168,16 +177,17 @@ class SupplementCard extends StatelessWidget {
                     if (tag.contains('Cognitive')) icon = Icons.psychology;
                     if (tag.contains('Daily')) icon = Icons.schedule;
                     if (tag.contains('Stimulant')) icon = Icons.medication;
-                    
+
                     return Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(icon, size: 16, color: const Color(0xFF9da8b9)),
+                        Icon(icon,
+                            size: 16, color: AppColors.textTertiary(isDark)),
                         const SizedBox(width: 6),
                         Text(
                           tag,
-                          style: const TextStyle(
-                            color: Color(0xFF9da8b9),
+                          style: TextStyle(
+                            color: AppColors.textTertiary(isDark),
                             fontSize: 12,
                           ),
                         ),
@@ -185,11 +195,11 @@ class SupplementCard extends StatelessWidget {
                     );
                   }).toList(),
                 ),
-                
+
                 const SizedBox(height: 16),
-                Divider(color: isDark ? Colors.grey[800] : Colors.grey[100]),
+                Divider(color: AppColors.dividerColor(isDark)),
                 const SizedBox(height: 16),
-                
+
                 // Footer
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,10 +207,10 @@ class SupplementCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'DAILY DOSAGE',
                           style: TextStyle(
-                            color: Color(0xFF9da8b9),
+                            color: AppColors.textTertiary(isDark),
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
@@ -210,7 +220,9 @@ class SupplementCard extends StatelessWidget {
                         Text(
                           dosage,
                           style: TextStyle(
-                            color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                            color: isDark
+                                ? Colors.white
+                                : AppColors.textPrimaryLight,
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
@@ -224,7 +236,8 @@ class SupplementCard extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

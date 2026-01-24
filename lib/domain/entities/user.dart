@@ -11,7 +11,9 @@ class User {
   final bool hasCompletedOnboarding;
   final String? adhdType; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
   final Medication? currentMedication;
-  final List<String> unlockedAchievements; // IDs of unlocked achievements
+  final List<String> unlockedAchievements;
+  final List<String>
+      activeEntitlements; // IDs of purchased entitlements (e.g. 'stack_builder')
 
   const User({
     required this.id,
@@ -25,6 +27,7 @@ class User {
     this.adhdType,
     this.currentMedication,
     this.unlockedAchievements = const [],
+    this.activeEntitlements = const [],
   });
 
   static const Object _unset = Object();
@@ -41,6 +44,7 @@ class User {
     Object? adhdType = _unset,
     Object? currentMedication = _unset,
     List<String>? unlockedAchievements,
+    List<String>? activeEntitlements,
   }) {
     return User(
       id: id ?? this.id,
@@ -61,6 +65,7 @@ class User {
           ? this.currentMedication
           : currentMedication as Medication?,
       unlockedAchievements: unlockedAchievements ?? this.unlockedAchievements,
+      activeEntitlements: activeEntitlements ?? this.activeEntitlements,
     );
   }
 
@@ -77,6 +82,7 @@ class User {
       'adhdType': adhdType,
       'currentMedication': currentMedication?.toJson(),
       'unlockedAchievements': unlockedAchievements,
+      'activeEntitlements': activeEntitlements,
     };
   }
 
@@ -96,6 +102,10 @@ class User {
               json['currentMedication'] as Map<String, dynamic>)
           : null,
       unlockedAchievements: (json['unlockedAchievements'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      activeEntitlements: (json['activeEntitlements'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           [],

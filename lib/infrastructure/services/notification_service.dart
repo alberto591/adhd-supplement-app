@@ -143,11 +143,19 @@ class NotificationService {
   }
 
   Future<void> cancelNotification(int id) async {
-    await _notificationsPlugin.cancel(id);
+    try {
+      await _notificationsPlugin.cancel(id);
+    } catch (e) {
+      // Silent catch for platform-level cancellation errors
+    }
   }
 
   Future<void> cancelAllNotifications() async {
-    await _notificationsPlugin.cancelAll();
+    try {
+      await _notificationsPlugin.cancelAll();
+    } catch (e) {
+      // Silent catch
+    }
   }
 
   Future<List<PendingNotificationRequest>> getPendingNotifications() async {
@@ -212,8 +220,12 @@ class NotificationService {
   /// Cancel all notifications in a nudge sequence for a specific supplement
   Future<void> cancelAllSupplementNudges(String supplementId,
       [int maxNudges = 12]) async {
-    for (int i = 0; i < maxNudges; i++) {
-      await _notificationsPlugin.cancel(_getNudgeId(supplementId, i));
+    try {
+      for (int i = 0; i < maxNudges; i++) {
+        await _notificationsPlugin.cancel(_getNudgeId(supplementId, i));
+      }
+    } catch (e) {
+      // Silent catch for platform-level cancellation errors (handles NPEs in plugin)
     }
   }
 }

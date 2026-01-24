@@ -551,6 +551,9 @@ class SupplementDetail extends StatelessWidget {
             _buildStackOption(context, '🌅 Morning Stack',
                 'Best for focus and energy', 'Morning Stack', viewModel),
             const SizedBox(height: 12),
+            _buildStackOption(context, '☀️ Afternoon Stack',
+                'Mid-day mental boost', 'Afternoon Stack', viewModel),
+            const SizedBox(height: 12),
             _buildStackOption(context, '🌇 Evening Stack',
                 'For relaxation and recovery', 'Evening Stack', viewModel),
             const SizedBox(height: 12),
@@ -660,8 +663,8 @@ class SupplementDetail extends StatelessWidget {
         'url': url,
       });
 
-      // Open link
-      await urlService.launchUri(url);
+      // Open link using robust in-app browser with service-level fallback
+      await urlService.launchInAppBrowser(url);
     } catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

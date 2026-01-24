@@ -86,9 +86,9 @@ class AdhdSupplementApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => locator<SupplementViewModel>()),
         ChangeNotifierProvider(create: (_) => locator<AuthProvider>()),
         ChangeNotifierProxyProvider<AuthProvider, SafetyViewModel>(
-          create: (_) => locator<SafetyViewModel>(param1: ''),
+          create: (_) => locator<SafetyViewModel>(param1: 'demo_user'),
           update: (_, auth, previous) =>
-              locator<SafetyViewModel>(param1: auth.user?.id ?? ''),
+              locator<SafetyViewModel>(param1: auth.user?.id ?? 'demo_user'),
         ),
         ChangeNotifierProvider(
             create: (_) => locator<PersistentRemindersViewModel>()),

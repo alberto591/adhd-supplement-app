@@ -331,4 +331,23 @@ class MockSettingsRepository extends _i1.Mock
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  bool hasAcceptedDisclaimer() => (super.noSuchMethod(
+        Invocation.method(
+          #hasAcceptedDisclaimer,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setAcceptedDisclaimer(bool? accepted) => (super.noSuchMethod(
+        Invocation.method(
+          #setAcceptedDisclaimer,
+          [accepted],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

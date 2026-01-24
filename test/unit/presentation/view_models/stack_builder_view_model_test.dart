@@ -41,6 +41,10 @@ class FakeStackRepository implements StackRepository {
   Future<void> saveStack(String userId, SupplementStack stack) async {}
   @override
   Future<SupplementStack?> getStack(String userId) async => null;
+
+  @override
+  Stream<List<SupplementStack>> watchUserStacks(String userId) =>
+      Stream.value([]);
 }
 
 class FakeSafetyViewModel extends Fake implements SafetyViewModel {

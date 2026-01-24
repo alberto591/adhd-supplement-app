@@ -4,7 +4,9 @@ import '../../application/view_models/subscription_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PaywallScreen extends StatelessWidget {
-  const PaywallScreen({super.key});
+  final String? returnTo;
+
+  const PaywallScreen({super.key, this.returnTo});
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +231,29 @@ class PaywallScreen extends StatelessWidget {
           width: double.infinity,
           height: 60,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              final viewModel = context.read<SubscriptionViewModel>();
+              final authProvider = context.read<AuthProvider>();
+
+              await viewModel.purchaseSubscription('pro_annual');
+
+              if (viewModel.isSubscribed) {
+                await authProvider.refreshEntitlements();
+
+                if (context.mounted) {
+                  if (returnTo != null) {
+                    Navigator.pushReplacementNamed(context, returnTo!);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                }
+              } else if (viewModel.error != null) {
+                scaffoldMessenger.showSnackBar(
+                  SnackBar(content: Text(viewModel.error!)),
+                );
+              }
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).primaryColor,
               foregroundColor: Colors.white,

@@ -172,4 +172,14 @@ class MockStackRepository extends _i1.Mock implements _i5.StackRepository {
         returnValue: _i3.Future<List<_i6.SupplementStack>>.value(
             <_i6.SupplementStack>[]),
       ) as _i3.Future<List<_i6.SupplementStack>>);
+
+  @override
+  _i3.Stream<List<_i6.SupplementStack>> watchUserStacks(String? userId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #watchUserStacks,
+          [userId],
+        ),
+        returnValue: _i3.Stream<List<_i6.SupplementStack>>.empty(),
+      ) as _i3.Stream<List<_i6.SupplementStack>>);
 }

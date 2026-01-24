@@ -64,59 +64,77 @@ class _StackDropZoneState extends State<StackDropZone> {
       builder: (context, candidateData, rejectedData) {
         // unused isDark variable removed
 
-        return Container(
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
           width: double.infinity,
           constraints: const BoxConstraints(minHeight: 300),
           decoration: BoxDecoration(
             color: _isHovering
-                ? AppColors.cardDark.withValues(alpha: 0.5)
-                : AppColors.cardDark.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(16),
+                ? AppColors.primary.withValues(alpha: 0.1)
+                : AppColors.cardBackground(
+                        Theme.of(context).brightness == Brightness.dark)
+                    .withValues(alpha: 0.3),
+            borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color: _isHovering
                   ? AppColors.primary
-                  : AppColors.secondary.withValues(alpha: 0.2),
+                  : AppColors.secondary.withValues(alpha: 0.1),
               width: 2,
-              style: BorderStyle.none,
             ),
           ),
           child: Stack(
             children: [
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _DashedBorderPainter(
-                    color: _isHovering
-                        ? AppColors.primary
-                        : AppColors.secondary.withValues(alpha: 0.2),
-                    strokeWidth: 2,
-                    gap: 5,
+              if (!_isHovering)
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _DashedBorderPainter(
+                      color: AppColors.secondary.withValues(alpha: 0.1),
+                      strokeWidth: 2,
+                      gap: 6,
+                    ),
                   ),
                 ),
-              ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
                     if (widget.currentItems.isEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(top: 100),
+                        padding: const EdgeInsets.only(top: 80, bottom: 40),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.drag_indicator,
-                              size: 48,
-                              color: AppColors.textSecondaryDark
-                                  .withValues(alpha: 0.5),
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color:
+                                    AppColors.primary.withValues(alpha: 0.05),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.add_circle_outline,
+                                size: 48,
+                                color: AppColors.primary.withValues(alpha: 0.5),
+                              ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 16),
                             Text(
                               widget.instructionText,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: AppColors.textSecondaryDark
-                                    .withValues(alpha: 0.7),
-                                fontSize: 14,
+                                    .withValues(alpha: 0.8),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Drop items here to synchronize',
+                              style: TextStyle(
+                                color: AppColors.textSecondaryDark
+                                    .withValues(alpha: 0.4),
+                                fontSize: 12,
                               ),
                             ),
                           ],
@@ -146,27 +164,38 @@ class _StackDropZoneState extends State<StackDropZone> {
                       ),
                     ],
 
-                    // Drop Target Indicator at bottom
-                    if (widget.currentItems.isNotEmpty)
-                      Container(
-                        margin: const EdgeInsets.only(top: 8),
-                        height: 48,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.05),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: AppColors.primary.withValues(alpha: 0.3),
-                            style: BorderStyle.solid,
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Drop here',
-                            style: TextStyle(
+                    // Drop Target Indicator at bottom when hovering OR when empty
+                    if (_isHovering)
+                      AnimatedOpacity(
+                        opacity: _isHovering ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 12),
+                          height: 56,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
                               color: AppColors.primary,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                              width: 2,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.download, color: Colors.white),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Release to Add',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

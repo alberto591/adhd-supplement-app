@@ -1405,8 +1405,8 @@ class _StudyCardState extends State<_StudyCard> {
                     ),
                     const SizedBox(height: 12),
                     InkWell(
-                      onTap: () =>
-                          widget.urlService.launchUri(widget.study.pubmedUrl),
+                      onTap: () => widget.urlService
+                          .launchInAppBrowser(widget.study.pubmedUrl),
                       child: Row(
                         children: [
                           Icon(Icons.launch, color: widget.primary, size: 16),

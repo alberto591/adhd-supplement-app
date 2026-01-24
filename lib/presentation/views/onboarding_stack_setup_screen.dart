@@ -588,8 +588,18 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
-                onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                    context, AppRouter.dashboard, (route) => false),
+                onPressed: () async {
+                  final auth = context.read<AuthProvider>();
+                  final user = auth.user;
+                  if (user != null) {
+                    await auth.updateProfile(
+                        user.copyWith(hasCompletedOnboarding: true));
+                  }
+                  if (mounted) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AppRouter.dashboard, (route) => false);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryGold,
                   foregroundColor: Colors.black,

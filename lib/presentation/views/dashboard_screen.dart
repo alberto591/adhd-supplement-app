@@ -29,7 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     final authProvider = context.read<AuthProvider>();
-    final userId = authProvider.user?.id ?? '';
+    final userId = authProvider.user?.id ?? 'demo_user';
     _viewModel = locator.get<DailyStackViewModel>(param1: userId);
     _viewModel.initialize();
   }
@@ -128,13 +128,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           : Colors.grey[200],
                                       shape: BoxShape.circle,
                                     ),
-                                    child: IconButton(
-                                      icon: const Icon(Icons.settings_outlined),
-                                      color: isDark
-                                          ? Colors.white
-                                          : Colors.black54,
-                                      onPressed: () => Navigator.pushNamed(
-                                          context, AppRouter.profile),
+                                    child: Consumer<AuthProvider>(
+                                      builder: (context, auth, _) {
+                                        final isPremium =
+                                            auth.canAccess('stack_builder');
+                                        return Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(
+                                                  Icons.auto_awesome),
+                                              color: AppColors.primaryGold,
+                                              onPressed: () =>
+                                                  Navigator.pushNamed(context,
+                                                      AppRouter.stackBuilder),
+                                            ),
+                                            if (!isPremium)
+                                              Positioned(
+                                                top: 8,
+                                                right: 8,
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(2),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color:
+                                                        AppColors.primaryGold,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: const Icon(Icons.lock,
+                                                      size: 8,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                   ),
                                 ],
@@ -151,54 +180,105 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           const SizedBox(height: 32),
 
+                          // Global Toggle
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton.icon(
+                              onPressed: viewModel.toggleAllExpansion,
+                              icon: Icon(
+                                viewModel.allCollapsed
+                                    ? Icons.unfold_more
+                                    : Icons.unfold_less,
+                                size: 18,
+                              ),
+                              label: Text(
+                                viewModel.allCollapsed
+                                    ? "Expand All"
+                                    : "Collapse All",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              style: TextButton.styleFrom(
+                                foregroundColor: AppColors.primaryGold,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+
                           // 3. Morning Focus
-                          _buildSectionHeader(context, 'Morning Focus',
-                              timeBadge: viewModel
-                                  .getSlotTime('morning')
-                                  .format(context),
-                              isNow: viewModel.greeting == 'Good Morning'),
+                          _buildSectionHeader(
+                            context,
+                            'Morning Focus',
+                            viewModel,
+                            stackId: 'morning',
+                            timeBadge: viewModel
+                                .getSlotTime('morning')
+                                .format(context),
+                            isNow: viewModel.greeting == 'Good Morning',
+                          ),
                           const SizedBox(height: 16),
-                          ..._buildMedicationList(
-                              viewModel.morningItems, viewModel, 'morning'),
+                          if (!viewModel.collapsedStackIds.contains('morning'))
+                            ..._buildMedicationList(
+                                viewModel.morningItems, viewModel, 'morning'),
 
                           const SizedBox(height: 32),
 
                           // 4. Afternoon Focus (if any)
                           if (viewModel.afternoonItems.isNotEmpty) ...[
-                            const SizedBox(height: 32),
-                            _buildSectionHeader(context, 'Afternoon Focus',
-                                timeBadge: viewModel
-                                    .getSlotTime('afternoon')
-                                    .format(context),
-                                isNow: viewModel.greeting == 'Good Afternoon'),
+                            _buildSectionHeader(
+                              context,
+                              'Afternoon Focus',
+                              viewModel,
+                              stackId: 'afternoon',
+                              timeBadge: viewModel
+                                  .getSlotTime('afternoon')
+                                  .format(context),
+                              isNow: viewModel.greeting == 'Good Afternoon',
+                            ),
                             const SizedBox(height: 16),
-                            ..._buildMedicationList(viewModel.afternoonItems,
-                                viewModel, 'afternoon'),
+                            if (!viewModel.collapsedStackIds
+                                .contains('afternoon'))
+                              ..._buildMedicationList(viewModel.afternoonItems,
+                                  viewModel, 'afternoon'),
+                            const SizedBox(height: 32),
                           ],
+
+                          // 5. Evening Stack
+                          _buildSectionHeader(
+                            context,
+                            'Evening Stack',
+                            viewModel,
+                            stackId: 'evening',
+                            timeBadge: viewModel
+                                .getSlotTime('evening')
+                                .format(context),
+                            isNow: viewModel.greeting == 'Good Evening',
+                          ),
+                          const SizedBox(height: 16),
+                          if (!viewModel.collapsedStackIds.contains('evening'))
+                            ..._buildMedicationList(
+                                viewModel.eveningItems, viewModel, 'evening'),
 
                           const SizedBox(height: 32),
 
-                          // 5. Evening Stack
-                          _buildSectionHeader(context, 'Evening Stack',
-                              timeBadge: viewModel
-                                  .getSlotTime('evening')
-                                  .format(context),
-                              isNow: viewModel.greeting == 'Good Evening'),
-                          const SizedBox(height: 16),
-                          ..._buildMedicationList(
-                              viewModel.eveningItems, viewModel, 'evening'),
-
                           // 6. Night Stack (if any)
                           if (viewModel.nightItems.isNotEmpty) ...[
-                            const SizedBox(height: 32),
-                            _buildSectionHeader(context, 'Night Stack',
-                                timeBadge: viewModel
-                                    .getSlotTime('night')
-                                    .format(context),
-                                isNow: viewModel.greeting == 'Good Night'),
+                            _buildSectionHeader(
+                              context,
+                              'Night Stack',
+                              viewModel,
+                              stackId: 'night',
+                              timeBadge: viewModel
+                                  .getSlotTime('night')
+                                  .format(context),
+                              isNow: viewModel.greeting == 'Good Night',
+                            ),
                             const SizedBox(height: 16),
-                            ..._buildMedicationList(
-                                viewModel.nightItems, viewModel, 'night'),
+                            if (!viewModel.collapsedStackIds.contains('night'))
+                              ..._buildMedicationList(
+                                  viewModel.nightItems, viewModel, 'night'),
                           ],
 
                           const SizedBox(height: 80), // Bottom padding
@@ -216,60 +296,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildSectionHeader(BuildContext context, String title,
-      {bool isNow = false, String? timeBadge}) {
+  Widget _buildSectionHeader(
+      BuildContext context, String title, DailyStackViewModel viewModel,
+      {required String stackId, bool isNow = false, String? timeBadge}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            title,
-            style: TextStyle(
-              color: isDark ? Colors.white : Colors.black87,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        if (isNow)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.primaryGold.withValues(alpha: 0.2), // Gold tint
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.primaryGold),
-            ),
-            child: const Text(
-              'NOW',
-              style: TextStyle(
-                color: AppColors.primaryGold,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
-        else if (timeBadge != null)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.1)
-                  : Colors.grey[200],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              timeBadge,
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
+    final isCollapsed = viewModel.collapsedStackIds.contains(stackId);
+
+    return GestureDetector(
+      onTap: () => viewModel.toggleStackExpansion(stackId),
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: isDark ? Colors.white : Colors.black87,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  isCollapsed
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_up,
+                  color: Colors.grey,
+                  size: 20,
+                ),
+              ],
             ),
           ),
-      ],
+          if (isNow)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color:
+                    AppColors.primaryGold.withValues(alpha: 0.2), // Gold tint
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.primaryGold),
+              ),
+              child: const Text(
+                'NOW',
+                style: TextStyle(
+                  color: AppColors.primaryGold,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          else if (timeBadge != null)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.grey[200],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                timeBadge,
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 

@@ -188,6 +188,7 @@ class LibraryViewModel extends ChangeNotifier {
         targetStack = null;
       }
 
+      final slot = _getNormalizedSlot(stackName);
       final now = DateTime.now();
 
       if (targetStack != null) {
@@ -205,13 +206,14 @@ class LibraryViewModel extends ChangeNotifier {
 
         final updatedStack = targetStack.copyWith(
           items: newItems,
+          timeOfDay: slot, // Ensure slot is standardized
           updatedAt: now,
         );
         await _stackRepository.saveStack(_userId, updatedStack);
       } else {
         // Create new stack
         final newStack = SupplementStack(
-          id: '${_userId}_${stackName.toLowerCase().replaceAll(' ', '_')}_$now',
+          id: '${_userId}_${slot}_$now',
           userId: _userId,
           name: stackName,
           items: [
@@ -221,7 +223,7 @@ class LibraryViewModel extends ChangeNotifier {
               scheduledTime: _getDefaultTimeForStack(stackName),
             )
           ],
-          timeOfDay: stackName.toLowerCase(),
+          timeOfDay: slot,
           createdAt: now,
           updatedAt: now,
         );
@@ -236,13 +238,29 @@ class LibraryViewModel extends ChangeNotifier {
     }
   }
 
-  String _getDefaultTimeForStack(String stackName) {
+  String _getNormalizedSlot(String stackName) {
     final name = stackName.toLowerCase();
-    if (name.contains('morning')) return '08:00';
-    if (name.contains('afternoon')) return '14:00';
-    if (name.contains('evening')) return '20:00';
-    if (name.contains('night')) return '22:00';
-    return '09:00';
+    if (name.contains('morning')) return 'morning';
+    if (name.contains('afternoon')) return 'afternoon';
+    if (name.contains('evening')) return 'evening';
+    if (name.contains('night')) return 'night';
+    return name;
+  }
+
+  String _getDefaultTimeForStack(String stackName) {
+    final slot = _getNormalizedSlot(stackName);
+    switch (slot) {
+      case 'morning':
+        return '08:00';
+      case 'afternoon':
+        return '14:00';
+      case 'evening':
+        return '20:00';
+      case 'night':
+        return '22:00';
+      default:
+        return '09:00';
+    }
   }
 
   // Private helpers

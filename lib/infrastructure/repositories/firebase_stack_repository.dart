@@ -3,11 +3,18 @@ import '../../domain/repositories/stack_repository.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../utils/logger.dart';
 
+import 'dart:async';
+
 class FirebaseStackRepository implements StackRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // In-memory cache: userId -> List<SupplementStack>
   final Map<String, List<SupplementStack>> _cache = {};
+
+  // Stream controller for broadcasting updates (userId -> stacks)
+  final StreamController<Map<String, List<SupplementStack>>>
+      _stackUpdateController =
+      StreamController<Map<String, List<SupplementStack>>>.broadcast();
 
   @override
   Future<void> saveStack(String userId, SupplementStack stack) async {
@@ -30,7 +37,10 @@ class FirebaseStackRepository implements StackRepository {
       } else {
         currentStacks.add(stack);
       }
-      _cache[userId] = currentStacks;
+      _cache[userId] = List.from(currentStacks);
+
+      // Broadcast update to stream (User specific event)
+      _stackUpdateController.add({userId: _cache[userId]!});
     } catch (e) {
       AppLogger.e('Error saving stack', e);
       // Still throw if it's a permission or structural error,
@@ -45,7 +55,7 @@ class FirebaseStackRepository implements StackRepository {
       // 1. Check in-memory cache first (Instant load)
       if (_cache.containsKey(userId) && _cache[userId]!.isNotEmpty) {
         AppLogger.d('Returning stacks from memory cache (0ms)');
-        return _cache[userId]!;
+        return List.from(_cache[userId]!);
       }
 
       // 2. Try to get from server with a short timeout
@@ -61,7 +71,7 @@ class FirebaseStackRepository implements StackRepository {
           .toList();
 
       // 3. Update cache
-      _cache[userId] = stacks;
+      _cache[userId] = List.from(stacks);
 
       return stacks;
     } catch (e) {
@@ -116,5 +126,18 @@ class FirebaseStackRepository implements StackRepository {
         return null;
       }
     }
+  }
+
+  @override
+  Stream<List<SupplementStack>> watchUserStacks(String userId) async* {
+    // 1. Emit current value if available (Behavioral behavior)
+    if (_cache.containsKey(userId)) {
+      yield List.from(_cache[userId]!);
+    }
+
+    // 2. Listen for future updates filtered by userId
+    yield* _stackUpdateController.stream
+        .where((update) => update.containsKey(userId))
+        .map((update) => List.from(update[userId]!));
   }
 }
