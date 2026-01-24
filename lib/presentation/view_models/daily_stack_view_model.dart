@@ -87,6 +87,18 @@ class DailyStackViewModel extends ChangeNotifier {
     return null;
   }
 
+  /// Helper to get slot from stack name (internal consistency)
+  String _getSlotFromName(String name) {
+    final lower = name.toLowerCase();
+    if (lower.contains('morning') || lower.contains('startup'))
+      return 'morning';
+    if (lower.contains('afternoon') || lower.contains('boost'))
+      return 'afternoon';
+    if (lower.contains('evening')) return 'evening';
+    if (lower.contains('night') || lower.contains('recovery')) return 'night';
+    return lower;
+  }
+
   /// Get all items that were skipped today
   List<StackItem> get skippedItems {
     return _stacks
@@ -253,10 +265,19 @@ class DailyStackViewModel extends ChangeNotifier {
       _stackSubscription?.cancel();
       _stackSubscription =
           _stackRepository.watchUserStacks(_userId).listen((updatedStacks) {
-        AppLogger.i('Reactive Update: Stacks refreshed from repository.');
+        AppLogger.i(
+            'REACTIVE UPDATE: Received ${updatedStacks.length} stacks for user $_userId');
+        for (var s in updatedStacks) {
+          AppLogger.d(
+              ' - Stack: ${s.name} (slot: ${s.timeOfDay}, items: ${s.items.length})');
+        }
         _stacks = List.from(updatedStacks);
         notifyListeners(); // Immediate feedback
-        _cacheSupplements().then((_) => notifyListeners()); // Refined feedback
+        _cacheSupplements().then((_) {
+          AppLogger.d(
+              'Supplement cache refreshed after reactive update. Current cache size: ${_supplementCache.length}');
+          notifyListeners();
+        });
       });
 
       _snoozedSupplements.clear();
@@ -588,27 +609,43 @@ class DailyStackViewModel extends ChangeNotifier {
   // Private helpers
 
   List<StackItem> _getItemsForSlot(String slot) {
+    AppLogger.d(
+        'Querying items for Dashboard Slot: $slot (Stacks available: ${_stacks.length})');
     final List<StackItem> items = [];
 
     for (final stack in _stacks) {
-      // Check if stack matches requested slot
-      if (stack.timeOfDay?.toLowerCase() == slot.toLowerCase()) {
+      // Check if stack matches requested slot (Standardized)
+      final stackSlot = _getSlotFromName(stack.name);
+      final isMatch = stackSlot == slot.toLowerCase() ||
+          stack.timeOfDay?.toLowerCase() == slot.toLowerCase();
+
+      AppLogger.d(
+          '  - Checking Stack: ${stack.name} | stackSlot: $stackSlot | stack.timeOfDay: ${stack.timeOfDay} | Match: $isMatch');
+
+      if (isMatch) {
         for (final item in stack.items) {
           // Filter out already taken or skipped items
-          if (isSupplementTaken(item.supplementId) ||
-              isSupplementSkipped(item.supplementId)) {
+          final taken = isSupplementTaken(item.supplementId);
+          final skipped = isSupplementSkipped(item.supplementId);
+
+          if (taken || skipped) {
+            AppLogger.d(
+                '    - Item ${item.supplementId} filtered out (taken: $taken, skipped: $skipped)');
             continue;
           }
 
-          // Check if already in list (for multi-stack duplicates, though rare)
+          // Check if already in list
           final exists = items.any((i) => i.supplementId == item.supplementId);
           if (!exists) {
+            AppLogger.d(
+                '    + Adding Item ${item.supplementId} to $slot items');
             items.add(item);
           }
         }
       }
     }
 
+    AppLogger.d('Finished query for $slot. Returning ${items.length} items.');
     return items;
   }
 

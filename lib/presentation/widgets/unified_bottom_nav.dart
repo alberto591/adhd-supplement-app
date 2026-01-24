@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import '../../application/providers/auth_provider.dart';
 
 class UnifiedBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -20,24 +22,26 @@ class UnifiedBottomNav extends StatelessWidget {
         routeName = AppRouter.dashboard;
         break;
       case 1:
-        routeName = AppRouter.dailyStack; // "Stacks"
-        break;
-      case 2:
         routeName = AppRouter.library;
         break;
-      case 3:
-        routeName = AppRouter.scienceHub; // "Hub"
+      case 2:
+        routeName = AppRouter.scienceHub;
         break;
-      case 4:
+      case 3:
         routeName = AppRouter.profile;
         break;
       default:
         routeName = AppRouter.dashboard;
     }
 
-    // Use pushReplacement to avoid building a huge stack, creating a "tab" feel
-    // Exception: Maybe keep Dashboard as root? For now, simple replacement is consistent.
-    Navigator.pushReplacementNamed(context, routeName);
+    // For the premium "Hub" tab, we use pushNamed so the back button (on the paywall)
+    // returns the user to their previous screen instead of exiting or getting stuck.
+    if (index == 2) {
+      Navigator.pushNamed(context, routeName);
+    } else {
+      // Use pushReplacement for others to maintain the "tab" feel
+      Navigator.pushReplacementNamed(context, routeName);
+    }
   }
 
   @override
@@ -63,55 +67,52 @@ class UnifiedBottomNav extends StatelessWidget {
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(
-                context,
-                index: 0,
-                icon: Icons.calendar_today,
-                label: 'Today',
-                isSelected: currentIndex == 0,
-                primaryColor: primaryColor,
-                unselectedColor: unselectedColor!,
-              ),
-              _buildNavItem(
-                context,
-                index: 1,
-                icon: Icons.layers,
-                label: 'Stacks',
-                isSelected: currentIndex == 1,
-                primaryColor: primaryColor,
-                unselectedColor: unselectedColor,
-              ),
-              _buildNavItem(
-                context,
-                index: 2,
-                icon: Icons.auto_stories,
-                label: 'Library', // Moved to 3rd position (index 2)
-                isSelected: currentIndex == 2,
-                primaryColor: primaryColor,
-                unselectedColor: unselectedColor,
-              ),
-              _buildNavItem(
-                context,
-                index: 3,
-                icon: Icons.science_outlined,
-                label: 'Hub', // Moved to 4th position (index 3)
-                isSelected: currentIndex == 3,
-                primaryColor: primaryColor,
-                unselectedColor: unselectedColor,
-              ),
-              _buildNavItem(
-                context,
-                index: 4,
-                icon: Icons.account_circle, // 'person'
-                label: 'Profile',
-                isSelected: currentIndex == 4,
-                primaryColor: primaryColor,
-                unselectedColor: unselectedColor,
-              ),
-            ],
+          child: Consumer<AuthProvider>(
+            builder: (BuildContext context, AuthProvider auth, _) {
+              final isPremium = auth.canAccess('pro');
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(
+                    context,
+                    index: 0,
+                    icon: Icons.calendar_today,
+                    label: 'Today',
+                    isSelected: currentIndex == 0,
+                    primaryColor: primaryColor,
+                    unselectedColor: unselectedColor!,
+                  ),
+                  _buildNavItem(
+                    context,
+                    index: 1,
+                    icon: Icons.auto_stories,
+                    label: 'Library',
+                    isSelected: currentIndex == 1,
+                    primaryColor: primaryColor,
+                    unselectedColor: unselectedColor,
+                  ),
+                  _buildNavItem(
+                    context,
+                    index: 2,
+                    icon: Icons.science_outlined,
+                    label: 'Hub',
+                    isSelected: currentIndex == 2,
+                    primaryColor: primaryColor,
+                    unselectedColor: unselectedColor,
+                    showLock: !isPremium,
+                  ),
+                  _buildNavItem(
+                    context,
+                    index: 3,
+                    icon: Icons.account_circle,
+                    label: 'Profile',
+                    isSelected: currentIndex == 3,
+                    primaryColor: primaryColor,
+                    unselectedColor: unselectedColor,
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -126,6 +127,7 @@ class UnifiedBottomNav extends StatelessWidget {
     required bool isSelected,
     required Color primaryColor,
     required Color unselectedColor,
+    bool showLock = false,
   }) {
     return InkWell(
       onTap: () => _onItemTapped(context, index),
@@ -135,10 +137,32 @@ class UnifiedBottomNav extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              color: isSelected ? primaryColor : unselectedColor,
-              size: 24,
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Icon(
+                  icon,
+                  color: isSelected ? primaryColor : unselectedColor,
+                  size: 24,
+                ),
+                if (showLock)
+                  Positioned(
+                    top: -4,
+                    right: -4,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primaryGold,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.lock,
+                        size: 8,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             const SizedBox(height: 4),
             Text(

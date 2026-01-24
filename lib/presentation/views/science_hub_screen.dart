@@ -96,7 +96,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
             );
           },
         ),
-        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 3),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 2),
       ),
     );
   }

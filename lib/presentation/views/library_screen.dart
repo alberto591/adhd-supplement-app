@@ -91,12 +91,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: 50,
-                          alignment: Alignment.centerRight,
-                          child: const Icon(Icons.bookmark_outline,
-                              size: 24, color: AppColors.primaryGold),
-                        ),
+                        const SizedBox(width: 50),
                       ],
                     ),
                   ),
@@ -468,7 +463,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             },
           ),
         ),
-        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 2),
+        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 1),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showCustomSupplementForm(context),
           backgroundColor: AppColors.primaryGold,

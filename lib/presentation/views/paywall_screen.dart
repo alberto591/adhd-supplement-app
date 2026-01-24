@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/subscription_view_model.dart';
-import '../../application/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
+import '../navigation/app_router.dart';
 
 class PaywallScreen extends StatelessWidget {
   final String? returnTo;
@@ -60,7 +60,13 @@ class PaywallScreen extends StatelessWidget {
       elevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.close),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          } else {
+            Navigator.of(context).pushReplacementNamed(AppRouter.dashboard);
+          }
+        },
       ),
       actions: [
         TextButton(
@@ -82,7 +88,7 @@ class PaywallScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: const Text(
-            'SUMMER SALE: 40% OFF',
+            'COMING IN VERSION 2.0',
             style: TextStyle(
               color: Colors.amber,
               fontWeight: FontWeight.bold,
@@ -92,7 +98,7 @@ class PaywallScreen extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         const Text(
-          'Reach Your Full Potential',
+          'Pro Features Coming Soon',
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
@@ -101,7 +107,7 @@ class PaywallScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         const Text(
-          'Join 10,000+ focused individuals using ADHD Supps Pro to optimize their daily routine.',
+          'We are working hard to bring you the best ADHD optimization tools. These premium features will be available in our next major update.',
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey,
@@ -146,78 +152,34 @@ class PaywallScreen extends StatelessWidget {
   }
 
   Widget _buildPricingSection(BuildContext context) {
-    return Column(
-      children: [
-        _buildPlanCard(
-          context,
-          'Annual Pro',
-          '\$4.99/mo',
-          'Billed as \$59.99/year',
-          isPopular: true,
-        ),
-        const SizedBox(height: 16),
-        _buildPlanCard(
-          context,
-          'Monthly Pro',
-          '\$9.99/mo',
-          'Cancel anytime',
-          isPopular: false,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPlanCard(
-    BuildContext context,
-    String title,
-    String price,
-    String subtitle, {
-    bool isPopular = false,
-  }) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: isPopular ? Theme.of(context).primaryColor : Colors.white,
+        color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color:
-              isPopular ? Theme.of(context).primaryColor : Colors.grey.shade200,
+          color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
           width: 2,
         ),
       ),
-      child: Row(
+      child: const Column(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: isPopular ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    color: isPopular
-                        ? Colors.white.withValues(alpha: 0.8)
-                        : Colors.grey,
-                    fontSize: 13,
-                  ),
-                ),
-              ],
+          Icon(Icons.auto_awesome, size: 48, color: Colors.amber),
+          SizedBox(height: 16),
+          Text(
+            'Free for Early Adopters',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
+          SizedBox(height: 8),
           Text(
-            price,
+            'All core features are free. Premium tools are under development.',
+            textAlign: TextAlign.center,
             style: TextStyle(
-              color: isPopular ? Colors.white : Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
+              color: Colors.grey,
+              fontSize: 14,
             ),
           ),
         ],
@@ -232,27 +194,11 @@ class PaywallScreen extends StatelessWidget {
           width: double.infinity,
           height: 60,
           child: ElevatedButton(
-            onPressed: () async {
-              final scaffoldMessenger = ScaffoldMessenger.of(context);
-              final viewModel = context.read<SubscriptionViewModel>();
-              final authProvider = context.read<AuthProvider>();
-
-              await viewModel.purchaseSubscription('pro_annual');
-
-              if (viewModel.isSubscribed) {
-                await authProvider.refreshEntitlements();
-
-                if (context.mounted) {
-                  if (returnTo != null) {
-                    Navigator.pushReplacementNamed(context, returnTo!);
-                  } else {
-                    Navigator.pop(context);
-                  }
-                }
-              } else if (viewModel.error != null) {
-                scaffoldMessenger.showSnackBar(
-                  SnackBar(content: Text(viewModel.error!)),
-                );
+            onPressed: () {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context).pushReplacementNamed(AppRouter.dashboard);
               }
             },
             style: ElevatedButton.styleFrom(
@@ -264,7 +210,7 @@ class PaywallScreen extends StatelessWidget {
               elevation: 0,
             ),
             child: const Text(
-              'Start 7-Day Free Trial',
+              'Back to App',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -274,7 +220,7 @@ class PaywallScreen extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         const Text(
-          'Secured with Stripe. Terms & Privacy Apply.',
+          'You will be notified when Pro features launch!',
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey,

@@ -71,8 +71,19 @@ This document serves as the technical "Source of Truth" for building the FocusSt
 
 ## 5. Technical Navigation Map
 
-### Primary Bottom Nav
-- Today, Stacks, Insights, Library, Profile.
+### Primary Bottom Nav (V1.0)
+- **Today**: Daily checklist and focus state.
+- **Library**: Supplement encyclopedia and stack creation.
+- **Hub**: (Gated) Expert-verified ADHD science and community.
+- **Profile**: Settings, gamification levels, and medical configuration.
 
-### Global Overlays
-- Safety Alerts, Nudge Notifications, and Level-Up Celebrations must be able to interrupt any active view.
+## 6. Premium Gating & V1.0 Strategy
+
+### Pre-Revenue Architecture
+- **State**: The `SubscriptionViewModel` is set to "Coming Soon" mode.
+- **Logic**: All active `purchase` and `restore` calls are deactivated to allow for a free v1 distribution.
+
+### Gating Triggers
+- **Static Guards**: `AppRouter` intercepts navigation to `insights`, `stackBuilder`, and `scienceHub` for users without active entitlements.
+- **UI Gating**: Premium entry points must display the `AppColors.primaryGold` lock icon.
+- **Redirection**: Unauthorized access attempts trigger the `PaywallScreen`, which uses history-preserving `pushNamed` navigation to allow graceful "Back" behavior.

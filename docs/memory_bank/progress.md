@@ -28,20 +28,27 @@
 - [x] **TL;DR Generation**: Concise one-sentence summaries for busy minds.
 - [x] **Data Refactor**: Syncing `Supplement` entity with clinical metadata.
 
+### Phase 13: V1.0 Distribution & Pre-Revenue Config
+- [x] **Simplified Nav**: 4-tab streamlined interface.
+- [x] **Coming Soon State**: Premium features gated with "Coming Soon" UI.
+- [x] **Revenue Neutrality**: Disabled all active payment flows for free v1 launch.
+- [x] **Navigation Robustness**: Fixed back-button recursion on gated routes.
+
 ---
 
 ## 🔧 In Progress
 
-**None - Project Season 1 & Early Season 2 Complete.**
+**Phase 13 Final Verification & Store Handoff.**
 
 ---
 
 ## 📋 Planned (Future Development)
 
-### Integration & Live Data
+### V2.0: Premium Launch
 - [ ] Connect real Firebase Cloud Functions for notifications.
 - [ ] Production RevenueCat API key configuration.
 - [ ] Live FDA Interaction API integration (replaces static mock guard).
+- [ ] Science Hub content curation (interactive deep-dives).
 
 ### Deployment
 - [ ] Google Play Console / App Store Connect store assets.
@@ -53,9 +60,9 @@
 
 | Metric | Value |
 |--------|-------|
-| Total Screens | 50 |
-| Screens Implemented | 50 (100%) |
-| Screens with Full Logic | 50 (100%) |
+| Total Screens | 52 |
+| Screens Implemented | 52 (100%) |
+| Screens with Full Logic | 52 (100%) |
 | Linting Issues | **0 (CLEAN)** |
-| ADR Documents | 23 |
+| ADR Documents | 39 |
 | Unit Tests | 179 (Passing) |

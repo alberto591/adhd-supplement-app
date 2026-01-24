@@ -1,23 +1,24 @@
 # Active Context - Current Development State
 
-> **Last Updated**: 2026-01-22 (Season 2 Launch)
+> **Last Updated**: 2026-01-24 (V1.0 Readiness)
 
 ## Current Focus
-✅ **Supplement Intelligence (Phase 1 & 2)**: Dosage intelligence and medication safety alert systems are fully implemented and verified in the UI.
+✅ **V1.0 Launch Configuration**: Simplified navigation and "Coming Soon" premium state for pre-revenue distribution.
 
 ## Recent Completions (This Session)
-**Supplement Intelligence Implementation:**
-1. ✅ **Dosage Calculator**: Weight-based personalized dosage logic.
-2. ✅ **Safety Alerts**: High-contrast ADHD medication interaction warnings.
-3. ✅ **TL;DR Banners**: Quick-read summaries for busy minds.
-4. ✅ **Data Mastery**: Synchronized `Supplement` and `User` entities with clinical metadata.
+**Navigation & Premium Refactor:**
+1. ✅ **Simplified Navigation**: Bottom Bar reduced to 4 items (Today, Library, Hub, Profile).
+2. ✅ **Coming Soon UI**: Paywall converted to a tease for V2.0 features.
+3. ✅ **Premium Gating**: Universal lock icons and router-level redirects for Pro features.
+4. ✅ **Robust Back-Navigation**: Fixed history stack issues when accessing gated content.
+5. ✅ **Clean UI**: Removed redundant bookmark buttons and fixed file-level compilation errors.
 
 ## Active Work Items
 | Priority | Status | Task |
 |----------|--------|------|
-| 1 - Verification | **IN PROGRESS** | Documenting and writing unit tests for safety logic |
-| 1 - Feature | **READY** | Phase 3: Scientific Deep-Dive (Meta-analysis data) |
-| 1 - Handoff | **READY** | Repository Handoff to User |
+| 1 - Handoff | **DONE** | ADR 0039 documented and memory bank updated |
+| 1 - Feature | **READY** | Version 1.0 Deployment Verification |
+| 2 - Future | **READY** | Phase 3: Scientific Deep-Dive (V2.0 Roadmap) |
 
 ## Known Issues
 - **None**: Codebase reports 0 issues/warnings in `flutter analyze`.

@@ -183,16 +183,18 @@ class LibraryViewModel extends ChangeNotifier {
     try {
       final userStacks = await _stackRepository.getUserStacks(_userId);
 
-      // Try to find existing stack by name
+      final slot = _getNormalizedSlot(stackName);
+
+      // Try to find existing stack by name OR slot
       SupplementStack? targetStack;
       try {
-        targetStack = userStacks.firstWhere(
-            (s) => s.name.toLowerCase().contains(stackName.toLowerCase()));
+        targetStack = userStacks.firstWhere((s) =>
+            s.name.toLowerCase().contains(stackName.toLowerCase()) ||
+            s.timeOfDay?.toLowerCase() == slot);
       } catch (_) {
         targetStack = null;
       }
 
-      final slot = _getNormalizedSlot(stackName);
       final now = DateTime.now();
 
       if (targetStack != null) {
@@ -213,11 +215,14 @@ class LibraryViewModel extends ChangeNotifier {
           timeOfDay: slot, // Ensure slot is standardized
           updatedAt: now,
         );
+        AppLogger.i(
+            'Adding supplement ${supplement.name} to EXISTING stack ${targetStack.name} (id: ${targetStack.id})');
         await _stackRepository.saveStack(_userId, updatedStack);
       } else {
         // Create new stack
+        AppLogger.i('Creating NEW stack $stackName for slot $slot');
         final newStack = SupplementStack(
-          id: '${_userId}_${slot}_$now',
+          id: '${_userId}_${slot}_${now.millisecondsSinceEpoch}',
           userId: _userId,
           name: stackName,
           items: [
@@ -234,8 +239,8 @@ class LibraryViewModel extends ChangeNotifier {
         await _stackRepository.saveStack(_userId, newStack);
       }
     } catch (e) {
+      AppLogger.e('Error in addToStack', e);
       _error = 'Failed to add to stack: $e';
-      AppLogger.e('ERROR in addToStack', e);
       rethrow;
     } finally {
       _setLoading(false);
@@ -248,6 +253,9 @@ class LibraryViewModel extends ChangeNotifier {
     if (name.contains('afternoon')) return 'afternoon';
     if (name.contains('evening')) return 'evening';
     if (name.contains('night')) return 'night';
+    if (name.contains('startup')) return 'morning';
+    if (name.contains('boost')) return 'afternoon';
+    if (name.contains('recovery')) return 'night';
     return name;
   }
 

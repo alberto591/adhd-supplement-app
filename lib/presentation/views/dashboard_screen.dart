@@ -383,7 +383,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     return items.map((item) {
-      // item is StackItem
       final supplement = viewModel.getSupplement(item.supplementId);
       final isTaken = viewModel.isSupplementTaken(item.supplementId);
       final isSkipped = viewModel.isSupplementSkipped(item.supplementId);

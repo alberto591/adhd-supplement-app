@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../domain/services/billing_service.dart';
-import '../../domain/services/analytics_service.dart';
 import '../../config/locator.dart';
 
 class SubscriptionViewModel extends ChangeNotifier {
   final BillingService _billingService = locator<BillingService>();
-  final AnalyticsService _analyticsService = locator<AnalyticsService>();
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -27,6 +25,9 @@ class SubscriptionViewModel extends ChangeNotifier {
 
   Future<void> purchaseSubscription(String planId) async {
     _setLoading(true);
+    _error = 'Pro features are coming soon in Version 2.0!';
+    _setLoading(false);
+    /* 
     _error = null;
     try {
       final success =
@@ -44,10 +45,14 @@ class SubscriptionViewModel extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
+    */
   }
 
   Future<void> restorePurchases() async {
     _setLoading(true);
+    _error = 'No features to restore yet. Coming soon!';
+    _setLoading(false);
+    /*
     _error = null;
     try {
       final success = await _billingService.restorePurchases();
@@ -61,6 +66,7 @@ class SubscriptionViewModel extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
+    */
   }
 
   void _setLoading(bool value) {

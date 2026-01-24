@@ -189,7 +189,17 @@ class AppRouter {
 
       case insights:
       case successStats:
-        return MaterialPageRoute(builder: (_) => const InsightsScreen());
+        return MaterialPageRoute(
+          builder: (context) {
+            final authProvider =
+                Provider.of<AuthProvider>(context, listen: false);
+
+            if (!authProvider.canAccess('pro')) {
+              return const PaywallScreen(returnTo: insights);
+            }
+            return const InsightsScreen();
+          },
+        );
 
       case library:
         return MaterialPageRoute(builder: (_) => const LibraryScreen());
@@ -271,7 +281,17 @@ class AppRouter {
             builder: (_) => TrophyRoomScreen.withProvider());
 
       case scienceHub:
-        return MaterialPageRoute(builder: (_) => const ScienceHubScreen());
+        return MaterialPageRoute(
+          builder: (context) {
+            final authProvider =
+                Provider.of<AuthProvider>(context, listen: false);
+
+            if (!authProvider.canAccess('pro')) {
+              return const PaywallScreen(returnTo: scienceHub);
+            }
+            return const ScienceHubScreen();
+          },
+        );
       case chemist:
         return MaterialPageRoute(builder: (_) => ChemistScreen.withProvider());
 

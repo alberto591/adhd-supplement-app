@@ -19,9 +19,6 @@ class FirebaseStackRepository implements StackRepository {
   @override
   Future<void> saveStack(String userId, SupplementStack stack) async {
     try {
-      // Use the stack's ID as the document ID
-      // NOTE: We remove .timeout() here to allow Firestore to queue writes locally
-      // while offline. It will sync automatically when connection returns.
       await _firestore
           .collection('users')
           .doc(userId)
@@ -30,21 +27,21 @@ class FirebaseStackRepository implements StackRepository {
           .set(stack.toJson());
 
       // Update cache instantly
-      final currentStacks = _cache[userId] ?? [];
+      final currentStacks = List<SupplementStack>.from(_cache[userId] ?? []);
       final index = currentStacks.indexWhere((s) => s.id == stack.id);
       if (index >= 0) {
         currentStacks[index] = stack;
       } else {
         currentStacks.add(stack);
       }
-      _cache[userId] = List.from(currentStacks);
+      _cache[userId] = currentStacks;
 
-      // Broadcast update to stream (User specific event)
-      _stackUpdateController.add({userId: _cache[userId]!});
+      // Broadcast update to stream
+      AppLogger.d(
+          'Broadcasting UPDATED stacks for $userId: ${currentStacks.length} stacks');
+      _stackUpdateController.add({userId: currentStacks});
     } catch (e) {
       AppLogger.e('Error saving stack', e);
-      // Still throw if it's a permission or structural error,
-      // but Firestore .set() rarely throws when offline.
       throw Exception('Failed to save stack: $e');
     }
   }
@@ -52,13 +49,12 @@ class FirebaseStackRepository implements StackRepository {
   @override
   Future<List<SupplementStack>> getUserStacks(String userId) async {
     try {
-      // 1. Check in-memory cache first (Instant load)
+      // 1. Check in-memory cache first
       if (_cache.containsKey(userId) && _cache[userId]!.isNotEmpty) {
-        AppLogger.d('Returning stacks from memory cache (0ms)');
         return List.from(_cache[userId]!);
       }
 
-      // 2. Try to get from server with a short timeout
+      // 2. Fetch from Firestore
       final snapshot = await _firestore
           .collection('users')
           .doc(userId)
@@ -71,73 +67,53 @@ class FirebaseStackRepository implements StackRepository {
           .toList();
 
       // 3. Update cache
-      _cache[userId] = List.from(stacks);
-
+      _cache[userId] = stacks;
       return stacks;
     } catch (e) {
-      AppLogger.w('Fetching stacks from cache (likely offline/slow)', e);
-      // Fallback: Force read from local cache
-      try {
-        final snapshot = await _firestore
-            .collection('users')
-            .doc(userId)
-            .collection('stacks')
-            .get(const GetOptions(source: Source.cache));
-        return snapshot.docs
-            .map((doc) => SupplementStack.fromJson(doc.data()))
-            .toList();
-      } catch (cacheError) {
-        AppLogger.e('Cache read failed', cacheError);
-        return [];
-      }
+      AppLogger.w('Fetching stacks fallback to cache', e);
+      final snapshot = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('stacks')
+          .get(const GetOptions(source: Source.cache));
+      final stacks = snapshot.docs
+          .map((doc) => SupplementStack.fromJson(doc.data()))
+          .toList();
+      _cache[userId] = stacks;
+      return stacks;
     }
   }
 
   @override
   Future<SupplementStack?> getStack(String userId) async {
-    try {
-      final doc = await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('stacks')
-          .doc('daily_stack')
-          .get(const GetOptions(source: Source.serverAndCache))
-          .timeout(const Duration(seconds: 3));
-
-      if (doc.exists && doc.data() != null) {
-        return SupplementStack.fromJson(doc.data()!);
-      }
-      return null;
-    } catch (e) {
-      AppLogger.w('Fetching stack from cache', e);
-      try {
-        final doc = await _firestore
-            .collection('users')
-            .doc(userId)
-            .collection('stacks')
-            .doc('daily_stack')
-            .get(const GetOptions(source: Source.cache));
-        if (doc.exists && doc.data() != null) {
-          return SupplementStack.fromJson(doc.data()!);
-        }
-        return null;
-      } catch (cacheErr) {
-        AppLogger.e('Stack cache failure', cacheErr);
-        return null;
-      }
-    }
+    // This method seems specialized or legacy, usually we use getUserStacks
+    return null;
   }
 
   @override
-  Stream<List<SupplementStack>> watchUserStacks(String userId) async* {
-    // 1. Emit current value if available (Behavioral behavior)
+  Stream<List<SupplementStack>> watchUserStacks(String userId) {
+    // Return a stream that starts with current cache and then listens for updates
+    final controller = StreamController<List<SupplementStack>>();
+
+    // Initial value
     if (_cache.containsKey(userId)) {
-      yield List.from(_cache[userId]!);
+      controller.add(List<SupplementStack>.from(_cache[userId]!));
+    } else {
+      // If not in cache, fetch once to seed
+      getUserStacks(userId).then((stacks) {
+        if (!controller.isClosed) controller.add(stacks);
+      });
     }
 
-    // 2. Listen for future updates filtered by userId
-    yield* _stackUpdateController.stream
+    // Listen to the global controller for this specific user
+    final subscription = _stackUpdateController.stream
         .where((update) => update.containsKey(userId))
-        .map((update) => List.from(update[userId]!));
+        .map((update) => List<SupplementStack>.from(update[userId]!))
+        .listen((stacks) {
+      if (!controller.isClosed) controller.add(stacks);
+    });
+
+    controller.onCancel = () => subscription.cancel();
+    return controller.stream;
   }
 }

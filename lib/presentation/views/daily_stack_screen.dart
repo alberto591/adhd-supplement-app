@@ -5,7 +5,6 @@ import '../../utils/supplement_ui_helper.dart';
 import '../widgets/up_next_card.dart';
 import '../widgets/daily_stack_item.dart';
 import '../widgets/symptom_quick_log.dart';
-import '../widgets/unified_bottom_nav.dart';
 import '../widgets/symptom_check_in_modal.dart';
 import '../widgets/celebration_animation.dart';
 import '../widgets/skeleton_loader.dart';
@@ -475,7 +474,12 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                         ),
 
                                         // Items in this stack
-                                        if (!isCollapsed)
+                                        if (!isCollapsed) ...[
+                                          if (stack.items.isEmpty)
+                                            const Padding(
+                                              padding: EdgeInsets.symmetric(vertical: 8),
+                                              child: Text('   (No items in this stack)', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                            ),
                                           ...stack.items
                                               .where((item) =>
                                                   !viewModel.isSupplementTaken(
@@ -484,6 +488,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                                       .isSupplementSkipped(
                                                           item.supplementId))
                                               .map((stackItem) {
+                                            debugPrint('RENDERING item ${stackItem.supplementId} in stack ${stack.name}');
                                             final supplement =
                                                 viewModel.getSupplement(
                                                     stackItem.supplementId);
@@ -644,12 +649,13 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                                           'Item',
                                                       stackItem.supplementId);
                                                 },
-                                              ),
-                                            );
+                                            ),
+                                          );
                                           }),
                                       ],
-                                    );
-                                  }),
+                                    ],
+                                  );
+                                }),
 
                                   // Skipped Items Section
                                   if (viewModel.hasSkippedItems) ...[
@@ -730,25 +736,44 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   const SizedBox(height: 24),
 
                                   // View Insights Button
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: OutlinedButton.icon(
-                                      onPressed: () => Navigator.pushNamed(
-                                          context, AppRouter.insights),
-                                      icon: const Icon(Icons.insights),
-                                      label: const Text('View Insights'),
-                                      style: OutlinedButton.styleFrom(
-                                        foregroundColor: AppColors.primaryGold,
-                                        side: const BorderSide(
-                                            color: AppColors.primaryGold),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 12),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
+                                  Consumer<AuthProvider>(
+                                    builder: (context, auth, _) {
+                                      final isPremium = auth.canAccess('pro');
+                                      return SizedBox(
+                                        width: double.infinity,
+                                        child: OutlinedButton(
+                                          onPressed: () => Navigator.pushNamed(
+                                              context, AppRouter.insights),
+                                          style: OutlinedButton.styleFrom(
+                                            foregroundColor:
+                                                AppColors.primaryGold,
+                                            side: const BorderSide(
+                                                color: AppColors.primaryGold),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 12),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(Icons.insights,
+                                                  size: 20),
+                                              const SizedBox(width: 8),
+                                              const Text('View Insights'),
+                                              if (!isPremium) ...[
+                                                const SizedBox(width: 8),
+                                                const Icon(Icons.lock,
+                                                    size: 14),
+                                              ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    },
                                   ),
 
                                   const SizedBox(height: 24),
@@ -786,7 +811,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
           backgroundColor: AppColors.primaryGold,
           child: const Icon(Icons.check, color: AppColors.backgroundDark),
         ),
-        bottomNavigationBar: const UnifiedBottomNav(currentIndex: 1),
+        // bottomNavigationBar: const UnifiedBottomNav(currentIndex: 1),
       ),
     );
   }

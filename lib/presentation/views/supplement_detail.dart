@@ -433,29 +433,32 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 16),
-                              // Buy Now Icon Button
-                              Container(
-                                width: 64,
-                                height: 64,
-                                decoration: BoxDecoration(
-                                  color: isDark
-                                      ? const Color(0xFF2D2616)
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
-                                  border: Border.all(
-                                      color:
-                                          primaryGold.withValues(alpha: 0.2)),
+                              // Only show shopping button for non-custom supplements
+                              if (!supplement.isCustom) ...[
+                                const SizedBox(width: 16),
+                                // Buy Now Icon Button
+                                Container(
+                                  width: 64,
+                                  height: 64,
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? const Color(0xFF2D2616)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.circular(24),
+                                    border: Border.all(
+                                        color:
+                                            primaryGold.withValues(alpha: 0.2)),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(Icons.shopping_bag_outlined,
+                                        color: primaryGold),
+                                    onPressed: () {
+                                      // Referral logic
+                                      _openReferralLink(context, supplement);
+                                    },
+                                  ),
                                 ),
-                                child: IconButton(
-                                  icon: const Icon(Icons.shopping_bag_outlined,
-                                      color: primaryGold),
-                                  onPressed: () {
-                                    // Referral logic
-                                    _openReferralLink(context, supplement);
-                                  },
-                                ),
-                              ),
+                              ],
                             ],
                           )
                         else

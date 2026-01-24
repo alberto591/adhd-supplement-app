@@ -279,15 +279,29 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 const _SectionHeader(title: 'Progress & Support'),
                 _SettingsGroup(
                   children: [
-                    _SettingsTile(
-                      icon: Icons.monitor_heart,
-                      iconColor: Colors.purple,
-                      title: 'Insights',
-                      subtitle: 'Your streaks & consistency',
-                      onTap: () => Navigator.pushReplacementNamed(
-                          context, AppRouter.insights),
-                      trailing:
-                          const Icon(Icons.chevron_right, color: Colors.grey),
+                    Consumer<AuthProvider>(
+                      builder: (context, auth, _) {
+                        final isPremium = auth.canAccess('pro');
+                        return _SettingsTile(
+                          icon: Icons.monitor_heart,
+                          iconColor: Colors.purple,
+                          title: 'Insights',
+                          subtitle: 'Your streaks & consistency',
+                          onTap: () =>
+                              Navigator.pushNamed(context, AppRouter.insights),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (!isPremium)
+                                const Icon(Icons.lock,
+                                    size: 14, color: Colors.grey),
+                              const SizedBox(width: 4),
+                              const Icon(Icons.chevron_right,
+                                  color: Colors.grey),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 2),
                     _SettingsTile(
@@ -439,7 +453,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const UnifiedBottomNav(currentIndex: 4),
+      bottomNavigationBar: const UnifiedBottomNav(currentIndex: 3),
     );
   }
 }

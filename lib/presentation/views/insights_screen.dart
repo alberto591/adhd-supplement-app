@@ -180,7 +180,7 @@ class _InsightsContent extends StatelessWidget {
                 ),
               ),
             ),
-      bottomNavigationBar: const UnifiedBottomNav(currentIndex: 4),
+      bottomNavigationBar: const UnifiedBottomNav(currentIndex: 3),
     );
   }
 
