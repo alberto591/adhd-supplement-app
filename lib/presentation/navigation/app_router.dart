@@ -259,7 +259,16 @@ class AppRouter {
 
       case doctorExport:
         return MaterialPageRoute(
-            builder: (_) => DoctorExportScreen.withProvider());
+          builder: (context) {
+            final authProvider =
+                Provider.of<AuthProvider>(context, listen: false);
+
+            if (!authProvider.canAccess('pro')) {
+              return const PaywallScreen(returnTo: doctorExport);
+            }
+            return DoctorExportScreen.withProvider();
+          },
+        );
 
       case historyLog:
         return MaterialPageRoute(

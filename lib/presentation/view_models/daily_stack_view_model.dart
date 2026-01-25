@@ -38,7 +38,6 @@ class DailyStackViewModel extends ChangeNotifier {
   final Set<String> _snoozedSupplements = {};
   final Set<String> _collapsedStackIds = {};
   bool _allCollapsed = false;
-  final Map<String, int> _missingSupplementCounters = {};
   StreamSubscription<List<SupplementStack>>? _stackSubscription;
 
   // Time-based slots
@@ -272,6 +271,11 @@ class DailyStackViewModel extends ChangeNotifier {
           _stackRepository.watchUserStacks(_userId).listen((updatedStacks) {
         AppLogger.i(
             'REACTIVE UPDATE: Received ${updatedStacks.length} stacks for user $_userId');
+        // DEBUG LOG
+        for (var s in updatedStacks) {
+          AppLogger.d(
+              'Stack: ${s.name} (${s.timeOfDay}) - ${s.items.length} items');
+        }
         _stacks = List.from(updatedStacks);
         notifyListeners(); // Notify immediately so UI shows new cards (even if loading supps)
         _cacheSupplements().then((_) {
@@ -283,11 +287,22 @@ class DailyStackViewModel extends ChangeNotifier {
 
       // Check for achievements on load
       final currentUser = await _authRepository.getCurrentUser();
+
+      // Streak Bagdes
+      if (_streakCount >= 3) {
+        await unlockAchievement('consistency_champion');
+      }
       if (_streakCount >= 7) {
         await unlockAchievement('7_day_warrior');
       }
-      if ((currentUser?.level ?? 1) >= 5) {
-        await unlockAchievement('focus_master');
+      if (_streakCount >= 30) {
+        await unlockAchievement('30_day_legend');
+      }
+
+      // Level Badges
+      // Level Badges
+      if ((currentUser?.level ?? 1) >= 10) {
+        await unlockAchievement('focus_adept');
       }
     } catch (e) {
       _error = 'Failed to load daily stack: $e';
@@ -706,6 +721,9 @@ class DailyStackViewModel extends ChangeNotifier {
       final isMatch = stackSlot == slot.toLowerCase() ||
           stack.timeOfDay?.toLowerCase() == slot.toLowerCase();
 
+      AppLogger.d(
+          'Checking stack ${stack.name} for slot $slot. Match: $isMatch');
+
       if (isMatch) {
         for (final item in stack.items) {
           // Filter out already taken or skipped items (as per user preference)
@@ -715,6 +733,8 @@ class DailyStackViewModel extends ChangeNotifier {
               isSupplementSkipped(item.supplementId, slot: stackSlot);
 
           if (taken || skipped) {
+            AppLogger.d(
+                'Skipping item ${item.supplementId} (Taken: $taken, Skipped: $skipped)');
             continue;
           }
 
@@ -901,76 +921,21 @@ class DailyStackViewModel extends ChangeNotifier {
 
     AppLogger.d('Parallel fetching ${supplementIds.length} supplements...');
 
-    final List<String> missingIds = [];
     await Future.wait(supplementIds.map((id) async {
       try {
         final supplement =
             await _supplementRepository.getSupplement(id, userId: _userId);
         if (supplement != null) {
           _supplementCache[id] = supplement;
-          _missingSupplementCounters.remove(id); // Reset if found
         } else {
-          final count = (_missingSupplementCounters[id] ?? 0) + 1;
-          _missingSupplementCounters[id] = count;
-
-          if (count >= 3) {
-            AppLogger.w(
-                'Supplement $id missing for 3 checks. Marking for cleanup.');
-            missingIds.add(id);
-            _missingSupplementCounters.remove(id);
-          } else {
-            AppLogger.d(
-                'Supplement $id not found (Attempt $count/3). Waiting...');
-          }
+          AppLogger.w('Supplement $id not found in repository.');
         }
       } catch (e) {
         AppLogger.e('Failed to load supplement $id', e);
       }
     }));
 
-    if (missingIds.isNotEmpty) {
-      await _cleanupOrphanedSupplements(missingIds);
-    }
     notifyListeners(); // Ensure UI redraws after cache update
-  }
-
-  Future<void> _cleanupOrphanedSupplements(List<String> missingIds) async {
-    AppLogger.i(
-        'Cleaning up ${missingIds.length} orphaned supplements from stacks...');
-    bool anyModified = false;
-
-    final updatedStacks = _stacks.map((stack) {
-      final originalCount = stack.items.length;
-      final filteredItems = stack.items
-          .where((item) => !missingIds.contains(item.supplementId))
-          .toList();
-
-      if (filteredItems.length != originalCount) {
-        anyModified = true;
-        // Re-order if items were removed
-        final reorderedItems = filteredItems.asMap().entries.map((entry) {
-          return entry.value.copyWith(order: entry.key);
-        }).toList();
-
-        final newStack = stack.copyWith(
-          items: reorderedItems,
-          updatedAt: DateTime.now(),
-        );
-
-        // Save to DB in background
-        _stackRepository.saveStack(_userId, newStack).catchError((Object e) {
-          AppLogger.e('Failed to save cleaned stack ${stack.id}', e);
-        });
-
-        return newStack;
-      }
-      return stack;
-    }).toList();
-
-    if (anyModified) {
-      _stacks = updatedStacks;
-      AppLogger.i('Stacks cleaned and updated locally.');
-    }
   }
 
   @override

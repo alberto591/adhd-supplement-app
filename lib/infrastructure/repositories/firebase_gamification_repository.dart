@@ -20,6 +20,17 @@ class FirebaseGamificationRepository implements GamificationRepository {
       icon: Icons.wb_sunny,
       color: Colors.amber,
       xpReward: 150,
+      targetValue: 1,
+    ),
+    GamificationBadge(
+      id: 'consistency_champion',
+      title: 'Consistency Champion',
+      subtitle: 'Log for 3 days in a row',
+      icon: Icons.directions_run,
+      color: Colors.teal,
+      tier: BadgeTier.bronze,
+      targetValue: 3,
+      xpReward: 300,
     ),
     GamificationBadge(
       id: '7_day_warrior',
@@ -27,7 +38,7 @@ class FirebaseGamificationRepository implements GamificationRepository {
       subtitle: 'Maintain a 7-day streak',
       icon: Icons.local_fire_department,
       color: Color(0xFFEC1380),
-      tier: BadgeTier.bronze,
+      tier: BadgeTier.silver,
       targetValue: 7,
       xpReward: 500,
     ),
@@ -37,9 +48,19 @@ class FirebaseGamificationRepository implements GamificationRepository {
       subtitle: 'Maintain a 30-day streak',
       icon: Icons.workspace_premium,
       color: Color(0xFFFFD700),
-      tier: BadgeTier.silver,
+      tier: BadgeTier.gold,
       targetValue: 30,
       xpReward: 2000,
+    ),
+    GamificationBadge(
+      id: 'night_owl',
+      title: 'Night Owl',
+      subtitle: 'Log 5 Night stacks',
+      icon: Icons.nightlight_round,
+      color: Colors.indigo,
+      tier: BadgeTier.bronze,
+      targetValue: 5,
+      xpReward: 300,
     ),
     GamificationBadge(
       id: 'safety_first',
@@ -48,6 +69,7 @@ class FirebaseGamificationRepository implements GamificationRepository {
       icon: Icons.verified_user,
       color: Colors.blue,
       xpReward: 100,
+      targetValue: 1,
     ),
     GamificationBadge(
       id: 'focus_adept',
@@ -67,6 +89,7 @@ class FirebaseGamificationRepository implements GamificationRepository {
       color: Color(0xFFFFD700),
       tier: BadgeTier.gold,
       xpReward: 5000,
+      targetValue: 1,
     ),
   ];
 
@@ -141,10 +164,12 @@ class FirebaseGamificationRepository implements GamificationRepository {
   }
 
   int _getXpToNextLevel(int level) {
-    // ADHD-friendly: Fast progression at first
+    // ADHD-friendly: Fast progression at first (gamification hook)
+    if (level < 3) return 200; // Very fast first few levels
     if (level < 5) return 500;
     if (level < 10) return 1000;
-    return level * 200; // Scales up linearly later
+    if (level < 20) return 2000;
+    return level * 1000; // Linear scaling for endgame
   }
 
   String _getLevelTitle(int level) {

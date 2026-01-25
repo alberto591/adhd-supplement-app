@@ -159,12 +159,37 @@ class _InsightsContent extends StatelessWidget {
                       child: ElevatedButton.icon(
                         onPressed: () => Navigator.pushNamed(
                             context, AppRouter.doctorExport),
-                        icon: const Icon(Icons.description_outlined),
-                        label: Text('Export Report for Doctor',
-                            style: GoogleFonts.lexend(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        icon: context.watch<AuthProvider>().isPremium
+                            ? const Icon(Icons.description_outlined)
+                            : const Icon(Icons.lock_outline, size: 18),
+                        label: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Export Report for Doctor',
+                                style: GoogleFonts.lexend(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            if (!context.watch<AuthProvider>().isPremium) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  'PRO',
+                                  style: GoogleFonts.lexend(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primaryGold,
                           foregroundColor: Colors.black,
