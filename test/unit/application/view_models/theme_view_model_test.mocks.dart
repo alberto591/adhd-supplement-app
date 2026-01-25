@@ -296,6 +296,25 @@ class MockSettingsRepository extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
+  bool getSoundsEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getSoundsEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setSoundsEnabled(bool? enabled) => (super.noSuchMethod(
+        Invocation.method(
+          #setSoundsEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
   bool getReducedMotionEnabled() => (super.noSuchMethod(
         Invocation.method(
           #getReducedMotionEnabled,

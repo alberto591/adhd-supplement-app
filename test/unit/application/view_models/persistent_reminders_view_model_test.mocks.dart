@@ -298,6 +298,25 @@ class MockSettingsRepository extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
+  bool getSoundsEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getSoundsEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setSoundsEnabled(bool? enabled) => (super.noSuchMethod(
+        Invocation.method(
+          #setSoundsEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
   bool getReducedMotionEnabled() => (super.noSuchMethod(
         Invocation.method(
           #getReducedMotionEnabled,
@@ -384,6 +403,24 @@ class MockNotificationService extends _i1.Mock
   MockNotificationService() {
     _i1.throwOnMissingStub(this);
   }
+
+  @override
+  _i4.Future<bool> checkExactAlarmPermission() => (super.noSuchMethod(
+        Invocation.method(
+          #checkExactAlarmPermission,
+          [],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+
+  @override
+  _i4.Future<bool> requestExactAlarmPermission() => (super.noSuchMethod(
+        Invocation.method(
+          #requestExactAlarmPermission,
+          [],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
   _i4.Future<void> init() => (super.noSuchMethod(

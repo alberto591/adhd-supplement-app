@@ -10,8 +10,11 @@ class PersistentRemindersViewModel extends ChangeNotifier {
     this._settingsRepository,
     this._notificationService,
   ) {
-    _loadSettings();
+    _initializationFuture = _loadSettings();
   }
+
+  late Future<void> _initializationFuture;
+  Future<void> get initializationFuture => _initializationFuture;
 
   bool _nudgeModeEnabled = true;
   TimeOfDay _nudgeTime = const TimeOfDay(hour: 8, minute: 0);
@@ -38,7 +41,7 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   TimeOfDay get eveningTime => _eveningTime;
   TimeOfDay get nightTime => _nightTime;
 
-  void _loadSettings() async {
+  Future<void> _loadSettings() async {
     _nudgeModeEnabled = _settingsRepository.getNudgeModeEnabled();
     _nudgeTime = _settingsRepository.getNudgeTime();
     _warningNudgeOption = _settingsRepository.getWarningNudgeOption();

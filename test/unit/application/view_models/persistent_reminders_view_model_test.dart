@@ -14,11 +14,11 @@ void main() {
   late MockSettingsRepository mockSettingsRepository;
   late MockNotificationService mockNotificationService;
 
-  setUp(() {
+  setUp(() async {
     mockSettingsRepository = MockSettingsRepository();
     mockNotificationService = MockNotificationService();
 
-    // Default mock behavior for initialization
+    // Default mock behavior for initialization (stub everything BEFORE creating VM)
     when(mockSettingsRepository.getNudgeModeEnabled()).thenReturn(true);
     when(mockSettingsRepository.getNudgeTime())
         .thenReturn(const TimeOfDay(hour: 8, minute: 0));
@@ -26,12 +26,21 @@ void main() {
     when(mockSettingsRepository.getExtendedRemindersEnabled()).thenReturn(true);
     when(mockSettingsRepository.getSlotTime(any))
         .thenReturn(const TimeOfDay(hour: 8, minute: 0));
+    when(mockSettingsRepository.getNotificationMode())
+        .thenReturn(NotificationMode.gentle);
+    when(mockNotificationService.checkExactAlarmPermission())
+        .thenAnswer((_) async => true);
+
+    // Stub missing members
+    when(mockSettingsRepository.hasAcceptedDisclaimer()).thenReturn(true);
+    when(mockSettingsRepository.getSoundsEnabled()).thenReturn(true);
   });
 
   group('PersistentRemindersViewModel', () {
-    test('initialization loads settings correctly', () {
+    test('initialization loads settings correctly', () async {
       viewModel = PersistentRemindersViewModel(
           mockSettingsRepository, mockNotificationService);
+      await viewModel.initializationFuture;
 
       expect(viewModel.nudgeModeEnabled, isTrue);
       expect(viewModel.nudgeTime.hour, 8);
@@ -44,6 +53,7 @@ void main() {
         () async {
       viewModel = PersistentRemindersViewModel(
           mockSettingsRepository, mockNotificationService);
+      await viewModel.initializationFuture;
 
       when(mockSettingsRepository.setNudgeModeEnabled(any))
           .thenAnswer((_) async => true);
@@ -67,6 +77,7 @@ void main() {
     test('setNudgeTime updates time and reschedules', () async {
       viewModel = PersistentRemindersViewModel(
           mockSettingsRepository, mockNotificationService);
+      await viewModel.initializationFuture;
       const newTime = TimeOfDay(hour: 9, minute: 30);
 
       when(mockSettingsRepository.setNudgeTime(newTime))
@@ -83,18 +94,20 @@ void main() {
 
       expect(viewModel.nudgeTime, newTime);
       verify(mockSettingsRepository.setNudgeTime(newTime)).called(1);
-      verify(mockNotificationService.scheduleRecurringNotification(
-        id: 1000,
+      verify(mockNotificationService.scheduleRecurringNudgeSequence(
+        baseId: 1000,
         title: anyNamed('title'),
         body: anyNamed('body'),
         hour: 9,
-        minute: 35,
+        minute: 30,
+        mode: anyNamed('mode'),
       )).called(1);
     });
 
     test('schedule notifications correctly maps nudge offsets', () async {
       viewModel = PersistentRemindersViewModel(
           mockSettingsRepository, mockNotificationService);
+      await viewModel.initializationFuture;
 
       when(mockSettingsRepository.setNudgeModeEnabled(any))
           .thenAnswer((_) async => true);
@@ -106,21 +119,24 @@ void main() {
         minute: anyNamed('minute'),
       )).thenAnswer((_) async => true);
 
-      // Default nudge is 15m after 08:00 -> 08:15
+      // Default nudge is 15m after 08:00 -> sequence handles offsets
       await viewModel.setNudgeModeEnabled(true);
 
-      verify(mockNotificationService.scheduleRecurringNotification(
-        id: 1001,
+      verify(mockSettingsRepository.setNudgeModeEnabled(true)).called(1);
+      verify(mockNotificationService.scheduleRecurringNudgeSequence(
+        baseId: 1000,
         title: anyNamed('title'),
         body: anyNamed('body'),
         hour: 8,
-        minute: 15,
+        minute: 0,
+        mode: anyNamed('mode'),
       )).called(1);
     });
 
     test('testNotification triggers service call', () async {
       viewModel = PersistentRemindersViewModel(
           mockSettingsRepository, mockNotificationService);
+      await viewModel.initializationFuture;
 
       when(mockNotificationService.showNotification(
         id: anyNamed('id'),

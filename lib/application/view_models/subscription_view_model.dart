@@ -25,18 +25,12 @@ class SubscriptionViewModel extends ChangeNotifier {
 
   Future<void> purchaseSubscription(String planId) async {
     _setLoading(true);
-    _error = 'Pro features are coming soon in Version 2.0!';
-    _setLoading(false);
-    /* 
     _error = null;
     try {
       final success =
           await _billingService.purchaseSubscription(planId: planId);
       if (success) {
         _isSubscribed = true;
-        await _analyticsService.logEvent('subscription_purchased', parameters: {
-          'plan_id': planId,
-        });
       } else {
         _error = 'Purchase failed. Please try again.';
       }
@@ -45,14 +39,10 @@ class SubscriptionViewModel extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
-    */
   }
 
   Future<void> restorePurchases() async {
     _setLoading(true);
-    _error = 'No features to restore yet. Coming soon!';
-    _setLoading(false);
-    /*
     _error = null;
     try {
       final success = await _billingService.restorePurchases();
@@ -66,7 +56,6 @@ class SubscriptionViewModel extends ChangeNotifier {
     } finally {
       _setLoading(false);
     }
-    */
   }
 
   void _setLoading(bool value) {

@@ -177,4 +177,10 @@ class FakeSettingsRepository implements SettingsRepository {
   ThemeMode getThemeMode() => ThemeMode.system;
   @override
   Future<void> setThemeMode(ThemeMode mode) async {}
+
+  @override
+  bool getSoundsEnabled() => true;
+
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {}
 }

@@ -170,6 +170,12 @@ class FakeNotificationService implements NotificationService {
       [int maxNudges = 12]) async {
     canceledSupplementNudges.add(supplementId);
   }
+
+  @override
+  Future<bool> checkExactAlarmPermission() async => true;
+
+  @override
+  Future<bool> requestExactAlarmPermission() async => true;
 }
 
 class FakeAuthRepository implements AuthRepository {
@@ -308,6 +314,12 @@ class FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setAcceptedDisclaimer(bool accepted) async {}
+
+  @override
+  bool getSoundsEnabled() => true;
+
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {}
 }
 
 void main() {

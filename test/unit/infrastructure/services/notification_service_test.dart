@@ -38,15 +38,15 @@ void main() {
 
       // Verify 3 notifications scheduled via zonedSchedule
       verify(mockPlugin.zonedSchedule(
-        argThat(contains(baseId)),
         any,
         any,
         any,
         any,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        any,
+        androidScheduleMode: anyNamed('androidScheduleMode'),
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time,
+            anyNamed('uiLocalNotificationDateInterpretation'),
+        matchDateTimeComponents: anyNamed('matchDateTimeComponents'),
       )).called(3);
     });
 

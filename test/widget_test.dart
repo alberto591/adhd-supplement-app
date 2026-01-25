@@ -286,6 +286,12 @@ class _FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setAcceptedDisclaimer(bool accepted) async {}
+
+  @override
+  bool getSoundsEnabled() => true;
+
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {}
 }
 
 class _FakeNotificationService implements NotificationService {
@@ -350,6 +356,12 @@ class _FakeNotificationService implements NotificationService {
     required String body,
     int maxNudges = 12,
   }) async {}
+
+  @override
+  Future<bool> checkExactAlarmPermission() async => true;
+
+  @override
+  Future<bool> requestExactAlarmPermission() async => true;
 }
 
 class _FakeSeedingService implements SeedingService {

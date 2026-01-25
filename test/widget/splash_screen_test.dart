@@ -66,7 +66,16 @@ class MockSettingsRepository extends Mock implements SettingsRepository {
   @override
   double getFontSizeScale() => 1.0;
   @override
-  Future<void> setFontSizeScale(double? scale) async {}
+  bool hasAcceptedDisclaimer() => true;
+
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
+
+  @override
+  bool getSoundsEnabled() => true;
+
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {}
 }
 
 class MockNotificationService extends Mock implements NotificationService {

@@ -160,7 +160,7 @@ void main() {
     expect(navFinder, findsOneWidget);
 
     final nav = tester.widget<UnifiedBottomNav>(navFinder);
-    expect(nav.currentIndex, 4); // Insights is now index 4 (Profile)
+    expect(nav.currentIndex, 3); // Insights is under Profile (index 3)
   });
 
   testWidgets('ScienceHubScreen renders without crashing',

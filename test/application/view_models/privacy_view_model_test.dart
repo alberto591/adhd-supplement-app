@@ -163,6 +163,12 @@ class MockSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setAcceptedDisclaimer(bool accepted) async {}
+
+  @override
+  bool getSoundsEnabled() => true;
+
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {}
 }
 
 void main() {

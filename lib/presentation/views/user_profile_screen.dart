@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../navigation/app_router.dart';
 import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
+import '../../application/view_models/theme_view_model.dart';
 import '../../application/view_models/persistent_reminders_view_model.dart';
 import '../widgets/unified_bottom_nav.dart';
 import 'package:intl/intl.dart';

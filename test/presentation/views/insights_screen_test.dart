@@ -24,6 +24,9 @@ void main() {
     mockViewModel = MockInsightsViewModel();
     mockAuthProvider = MockAuthProvider();
 
+    when(mockAuthProvider.isPremium).thenReturn(false);
+    when(mockAuthProvider.canAccess(any)).thenReturn(true);
+
     // Setup Locator for ViewModels
     // Note: InsightsScreen uses locator<InsightsViewModel>(param1: userId)
     // We need to register a factory or simple mock for testing

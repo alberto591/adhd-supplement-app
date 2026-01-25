@@ -69,8 +69,7 @@ class DailyStackViewModel extends ChangeNotifier {
     final nowMinutes = now.hour * 60 + now.minute;
 
     // Get configured times (defaulting if necessary)
-    final morningTime =
-        _timeToMinutes(_settingsRepository.getSlotTime('morning'));
+    // final morningTime = _timeToMinutes(_settingsRepository.getSlotTime('morning'));
     final afternoonTime =
         _timeToMinutes(_settingsRepository.getSlotTime('afternoon'));
     final eveningTime =

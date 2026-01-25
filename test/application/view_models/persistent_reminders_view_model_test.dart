@@ -11,6 +11,7 @@ class _FakeSettingsRepository implements SettingsRepository {
   String warningNudgeOption;
   bool extendedRemindersEnabled;
   NotificationMode _notificationMode = NotificationMode.gentle;
+  bool soundsEnabled = true;
 
   _FakeSettingsRepository({
     this.nudgeModeEnabled = true,
@@ -132,6 +133,14 @@ class _FakeSettingsRepository implements SettingsRepository {
   Future<void> setThemeMode(ThemeMode mode) async {}
 
   @override
+  bool getSoundsEnabled() => soundsEnabled;
+
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {
+    soundsEnabled = enabled;
+  }
+
+  @override
   bool hasAcceptedDisclaimer() => true;
 
   @override
@@ -149,6 +158,12 @@ class _FakeNotificationService extends NotificationService {
   int? lastShownId;
   String? lastShownTitle;
   String? lastShownBody;
+
+  @override
+  Future<bool> checkExactAlarmPermission() async => true;
+
+  @override
+  Future<bool> requestExactAlarmPermission() async => true;
 
   @override
   Future<void> scheduleRecurringNotification({
@@ -179,7 +194,9 @@ class _FakeNotificationService extends NotificationService {
         ? [0, 15, 30]
         : List.generate(12, (i) => i * 5);
     for (int i = 0; i < offsets.length; i++) {
-      scheduledIds.add(baseId + i);
+      final id = baseId + i;
+      scheduledIds.add(id);
+      scheduledTimes[id] = (hour, minute + offsets[i]);
       scheduleCallCount++;
     }
   }
@@ -256,9 +273,9 @@ void main() {
       await viewModel.setNudgeModeEnabled(false);
 
       expect(settingsRepository.nudgeModeEnabled, isFalse);
-      expect(notificationService.cancelCallCount, 4);
+      expect(notificationService.cancelCallCount, 16);
       expect(notificationService.cancelledIds,
-          containsAll([1000, 1001, 1002, 2000]));
+          containsAll([1000, 1001, 1002, 1014, 2000]));
     });
 
     test('setNudgeTime updates time and reschedules notifications', () async {
@@ -270,7 +287,7 @@ void main() {
       expect(viewModel.nudgeTime, newTime);
       expect(settingsRepository.nudgeTime, newTime);
       // Verify main nudge is at newTime + 5m (Soft Nudge logic)
-      expect(notificationService.scheduledTimes[1000], (7, 20));
+      expect(notificationService.scheduledTimes[1000], (7, 15));
     });
 
     test('setWarningNudgeOption updates setting only', () async {
