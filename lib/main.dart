@@ -13,6 +13,8 @@ import 'package:adhd_supplement_app/application/view_models/persistent_reminders
 import 'package:adhd_supplement_app/firebase_options.dart';
 import 'package:adhd_supplement_app/application/view_models/theme_view_model.dart';
 import 'package:adhd_supplement_app/utils/logger.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:adhd_supplement_app/l10n/generated/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,6 +99,17 @@ class AdhdSupplementApp extends StatelessWidget {
       child: Consumer<ThemeViewModel>(
         builder: (context, themeVM, _) => MaterialApp(
           title: 'Daily Stack',
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'), // English
+            Locale('es'), // Spanish
+            Locale('it'), // Italian
+          ],
           theme: AppTheme.lightTheme,
           themeMode: ThemeMode.light,
           initialRoute: AppRouter.splash,

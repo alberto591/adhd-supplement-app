@@ -12,6 +12,10 @@ dependencies:
   fl_chart: ^0.68.0
   cupertino_icons: ^1.0.6
   
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+
   # Backend - Downgraded for Swift 5 / Xcode 15.4 compatibility
   firebase_core: ^2.24.0
   firebase_auth: ^4.16.0
@@ -50,6 +54,7 @@ dev_dependencies:
   mockito: any
   build_runner: ^2.4.0
 flutter:
+  generate: true
   uses-material-design: true
 
   assets:
