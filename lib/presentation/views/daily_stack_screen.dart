@@ -717,46 +717,20 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
   }
 
   Widget _buildUpNextSection(DailyStackViewModel viewModel, bool isDark) {
-    // Determine which slot is next
-    final now = DateTime.now();
-    final hour = now.hour;
+    final upcoming = viewModel.upcomingStack;
+    if (upcoming == null) return const SizedBox.shrink();
 
-    String slot;
-    List<StackItem> items;
-    String timeLabel;
-
-    if (hour < 11) {
-      slot = 'Morning';
-      items = viewModel.morningItems;
-      timeLabel = 'Before 11:00 AM';
-    } else if (hour < 16) {
-      slot = 'Afternoon';
-      items = viewModel.afternoonItems;
-      timeLabel = 'Before 4:00 PM';
-    } else if (hour < 21) {
-      slot = 'Evening';
-      items = viewModel.eveningItems;
-      timeLabel = 'Before 9:00 PM';
-    } else {
-      slot = 'Night';
-      items = viewModel.nightItems;
-      timeLabel = 'Before Bed';
-    }
-
-    // Filter out taken items for the "Up Next" card
-    final pendingItems = items
-        .where((i) => !viewModel.isSupplementTaken(i.supplementId))
-        .toList();
-
-    if (pendingItems.isEmpty) return const SizedBox.shrink();
+    final slot = upcoming['slot'] as String;
+    final items = upcoming['items'] as List<StackItem>;
 
     return UpNextCard(
-      title: slot,
-      subtitle: slot == 'Morning' ? 'Start your day' : 'Stay on track',
-      timeLabel: timeLabel,
-      itemCount: pendingItems.length,
+      title: upcoming['title'] as String,
+      subtitle: upcoming['subtitle'] as String,
+      timeLabel: upcoming['timeLabel'] as String,
+      itemCount: items.length,
+      imagePath: upcoming['imagePath'] as String,
       onTakeAll: () async {
-        final ids = pendingItems.map((i) => i.supplementId).toList();
+        final ids = items.map((i) => i.supplementId).toList();
         await viewModel.markBatchTaken(ids, slot: slot);
         setState(() => _showCelebration = true);
       },

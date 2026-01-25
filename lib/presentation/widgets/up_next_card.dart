@@ -6,6 +6,7 @@ class UpNextCard extends StatelessWidget {
   final String subtitle;
   final String timeLabel;
   final int itemCount;
+  final String imagePath;
   final VoidCallback? onTakeAll;
 
   const UpNextCard({
@@ -14,6 +15,7 @@ class UpNextCard extends StatelessWidget {
     required this.subtitle,
     required this.timeLabel,
     required this.itemCount,
+    required this.imagePath,
     this.onTakeAll,
   });
 
@@ -76,8 +78,8 @@ class UpNextCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               // Background Image with Gradient
-              Image.network(
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuDDeQAsZknPjXtiKsTY8VWHBbswWWoy9p8P-2sDVv2vDVdiw_IwzwkZsuqJWdu8c3V0OXw-zS8sI7X6IqkKN8g2NSbpAsL5Rov_pBWXTiKHTHI-NJBs-it-RnMc4aq-9iOXOXj9G5msIkcSdri6U7Htbl5WcOfNor4n22tI0hAiK-qI-ZVdvv2-mWa7RHsQwaosBTTyXPDbsoLMUBRNfJf1FvNaPs6pZ3XvwJgPazI4K8XSXqgzTPC4QDEeglh-uXczZBn-VISEvtg',
+              Image.asset(
+                imagePath,
                 fit: BoxFit.cover,
                 errorBuilder: (ctx, err, stack) =>
                     Container(color: AppColors.cardDark),

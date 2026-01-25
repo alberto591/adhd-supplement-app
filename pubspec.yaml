@@ -62,4 +62,8 @@ flutter:
     - assets/images/vitamin_d_focus.png
     - assets/images/theanine_calm.png
     - assets/images/referral_hero.png
+    - assets/images/morning_slot.png
+    - assets/images/afternoon_slot.png
+    - assets/images/evening_slot.png
+    - assets/images/night_slot.png
     - assets/sounds/

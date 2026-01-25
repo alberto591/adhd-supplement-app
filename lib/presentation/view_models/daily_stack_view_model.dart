@@ -48,43 +48,125 @@ class DailyStackViewModel extends ChangeNotifier {
 
   /// Get the data for the "Up Next" routine card
   Map<String, dynamic>? get upcomingStack {
-    if (morningItems.isNotEmpty) {
-      return {
-        'slot': 'morning',
-        'title': 'Morning Focus',
-        'subtitle': 'Daily Startup',
-        'time': _settingsRepository.getSlotTime('morning'),
-        'items': morningItems,
-      };
+    final slot = _getCurrentRoutineSlot();
+    if (slot == null) return null;
+
+    final items = _getItemsForSlot(slot);
+    if (items.isEmpty) return null;
+
+    return {
+      'slot': slot,
+      'title': _getSlotTitle(slot),
+      'subtitle': getSlotSubtitle(slot),
+      'imagePath': getSlotImagePath(slot),
+      'timeLabel': getSlotTimeLabel(slot),
+      'items': items,
+    };
+  }
+
+  String? _getCurrentRoutineSlot() {
+    final now = DateTime.now();
+    final nowMinutes = now.hour * 60 + now.minute;
+
+    // Get configured times (defaulting if necessary)
+    final morningTime =
+        _timeToMinutes(_settingsRepository.getSlotTime('morning'));
+    final afternoonTime =
+        _timeToMinutes(_settingsRepository.getSlotTime('afternoon'));
+    final eveningTime =
+        _timeToMinutes(_settingsRepository.getSlotTime('evening'));
+    final nightTime = _timeToMinutes(_settingsRepository.getSlotTime('night'));
+
+    // Determine current phase
+    // Default order: Morning < Afternoon < Evening < Night
+    // We check ranges.
+
+    // Check Active Phase first
+    if (nowMinutes < afternoonTime) {
+      // In Morning Phase (before Afternoon starts)
+      if (morningItems.isNotEmpty) return 'morning';
+      // If Morning done, check Afternoon (Upcoming)
+      if (afternoonItems.isNotEmpty) return 'afternoon';
+      if (eveningItems.isNotEmpty) return 'evening';
+      if (nightItems.isNotEmpty) return 'night';
+    } else if (nowMinutes < eveningTime) {
+      // In Afternoon Phase
+      if (afternoonItems.isNotEmpty) return 'afternoon';
+      // If Afternoon done, check Evening
+      if (eveningItems.isNotEmpty) return 'evening';
+      if (nightItems.isNotEmpty) return 'night';
+      // Fallback: Check if Morning was missed?
+      if (morningItems.isNotEmpty) return 'morning';
+    } else if (nowMinutes < nightTime) {
+      // In Evening Phase
+      if (eveningItems.isNotEmpty) return 'evening';
+      if (nightItems.isNotEmpty) return 'night';
+      // Fallback: Missed previous?
+      if (afternoonItems.isNotEmpty) return 'afternoon';
+      if (morningItems.isNotEmpty) return 'morning';
+    } else {
+      // In Night Phase
+      if (nightItems.isNotEmpty) return 'night';
+      // Fallback: Missed previous?
+      if (eveningItems.isNotEmpty) return 'evening';
+      if (afternoonItems.isNotEmpty) return 'afternoon';
+      if (morningItems.isNotEmpty) return 'morning';
     }
-    if (afternoonItems.isNotEmpty) {
-      return {
-        'slot': 'afternoon',
-        'title': 'Afternoon Focus',
-        'subtitle': 'Mid-day Boost',
-        'time': _settingsRepository.getSlotTime('afternoon'),
-        'items': afternoonItems,
-      };
-    }
-    if (eveningItems.isNotEmpty) {
-      return {
-        'slot': 'evening',
-        'title': 'Evening Stack',
-        'subtitle': 'Sundown Support',
-        'time': _settingsRepository.getSlotTime('evening'),
-        'items': eveningItems,
-      };
-    }
-    if (nightItems.isNotEmpty) {
-      return {
-        'slot': 'night',
-        'title': 'Night Stack',
-        'subtitle': 'Rest & Recovery',
-        'time': _settingsRepository.getSlotTime('night'),
-        'items': nightItems,
-      };
-    }
+
     return null;
+  }
+
+  int _timeToMinutes(TimeOfDay time) {
+    return time.hour * 60 + time.minute;
+  }
+
+  String _getSlotTitle(String slot) {
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        return 'Morning';
+      case 'afternoon':
+        return 'Afternoon';
+      case 'evening':
+        return 'Evening';
+      case 'night':
+        return 'Night';
+      default:
+        return slot;
+    }
+  }
+
+  String getSlotSubtitle(String slot) {
+    return slot.toLowerCase() == 'morning' ? 'Start your day' : 'Stay on track';
+  }
+
+  String getSlotImagePath(String slot) {
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        return 'assets/images/morning_slot.png';
+      case 'afternoon':
+        return 'assets/images/afternoon_slot.png';
+      case 'evening':
+        return 'assets/images/evening_slot.png';
+      case 'night':
+        return 'assets/images/night_slot.png';
+      default:
+        return 'assets/images/morning_slot.png';
+    }
+  }
+
+  String getSlotTimeLabel(String slot) {
+    if (slot.toLowerCase() == 'night') return 'Before Bed';
+
+    try {
+      final time = _settingsRepository.getSlotTime(slot.toLowerCase());
+      final hour =
+          time.hour == 0 ? 12 : (time.hour > 12 ? time.hour - 12 : time.hour);
+      final amPm = time.hour >= 12 ? 'PM' : 'AM';
+      final minute = time.minute.toString().padLeft(2, '0');
+      return 'Before $hour:$minute $amPm';
+    } catch (_) {
+      return '';
+    }
   }
 
   /// Helper to get slot from stack name (internal consistency)
