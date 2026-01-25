@@ -24,6 +24,7 @@ class ThemeViewModel extends ChangeNotifier {
   double get fontScale => _settingsRepository.getFontSizeScale();
   bool get reducedMotion => _settingsRepository.getReducedMotionEnabled();
   bool get hapticEnabled => _settingsRepository.getHapticFeedbackEnabled();
+  bool get soundsEnabled => _settingsRepository.getSoundsEnabled();
 
   Future<void> updateFontScale(double scale) async {
     await _settingsRepository.setFontSizeScale(scale);
@@ -37,6 +38,11 @@ class ThemeViewModel extends ChangeNotifier {
 
   Future<void> updateHapticEnabled(bool enabled) async {
     await _settingsRepository.setHapticFeedbackEnabled(enabled);
+    notifyListeners();
+  }
+
+  Future<void> updateSoundsEnabled(bool enabled) async {
+    await _settingsRepository.setSoundsEnabled(enabled);
     notifyListeners();
   }
 }

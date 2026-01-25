@@ -40,6 +40,9 @@ abstract class SettingsRepository {
   ThemeMode getThemeMode();
   Future<void> setThemeMode(ThemeMode mode);
 
+  bool getSoundsEnabled();
+  Future<void> setSoundsEnabled(bool enabled);
+
   // Accessibility Settings
   bool getReducedMotionEnabled();
   Future<void> setReducedMotionEnabled(bool enabled);

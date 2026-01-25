@@ -24,19 +24,21 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   TimeOfDay _nightTime = const TimeOfDay(hour: 21, minute: 0);
 
   NotificationMode _notificationMode = NotificationMode.gentle;
+  bool _exactAlarmPermissionGranted = true;
 
   bool get nudgeModeEnabled => _nudgeModeEnabled;
   TimeOfDay get nudgeTime => _nudgeTime;
   String get warningNudgeOption => _warningNudgeOption;
   bool get extendedRemindersEnabled => _extendedRemindersEnabled;
   NotificationMode get notificationMode => _notificationMode;
+  bool get exactAlarmPermissionGranted => _exactAlarmPermissionGranted;
 
   TimeOfDay get morningTime => _morningTime;
   TimeOfDay get afternoonTime => _afternoonTime;
   TimeOfDay get eveningTime => _eveningTime;
   TimeOfDay get nightTime => _nightTime;
 
-  void _loadSettings() {
+  void _loadSettings() async {
     _nudgeModeEnabled = _settingsRepository.getNudgeModeEnabled();
     _nudgeTime = _settingsRepository.getNudgeTime();
     _warningNudgeOption = _settingsRepository.getWarningNudgeOption();
@@ -49,6 +51,21 @@ class PersistentRemindersViewModel extends ChangeNotifier {
     _eveningTime = _settingsRepository.getSlotTime('evening');
     _nightTime = _settingsRepository.getSlotTime('night');
 
+    _exactAlarmPermissionGranted =
+        await _notificationService.checkExactAlarmPermission();
+
+    notifyListeners();
+  }
+
+  Future<void> refreshPermissionStatus() async {
+    _exactAlarmPermissionGranted =
+        await _notificationService.checkExactAlarmPermission();
+    notifyListeners();
+  }
+
+  Future<void> requestExactAlarmPermission() async {
+    final granted = await _notificationService.requestExactAlarmPermission();
+    _exactAlarmPermissionGranted = granted;
     notifyListeners();
   }
 

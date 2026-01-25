@@ -23,8 +23,34 @@ class PersistentRemindersScreen extends StatelessWidget {
   }
 }
 
-class _PersistentRemindersContent extends StatelessWidget {
+class _PersistentRemindersContent extends StatefulWidget {
   const _PersistentRemindersContent();
+
+  @override
+  State<_PersistentRemindersContent> createState() =>
+      _PersistentRemindersContentState();
+}
+
+class _PersistentRemindersContentState
+    extends State<_PersistentRemindersContent> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<PersistentRemindersViewModel>().refreshPermissionStatus();
+    }
+  }
 
   Future<void> _selectTime(
       BuildContext context, PersistentRemindersViewModel viewModel) async {
@@ -152,7 +178,67 @@ class _PersistentRemindersContent extends StatelessWidget {
                 height: 1.5,
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 16),
+
+            // Exact Alarm Permission Warning (Android 12/15/16)
+            if (!viewModel.exactAlarmPermissionGranted)
+              Container(
+                margin: const EdgeInsets.only(bottom: 24),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(16),
+                  border:
+                      Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.warning_amber_rounded,
+                            color: Colors.orange, size: 28),
+                        const SizedBox(width: 12),
+                        const Expanded(
+                          child: Text(
+                            'Exact Alarms Required',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.orange,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Android requires special permission for precise reminders. Without this, your nudges might be delayed by 10-15 minutes.',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: isDark ? Colors.orange[200] : Colors.orange[900],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            viewModel.requestExactAlarmPermission(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text('Grant Permission'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+            const SizedBox(height: 16),
 
             // Nudge Mode Toggle Card
             Container(

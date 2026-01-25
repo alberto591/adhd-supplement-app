@@ -19,6 +19,7 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   static const String _keyHapticFeedback = 'haptic_feedback_enabled';
   static const String _keyFontSizeScale = 'font_size_scale';
   static const String _keyAcceptedDisclaimer = 'accepted_medical_disclaimer';
+  static const String _keySoundsEnabled = 'sounds_enabled';
 
   @override
   Future<void> init() async {
@@ -169,6 +170,16 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   @override
   Future<void> setThemeMode(ThemeMode mode) async {
     await _prefs.setInt(_keyThemeMode, mode.index);
+  }
+
+  @override
+  bool getSoundsEnabled() {
+    return _prefs.getBool(_keySoundsEnabled) ?? true; // Default true
+  }
+
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {
+    await _prefs.setBool(_keySoundsEnabled, enabled);
   }
 
   @override

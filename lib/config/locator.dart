@@ -88,7 +88,8 @@ void _setupCore(SharedPreferences prefs) {
   locator.registerLazySingleton<SettingsRepository>(
       () => SharedPrefsSettingsRepository(prefs));
   locator.registerLazySingleton<HapticService>(() => HapticService());
-  locator.registerLazySingleton<SoundService>(() => SoundService());
+  locator.registerLazySingleton<SoundService>(
+      () => SoundService(locator<SettingsRepository>()));
   locator.registerLazySingleton<UrlService>(() => UrlService());
   locator.registerLazySingleton<ReportPdfService>(() => ReportPdfService());
   locator.registerLazySingleton<SeedingService>(() => SeedingService());

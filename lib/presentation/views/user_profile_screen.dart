@@ -337,6 +337,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         );
                       },
                     ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.volume_up_outlined,
+                      iconColor: AppColors.primary,
+                      title: 'Sound Effects',
+                      subtitle: 'Play sounds on completion',
+                      trailing: Consumer<ThemeViewModel>(
+                        builder: (context, themeVM, _) => Switch(
+                          value: themeVM.soundsEnabled,
+                          activeThumbColor: AppColors.primary,
+                          onChanged: (value) =>
+                              themeVM.updateSoundsEnabled(value),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
 

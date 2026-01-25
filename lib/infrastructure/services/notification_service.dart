@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'dart:io';
 
 enum NotificationMode {
   persistent, // Aggressive: Every 5 mins for an hour
@@ -13,6 +14,35 @@ class NotificationService {
 
   NotificationService({FlutterLocalNotificationsPlugin? plugin})
       : _notificationsPlugin = plugin ?? FlutterLocalNotificationsPlugin();
+
+  Future<bool> checkExactAlarmPermission() async {
+    if (!Platform.isAndroid) return true;
+
+    final androidImplementation =
+        _notificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+
+    if (androidImplementation == null) return false;
+
+    final bool? granted =
+        await androidImplementation.canScheduleExactNotifications();
+    return granted ?? false;
+  }
+
+  Future<bool> requestExactAlarmPermission() async {
+    if (!Platform.isAndroid) return true;
+
+    final androidImplementation =
+        _notificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+
+    if (androidImplementation == null) return false;
+
+    // This typically opens the system "Alarms & Reminders" settings page for the app
+    final bool? granted =
+        await androidImplementation.requestExactAlarmsPermission();
+    return granted ?? false;
+  }
 
   Future<void> init() async {
     // Initialize timezone data
