@@ -938,7 +938,7 @@ class SeedingService {
         "focusLevel": 1,
         "mechanismOfAction":
             "Artificial dyes have been shown to trigger histamine release and may interfere with zinc metabolism. Zinc is a critical cofactor for neurotransmitter synthesis; its depletion can directly worsen hyperactivity and impulsivity in ADHD-sensitive individuals.",
-        "detailedBenefits": [],
+        "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Consumption should be eliminated to avoid behavioral flares.",
         "scientificEvidenceRank": 75,
@@ -983,7 +983,7 @@ class SeedingService {
         "focusLevel": 1,
         "mechanismOfAction":
             "HFCS induces rapid insulin release leading to significant blood sugar fluctuations. The subsequent hypoglycemic 'crash' can temporarily deplete neurotransmitter reserves and cause intense brain fog, irritability, and worsened impulsivity in ADHD individuals.",
-        "detailedBenefits": [],
+        "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Consumption leads to neuro-energetic instability.",
         "scientificEvidenceRank": 70,
@@ -1028,7 +1028,7 @@ class SeedingService {
         "focusLevel": 1,
         "mechanismOfAction":
             "Sodium benzoate (E211) can cross the blood-brain barrier and has been shown to increase hyperactivity in its own right. It may interfere with mitochondrial function and potentially induce oxidative stress in the hippocampus.",
-        "detailedBenefits": [],
+        "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Preservative with recognized behavioral impact.",
         "scientificEvidenceRank": 68,

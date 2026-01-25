@@ -122,20 +122,6 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
                     _buildInputDecoration('e.g., 500mg, 1 pill', isDark),
               ),
 
-              const SizedBox(height: 16),
-
-              // Time of Day
-              _buildLabel('Preferred Routine'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildTimeChip('morning', '🌅', isDark),
-                  _buildTimeChip('afternoon', '☀️', isDark),
-                  _buildTimeChip('evening', '🌇', isDark),
-                  _buildTimeChip('night', '🌙', isDark),
-                ],
-              ),
-
               const SizedBox(height: 24),
 
               // Save Button
@@ -212,46 +198,6 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
-      ),
-    );
-  }
-
-  Widget _buildTimeChip(String value, String emoji, bool isDark) {
-    final isSelected = _selectedTimeOfDay == value;
-    return GestureDetector(
-      onTap: () =>
-          setState(() => _selectedTimeOfDay = isSelected ? null : value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primaryGold.withValues(alpha: 0.2)
-              : (isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected
-                ? AppColors.primaryGold
-                : (isDark
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : Colors.grey[300]!),
-          ),
-        ),
-        child: Column(
-          children: [
-            Text(emoji, style: const TextStyle(fontSize: 20)),
-            const SizedBox(height: 4),
-            Text(
-              value[0].toUpperCase() + value.substring(1),
-              style: GoogleFonts.lexend(
-                fontSize: 10,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected
-                    ? AppColors.primaryGold
-                    : (isDark ? Colors.white70 : Colors.black54),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

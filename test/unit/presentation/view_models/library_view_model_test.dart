@@ -237,7 +237,7 @@ void main() {
       fakeSupplementRepo.supplements = [
         beneficialSupp,
         beneficialSupp.copyWith(id: 'supp2', name: 'Zinc'),
-        avoidSupp,
+        avoidSupp.copyWith(name: 'Avoid Item'),
       ];
       await viewModel.initialize();
 
@@ -252,9 +252,9 @@ void main() {
 
       // Switch to avoid and search
       viewModel.filterByStatus('avoid');
-      await viewModel.search('Red');
+      await viewModel.search('Avoid');
       expect(viewModel.supplements.length, 1);
-      expect(viewModel.supplements.first.name, 'Red Dye 40');
+      expect(viewModel.supplements.first.name, 'Avoid Item');
     });
 
     test('filterByCategory works with status', () async {
@@ -318,23 +318,163 @@ void main() {
       expect(viewModel.supplements.isEmpty, true);
     });
 
-    test('filterByForm works correctly', () async {
+    test('filterByForm supports multi-select and toggling', () async {
       fakeSupplementRepo.supplements = [
-        beneficialSupp.copyWith(id: 'supp1', form: 'Capsule'),
-        beneficialSupp.copyWith(id: 'supp2', form: 'Tablet'),
+        beneficialSupp.copyWith(id: 'supp1', name: 'Supp 1', form: 'Capsule'),
+        beneficialSupp.copyWith(id: 'supp2', name: 'Supp 2', form: 'Tablet'),
+        beneficialSupp.copyWith(id: 'supp3', name: 'Supp 3', form: 'Powder'),
       ];
       await viewModel.initialize();
 
+      // Select Capsule
       viewModel.filterByForm('Capsule');
       expect(viewModel.supplements.length, 1);
-      expect(viewModel.supplements.first.form, 'Capsule');
+      expect(viewModel.supplements.first.id, 'supp1');
 
+      // Select Tablet (now both Capsule and Tablet)
       viewModel.filterByForm('Tablet');
-      expect(viewModel.supplements.length, 1);
-      expect(viewModel.supplements.first.form, 'Tablet');
-
-      viewModel.filterByForm(null);
       expect(viewModel.supplements.length, 2);
+      expect(viewModel.supplements.any((s) => s.id == 'supp1'), true);
+      expect(viewModel.supplements.any((s) => s.id == 'supp2'), true);
+
+      // Deselect Capsule (leaving only Tablet)
+      viewModel.filterByForm('Capsule');
+      expect(viewModel.supplements.length, 1);
+      expect(viewModel.supplements.first.id, 'supp2');
+
+      // Select Powder (Tablet and Powder)
+      viewModel.filterByForm('Powder');
+      expect(viewModel.supplements.length, 2);
+
+      // Clear all
+      viewModel.filterByForm(null);
+      expect(viewModel.supplements.length, 3);
+    });
+
+    test('filterByEvidence supports multi-select', () async {
+      fakeSupplementRepo.supplements = [
+        beneficialSupp.copyWith(
+            id: 'supp1', name: 'Supp 1', evidenceLevel: 'High'),
+        beneficialSupp.copyWith(
+            id: 'supp2', name: 'Supp 2', evidenceLevel: 'Moderate'),
+        beneficialSupp.copyWith(
+            id: 'supp3', name: 'Supp 3', evidenceLevel: 'Low'),
+      ];
+      await viewModel.initialize();
+
+      viewModel.filterByEvidence('High');
+      viewModel.filterByEvidence('Low');
+
+      expect(viewModel.supplements.length, 2);
+      expect(
+          viewModel.supplements
+              .any((s) => s.evidenceLevel?.toLowerCase() == 'high'),
+          true);
+      expect(
+          viewModel.supplements
+              .any((s) => s.evidenceLevel?.toLowerCase() == 'low'),
+          true);
+      expect(
+          viewModel.supplements
+              .any((s) => s.evidenceLevel?.toLowerCase() == 'moderate'),
+          false);
+
+      viewModel.filterByEvidence(null);
+      expect(viewModel.supplements.length, 3);
+    });
+
+    test('filterByStimulant handles Safe and Caution multi-select', () async {
+      fakeSupplementRepo.supplements = [
+        beneficialSupp.copyWith(
+            id: 'safe1',
+            name: 'Safe Supp',
+            isPrescription: false,
+            adhdMedInteractions: {}),
+        beneficialSupp.copyWith(
+            id: 'caution1', name: 'Caution Supp 1', isPrescription: true),
+        beneficialSupp.copyWith(
+            id: 'caution2',
+            name: 'Caution Supp 2',
+            adhdMedInteractions: {'Adderall': 'Interaction'}),
+      ];
+      await viewModel.initialize();
+
+      // Filter by Safe
+      viewModel.filterByStimulant('Safe');
+      expect(viewModel.supplements.length, 1);
+      expect(viewModel.supplements.first.id, 'safe1');
+
+      // Filter by Caution (now showing both)
+      viewModel.filterByStimulant('Caution');
+      expect(viewModel.supplements.length, 3);
+
+      // Deselect Safe (showing only Caution)
+      viewModel.filterByStimulant('Safe');
+      expect(viewModel.supplements.length, 2);
+      expect(viewModel.supplements.any((s) => s.id == 'safe1'), false);
+
+      viewModel.filterByStimulant(null);
+      expect(viewModel.supplements.length, 3);
+    });
+
+    group('De-duplication Logic', () {
+      test('initialize removes duplicates by name, preferring detailed entries',
+          () async {
+        final alcar1 = beneficialSupp.copyWith(
+          id: 'alcar-basic',
+          name: 'Acetyl-L-Carnitine',
+          description: 'Short desc',
+          benefits: ['A'],
+        );
+        final alcar2 = beneficialSupp.copyWith(
+          id: 'alcar-detailed',
+          name: 'Acetyl-L-Carnitine',
+          description: 'Much longer description with more details',
+          benefits: ['A', 'B', 'C'],
+        );
+
+        fakeSupplementRepo.supplements = [alcar1, alcar2, beneficialSupp];
+
+        await viewModel.initialize();
+
+        // Should have 2 (ALCAR + Magnesium)
+        expect(viewModel.allSupplements.length, 2);
+        final alcar = viewModel.allSupplements
+            .firstWhere((s) => s.name == 'Acetyl-L-Carnitine');
+        // Should prefer the detailed one (alcar2)
+        expect(alcar.id, 'alcar-detailed');
+      });
+
+      test('de-duplication treats names case-insensitively', () async {
+        final zinc1 = beneficialSupp.copyWith(id: 'zinc1', name: 'ZINC');
+        final zinc2 = beneficialSupp.copyWith(id: 'zinc2', name: 'zinc');
+
+        fakeSupplementRepo.supplements = [zinc1, zinc2];
+        await viewModel.initialize();
+
+        expect(viewModel.allSupplements.length, 1);
+      });
+
+      test('supplements are sorted alphabetically case-insensitively',
+          () async {
+        final suppA = beneficialSupp.copyWith(id: 'a', name: 'Alpha');
+        final suppB =
+            beneficialSupp.copyWith(id: 'b', name: 'beta'); // lowercase
+        final suppC = beneficialSupp.copyWith(id: 'c', name: 'Gamma');
+
+        // Mixed order input
+        fakeSupplementRepo.supplements = [suppC, suppA, suppB];
+        await viewModel.initialize();
+
+        expect(viewModel.supplements.length, 3);
+        expect(viewModel.supplements[0].name, 'Alpha');
+        // 'beta' should come before 'Gamma' if case-insensitive
+        // 'beta' comes AFTER 'Gamma' if case-sensitive (default behavior, which we want to fix/test)
+        // With current broken implementation: expecting this to FAIL if we assertion strictly
+        // But for reproduction, let's assert the CORRECT behavior and watch it fail.
+        expect(viewModel.supplements[1].name, 'beta');
+        expect(viewModel.supplements[2].name, 'Gamma');
+      });
     });
   });
 }

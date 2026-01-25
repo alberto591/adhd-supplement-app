@@ -86,6 +86,7 @@ class LogEntry {
   final LogStatus status;
   final String? skippedReason;
   final int? confidenceScore; // 1-5: 1=think, 5=certain
+  final String? slot; // e.g., 'morning', 'afternoon'
 
   // Backward compatibility
   bool get taken => status == LogStatus.taken;
@@ -96,6 +97,7 @@ class LogEntry {
     required this.status,
     this.skippedReason,
     this.confidenceScore,
+    this.slot,
   });
 
   static const Object _unset = Object();
@@ -106,6 +108,7 @@ class LogEntry {
     LogStatus? status,
     Object? skippedReason = _unset,
     int? confidenceScore,
+    String? slot,
   }) {
     return LogEntry(
       supplementId: supplementId ?? this.supplementId,
@@ -115,6 +118,7 @@ class LogEntry {
           ? this.skippedReason
           : skippedReason as String?,
       confidenceScore: confidenceScore ?? this.confidenceScore,
+      slot: slot ?? this.slot,
     );
   }
 
@@ -125,6 +129,7 @@ class LogEntry {
       'status': status.name,
       'skippedReason': skippedReason,
       'confidenceScore': confidenceScore,
+      'slot': slot,
     };
   }
 
@@ -142,6 +147,7 @@ class LogEntry {
       ),
       skippedReason: json['skippedReason'] as String?,
       confidenceScore: json['confidenceScore'] as int?,
+      slot: json['slot'] as String?,
     );
   }
 }

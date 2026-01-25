@@ -39,7 +39,17 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     {
       'question': 'How do I add a new supplement?',
       'answer':
-          'Go to the "Library" tab, search for your supplement, then tap "Add to Stack". You can also create custom supplements if needed.',
+          'Go to the "Library" tab, search for your supplement, then tap "Add to Stack". If you don\'t see it, you can create a custom supplement entirely from scratch!',
+    },
+    {
+      'question': 'Can I take the same supplement twice a day?',
+      'answer':
+          'Yes! You can add the same supplement to multiple stacks (e.g., Morning and Afternoon). Taking it in one slot won\'t hide it in the other.',
+    },
+    {
+      'question': 'What if I miss a dose?',
+      'answer':
+          'No problem! You can tap the "..." menu on any item to "Skip for this Slot". This tracks your consistency accurately without penalty.',
     },
     {
       'question': 'Can I export my data for my doctor?',
@@ -55,11 +65,6 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
       'question': 'Is my data private?',
       'answer':
           'Absolutely. Your health data is stored locally on your device and only synced to our secure cloud if you enable backup. We never sell your personal data.',
-    },
-    {
-      'question': 'What if I miss a dose?',
-      'answer':
-          'Don\'t worry! You can still log it as "Late" in the Today view. Your streak will be preserved if you have Grace Days available.',
     },
   ];
 

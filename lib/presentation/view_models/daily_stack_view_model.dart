@@ -103,10 +103,13 @@ class DailyStackViewModel extends ChangeNotifier {
 
   /// Get all items that were skipped today
   List<StackItem> get skippedItems {
-    return _stacks
-        .expand((stack) => stack.items)
-        .where((item) => isSupplementSkipped(item.supplementId))
-        .toList();
+    final List<StackItem> result = [];
+    for (final stack in _stacks) {
+      final slot = _getSlotFromName(stack.name);
+      result.addAll(stack.items
+          .where((item) => isSupplementSkipped(item.supplementId, slot: slot)));
+    }
+    return result;
   }
 
   // Getters
@@ -121,12 +124,14 @@ class DailyStackViewModel extends ChangeNotifier {
 
   /// Get all items that are pending (neither taken nor skipped)
   List<StackItem> get pendingItems {
-    return _stacks
-        .expand((stack) => stack.items)
-        .where((item) =>
-            !isSupplementTaken(item.supplementId) &&
-            !isSupplementSkipped(item.supplementId))
-        .toList();
+    final List<StackItem> result = [];
+    for (final stack in _stacks) {
+      final slot = _getSlotFromName(stack.name);
+      result.addAll(stack.items.where((item) =>
+          !isSupplementTaken(item.supplementId, slot: slot) &&
+          !isSupplementSkipped(item.supplementId, slot: slot)));
+    }
+    return result;
   }
 
   /// Whether there are any skipped items today
@@ -151,30 +156,29 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   /// Calculate today's progress as a percentage (0.0 - 1.0)
+  /// Calculate today's progress as a percentage (0.0 - 1.0)
   double get todayProgress {
     if (_stacks.isEmpty) return 0.0;
 
-    // Get unique supplement IDs across all stacks
-    final scheduledSupps =
-        _stacks.expand((s) => s.items.map((i) => i.supplementId)).toSet();
-    final totalDistinct = scheduledSupps.length;
-
-    if (totalDistinct == 0) return 0.0;
-
+    int totalScheduledItems = 0;
     int completedItems = 0;
-    if (_todayLog != null) {
-      for (final entry in _todayLog!.entries) {
-        // Only count if it's one of the supplements we actually have scheduled today
-        if (scheduledSupps.contains(entry.supplementId)) {
-          if (entry.status == LogStatus.taken ||
-              entry.status == LogStatus.skipped) {
-            completedItems++;
-          }
+
+    for (final stack in _stacks) {
+      final stackSlot = _getSlotFromName(stack.name);
+
+      for (final item in stack.items) {
+        totalScheduledItems++;
+
+        if (isSupplementTaken(item.supplementId, slot: stackSlot) ||
+            isSupplementSkipped(item.supplementId, slot: stackSlot)) {
+          completedItems++;
         }
       }
     }
 
-    return completedItems / totalDistinct;
+    if (totalScheduledItems == 0) return 0.0;
+    // Cap at 1.0 just in case
+    return (completedItems / totalScheduledItems).clamp(0.0, 1.0);
   }
 
   /// Get count of completed stacks vs total
@@ -185,13 +189,11 @@ class DailyStackViewModel extends ChangeNotifier {
     for (final stack in _stacks) {
       if (stack.items.isEmpty) continue;
 
+      final stackSlot = _getSlotFromName(stack.name);
+
       final allHandled = stack.items.every((item) {
-        if (_todayLog == null) return false;
-        return _todayLog!.entries.any(
-          (e) =>
-              e.supplementId == item.supplementId &&
-              (e.status == LogStatus.taken || e.status == LogStatus.skipped),
-        );
+        return isSupplementTaken(item.supplementId, slot: stackSlot) ||
+            isSupplementSkipped(item.supplementId, slot: stackSlot);
       });
 
       if (allHandled) {
@@ -199,7 +201,7 @@ class DailyStackViewModel extends ChangeNotifier {
       }
     }
 
-    return '$completedStacks of ${_stacks.length} stacks completed';
+    return '$completedStacks/${_stacks.length} Stacks Completed';
   }
 
   /// Get the target time for a specific slot
@@ -295,9 +297,10 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   /// Mark a supplement as taken
-  Future<void> markSupplementTaken(String supplementId) async {
+  /// Mark a supplement as taken
+  Future<void> markSupplementTaken(String supplementId, {String? slot}) async {
     _snoozedSupplements.remove(supplementId);
-    AppLogger.d('Marking supplement as taken: $supplementId');
+    AppLogger.d('Marking supplement as taken: $supplementId (Slot: $slot)');
     HapticFeedback.mediumImpact();
     _soundService.playSuccess();
     final now = DateTime.now();
@@ -306,6 +309,7 @@ class DailyStackViewModel extends ChangeNotifier {
       takenAt: now,
       status: LogStatus.taken,
       confidenceScore: 5, // Default to high certainty for manual logs
+      slot: slot?.toLowerCase(),
     );
 
     await _updateTodayLog(entry);
@@ -313,6 +317,7 @@ class DailyStackViewModel extends ChangeNotifier {
     await _analyticsService.logEvent('dose_logged', parameters: {
       'supplement_id': supplementId,
       'status': 'taken',
+      'slot': slot?.toLowerCase() ?? 'unknown',
     });
 
     AppLogger.d('Today log updated for $supplementId');
@@ -367,8 +372,9 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   /// Mark a supplement as skipped
+  /// Mark a supplement as skipped
   Future<void> markSupplementSkipped(String supplementId,
-      {String? reason}) async {
+      {String? reason, String? slot}) async {
     _snoozedSupplements.remove(supplementId);
     HapticFeedback.lightImpact();
     final now = DateTime.now();
@@ -377,6 +383,7 @@ class DailyStackViewModel extends ChangeNotifier {
       takenAt: now,
       status: LogStatus.skipped,
       skippedReason: reason,
+      slot: slot?.toLowerCase(),
     );
 
     await _updateTodayLog(entry);
@@ -390,16 +397,18 @@ class DailyStackViewModel extends ChangeNotifier {
     }
   }
 
-  /// Toggle a supplement's taken/skipped status (removes from log if already handled)
-  Future<void> toggleSupplement(String supplementId) async {
-    final isTaken = isSupplementTaken(supplementId);
-    final isSkipped = isSupplementSkipped(supplementId);
+  Future<void> toggleSupplement(String supplementId, {String? slot}) async {
+    final normalizedSlot = slot?.toLowerCase();
+    final isTaken = isSupplementTaken(supplementId, slot: normalizedSlot);
+    final isSkipped = isSupplementSkipped(supplementId, slot: normalizedSlot);
 
     if (isTaken || isSkipped) {
       // Remove the entry (undo / unskip)
-      await _deleteFromTodayLog(supplementId);
+      // Note: _deleteFromTodayLog needs to be slot-aware or we might delete the wrong entry if multiple exist
+      // For now, simpler approach: find entry matching ID and Status (and slot) and remove it.
+      await _deleteFromTodayLog(supplementId, slot: normalizedSlot);
     } else {
-      await markSupplementTaken(supplementId);
+      await markSupplementTaken(supplementId, slot: normalizedSlot);
     }
   }
 
@@ -456,19 +465,35 @@ class DailyStackViewModel extends ChangeNotifier {
     return _snoozedSupplements.contains(supplementId);
   }
 
-  /// Check if a supplement has been taken today
-  bool isSupplementTaken(String supplementId) {
+  /// Check if a supplement has been taken today (optionally in a specific slot)
+  bool isSupplementTaken(String supplementId, {String? slot}) {
     if (_todayLog == null) return false;
     return _todayLog!.entries.any(
-      (e) => e.supplementId == supplementId && e.status == LogStatus.taken,
+      (e) {
+        final idMatch = e.supplementId == supplementId;
+        final statusMatch = e.status == LogStatus.taken;
+        // If slot is provided, match it. If log has no slot (legacy), assume global match (or ignore slot? Let's assume strict if slot provided)
+        // Better logic: If we are checking for a specific slot, we only care if it was taken IN THAT SLOT.
+        // If the log entry has NO slot, it might be a legacy global take.
+        // Let's decide: New system requires slot matching if provided.
+        final slotMatch =
+            slot == null || e.slot?.toLowerCase() == slot.toLowerCase();
+        return idMatch && statusMatch && slotMatch;
+      },
     );
   }
 
   /// Check if a supplement has been skipped today
-  bool isSupplementSkipped(String supplementId) {
+  bool isSupplementSkipped(String supplementId, {String? slot}) {
     if (_todayLog == null) return false;
     return _todayLog!.entries.any(
-      (e) => e.supplementId == supplementId && e.status == LogStatus.skipped,
+      (e) {
+        final idMatch = e.supplementId == supplementId;
+        final statusMatch = e.status == LogStatus.skipped;
+        final slotMatch =
+            slot == null || e.slot?.toLowerCase() == slot.toLowerCase();
+        return idMatch && statusMatch && slotMatch;
+      },
     );
   }
 
@@ -623,44 +648,53 @@ class DailyStackViewModel extends ChangeNotifier {
   // Private helpers
 
   List<StackItem> _getItemsForSlot(String slot) {
-    AppLogger.d(
-        'Querying items for Dashboard Slot: $slot (Stacks available: ${_stacks.length})');
+    // Auto-refresh log if the day has rolled over
+    _checkForDayRollover();
+
     final List<StackItem> items = [];
 
     for (final stack in _stacks) {
-      // Check if stack matches requested slot (Standardized)
       final stackSlot = _getSlotFromName(stack.name);
       final isMatch = stackSlot == slot.toLowerCase() ||
           stack.timeOfDay?.toLowerCase() == slot.toLowerCase();
 
-      AppLogger.d(
-          '  - Checking Stack: ${stack.name} | stackSlot: $stackSlot | stack.timeOfDay: ${stack.timeOfDay} | Match: $isMatch');
-
       if (isMatch) {
         for (final item in stack.items) {
-          // Filter out already taken or skipped items
-          final taken = isSupplementTaken(item.supplementId);
-          final skipped = isSupplementSkipped(item.supplementId);
+          // Filter out already taken or skipped items (as per user preference)
+          // Pass the calculated stackSlot to allow multi-dose tracking
+          final taken = isSupplementTaken(item.supplementId, slot: stackSlot);
+          final skipped =
+              isSupplementSkipped(item.supplementId, slot: stackSlot);
 
           if (taken || skipped) {
-            AppLogger.d(
-                '    - Item ${item.supplementId} filtered out (taken: $taken, skipped: $skipped)');
             continue;
           }
 
-          // Check if already in list
           final exists = items.any((i) => i.supplementId == item.supplementId);
           if (!exists) {
-            AppLogger.d(
-                '    + Adding Item ${item.supplementId} to $slot items');
             items.add(item);
           }
         }
       }
     }
-
-    AppLogger.d('Finished query for $slot. Returning ${items.length} items.');
     return items;
+  }
+
+  void _checkForDayRollover() {
+    if (_todayLog == null) return;
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    // If the log date is not today, we need to re-initialize
+    if (!_isSameDay(_todayLog!.date, today)) {
+      AppLogger.i('Day rollover detected. Refreshing Daily Log...');
+      initialize();
+    }
+  }
+
+  bool _isSameDay(DateTime d1, DateTime d2) {
+    return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
   }
 
   Future<void> _updateTodayLog(LogEntry entry) async {
@@ -669,10 +703,13 @@ class DailyStackViewModel extends ChangeNotifier {
 
     List<LogEntry> entries;
     if (_todayLog != null) {
-      // Replace existing entry for same supplement, or add new
-      entries = _todayLog!.entries
-          .where((e) => e.supplementId != entry.supplementId)
-          .toList();
+      // Replace existing entry for same supplement AND slot, or add new
+      // This allows multi-dose supplements (e.g. Morning vs Afternoon) to coexist in the log
+      entries = _todayLog!.entries.where((e) {
+        final sameSupp = e.supplementId == entry.supplementId;
+        final sameSlot = e.slot == entry.slot;
+        return !(sameSupp && sameSlot);
+      }).toList();
       entries.add(entry);
     } else {
       entries = [entry];
@@ -701,12 +738,24 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   /// Remove an entry from today's log for a specific supplement
-  Future<void> _deleteFromTodayLog(String supplementId) async {
+  Future<void> _deleteFromTodayLog(String supplementId, {String? slot}) async {
     if (_todayLog == null) return;
 
-    final updatedEntries = _todayLog!.entries
-        .where((e) => e.supplementId != supplementId)
-        .toList();
+    final updatedEntries = _todayLog!.entries.where((e) {
+      if (e.supplementId != supplementId) return true;
+      // If matching supplement, check slot
+      if (slot != null && e.slot?.toLowerCase() != slot.toLowerCase()) {
+        return true;
+      }
+      // If we are deleting a specific slot but the entry has no slot (legacy),
+      // we might want to keep it or delete it?
+      // Strict matching: If slot requested, only delete if slot matches.
+      // If slot NOT requested (shouldn't happen with new logic), delete all for ID?
+      // Let's assume strict:
+      if (slot == null && e.slot != null) return true;
+
+      return false; // Delete this one
+    }).toList();
 
     final updatedLog = _todayLog!.copyWith(entries: updatedEntries);
 
@@ -725,13 +774,12 @@ class DailyStackViewModel extends ChangeNotifier {
     if (_stacks.isEmpty) return;
 
     // Check if ALL items in ALL stacks are handled (taken or skipped)
-    final allHandled = _stacks.expand((s) => s.items).every((item) {
-      if (_todayLog == null) return false;
-      return _todayLog!.entries.any(
-        (e) =>
-            e.supplementId == item.supplementId &&
-            (e.status == LogStatus.taken || e.status == LogStatus.skipped),
-      );
+    final allHandled = _stacks.every((stack) {
+      final slot = _getSlotFromName(stack.name);
+      return stack.items.every((item) {
+        return isSupplementTaken(item.supplementId, slot: slot) ||
+            isSupplementSkipped(item.supplementId, slot: slot);
+      });
     });
 
     if (allHandled) {
@@ -777,11 +825,17 @@ class DailyStackViewModel extends ChangeNotifier {
             await _supplementRepository.getSupplement(id, userId: _userId);
         if (supplement != null) {
           _supplementCache[id] = supplement;
+        } else {
+          // Fallback for immediate UI feedback if DB is slow
+          AppLogger.d(
+              'Supplement $id not found in DB yet (likely just created)');
+          // Debounce retry logic could go here if needed, but UI stream updates usually catch it.
         }
       } catch (e) {
         AppLogger.e('Failed to load supplement $id', e);
       }
     }));
+    notifyListeners(); // Ensure UI redraws after cache update
   }
 
   @override

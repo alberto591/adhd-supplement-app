@@ -139,6 +139,15 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
+  Stream<User?> watchUser(String userId) {
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .map((doc) => doc.exists ? User.fromJson(doc.data()!) : null);
+  }
+
+  @override
   Future<void> deleteUser() async {
     final user = _firebaseAuth.currentUser;
     if (user == null) {

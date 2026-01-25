@@ -1010,30 +1010,25 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           isDark,
                         ),
                         const SizedBox(height: 24),
-                        _buildFilterSection(
+                        _buildFilterSectionMulti(
                           'Evidence Strength',
                           ['High', 'Moderate', 'Low'],
-                          viewModel.evidenceStrength,
+                          viewModel.selectedEvidenceLevels,
                           (val) => viewModel.filterByEvidence(val),
                           isDark,
                         ),
                         const SizedBox(height: 24),
-                        _buildFilterSection(
+                        _buildFilterSectionMulti(
                           'Stimulant Compatible',
                           ['Safe', 'Caution'],
-                          viewModel.stimulantCompatible == null
-                              ? null
-                              : (viewModel.stimulantCompatible!
-                                  ? 'Safe'
-                                  : 'Caution'),
-                          (val) => viewModel.filterByStimulant(val == 'Safe'),
+                          viewModel.selectedStimulantStatus,
+                          (val) => viewModel.filterByStimulant(val),
                           isDark,
                         ),
-                        const SizedBox(height: 24),
-                        _buildFilterSection(
+                        _buildFilterSectionMulti(
                           'Form',
                           ['Capsule', 'Tablet', 'Liquid', 'Powder'],
-                          viewModel.form,
+                          viewModel.selectedForms,
                           (val) => viewModel.filterByForm(val),
                           isDark,
                         ),
@@ -1084,66 +1079,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildFilterSection(
-    String title,
-    List<String> options,
-    String? selectedValue,
-    void Function(String) onSelect,
-    bool isDark,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title.toUpperCase(),
-          style: GoogleFonts.lexend(
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.5,
-            color: AppColors.primaryGold.withValues(alpha: 0.7),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: options.map((option) {
-            final isSelected =
-                selectedValue?.toLowerCase() == option.toLowerCase();
-            return GestureDetector(
-              onTap: () => onSelect(option),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppColors.primaryGold
-                      : (isDark ? Colors.white12 : Colors.grey[100]),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isSelected
-                        ? AppColors.primaryGold
-                        : (isDark ? Colors.white24 : Colors.grey[300]!),
-                  ),
-                ),
-                child: Text(
-                  option,
-                  style: GoogleFonts.lexend(
-                    fontSize: 12,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                    color: isSelected
-                        ? Colors.black
-                        : (isDark ? Colors.white70 : Colors.grey[700]),
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ],
     );
   }
 

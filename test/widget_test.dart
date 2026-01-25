@@ -133,6 +133,9 @@ class _FakeAuthRepository implements AuthRepository {
 
   @override
   Future<void> updateUserProfile(User user) async {}
+
+  @override
+  Stream<User?> watchUser(String userId) => Stream<User?>.value(null);
 }
 
 class _FakeSupplementRepository implements SupplementRepository {

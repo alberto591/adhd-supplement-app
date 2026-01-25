@@ -20,6 +20,9 @@ abstract class AuthRepository {
   /// Update user profile
   Future<void> updateUserProfile(User user);
 
+  /// Watch user profile for real-time updates
+  Stream<User?> watchUser(String userId);
+
   /// Sign in anonymously (Dev Mode bypass)
   Future<User> signInAnonymously();
 

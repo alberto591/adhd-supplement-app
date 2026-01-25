@@ -123,6 +123,7 @@ class StackBuilderViewModel extends ChangeNotifier {
 
     _checkInteractions();
     notifyListeners();
+    saveStack(silent: true);
   }
 
   void updateItemDosage(String supplementId, String dosage) {
@@ -138,6 +139,7 @@ class StackBuilderViewModel extends ChangeNotifier {
     _currentStack =
         _currentStack!.copyWith(items: updatedItems, updatedAt: DateTime.now());
     notifyListeners();
+    saveStack(silent: true);
   }
 
   void updateStackMeta(String name, {String? timeOfDay}) {
@@ -149,6 +151,7 @@ class StackBuilderViewModel extends ChangeNotifier {
       updatedAt: DateTime.now(),
     );
     notifyListeners();
+    saveStack(silent: true);
   }
 
   void removeItem(int index) {
@@ -166,6 +169,7 @@ class StackBuilderViewModel extends ChangeNotifier {
 
     _checkInteractions();
     notifyListeners();
+    saveStack(silent: true);
   }
 
   void reorderItems(int oldIndex, int newIndex) {
@@ -186,21 +190,22 @@ class StackBuilderViewModel extends ChangeNotifier {
     _currentStack =
         _currentStack!.copyWith(items: updatedItems, updatedAt: DateTime.now());
     notifyListeners();
+    saveStack(silent: true);
   }
 
-  Future<bool> saveStack() async {
+  Future<bool> saveStack({bool silent = false}) async {
     if (_currentStack == null) return false;
 
-    _setLoading(true);
+    if (!silent) _setLoading(true);
     try {
       await _stackRepository.saveStack(_userId, _currentStack!);
       return true;
     } catch (e) {
       _error = 'Failed to save stack: $e';
-      notifyListeners();
+      if (!silent) notifyListeners();
       return false;
     } finally {
-      _setLoading(false);
+      if (!silent) _setLoading(false);
     }
   }
 
@@ -275,6 +280,7 @@ class StackBuilderViewModel extends ChangeNotifier {
       );
       _checkInteractions();
       notifyListeners();
+      saveStack(silent: true);
     }
   }
 

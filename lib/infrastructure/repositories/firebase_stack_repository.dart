@@ -93,31 +93,20 @@ class FirebaseStackRepository implements StackRepository {
 
   @override
   Stream<List<SupplementStack>> watchUserStacks(String userId) {
-    // Return a stream that starts with current cache and then listens for updates
-    final controller = StreamController<List<SupplementStack>>();
+    // Use Firestore snapshots for real-time cross-device sync
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('stacks')
+        .snapshots()
+        .map((snapshot) {
+      final stacks = snapshot.docs
+          .map((doc) => SupplementStack.fromJson(doc.data()))
+          .toList();
 
-    // Initial value
-    if (_cache.containsKey(userId)) {
-      controller.add(List<SupplementStack>.from(_cache[userId]!));
-    } else {
-      // If not in cache, fetch once to seed
-      getUserStacks(userId).then((stacks) {
-        if (!controller.isClosed) controller.add(stacks);
-      });
-    }
-
-    // Listen to the global controller for this specific user
-    final subscription = _stackUpdateController.stream
-        .where((update) => update.containsKey(userId))
-        .map((update) => List<SupplementStack>.from(update[userId]!))
-        .listen((stacks) {
-      if (!controller.isClosed) controller.add(stacks);
+      // Update local cache
+      _cache[userId] = stacks;
+      return stacks;
     });
-
-    controller.onCancel = () {
-      subscription.cancel();
-      controller.close();
-    };
-    return controller.stream;
   }
 }

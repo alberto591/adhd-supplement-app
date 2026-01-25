@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -23,18 +24,40 @@ class AuthProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   bool get isAuthenticated => _status == AuthStatus.authenticated;
 
+  StreamSubscription<User?>? _userSubscription;
+
   void _initialize() {
     _authRepository.authStateChanges().listen((user) async {
-      _user = user;
       _status =
           user != null ? AuthStatus.authenticated : AuthStatus.unauthenticated;
 
-      if (_user != null) {
+      // Cancel existing profile subscription
+      _userSubscription?.cancel();
+
+      if (user != null) {
+        // Start watching the Firestore document for real-time updates (XP, etc)
+        _userSubscription =
+            _authRepository.watchUser(user.id).listen((updatedUser) {
+          if (updatedUser != null) {
+            _user = updatedUser;
+            notifyListeners();
+          }
+        });
+
+        _user = user;
         await refreshEntitlements();
+      } else {
+        _user = null;
       }
 
       notifyListeners();
     });
+  }
+
+  @override
+  void dispose() {
+    _userSubscription?.cancel();
+    super.dispose();
   }
 
   Future<void> refreshEntitlements() async {

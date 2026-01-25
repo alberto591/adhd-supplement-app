@@ -187,6 +187,9 @@ class FakeAuthRepository implements AuthRepository {
   }
 
   @override
+  Stream<User?> watchUser(String userId) => Stream.value(currentUser);
+
+  @override
   Future<void> deleteUser() async {}
 }
 
@@ -380,7 +383,9 @@ void main() {
           LogEntry(
               supplementId: 'supp1',
               takenAt: DateTime.now(),
-              status: LogStatus.taken),
+              status: LogStatus.taken,
+              slot: 'evening' // Match stackSlot
+              ),
         ],
         createdAt: DateTime.now(),
       );
@@ -399,9 +404,9 @@ void main() {
       await viewModel.initialize();
       expect(viewModel.isSupplementTaken('supp1'), false);
 
-      await viewModel.toggleSupplement('supp1');
+      await viewModel.toggleSupplement('supp1', slot: 'evening');
 
-      expect(viewModel.isSupplementTaken('supp1'), true);
+      expect(viewModel.isSupplementTaken('supp1', slot: 'evening'), true);
       expect(fakeLogRepo.lastSavedLog, isNotNull);
       expect(
           fakeLogRepo.lastSavedLog!.entries.any(
@@ -454,7 +459,7 @@ void main() {
       expect(
           viewModel.eveningItems.any((i) => i.supplementId == 'supp1'), true);
 
-      await viewModel.markSupplementTaken('supp1');
+      await viewModel.markSupplementTaken('supp1', slot: 'evening');
 
       // Should now be filtered out
       expect(
@@ -468,7 +473,8 @@ void main() {
       await viewModel.initialize();
       expect(viewModel.isSupplementSkipped('supp1'), false);
 
-      await viewModel.markSupplementSkipped('supp1', reason: 'Forgot');
+      await viewModel.markSupplementSkipped('supp1',
+          reason: 'Forgot', slot: 'evening');
 
       expect(viewModel.isSupplementSkipped('supp1'), true);
       expect(fakeLogRepo.lastSavedLog, isNotNull);
@@ -485,11 +491,11 @@ void main() {
       await viewModel.initialize();
 
       // First skip it
-      await viewModel.markSupplementSkipped('supp1');
+      await viewModel.markSupplementSkipped('supp1', slot: 'evening');
       expect(viewModel.isSupplementSkipped('supp1'), true);
 
       // Now toggle it (should unskip)
-      await viewModel.toggleSupplement('supp1');
+      await viewModel.toggleSupplement('supp1', slot: 'evening');
 
       expect(viewModel.isSupplementSkipped('supp1'), false);
       expect(viewModel.isSupplementTaken('supp1'), false);
@@ -507,7 +513,7 @@ void main() {
       expect(
           viewModel.eveningItems.any((i) => i.supplementId == 'supp1'), true);
 
-      await viewModel.markSupplementSkipped('supp1');
+      await viewModel.markSupplementSkipped('supp1', slot: 'evening');
 
       // Should now be filtered out
       expect(
@@ -606,8 +612,8 @@ void main() {
       });
     });
 
-    group('Progress Calculation', () {
-      test('todayProgress handles duplicate supplements and skipped items',
+    group('Progress Calculation & Slot-Awareness', () {
+      test('todayProgress counts same supplement twice if in different slots',
           () async {
         final stack1 = SupplementStack(
           id: 'stack1',
@@ -621,12 +627,9 @@ void main() {
         final stack2 = SupplementStack(
           id: 'stack2',
           userId: userId,
-          name: 'Evening Stack',
-          items: [
-            const StackItem(supplementId: 'supp1', order: 1), // DUPLICATE
-            const StackItem(supplementId: 'supp2', order: 1),
-          ],
-          timeOfDay: 'evening',
+          name: 'Afternoon Stack',
+          items: [const StackItem(supplementId: 'supp1', order: 1)],
+          timeOfDay: 'afternoon',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
@@ -634,20 +637,113 @@ void main() {
         fakeStackRepo.stacks = [stack1, stack2];
         await viewModel.initialize();
 
-        // totalDistinct = 2 (supp1, supp2)
-
+        // total items = 2 (supp1 in morning, supp1 in afternoon)
         expect(viewModel.todayProgress, 0.0);
 
-        // Take supp1
-        await viewModel.markSupplementTaken('supp1');
-        // supp1 handled (1 of 2)
+        // Take supp1 in morning
+        await viewModel.markSupplementTaken('supp1', slot: 'morning');
         expect(viewModel.todayProgress, 0.5);
+        expect(viewModel.isSupplementTaken('supp1', slot: 'morning'), true);
+        expect(viewModel.isSupplementTaken('supp1', slot: 'afternoon'), false);
 
-        // Skip supp2
-        await viewModel.markSupplementSkipped('supp2');
-        // supp2 handled (2 of 2)
+        // Take supp1 in afternoon
+        await viewModel.markSupplementTaken('supp1', slot: 'afternoon');
         expect(viewModel.todayProgress, 1.0);
-        expect(viewModel.progressText, '2 of 2 stacks completed');
+        expect(viewModel.isSupplementTaken('supp1', slot: 'afternoon'), true);
+      });
+
+      test('taking afternoon dose doesn\'t overwrite morning dose in log',
+          () async {
+        fakeStackRepo.stacks = [morningStack, eveningStack];
+        await viewModel.initialize();
+
+        await viewModel.markSupplementTaken('supp1', slot: 'morning');
+        await viewModel.markSupplementTaken('supp1', slot: 'evening');
+
+        final entries = fakeLogRepo.todayLog!.entries;
+        expect(entries.length, 2);
+        expect(entries.any((e) => e.slot == 'morning'), true);
+        expect(entries.any((e) => e.slot == 'evening'), true);
+      });
+
+      test('pendingItems is slot-aware', () async {
+        final stack1 = SupplementStack(
+          id: 'stack1',
+          userId: userId,
+          name: 'Morning Stack',
+          items: [const StackItem(supplementId: 'supp1', order: 1)],
+          timeOfDay: 'morning',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+        final stack2 = SupplementStack(
+          id: 'stack2',
+          userId: userId,
+          name: 'Afternoon Stack',
+          items: [const StackItem(supplementId: 'supp1', order: 1)],
+          timeOfDay: 'afternoon',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        fakeStackRepo.stacks = [stack1, stack2];
+        await viewModel.initialize();
+
+        expect(viewModel.pendingItems.length, 2);
+
+        await viewModel.markSupplementTaken('supp1', slot: 'morning');
+        expect(viewModel.pendingItems.length, 1);
+        expect(viewModel.pendingItems.first.supplementId, 'supp1');
+      });
+
+      test('custom supplements respect slot-aware logging', () async {
+        final customSupp = testSupplement.copyWith(
+          id: 'custom_123',
+          name: 'My Custom Supp',
+          isCustom: true,
+        );
+        fakeSupplementRepo.supplements['custom_123'] = customSupp;
+
+        final stack1 = SupplementStack(
+          id: 'stack1',
+          userId: userId,
+          name: 'Morning Stack',
+          items: [const StackItem(supplementId: 'custom_123', order: 1)],
+          timeOfDay: 'morning',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+        final stack2 = SupplementStack(
+          id: 'stack2',
+          userId: userId,
+          name: 'Afternoon Stack',
+          items: [const StackItem(supplementId: 'custom_123', order: 1)],
+          timeOfDay: 'afternoon',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        fakeStackRepo.stacks = [stack1, stack2];
+        await viewModel.initialize();
+
+        // Take Morning dose (Simulate UI passing Capitalized string)
+        await viewModel.markSupplementTaken('custom_123', slot: 'Morning');
+
+        // Verify Morning is taken (Check logic should work case-insensitively)
+        expect(
+            viewModel.isSupplementTaken('custom_123', slot: 'morning'), true);
+        // Verify Afternoon is NOT taken
+        expect(viewModel.isSupplementTaken('custom_123', slot: 'afternoon'),
+            false);
+
+        // Take Afternoon dose
+        await viewModel.markSupplementTaken('custom_123', slot: 'afternoon');
+
+        // Verify both are taken
+        expect(
+            viewModel.isSupplementTaken('custom_123', slot: 'morning'), true);
+        expect(
+            viewModel.isSupplementTaken('custom_123', slot: 'afternoon'), true);
       });
     });
   });

@@ -9,9 +9,10 @@ import '../../application/view_models/persistent_reminders_view_model.dart';
 import '../widgets/unified_bottom_nav.dart';
 import 'package:intl/intl.dart';
 import '../../domain/entities/user.dart';
-import '../../application/view_models/theme_view_model.dart';
 import '../view_models/daily_stack_view_model.dart';
 import '../../config/locator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -149,6 +150,38 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
+  // Method to pick image
+  Future<void> _pickImage(BuildContext context, User? user) async {
+    if (user == null) return;
+
+    final picker = ImagePicker();
+    try {
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        // Save the file path to user profile
+        // Note: In a real app with backend, we would upload this to storage (e.g. Firebase Storage)
+        // and get a download URL. For now with local storage/mock, we just save the local path.
+        // If syncing is enabled, this path won't work on other devices.
+
+        // However, since we are using Firebase Auth mostly, typically we can't just set photoUrl to local path
+        // and expect it to persist well if the user uninstalls.
+        // But for this "local-first" or MVP approach:
+
+        final updatedUser = user.copyWith(photoUrl: image.path);
+        if (context.mounted) {
+          await context.read<AuthProvider>().updateProfile(updatedUser);
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to pick image: $e')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -185,15 +218,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             child: Column(
               children: [
                 // Profile Header
-                Consumer2<AuthProvider, ThemeViewModel>(
-                  builder: (context, auth, themeVM, _) => _ProfileHeader(
+                Consumer<AuthProvider>(
+                  builder: (context, auth, _) => _ProfileHeader(
                     user: auth.user,
                     streakCount: viewModel.streakCount,
                     dailyProgress: viewModel.todayProgress,
-                    isDarkMode: themeVM.isDarkMode,
-                    onThemeToggle: () => themeVM.toggleTheme(),
                     onEditProfile: () =>
                         _showEditProfileDialog(context, auth.user),
+                    onEditImage: () => _pickImage(context, auth.user),
                   ),
                 ),
 
@@ -441,17 +473,15 @@ class _ProfileHeader extends StatelessWidget {
   final User? user;
   final int streakCount;
   final double dailyProgress;
-  final bool isDarkMode;
-  final VoidCallback onThemeToggle;
   final VoidCallback onEditProfile;
+  final VoidCallback? onEditImage;
 
   const _ProfileHeader({
     this.user,
     this.streakCount = 0,
     this.dailyProgress = 0.0,
-    required this.isDarkMode,
-    required this.onThemeToggle,
     required this.onEditProfile,
+    this.onEditImage,
   });
 
   @override
@@ -465,6 +495,18 @@ class _ProfileHeader extends StatelessWidget {
     final level = user?.level ?? 1;
     final xpToNextLevel = level * 1000;
     final xpProgress = (xp % xpToNextLevel) / xpToNextLevel;
+
+    ImageProvider imageProvider;
+    if (user?.photoUrl != null && user!.photoUrl!.isNotEmpty) {
+      if (user!.photoUrl!.startsWith('http')) {
+        imageProvider = CachedNetworkImageProvider(user!.photoUrl!);
+      } else {
+        imageProvider = FileImage(File(user!.photoUrl!));
+      }
+    } else {
+      imageProvider = const CachedNetworkImageProvider(
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw');
+    }
 
     return Container(
       width: double.infinity,
@@ -480,19 +522,7 @@ class _ProfileHeader extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Top Bar with Theme Toggle
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: Icon(
-                  isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                  color: isDark ? Colors.white70 : Colors.black54,
-                ),
-                onPressed: onThemeToggle,
-              ),
-            ],
-          ),
+          const SizedBox(height: 12),
 
           // Avatar with Progress Ring
           Stack(
@@ -512,26 +542,46 @@ class _ProfileHeader extends StatelessWidget {
                 ),
               ),
               // Inner Avatar
-              Container(
-                width: 115,
-                height: 115,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isDark ? Colors.grey[900]! : Colors.white,
-                    width: 4,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
+              GestureDetector(
+                onTap: onEditImage,
+                child: Container(
+                  width: 115,
+                  height: 115,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isDark ? Colors.grey[900]! : Colors.white,
+                      width: 4,
                     ),
-                  ],
-                  image: const DecorationImage(
-                    image: CachedNetworkImageProvider(
-                        'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw'),
-                    fit: BoxFit.cover,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Stack(
+                    children: [
+                      if (onEditImage != null)
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryGold,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                            ),
+                            child: const Icon(Icons.edit,
+                                size: 12, color: Colors.white),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),

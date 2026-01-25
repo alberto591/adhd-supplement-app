@@ -32,6 +32,8 @@ class LibraryViewModel extends ChangeNotifier {
   List<Supplement> get allSupplements => _allSupplements;
   String get searchQuery => _searchQuery;
   List<String> get selectedCategories => _selectedCategories;
+  String? get selectedCategory =>
+      _selectedCategories.isEmpty ? null : _selectedCategories.first;
   List<String> get selectedEvidenceLevels => _selectedEvidenceLevels;
   List<String> get selectedStimulantStatus => _selectedStimulantStatus;
   List<String> get selectedForms => _selectedForms;
@@ -64,8 +66,9 @@ class LibraryViewModel extends ChangeNotifier {
     _error = null;
 
     try {
-      _allSupplements =
+      final fetched =
           await _supplementRepository.getAllSupplements(userId: _userId);
+      _allSupplements = _deduplicateSupplements(fetched);
       _applyFilters();
     } catch (e) {
       _error = 'Failed to load supplements: $e';
@@ -142,31 +145,43 @@ class LibraryViewModel extends ChangeNotifier {
   }
 
   /// Filter by evidence strength (Multi-select)
-  void filterByEvidence(String strength) {
-    if (_selectedEvidenceLevels.contains(strength)) {
-      _selectedEvidenceLevels.remove(strength);
+  void filterByEvidence(String? strength) {
+    if (strength == null) {
+      _selectedEvidenceLevels = [];
     } else {
-      _selectedEvidenceLevels.add(strength);
+      if (_selectedEvidenceLevels.contains(strength)) {
+        _selectedEvidenceLevels.remove(strength);
+      } else {
+        _selectedEvidenceLevels.add(strength);
+      }
     }
     _applyFilters();
   }
 
   /// Filter by stimulant compatibility (Multi-select)
-  void filterByStimulant(String status) {
-    if (_selectedStimulantStatus.contains(status)) {
-      _selectedStimulantStatus.remove(status);
+  void filterByStimulant(String? status) {
+    if (status == null) {
+      _selectedStimulantStatus = [];
     } else {
-      _selectedStimulantStatus.add(status);
+      if (_selectedStimulantStatus.contains(status)) {
+        _selectedStimulantStatus.remove(status);
+      } else {
+        _selectedStimulantStatus.add(status);
+      }
     }
     _applyFilters();
   }
 
   /// Filter by form (Multi-select)
-  void filterByForm(String form) {
-    if (_selectedForms.contains(form)) {
-      _selectedForms.remove(form);
+  void filterByForm(String? form) {
+    if (form == null) {
+      _selectedForms = [];
     } else {
-      _selectedForms.add(form);
+      if (_selectedForms.contains(form)) {
+        _selectedForms.remove(form);
+      } else {
+        _selectedForms.add(form);
+      }
     }
     _applyFilters();
   }
@@ -286,6 +301,30 @@ class LibraryViewModel extends ChangeNotifier {
       return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
     }
     return '09:00';
+  }
+
+  List<Supplement> _deduplicateSupplements(List<Supplement> supplements) {
+    final Map<String, Supplement> uniqueMap = {};
+    for (final s in supplements) {
+      final key = s.name.toLowerCase().trim();
+      // If we have a duplicate, prefer the one with more data (global usually has more)
+      // or if one is already in the map, only replace if the new one is 'better'
+      if (!uniqueMap.containsKey(key)) {
+        uniqueMap[key] = s;
+      } else {
+        // Simple heuristic: prefer the one with longer description or more benefits
+        final existing = uniqueMap[key]!;
+        final sScore = (s.description.length) + (s.benefits.length * 10);
+        final eScore =
+            (existing.description.length) + (existing.benefits.length * 10);
+
+        if (sScore > eScore) {
+          uniqueMap[key] = s;
+        }
+      }
+    }
+    return uniqueMap.values.toList()
+      ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
   }
 
   // Private helpers

@@ -36,7 +36,7 @@ import '../views/science_hub_screen.dart';
 import '../views/chemist_screen.dart';
 import '../views/focus_buddies_screen.dart';
 import '../views/privacy_settings_screen.dart';
-import '../views/nightly_reflection_screen.dart';
+// import '../views/nightly_reflection_screen.dart';
 import '../views/refer_friend_screen.dart';
 import '../views/insights_screen.dart';
 import 'auth_wrapper.dart';
@@ -101,7 +101,7 @@ class AppRouter {
   static const String chemist = '/chemist';
   static const String focusBuddies = '/focus-buddies';
   static const String privacySettings = '/privacy-settings';
-  static const String nightlyReflection = '/nightly-reflection';
+  // static const String nightlyReflection = '/nightly-reflection';
   static const String appAppearance = '/app-appearance';
   static const String referFriend = '/refer-friend';
   static const String successStats = '/success-stats';
@@ -172,9 +172,9 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => PrivacySettingsScreen.withProvider());
 
-      case nightlyReflection:
-        return MaterialPageRoute(
-            builder: (_) => const NightlyReflectionScreen());
+      // case nightlyReflection:
+      //   return MaterialPageRoute(
+      //       builder: (_) => const NightlyReflectionScreen());
 
       case dailyStack:
         return MaterialPageRoute(builder: (_) => const DailyStackScreen());

@@ -48,6 +48,9 @@ class MockAuthRepository implements AuthRepository {
   Future<User> signInAnonymously() async {
     throw UnimplementedError();
   }
+
+  @override
+  Stream<User?> watchUser(String userId) => const Stream.empty();
 }
 
 class MockLogRepository implements LogRepository {

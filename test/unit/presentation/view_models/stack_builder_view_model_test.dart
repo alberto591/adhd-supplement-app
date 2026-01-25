@@ -35,10 +35,17 @@ class FakeSupplementRepository implements SupplementRepository {
 }
 
 class FakeStackRepository implements StackRepository {
+  SupplementStack? lastSavedStack;
+  int saveCount = 0;
+
   @override
   Future<List<SupplementStack>> getUserStacks(String userId) async => [];
   @override
-  Future<void> saveStack(String userId, SupplementStack stack) async {}
+  Future<void> saveStack(String userId, SupplementStack stack) async {
+    lastSavedStack = stack;
+    saveCount++;
+  }
+
   @override
   Future<SupplementStack?> getStack(String userId) async => null;
 
@@ -109,6 +116,48 @@ void main() {
       viewModel.updateStackMeta('Early Bird Focus', timeOfDay: '07:00');
       expect(viewModel.currentStack?.name, 'Early Bird Focus');
       expect(viewModel.currentStack?.timeOfDay, '07:00');
+      expect(fakeStackRepo.saveCount, 1);
+    });
+
+    test('addItem triggers autosave', () async {
+      const supplement = Supplement(id: '1', name: 'Z', category: 'C');
+      fakeSupplementRepo.supplements = [supplement];
+      await viewModel.initialize();
+
+      viewModel.addItem(supplement);
+      expect(fakeStackRepo.saveCount, 1);
+      expect(fakeStackRepo.lastSavedStack?.items.length, 1);
+    });
+
+    test('removeItem triggers autosave', () async {
+      const supplement = Supplement(id: '1', name: 'Z', category: 'C');
+      fakeSupplementRepo.supplements = [supplement];
+      await viewModel.initialize();
+      viewModel.addItem(supplement);
+      fakeStackRepo.saveCount = 0; // Reset
+
+      viewModel.removeItem(0);
+      expect(fakeStackRepo.saveCount, 1);
+      expect(fakeStackRepo.lastSavedStack?.items.isEmpty, true);
+    });
+
+    test('updateItemDosage triggers autosave', () async {
+      const supplement = Supplement(id: '1', name: 'Z', category: 'C');
+      fakeSupplementRepo.supplements = [supplement];
+      await viewModel.initialize();
+      viewModel.addItem(supplement);
+      fakeStackRepo.saveCount = 0; // Reset
+
+      viewModel.updateItemDosage('1', '500mg');
+      expect(fakeStackRepo.saveCount, 1);
+      expect(fakeStackRepo.lastSavedStack?.items.first.customDosage, '500mg');
+    });
+
+    test('applyPreset triggers autosave', () async {
+      await viewModel.initialize();
+      viewModel.applyPreset('Student');
+      expect(fakeStackRepo.saveCount, 1);
+      expect(fakeStackRepo.lastSavedStack?.items.isNotEmpty, true);
     });
   });
 }
