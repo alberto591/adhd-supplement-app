@@ -38,6 +38,7 @@ class DailyStackViewModel extends ChangeNotifier {
   final Set<String> _snoozedSupplements = {};
   final Set<String> _collapsedStackIds = {};
   bool _allCollapsed = false;
+  final Map<String, int> _missingSupplementCounters = {};
   StreamSubscription<List<SupplementStack>>? _stackSubscription;
 
   // Time-based slots
@@ -331,6 +332,53 @@ class DailyStackViewModel extends ChangeNotifier {
       await _checkAndCancelGlobalNudges();
     } catch (e) {
       AppLogger.e('Failed to cancel nudges', e);
+    }
+  }
+
+  /// Mark multiple supplements as taken efficiently
+  Future<void> markBatchTaken(List<String> supplementIds,
+      {String? slot}) async {
+    if (supplementIds.isEmpty) return;
+
+    AppLogger.d(
+        'Batch marking ${supplementIds.length} supplements as taken (Slot: $slot)');
+    HapticFeedback.mediumImpact();
+    _soundService.playSuccess();
+
+    final now = DateTime.now();
+    final newEntries = supplementIds.map((id) {
+      _snoozedSupplements.remove(id);
+      return LogEntry(
+        supplementId: id,
+        takenAt: now,
+        status: LogStatus.taken,
+        confidenceScore: 5,
+        slot: slot?.toLowerCase(),
+      );
+    }).toList();
+
+    await _updateTodayLogBatch(newEntries);
+
+    // Batch analytics logging
+    for (final id in supplementIds) {
+      await _analyticsService.logEvent('dose_logged', parameters: {
+        'supplement_id': id,
+        'status': 'taken',
+        'slot': slot?.toLowerCase() ?? 'unknown',
+        'is_batch': true,
+      });
+    }
+
+    // Give XP per supplement (10 XP each)
+    await _incrementUserXP(10 * supplementIds.length);
+
+    // Cancel nudges
+    try {
+      await Future.wait(supplementIds
+          .map((id) => _notificationService.cancelAllSupplementNudges(id)));
+      await _checkAndCancelGlobalNudges();
+    } catch (e) {
+      AppLogger.e('Failed to cancel nudges in batch', e);
     }
   }
 
@@ -697,6 +745,40 @@ class DailyStackViewModel extends ChangeNotifier {
     return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
   }
 
+  Future<void> _updateTodayLogBatch(List<LogEntry> newEntries) async {
+    final now = DateTime.now();
+    final logicalToday = _getLogicalToday();
+
+    List<LogEntry> currentEntries = _todayLog?.entries.toList() ?? [];
+
+    // Remove existing entries that conflict with new ones (same ID and slot)
+    for (final newEntry in newEntries) {
+      currentEntries.removeWhere((e) =>
+          e.supplementId == newEntry.supplementId && e.slot == newEntry.slot);
+    }
+
+    // Add new entries
+    currentEntries.addAll(newEntries);
+
+    final log = _todayLog?.copyWith(entries: currentEntries) ??
+        DailyLog(
+          id: '${_userId}_${logicalToday.toIso8601String().split('T').first}',
+          userId: _userId,
+          date: logicalToday,
+          entries: currentEntries,
+          createdAt: now,
+        );
+
+    try {
+      _todayLog = log;
+      notifyListeners();
+      await _logRepository.saveLog(log);
+    } catch (e) {
+      _error = 'Failed to save batch log: $e';
+      notifyListeners();
+    }
+  }
+
   Future<void> _updateTodayLog(LogEntry entry) async {
     final now = DateTime.now();
     final logicalToday = _getLogicalToday();
@@ -819,23 +901,76 @@ class DailyStackViewModel extends ChangeNotifier {
 
     AppLogger.d('Parallel fetching ${supplementIds.length} supplements...');
 
+    final List<String> missingIds = [];
     await Future.wait(supplementIds.map((id) async {
       try {
         final supplement =
             await _supplementRepository.getSupplement(id, userId: _userId);
         if (supplement != null) {
           _supplementCache[id] = supplement;
+          _missingSupplementCounters.remove(id); // Reset if found
         } else {
-          // Fallback for immediate UI feedback if DB is slow
-          AppLogger.d(
-              'Supplement $id not found in DB yet (likely just created)');
-          // Debounce retry logic could go here if needed, but UI stream updates usually catch it.
+          final count = (_missingSupplementCounters[id] ?? 0) + 1;
+          _missingSupplementCounters[id] = count;
+
+          if (count >= 3) {
+            AppLogger.w(
+                'Supplement $id missing for 3 checks. Marking for cleanup.');
+            missingIds.add(id);
+            _missingSupplementCounters.remove(id);
+          } else {
+            AppLogger.d(
+                'Supplement $id not found (Attempt $count/3). Waiting...');
+          }
         }
       } catch (e) {
         AppLogger.e('Failed to load supplement $id', e);
       }
     }));
+
+    if (missingIds.isNotEmpty) {
+      await _cleanupOrphanedSupplements(missingIds);
+    }
     notifyListeners(); // Ensure UI redraws after cache update
+  }
+
+  Future<void> _cleanupOrphanedSupplements(List<String> missingIds) async {
+    AppLogger.i(
+        'Cleaning up ${missingIds.length} orphaned supplements from stacks...');
+    bool anyModified = false;
+
+    final updatedStacks = _stacks.map((stack) {
+      final originalCount = stack.items.length;
+      final filteredItems = stack.items
+          .where((item) => !missingIds.contains(item.supplementId))
+          .toList();
+
+      if (filteredItems.length != originalCount) {
+        anyModified = true;
+        // Re-order if items were removed
+        final reorderedItems = filteredItems.asMap().entries.map((entry) {
+          return entry.value.copyWith(order: entry.key);
+        }).toList();
+
+        final newStack = stack.copyWith(
+          items: reorderedItems,
+          updatedAt: DateTime.now(),
+        );
+
+        // Save to DB in background
+        _stackRepository.saveStack(_userId, newStack).catchError((Object e) {
+          AppLogger.e('Failed to save cleaned stack ${stack.id}', e);
+        });
+
+        return newStack;
+      }
+      return stack;
+    }).toList();
+
+    if (anyModified) {
+      _stacks = updatedStacks;
+      AppLogger.i('Stacks cleaned and updated locally.');
+    }
   }
 
   @override

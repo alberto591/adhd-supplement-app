@@ -5,6 +5,7 @@ import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
 import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 import 'package:flutter/material.dart';
 
 // Fakes for cleaner testing
@@ -93,6 +94,12 @@ class FakeSettingsRepository implements SettingsRepository {
   bool getNudgeModeEnabled() => true;
   @override
   Future<void> setNudgeModeEnabled(bool enabled) async {}
+
+  @override
+  NotificationMode getNotificationMode() => NotificationMode.gentle;
+
+  @override
+  Future<void> setNotificationMode(NotificationMode mode) async {}
 
   @override
   TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);

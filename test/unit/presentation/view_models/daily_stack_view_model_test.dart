@@ -136,18 +136,32 @@ class FakeNotificationService implements NotificationService {
   Future<List<PendingNotificationRequest>> getPendingNotifications() async =>
       [];
   @override
-  Future<void> schedulePersistentNudge(
-      {required String supplementId,
-      required String title,
-      required String body,
-      required DateTime initialTime,
-      int maxNudges = 12}) async {}
+  Future<void> schedulePersistentNudge({
+    required String supplementId,
+    required String title,
+    required String body,
+    required DateTime initialTime,
+    int maxNudges = 12,
+  }) async {}
+
   @override
-  Future<void> snoozePersistentNudge(
-      {required String supplementId,
-      required String title,
-      required String body,
-      int maxNudges = 12}) async {}
+  Future<void> scheduleRecurringNudgeSequence({
+    required int baseId,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    required NotificationMode mode,
+  }) async {}
+
+  @override
+  Future<void> snoozePersistentNudge({
+    required String supplementId,
+    required String title,
+    required String body,
+    int maxNudges = 12,
+  }) async {}
+
   @override
   Future<void> cancelAllSupplementNudges(String supplementId,
       [int maxNudges = 12]) async {
@@ -219,6 +233,10 @@ class FakeSettingsRepository implements SettingsRepository {
   bool getNudgeModeEnabled() => true;
   @override
   Future<void> setNudgeModeEnabled(bool enabled) async {}
+  @override
+  NotificationMode getNotificationMode() => NotificationMode.gentle;
+  @override
+  Future<void> setNotificationMode(NotificationMode mode) async {}
   @override
   TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
   @override
@@ -744,6 +762,52 @@ void main() {
             viewModel.isSupplementTaken('custom_123', slot: 'morning'), true);
         expect(
             viewModel.isSupplementTaken('custom_123', slot: 'afternoon'), true);
+      });
+      test('markBatchTaken updates multiple items with correct slot', () async {
+        final stack = SupplementStack(
+          id: 'morning_stack',
+          userId: userId,
+          name: 'Morning Stack',
+          items: [
+            const StackItem(supplementId: 'supp1', order: 1),
+            const StackItem(supplementId: 'supp2', order: 2),
+            const StackItem(supplementId: 'supp3', order: 3),
+          ],
+          timeOfDay: 'morning',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        fakeStackRepo.stacks = [stack];
+        // Ensure supplements exist to avoid cleanup
+        fakeSupplementRepo.supplements.clear();
+        fakeSupplementRepo.supplements.addAll({
+          'supp1': testSupplement.copyWith(id: 'supp1'),
+          'supp2': testSupplement.copyWith(id: 'supp2'),
+          'supp3': testSupplement.copyWith(id: 'supp3'),
+        });
+        await viewModel.initialize();
+
+        // Initially pending
+        expect(viewModel.isSupplementTaken('supp1', slot: 'morning'), false);
+        expect(viewModel.isSupplementTaken('supp2', slot: 'morning'), false);
+        expect(viewModel.isSupplementTaken('supp3', slot: 'morning'), false);
+
+        // Batch take 2 out of 3
+        await viewModel.markBatchTaken(['supp1', 'supp3'], slot: 'morning');
+
+        // Verify correct items taken
+        expect(viewModel.isSupplementTaken('supp1', slot: 'morning'), true);
+        expect(viewModel.isSupplementTaken('supp2', slot: 'morning'), false);
+        expect(viewModel.isSupplementTaken('supp3', slot: 'morning'), true);
+
+        // Verify logs
+        expect(fakeLogRepo.todayLog != null, true);
+        final log = fakeLogRepo.todayLog!;
+        final takenEntries =
+            log.entries.where((e) => e.status == LogStatus.taken);
+        expect(takenEntries.length, 2);
+        expect(takenEntries.every((e) => e.slot == 'morning'), true);
       });
     });
   });

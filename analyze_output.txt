@@ -1,0 +1,22 @@
+Analyzing adhd_supplement_app...                                
+
+  error • Target of URI doesn't exist: '../widgets/custom_supplement_form.dart' • lib/presentation/views/library_screen.dart:7:8 • uri_does_not_exist
+  error • The method 'CustomSupplementForm' isn't defined for the type '_LibraryScreenState' • lib/presentation/views/library_screen.dart:485:29 • undefined_method
+warning • The type of name can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:486:18 • inference_failure_on_untyped_parameter
+warning • The type of category can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:486:24 • inference_failure_on_untyped_parameter
+warning • The type of dosage can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:486:34 • inference_failure_on_untyped_parameter
+warning • The type of timeOfDay can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:486:42 • inference_failure_on_untyped_parameter
+warning • The type of benefits can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:486:53 • inference_failure_on_untyped_parameter
+warning • The type of evidence can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:486:63 • inference_failure_on_untyped_parameter
+warning • The type of form can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:486:73 • inference_failure_on_untyped_parameter
+warning • The type of isSafe can't be inferred; a type must be explicitly provided • lib/presentation/views/library_screen.dart:487:13 • inference_failure_on_untyped_parameter
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'String'.  • lib/presentation/views/library_screen.dart:491:21 • argument_type_not_assignable
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'String'.  • lib/presentation/views/library_screen.dart:492:25 • argument_type_not_assignable
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'String?'.  • lib/presentation/views/library_screen.dart:493:23 • argument_type_not_assignable
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'String?'.  • lib/presentation/views/library_screen.dart:494:26 • argument_type_not_assignable
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'List<String>'.  • lib/presentation/views/library_screen.dart:495:25 • argument_type_not_assignable
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'String?'.  • lib/presentation/views/library_screen.dart:496:30 • argument_type_not_assignable
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'String?'.  • lib/presentation/views/library_screen.dart:497:21 • argument_type_not_assignable
+  error • Conditions must have a static type of 'bool' • lib/presentation/views/library_screen.dart:498:36 • non_bool_condition
+
+18 issues found. (ran in 5.9s)

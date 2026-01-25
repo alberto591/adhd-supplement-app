@@ -10,6 +10,7 @@ class _FakeSettingsRepository implements SettingsRepository {
   TimeOfDay nudgeTime;
   String warningNudgeOption;
   bool extendedRemindersEnabled;
+  NotificationMode _notificationMode = NotificationMode.gentle;
 
   _FakeSettingsRepository({
     this.nudgeModeEnabled = true,
@@ -55,6 +56,14 @@ class _FakeSettingsRepository implements SettingsRepository {
   @override
   Future<void> setNudgeModeEnabled(bool enabled) async {
     nudgeModeEnabled = enabled;
+  }
+
+  @override
+  NotificationMode getNotificationMode() => _notificationMode;
+
+  @override
+  Future<void> setNotificationMode(NotificationMode mode) async {
+    _notificationMode = mode;
   }
 
   @override
@@ -154,6 +163,25 @@ class _FakeNotificationService extends NotificationService {
     scheduledIds.add(id);
     scheduledTimes[id] = (hour, minute);
     scheduleCallCount++;
+  }
+
+  @override
+  Future<void> scheduleRecurringNudgeSequence({
+    required int baseId,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    required NotificationMode mode,
+  }) async {
+    // Add multiple IDs based on mode
+    final offsets = mode == NotificationMode.gentle
+        ? [0, 15, 30]
+        : List.generate(12, (i) => i * 5);
+    for (int i = 0; i < offsets.length; i++) {
+      scheduledIds.add(baseId + i);
+      scheduleCallCount++;
+    }
   }
 
   @override

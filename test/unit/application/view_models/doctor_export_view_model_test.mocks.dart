@@ -239,6 +239,15 @@ class MockAuthRepository extends _i1.Mock implements _i6.AuthRepository {
       ) as _i4.Future<void>);
 
   @override
+  _i4.Stream<_i2.User?> watchUser(String? userId) => (super.noSuchMethod(
+        Invocation.method(
+          #watchUser,
+          [userId],
+        ),
+        returnValue: _i4.Stream<_i2.User?>.empty(),
+      ) as _i4.Stream<_i2.User?>);
+
+  @override
   _i4.Future<_i2.User> signInAnonymously() => (super.noSuchMethod(
         Invocation.method(
           #signInAnonymously,

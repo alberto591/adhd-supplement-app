@@ -33,6 +33,14 @@ void main() {
 
   testWidgets('SupplementDetailScreen displays rich intelligence data',
       (WidgetTester tester) async {
+    // Set a larger surface size to avoid scrolling issues
+    tester.view.physicalSize = const Size(800, 1200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
     const supplement = Supplement(
       id: 'test-id',
       name: 'Test Supplement',
@@ -58,12 +66,18 @@ void main() {
       ),
     );
 
-    // Verify Mechanism of Action
-    expect(find.text('Mechanism of Action'), findsOneWidget);
+    // Verify Mechanism of Action (Expand first)
+    final pharmacologyHeader = find.text('Mechanism of Action');
+    expect(pharmacologyHeader, findsOneWidget);
+    await tester.tap(pharmacologyHeader);
+    await tester.pumpAndSettle();
     expect(find.text('This is how it works.'), findsOneWidget);
 
-    // Verify Timing Strategy
-    expect(find.text('Timing Strategy'), findsOneWidget);
+    // Verify Timing Strategy (Expand first)
+    final timingHeader = find.text('Timing Strategy');
+    expect(timingHeader, findsOneWidget);
+    await tester.tap(timingHeader);
+    await tester.pumpAndSettle();
     expect(find.text('Take it in the morning.'), findsOneWidget);
 
     // Verify Detailed Benefits
@@ -71,8 +85,11 @@ void main() {
     expect(find.text('Benefit A'), findsOneWidget);
     expect(find.text('Benefit B'), findsOneWidget);
 
-    // Verify Scientific Evidence
-    expect(find.text('Scientific Evidence'), findsOneWidget);
+    // Verify Scientific Evidence (Expand first)
+    final evidenceHeader = find.text('Scientific Evidence');
+    expect(evidenceHeader, findsOneWidget);
+    await tester.tap(evidenceHeader);
+    await tester.pumpAndSettle();
     expect(find.text('Study 1'), findsOneWidget);
   });
 }

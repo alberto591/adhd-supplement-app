@@ -162,8 +162,42 @@ class MockAuthProvider extends _i1.Mock implements _i7.AuthProvider {
       ) as bool);
 
   @override
+  bool get isPremium => (super.noSuchMethod(
+        Invocation.getter(#isPremium),
+        returnValue: false,
+      ) as bool);
+
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i8.Future<void> refreshEntitlements() => (super.noSuchMethod(
+        Invocation.method(
+          #refreshEntitlements,
+          [],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  bool canAccess(String? entitlementId) => (super.noSuchMethod(
+        Invocation.method(
+          #canAccess,
+          [entitlementId],
+        ),
         returnValue: false,
       ) as bool);
 
@@ -247,15 +281,6 @@ class MockAuthProvider extends _i1.Mock implements _i7.AuthProvider {
         Invocation.method(
           #removeListener,
           [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
         ),
         returnValueForMissingStub: null,
       );

@@ -45,6 +45,12 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
       'icon': Icons.bolt,
       'color': Colors.amber,
     },
+    {
+      'title': 'Morning Fog Lifter',
+      'description': 'Vitamin D, Tyrosine, Alpha-GPC',
+      'icon': Icons.wb_sunny,
+      'color': Colors.orange,
+    },
   ];
 
   void _nextStep() {

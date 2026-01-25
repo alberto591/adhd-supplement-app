@@ -196,6 +196,12 @@ class _FakeSettingsRepository implements SettingsRepository {
   Future<void> setNudgeModeEnabled(bool enabled) async {}
 
   @override
+  NotificationMode getNotificationMode() => NotificationMode.gentle;
+
+  @override
+  Future<void> setNotificationMode(NotificationMode mode) async {}
+
+  @override
   TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
   @override
   Future<void> setNudgeTime(TimeOfDay time) async {}
@@ -323,6 +329,17 @@ class _FakeNotificationService implements NotificationService {
     required DateTime initialTime,
     int maxNudges = 12,
   }) async {}
+
+  @override
+  Future<void> scheduleRecurringNudgeSequence({
+    required int baseId,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    required NotificationMode mode,
+  }) async {}
+
   @override
   Future<void> snoozePersistentNudge({
     required String supplementId,

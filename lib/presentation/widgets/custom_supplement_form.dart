@@ -2,9 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 
+typedef SupplementSaveCallback = Future<void> Function(
+  String name,
+  String category,
+  String? dosage,
+  String? timeOfDay,
+  List<String> benefits,
+  String? evidence,
+  String? form,
+  bool isSafe,
+);
+
 class CustomSupplementForm extends StatefulWidget {
-  final void Function(String name, String category, String? dosage,
-      String? timeOfDay, List<String> benefits) onSave;
+  final SupplementSaveCallback onSave;
 
   const CustomSupplementForm({super.key, required this.onSave});
 
@@ -14,20 +24,15 @@ class CustomSupplementForm extends StatefulWidget {
 
 class _CustomSupplementFormState extends State<CustomSupplementForm> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _dosageController = TextEditingController();
-  final _benefitsController = TextEditingController();
 
-  String _selectedCategory = 'General';
-  String? _selectedTimeOfDay;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _dosageController.dispose();
-    _benefitsController.dispose();
-    super.dispose();
-  }
+  String _name = '';
+  String _category = 'Vitamin';
+  String? _dosage;
+  String? _timeOfDay = 'Morning';
+  final List<String> _benefits = [];
+  final String _evidence = 'Moderate';
+  final String _form = 'Capsule';
+  bool _isSafe = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,135 +40,105 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
 
     return Container(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-        left: 24,
-        right: 24,
-        top: 16,
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E242E) : Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        color: isDark ? AppColors.backgroundPremiumDark : Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
       ),
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Form(
+          key: _formKey,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Center(
                 child: Container(
                   width: 40,
                   height: 4,
+                  margin: const EdgeInsets.only(bottom: 24),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withValues(alpha: 0.3),
+                    color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
               Text(
-                'Custom Supplement',
+                'Add Custom Supplement',
                 style: GoogleFonts.lexend(
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F172A),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Add your personal vitamins or medications that aren\'t in our database.',
-                style: GoogleFonts.lexend(
-                  fontSize: 14,
-                  color: isDark ? Colors.grey[400] : Colors.grey[500],
+                  color: AppColors.primaryGold,
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Name Field
-              _buildLabel('Supplement Name *'),
-              TextFormField(
-                controller: _nameController,
-                style: TextStyle(color: isDark ? Colors.white : Colors.black),
-                decoration:
-                    _buildInputDecoration('e.g., My Mystery Focus Mix', isDark),
-                validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
+              _buildTextField(
+                label: 'Supplement Name',
+                hint: 'e.g. Lion\'s Mane',
+                onChanged: (v) => _name = v,
+                validator: (v) => v?.isEmpty == true ? 'Required' : null,
               ),
-
               const SizedBox(height: 16),
-
-              // Category Field
-              _buildLabel('Category'),
-              DropdownButtonFormField<String>(
-                initialValue: _selectedCategory,
-                dropdownColor: isDark ? const Color(0xFF2D3748) : Colors.white,
-                style: TextStyle(color: isDark ? Colors.white : Colors.black),
-                decoration: _buildInputDecoration('', isDark),
-                items: [
-                  'General',
-                  'Vitamin',
-                  'Mineral',
-                  'Prescription',
-                  'Nootropic'
-                ]
-                    .map((c) => DropdownMenuItem(value: c, child: Text(c)))
-                    .toList(),
-                onChanged: (v) => setState(() => _selectedCategory = v!),
+              _buildDropdown(
+                label: 'Category',
+                value: _category,
+                items: ['Vitamin', 'Mineral', 'Herbal', 'Amino Acid', 'Other'],
+                onChanged: (v) => setState(() => _category = v!),
               ),
-
               const SizedBox(height: 16),
-
-              // Dosage Field
-              _buildLabel('Dosage (Optional)'),
-              TextFormField(
-                controller: _dosageController,
-                style: TextStyle(color: isDark ? Colors.white : Colors.black),
-                decoration:
-                    _buildInputDecoration('e.g., 500mg, 1 pill', isDark),
+              _buildTextField(
+                label: 'Dosage (Optional)',
+                hint: 'e.g. 500mg',
+                onChanged: (v) => _dosage = v,
               ),
-
+              const SizedBox(height: 16),
+              _buildDropdown(
+                label: 'Usual Timing',
+                value: _timeOfDay,
+                items: ['Morning', 'Afternoon', 'Evening', 'Night'],
+                onChanged: (v) => setState(() => _timeOfDay = v),
+              ),
               const SizedBox(height: 24),
-
-              // Save Button
+              Row(
+                children: [
+                  Checkbox(
+                    value: _isSafe,
+                    activeColor: AppColors.primaryGold,
+                    onChanged: (v) => setState(() => _isSafe = v ?? true),
+                  ),
+                  Expanded(
+                    child: Text(
+                      'I have verified this doesn\'t interact with my ADHD meds.',
+                      style: GoogleFonts.lexend(fontSize: 12),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
               SizedBox(
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      final benefits = _benefitsController.text
-                          .split(',')
-                          .map((e) => e.trim())
-                          .where((e) => e.isNotEmpty)
-                          .toList();
-
-                      widget.onSave(
-                        _nameController.text,
-                        _selectedCategory,
-                        _dosageController.text.isEmpty
-                            ? null
-                            : _dosageController.text,
-                        _selectedTimeOfDay,
-                        benefits,
-                      );
-                      Navigator.pop(context);
-                    }
-                  },
+                  onPressed: _submit,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryGold,
                     foregroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    elevation: 0,
                   ),
                   child: Text(
                     'Save Supplement',
                     style: GoogleFonts.lexend(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -171,34 +146,92 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
     );
   }
 
-  Widget _buildLabel(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        text,
-        style: GoogleFonts.lexend(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: AppColors.primaryGold,
-          letterSpacing: 1.0,
+  Widget _buildTextField({
+    required String label,
+    required String hint,
+    required void Function(String) onChanged,
+    String? Function(String?)? validator,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.lexend(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+          ),
         ),
-      ),
+        const SizedBox(height: 8),
+        TextFormField(
+          style: GoogleFonts.lexend(),
+          decoration: InputDecoration(
+            hintText: hint,
+            filled: true,
+            fillColor: Colors.black.withValues(alpha: 0.05),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          onChanged: onChanged,
+          validator: validator,
+        ),
+      ],
     );
   }
 
-  InputDecoration _buildInputDecoration(String hint, bool isDark) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: TextStyle(color: isDark ? Colors.grey[600] : Colors.grey[400]),
-      filled: true,
-      fillColor: isDark
-          ? const Color(0xFF2D3748).withValues(alpha: 0.5)
-          : Colors.grey[100],
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
+  Widget _buildDropdown({
+    required String label,
+    required String? value,
+    required List<String> items,
+    required void Function(String?) onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.lexend(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+          ),
+        ),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          initialValue: value,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.black.withValues(alpha: 0.05),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          items: items
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
+          onChanged: onChanged,
+        ),
+      ],
     );
+  }
+
+  void _submit() {
+    if (_formKey.currentState?.validate() == true) {
+      widget.onSave(
+        _name,
+        _category,
+        _dosage,
+        _timeOfDay,
+        _benefits,
+        _evidence,
+        _form,
+        _isSafe,
+      );
+      Navigator.pop(context);
+    }
   }
 }

@@ -2,9 +2,17 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+enum NotificationMode {
+  persistent, // Aggressive: Every 5 mins for an hour
+  gentle, // Inattentive-friendly: Every 15 mins (3 times)
+  urgent, // New: Immediate feedback loop
+}
+
 class NotificationService {
-  final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _notificationsPlugin;
+
+  NotificationService({FlutterLocalNotificationsPlugin? plugin})
+      : _notificationsPlugin = plugin ?? FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
     // Initialize timezone data
@@ -140,6 +148,61 @@ class NotificationService {
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
     );
+  }
+
+  /// Schedules a sequence of recurring notifications based on the mode.
+  /// [baseId] is used as the starting ID for the sequence (e.g. 1000).
+  /// [hour] and [minute] define the start time.
+  Future<void> scheduleRecurringNudgeSequence({
+    required int baseId,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    required NotificationMode mode,
+  }) async {
+    List<int> offsets;
+    if (mode == NotificationMode.gentle) {
+      // Gentle: 0, 15, 30 mins
+      offsets = [0, 15, 30];
+    } else {
+      // Persistent: 0, 5, 10, ... 55 mins (12 times)
+      offsets = List.generate(12, (index) => index * 5);
+    }
+
+    for (int i = 0; i < offsets.length; i++) {
+      int offset = offsets[i];
+      int nudgeHour = hour;
+      int nudgeMinute = minute + offset;
+
+      // Handle hour rollover
+      if (nudgeMinute >= 60) {
+        nudgeHour = (nudgeHour + (nudgeMinute ~/ 60)) % 24;
+        nudgeMinute = nudgeMinute % 60;
+      }
+
+      String nudgeTitle = title;
+      String nudgeBody = body;
+
+      // Customize messages for sequence
+      if (i > 0) {
+        if (mode == NotificationMode.gentle) {
+          nudgeTitle = 'Gentle Reminder: $title';
+          nudgeBody = 'Have you had a chance to start? $body';
+        } else {
+          nudgeTitle = 'URGENT: $title';
+          nudgeBody = 'Action Required! $body';
+        }
+      }
+
+      await scheduleRecurringNotification(
+        id: baseId + i,
+        title: nudgeTitle,
+        body: nudgeBody,
+        hour: nudgeHour,
+        minute: nudgeMinute,
+      );
+    }
   }
 
   Future<void> cancelNotification(int id) async {

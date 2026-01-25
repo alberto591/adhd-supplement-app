@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/repositories/settings_repository.dart';
+import '../../infrastructure/services/notification_service.dart';
 
 class SharedPrefsSettingsRepository implements SettingsRepository {
   final SharedPreferences _prefs;
@@ -32,6 +33,22 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   @override
   Future<void> setNudgeModeEnabled(bool enabled) async {
     await _prefs.setBool(_keyNudgeEnabled, enabled);
+  }
+
+  static const String _keyNotificationMode = 'notification_mode';
+
+  @override
+  NotificationMode getNotificationMode() {
+    final index =
+        _prefs.getInt(_keyNotificationMode) ?? 1; // Default to Gentle (1)
+    return NotificationMode.values.length > index
+        ? NotificationMode.values[index]
+        : NotificationMode.gentle;
+  }
+
+  @override
+  Future<void> setNotificationMode(NotificationMode mode) async {
+    await _prefs.setInt(_keyNotificationMode, mode.index);
   }
 
   @override

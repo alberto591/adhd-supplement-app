@@ -483,7 +483,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => CustomSupplementForm(
-        onSave: (name, category, dosage, timeOfDay, benefits) async {
+        onSave: (String name,
+            String category,
+            String? dosage,
+            String? timeOfDay,
+            List<String> benefits,
+            String? evidence,
+            String? form,
+            bool isSafe) async {
           final messenger = ScaffoldMessenger.of(context);
           try {
             await _viewModel.createCustomSupplement(
@@ -492,6 +499,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
               dosage: dosage,
               timeOfDay: timeOfDay,
               benefits: benefits,
+              evidenceLevel: evidence,
+              form: form,
+              adhdMedInteractions: isSafe ? {} : {'Stimulants': 'Caution'},
             );
             messenger.showSnackBar(
               const SnackBar(content: Text('Custom supplement created!')),
@@ -1010,6 +1020,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           isDark,
                         ),
                         const SizedBox(height: 24),
+                        /* 
                         _buildFilterSectionMulti(
                           'Evidence Strength',
                           ['High', 'Moderate', 'Low'],
@@ -1032,6 +1043,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           (val) => viewModel.filterByForm(val),
                           isDark,
                         ),
+                        */
                         const SizedBox(height: 40),
                         Row(
                           children: [

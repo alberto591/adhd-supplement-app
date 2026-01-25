@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../infrastructure/services/notification_service.dart';
 
 abstract class SettingsRepository {
   Future<void> init();
@@ -6,6 +7,9 @@ abstract class SettingsRepository {
   // Notification Settings
   bool getNudgeModeEnabled();
   Future<void> setNudgeModeEnabled(bool enabled);
+
+  NotificationMode getNotificationMode();
+  Future<void> setNotificationMode(NotificationMode mode);
 
   TimeOfDay getNudgeTime();
   Future<void> setNudgeTime(TimeOfDay time);

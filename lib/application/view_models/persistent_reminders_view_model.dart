@@ -23,10 +23,13 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   TimeOfDay _eveningTime = const TimeOfDay(hour: 18, minute: 0);
   TimeOfDay _nightTime = const TimeOfDay(hour: 21, minute: 0);
 
+  NotificationMode _notificationMode = NotificationMode.gentle;
+
   bool get nudgeModeEnabled => _nudgeModeEnabled;
   TimeOfDay get nudgeTime => _nudgeTime;
   String get warningNudgeOption => _warningNudgeOption;
   bool get extendedRemindersEnabled => _extendedRemindersEnabled;
+  NotificationMode get notificationMode => _notificationMode;
 
   TimeOfDay get morningTime => _morningTime;
   TimeOfDay get afternoonTime => _afternoonTime;
@@ -39,6 +42,7 @@ class PersistentRemindersViewModel extends ChangeNotifier {
     _warningNudgeOption = _settingsRepository.getWarningNudgeOption();
     _extendedRemindersEnabled =
         _settingsRepository.getExtendedRemindersEnabled();
+    _notificationMode = _settingsRepository.getNotificationMode();
 
     _morningTime = _settingsRepository.getSlotTime('morning');
     _afternoonTime = _settingsRepository.getSlotTime('afternoon');
@@ -58,6 +62,13 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   Future<void> setNudgeTime(TimeOfDay time) async {
     _nudgeTime = time;
     await _settingsRepository.setNudgeTime(time);
+    await _scheduleOrCancelNotifications();
+    notifyListeners();
+  }
+
+  Future<void> setNotificationMode(NotificationMode mode) async {
+    _notificationMode = mode;
+    await _settingsRepository.setNotificationMode(mode);
     await _scheduleOrCancelNotifications();
     notifyListeners();
   }
@@ -94,52 +105,15 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   }
 
   Future<void> _scheduleOrCancelNotifications() async {
-    // 1000 is the ID for the daily reminder
-    // 1001 is the ID for the warning/follow-up nudge
+    // 1000 is the ID for the daily reminder sequence
     if (_nudgeModeEnabled) {
-      // Soft Nudge (+5m)
-      int softHour = _nudgeTime.hour;
-      int softMinute = _nudgeTime.minute + 5;
-      if (softMinute >= 60) {
-        softHour = (softHour + 1) % 24;
-        softMinute = softMinute - 60;
-      }
-      await _notificationService.scheduleRecurringNotification(
-        id: 1000,
-        title: 'Time for your daily stack! (Soft Nudge)',
+      await _notificationService.scheduleRecurringNudgeSequence(
+        baseId: 1000,
+        title: 'Time for your daily stack!',
         body: 'Keep your streak alive. Take your supplements now.',
-        hour: softHour,
-        minute: softMinute,
-      );
-
-      // Medium Nudge (+15m)
-      int mediumHour = _nudgeTime.hour;
-      int mediumMinute = _nudgeTime.minute + 15;
-      if (mediumMinute >= 60) {
-        mediumHour = (mediumHour + 1) % 24;
-        mediumMinute = mediumMinute - 60;
-      }
-      await _notificationService.scheduleRecurringNotification(
-        id: 1001,
-        title: 'Missed your stack? (Medium Nudge)',
-        body: 'Just a friendly nudge to log your supplements!',
-        hour: mediumHour,
-        minute: mediumMinute,
-      );
-
-      // CRITICAL Alert (+30m)
-      int criticalHour = _nudgeTime.hour;
-      int criticalMinute = _nudgeTime.minute + 30;
-      if (criticalMinute >= 60) {
-        criticalHour = (criticalHour + 1) % 24;
-        criticalMinute = criticalMinute - 60;
-      }
-      await _notificationService.scheduleRecurringNotification(
-        id: 1002,
-        title: 'STILL HAVEN\'T LOGGED? (CRITICAL)',
-        body: 'Consistency is key! Tracking helps your doctor help you.',
-        hour: criticalHour,
-        minute: criticalMinute,
+        hour: _nudgeTime.hour,
+        minute: _nudgeTime.minute,
+        mode: _notificationMode,
       );
 
       // Evening Summary (20:00) - Always on if Nudge Mode is active
@@ -151,9 +125,10 @@ class PersistentRemindersViewModel extends ChangeNotifier {
         minute: 0,
       );
     } else {
-      await _notificationService.cancelNotification(1000);
-      await _notificationService.cancelNotification(1001);
-      await _notificationService.cancelNotification(1002);
+      // Cancel sequence range (max 12 for persistent)
+      for (int i = 0; i < 15; i++) {
+        await _notificationService.cancelNotification(1000 + i);
+      }
       await _notificationService.cancelNotification(2000);
     }
   }

@@ -144,8 +144,6 @@ class SupplementDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // Content
                 SliverToBoxAdapter(
                   child: Padding(
                     padding:
@@ -218,7 +216,7 @@ class SupplementDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 24),
 
                         // Medication Safety Alert
                         if (safetyWarnings.isNotEmpty)
@@ -274,7 +272,7 @@ class SupplementDetail extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 32),
                         ],
 
                         // Description
@@ -294,7 +292,7 @@ class SupplementDetail extends StatelessWidget {
                           Column(
                             children: [
                               if (supplement.mechanismOfAction != null)
-                                _InfoCard(
+                                _CollapsibleInfoCard(
                                   title: 'Mechanism of Action',
                                   icon: Icons.science_outlined,
                                   color: Colors.blue,
@@ -312,7 +310,7 @@ class SupplementDetail extends StatelessWidget {
                                 ),
                               const SizedBox(height: 16),
                               if (supplement.timingRationale != null)
-                                _InfoCard(
+                                _CollapsibleInfoCard(
                                   title: 'Timing Strategy',
                                   icon: Icons.access_time_filled,
                                   color: Colors.purple,
@@ -328,10 +326,80 @@ class SupplementDetail extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              const SizedBox(height: 32),
+                              const SizedBox(height: 16),
+                              if (supplement.studyLinks.isNotEmpty ||
+                                  supplement.scientificEvidenceRank != null)
+                                _CollapsibleInfoCard(
+                                  title: 'Scientific Evidence',
+                                  icon: Icons.menu_book_outlined,
+                                  color: Colors.teal,
+                                  isDark: isDark,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      if (supplement.scientificEvidenceRank !=
+                                          null)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 12),
+                                          child: Text(
+                                            'Evidence Strength: ${supplement.scientificEvidenceRank}/100',
+                                            style: GoogleFonts.lexend(
+                                              color: isDark
+                                                  ? Colors.teal[200]
+                                                  : Colors.teal[700],
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ...supplement.studyLinks.entries
+                                          .map((entry) => Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 8),
+                                                child: InkWell(
+                                                  onTap: () {}, // Link behavior
+                                                  child: Row(
+                                                    children: [
+                                                      const Icon(Icons.link,
+                                                          size: 16,
+                                                          color: Colors.teal),
+                                                      const SizedBox(width: 8),
+                                                      Expanded(
+                                                        child: Text(
+                                                          entry.key,
+                                                          style: GoogleFonts
+                                                              .lexend(
+                                                            color: isDark
+                                                                ? Colors
+                                                                    .teal[200]
+                                                                : Colors.teal,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )),
+                                    ],
+                                  ),
+                                ),
+                              const SizedBox(height: 24),
                             ],
                           ),
-
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
                         // Enhanced Benefits Section
                         _SectionCard(
                           title: 'ADHD Specific Benefits',
@@ -342,19 +410,7 @@ class SupplementDetail extends StatelessWidget {
                               : supplement.benefits,
                           isDark: isDark,
                         ),
-                        const SizedBox(height: 16),
-
-                        /* // Scientific Evidence
-                        if (supplement.studyLinks.isNotEmpty) ...[
-                          _SectionCard(
-                            title: 'Scientific Studies',
-                            icon: Icons.science_outlined,
-                            color: Colors.blue[400]!,
-                            items: supplement.scientificStudies ?? [],
-                            isDark: isDark,
-                          ),
-                          const SizedBox(height: 16),
-                        ], */
+                        const SizedBox(height: 24),
 
                         // Dosage Section
                         if (supplement.dosageByWeight != null) ...[
@@ -362,7 +418,7 @@ class SupplementDetail extends StatelessWidget {
                             supplement: supplement,
                             isDark: isDark,
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 24),
                         ] else if ((supplement.dosage ??
                                     supplement.defaultDosage)
                                 ?.isNotEmpty ==
@@ -376,7 +432,7 @@ class SupplementDetail extends StatelessWidget {
                                 '',
                             isDark: isDark,
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 24),
                         ],
 
                         // Side Effects Section
@@ -428,33 +484,6 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              /* // Only show shopping button for non-custom supplements
-                              if (!supplement.isCustom) ...[
-                                const SizedBox(width: 16),
-                                // Buy Now Icon Button
-                                Container(
-                                  width: 64,
-                                  height: 64,
-                                  decoration: BoxDecoration(
-                                    color: isDark
-                                        ? const Color(0xFF2D2616)
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(24),
-                                    border: Border.all(
-                                        color:
-                                            primaryGold.withValues(alpha: 0.2)),
-                                  ),
-                                  child: IconButton(
-                                    icon: const Icon(
-                                        Icons.shopping_bag_outlined,
-                                        color: primaryGold),
-                                    onPressed: () {
-                                      // Referral logic
-                                      _openReferralLink(context, supplement);
-                                    },
-                                  ),
-                                ),
-                              ], */
                             ],
                           )
                         else
@@ -500,7 +529,7 @@ class SupplementDetail extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 48),
+                        const SizedBox(height: 100),
                       ],
                     ),
                   ),
@@ -855,6 +884,63 @@ class _InfoCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _CollapsibleInfoCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Color color;
+  final Widget child;
+  final bool isDark;
+
+  const _CollapsibleInfoCard({
+    required this.title,
+    required this.icon,
+    required this.color,
+    required this.child,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF2D2616) : Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: color.withValues(alpha: 0.1),
+        ),
+      ),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: const EdgeInsets.all(20),
+          childrenPadding:
+              const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          leading: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(icon, color: color, size: 24),
+          ),
+          title: Text(
+            title,
+            style: GoogleFonts.lexend(
+              color: color,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
+            ),
+          ),
+          children: [
+            child,
+          ],
+        ),
       ),
     );
   }

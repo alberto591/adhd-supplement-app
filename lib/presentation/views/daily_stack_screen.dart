@@ -756,9 +756,8 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
       timeLabel: timeLabel,
       itemCount: pendingItems.length,
       onTakeAll: () async {
-        for (final item in pendingItems) {
-          await viewModel.markSupplementTaken(item.supplementId);
-        }
+        final ids = pendingItems.map((i) => i.supplementId).toList();
+        await viewModel.markBatchTaken(ids, slot: slot);
         setState(() => _showCelebration = true);
       },
     );

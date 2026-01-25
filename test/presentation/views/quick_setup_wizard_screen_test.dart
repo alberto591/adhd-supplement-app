@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:adhd_supplement_app/presentation/views/quick_setup_wizard_screen.dart';
 
 import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 import 'package:adhd_supplement_app/config/locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,6 +53,14 @@ void main() {
   });
 
   testWidgets('Navigation through steps works', (WidgetTester tester) async {
+    // Set a larger surface size to avoid scrolling issues
+    tester.view.physicalSize = const Size(800, 1200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
     await tester.pumpWidget(const MaterialApp(
       home: QuickSetupWizardScreen(),
     ));
@@ -81,6 +90,24 @@ void main() {
     // Verify Step 2 (Stack Selection)
     expect(find.text('Choose a starter stack'), findsOneWidget);
     expect(find.text('Focus Stack'), findsOneWidget);
+
+    final fogLifter = find.text('Morning Fog Lifter');
+    expect(fogLifter, findsOneWidget);
+    expect(find.text('Vitamin D, Tyrosine, Alpha-GPC'), findsOneWidget);
+
+    // Select Morning Fog Lifter
+    await tester.tap(fogLifter);
+    await tester.pumpAndSettle();
+
+    // Tap Next to go to confirmation
+    final nextButtonAgain = find.text('Next');
+    await tester.tap(nextButtonAgain);
+    await tester.pumpAndSettle();
+
+    // Verify confirmation screen
+    expect(find.text('You\'re all set!'), findsOneWidget);
+    expect(find.textContaining('Your Morning Fog Lifter is ready'),
+        findsOneWidget);
   });
 }
 
@@ -95,6 +122,13 @@ class FakeSettingsRepository implements SettingsRepository {
   bool getNudgeModeEnabled() => true;
   @override
   Future<void> setNudgeModeEnabled(bool enabled) async {}
+
+  @override
+  NotificationMode getNotificationMode() => NotificationMode.gentle;
+
+  @override
+  Future<void> setNotificationMode(NotificationMode mode) async {}
+
   @override
   TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
   @override

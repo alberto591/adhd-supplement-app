@@ -36,7 +36,14 @@ This document outlines the specific features implemented to support users with A
 2.  **Safety Check**: High-impact decision about existing medications (Ensures safety early).
 3.  **Direct-to-Dashboard**: Skips manual stack building initially, allowing users to explore pre-configured suggestions or add items contextually.
 
-## 5. 4:00 AM Rollover Logic
-**Problem**: Users with ADHD often have erratic sleep schedules. A hard midnight reset can be discouraging if a user takes an "evening" supplement at 1 AM.
-**Solution**: The "logical day" resets at 4:00 AM.
-- **Benefit**: Supplements taken after midnight but before 4 AM are still counted towards the previous calendar day's goals and streak.
+## 6. Progressive Disclosure for Cognitive Focus
+**Problem**: Medical and pharmacological data is dense and overwhelming, causing "cognitive freeze."
+**Solution**: Collapsible information blocks in the Supplement Detail screen.
+- **Implementation**: Pharmacology and dosage tables are hidden behind `ExpansionTile` headers.
+- **Benefit**: Allows users to focus on high-level benefits (the "what") before choosing to dive into the technical details (the "how").
+
+## 7. "Morning Fog Lifter" Template
+**Problem**: Developing a routine from scratch is a high executive function task.
+**Solution**: Pre-built "Starter Stacks" like the **Morning Fog Lifter**.
+- **Components**: Vitamin D, Tyrosine, Alpha-GPC.
+- **Benefit**: Provides a low-friction entry point for users specifically looking to overcome morning brain fog.

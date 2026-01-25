@@ -85,6 +85,9 @@ class LibraryViewModel extends ChangeNotifier {
     String? dosage,
     String? timeOfDay,
     List<String> benefits = const [],
+    String? evidenceLevel,
+    Map<String, String>? adhdMedInteractions,
+    String? form,
   }) async {
     _setLoading(true);
     try {
@@ -95,6 +98,9 @@ class LibraryViewModel extends ChangeNotifier {
         dosage: dosage,
         timeOfDay: timeOfDay,
         benefits: benefits,
+        evidenceLevel: evidenceLevel,
+        adhdMedInteractions: adhdMedInteractions,
+        form: form,
         userId: _userId,
         isCustom: true,
         status: 'beneficial',

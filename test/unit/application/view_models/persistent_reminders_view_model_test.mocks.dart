@@ -8,12 +8,12 @@ import 'dart:async' as _i4;
 import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart'
     as _i3;
 import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart'
-    as _i6;
+    as _i5;
 import 'package:flutter/material.dart' as _i2;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     as _i7;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
+import 'package:mockito/src/dummies.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -73,6 +73,26 @@ class MockSettingsRepository extends _i1.Mock
         Invocation.method(
           #setNudgeModeEnabled,
           [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i5.NotificationMode getNotificationMode() => (super.noSuchMethod(
+        Invocation.method(
+          #getNotificationMode,
+          [],
+        ),
+        returnValue: _i5.NotificationMode.persistent,
+      ) as _i5.NotificationMode);
+
+  @override
+  _i4.Future<void> setNotificationMode(_i5.NotificationMode? mode) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setNotificationMode,
+          [mode],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
@@ -141,7 +161,7 @@ class MockSettingsRepository extends _i1.Mock
           #getWarningNudgeOption,
           [],
         ),
-        returnValue: _i5.dummyValue<String>(
+        returnValue: _i6.dummyValue<String>(
           this,
           Invocation.method(
             #getWarningNudgeOption,
@@ -360,7 +380,7 @@ class MockSettingsRepository extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNotificationService extends _i1.Mock
-    implements _i6.NotificationService {
+    implements _i5.NotificationService {
   MockNotificationService() {
     _i1.throwOnMissingStub(this);
   }
@@ -439,6 +459,32 @@ class MockNotificationService extends _i1.Mock
             #minute: minute,
             #second: second,
             #startFromTomorrow: startFromTomorrow,
+          },
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> scheduleRecurringNudgeSequence({
+    required int? baseId,
+    required String? title,
+    required String? body,
+    required int? hour,
+    required int? minute,
+    required _i5.NotificationMode? mode,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #scheduleRecurringNudgeSequence,
+          [],
+          {
+            #baseId: baseId,
+            #title: title,
+            #body: body,
+            #hour: hour,
+            #minute: minute,
+            #mode: mode,
           },
         ),
         returnValue: _i4.Future<void>.value(),
