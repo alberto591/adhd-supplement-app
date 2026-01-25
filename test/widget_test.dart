@@ -371,6 +371,9 @@ class _FakeNotificationService implements NotificationService {
 
   @override
   Future<bool> requestExactAlarmPermission() async => true;
+
+  @override
+  Future<void> configureLocalTimezone() async {}
 }
 
 class _FakeSeedingService implements SeedingService {

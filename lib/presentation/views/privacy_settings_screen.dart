@@ -234,14 +234,30 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
               const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Text(
-                  'We use end-to-end encryption for all transmitted data. Learn more in our Privacy Policy.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: isDark
-                        ? const Color(0xFF94A3B8)
-                        : const Color(0xFF616F89),
-                    fontSize: 12,
+                child: GestureDetector(
+                  onTap: () => _showPrivacyPolicyDialog(context),
+                  child: Text.rich(
+                    TextSpan(
+                      text:
+                          'We use end-to-end encryption for all transmitted data. ',
+                      style: TextStyle(
+                        color: isDark
+                            ? const Color(0xFF94A3B8)
+                            : const Color(0xFF616F89),
+                        fontSize: 12,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Tap to read our Privacy Policy.',
+                          style: TextStyle(
+                            color: primaryBlue,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -451,6 +467,64 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showPrivacyPolicyDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Privacy Policy'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildPolicySection('1. Data Collection',
+                    'We collect only the data necessary to provide our services. This includes your supplement logs, symptom checks, and basic profile information. All health data is stored locally on your device unless you enable cloud sync.'),
+                _buildPolicySection('2. Data Usage',
+                    'Your data is used solely to provide you with insights and track your progress. We do not sell your personal data to third parties.'),
+                _buildPolicySection('3. Security',
+                    'We use industry-standard encryption to protect your data. If you choose to sync your data, it is encrypted in transit and at rest.'),
+                _buildPolicySection('4. User Rights',
+                    'You have the right to access, correct, or delete your data at any time. You can delete your account and all associated data from the "Data Control" section of this screen.'),
+                _buildPolicySection('5. Updates',
+                    'We may update this policy from time to time. We will notify you of any significant changes.'),
+                const SizedBox(height: 16),
+                const Text('Last Updated: January 2026',
+                    style: TextStyle(color: Colors.grey, fontSize: 12)),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPolicySection(String title, String content) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            content,
+            style: const TextStyle(fontSize: 13, height: 1.4),
+          ),
+        ],
       ),
     );
   }

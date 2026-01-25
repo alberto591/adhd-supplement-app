@@ -196,7 +196,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () => Navigator.pushNamed(
-                          context, AppRouter.onboardingGoals),
+                          context, AppRouter.onboardingStackSetup),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,

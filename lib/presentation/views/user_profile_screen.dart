@@ -896,6 +896,9 @@ class _Achievement {
   final String description;
   final IconData icon;
   final Color color;
+  final String targetDescription;
+  final int? targetValue;
+  final String? targetUnit;
 
   const _Achievement({
     required this.id,
@@ -903,6 +906,9 @@ class _Achievement {
     required this.description,
     required this.icon,
     required this.color,
+    required this.targetDescription,
+    this.targetValue,
+    this.targetUnit,
   });
 }
 
@@ -911,6 +917,9 @@ final List<_Achievement> _allAchievements = [
     id: '7_day_warrior',
     title: '7-Day Warrior',
     description: 'Maintain a 7-day streak',
+    targetDescription: 'Complete 7 consecutive days',
+    targetValue: 7,
+    targetUnit: 'days',
     icon: Icons.bolt,
     color: Colors.orange,
   ),
@@ -918,6 +927,7 @@ final List<_Achievement> _allAchievements = [
     id: 'early_bird',
     title: 'Early Bird',
     description: 'Logged a dose before 8 AM',
+    targetDescription: 'Log a supplement before 8:00 AM',
     icon: Icons.wb_sunny,
     color: Colors.amber,
   ),
@@ -925,6 +935,9 @@ final List<_Achievement> _allAchievements = [
     id: 'focus_master',
     title: 'Focus Master',
     description: 'Reach Level 5',
+    targetDescription: 'Reach Level 5',
+    targetValue: 5,
+    targetUnit: 'level',
     icon: Icons.psychology,
     color: Colors.purple,
   ),
@@ -932,13 +945,19 @@ final List<_Achievement> _allAchievements = [
     id: 'alpha_hero',
     title: 'Alpha Hero',
     description: 'Early app supporter',
+    targetDescription: 'Be an early supporter of Daily Stack',
     icon: Icons.auto_awesome,
     color: AppColors.primaryGold,
   ),
 ];
 
-void _showAchievementDialog(BuildContext context, _Achievement achievement,
-    bool isUnlocked, bool isDark) {
+void _showAchievementDialog(
+  BuildContext context,
+  _Achievement achievement,
+  bool isUnlocked,
+  bool isDark, {
+  int? currentValue,
+}) {
   showDialog<void>(
     context: context,
     builder: (context) {
@@ -1009,6 +1028,107 @@ void _showAchievementDialog(BuildContext context, _Achievement achievement,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              // Target Information
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.grey[900] : Colors.grey[100],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.flag,
+                          size: 16,
+                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Target',
+                          style: GoogleFonts.lexend(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      achievement.targetDescription,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: isDark ? Colors.white : Colors.black87,
+                      ),
+                    ),
+                    // Progress for locked achievements
+                    if (!isUnlocked &&
+                        achievement.targetValue != null &&
+                        currentValue != null) ...[
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Progress',
+                            style: GoogleFonts.lexend(
+                              fontSize: 11,
+                              color:
+                                  isDark ? Colors.grey[500] : Colors.grey[600],
+                            ),
+                          ),
+                          Text(
+                            '$currentValue/${achievement.targetValue} ${achievement.targetUnit ?? ""}',
+                            style: GoogleFonts.lexend(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: achievement.color,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: currentValue / achievement.targetValue!,
+                          backgroundColor:
+                              isDark ? Colors.grey[800] : Colors.grey[300],
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(achievement.color),
+                          minHeight: 6,
+                        ),
+                      ),
+                    ],
+                    // Achievement status
+                    if (isUnlocked) ...[
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.check_circle,
+                            size: 16,
+                            color: Colors.green,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Achieved!',
+                            style: GoogleFonts.lexend(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
               ),
               if (!isUnlocked) ...[
                 const SizedBox(height: 16),

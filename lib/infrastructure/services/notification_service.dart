@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'dart:io';
 
 enum NotificationMode {
@@ -67,6 +68,7 @@ class NotificationService {
   Future<void> init() async {
     // Initialize timezone data
     tz.initializeTimeZones();
+    await configureLocalTimezone();
 
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -340,7 +342,21 @@ class NotificationService {
         await _notificationsPlugin.cancel(_getNudgeId(supplementId, i));
       }
     } catch (e) {
-      // Silent catch for platform-level cancellation errors (handles NPEs in plugin)
+      // Silent catch
+    }
+  }
+
+  Future<void> configureLocalTimezone() async {
+    try {
+      // Dynamic handling to support different versions of flutter_timezone
+      final dynamic timeZoneResult = await FlutterTimezone.getLocalTimezone();
+      final String timeZoneName = timeZoneResult.toString();
+      tz.setLocalLocation(tz.getLocation(timeZoneName));
+    } catch (e) {
+      // Fallback or log error
+      try {
+        tz.setLocalLocation(tz.getLocation('UTC'));
+      } catch (_) {}
     }
   }
 }

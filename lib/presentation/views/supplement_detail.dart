@@ -51,7 +51,7 @@ class SupplementDetail extends StatelessWidget {
               slivers: [
                 // Hero App Bar
                 SliverAppBar(
-                  expandedHeight: 240,
+                  expandedHeight: 180,
                   pinned: true,
                   backgroundColor: bgColor,
                   elevation: 0,
@@ -85,7 +85,7 @@ class SupplementDetail extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(height: 60),
+                            // const SizedBox(height: 30),
                             Container(
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
@@ -147,7 +147,7 @@ class SupplementDetail extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -327,8 +327,9 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               const SizedBox(height: 16),
-                              if (supplement.studyLinks.isNotEmpty ||
-                                  supplement.scientificEvidenceRank != null)
+                              /*if (supplement.studyLinks.isNotEmpty ||
+                                  supplement.scientificEvidenceRank != null)*/
+                              if (false)
                                 _CollapsibleInfoCard(
                                   title: 'Scientific Evidence',
                                   icon: Icons.menu_book_outlined,

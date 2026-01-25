@@ -142,7 +142,7 @@ class AdhdSupplementApp extends StatelessWidget {
               data: MediaQuery.of(context).copyWith(
                 textScaler: TextScaler.linear(scale),
               ),
-              child: child!,
+              child: _AppLifecycleIntegration(child: child!),
             );
           },
         ),

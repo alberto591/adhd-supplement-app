@@ -248,10 +248,8 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
           width: double.infinity,
           height: 56,
           child: ElevatedButton(
-            onPressed: () async {
-              final authProvider = context.read<AuthProvider>();
-              final user = authProvider.user;
               if (user != null) {
+                // Determine if medication was selected
                 final medication = (_selectedMedication == null ||
                         _selectedMedication ==
                             'None / I don\'t take medication')
@@ -260,16 +258,12 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
 
                 await authProvider.updateProfile(
                   user.copyWith(
-                    hasCompletedOnboarding: true,
                     currentMedication: medication,
                   ),
                 );
+
+                Navigator.pushNamed(context, AppRouter.onboardingGracePeriod);
               }
-              if (context.mounted) {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, AppRouter.dashboard, (route) => false);
-              }
-            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
@@ -280,7 +274,7 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
               ),
             ),
             child: const Text(
-              'Finish Setup',
+              'Next: Grace Philosophy',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

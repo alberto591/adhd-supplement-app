@@ -170,4 +170,17 @@ class PersistentRemindersViewModel extends ChangeNotifier {
       await _scheduleOrCancelNotifications();
     }
   }
+
+  Future<void> refreshSchedules() async {
+    // 1. Update the timezone definition (critical step)
+    await _notificationService.configureLocalTimezone();
+
+    // 2. Clear and reschedule ensuring new timezone is used
+    await _notificationService.cancelAllNotifications();
+
+    if (_nudgeModeEnabled) {
+      // Logic re-runs using the (now updated) tz.local
+      await _scheduleOrCancelNotifications();
+    }
+  }
 }

@@ -53,8 +53,7 @@ class RevenueCatBillingService implements BillingService {
     if (!_isInitialized) return false;
     try {
       // Using RevenueCat Paywall UI for simplified purchase flow
-      final paywallResult =
-          await RevenueCatUI.presentPaywallIfNeeded(_entitlementId);
+      await RevenueCatUI.presentPaywallIfNeeded(_entitlementId);
 
       // If result is 'notPresented', user might already be subscribed or no paywall configured
       // If they completed purchase, this returns success
