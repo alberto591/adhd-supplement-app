@@ -151,6 +151,52 @@ class AdhdSupplementApp extends StatelessWidget {
   }
 }
 
+class _AppLifecycleIntegration extends StatefulWidget {
+  final Widget child;
+  const _AppLifecycleIntegration({required this.child});
+
+  @override
+  State<_AppLifecycleIntegration> createState() =>
+      _AppLifecycleIntegrationState();
+}
+
+class _AppLifecycleIntegrationState extends State<_AppLifecycleIntegration>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      try {
+        final remindersVM = context.read<PersistentRemindersViewModel>();
+        remindersVM.refreshSchedules();
+        AppLogger.d('App Resumed: Triggered timezone schedule refresh');
+
+        final dailyStackVM = context.read<DailyStackViewModel>();
+        dailyStackVM.checkForDayRollover();
+        AppLogger.d('App Resumed: Checked for day rollover');
+      } catch (e) {
+        AppLogger.e('Failed to refresh schedules on resume', e);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+}
+
 class _FirebaseErrorScreen extends StatelessWidget {
   final String? errorMessage;
 

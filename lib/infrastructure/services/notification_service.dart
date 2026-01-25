@@ -349,8 +349,9 @@ class NotificationService {
   Future<void> configureLocalTimezone() async {
     try {
       // Dynamic handling to support different versions of flutter_timezone
-      final dynamic timeZoneResult = await FlutterTimezone.getLocalTimezone();
-      final String timeZoneName = timeZoneResult.toString();
+      // Some versions return String, others return TimezoneInfo
+      final dynamic result = await FlutterTimezone.getLocalTimezone();
+      final String timeZoneName = result.toString();
       tz.setLocalLocation(tz.getLocation(timeZoneName));
     } catch (e) {
       // Fallback or log error

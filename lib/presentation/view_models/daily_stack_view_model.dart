@@ -323,6 +323,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
     try {
       AppLogger.i('Initializing DailyStackViewModel for user: $_userId');
+      AppLogger.d('Initialize StackTrace: ${StackTrace.current}'); // DEBUG LOOP
       final logicalToday = _getLogicalToday();
       AppLogger.d('Logical today determined as: $logicalToday');
 
@@ -792,8 +793,8 @@ class DailyStackViewModel extends ChangeNotifier {
   // Private helpers
 
   List<StackItem> _getItemsForSlot(String slot) {
-    // Auto-refresh log if the day has rolled over
-    _checkForDayRollover();
+    // Note: _checkForDayRollover() removed to prevent infinite build loops.
+    // Rollover checks should be handled via Lifecycle/Timer events.
 
     final List<StackItem> items = [];
 
@@ -829,7 +830,8 @@ class DailyStackViewModel extends ChangeNotifier {
     return items;
   }
 
-  void _checkForDayRollover() {
+  void checkForDayRollover() {
+    AppLogger.i('checkForDayRollover called from: ${StackTrace.current}');
     if (_todayLog == null) return;
 
     final now = DateTime.now();

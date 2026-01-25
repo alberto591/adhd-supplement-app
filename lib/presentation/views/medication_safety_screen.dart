@@ -248,6 +248,9 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
           width: double.infinity,
           height: 56,
           child: ElevatedButton(
+            onPressed: () async {
+              final authProvider = context.read<AuthProvider>();
+              final user = authProvider.user;
               if (user != null) {
                 // Determine if medication was selected
                 final medication = (_selectedMedication == null ||
@@ -262,8 +265,10 @@ class _MedicationSafetyScreenState extends State<MedicationSafetyScreen> {
                   ),
                 );
 
+                if (!context.mounted) return;
                 Navigator.pushNamed(context, AppRouter.onboardingGracePeriod);
               }
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
