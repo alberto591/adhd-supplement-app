@@ -25,4 +25,7 @@ abstract class SupplementRepository {
 
   /// Track a referral click
   Future<void> trackReferralClick(String supplementId);
+
+  /// Force download all supplements to local cache for offline use
+  Future<void> downloadLibrary();
 }

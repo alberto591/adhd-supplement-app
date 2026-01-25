@@ -263,4 +263,28 @@ class FirebaseSupplementRepository implements SupplementRepository {
       AppLogger.e('Error tracking referral click', e);
     }
   }
+
+  @override
+  Future<void> downloadLibrary() async {
+    try {
+      AppLogger.i('Forcing library download for offline use...');
+      // Fetch all global supplements from server to ensure they are in the local cache
+      final snapshot = await _firestore
+          .collection('supplements')
+          .get(const GetOptions(source: Source.server))
+          .timeout(const Duration(seconds: 20));
+
+      final supplements = snapshot.docs
+          .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
+          .toList();
+
+      // Update in-memory global cache as well
+      _userCache['global'] = supplements;
+
+      AppLogger.i('Library download complete: ${supplements.length} items.');
+    } catch (e) {
+      AppLogger.e('Failed to download library for offline use', e);
+      rethrow;
+    }
+  }
 }

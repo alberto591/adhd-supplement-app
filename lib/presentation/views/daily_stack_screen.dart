@@ -648,7 +648,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
               key: Key('dismiss_${title}_${stackItem.supplementId}'),
               direction: DismissDirection.horizontal,
               background: Container(
-                margin: const EdgeInsets.only(bottom: 12),
+                margin: const EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(16),
@@ -658,7 +658,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                 child: const Icon(Icons.check, color: Colors.white, size: 32),
               ),
               secondaryBackground: Container(
-                margin: const EdgeInsets.only(bottom: 12),
+                margin: const EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                   color: Colors.grey,
                   borderRadius: BorderRadius.circular(16),

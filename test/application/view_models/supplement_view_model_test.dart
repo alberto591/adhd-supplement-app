@@ -63,6 +63,9 @@ class MockSupplementRepository implements SupplementRepository {
   Future<void> trackReferralClick(String supplementId) async {
     await Future<void>.delayed(const Duration(milliseconds: 50));
   }
+
+  @override
+  Future<void> downloadLibrary() async {}
 }
 
 class MockUrlService extends UrlService {

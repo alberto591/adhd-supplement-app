@@ -167,6 +167,9 @@ class _FakeSupplementRepository implements SupplementRepository {
   @override
   Stream<List<Supplement>> watchSupplements({String? userId}) =>
       const Stream.empty();
+
+  @override
+  Future<void> downloadLibrary() async {}
 }
 
 class _FakeSafetyRepository implements SafetyRepository {

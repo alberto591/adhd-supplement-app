@@ -50,7 +50,7 @@ class MedicationCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
+        margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(16),
@@ -66,7 +66,7 @@ class MedicationCard extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(12.0),
               child: Row(
                 children: [
                   // Options button in Far Left
@@ -102,7 +102,7 @@ class MedicationCard extends StatelessWidget {
                       size: 20.0,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
 
                   // Details
                   Expanded(
@@ -216,7 +216,7 @@ class MedicationCard extends StatelessWidget {
             // Timestamp if taken or skipped
             if ((isTaken || isSkipped) && statusText != null)
               Padding(
-                padding: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
+                padding: const EdgeInsets.only(bottom: 8, left: 12, right: 12),
                 child: Row(
                   children: [
                     Text(

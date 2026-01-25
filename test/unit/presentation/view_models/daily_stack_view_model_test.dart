@@ -103,6 +103,9 @@ class FakeSupplementRepository implements SupplementRepository {
 
   @override
   Future<void> trackReferralClick(String supplementId) async {}
+
+  @override
+  Future<void> downloadLibrary() async {}
 }
 
 class FakeNotificationService implements NotificationService {

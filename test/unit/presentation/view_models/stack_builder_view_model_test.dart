@@ -32,6 +32,9 @@ class FakeSupplementRepository implements SupplementRepository {
   Future<void> deleteCustomSupplement(String id, String userId) async {}
   @override
   Future<void> trackReferralClick(String supplementId) async {}
+
+  @override
+  Future<void> downloadLibrary() async {}
 }
 
 class FakeStackRepository implements StackRepository {

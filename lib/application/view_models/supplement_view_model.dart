@@ -4,6 +4,7 @@ import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
 import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
+import 'package:adhd_supplement_app/utils/logger.dart';
 
 class SupplementViewModel extends ChangeNotifier {
   final SupplementRepository _repository;
@@ -16,10 +17,12 @@ class SupplementViewModel extends ChangeNotifier {
   }
 
   bool _isLoading = false;
+  bool _isDownloadingLibrary = false;
   List<Supplement> _supplements = [];
   String? _error;
 
   bool get isLoading => _isLoading;
+  bool get isDownloadingLibrary => _isDownloadingLibrary;
   List<Supplement> get supplements => _supplements;
   String? get error => _error;
 
@@ -34,6 +37,25 @@ class SupplementViewModel extends ChangeNotifier {
       _error = 'Failed to load supplements';
     } finally {
       _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> downloadLibraryForOffline() async {
+    if (_isDownloadingLibrary) return;
+
+    _isDownloadingLibrary = true;
+    notifyListeners();
+
+    try {
+      await _repository.downloadLibrary();
+      // After downloading, refresh the local list to ensure even the in-memory cache is hot
+      _supplements = await _repository.getAllSupplements();
+    } catch (e) {
+      AppLogger.e('Error during manual library download', e);
+      rethrow;
+    } finally {
+      _isDownloadingLibrary = false;
       notifyListeners();
     }
   }

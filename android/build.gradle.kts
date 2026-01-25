@@ -20,6 +20,7 @@ subprojects {
         if (hasProperty("android")) {
             extensions.findByName("android")?.let { android ->
                 if (android is com.android.build.gradle.BaseExtension) {
+                    android.compileSdkVersion = "android-36" // Set minimum compile SDK for all subprojects
                     android.compileOptions {
                         sourceCompatibility = JavaVersion.VERSION_17
                         targetCompatibility = JavaVersion.VERSION_17

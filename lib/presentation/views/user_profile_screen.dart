@@ -14,6 +14,7 @@ import '../../config/locator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../../application/view_models/supplement_view_model.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -282,6 +283,59 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           const Icon(Icons.chevron_right, color: Colors.grey),
                       onTap: () => Navigator.pushNamed(
                           context, AppRouter.privacySettings),
+                    ),
+                    const SizedBox(height: 2),
+                    Consumer<SupplementViewModel>(
+                      builder: (context, suppVM, child) {
+                        final isDownloading = suppVM.isDownloadingLibrary;
+                        return _SettingsTile(
+                          icon: Icons.download_for_offline,
+                          iconColor: AppColors.primary,
+                          title: 'Offline Library',
+                          subtitle: isDownloading
+                              ? 'Downloading...'
+                              : 'Keep supplements available offline',
+                          trailing: isDownloading
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        AppColors.primary),
+                                  ),
+                                )
+                              : const Icon(Icons.download, color: Colors.grey),
+                          onTap: isDownloading
+                              ? null
+                              : () async {
+                                  try {
+                                    await suppVM.downloadLibraryForOffline();
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Library downloaded for offline use'),
+                                          backgroundColor: Colors.green,
+                                        ),
+                                      );
+                                    }
+                                  } catch (e) {
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'Download failed: ${e.toString()}'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                },
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -837,6 +891,111 @@ final List<_Achievement> _allAchievements = [
   ),
 ];
 
+void _showAchievementDialog(BuildContext context, _Achievement achievement,
+    bool isUnlocked, bool isDark) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        backgroundColor: isDark ? AppColors.cardDark : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isUnlocked
+                      ? achievement.color.withValues(alpha: 0.15)
+                      : (isDark ? Colors.grey[900] : Colors.grey[200]),
+                  border: Border.all(
+                    color: isUnlocked ? achievement.color : Colors.transparent,
+                    width: 3,
+                  ),
+                ),
+                child: Icon(
+                  achievement.icon,
+                  color: isUnlocked
+                      ? achievement.color
+                      : (isDark ? Colors.grey[700] : Colors.grey[400]),
+                  size: 40,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                achievement.title,
+                style: GoogleFonts.lexend(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : Colors.black87,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                  color: isUnlocked
+                      ? Colors.green.withValues(alpha: 0.1)
+                      : Colors.grey.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  isUnlocked ? 'UNLOCKED' : 'LOCKED',
+                  style: GoogleFonts.lexend(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: isUnlocked ? Colors.green : Colors.grey,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                achievement.description,
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  color: isDark ? Colors.grey[300] : Colors.grey[800],
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              if (!isUnlocked) ...[
+                const SizedBox(height: 16),
+                Text(
+                  "Keep using the app to unlock this achievement!",
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('Close'),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
 class _AchievementsCarousel extends StatelessWidget {
   final User? user;
   final int streakCount;
@@ -906,16 +1065,16 @@ class _AchievementsCarousel extends StatelessWidget {
                 }
               }
 
-              return Container(
-                width: 80,
-                margin: const EdgeInsets.only(right: 16),
-                child: Column(
-                  children: [
-                    Tooltip(
-                      message: isUnlocked
-                          ? achievement.description
-                          : 'Locked: ${achievement.description}',
-                      child: Container(
+              return GestureDetector(
+                onTap: () => _showAchievementDialog(
+                    context, achievement, isUnlocked, isDark),
+                child: Container(
+                  width: 80,
+                  margin: const EdgeInsets.only(right: 16),
+                  color: Colors.transparent, // Hit test for GestureDetector
+                  child: Column(
+                    children: [
+                      Container(
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
@@ -938,22 +1097,22 @@ class _AchievementsCarousel extends StatelessWidget {
                           size: 30,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      achievement.title,
-                      style: GoogleFonts.lexend(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        color: isUnlocked
-                            ? (isDark ? Colors.white : Colors.black87)
-                            : (isDark ? Colors.grey[600] : Colors.grey[500]),
+                      const SizedBox(height: 8),
+                      Text(
+                        achievement.title,
+                        style: GoogleFonts.lexend(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: isUnlocked
+                              ? (isDark ? Colors.white : Colors.black87)
+                              : (isDark ? Colors.grey[600] : Colors.grey[500]),
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

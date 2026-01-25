@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/services/billing_service.dart';
+import '../../domain/errors/failure.dart';
 import '../../utils/logger.dart';
 
 enum AuthStatus { initial, authenticated, unauthenticated }
@@ -86,7 +87,11 @@ class AuthProvider extends ChangeNotifier {
       _status = AuthStatus.authenticated;
       notifyListeners();
     } catch (e) {
-      _errorMessage = e.toString();
+      if (e is Failure) {
+        _errorMessage = e.message;
+      } else {
+        _errorMessage = e.toString();
+      }
       _status = AuthStatus.unauthenticated;
       notifyListeners();
       rethrow;
@@ -103,7 +108,11 @@ class AuthProvider extends ChangeNotifier {
       _status = AuthStatus.authenticated;
       notifyListeners();
     } catch (e) {
-      _errorMessage = e.toString();
+      if (e is Failure) {
+        _errorMessage = e.message;
+      } else {
+        _errorMessage = e.toString();
+      }
       _status = AuthStatus.unauthenticated;
       notifyListeners();
       rethrow;
@@ -119,7 +128,11 @@ class AuthProvider extends ChangeNotifier {
       _status = AuthStatus.authenticated;
       notifyListeners();
     } catch (e) {
-      _errorMessage = e.toString();
+      if (e is Failure) {
+        _errorMessage = e.message;
+      } else {
+        _errorMessage = e.toString();
+      }
       _status = AuthStatus.unauthenticated;
       notifyListeners();
       rethrow;

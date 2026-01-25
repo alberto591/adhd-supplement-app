@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../domain/errors/failure.dart';
 import '../../utils/logger.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
@@ -42,7 +43,7 @@ class FirebaseAuthRepository implements AuthRepository {
       );
 
       if (credential.user == null) {
-        throw Exception('Sign in failed');
+        throw const AuthFailure('Sign in failed');
       }
 
       // Get user data from Firestore
@@ -55,6 +56,9 @@ class FirebaseAuthRepository implements AuthRepository {
       return _mapFirebaseUser(credential.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw _mapAuthException(e);
+    } catch (e) {
+      if (e is Failure) rethrow;
+      throw AuthFailure('Sign in failed', e);
     }
   }
 
@@ -68,7 +72,7 @@ class FirebaseAuthRepository implements AuthRepository {
       );
 
       if (credential.user == null) {
-        throw Exception('Sign up failed');
+        throw const AuthFailure('Sign up failed');
       }
 
       // Update display name
@@ -88,6 +92,9 @@ class FirebaseAuthRepository implements AuthRepository {
       return user;
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw _mapAuthException(e);
+    } catch (e) {
+      if (e is Failure) rethrow;
+      throw AuthFailure('Sign up failed', e);
     }
   }
 
@@ -151,7 +158,7 @@ class FirebaseAuthRepository implements AuthRepository {
   Future<void> deleteUser() async {
     final user = _firebaseAuth.currentUser;
     if (user == null) {
-      throw Exception('No user signed in');
+      throw const AuthFailure('No user signed in');
     }
 
     // Delete from Firestore
@@ -169,7 +176,7 @@ class FirebaseAuthRepository implements AuthRepository {
       final credential = await _firebaseAuth.signInAnonymously();
 
       if (credential.user == null) {
-        throw Exception('Anonymous sign in failed');
+        throw const AuthFailure('Anonymous sign in failed');
       }
 
       // Check if user already exists in Firestore
@@ -194,6 +201,9 @@ class FirebaseAuthRepository implements AuthRepository {
       return user;
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw _mapAuthException(e);
+    } catch (e) {
+      if (e is Failure) rethrow;
+      throw AuthFailure('Anonymous sign in failed', e);
     }
   }
 
@@ -207,23 +217,24 @@ class FirebaseAuthRepository implements AuthRepository {
     );
   }
 
-  String _mapAuthException(firebase_auth.FirebaseAuthException e) {
+  AuthFailure _mapAuthException(firebase_auth.FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':
-        return 'No user found with this email.';
       case 'wrong-password':
-        return 'Wrong password.';
+        // Standardized message for security
+        return const AuthFailure('Invalid email or password.');
       case 'email-already-in-use':
-        return 'An account already exists with this email.';
+        return const AuthFailure('An account already exists with this email.');
       case 'weak-password':
-        return 'Password is too weak.';
+        return const AuthFailure('Password is too weak.');
       case 'invalid-email':
-        return 'Invalid email address.';
+        return const AuthFailure('Invalid email address.');
       case 'admin-restricted-operation':
       case 'operation-not-allowed':
-        return 'Anonymous login is disabled. Please enable it in Firebase Console -> Authentication -> Sign-in method.';
+        return const AuthFailure(
+            'Anonymous login is disabled. Please enable it in Firebase Console -> Authentication -> Sign-in method.');
       default:
-        return e.message ?? 'Authentication failed.';
+        return AuthFailure(e.message ?? 'Authentication failed.');
     }
   }
 }

@@ -3,10 +3,12 @@ import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
 import 'package:adhd_supplement_app/domain/entities/user.dart';
 import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
 import 'package:adhd_supplement_app/domain/services/billing_service.dart';
+import 'package:adhd_supplement_app/domain/errors/failure.dart';
 import 'dart:async';
 
 class FakeAuthRepository implements AuthRepository {
   User? currentUser;
+  Object? errorToThrow;
   final _authStateController = StreamController<User?>.broadcast();
   final _userSnapshotController = StreamController<User?>.broadcast();
 
@@ -30,12 +32,18 @@ class FakeAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<User> signInWithEmail(String email, String password) async =>
-      currentUser!;
+  Future<User> signInWithEmail(String email, String password) async {
+    if (errorToThrow != null) throw errorToThrow!;
+    return currentUser!;
+  }
+
   @override
   Future<User> signUpWithEmail(
-          String email, String password, String displayName) async =>
-      currentUser!;
+      String email, String password, String displayName) async {
+    if (errorToThrow != null) throw errorToThrow!;
+    return currentUser!;
+  }
+
   @override
   Future<void> signOut() async => emitAuthState(null);
   @override
@@ -141,6 +149,32 @@ void main() {
 
       expect(authProvider.user, isNull);
       expect(authProvider.status, AuthStatus.unauthenticated);
+    });
+
+    test('sets errorMessage when sign in fails with AuthFailure', () async {
+      fakeAuthRepo.errorToThrow = const AuthFailure('Invalid credentials');
+
+      try {
+        await authProvider.signIn('test@test.com', 'wrongpassword');
+      } catch (_) {
+        // Expected to throw
+      }
+
+      expect(authProvider.status, AuthStatus.unauthenticated);
+      expect(authProvider.errorMessage, 'Invalid credentials');
+    });
+
+    test('sets errorMessage using toString for non-Failure errors', () async {
+      fakeAuthRepo.errorToThrow = Exception('Network error');
+
+      try {
+        await authProvider.signIn('test@test.com', 'password');
+      } catch (_) {
+        // Expected to throw
+      }
+
+      expect(authProvider.status, AuthStatus.unauthenticated);
+      expect(authProvider.errorMessage, 'Exception: Network error');
     });
   });
 }
