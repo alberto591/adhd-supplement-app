@@ -171,6 +171,18 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email.trim());
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw _mapAuthException(e);
+    } catch (e) {
+      if (e is Failure) rethrow;
+      throw AuthFailure('Failed to send password reset email', e);
+    }
+  }
+
+  @override
   Future<User> signInAnonymously() async {
     try {
       final credential = await _firebaseAuth.signInAnonymously();
@@ -221,8 +233,12 @@ class FirebaseAuthRepository implements AuthRepository {
     switch (e.code) {
       case 'user-not-found':
       case 'wrong-password':
-        // Standardized message for security
-        return const AuthFailure('Incorrect email or password.');
+      case 'invalid-credential':
+      case 'invalid-login-credentials':
+      case 'INVALID_LOGIN_CREDENTIALS':
+        // Standardized message for security (does not reveal which field is wrong)
+        return const AuthFailure(
+            'Invalid email or password. Please try again.');
       case 'email-already-in-use':
         return const AuthFailure('An account already exists with this email.');
       case 'weak-password':

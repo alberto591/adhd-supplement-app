@@ -15,6 +15,7 @@ import 'package:adhd_supplement_app/application/view_models/theme_view_model.dar
 import 'package:adhd_supplement_app/utils/logger.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adhd_supplement_app/l10n/generated/app_localizations.dart';
+import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +55,16 @@ void main() async {
     } catch (e) {
       AppLogger.e('Locator/Init setup error', e);
       initializationError ??= 'Setup error: $e';
+    }
+  }
+
+  // Initialize Billing Service (RevenueCat)
+  if (!kIsWeb) {
+    // Only init on mobile for now as purchases_flutter has limited web support configuration in this setup
+    try {
+      await locator<BillingService>().initialize();
+    } catch (e) {
+      AppLogger.e('Billing initialization failed', e);
     }
   }
 

@@ -409,9 +409,9 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                               ElevatedButton(
                                                 onPressed: () =>
                                                     Navigator.pushNamed(context,
-                                                        AppRouter.stackBuilder),
+                                                        AppRouter.library),
                                                 child:
-                                                    const Text('Go to Builder'),
+                                                    const Text('Go to Library'),
                                               ),
                                             ],
                                           ),

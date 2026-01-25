@@ -214,6 +214,9 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future<void> deleteUser() async {}
+
+  @override
+  Future<void> sendPasswordResetEmail(String email) async {}
 }
 
 class FakeAnalyticsService implements AnalyticsService {

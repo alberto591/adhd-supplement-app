@@ -52,6 +52,9 @@ class MockAuthRepository implements AuthRepository {
 
   @override
   Stream<User?> watchUser(String userId) => const Stream.empty();
+
+  @override
+  Future<void> sendPasswordResetEmail(String email) async {}
 }
 
 class MockLogRepository implements LogRepository {

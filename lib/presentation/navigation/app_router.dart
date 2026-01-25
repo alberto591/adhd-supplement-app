@@ -6,6 +6,7 @@ import '../../application/view_models/symptom_checkin_viewmodel.dart';
 import '../../application/view_models/safety_view_model.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/signup_screen.dart';
+import '../views/auth/forgot_password_screen.dart';
 import '../views/splash_screen.dart';
 import '../views/daily_stack_screen.dart';
 // import '../views/insights_screen.dart';
@@ -71,6 +72,7 @@ class AppRouter {
   static const String splash = '/splash';
   static const String login = '/login';
   static const String signup = '/signup';
+  static const String forgotPassword = '/forgot-password';
   static const String onboardingGracePeriod = '/onboarding/grace-period';
   static const String onboardingMedicalDisclaimer =
       '/onboarding/medical-disclaimer';
@@ -144,6 +146,9 @@ class AppRouter {
 
       case signup:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
+
+      case forgotPassword:
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
 
       case onboardingMedicalDisclaimer:
         return MaterialPageRoute(

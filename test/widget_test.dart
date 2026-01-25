@@ -137,6 +137,9 @@ class _FakeAuthRepository implements AuthRepository {
 
   @override
   Stream<User?> watchUser(String userId) => Stream<User?>.value(null);
+
+  @override
+  Future<void> sendPasswordResetEmail(String email) async {}
 }
 
 class _FakeSupplementRepository implements SupplementRepository {
@@ -403,4 +406,6 @@ class _FakeBillingService implements BillingService {
   Future<bool> hasEntitlement(String entitlementId) async => false;
   @override
   Future<List<String>> getEntitlements() async => [];
+  @override
+  Future<void> presentCustomerCenter() async {}
 }

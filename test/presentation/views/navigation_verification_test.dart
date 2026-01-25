@@ -44,6 +44,9 @@ class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   Future<void> updateProfile(User user) async {}
 
   @override
+  Future<void> sendPasswordResetEmail(String email) async {}
+
+  @override
   bool canAccess(String entitlementId) => true;
 
   @override

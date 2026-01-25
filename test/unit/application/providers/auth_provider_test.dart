@@ -52,6 +52,10 @@ class FakeAuthRepository implements AuthRepository {
   Future<User> signInAnonymously() async => currentUser!;
   @override
   Future<void> deleteUser() async {}
+  @override
+  Future<void> sendPasswordResetEmail(String email) async {
+    if (errorToThrow != null) throw errorToThrow!;
+  }
 }
 
 class FakeBillingService implements BillingService {
@@ -72,6 +76,9 @@ class FakeBillingService implements BillingService {
 
   @override
   Future<List<String>> getEntitlements() async => [];
+
+  @override
+  Future<void> presentCustomerCenter() async {}
 }
 
 void main() {
@@ -175,6 +182,31 @@ void main() {
 
       expect(authProvider.status, AuthStatus.unauthenticated);
       expect(authProvider.errorMessage, 'Exception: Network error');
+    });
+
+    test('sendPasswordResetEmail succeeds and clears error', () async {
+      // Arrange
+      fakeAuthRepo.errorToThrow = null;
+
+      // Act
+      await authProvider.sendPasswordResetEmail('test@test.com');
+
+      // Assert
+      expect(authProvider.errorMessage, isNull);
+    });
+
+    test('sendPasswordResetEmail sets errorMessage on failure', () async {
+      // Arrange
+      fakeAuthRepo.errorToThrow = const AuthFailure('Invalid email address.');
+
+      // Act & Assert
+      try {
+        await authProvider.sendPasswordResetEmail('invalid-email');
+      } catch (_) {
+        // Expected to throw
+      }
+
+      expect(authProvider.errorMessage, 'Invalid email address.');
     });
   });
 }

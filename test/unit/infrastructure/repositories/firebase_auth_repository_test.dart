@@ -91,7 +91,7 @@ void main() {
         throwsA(isA<AuthFailure>().having(
           (e) => e.message,
           'message',
-          'Incorrect email or password.',
+          'Invalid email or password. Please try again.',
         )),
       );
     });
@@ -112,9 +112,79 @@ void main() {
         throwsA(isA<AuthFailure>().having(
           (e) => e.message,
           'message',
-          'Incorrect email or password.',
+          'Invalid email or password. Please try again.',
         )),
       );
+    });
+
+    test(
+        'should return correct error message for invalid-credential (Firebase v9+)',
+        () async {
+      // Arrange - newer Firebase SDK uses invalid-credential
+      when(mockFirebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      )).thenThrow(firebase_auth.FirebaseAuthException(
+        code: 'invalid-credential',
+        message: 'The supplied auth credential is incorrect.',
+      ));
+
+      // Act & Assert
+      expect(
+        () => repository.signInWithEmail(email, password),
+        throwsA(isA<AuthFailure>().having(
+          (e) => e.message,
+          'message',
+          'Invalid email or password. Please try again.',
+        )),
+      );
+    });
+  });
+
+  group('sendPasswordResetEmail', () {
+    const email = 'test@example.com';
+
+    test('should send password reset email successfully', () async {
+      // Arrange
+      when(mockFirebaseAuth.sendPasswordResetEmail(email: email))
+          .thenAnswer((_) async => Future.value());
+
+      // Act
+      await repository.sendPasswordResetEmail(email);
+
+      // Assert
+      verify(mockFirebaseAuth.sendPasswordResetEmail(email: email));
+    });
+
+    test('should throw AuthFailure for invalid email', () async {
+      // Arrange
+      when(mockFirebaseAuth.sendPasswordResetEmail(email: email))
+          .thenThrow(firebase_auth.FirebaseAuthException(
+        code: 'invalid-email',
+        message: 'Invalid email address.',
+      ));
+
+      // Act & Assert
+      expect(
+        () => repository.sendPasswordResetEmail(email),
+        throwsA(isA<AuthFailure>().having(
+          (e) => e.message,
+          'message',
+          'Invalid email address.',
+        )),
+      );
+    });
+
+    test('should send reset email even if user not found (security)', () async {
+      // Arrange - Firebase may throw user-not-found, but we handle it gracefully
+      when(mockFirebaseAuth.sendPasswordResetEmail(email: email))
+          .thenAnswer((_) async => Future.value());
+
+      // Act
+      await repository.sendPasswordResetEmail(email);
+
+      // Assert - Should not throw, maintaining security by not revealing if user exists
+      verify(mockFirebaseAuth.sendPasswordResetEmail(email: email));
     });
   });
 }

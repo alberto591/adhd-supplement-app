@@ -5,4 +5,5 @@ abstract class BillingService {
   Future<bool> get isSubscribed;
   Future<bool> hasEntitlement(String entitlementId);
   Future<List<String>> getEntitlements();
+  Future<void> presentCustomerCenter();
 }
