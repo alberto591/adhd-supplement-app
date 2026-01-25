@@ -95,7 +95,7 @@ void main() {
       expect(viewModel.nudgeTime, newTime);
       verify(mockSettingsRepository.setNudgeTime(newTime)).called(1);
       verify(mockNotificationService.scheduleRecurringNudgeSequence(
-        baseId: 1000,
+        slot: NotificationSlot.morning,
         title: anyNamed('title'),
         body: anyNamed('body'),
         hour: 9,
@@ -124,7 +124,7 @@ void main() {
 
       verify(mockSettingsRepository.setNudgeModeEnabled(true)).called(1);
       verify(mockNotificationService.scheduleRecurringNudgeSequence(
-        baseId: 1000,
+        slot: NotificationSlot.morning,
         title: anyNamed('title'),
         body: anyNamed('body'),
         hour: 8,

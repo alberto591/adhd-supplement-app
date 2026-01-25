@@ -9,6 +9,26 @@ enum NotificationMode {
   urgent, // New: Immediate feedback loop
 }
 
+enum NotificationSlot {
+  morning,
+  afternoon,
+  evening,
+  night;
+
+  int get baseId {
+    switch (this) {
+      case NotificationSlot.morning:
+        return 1000;
+      case NotificationSlot.afternoon:
+        return 2000;
+      case NotificationSlot.evening:
+        return 3000;
+      case NotificationSlot.night:
+        return 4000;
+    }
+  }
+}
+
 class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin;
 
@@ -181,10 +201,10 @@ class NotificationService {
   }
 
   /// Schedules a sequence of recurring notifications based on the mode.
-  /// [baseId] is used as the starting ID for the sequence (e.g. 1000).
+  /// [slot] determines the ID range (Morning=1000+, Afternoon=2000+, etc.)
   /// [hour] and [minute] define the start time.
   Future<void> scheduleRecurringNudgeSequence({
-    required int baseId,
+    required NotificationSlot slot,
     required String title,
     required String body,
     required int hour,
@@ -199,6 +219,8 @@ class NotificationService {
       // Persistent: 0, 5, 10, ... 55 mins (12 times)
       offsets = List.generate(12, (index) => index * 5);
     }
+
+    final baseId = slot.baseId;
 
     for (int i = 0; i < offsets.length; i++) {
       int offset = offsets[i];

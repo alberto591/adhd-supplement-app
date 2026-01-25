@@ -155,6 +155,7 @@ void _setupViewModels() {
         locator<SupplementRepository>(),
         locator<UrlService>(),
         locator<AnalyticsService>(),
+        locator<SettingsRepository>(),
       ));
   locator.registerFactory(() => PersistentRemindersViewModel(
         locator<SettingsRepository>(),

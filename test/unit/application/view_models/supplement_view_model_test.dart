@@ -7,7 +7,9 @@ import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
 import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 
-@GenerateMocks([SupplementRepository, UrlService])
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+
+@GenerateMocks([SupplementRepository, UrlService, SettingsRepository])
 import 'supplement_view_model_test.mocks.dart';
 
 class FakeAnalyticsService implements AnalyticsService {
@@ -26,6 +28,7 @@ void main() {
   late SupplementViewModel viewModel;
   late MockSupplementRepository mockRepository;
   late MockUrlService mockUrlService;
+  late MockSettingsRepository mockSettingsRepository;
   late FakeAnalyticsService mockAnalyticsService;
 
   final testSupplements = [
@@ -41,17 +44,19 @@ void main() {
   setUp(() {
     mockRepository = MockSupplementRepository();
     mockUrlService = MockUrlService();
+    mockSettingsRepository = MockSettingsRepository();
     mockAnalyticsService = FakeAnalyticsService();
 
     // Default mock behavior for initial fetch
     when(mockRepository.getAllSupplements())
         .thenAnswer((_) async => testSupplements);
+    when(mockSettingsRepository.getLastLibraryDownloadTime()).thenReturn(null);
   });
 
   group('SupplementViewModel', () {
     test('initialization triggers supplement fetch', () async {
-      viewModel = SupplementViewModel(
-          mockRepository, mockUrlService, mockAnalyticsService);
+      viewModel = SupplementViewModel(mockRepository, mockUrlService,
+          mockAnalyticsService, mockSettingsRepository);
 
       // Need to wait for the microtask/async fetch in constructor
       await Future<void>.delayed(Duration.zero);
@@ -65,17 +70,45 @@ void main() {
       when(mockRepository.getAllSupplements())
           .thenThrow(Exception('Network error'));
 
-      viewModel = SupplementViewModel(
-          mockRepository, mockUrlService, mockAnalyticsService);
+      viewModel = SupplementViewModel(mockRepository, mockUrlService,
+          mockAnalyticsService, mockSettingsRepository);
       await Future<void>.delayed(Duration.zero);
 
       expect(viewModel.isLoading, isFalse);
       expect(viewModel.error, contains('Failed to load supplements'));
     });
 
+    test('isLibraryDownloaded returns true if timestamp exists', () async {
+      when(mockSettingsRepository.getLastLibraryDownloadTime())
+          .thenReturn(DateTime(2024, 1, 1));
+
+      viewModel = SupplementViewModel(mockRepository, mockUrlService,
+          mockAnalyticsService, mockSettingsRepository);
+
+      expect(viewModel.isLibraryDownloaded, isTrue);
+      expect(viewModel.lastDownloadTime, isNotNull);
+    });
+
+    test('downloadLibraryForOffline saves timestamp on success', () async {
+      when(mockRepository.downloadLibrary()).thenAnswer((_) async {});
+      when(mockRepository.getAllSupplements())
+          .thenAnswer((_) async => testSupplements);
+      when(mockSettingsRepository.setLastLibraryDownloadTime(any))
+          .thenAnswer((_) async {});
+
+      viewModel = SupplementViewModel(mockRepository, mockUrlService,
+          mockAnalyticsService, mockSettingsRepository);
+      await Future<void>.delayed(Duration.zero);
+
+      await viewModel.downloadLibraryForOffline();
+
+      verify(mockRepository.downloadLibrary()).called(1);
+      verify(mockSettingsRepository.setLastLibraryDownloadTime(any)).called(1);
+    });
+
     test('onReferralClicked tracks click and launches URL', () async {
-      viewModel = SupplementViewModel(
-          mockRepository, mockUrlService, mockAnalyticsService);
+      viewModel = SupplementViewModel(mockRepository, mockUrlService,
+          mockAnalyticsService, mockSettingsRepository);
       await Future<void>.delayed(Duration.zero);
 
       final supplement = testSupplements.first;

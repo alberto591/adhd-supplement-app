@@ -125,10 +125,10 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   }
 
   Future<void> _scheduleOrCancelNotifications() async {
-    // 1000 is the ID for the daily reminder sequence
+    // 1000 is the ID for the daily reminder sequence (Morning Slot)
     if (_nudgeModeEnabled) {
       await _notificationService.scheduleRecurringNudgeSequence(
-        baseId: 1000,
+        slot: NotificationSlot.morning,
         title: 'Time for your daily stack!',
         body: 'Keep your streak alive. Take your supplements now.',
         hour: _nudgeTime.hour,
@@ -136,20 +136,22 @@ class PersistentRemindersViewModel extends ChangeNotifier {
         mode: _notificationMode,
       );
 
-      // Evening Summary (20:00) - Always on if Nudge Mode is active
+      // Evening Summary (20:00) - Uses Evening Slot Base ID (3000)
       await _notificationService.scheduleRecurringNotification(
-        id: 2000,
+        id: NotificationSlot.evening.baseId,
         title: 'Daily Summary 🌙',
         body: 'Tap to see your progress for today!',
         hour: 20,
         minute: 0,
       );
     } else {
-      // Cancel sequence range (max 12 for persistent)
+      // Cancel sequence range (max 15 for persistent)
+      final morningBase = NotificationSlot.morning.baseId;
       for (int i = 0; i < 15; i++) {
-        await _notificationService.cancelNotification(1000 + i);
+        await _notificationService.cancelNotification(morningBase + i);
       }
-      await _notificationService.cancelNotification(2000);
+      await _notificationService
+          .cancelNotification(NotificationSlot.evening.baseId);
     }
   }
 

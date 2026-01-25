@@ -310,30 +310,29 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           onTap: isDownloading
                               ? null
                               : () async {
-                                  try {
-                                    await suppVM.downloadLibraryForOffline();
-                                    if (context.mounted) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              'Library downloaded for offline use'),
-                                          backgroundColor: Colors.green,
+                                  // Check if already downloaded
+                                  if (suppVM.isLibraryDownloaded) {
+                                    final lastDate = suppVM.lastDownloadTime;
+                                    final dateStr = lastDate != null
+                                        ? DateFormat.yMMMd().format(lastDate)
+                                        : 'Unknown date';
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Library already downloaded on $dateStr'),
+                                        duration: const Duration(seconds: 3),
+                                        action: SnackBarAction(
+                                          label: 'Update',
+                                          onPressed: () async {
+                                            await _downloadLibrary(
+                                                context, suppVM);
+                                          },
                                         ),
-                                      );
-                                    }
-                                  } catch (e) {
-                                    if (context.mounted) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              'Download failed: ${e.toString()}'),
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      );
-                                    }
+                                      ),
+                                    );
                                   }
+                                  await _downloadLibrary(context, suppVM);
                                 },
                         );
                       },
@@ -368,8 +367,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           iconColor: Colors.purple,
                           title: 'Insights',
                           subtitle: 'Your streaks & consistency',
-                          onTap: () =>
-                              Navigator.pushNamed(context, AppRouter.insights),
+                          onTap: () {
+                            if (isPremium) {
+                              Navigator.pushNamed(context, AppRouter.insights);
+                            } else {
+                              Navigator.pushNamed(context, AppRouter.paywall,
+                                  arguments: AppRouter.insights);
+                            }
+                          },
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -536,6 +541,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       ),
       bottomNavigationBar: const UnifiedBottomNav(currentIndex: 3),
     );
+  }
+
+  Future<void> _downloadLibrary(
+      BuildContext context, SupplementViewModel suppVM) async {
+    try {
+      await suppVM.downloadLibraryForOffline();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Library downloaded for offline use'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Download failed: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }
 
@@ -909,7 +939,7 @@ final List<_Achievement> _allAchievements = [
 
 void _showAchievementDialog(BuildContext context, _Achievement achievement,
     bool isUnlocked, bool isDark) {
-  showDialog(
+  showDialog<void>(
     context: context,
     builder: (context) {
       return Dialog(

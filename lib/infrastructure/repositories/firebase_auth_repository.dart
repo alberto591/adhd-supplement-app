@@ -222,7 +222,7 @@ class FirebaseAuthRepository implements AuthRepository {
       case 'user-not-found':
       case 'wrong-password':
         // Standardized message for security
-        return const AuthFailure('Invalid email or password.');
+        return const AuthFailure('Incorrect email or password.');
       case 'email-already-in-use':
         return const AuthFailure('An account already exists with this email.');
       case 'weak-password':

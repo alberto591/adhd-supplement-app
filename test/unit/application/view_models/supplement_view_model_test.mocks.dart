@@ -3,14 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
-import 'package:adhd_supplement_app/domain/entities/supplement.dart' as _i4;
+import 'package:adhd_supplement_app/domain/entities/supplement.dart' as _i5;
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart'
+    as _i7;
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart'
-    as _i2;
+    as _i3;
+import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart'
+    as _i8;
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart'
-    as _i5;
+    as _i6;
+import 'package:flutter/material.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -27,28 +33,38 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: subtype_of_sealed_class
 // ignore_for_file: invalid_use_of_internal_member
 
+class _FakeTimeOfDay_0 extends _i1.SmartFake implements _i2.TimeOfDay {
+  _FakeTimeOfDay_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [SupplementRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSupplementRepository extends _i1.Mock
-    implements _i2.SupplementRepository {
+    implements _i3.SupplementRepository {
   MockSupplementRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<_i4.Supplement>> getAllSupplements({String? userId}) =>
+  _i4.Future<List<_i5.Supplement>> getAllSupplements({String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getAllSupplements,
           [],
           {#userId: userId},
         ),
-        returnValue: _i3.Future<List<_i4.Supplement>>.value(<_i4.Supplement>[]),
-      ) as _i3.Future<List<_i4.Supplement>>);
+        returnValue: _i4.Future<List<_i5.Supplement>>.value(<_i5.Supplement>[]),
+      ) as _i4.Future<List<_i5.Supplement>>);
 
   @override
-  _i3.Future<List<_i4.Supplement>> getSupplementsByCategory(
+  _i4.Future<List<_i5.Supplement>> getSupplementsByCategory(
     String? category, {
     String? userId,
   }) =>
@@ -58,11 +74,11 @@ class MockSupplementRepository extends _i1.Mock
           [category],
           {#userId: userId},
         ),
-        returnValue: _i3.Future<List<_i4.Supplement>>.value(<_i4.Supplement>[]),
-      ) as _i3.Future<List<_i4.Supplement>>);
+        returnValue: _i4.Future<List<_i5.Supplement>>.value(<_i5.Supplement>[]),
+      ) as _i4.Future<List<_i5.Supplement>>);
 
   @override
-  _i3.Future<List<_i4.Supplement>> searchSupplements(
+  _i4.Future<List<_i5.Supplement>> searchSupplements(
     String? query, {
     String? userId,
   }) =>
@@ -72,11 +88,11 @@ class MockSupplementRepository extends _i1.Mock
           [query],
           {#userId: userId},
         ),
-        returnValue: _i3.Future<List<_i4.Supplement>>.value(<_i4.Supplement>[]),
-      ) as _i3.Future<List<_i4.Supplement>>);
+        returnValue: _i4.Future<List<_i5.Supplement>>.value(<_i5.Supplement>[]),
+      ) as _i4.Future<List<_i5.Supplement>>);
 
   @override
-  _i3.Future<_i4.Supplement?> getSupplement(
+  _i4.Future<_i5.Supplement?> getSupplement(
     String? id, {
     String? userId,
   }) =>
@@ -86,33 +102,33 @@ class MockSupplementRepository extends _i1.Mock
           [id],
           {#userId: userId},
         ),
-        returnValue: _i3.Future<_i4.Supplement?>.value(),
-      ) as _i3.Future<_i4.Supplement?>);
+        returnValue: _i4.Future<_i5.Supplement?>.value(),
+      ) as _i4.Future<_i5.Supplement?>);
 
   @override
-  _i3.Stream<List<_i4.Supplement>> watchSupplements({String? userId}) =>
+  _i4.Stream<List<_i5.Supplement>> watchSupplements({String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
           #watchSupplements,
           [],
           {#userId: userId},
         ),
-        returnValue: _i3.Stream<List<_i4.Supplement>>.empty(),
-      ) as _i3.Stream<List<_i4.Supplement>>);
+        returnValue: _i4.Stream<List<_i5.Supplement>>.empty(),
+      ) as _i4.Stream<List<_i5.Supplement>>);
 
   @override
-  _i3.Future<void> saveCustomSupplement(_i4.Supplement? supplement) =>
+  _i4.Future<void> saveCustomSupplement(_i5.Supplement? supplement) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveCustomSupplement,
           [supplement],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i3.Future<void> deleteCustomSupplement(
+  _i4.Future<void> deleteCustomSupplement(
     String? id,
     String? userId,
   ) =>
@@ -124,57 +140,433 @@ class MockSupplementRepository extends _i1.Mock
             userId,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i3.Future<void> trackReferralClick(String? supplementId) =>
+  _i4.Future<void> trackReferralClick(String? supplementId) =>
       (super.noSuchMethod(
         Invocation.method(
           #trackReferralClick,
           [supplementId],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> downloadLibrary() => (super.noSuchMethod(
+        Invocation.method(
+          #downloadLibrary,
+          [],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [UrlService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUrlService extends _i1.Mock implements _i5.UrlService {
+class MockUrlService extends _i1.Mock implements _i6.UrlService {
   MockUrlService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> launchReferral(String? url) => (super.noSuchMethod(
+  _i4.Future<void> launchReferral(String? url) => (super.noSuchMethod(
         Invocation.method(
           #launchReferral,
           [url],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i3.Future<void> launchInAppBrowser(String? url) => (super.noSuchMethod(
+  _i4.Future<void> launchInAppBrowser(String? url) => (super.noSuchMethod(
         Invocation.method(
           #launchInAppBrowser,
           [url],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i3.Future<void> launchUri(String? url) => (super.noSuchMethod(
+  _i4.Future<void> launchUri(String? url) => (super.noSuchMethod(
         Invocation.method(
           #launchUri,
           [url],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+}
+
+/// A class which mocks [SettingsRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSettingsRepository extends _i1.Mock
+    implements _i7.SettingsRepository {
+  MockSettingsRepository() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<void> init() => (super.noSuchMethod(
+        Invocation.method(
+          #init,
+          [],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getNudgeModeEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getNudgeModeEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setNudgeModeEnabled(bool? enabled) => (super.noSuchMethod(
+        Invocation.method(
+          #setNudgeModeEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i8.NotificationMode getNotificationMode() => (super.noSuchMethod(
+        Invocation.method(
+          #getNotificationMode,
+          [],
+        ),
+        returnValue: _i8.NotificationMode.persistent,
+      ) as _i8.NotificationMode);
+
+  @override
+  _i4.Future<void> setNotificationMode(_i8.NotificationMode? mode) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setNotificationMode,
+          [mode],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i2.TimeOfDay getNudgeTime() => (super.noSuchMethod(
+        Invocation.method(
+          #getNudgeTime,
+          [],
+        ),
+        returnValue: _FakeTimeOfDay_0(
+          this,
+          Invocation.method(
+            #getNudgeTime,
+            [],
+          ),
+        ),
+      ) as _i2.TimeOfDay);
+
+  @override
+  _i4.Future<void> setNudgeTime(_i2.TimeOfDay? time) => (super.noSuchMethod(
+        Invocation.method(
+          #setNudgeTime,
+          [time],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i2.TimeOfDay getSlotTime(String? slot) => (super.noSuchMethod(
+        Invocation.method(
+          #getSlotTime,
+          [slot],
+        ),
+        returnValue: _FakeTimeOfDay_0(
+          this,
+          Invocation.method(
+            #getSlotTime,
+            [slot],
+          ),
+        ),
+      ) as _i2.TimeOfDay);
+
+  @override
+  _i4.Future<void> setSlotTime(
+    String? slot,
+    _i2.TimeOfDay? time,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setSlotTime,
+          [
+            slot,
+            time,
+          ],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  String getWarningNudgeOption() => (super.noSuchMethod(
+        Invocation.method(
+          #getWarningNudgeOption,
+          [],
+        ),
+        returnValue: _i9.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getWarningNudgeOption,
+            [],
+          ),
+        ),
+      ) as String);
+
+  @override
+  _i4.Future<void> setWarningNudgeOption(String? option) => (super.noSuchMethod(
+        Invocation.method(
+          #setWarningNudgeOption,
+          [option],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getExtendedRemindersEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getExtendedRemindersEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setExtendedRemindersEnabled(bool? enabled) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setExtendedRemindersEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getBiometricLockEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getBiometricLockEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setBiometricLockEnabled(bool? enabled) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setBiometricLockEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getLocalStorageOnly() => (super.noSuchMethod(
+        Invocation.method(
+          #getLocalStorageOnly,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setLocalStorageOnly(bool? enabled) => (super.noSuchMethod(
+        Invocation.method(
+          #setLocalStorageOnly,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getAnalyticsEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getAnalyticsEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setAnalyticsEnabled(bool? enabled) => (super.noSuchMethod(
+        Invocation.method(
+          #setAnalyticsEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getCrashReportingEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getCrashReportingEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setCrashReportingEnabled(bool? enabled) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setCrashReportingEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i2.ThemeMode getThemeMode() => (super.noSuchMethod(
+        Invocation.method(
+          #getThemeMode,
+          [],
+        ),
+        returnValue: _i2.ThemeMode.system,
+      ) as _i2.ThemeMode);
+
+  @override
+  _i4.Future<void> setThemeMode(_i2.ThemeMode? mode) => (super.noSuchMethod(
+        Invocation.method(
+          #setThemeMode,
+          [mode],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getSoundsEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getSoundsEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setSoundsEnabled(bool? enabled) => (super.noSuchMethod(
+        Invocation.method(
+          #setSoundsEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getReducedMotionEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getReducedMotionEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setReducedMotionEnabled(bool? enabled) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setReducedMotionEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool getHapticFeedbackEnabled() => (super.noSuchMethod(
+        Invocation.method(
+          #getHapticFeedbackEnabled,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setHapticFeedbackEnabled(bool? enabled) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setHapticFeedbackEnabled,
+          [enabled],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  double getFontSizeScale() => (super.noSuchMethod(
+        Invocation.method(
+          #getFontSizeScale,
+          [],
+        ),
+        returnValue: 0.0,
+      ) as double);
+
+  @override
+  _i4.Future<void> setFontSizeScale(double? scale) => (super.noSuchMethod(
+        Invocation.method(
+          #setFontSizeScale,
+          [scale],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  bool hasAcceptedDisclaimer() => (super.noSuchMethod(
+        Invocation.method(
+          #hasAcceptedDisclaimer,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> setAcceptedDisclaimer(bool? accepted) => (super.noSuchMethod(
+        Invocation.method(
+          #setAcceptedDisclaimer,
+          [accepted],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> setLastLibraryDownloadTime(DateTime? time) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setLastLibraryDownloadTime,
+          [time],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

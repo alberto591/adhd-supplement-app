@@ -1,7 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
 import 'package:adhd_supplement_app/domain/entities/supplement.dart';
+import 'package:flutter/material.dart';
 import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 
@@ -68,6 +71,86 @@ class MockSupplementRepository implements SupplementRepository {
   Future<void> downloadLibrary() async {}
 }
 
+class MockSettingsRepository implements SettingsRepository {
+  DateTime? lastDownloadTime;
+
+  @override
+  Future<void> init() async {}
+
+  @override
+  DateTime? getLastLibraryDownloadTime() => lastDownloadTime;
+
+  @override
+  Future<void> setLastLibraryDownloadTime(DateTime time) async {
+    lastDownloadTime = time;
+  }
+
+  @override
+  bool getNudgeModeEnabled() => true;
+  @override
+  Future<void> setNudgeModeEnabled(bool enabled) async {}
+  @override
+  NotificationMode getNotificationMode() => NotificationMode.gentle;
+  @override
+  Future<void> setNotificationMode(NotificationMode mode) async {}
+  @override
+  TimeOfDay getNudgeTime() => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setNudgeTime(TimeOfDay time) async {}
+  @override
+  TimeOfDay getSlotTime(String slot) => const TimeOfDay(hour: 8, minute: 0);
+  @override
+  Future<void> setSlotTime(String slot, TimeOfDay time) async {}
+  @override
+  String getWarningNudgeOption() => '15m';
+  @override
+  Future<void> setWarningNudgeOption(String option) async {}
+  @override
+  bool getExtendedRemindersEnabled() => false;
+  @override
+  Future<void> setExtendedRemindersEnabled(bool enabled) async {}
+  @override
+  bool getBiometricLockEnabled() => false;
+  @override
+  Future<void> setBiometricLockEnabled(bool enabled) async {}
+  @override
+  bool getLocalStorageOnly() => false;
+  @override
+  Future<void> setLocalStorageOnly(bool enabled) async {}
+  @override
+  bool getAnalyticsEnabled() => true;
+  @override
+  Future<void> setAnalyticsEnabled(bool enabled) async {}
+  @override
+  bool getCrashReportingEnabled() => true;
+  @override
+  Future<void> setCrashReportingEnabled(bool enabled) async {}
+  @override
+  ThemeMode getThemeMode() => ThemeMode.system;
+  @override
+  Future<void> setThemeMode(ThemeMode mode) async {}
+  @override
+  bool getSoundsEnabled() => true;
+  @override
+  Future<void> setSoundsEnabled(bool enabled) async {}
+  @override
+  bool getReducedMotionEnabled() => false;
+  @override
+  Future<void> setReducedMotionEnabled(bool enabled) async {}
+  @override
+  bool getHapticFeedbackEnabled() => true;
+  @override
+  Future<void> setHapticFeedbackEnabled(bool enabled) async {}
+  @override
+  double getFontSizeScale() => 1.0;
+  @override
+  Future<void> setFontSizeScale(double scale) async {}
+  @override
+  bool hasAcceptedDisclaimer() => true;
+  @override
+  Future<void> setAcceptedDisclaimer(bool accepted) async {}
+}
+
 class MockUrlService extends UrlService {
   String? lastLaunchedUrl;
   bool _shouldThrow = false;
@@ -100,14 +183,16 @@ void main() {
   late MockSupplementRepository mockRepository;
   late MockUrlService mockUrlService;
   late MockAnalyticsService mockAnalyticsService;
+  late MockSettingsRepository mockSettingsRepository;
   late SupplementViewModel viewModel;
 
   setUp(() {
     mockRepository = MockSupplementRepository();
     mockUrlService = MockUrlService();
     mockAnalyticsService = MockAnalyticsService();
-    viewModel = SupplementViewModel(
-        mockRepository, mockUrlService, mockAnalyticsService);
+    mockSettingsRepository = MockSettingsRepository();
+    viewModel = SupplementViewModel(mockRepository, mockUrlService,
+        mockAnalyticsService, mockSettingsRepository);
   });
 
   group('SupplementViewModel', () {
@@ -148,8 +233,8 @@ void main() {
       mockRepository.setSupplements([]);
 
       // Create new view model to trigger fetch
-      final newViewModel = SupplementViewModel(
-          mockRepository, mockUrlService, mockAnalyticsService);
+      final newViewModel = SupplementViewModel(mockRepository, mockUrlService,
+          mockAnalyticsService, mockSettingsRepository);
 
       // Immediately check loading state (before async completes)
       expect(newViewModel.isLoading, true);
@@ -162,8 +247,8 @@ void main() {
     test('should handle repository errors', () async {
       mockRepository.setShouldThrow(true);
 
-      final newViewModel = SupplementViewModel(
-          mockRepository, mockUrlService, mockAnalyticsService);
+      final newViewModel = SupplementViewModel(mockRepository, mockUrlService,
+          mockAnalyticsService, mockSettingsRepository);
 
       await Future<void>.delayed(const Duration(milliseconds: 200));
 

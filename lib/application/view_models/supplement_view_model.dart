@@ -5,14 +5,17 @@ import 'package:adhd_supplement_app/domain/repositories/supplement_repository.da
 import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
 import 'package:adhd_supplement_app/utils/logger.dart';
+import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
 
 class SupplementViewModel extends ChangeNotifier {
   final SupplementRepository _repository;
   final UrlService _urlService;
   final AnalyticsService _analyticsService;
 
-  SupplementViewModel(
-      this._repository, this._urlService, this._analyticsService) {
+  final SettingsRepository _settingsRepository;
+
+  SupplementViewModel(this._repository, this._urlService,
+      this._analyticsService, this._settingsRepository) {
     _fetchSupplements();
   }
 
@@ -25,6 +28,11 @@ class SupplementViewModel extends ChangeNotifier {
   bool get isDownloadingLibrary => _isDownloadingLibrary;
   List<Supplement> get supplements => _supplements;
   String? get error => _error;
+
+  bool get isLibraryDownloaded =>
+      _settingsRepository.getLastLibraryDownloadTime() != null;
+  DateTime? get lastDownloadTime =>
+      _settingsRepository.getLastLibraryDownloadTime();
 
   Future<void> _fetchSupplements() async {
     _isLoading = true;
@@ -51,6 +59,7 @@ class SupplementViewModel extends ChangeNotifier {
       await _repository.downloadLibrary();
       // After downloading, refresh the local list to ensure even the in-memory cache is hot
       _supplements = await _repository.getAllSupplements();
+      await _settingsRepository.setLastLibraryDownloadTime(DateTime.now());
     } catch (e) {
       AppLogger.e('Error during manual library download', e);
       rethrow;

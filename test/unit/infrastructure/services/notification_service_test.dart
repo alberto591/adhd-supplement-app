@@ -21,14 +21,13 @@ void main() {
   group('scheduleRecurringNudgeSequence', () {
     test('schedules 3 notifications with correct offsets for Gentle mode',
         () async {
-      const baseId = 1000;
       const title = 'Test Title';
       const body = 'Test Body';
       const hour = 8;
       const minute = 0;
 
       await notificationService.scheduleRecurringNudgeSequence(
-        baseId: baseId,
+        slot: NotificationSlot.morning,
         title: title,
         body: body,
         hour: hour,
@@ -53,7 +52,7 @@ void main() {
     test('urgent mode uses different time offsets', () async {
       // Future-proofing the test for when urgent logic is detailed
       await notificationService.scheduleRecurringNudgeSequence(
-        baseId: 2000,
+        slot: NotificationSlot.afternoon,
         title: 'Urgent',
         body: 'Hurry',
         hour: 9,

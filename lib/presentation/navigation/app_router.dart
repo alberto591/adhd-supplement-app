@@ -190,6 +190,12 @@ class AppRouter {
       case successStats:
         return MaterialPageRoute(
           builder: (context) {
+            final authProvider =
+                Provider.of<AuthProvider>(context, listen: false);
+
+            if (!authProvider.canAccess('pro')) {
+              return const PaywallScreen(returnTo: insights);
+            }
             return const InsightsScreen();
           },
         );
@@ -305,7 +311,9 @@ class AppRouter {
 //        return MaterialPageRoute(builder: (_) => const AppAppearanceScreen());
       case subscription:
       case paywall:
-        return MaterialPageRoute(builder: (_) => const PaywallScreen());
+        final returnTo = settings.arguments as String?;
+        return MaterialPageRoute(
+            builder: (_) => PaywallScreen(returnTo: returnTo));
       case referFriend:
         return MaterialPageRoute(builder: (_) => const ReferFriendScreen());
       case symptomCheckin:

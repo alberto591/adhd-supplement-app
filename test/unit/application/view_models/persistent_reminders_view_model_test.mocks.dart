@@ -393,6 +393,17 @@ class MockSettingsRepository extends _i1.Mock
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> setLastLibraryDownloadTime(DateTime? time) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setLastLibraryDownloadTime,
+          [time],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [NotificationService].
@@ -504,7 +515,7 @@ class MockNotificationService extends _i1.Mock
 
   @override
   _i4.Future<void> scheduleRecurringNudgeSequence({
-    required int? baseId,
+    required _i5.NotificationSlot? slot,
     required String? title,
     required String? body,
     required int? hour,
@@ -516,7 +527,7 @@ class MockNotificationService extends _i1.Mock
           #scheduleRecurringNudgeSequence,
           [],
           {
-            #baseId: baseId,
+            #slot: slot,
             #title: title,
             #body: body,
             #hour: hour,

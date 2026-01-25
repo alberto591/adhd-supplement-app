@@ -37,9 +37,10 @@ void main() {
 
     locator.registerFactory<SupplementViewModel>(
       () => SupplementViewModel(
-        _FakeSupplementRepository(),
+        locator<SupplementRepository>(),
         UrlService(),
-        _FakeAnalyticsService(),
+        locator<AnalyticsService>(),
+        locator<SettingsRepository>(),
       ),
     );
 
@@ -292,6 +293,11 @@ class _FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setSoundsEnabled(bool enabled) async {}
+
+  @override
+  DateTime? getLastLibraryDownloadTime() => null;
+  @override
+  Future<void> setLastLibraryDownloadTime(DateTime time) async {}
 }
 
 class _FakeNotificationService implements NotificationService {
@@ -341,7 +347,7 @@ class _FakeNotificationService implements NotificationService {
 
   @override
   Future<void> scheduleRecurringNudgeSequence({
-    required int baseId,
+    required NotificationSlot slot,
     required String title,
     required String body,
     required int hour,

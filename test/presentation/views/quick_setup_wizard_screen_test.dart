@@ -183,4 +183,9 @@ class FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setSoundsEnabled(bool enabled) async {}
+
+  @override
+  DateTime? getLastLibraryDownloadTime() => null;
+  @override
+  Future<void> setLastLibraryDownloadTime(DateTime time) async {}
 }

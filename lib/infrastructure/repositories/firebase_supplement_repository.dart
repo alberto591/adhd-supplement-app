@@ -149,6 +149,8 @@ class FirebaseSupplementRepository implements SupplementRepository {
         }
       }
 
+      AppLogger.w(
+          'Supplement $id not found in global or user ($userId) collections');
       return null;
     } catch (e) {
       AppLogger.w(
@@ -211,11 +213,16 @@ class FirebaseSupplementRepository implements SupplementRepository {
     try {
       final data = supplement.toJson();
       if (supplement.id.isEmpty) {
-        await _firestore
+        // Generate a fresh ID explicitly to ensure consistency between doc.id and data['id']
+        final docRef = _firestore
             .collection('users')
             .doc(supplement.userId)
             .collection('custom_supplements')
-            .add(data);
+            .doc();
+
+        final dataWithId = {...data, 'id': docRef.id};
+        await docRef.set(dataWithId);
+        AppLogger.i('Created new custom supplement with ID: ${docRef.id}');
       } else {
         await _firestore
             .collection('users')
@@ -223,11 +230,11 @@ class FirebaseSupplementRepository implements SupplementRepository {
             .collection('custom_supplements')
             .doc(supplement.id)
             .set(data);
+        AppLogger.i('Updated custom supplement: ${supplement.id}');
       }
 
       // Invalidate cache
-      _userCache.remove(supplement.userId);
-      _userCache.remove('global');
+      _userCache.clear(); // Clear all to ensure next fetch is fresh
     } catch (e) {
       AppLogger.e('Error saving custom supplement', e);
       throw Exception('Failed to save custom supplement: $e');

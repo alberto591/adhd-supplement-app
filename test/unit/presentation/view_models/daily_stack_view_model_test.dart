@@ -149,7 +149,7 @@ class FakeNotificationService implements NotificationService {
 
   @override
   Future<void> scheduleRecurringNudgeSequence({
-    required int baseId,
+    required NotificationSlot slot,
     required String title,
     required String body,
     required int hour,
@@ -320,6 +320,12 @@ class FakeSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setSoundsEnabled(bool enabled) async {}
+
+  @override
+  DateTime? getLastLibraryDownloadTime() => null;
+
+  @override
+  Future<void> setLastLibraryDownloadTime(DateTime time) async {}
 }
 
 void main() {

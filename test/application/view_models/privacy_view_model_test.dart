@@ -160,9 +160,13 @@ class MockSettingsRepository implements SettingsRepository {
 
   @override
   bool hasAcceptedDisclaimer() => true;
-
   @override
   Future<void> setAcceptedDisclaimer(bool accepted) async {}
+
+  @override
+  DateTime? getLastLibraryDownloadTime() => null;
+  @override
+  Future<void> setLastLibraryDownloadTime(DateTime time) async {}
 
   @override
   bool getSoundsEnabled() => true;
