@@ -3,7 +3,10 @@
 This guide explains how to manage app versions for NeuroStack to ensure smooth deployments to the Google Play Store and Apple App Store.
 
 ## 📌 The Golden Rule of Versioning
-**Every single release must have a higher "Build Number" than the previous one.** If you upload a file with a number that has already been used, the store will reject it.
+**Every single release (and every upload attempt to fix an error) must have a higher "Build Number" than the previous one.** If you upload a file with a number that has already been used (or even an abandoned upload with that number), the store will reject it.
+
+> [!IMPORTANT]
+> If a build fails to upload or you need to re-upload for any reason, you **must** increment the number again.
 
 ---
 
