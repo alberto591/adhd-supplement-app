@@ -143,7 +143,7 @@ class DoctorExportViewModel extends ChangeNotifier {
     final dateFormat = DateFormat('MMM d, yyyy');
     final buffer = StringBuffer();
 
-    buffer.writeln('ADHD MANAGEMENT REPORT');
+    buffer.writeln('ROUTINE FOCUS REPORT');
     buffer.writeln('=======================');
     buffer.writeln('Generated: ${dateFormat.format(DateTime.now())}');
     buffer.writeln(
@@ -151,11 +151,11 @@ class DoctorExportViewModel extends ChangeNotifier {
     buffer.writeln('');
 
     if (includeConsistency) {
-      buffer.writeln('SUPPLEMENT CONSISTENCY');
+      buffer.writeln('ROUTINE ADHERENCE');
       buffer.writeln('----------------------');
       buffer.writeln(
           'Overall Adherence: ${(_consistency * 100).toStringAsFixed(1)}%');
-      buffer.writeln('Doses Taken: $_takenDoses / $_totalDoses recorded');
+      buffer.writeln('Rituals Taken: $_takenDoses / $_totalDoses recorded');
       buffer.writeln('');
     }
 
@@ -191,7 +191,7 @@ class DoctorExportViewModel extends ChangeNotifier {
         final taken =
             log.entries.where((e) => e.status == LogStatus.taken).length;
         final total = log.entries.length;
-        buffer.writeln('  Supplements: $taken/$total taken');
+        buffer.writeln('  Rituals: $taken/$total taken');
         // List skipped
         final skipped = log.entries.where((e) => e.status == LogStatus.skipped);
         if (skipped.isNotEmpty) {

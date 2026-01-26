@@ -14,9 +14,9 @@ class SupplementUIHelper {
         return Icons.psychology;
       case 'herbal':
         return Icons.spa;
-      case 'medication':
+      case 'protocol':
         return Icons.medication;
-      case 'stimulant':
+      case 'focus_agent':
         return Icons.bolt;
       default:
         return Icons.local_pharmacy;
@@ -61,7 +61,7 @@ class SupplementUIHelper {
         return Colors.green[400]!;
       case 'herbal':
         return Colors.teal[400]!;
-      case 'medication':
+      case 'protocol':
         return Colors.red[400]!;
       default:
         return Colors.blueGrey;

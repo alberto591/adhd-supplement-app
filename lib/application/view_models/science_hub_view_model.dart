@@ -133,17 +133,17 @@ class ScienceHubViewModel extends ChangeNotifier {
     _faqs = [
       FaqItem(
         id: 'faq-1',
-        question: 'Can I take supplements with my ADHD medication?',
+        question: 'Can I take routines with my daily protocols?',
         answer:
-            'Most supplements are safe to combine with ADHD medications, but timing and specific interactions matter. **Critical exception: Vitamin C** must be taken 1+ hours BEFORE or 4+ hours AFTER stimulants (Adderall, Vyvanse) as it can reduce medication effectiveness by 30-50%. Caffeine should be used cautiously as it has additive stimulant effects. Always consult your prescribing physician before adding supplements, especially if you take multiple medications.',
+            'Most additions are safe to combine with your daily routine, but timing and specific interactions matter. **Critical exception: Vitamin C** must be taken 1+ hours BEFORE or 4+ hours AFTER certain sharp-focus alerts as it can reduce effectiveness by 30-50%. Caffeine should be used cautiously as it has additive focal effects. Always consult your advisor before adding new rituals, especially if you have multiple daily protocols.',
         category: 'Safety',
         relatedSupplements: ['Vitamin C', 'Caffeine', 'Magnesium'],
       ),
       FaqItem(
         id: 'faq-2',
-        question: 'Why does timing matter for Vitamin C and stimulants?',
+        question: 'Why does timing matter for Vitamin C?',
         answer:
-            'Vitamin C (ascorbic acid) acidifies urine, which increases the excretion rate of amphetamine-based stimulants like Adderall and Vyvanse. This can reduce blood levels of the medication by 30-50%, significantly decreasing effectiveness. To avoid this interaction, take Vitamin C at least 1 hour before your morning dose or wait 4+ hours after. Evening dosing (after medication has worn off) is often the safest approach.',
+            'Vitamin C (ascorbic acid) acidifies urine, which increases the excretion rate of certain focus-enhancing compounds. This can reduce blood levels of the active ingredients by 30-50%, significantly decreasing effectiveness. To avoid this interaction, take Vitamin C at least 1 hour before your morning intake or wait 4+ hours after. Evening intake is often the safest approach.',
         category: 'Dosing',
         relatedSupplements: ['Vitamin C'],
       ),
@@ -152,7 +152,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         question:
             'What\'s the difference between methylated and regular B vitamins?',
         answer:
-            'Methylated B vitamins (like methylfolate and methylcobalamin) are "pre-activated" forms that bypass a genetic conversion step. About 40-60% of people have MTHFR gene variants that reduce their ability to convert regular folic acid and B12 into usable forms. Methylated versions are immediately bioavailable and often more effective for neurotransmitter synthesis, especially for dopamine and serotonin production critical in ADHD.',
+            'Methylated B vitamins (like methylfolate and methylcobalamin) are "pre-activated" forms that bypass a genetic conversion step. About 40-60% of people have variants that reduce their ability to convert regular folic acid and B12 into usable forms. Methylated versions are immediately bioavailable and often more effective for routine synthesis, especially for neurotransmitter production critical in sharp-focus thinking.',
         category: 'General',
         relatedSupplements: ['B-Complex Vitamins'],
       ),
@@ -176,7 +176,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         id: 'faq-6',
         question: 'Is it safe to take multiple supplements together?',
         answer:
-            'Generally yes, but consider:\n\n**Synergistic combinations (good):**\n• Magnesium + B6 (enhances absorption)\n• Caffeine + L-Theanine (reduces jitters)\n• Omega-3 + Vitamin D (fat-soluble absorption)\n\n**Competitive absorption (separate timing):**\n• Zinc + Copper (compete for absorption)\n• Calcium + Magnesium (take separately)\n• High-dose Vitamin C + Copper (inhibits absorption)\n\n**Avoid combining:**\n• 5-HTP + SSRIs (serotonin syndrome risk)\n• St. John\'s Wort + most medications (extensive interactions)\n\nStart with 1-2 supplements and add gradually to identify what works.',
+            'Generally yes, but consider:\n\n**Synergistic combinations (good):**\n• Magnesium + B6 (enhances absorption)\n• Caffeine + L-Theanine (reduces jitters)\n• Omega-3 + Vitamin D (fat-soluble absorption)\n\n**Competitive absorption (separate timing):**\n• Zinc + Copper (compete for absorption)\n• Calcium + Magnesium (take separately)\n• High-dose Vitamin C + Copper (inhibits absorption)\n\n**Avoid combining:**\n• 5-HTP + Serotonin-affecting agents (risk of overload)\n• St. John\'s Wort + most protocols (extensive interactions)\n\nStart with 1-2 rituals and add gradually to identify what works.',
         category: 'Safety',
         relatedSupplements: ['Magnesium', 'Zinc', '5-HTP', 'Omega-3'],
       ),
@@ -199,22 +199,22 @@ class ScienceHubViewModel extends ChangeNotifier {
       ),
       FaqItem(
         id: 'faq-9',
-        question: 'Can supplements replace ADHD medication?',
+        question: 'Can routines replace focus protocols?',
         answer:
-            '**No.** Supplements support brain function but do not replace prescription ADHD medications. Research shows:\n\n• Stimulants (Adderall, Vyvanse, Ritalin) have ~70-80% response rates for core ADHD symptoms\n• Supplements typically provide 10-30% improvement in specific areas (focus, mood, sleep)\n• Supplements work best as **adjunct therapy** alongside medication and behavioral strategies\n\nSome people use supplements to:\n• Reduce medication dose (under medical supervision)\n• Manage side effects (sleep, appetite)\n• Support neurotransmitter health long-term\n\nNever stop or reduce medication without consulting your prescribing physician.',
+            '**No.** Routines support brain logic but do not replace protocols. Research shows:\n\n• Core protocols have ~70-80% response rates for specific goals\n• Routines typically provide 10-30% improvement in specific areas (focus, mood, sleep)\n• Routines work best as **adjacent support** alongside protocols and behavioral strategies\n\nSome people use routines to:\n• Optimize their daily protocol (under supervision)\n• Manage transitions (sleep, appetite)\n• Support long-term routine health\n\nNever adjust your protocols without consulting your professional advisor.',
         category: 'General',
         relatedSupplements: [],
       ),
       FaqItem(
         id: 'faq-10',
-        question: 'Are there supplements I should avoid with ADHD?',
+        question: 'Are there routines I should avoid?',
         answer:
-            '**Avoid or use extreme caution:**\n\n• **St. John\'s Wort** - Reduces birth control effectiveness 50%+, extensive drug interactions\n• **Kava Kava** - Liver toxicity risk, banned in several countries\n• **High-dose standalone B6 (>100mg)** - Risk of irreversible nerve damage\n• **DMAE** - Weak evidence, unpredictable effects, may worsen symptoms\n\n**Conditional (medical supervision required):**\n• **5-HTP** - NEVER with SSRIs/SNRIs (serotonin syndrome risk)\n• **Copper** - Most ADHD patients have high copper; only supplement if deficient\n• **Mucuna Pruriens** - Must cycle; risk of dopamine depletion\n\nAlways check "Avoid" category in the Library for detailed warnings.',
+            '**Avoid or use extreme caution:**\n\n• **St. John\'s Wort** - Extensive protocol interactions\n• **Kava Kava** - Liver considerations, restricted in several countries\n• **High-amount standalone B6 (>100mg)** - Risk of nerve sensitivity\n• **DMAE** - Weak evidence, unpredictable effects\n\n**Conditional (professional supervision required):**\n• **5-HTP** - NEVER with serotonin protocols\n• **Copper** - Often sufficient in diet; only add if deficient\n• **Mucuna Pruriens** - Must cycle; risk of baseline depletion\n\nAlways check "Avoid" category in the Library for detailed warnings.',
         category: 'Safety',
         relatedSupplements: [
           'St. John\'s Wort',
           'Kava Kava',
-          'High-dose B6',
+          'High-amount B6',
           '5-HTP'
         ],
       ),
@@ -222,7 +222,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         id: 'faq-11',
         question: 'How do I know if a supplement is working?',
         answer:
-            'Track specific metrics:\n\n**Subjective measures:**\n• Focus duration (how long can you work without distraction?)\n• Mental clarity (brain fog vs. sharp thinking)\n• Mood stability (emotional regulation)\n• Sleep quality (time to fall asleep, wake feeling rested)\n\n**Objective measures:**\n• Work output (tasks completed per day)\n• Medication effectiveness (do you need less?)\n• Side effect reduction (appetite, sleep, anxiety)\n\n**Best practice:**\n• Add ONE supplement at a time (2-4 week trial)\n• Keep a daily journal of the above metrics\n• Use the app\'s tracking features\n• If no improvement after 4-6 weeks, discontinue\n\nPlacebo effect is real - objective tracking helps identify true benefits.',
+            'Track specific metrics:\n\n**Subjective measures:**\n• Focus duration (how long can you work without distraction?)\n• Mental clarity (brain fog vs. sharp thinking)\n• Mood stability (emotional regulation)\n• Sleep quality (time to fall asleep, wake feeling rested)\n\n**Objective measures:**\n• Work output (tasks completed per day)\n• Protocol effectiveness (do you need less?)\n• Challenge reduction (appetite, sleep, anxiety)\n\n**Best practice:**\n• Add ONE change at a time (2-4 week trial)\n• Keep a daily journal of the above metrics\n• Use the app\'s tracking features\n• If no improvement after 4-6 weeks, discontinue\n\nPlacebo effect is real - objective tracking helps identify true benefits.',
         category: 'General',
         relatedSupplements: [],
       ),
@@ -231,7 +231,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         question:
             'What\'s the difference between "beneficial" and "conditional" supplements?',
         answer:
-            '**Beneficial supplements:**\n• Strong safety profile for most people\n• Supported by research for ADHD/cognitive function\n• Minimal drug interactions\n• Example: Omega-3, Magnesium, B-Complex, Creatine\n\n**Conditional/Cautionary supplements:**\n• Effective BUT have significant risks or limitations\n• Require medical supervision or specific conditions\n• May have drug interactions or side effects\n• Example: Caffeine (additive stimulation), Melatonin (hormone), 5-HTP (SSRI interaction), Copper (often already high in ADHD)\n\nConditional doesn\'t mean "bad" - it means "use carefully with awareness of risks." Many people benefit from conditional supplements under proper guidance.',
+            '**Beneficial additions:**\n• Strong safety profile for most people\n• Supported by research for cognitive function\n• Minimal protocol interactions\n• Example: Omega-3, Magnesium, B-Complex, Creatine\n\n**Conditional/Cautionary additions:**\n• Effective BUT have limitations or specific requirements\n• May have interactions or specific considerations\n• Example: Caffeine (additive stimulation), Melatonin (hormone), 5-HTP (serotonin interaction), Copper\n\nConditional doesn\'t mean "bad" - it means "use carefully with awareness of trade-offs." Many people benefit from conditional additions under proper guidance.',
         category: 'General',
         relatedSupplements: ['Caffeine', 'Melatonin', '5-HTP', 'Copper'],
       ),
@@ -242,14 +242,14 @@ class ScienceHubViewModel extends ChangeNotifier {
     _studies = [
       Study(
         id: 'study-1',
-        title: 'Omega-3 fatty acids for ADHD',
+        title: 'Omega-3 fatty acids for Attention',
         authors: 'Bloch MH, Qawasmi A.',
         year: 2011,
         pubmedUrl: 'https://pubmed.ncbi.nlm.nih.gov/21961774/',
         category: 'Essential Fatty Acids',
         evidenceQuality: EvidenceQuality.high,
         keyFindings:
-            'Meta-analysis showed a small but significant effect of omega-3 fatty acids in improving ADHD symptoms. Higher doses of EPA were associated with greater efficacy.',
+            'Meta-analysis showed a small but significant effect of omega-3 fatty acids in improving attention symptoms. Higher amounts of EPA were associated with greater efficacy.',
         relatedSupplements: ['Omega-3 Fish Oil'],
       ),
       Study(
@@ -266,14 +266,14 @@ class ScienceHubViewModel extends ChangeNotifier {
       ),
       Study(
         id: 'study-3',
-        title: 'Zinc for ADHD: A systematic review',
+        title: 'Zinc for Focus: A systematic review',
         authors: 'Zinc Research Group',
         year: 2015,
         pubmedUrl: 'https://pubmed.ncbi.nlm.nih.gov/21350130/',
         category: 'Vitamins & Minerals',
         evidenceQuality: EvidenceQuality.moderate,
         keyFindings:
-            'Zinc supplementation may be beneficial as an adjunct to stimulant therapy, especially in populations with low zinc status.',
+            'Zinc supplementation may be beneficial as an adjunct to standard protocols, especially in populations with low zinc status.',
         relatedSupplements: ['Zinc'],
       ),
       Study(
@@ -290,14 +290,14 @@ class ScienceHubViewModel extends ChangeNotifier {
       ),
       Study(
         id: 'study-5',
-        title: 'Magnesium and Vitamin B6 for ADHD',
+        title: 'Magnesium and Vitamin B6 for Regulation',
         authors: 'Mousain-Bosc M, et al.',
         year: 2006,
         pubmedUrl: 'https://pubmed.ncbi.nlm.nih.gov/16846314/',
         category: 'Vitamins & Minerals',
         evidenceQuality: EvidenceQuality.moderate,
         keyFindings:
-            'Combined magnesium and B6 supplementation significantly improved ADHD symptoms (hyperactivity, aggressiveness) compared to baseline.',
+            'Combined magnesium and B6 supplementation significantly improved regulated behavior and calm compared to baseline.',
         relatedSupplements: ['Magnesium Glycinate', 'Vitamin B6'],
       ),
       Study(
@@ -333,7 +333,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         category: 'Nootropics',
         evidenceQuality: EvidenceQuality.moderate,
         keyFindings:
-            'N-Acetyl Cysteine significantly reduced impulsive behaviors in clinical trials, suggesting benefit for ADHD impulsivity.',
+            'N-Acetyl Cysteine significantly reduced impulsive behaviors in clinical trials, suggesting benefit for impulse control.',
         relatedSupplements: ['N-Acetyl Cysteine (NAC)'],
       ),
     ];
@@ -343,9 +343,9 @@ class ScienceHubViewModel extends ChangeNotifier {
     _educationalArticles = [
       EducationalArticle(
         id: '1',
-        title: 'Understanding ADHD Neurotransmitter Deficiencies',
+        title: 'Understanding Focus Neurotransmitter Support',
         summary:
-            'A deep dive into how dopamine and norepinephrine affect ADHD brains and how supplementation can help.',
+            'A deep dive into how dopamine and norepinephrine affect neurodivergent brains and how nutrition can help.',
         content: '''# Understanding ADHD Neurotransmitter Deficiencies
 
 ADHD is increasingly understood not just as a behavioral disorder, but as a complex interplay of neurotransmitter systems that regulate attention, motivation, and executive function.
@@ -433,7 +433,7 @@ The goal of the evening is to reduce cortisol and support restorative sleep.
 - **L-Theanine:** Can be used in the evening to "quiet the brain" without causing drowsiness.
 
 ## The Vitamin C Stimulant Rule
-**Warning:** Never take high-dose Vitamin C within 4 hours of taking stimulant medication (Vyvanse, Adderall), as it can interfere with the medication's absorption and effectiveness.''',
+**Warning:** Never take high-amount Vitamin C within 4 hours of your focus routine, as it can interfere with absorption and effectiveness.''',
         imageUrl:
             'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800',
         category: 'Lifestyle',
@@ -449,7 +449,7 @@ The goal of the evening is to reduce cortisol and support restorative sleep.
       ),
       EducationalArticle(
         id: '4',
-        title: 'The Methylation Cycle and ADHD',
+        title: 'The Methylation Cycle and Focus',
         summary:
             'Exploring the genetic link between MTHFR mutations, methylation, and neurotransmitter balance.',
         content: '''# The Methylation Cycle and ADHD
@@ -483,7 +483,7 @@ The MTHFR gene provides instructions for making an enzyme that processes folate.
       ),
       EducationalArticle(
         id: '5',
-        title: 'Building Your First ADHD Supplement Stack',
+        title: 'Building Your First Focus Stack',
         summary:
             'A step-by-step guide to starting your journey with evidence-based supplementation.',
         content: '''# Building Your First ADHD Supplement Stack

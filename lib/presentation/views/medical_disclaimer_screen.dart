@@ -39,7 +39,7 @@ class MedicalDisclaimerScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
                     Text(
-                      'Medical Disclaimer',
+                      'Usage Agreement',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -60,15 +60,15 @@ class MedicalDisclaimerScreen extends StatelessWidget {
                     _buildDisclaimerCard(
                       context,
                       isDark,
-                      'Not Medical Advice',
-                      'Daily Stack is an educational resource. The information provided is for informational purposes only and is not intended as medical advice, diagnosis, or treatment.',
+                      'General Information',
+                      'NeuroStack is a lifestyle efficiency tool. The information provided is for educational purposes and is not intended to replace professional guidance or support.',
                     ),
                     const SizedBox(height: 16),
                     _buildDisclaimerCard(
                       context,
                       isDark,
-                      'Consult Your Physician',
-                      'Always seek the advice of your physician or other qualified health provider before starting any new supplement, especially if you have an existing medical condition or are taking prescription medications.',
+                      'Consult Your Professional',
+                      'Always seek the advice of a qualified professional advisor before starting any new routine, especially if you have sensitive requirements or specific daily protocols.',
                     ),
                     const SizedBox(height: 16),
                     _buildDisclaimerCard(

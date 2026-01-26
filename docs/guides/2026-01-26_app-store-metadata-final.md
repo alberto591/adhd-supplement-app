@@ -1,7 +1,7 @@
-# NeuroStack: Official App Store Metadata (2026)
+# NeuroStack: Focus & Flow — Official App Store Metadata (2026)
 
 ## 📋 General Info
-- **App Name**: NeuroStack
+- **App Name**: NeuroStack: Focus & Flow
 - **App Category**: Health & Fitness
 - **Release Status**: V1.0.0+2 (Signed AAB generated)
 
@@ -10,22 +10,22 @@
 ## ✍️ Text Listing
 
 ### Short Description (Max 80 chars)
-> Optimize ADHD focus with smart supplement reminders and evidence-based stacks.
+> Personalized habit anchors for daily focus and routine consistency.
 
 ### Full Description (Max 4000 chars)
 **Master Your Focus. Simplify Your Routine.**
 
-NeuroStack is the ultimate supplement and medication tracking companion designed specifically for the ADHD brain. Whether you are managing complex "Focus Stacks" or simple daily vitamins, NeuroStack provides the clarity, consistency, and scientific rigor you need to perform at your best.
+NeuroStack is the ultimate routine tracking companion designed for anyone seeking better daily focus and routine consistency. Whether you are managing complex daily stacks or simple vitamins, NeuroStack provides the clarity and evidence-backed insights you need to perform at your best.
 
 Why NeuroStack?
-Traditional trackers are cluttered and overwhelming. NeuroStack uses high-contrast, ADHD-friendly design principles to reduce cognitive load and help you stay on track without the "nagging" anxiety.
+Traditional trackers are cluttered and overwhelming. NeuroStack uses high-clarity, high-contrast design principles to reduce cognitive load and help you stay on track without the "nagging" anxiety.
 
 **🚀 Key Features:**
 
 - **Smart "Nudge" Reminders**: Get gentle anchors for your morning, afternoon, evening, and night routines.
-- **Supplement Intelligence**: Explore a curated database of focus-enhancing supplements with evidence-based insights and timing rationale.
-- **Personalized "Stacks"**: Organize your supplements into logical daily groups to simplify your intake process.
-- **Privacy First**: Your health data is yours alone. We use secure Firebase encryption and provide easy tools for data deletion.
+- **Routine Intelligence**: Explore a curated database of focus-enhancing ingredients with evidence-based insights and timing rationale.
+- **Personalized "Stacks"**: Organize your daily routines into logical groups to simplify your ritual.
+- **Privacy First**: Your personal data is yours alone. We use secure Firebase encryption and provide easy tools for data deletion.
 - **Simple Progress Insights**: See your consistency patterns over time to understand what routines truly move the needle for your focus.
 
 **⚠️ Medical Disclaimer:**

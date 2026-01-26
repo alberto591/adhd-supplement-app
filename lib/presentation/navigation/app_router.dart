@@ -75,9 +75,8 @@ class AppRouter {
   static const String forgotPassword = '/forgot-password';
   static const String onboardingGracePeriod = '/onboarding/grace-period';
   static const String onboardingMedicalDisclaimer =
-      '/onboarding/medical-disclaimer';
-  static const String onboardingMedicationSafety =
-      '/onboarding/medication-safety';
+      '/onboarding/usage-agreement';
+  static const String onboardingMedicationSafety = '/onboarding/routine-safety';
   static const String onboardingGoals = '/onboarding/goals';
   static const String onboardingStackSetup = '/onboarding/stack-setup';
   static const String home = '/';
@@ -95,7 +94,7 @@ class AppRouter {
   static const String streakRecovery = '/streak-recovery';
   static const String safetyDetail = '/safety-detail';
   static const String widgetsPreview = '/widgets-preview';
-  static const String doctorExport = '/doctor-export';
+  static const String doctorExport = '/professional-export';
   static const String historyLog = '/history-log';
   static const String community = '/community';
   static const String trophyRoom = '/trophy-room';
@@ -106,7 +105,8 @@ class AppRouter {
   // static const String nightlyReflection = '/nightly-reflection';
   static const String appAppearance = '/app-appearance';
   static const String referFriend = '/refer-friend';
-  static const String successStats = '/success-stats';
+  static const String routineFocusReport = '/routine-focus-report';
+  static const String routineAdherence = '/routine-adherence';
   static const String subscription = '/subscription';
   static const String paywall = '/paywall';
   static const String symptomCheckin = '/symptom-checkin';
@@ -192,7 +192,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const DailyStackScreen());
 
       case insights:
-      case successStats:
+      case routineAdherence: // Changed from successStats
         return MaterialPageRoute(
           builder: (context) {
             final authProvider =

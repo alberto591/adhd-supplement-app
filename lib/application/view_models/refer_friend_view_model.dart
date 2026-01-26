@@ -33,8 +33,8 @@ class ReferFriendViewModel extends ChangeNotifier {
     if (_referralData == null) return;
 
     await Share.share(
-      'Join me on ADHD Stack! Use my code ${_referralData!.referralCode} to get 1 month of Pro for free: ${_referralData!.shareLink}',
-      subject: 'Gift from a friend: 1 Month of ADHD Stack Pro',
+      'Join me on NeuroStack! Use my code ${_referralData!.referralCode} to get 1 month of Pro for free: ${_referralData!.shareLink}',
+      subject: 'Gift from a friend: 1 Month of NeuroStack Pro',
     );
   }
 }

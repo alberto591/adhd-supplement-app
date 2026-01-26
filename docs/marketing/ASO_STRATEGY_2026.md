@@ -1,6 +1,4 @@
-# App Store Optimization (ASO) & Marketing Strategy (2026)
-
-To help you launch successfully, I have drafted an SEO-optimized App Store Description tailored for 2026. This draft is designed for neurodivergent brains (easy to scan) while hitting the high-intent keywords that trigger the App Store and Google Play algorithms.
+To help you launch successfully, I have drafted an SEO-optimized App Store Description tailored for 2026. This draft is designed for anyone seeking better mental clarity (easy to scan) while hitting the high-intent keywords that trigger search algorithms.
 
 ---
 
@@ -8,28 +6,26 @@ To help you launch successfully, I have drafted an SEO-optimized App Store Descr
 
 In 2026, the **Title** and **Subtitle** are your strongest ranking signals. Do not just use a brand name; use your primary keywords.
 
-*   **App Title (30 Chars)**: `ADHD Focus: Supplement Tracker` (or `[YourBrand]: ADHD Supplement Logic`)
-*   **Subtitle (30 Chars)**: `Focus Stacks & Safety Alerts`
-*   **Keyword Field (iOS Only - 100 Chars)**: `adhd,focus,brain,fog,executive,dysfunction,magnesium,omega3,vitamins,nootropics,stack,reminders`
+*   **App Title (30 Chars)**: `NeuroStack: Focus & Flow Tracker`
+*   **Subtitle (30 Chars)**: `Daily Routine & Habit Anchors`
+*   **Keyword Field (iOS Only - 100 Chars)**: `focus,brain,habits,nutrition,consistency,magnesium,omega3,vitamins,nootropics,routine,reminders`
 
 ---
 
 ## 2. The Description Template (Copy & Paste)
 
-This description uses "Active Voice" and "Bite-sized chunks" as required for neurodivergent accessibility.
-
 ### **Stop the Brain Fog. Master Your Focus.**
 
-Managing ADHD is hard. Finding the right supplement routine shouldn’t be. Whether you struggle with executive dysfunction, the "afternoon crash," or forgetting your pills, **[App Name]** is built for your neurodivergent brain.
+Maintaining daily focus is hard. Finding the right consistency shouldn’t be. Whether you struggle with energy crashes or forgetting your daily rituals, **[App Name]** is built to help you stay sharp and consistent.
 
-#### **Safety First: The Med-Check**
-Taking Vyvanse, Adderall, or Ritalin? Our built-in **Safety Guard** alerts you if a supplement (like Vitamin C) might interfere with your ADHD medication.
+#### **Safety First: The Stack-Check**
+Taking sensitive routines? Our built-in **Routine Guard** alerts you if a nutrition choice might interfere with your existing daily protocols.
 
 #### **Smart Supplement Stacks**
 Don’t just take pills—build a routine.
-*   **Morning Focus**: Kickstart your dopamine.
+*   **Morning Flow**: Kickstart your energy levels.
 *   **Afternoon Clarity**: Beat the 3 PM wall.
-*   **Evening Calm**: Wind down without the racing thoughts.
+*   **Evening Calm**: Wind down with ease.
 
 #### **Why [App Name]?**
 *   **Refill Reminders**: Never run out. We notify you when your bottle is low.
