@@ -112,6 +112,7 @@ class AdhdSupplementApp extends StatelessWidget {
       child: Consumer<ThemeViewModel>(
         builder: (context, themeVM, _) => MaterialApp(
           title: 'NeuroStack',
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
