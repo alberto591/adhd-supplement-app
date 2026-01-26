@@ -93,16 +93,6 @@ class UnifiedBottomNav extends StatelessWidget {
                   ),
                   _buildNavItem(
                     context,
-                    index: 2,
-                    icon: Icons.science_outlined,
-                    label: 'Hub',
-                    isSelected: currentIndex == 2,
-                    primaryColor: primaryColor,
-                    unselectedColor: unselectedColor,
-                    showLock: !isPremium,
-                  ),
-                  _buildNavItem(
-                    context,
                     index: 3,
                     icon: Icons.account_circle,
                     label: 'Profile',

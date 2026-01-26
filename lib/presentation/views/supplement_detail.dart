@@ -327,68 +327,6 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               const SizedBox(height: 16),
-                              /*if (supplement.studyLinks.isNotEmpty ||
-                                  supplement.scientificEvidenceRank != null)*/
-                              if (false)
-                                _CollapsibleInfoCard(
-                                  title: 'Scientific Evidence',
-                                  icon: Icons.menu_book_outlined,
-                                  color: Colors.teal,
-                                  isDark: isDark,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      if (supplement.scientificEvidenceRank !=
-                                          null)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 12),
-                                          child: Text(
-                                            'Evidence Strength: ${supplement.scientificEvidenceRank}/100',
-                                            style: GoogleFonts.lexend(
-                                              color: isDark
-                                                  ? Colors.teal[200]
-                                                  : Colors.teal[700],
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ...supplement.studyLinks.entries
-                                          .map((entry) => Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 8),
-                                                child: InkWell(
-                                                  onTap: () {}, // Link behavior
-                                                  child: Row(
-                                                    children: [
-                                                      const Icon(Icons.link,
-                                                          size: 16,
-                                                          color: Colors.teal),
-                                                      const SizedBox(width: 8),
-                                                      Expanded(
-                                                        child: Text(
-                                                          entry.key,
-                                                          style: GoogleFonts
-                                                              .lexend(
-                                                            color: isDark
-                                                                ? Colors
-                                                                    .teal[200]
-                                                                : Colors.teal,
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )),
-                                    ],
-                                  ),
-                                ),
-                              const SizedBox(height: 24),
                             ],
                           ),
                       ],

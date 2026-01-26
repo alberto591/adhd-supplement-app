@@ -13,10 +13,23 @@ class SoundService {
   Future<void> playSuccess() async {
     if (!_settingsRepository.getSoundsEnabled()) return;
     try {
-      // Using Source from assets directory
       await _player.play(AssetSource('sounds/success.mp3'));
     } catch (e) {
       AppLogger.e('Failed to play success sound', e);
+    }
+  }
+
+  Future<void> playTriumphant() async {
+    if (!_settingsRepository.getSoundsEnabled()) return;
+    try {
+      // Play a rhythmic sequence for a more "celebratory" feel
+      await _player.play(AssetSource('sounds/success.mp3'), volume: 1.0);
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      await _player.play(AssetSource('sounds/success.mp3'), volume: 0.8);
+      await Future<void>.delayed(const Duration(milliseconds: 120));
+      await _player.play(AssetSource('sounds/success.mp3'), volume: 1.0);
+    } catch (e) {
+      AppLogger.e('Failed to play triumphant sound', e);
     }
   }
 

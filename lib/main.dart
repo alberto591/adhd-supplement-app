@@ -16,6 +16,7 @@ import 'package:adhd_supplement_app/utils/logger.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adhd_supplement_app/l10n/generated/app_localizations.dart';
 import 'package:adhd_supplement_app/domain/services/billing_service.dart';
+import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

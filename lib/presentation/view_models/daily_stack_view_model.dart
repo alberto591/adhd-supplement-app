@@ -399,8 +399,8 @@ class DailyStackViewModel extends ChangeNotifier {
   Future<void> markSupplementTaken(String supplementId, {String? slot}) async {
     _snoozedSupplements.remove(supplementId);
     AppLogger.d('Marking supplement as taken: $supplementId (Slot: $slot)');
-    HapticFeedback.mediumImpact();
-    _soundService.playSuccess();
+    HapticFeedback.heavyImpact();
+    _soundService.playTriumphant();
     final now = DateTime.now();
     final entry = LogEntry(
       supplementId: supplementId,
@@ -439,8 +439,8 @@ class DailyStackViewModel extends ChangeNotifier {
 
     AppLogger.d(
         'Batch marking ${supplementIds.length} supplements as taken (Slot: $slot)');
-    HapticFeedback.mediumImpact();
-    _soundService.playSuccess();
+    HapticFeedback.heavyImpact();
+    _soundService.playTriumphant();
 
     final now = DateTime.now();
     final newEntries = supplementIds.map((id) {

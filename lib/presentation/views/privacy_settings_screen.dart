@@ -246,7 +246,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                             : const Color(0xFF616F89),
                         fontSize: 12,
                       ),
-                      children: [
+                      children: const [
                         TextSpan(
                           text: 'Tap to read our Privacy Policy.',
                           style: TextStyle(

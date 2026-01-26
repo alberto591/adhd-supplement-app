@@ -317,7 +317,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                         ? DateFormat.yMMMd().format(lastDate)
                                         : 'Unknown date';
 
-                                    ScaffoldMessenger.of(context).showSnackBar(
+                                    final scaffoldMessenger =
+                                        ScaffoldMessenger.of(context);
+                                    scaffoldMessenger.removeCurrentSnackBar();
+                                    scaffoldMessenger.showSnackBar(
                                       SnackBar(
                                         content: Text(
                                             'Library already downloaded on $dateStr'),
@@ -331,6 +334,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                         ),
                                       ),
                                     );
+                                    return; // Don't trigger another download immediately
                                   }
                                   await _downloadLibrary(context, suppVM);
                                 },
@@ -545,10 +549,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   Future<void> _downloadLibrary(
       BuildContext context, SupplementViewModel suppVM) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
     try {
       await suppVM.downloadLibraryForOffline();
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        scaffoldMessenger.removeCurrentSnackBar();
+        scaffoldMessenger.showSnackBar(
           const SnackBar(
             content: Text('Library downloaded for offline use'),
             backgroundColor: Colors.green,
@@ -558,10 +564,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        scaffoldMessenger.removeCurrentSnackBar();
+        scaffoldMessenger.showSnackBar(
           SnackBar(
             content: Text('Download failed: ${e.toString()}'),
             backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
           ),
         );
       }

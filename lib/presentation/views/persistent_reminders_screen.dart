@@ -193,12 +193,12 @@ class _PersistentRemindersContentState
                 ),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       children: [
-                        const Icon(Icons.warning_amber_rounded,
+                        Icon(Icons.warning_amber_rounded,
                             color: Colors.orange, size: 28),
-                        const SizedBox(width: 12),
-                        const Expanded(
+                        SizedBox(width: 12),
+                        Expanded(
                           child: Text(
                             'Exact Alarms Required',
                             style: TextStyle(
