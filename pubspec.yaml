@@ -1,6 +1,6 @@
 name: adhd_supplement_app
 description: An ADHD supplement education and referral tracking app.
-version: 1.0.0+3
+version: 1.0.0+4
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -55,6 +55,16 @@ dev_dependencies:
 
   mockito: any
   build_runner: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  min_sdk_android: 21
+  image_path: "assets/icon/app_icon.png"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/icon/app_icon.png"
+
 flutter:
   generate: true
   uses-material-design: true
