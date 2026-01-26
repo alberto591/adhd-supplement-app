@@ -22,8 +22,11 @@ class MockAuthRepository implements AuthRepository {
     await Future<void>.delayed(const Duration(milliseconds: 100));
   }
 
+  User? _currentUser;
+  void setCurrentUser(User? user) => _currentUser = user;
+
   @override
-  Future<User?> getCurrentUser() async => null;
+  Future<User?> getCurrentUser() async => _currentUser;
 
   @override
   Future<User> signInWithEmail(String email, String password) async {
@@ -81,8 +84,12 @@ class MockLogRepository implements LogRepository {
   @override
   Stream<DailyLog?> watchTodayLog(String userId) => const Stream.empty();
 
+  int clearAllLogsCallCount = 0;
+
   @override
-  Future<void> clearAllLogs(String userId) async {}
+  Future<void> clearAllLogs(String userId) async {
+    clearAllLogsCallCount++;
+  }
 }
 
 class MockSettingsRepository implements SettingsRepository {
@@ -305,6 +312,33 @@ void main() {
       mockAuthRepository.setShouldThrow(false);
       await viewModel.downloadData();
       expect(viewModel.error, null);
+    });
+    test('clearAllHealthData should call repository when user exists',
+        () async {
+      final viewModel = PrivacyViewModel();
+      mockAuthRepository.setCurrentUser(User(
+        id: '123',
+        email: 'test@example.com',
+        displayName: 'Test',
+        createdAt: DateTime(2023, 1, 1),
+      ));
+
+      await viewModel.clearAllHealthData();
+
+      expect(mockLogRepository.clearAllLogsCallCount, 1);
+      expect(viewModel.isLoading, false);
+      expect(viewModel.error, null);
+    });
+
+    test('clearAllHealthData should NOT call repository when user is null',
+        () async {
+      final viewModel = PrivacyViewModel();
+      mockAuthRepository.setCurrentUser(null);
+
+      await viewModel.clearAllHealthData();
+
+      expect(mockLogRepository.clearAllLogsCallCount, 0); // No clear call
+      expect(viewModel.isLoading, false);
     });
   });
 }

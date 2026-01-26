@@ -28,3 +28,7 @@ This project uses a hybrid of **Hexagonal Architecture** and **MVVM**:
    ```bash
    flutter run --dart-define=RC_ANDROID_KEY=your_android_key --dart-define=RC_IOS_KEY=your_ios_key
    ```
+
+## Release & Versioning
+
+For details on how to build and version the app for Google Play and Apple App Store, see the [Release & Versioning Guide](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/guides/2026-01-26_release-versioning-guide.md).
