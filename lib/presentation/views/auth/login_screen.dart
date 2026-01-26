@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 import '../../theme/app_theme.dart';
 import '../../navigation/app_router.dart';
 import '../../../application/providers/auth_provider.dart';
@@ -210,11 +211,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 32),
 
                 // Dev bypass
-                OutlinedButton(
-                  onPressed: () =>
-                      context.read<AuthProvider>().signInAnonymously(),
-                  child: const Text('Skip Login (Dev Mode)'),
-                ),
+                if (kDebugMode)
+                  OutlinedButton(
+                    onPressed: () =>
+                        context.read<AuthProvider>().signInAnonymously(),
+                    child: const Text('Skip Login (Dev Mode)'),
+                  ),
               ],
             ),
           ),
