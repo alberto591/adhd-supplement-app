@@ -11,7 +11,7 @@ class CommunityPost {
   final int helpfulCount;
   final bool isInsightful; // If current user marked it
   final Color userColor;
-  final IconData userIcon;
+  final int userIconCodePoint;
   final String? imageUrl; // Optional image
 
   const CommunityPost({
@@ -25,7 +25,7 @@ class CommunityPost {
     required this.helpfulCount,
     this.isInsightful = false,
     required this.userColor,
-    required this.userIcon,
+    required this.userIconCodePoint,
     this.imageUrl,
   });
 
@@ -40,7 +40,7 @@ class CommunityPost {
     int? helpfulCount,
     bool? isInsightful,
     Color? userColor,
-    IconData? userIcon,
+    int? userIconCodePoint,
     String? imageUrl,
   }) {
     return CommunityPost(
@@ -54,7 +54,7 @@ class CommunityPost {
       helpfulCount: helpfulCount ?? this.helpfulCount,
       isInsightful: isInsightful ?? this.isInsightful,
       userColor: userColor ?? this.userColor,
-      userIcon: userIcon ?? this.userIcon,
+      userIconCodePoint: userIconCodePoint ?? this.userIconCodePoint,
       imageUrl: imageUrl ?? this.imageUrl,
     );
   }
@@ -71,10 +71,15 @@ class CommunityPost {
       'helpfulCount': helpfulCount,
       'isInsightful': isInsightful,
       'userColor': userColor.toARGB32(),
-      'userIcon': userIcon.codePoint,
+      'userIcon': userIconCodePoint,
       'imageUrl': imageUrl,
     };
   }
+
+  /// Helper to get the actual IconData. Note: This will disable icon tree shaking
+  /// for this specific call site if used without constant data.
+  IconData get userIcon =>
+      IconData(userIconCodePoint, fontFamily: 'MaterialIcons');
 
   factory CommunityPost.fromJson(Map<String, dynamic> json) {
     return CommunityPost(
@@ -88,8 +93,7 @@ class CommunityPost {
       helpfulCount: json['helpfulCount'] as int? ?? 0,
       isInsightful: json['isInsightful'] as bool? ?? false,
       userColor: Color(json['userColor'] as int? ?? 0xFF000000),
-      userIcon: IconData(json['userIcon'] as int? ?? 57352,
-          fontFamily: 'MaterialIcons'),
+      userIconCodePoint: json['userIcon'] as int? ?? 57352,
       imageUrl: json['imageUrl'] as String?,
     );
   }
