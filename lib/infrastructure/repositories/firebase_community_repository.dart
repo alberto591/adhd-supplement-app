@@ -24,7 +24,7 @@ class FirebaseCommunityRepository implements CommunityRepository {
           'This helps the medication start working right as you need to get out of bed. No more morning fog!',
       helpfulCount: 24,
       userColor: Colors.orange,
-      userIcon: Icons.person,
+      userIconCodePoint: Icons.person.codePoint,
     ),
     CommunityPost(
       id: '2',
@@ -38,7 +38,7 @@ class FirebaseCommunityRepository implements CommunityRepository {
       helpfulCount: 156,
       isInsightful: true,
       userColor: Colors.purple,
-      userIcon: Icons.bedtime,
+      userIconCodePoint: Icons.bedtime.codePoint,
     ),
     CommunityPost(
       id: '3',
@@ -51,7 +51,7 @@ class FirebaseCommunityRepository implements CommunityRepository {
           'Using a clear scheduler helped me ignore the "did I take it?" anxiety.',
       helpfulCount: 89,
       userColor: Colors.teal,
-      userIcon: Icons.palette,
+      userIconCodePoint: Icons.palette.codePoint,
     ),
   ];
 
