@@ -76,10 +76,24 @@ class CommunityPost {
     };
   }
 
-  /// Helper to get the actual IconData. Note: This will disable icon tree shaking
-  /// for this specific call site if used without constant data.
-  IconData get userIcon =>
-      IconData(userIconCodePoint, fontFamily: 'MaterialIcons');
+  /// Helper to get the actual IconData. Using a switch with constants ensures
+  /// Flutter's icon tree-shaking works correctly in release builds.
+  IconData get userIcon {
+    switch (userIconCodePoint) {
+      case 57352: // person
+        return Icons.person;
+      case 58655: // bedtime
+        return Icons.bedtime;
+      case 58498: // palette
+        return Icons.palette;
+      case 58611: // bolt
+        return Icons.bolt;
+      case 60599: // psychology
+        return Icons.psychology;
+      default:
+        return Icons.person;
+    }
+  }
 
   factory CommunityPost.fromJson(Map<String, dynamic> json) {
     return CommunityPost(
