@@ -280,7 +280,11 @@ class CommunityScreen extends StatelessWidget {
                   color: post.userColor.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(post.userIcon, color: post.userColor, size: 24),
+                child: Icon(
+                  CommunityPost.getIcon(post.userIconCodePoint),
+                  color: post.userColor,
+                  size: 24,
+                ),
               ),
               const SizedBox(width: 12),
               Column(
@@ -430,8 +434,11 @@ class CommunityScreen extends StatelessWidget {
                         color: post.userColor.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                       ),
-                      child:
-                          Icon(post.userIcon, color: post.userColor, size: 24),
+                      child: Icon(
+                        CommunityPost.getIcon(post.userIconCodePoint),
+                        color: post.userColor,
+                        size: 24,
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Column(

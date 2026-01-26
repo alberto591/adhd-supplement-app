@@ -76,20 +76,19 @@ class CommunityPost {
     };
   }
 
-  /// Helper to get the actual IconData. Using a switch with constants ensures
-  /// Flutter's icon tree-shaking works correctly in release builds.
-  IconData get userIcon {
-    switch (userIconCodePoint) {
-      case 57352: // person
-        return Icons.person;
-      case 58655: // bedtime
+  /// Static helper to get IconData from a code point.
+  /// Using explicit constant mapping ensures icon tree-shaking works.
+  static IconData getIcon(int codePoint) {
+    switch (codePoint) {
+      case 58655:
         return Icons.bedtime;
-      case 58498: // palette
+      case 58498:
         return Icons.palette;
-      case 58611: // bolt
+      case 58611:
         return Icons.bolt;
-      case 60599: // psychology
+      case 60599:
         return Icons.psychology;
+      case 57352:
       default:
         return Icons.person;
     }
