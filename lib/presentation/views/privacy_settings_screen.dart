@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import '../../application/view_models/privacy_view_model.dart';
+import '../../config/locator.dart';
+import '../../infrastructure/services/url_service.dart';
 
 class PrivacySettingsScreen extends StatefulWidget {
   const PrivacySettingsScreen({super.key});
@@ -164,6 +167,59 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                           showDialog<void>(
                               context: context,
                               builder: (ctx) => AlertDialog(
+                                    title: const Text('Clear All History?'),
+                                    content: const Text(
+                                        'This will delete all your supplement logs but keep your account and stacks active.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(ctx),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          Navigator.pop(ctx);
+                                          await viewModel.clearAllHealthData();
+                                          if (!context.mounted) return;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'Health history cleared.')));
+                                        },
+                                        child: const Text('CLEAR',
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                      ),
+                                    ],
+                                  ));
+                        },
+                        icon: const Icon(Icons.history_toggle_off,
+                            color: Color(0xFFDC2626)),
+                        label: const Text(
+                          'Clear Supplement History',
+                          style: TextStyle(
+                            color: Color(0xFFDC2626),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor:
+                              const Color(0xFFDC2626).withValues(alpha: 0.1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton.icon(
+                        onPressed: () {
+                          showDialog<void>(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
                                     title: const Text('Delete Everything?'),
                                     content: const Text(
                                         'This action cannot be undone.'),
@@ -208,6 +264,16 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 12),
+                    _buildActionTile(
+                      context,
+                      icon: Icons.alternate_email,
+                      iconColor: const Color(0xFFEE8C2B),
+                      title: 'Request Data Removal (Manual)',
+                      subtitle: 'Official web form for deletion requests',
+                      onTap: () => locator<UrlService>().launchUri(
+                          'https://neurostack-app.web.app/delete-data'),
+                    ),
                   ],
                 ),
               ),
@@ -246,14 +312,29 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                             : const Color(0xFF616F89),
                         fontSize: 12,
                       ),
-                      children: const [
+                      children: [
                         TextSpan(
                           text: 'Tap to read our Privacy Policy.',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: primaryBlue,
                             decoration: TextDecoration.underline,
                             fontWeight: FontWeight.bold,
                           ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => locator<UrlService>().launchUri(
+                                'https://neurostack-app.web.app/privacy'),
+                        ),
+                        const TextSpan(text: '\n\n'),
+                        TextSpan(
+                          text: 'Request Account & Data Deletion',
+                          style: const TextStyle(
+                            color: primaryBlue,
+                            decoration: TextDecoration.underline,
+                            fontSize: 12,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => locator<UrlService>().launchUri(
+                                'https://neurostack-app.web.app/delete-data'),
                         ),
                       ],
                     ),

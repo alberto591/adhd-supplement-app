@@ -1,1 +1,57 @@
-{"flutter":{"platforms":{"macos":{"default":{"projectId":"adhd-supplement-app","appId":"1:93466359350:ios:ea28d62154476bd3f20a97","uploadDebugSymbols":true,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"adhd-supplement-app","configurations":{"android":"1:93466359350:android:1aa4eb1af7506870f20a97","ios":"1:93466359350:ios:acafee8b05086757f20a97"}}},"android":{"default":{"projectId":"adhd-supplement-app","appId":"1:93466359350:android:1aa4eb1af7506870f20a97","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"adhd-supplement-app","appId":"1:93466359350:ios:acafee8b05086757f20a97","uploadDebugSymbols":true,"fileOutput":"ios/Runner/GoogleService-Info.plist"}}}}}
+{
+    "flutter": {
+        "platforms": {
+            "macos": {
+                "default": {
+                    "projectId": "adhd-supplement-app",
+                    "appId": "1:93466359350:ios:ea28d62154476bd3f20a97",
+                    "uploadDebugSymbols": true,
+                    "fileOutput": "macos/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "adhd-supplement-app",
+                    "configurations": {
+                        "android": "1:93466359350:android:1aa4eb1af7506870f20a97",
+                        "ios": "1:93466359350:ios:acafee8b05086757f20a97"
+                    }
+                }
+            },
+            "android": {
+                "default": {
+                    "projectId": "adhd-supplement-app",
+                    "appId": "1:93466359350:android:1aa4eb1af7506870f20a97",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "adhd-supplement-app",
+                    "appId": "1:93466359350:ios:acafee8b05086757f20a97",
+                    "uploadDebugSymbols": true,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            }
+        }
+    },
+    "hosting": {
+        "site": "neurostack-app",
+        "public": "web/public",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [
+            {
+                "source": "/privacy",
+                "destination": "/privacy.html"
+            },
+            {
+                "source": "/delete-data",
+                "destination": "/delete-data.html"
+            }
+        ]
+    }
+}

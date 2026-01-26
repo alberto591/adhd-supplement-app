@@ -78,6 +78,21 @@ class PrivacyViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> clearAllHealthData() async {
+    _setLoading(true);
+    _error = null;
+    try {
+      final user = await _authRepository.getCurrentUser();
+      if (user != null) {
+        await _logRepository.clearAllLogs(user.id);
+      }
+    } catch (e) {
+      _error = 'Failed to clear history. Please try again.';
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   Future<void> deleteAccount() async {
     _setLoading(true);
     _error = null;

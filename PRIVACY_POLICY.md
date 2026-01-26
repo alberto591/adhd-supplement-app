@@ -1,10 +1,10 @@
-# Privacy Policy for Daily Stack
+# Privacy Policy for NeuroStack
 
 **Last Updated:** January 25, 2026
 
 ## Introduction
 
-Daily Stack ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.
+NeuroStack ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.
 
 ## Information We Collect
 
@@ -70,7 +70,8 @@ You have the right to:
 
 ### How to Exercise Your Rights
 - **Delete Account**: Settings → Privacy & Security → Delete All My Data
-- **Export Data**: Settings → Privacy & Security → Download My Data
+- **Web Request**: [neurostack-app.web.app/delete-data](https://neurostack-app.web.app/delete-data)
+- **Email**: Send a request to [your-email@example.com]
 - **Disable Analytics**: Settings → Privacy & Security → Share Analytics (toggle off)
 
 ## Data Retention
@@ -81,7 +82,7 @@ You have the right to:
 
 ## Children's Privacy
 
-Daily Stack is not intended for children under 13. We do not knowingly collect information from children under 13. If you believe we have collected such information, please contact us immediately.
+NeuroStack is not intended for children under 13. We do not knowingly collect information from children under 13. If you believe we have collected such information, please contact us immediately.
 
 ## Third-Party Services
 
@@ -113,7 +114,7 @@ We may update this Privacy Policy from time to time. We will notify you of signi
 
 ## Medical Disclaimer
 
-Daily Stack is for informational and tracking purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult your healthcare provider before starting any supplement regimen.
+NeuroStack is for informational and tracking purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult your healthcare provider before starting any supplement regimen.
 
 ## Contact Us
 
@@ -126,10 +127,10 @@ If you have questions about this Privacy Policy or your data:
 
 ## Consent
 
-By using Daily Stack, you consent to this Privacy Policy and agree to its terms.
+By using NeuroStack, you consent to this Privacy Policy and agree to its terms.
 
 ---
 
-**Daily Stack**  
+**NeuroStack**  
 Version 2.4.1  
 © 2026 All Rights Reserved

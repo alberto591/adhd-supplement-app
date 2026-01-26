@@ -75,7 +75,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
     storageBucket: 'adhd-supplement-app.firebasestorage.app',
-    iosBundleId: 'com.example.adhdSupplementApp',
+    iosBundleId: 'com.neurostack.app',
   );
-
 }

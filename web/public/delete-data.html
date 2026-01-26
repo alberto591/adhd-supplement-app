@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion Request | NeuroStack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #101622;
+            --surface: #1C222E;
+            --primary: #EE8C2B;
+            --text: #F8F7F6;
+            --text-dim: #94A3B8;
+            --border: #2D3648;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        input[type="email"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--text);
+            box-sizing: border-box;
+        }
+
+        .radio-group {
+            background: var(--bg-dark);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .radio-option:last-child {
+            margin-bottom: 0;
+        }
+
+        .radio-option input {
+            margin-top: 5px;
+            margin-right: 12px;
+            accent-color: var(--primary);
+        }
+
+        .radio-label-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .radio-title {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .radio-sub {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .info {
+            font-size: 0.85rem;
+            background: rgba(238, 140, 43, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(238, 140, 43, 0.3);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Request Data Deletion</h1>
+        <p>Use this form to manage your data removal requests. You can choose to delete specific health history or your
+            entire account.</p>
+
+        <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+            <div class="form-group">
+                <label for="email">Account Email Address</label>
+                <input type="email" id="email" name="email" placeholder="email@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label>What would you like to delete?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="request_type" value="Partial (History Only)" checked>
+                        <span class="radio-label-text">
+                            <span class="radio-title">Clear Supplement History</span>
+                            <span class="radio-sub">Delete all logs, but keep my account and active stacks.</span>
+                        </span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="request_type" value="Full Account Deletion">
+                        <span class="radio-label-text">
+                            <span class="radio-title">Full Account Deletion</span>
+                            <span class="radio-sub">Permanently remove my account and ALL associated data.</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Reason (Optional)</label>
+                <input type="text" id="reason" name="reason" placeholder="e.g. Starting a new protocol">
+            </div>
+
+            <button type="submit" class="btn">Submit Request</button>
+        </form>
+
+        <div class="info">
+            <strong>Timeline:</strong><br>
+            Manual requests are processed within 30 days. You will receive a confirmation email once the removal is
+            complete.
+        </div>
+    </div>
+</body>
+
+</html>

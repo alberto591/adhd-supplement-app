@@ -17,3 +17,6 @@
 
 # Support for specific packages
 -dontwarn com.revenuecat.purchases.**
+
+# Ignore missing Play Core classes (standard Flutter release build fix)
+-dontwarn com.google.android.play.core.**
