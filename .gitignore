@@ -32,6 +32,8 @@ build/
 
 # Android
 android/local.properties
+android/key.properties
+**/*.jks
 android/gradle/wrapper/gradle-wrapper.jar
 android/.gradle
 android/app/src/main/assets/

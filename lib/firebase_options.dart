@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBo9QF3oAS-F4GbBEkEIOY6o230_jZRBlg',
-    appId: '1:93466359350:android:624499d319cae893f20a97',
+    appId: '1:93466359350:android:1aa4eb1af7506870f20a97',
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
     storageBucket: 'adhd-supplement-app.firebasestorage.app',
@@ -62,11 +62,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDLTcPuiQcaVjmQqAyFT6VJiTQ-WWC4m7w',
-    appId: '1:93466359350:ios:ea28d62154476bd3f20a97',
+    appId: '1:93466359350:ios:acafee8b05086757f20a97',
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
     storageBucket: 'adhd-supplement-app.firebasestorage.app',
-    iosBundleId: 'com.example.adhdSupplementApp',
+    iosBundleId: 'com.neurostack.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

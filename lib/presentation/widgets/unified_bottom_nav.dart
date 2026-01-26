@@ -69,7 +69,6 @@ class UnifiedBottomNav extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Consumer<AuthProvider>(
             builder: (BuildContext context, AuthProvider auth, _) {
-              final isPremium = auth.canAccess('pro');
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

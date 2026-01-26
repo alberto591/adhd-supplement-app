@@ -15,7 +15,6 @@ import 'package:adhd_supplement_app/application/view_models/theme_view_model.dar
 import 'package:adhd_supplement_app/utils/logger.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adhd_supplement_app/l10n/generated/app_localizations.dart';
-import 'package:adhd_supplement_app/domain/services/billing_service.dart';
 import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
 
 void main() async {
@@ -59,6 +58,7 @@ void main() async {
     }
   }
 
+  /* 
   // Initialize Billing Service (RevenueCat)
   if (!kIsWeb) {
     // Only init on mobile for now as purchases_flutter has limited web support configuration in this setup
@@ -68,6 +68,7 @@ void main() async {
       AppLogger.e('Billing initialization failed', e);
     }
   }
+  */
 
   runApp(AdhdSupplementApp(
     isFirebaseReady: firebaseInitialized,
@@ -110,7 +111,7 @@ class AdhdSupplementApp extends StatelessWidget {
       ],
       child: Consumer<ThemeViewModel>(
         builder: (context, themeVM, _) => MaterialApp(
-          title: 'Daily Stack',
+          title: 'NeuroStack',
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

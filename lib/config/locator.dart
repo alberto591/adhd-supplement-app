@@ -19,6 +19,7 @@ import 'package:adhd_supplement_app/domain/services/interaction_service.dart';
 import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
 
 // --- Infrastructure ---
+import 'package:adhd_supplement_app/infrastructure/services/no_op_billing_service.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_auth_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_supplement_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_stack_repository.dart';
@@ -32,7 +33,6 @@ import 'package:adhd_supplement_app/infrastructure/repositories/firebase_communi
 import 'package:adhd_supplement_app/infrastructure/repositories/firebase_referral_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/perplexity_repository.dart';
 import 'package:adhd_supplement_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/revenue_cat_billing_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/fda_interaction_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/firebase_analytics_service.dart';
 import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
@@ -97,8 +97,7 @@ void _setupCore(SharedPreferences prefs) {
 
 void _setupInfrastructure(SharedPreferences prefs) {
   // Services
-  locator
-      .registerLazySingleton<BillingService>(() => RevenueCatBillingService());
+  locator.registerLazySingleton<BillingService>(() => NoOpBillingService());
   locator.registerLazySingleton<AnalyticsService>(
       () => FirebaseAnalyticsService());
   locator

@@ -1,4 +1,4 @@
-package com.example.adhd_supplement_app
+package com.neurostack.app
 
 import io.flutter.embedding.android.FlutterActivity
 

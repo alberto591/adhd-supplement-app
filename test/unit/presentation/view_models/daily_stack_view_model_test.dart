@@ -238,6 +238,8 @@ class FakeSoundService implements SoundService {
   @override
   Future<void> playSuccess() async {}
   @override
+  Future<void> playTriumphant() async {}
+  @override
   Future<void> dispose() async {}
 }
 
