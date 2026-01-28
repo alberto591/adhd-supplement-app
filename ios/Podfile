@@ -38,23 +38,23 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    
+
     target.build_configurations.each do |config|
       # Force stable deployment target
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.4'
-      
+
       # Force Swift 5.0 to avoid Swift 6 concurrency/strictness errors in pods
       config.build_settings['SWIFT_VERSION'] = '5.0'
-      
+
       # Fix legacy flag interference (GCC_WARN_INHIBIT_ALL_WARNINGS)
       config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'NO'
-      
+
       # Enable compatibility for modern architectures
       config.build_settings['ENABLE_BITCODE'] = 'NO'
 
       # Fix BoringSSL-GRPC 'unsupported option -G' error on Xcode 16+
       if target.name == 'BoringSSL-GRPC'
-        # 1. Scrub target-level flags (as before)
+        # 1. Scrub target-level flags
         ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS'].each do |flag_name|
           flags = config.build_settings[flag_name] || ['$(inherited)']
           if flags.is_a?(Array)
@@ -65,11 +65,9 @@ post_install do |installer|
           config.build_settings[flag_name] = flags
         end
 
-        # 2. Scrub individual file-level flags (where the real culprits are)
+        # 2. Scrub individual file-level flags (the aggressive scrub)
         target.source_build_phase.files.each do |file|
           if file.settings && file.settings['COMPILER_FLAGS']
-            # Remove -GCC_WARN_INHIBIT_ALL_WARNINGS and -G from file settings
-            # Using split/join to safely handle complex flag strings
             current_flags = file.settings['COMPILER_FLAGS']
             scrubbed_flags = current_flags.split(' ').reject { |f| f == '-G' || f == '-GCC_WARN_INHIBIT_ALL_WARNINGS' }.join(' ')
             file.settings['COMPILER_FLAGS'] = scrubbed_flags
@@ -81,13 +79,13 @@ post_install do |installer|
 
   # Fix gRPC-Core 'missing template argument list' error on Xcode 16+
   # Patch basic_seq.h to remove invalid 'template' keyword
-  # See: https://github.com/grpc/grpc/pull/35889
+  # This must run outside the targets loop because it patches source files once
   Dir.glob("Pods/**/basic_seq.h").each do |file|
     text = File.read(file)
     if text.include?("Traits::template CallSeqFactory")
       puts "Patching #{file} to fix gRPC template error..."
       new_contents = text.gsub("Traits::template CallSeqFactory", "Traits::CallSeqFactory")
-      File.open(file, "w") { |f| f.puts new_contents }
+      File.open(file, "w") { |f| f.write(new_contents) }
     end
   end
 end
