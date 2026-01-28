@@ -6,7 +6,7 @@ set -e
 # Make sure we are in the root of the repo
 cd $CI_PRIMARY_REPOSITORY_PATH
 
-echo "🚀 Starting ci_post_clone.sh (V6: The Nuclear Option)"
+echo "🚀 Starting ci_post_clone.sh (V7: The Ultimate Version)"
 echo "📂 Current directory: $(pwd)"
 
 # Define Flutter settings
@@ -28,32 +28,45 @@ export PATH="$PATH:$FLUTTER_HOME/bin"
 echo "✅ Flutter version:"
 flutter --version
 
-# 2. Setup Flutter Dependencies
+# 2. Pre-cache iOS Artifacts (Provenance: V4 Fix)
+# This explicitly downloads Flutter.xcframework
+echo "📦 Pre-caching iOS artifacts (Critical Step)..."
+flutter precache --ios
+
+# 3. Setup Flutter Dependencies
 # Disable analytics to prevent hanging
 flutter config --no-analytics
 
 echo "🔄 Running flutter pub get..."
 flutter pub get
 
-# 3. FORCE Build Config (The Change from V5)
-# Instead of trusting precache, we FORCE a config-only build.
-# This guarantees that the engine artifacts are downloaded AND placed exactly where Xcode expects.
-echo "🔨 Running flutter build ios --config-only (Force)..."
+# 4. FORCE Build Config (Provenance: V6 Fix)
+# We do BOTH precache AND config-only build to be 100% sure.
+echo "🔨 Running flutter build ios --config-only (Force Config)..."
 flutter build ios --config-only --no-codesign --no-pub
 
-# 4. Verify Generated Config
+# 5. Verify Generated Config
 echo "🧐 Verifying ios/Flutter/Generated.xcconfig..."
 if [ -f "ios/Flutter/Generated.xcconfig" ]; then
-    echo "✅ Generated.xcconfig successfully created!"
+    echo "✅ Generated.xcconfig successfully updated!"
     head -n 5 ios/Flutter/Generated.xcconfig
 else
     echo "🔥 FATAL: Could not generate Generated.xcconfig."
     exit 1
 fi
 
-# 5. Install CocoaPods with Retries (ANTIFLAKE)
+# 6. Install CocoaPods with Retries (Provenance: V5 Fix)
 echo "🥥 Installing Pods..."
 cd ios
+
+# Check framework existence again just to be sure
+FLUTTER_XCFRAMEWORK="$FLUTTER_HOME/bin/cache/artifacts/engine/ios/Flutter.xcframework"
+if [ ! -d "$FLUTTER_XCFRAMEWORK" ]; then
+    echo "🔥 FATAL: Flutter.xcframework STILL MISSING at $FLUTTER_XCFRAMEWORK"
+    exit 1
+else
+    echo "✅ Flutter.xcframework confirmed at $FLUTTER_XCFRAMEWORK"
+fi
 
 # Retry loop definition
 MAX_RETRIES=3
@@ -72,9 +85,9 @@ while [ $COUNT -lt $MAX_RETRIES ]; do
         echo "⚠️ Pod install failed (Attempt $(($COUNT + 1))). Retrying in 15s..."
         COUNT=$(($COUNT + 1))
         
-        # Diagnostics on failure
-        echo "Diagnostics: Checking for Flutter.xcframework..."
-        ls -R "$FLUTTER_HOME/bin/cache/artifacts/engine/ios/" || echo "Artifacts dir incomplete"
+        # Clean cache if it fails
+        echo "🧹 Cleaning Pod Cache before retry..."
+        pod cache clean --all
         
         sleep 15
     fi
@@ -87,5 +100,5 @@ if [ "$SUCCESS" = false ]; then
     exit 1
 fi
 
-echo "🎉 ci_post_clone.sh completed successfully."
+echo "🎉 ci_post_clone.sh V7 completed successfully."
 exit 0
