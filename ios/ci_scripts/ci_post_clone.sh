@@ -6,7 +6,7 @@ set -e
 # Make sure we are in the root of the repo
 cd $CI_PRIMARY_REPOSITORY_PATH
 
-echo "🚀 Starting ci_post_clone.sh (V3)"
+echo "🚀 Starting ci_post_clone.sh (V4)"
 echo "📂 Current directory: $(pwd)"
 
 # Define Flutter settings
@@ -28,22 +28,25 @@ export PATH="$PATH:$FLUTTER_HOME/bin"
 echo "✅ Flutter version:"
 flutter --version
 
-# 2. Setup Flutter Dependencies
+# 2. Pre-cache iOS Artifacts (CRITICAL FIX)
+echo "📦 Pre-caching iOS artifacts..."
+flutter precache --ios
+
+# 3. Setup Flutter Dependencies
 # Disable analytics to prevent hanging
 flutter config --no-analytics
 
 echo "🔄 Running flutter pub get..."
 flutter pub get
 
-# 3. Verify Generated Config (Critical Step)
+# 4. Verify Generated Config
 echo "🧐 Verifying ios/Flutter/Generated.xcconfig..."
 if [ -f "ios/Flutter/Generated.xcconfig" ]; then
     echo "✅ Generated.xcconfig successfully created by pub get!"
-    # Print content for debugging (first 5 lines)
     head -n 5 ios/Flutter/Generated.xcconfig
 else
-    echo "❌ Generated.xcconfig MISSING after pub get. Attempting generic build..."
-    # Fallback: simple build command just to generate config, skipping signing/codes
+    echo "❌ Generated.xcconfig MISSING after pub get. Attempting fallback build..."
+    # Fallback to force generation
     flutter build ios --config-only --no-codesign --no-pub || true
     
     if [ -f "ios/Flutter/Generated.xcconfig" ]; then
@@ -54,12 +57,21 @@ else
     fi
 fi
 
-# 4. Install CocoaPods
+# 5. Install CocoaPods
 echo "🥥 Installing Pods..."
 cd ios
 
-# Check that Podfile can see the config
-# (The Podfile throws error if Generated.xcconfig is missing, so this acts as a check)
+# Explicitly check for Flutter.xcframework before pod install to fail fast if missing
+FLUTTER_XCFRAMEWORK="$FLUTTER_HOME/bin/cache/artifacts/engine/ios/Flutter.xcframework"
+if [ ! -d "$FLUTTER_XCFRAMEWORK" ]; then
+    echo "🔥 FATAL: Flutter.xcframework NOT FOUND at $FLUTTER_XCFRAMEWORK"
+    echo "Directory listing of $FLUTTER_HOME/bin/cache/artifacts/engine/ios/:"
+    ls -R "$FLUTTER_HOME/bin/cache/artifacts/engine/ios/" || echo "Directory does not exist."
+    exit 1
+else
+    echo "✅ Flutter.xcframework found at $FLUTTER_XCFRAMEWORK"
+fi
+
 pod install --repo-update
 
 echo "🎉 ci_post_clone.sh completed successfully."
