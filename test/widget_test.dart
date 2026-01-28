@@ -1,6 +1,6 @@
 // This is a basic Flutter widget test.
 //
-// To perform an interaction with a widget in your test, use the WidgetTester
+// To perform an compatibility with a widget in your test, use the WidgetTester
 // utility in the flutter_test package. For example, you can send tap and scroll
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
@@ -8,31 +8,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:adhd_supplement_app/main.dart';
-import 'package:adhd_supplement_app/config/locator.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
-import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/safety_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_interaction.dart';
-import 'package:adhd_supplement_app/domain/entities/safety_override.dart';
-import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
-import 'package:adhd_supplement_app/application/view_models/persistent_reminders_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/theme_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/main.dart';
+import 'package:neurostack_app/config/locator.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/application/view_models/routine_safety_view_model.dart';
+import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
+import 'package:neurostack_app/domain/repositories/auth_repository.dart';
+import 'package:neurostack_app/domain/repositories/routine_safety_repository.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/domain/entities/supplement_compatibility.dart';
+import 'package:neurostack_app/domain/entities/routine_override.dart';
+import 'package:neurostack_app/infrastructure/services/url_service.dart';
+import 'package:neurostack_app/application/view_models/persistent_reminders_view_model.dart';
+import 'package:neurostack_app/application/view_models/theme_view_model.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
-import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
-import 'package:adhd_supplement_app/domain/services/billing_service.dart';
+import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
+import 'package:neurostack_app/domain/services/analytics_service.dart';
+import 'package:neurostack_app/domain/services/billing_service.dart';
 
 void main() {
   setUp(() {
-    // Ensure GetIt has the minimal registrations needed for AdhdSupplementApp.build.
+    // Ensure GetIt has the minimal registrations needed for NeuroStackApp.build.
     locator.reset();
 
     locator.registerFactory<SupplementViewModel>(
@@ -51,10 +51,10 @@ void main() {
     );
 
     locator
-        .registerLazySingleton<SafetyRepository>(() => _FakeSafetyRepository());
-    locator.registerFactoryParam<SafetyViewModel, String, void>(
-      (userId, _) => SafetyViewModel(
-        repository: locator<SafetyRepository>(),
+        .registerLazySingleton<RoutineSafetyRepository>(() => _FakeRoutineSafetyRepository());
+    locator.registerFactoryParam<RoutineSafetyViewModel, String, void>(
+      (userId, _) => RoutineSafetyViewModel(
+        repository: locator<RoutineSafetyRepository>(),
         userId: userId,
       ),
     );
@@ -80,7 +80,7 @@ void main() {
   });
 
   testWidgets('App builds (smoke test)', (WidgetTester tester) async {
-    await tester.pumpWidget(const AdhdSupplementApp(isFirebaseReady: true));
+    await tester.pumpWidget(const NeuroStackApp(isFirebaseReady: true));
     await tester.pumpAndSettle(const Duration(milliseconds: 2000));
 
     expect(find.byType(MaterialApp), findsOneWidget);
@@ -176,21 +176,21 @@ class _FakeSupplementRepository implements SupplementRepository {
   Future<void> downloadLibrary() async {}
 }
 
-class _FakeSafetyRepository implements SafetyRepository {
+class _FakeRoutineSafetyRepository implements RoutineSafetyRepository {
   @override
-  Future<List<SupplementInteraction>> getInteractionsForSupplements(
+  Future<List<SupplementCompatibility>> getCompatibilitysForSupplements(
     List<String> supplementIds,
   ) async =>
       [];
 
   @override
-  Future<void> logSafetyOverride(SafetyOverride override) async {}
+  Future<void> logRoutineOverride(RoutineOverride override) async {}
 
   @override
-  Future<List<SafetyOverride>> getSafetyOverrides(String userId) async => [];
+  Future<List<RoutineOverride>> getRoutineOverrides(String userId) async => [];
 
   @override
-  Future<SupplementInteraction?> getInteractionById(String id) async => null;
+  Future<SupplementCompatibility?> getCompatibilityById(String id) async => null;
 }
 
 class _FakeSettingsRepository implements SettingsRepository {

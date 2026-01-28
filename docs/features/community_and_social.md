@@ -3,7 +3,7 @@
 This document covers the social and peer support aspects of the app.
 
 ## Overview
-ADHD management is easier with community support. The app includes several social features for sharing, accountability, and learning from others.
+Focus management is easier with community support. The app includes several social features for sharing, accountability, and learning from others.
 
 ## Screens
 
@@ -35,7 +35,7 @@ A "body doubling" feature where users can match with accountability partners.
 4. Visual confirmation when both complete.
 
 **Psychology:**
-ADHD research shows "body doubling" (doing tasks alongside someone) improves completion rates.
+Focus research shows "body doubling" (doing tasks alongside someone) improves completion rates.
 
 ### 3. `ReferFriendScreen`
 **Location**: `lib/presentation/views/refer_friend_screen.dart`
@@ -49,12 +49,12 @@ Referral system with built-in affiliate rewards.
 - (Future) Unlock premium features after X referrals.
 
 **Messaging:**
-"Help a friend optimize their ADHD routine. You both get 1 month free!"
+"Help a friend optimize their Focus routine. You both get 1 month free!"
 
 ### 4. `ScienceHubScreen`
 **Location**: `lib/presentation/views/science_hub_screen.dart`
 
-A curated library of research articles about ADHD, supplements, and neuroscience.
+A curated library of research articles about Focus, supplements, and neuroscience.
 
 **Content Types:**
 - 📄 Research summaries (plain language).
@@ -63,7 +63,7 @@ A curated library of research articles about ADHD, supplements, and neuroscience
 
 **Example Topics:**
 - "Why Vitamin C reduces Adderall effectiveness"
-- "Omega-3 for ADHD: What the studies say"
+- "Omega-3 for Focus: What the studies say"
 - "L-Theanine + Caffeine synergy"
 
 ## Social Gamification

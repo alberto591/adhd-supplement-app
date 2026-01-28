@@ -1,7 +1,7 @@
 # ADR 0024: Supplement Status Categorization (Avoid List)
 
 ## Context
-The application needs to educate users about supplements that are harmful or ineffective for ADHD. We need a way to categorize these items in the database and provide safety-first UI experiences to prevent accidental intake.
+The application needs to educate users about supplements that are harmful or ineffective for Focus. We need a way to categorize these items in the database and provide safety-first UI experiences to prevent accidental intake.
 
 ## Decision
 We introduced a `status` field to the `Supplement` entity to categorize supplements into three states:

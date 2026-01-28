@@ -1,6 +1,6 @@
 # Firebase Setup Guide
 
-This guide will walk you through setting up Firebase for the Daily Stack ADHD supplement tracking app.
+This guide will walk you through setting up Firebase for the Daily Stack Focus supplement tracking app.
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ This guide will walk you through setting up Firebase for the Daily Stack ADHD su
 
 1. Go to [Firebase Console](https://console.firebase.google.com/)
 2. Click "Add project"
-3. Enter project name: `daily-stack-adhd` (or your preferred name)
+3. Enter project name: `daily-stack-focus` (or your preferred name)
 4. Enable Google Analytics (recommended)
 5. Select or create an Analytics account
 6. Click "Create project"
@@ -21,7 +21,7 @@ This guide will walk you through setting up Firebase for the Daily Stack ADHD su
 ## Step 2: Register iOS App
 
 1. In Firebase Console, click the iOS icon
-2. Enter iOS bundle ID: `com.yourcompany.adhdSupplementApp`
+2. Enter iOS bundle ID: `com.yourcompany.focusSupplementApp`
    - Find this in `ios/Runner.xcodeproj/project.pbxproj` (look for `PRODUCT_BUNDLE_IDENTIFIER`)
 3. Download `GoogleService-Info.plist`
 4. Move the file to `ios/Runner/` directory
@@ -32,7 +32,7 @@ This guide will walk you through setting up Firebase for the Daily Stack ADHD su
 ## Step 3: Register Android App
 
 1. In Firebase Console, click the Android icon
-2. Enter Android package name: `com.yourcompany.adhd_supplement_app`
+2. Enter Android package name: `com.yourcompany.focus_supplement_app`
    - Find this in `android/app/build.gradle` (look for `applicationId`)
 3. Download `google-services.json`
 4. Move the file to `android/app/` directory

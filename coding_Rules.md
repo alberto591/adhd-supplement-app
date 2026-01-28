@@ -1,7 +1,7 @@
 # Critical Analysis: 2026 Flutter Coding Standards
 
 ## Overview
-These standards are **mostly solid** with some practical strengths and notable gaps. They're contextual to an ADHD-friendly supplement app, which affects their applicability. Here's the honest breakdown.
+These standards are **mostly solid** with some practical strengths and notable gaps. They're contextual to an Focus-friendly supplement app, which affects their applicability. Here's the honest breakdown.
 
 ---
 
@@ -22,7 +22,7 @@ These standards are **mostly solid** with some practical strengths and notable g
 ### 3. **Widget Architecture Rules**
 **Rating: A-**
 - "Pure Build Functions" is a good principle that prevents subtle state management bugs.
-- The 50-100 line threshold is reasonable and ADHD-accessible.
+- The 50-100 line threshold is reasonable and Focus-accessible.
 - **Gap**: No mention of `build()` method complexity metrics (e.g., nesting depth). Deep widget trees can be hard to debug.
 
 ---
@@ -152,7 +152,7 @@ These standards are **mostly solid** with some practical strengths and notable g
 ### Strengths:
 - Practical and opinionated (good for avoiding decision paralysis)
 - Covers naming, architecture, and performance basics
-- ADHD-aware tone is refreshing and inclusive
+- Focus-aware tone is refreshing and inclusive
 
 ### Weaknesses:
 - Missing testing, security, and accessibility

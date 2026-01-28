@@ -1,5 +1,5 @@
 enum NotificationType {
-  medication,
+  routine,
   nudge,
   system,
   achievement,

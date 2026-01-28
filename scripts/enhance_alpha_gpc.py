@@ -80,7 +80,7 @@ def enhance_supplements(file_path):
         ],
         "tldr":
             "Premium, highly bioavailable choline source for acetylcholine synthesis; improves working memory and attention.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Complementary mechanism - supports acetylcholine (attention/memory) while stimulants enhance dopamine (motivation/focus).",
           "Vyvanse":

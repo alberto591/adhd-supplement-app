@@ -172,7 +172,7 @@ class _NotificationReliabilitySetupScreenState
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      "ADHD brains rely on external cues. Let's ensure your phone doesn't silence your critical health loops.",
+                      "Neurostack brains rely on external cues. Let's ensure your phone doesn't silence your critical health loops.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lexend(
                         color: Colors.grey,

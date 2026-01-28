@@ -16,7 +16,7 @@ NeuroStack ("we," "our," or "us") is committed to protecting your privacy. This 
 ### Health & Wellness Data
 - **Supplement Tracking**: Information about supplements you track (names, dosages, schedules)
 - **Daily Logs**: Records of when you take supplements
-- **ADHD Type**: Optional self-reported diagnosis information
+- **Focus Type**: Optional self-reported diagnosis information
 - **Symptom Check-ins**: Optional mood and focus ratings
 
 ### Usage Data
@@ -112,9 +112,9 @@ We may update this Privacy Policy from time to time. We will notify you of signi
 - Updating the "Last Updated" date
 - Sending an in-app notification (for material changes)
 
-## Medical Disclaimer
+## Clinical Disclaimer
 
-NeuroStack is for informational and tracking purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult your healthcare provider before starting any supplement regimen.
+NeuroStack is for informational and tracking purposes only. It is not a substitute for professional clinical advice, diagnosis, or treatment. Always consult your healthcare provider before starting any supplement regimen.
 
 ## Contact Us
 

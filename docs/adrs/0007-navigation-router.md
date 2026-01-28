@@ -69,7 +69,7 @@ AppRouter.navigateToHome(context);
 | Category | Routes |
 |----------|--------|
 | Auth | login, signup |
-| Onboarding | gracePeriod, goals, medicationSafety, stackSetup |
+| Onboarding | gracePeriod, goals, routineSafety, stackSetup |
 | Core | dashboard, dailyStack, insights |
 | Gamification | trophyRoom, levelUp, streakSaved, streakRecovery |
 | Settings | profile, privacySettings, reminders, appAppearance |

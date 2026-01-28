@@ -3,14 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:provider/provider.dart';
-import 'package:adhd_supplement_app/presentation/views/global_search_screen.dart';
-import 'package:adhd_supplement_app/application/view_models/global_search_view_model.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
+import 'package:neurostack_app/presentation/views/global_search_screen.dart';
+import 'package:neurostack_app/application/view_models/global_search_view_model.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
 // ignore: unused_import
-import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:neurostack_app/config/locator.dart';
 import 'package:get_it/get_it.dart';
 
 @GenerateMocks([GlobalSearchViewModel, AuthProvider])

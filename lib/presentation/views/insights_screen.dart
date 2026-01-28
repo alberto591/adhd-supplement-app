@@ -158,14 +158,14 @@ class _InsightsContent extends StatelessWidget {
                       height: 56,
                       child: ElevatedButton.icon(
                         onPressed: () => Navigator.pushNamed(
-                            context, AppRouter.doctorExport),
+                            context, AppRouter.advisorReport),
                         icon: context.watch<AuthProvider>().isPremium
                             ? const Icon(Icons.description_outlined)
                             : const Icon(Icons.lock_outline, size: 18),
                         label: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('Export Report for Doctor',
+                            Text('Export Report for Advisor',
                                 style: GoogleFonts.lexend(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

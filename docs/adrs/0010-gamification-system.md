@@ -6,10 +6,10 @@
 
 ## Context
 
-ADHD users benefit from dopamine-driven reward loops. We needed a gamification system that:
+Focus users benefit from dopamine-driven reward loops. We needed a gamification system that:
 - Tracks daily supplement intake streaks
 - Provides visual celebrations (confetti, badges)
-- Supports "grace days" for ADHD-friendly forgiveness
+- Supports "grace days" for Focus-friendly forgiveness
 - Unlocks achievements and trophies
 
 ## Decision
@@ -72,7 +72,7 @@ Daily Stack → Check Streak Status
 ## Consequences
 
 **Positive:**
-- Motivating reward system for ADHD users
+- Motivating reward system for Focus users
 - Forgiveness mechanism reduces guilt
 - Visual celebrations provide dopamine hits
 - Trophy collection adds long-term engagement

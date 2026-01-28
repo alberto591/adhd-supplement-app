@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
 import 'package:flutter/material.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
-import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/infrastructure/services/url_service.dart';
+import 'package:neurostack_app/domain/services/analytics_service.dart';
 
 class MockSupplementRepository implements SupplementRepository {
   bool _shouldThrow = false;

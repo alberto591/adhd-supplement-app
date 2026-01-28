@@ -4,7 +4,7 @@
 Proposed
 
 ## Context
-The initial `StackBuilderScreen` was a simple drag-and-drop interface with No discoverability (search) and limited customization. ADHD users need faster ways to find items (reducing cognitive load) and the ability to set specific dosages per routine slot to ensure accuracy and engagement.
+The initial `StackBuilderScreen` was a simple drag-and-drop interface with No discoverability (search) and limited customization. Focus users need faster ways to find items (reducing cognitive load) and the ability to set specific dosages per routine slot to ensure accuracy and engagement.
 
 ## Decision
 We implemented several enhancements to the Stack Builder:
@@ -18,4 +18,4 @@ We implemented several enhancements to the Stack Builder:
 -   **Usability**: Significant reduction in time-to-completion for building routines due to search and better visual cues.
 -   **Flexibility**: Users can now have different dosages for the same supplement across different times of day.
 -   **State Management**: `StackBuilderViewModel` now manages more transient state (search query) and deeper object updates (per-item dosage), slightly increasing its internal complexity.
--   **Design Consistency**: The enhancements follow the "Rule of One" and other ADHD-friendly principles defined in our design system.
+-   **Design Consistency**: The enhancements follow the "Rule of One" and other Focus-friendly principles defined in our design system.

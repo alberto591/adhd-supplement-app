@@ -17,7 +17,7 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
         ],
         "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CAUTION: Powerful CYP450 enzyme inducer. Interacts with MANY medications including birth control, antidepressants, and blood thinners. NOT recommended for ADHD.",
+            "⚠️ CAUTION: Powerful CYP450 enzyme inducer. Interacts with MANY medications including birth control, antidepressants, and blood thinners. NOT recommended for Focus.",
         "status": "caution",
         "mechanismOfAction":
             "St. John's Wort contains hypericin and hyperforin which modulate serotonin, dopamine, and norepinephrine reuptake. However, it is a potent inducer of CYP450 enzymes (particularly CYP3A4), which dramatically increases the metabolism of many medications, reducing their effectiveness. This makes it incompatible with most pharmaceutical treatments.",
@@ -27,7 +27,7 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
           "Natural alternative to pharmaceutical antidepressants for some people"
         ],
         "timingRationale":
-            "Morning dosing if used. However, NOT RECOMMENDED for people with ADHD due to extensive drug interactions with stimulant medications and other common treatments. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
+            "Morning dosing if used. However, NOT RECOMMENDED for people with Focus due to extensive drug interactions with stimulant medications and other common treatments. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
         "scientificEvidenceRank": 65,
         "studyLinks": {
           "St. John's Wort for depression":
@@ -43,18 +43,18 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
           "80-100": "600mg",
           "100-120": "600-900mg"
         },
-        "dosageFrequency": "Once or twice daily (NOT RECOMMENDED for ADHD patients)",
+        "dosageFrequency": "Once or twice daily (NOT RECOMMENDED for Focus patients)",
         "dosageWarnings": [
           "⚠️ CRITICAL: Reduces effectiveness of birth control pills by 50%+",
           "⚠️ Interacts with SSRIs, SNRIs (serotonin syndrome risk)",
           "⚠️ Reduces effectiveness of blood thinners, immunosuppressants, HIV medications",
-          "⚠️ May interact with ADHD stimulant medications",
+          "⚠️ May interact with Focus stimulant medications",
           "Causes photosensitivity - increases sun sensitivity",
           "NOT RECOMMENDED for people on multiple medications"
         ],
         "tldr":
-            "Herb for mild depression but EXTENSIVE drug interactions make it unsuitable for most ADHD patients on medications.",
-        "adhdMedInteractions": {
+            "Herb for mild depression but EXTENSIVE drug interactions make it unsuitable for most Focus patients on medications.",
+        "focusMedInteractions": {
           "Adderall":
               "⚠️ NOT RECOMMENDED: May alter stimulant metabolism through CYP450 induction, reducing effectiveness or causing unpredictable effects.",
           "Vyvanse":
@@ -112,7 +112,7 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
         ],
         "tldr":
             "Sedating herb for sleep support; highly variable effects and can cause morning grogginess.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "May help with stimulant-induced insomnia but can cause morning grogginess that interferes with medication effectiveness.",
           "Vyvanse":
@@ -171,7 +171,7 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
         ],
         "tldr":
             "Potent anxiolytic herb but SERIOUS liver toxicity risk; use only noble varieties and monitor liver function.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "May reduce stimulant-induced anxiety but liver toxicity risk makes it a poor choice for long-term use with medications.",
           "Vyvanse":
@@ -192,7 +192,7 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
         ],
         "evidenceLevel": "low",
         "notes":
-            "⚠️ CAUTION: Theoretical choline precursor but limited evidence. May cause overstimulation, insomnia, or headaches. Not well-researched for ADHD.",
+            "⚠️ CAUTION: Theoretical choline precursor but limited evidence. May cause overstimulation, insomnia, or headaches. Not well-researched for Focus.",
         "status": "caution",
         "mechanismOfAction":
             "DMAE is theorized to be a precursor to choline and acetylcholine, but this mechanism is poorly supported by research. It may modulate cholinergic activity through unclear pathways. Some studies suggest it stabilizes cell membranes. However, evidence for cognitive benefits is weak and inconsistent. May cause neural overstimulation in some individuals.",
@@ -222,7 +222,7 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
         "dosageWarnings": [
           "⚠️ Limited scientific evidence for benefits",
           "⚠️ May cause overstimulation, insomnia, headaches, irritability",
-          "⚠️ Can worsen symptoms in some people with ADHD",
+          "⚠️ Can worsen symptoms in some people with Focus",
           "Avoid if you have bipolar disorder (may trigger mania)",
           "May interact with cholinergic medications",
           "Not recommended during pregnancy or breastfeeding",
@@ -230,7 +230,7 @@ NEW_SUPPLEMENTS_BATCH3 = '''      {
         ],
         "tldr":
             "Theoretical nootropic with weak evidence and unpredictable effects; better choline sources available.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "⚠️ May cause overstimulation when combined with stimulants; unpredictable effects.",
           "Vyvanse":

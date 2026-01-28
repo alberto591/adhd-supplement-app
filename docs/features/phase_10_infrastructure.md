@@ -3,19 +3,19 @@
 **Status:** Completed  
 **Phase Duration:** January 2026  
 **Related ADRs:**
-- [ADR 0013: Notification Scheduling](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/adrs/0013-notification-scheduling.md)
-- [ADR 0014: Streak Grace Days](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/adrs/0014-streak-grace-days.md)
+- [ADR 0013: Notification Scheduling](file:///Users/lycanbeats/Desktop/focus_supplement_app/docs/adrs/0013-notification-scheduling.md)
+- [ADR 0014: Streak Grace Days](file:///Users/lycanbeats/Desktop/focus_supplement_app/docs/adrs/0014-streak-grace-days.md)
 
 ## Overview
 
-Phase 10 implemented core infrastructure for recurring notifications, streak tracking, and grace day logic to support sustainable habit building for ADHD users.
+Phase 10 implemented core infrastructure for recurring notifications, streak tracking, and grace day logic to support sustainable habit building for Focus users.
 
 ## Components Implemented
 
 ### 1. Notification Scheduling
 
 **Files:**
-- [notification_service.dart](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/infrastructure/services/notification_service.dart)
+- [notification_service.dart](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/infrastructure/services/notification_service.dart)
 - Added `timezone` package dependency
 
 **Features:**
@@ -48,9 +48,9 @@ await service.scheduleRecurringNotification(
 ### 2. Streak Tracking
 
 **Files:**
-- [streak.dart](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/domain/entities/streak.dart) - Entity
-- [streak_service.dart](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/infrastructure/services/streak_service.dart) - Business logic
-- [streak_view_model.dart](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/application/view_models/streak_view_model.dart) - State management
+- [streak.dart](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/domain/entities/streak.dart) - Entity
+- [streak_service.dart](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/infrastructure/services/streak_service.dart) - Business logic
+- [streak_view_model.dart](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/application/view_models/streak_view_model.dart) - State management
 
 **Streak Entity Fields:**
 - `currentStreak`: Current consecutive days
@@ -79,7 +79,7 @@ final updatedStreak = service.calculateStreak(
 
 ### 3. Grace Day System
 
-**Purpose:** Forgive missed days for ADHD users (reduces anxiety, promotes sustainability)
+**Purpose:** Forgive missed days for Focus users (reduces anxiety, promotes sustainability)
 
 **Rules:**
 - 2 grace days per month (renewable)
@@ -88,13 +88,13 @@ final updatedStreak = service.calculateStreak(
 - Resets at start of each month
 
 **UI Integration:**
-- [grace_period_card.dart](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/presentation/widgets/grace_period_card.dart) displays remaining grace days
+- [grace_period_card.dart](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/presentation/widgets/grace_period_card.dart) displays remaining grace days
 - Visual indicators (hearts: ❤️❤️ → ❤️🖤)
 - "How Grace Days work" explainer button
 
 ## Dependency Injection
 
-All services registered in [locator.dart](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/config/locator.dart):
+All services registered in [locator.dart](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/config/locator.dart):
 
 ```dart
 // Services

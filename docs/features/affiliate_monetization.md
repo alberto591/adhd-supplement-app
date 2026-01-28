@@ -24,9 +24,9 @@ Responsible for generating region-aware affiliate links.
 **Affiliate Tags:**
 | Region | Tag | Store URL |
 |--------|-----|-----------|
-| US | `adhdsupplements-20` | amazon.com |
-| UK | `adhdsupplements-21` | amazon.co.uk |
-| EU | `adhdsupplements-22` | amazon.de |
+| US | `focussupplements-20` | amazon.com |
+| UK | `focussupplements-21` | amazon.co.uk |
+| EU | `focussupplements-22` | amazon.de |
 
 ### 2. `UrlService` (Infrastructure Service)
 **Location**: `lib/infrastructure/services/url_service.dart`

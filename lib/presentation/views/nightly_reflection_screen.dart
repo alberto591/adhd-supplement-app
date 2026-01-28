@@ -474,7 +474,7 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.medication),
+                                    Icon(Icons.auto_awesome),
                                     SizedBox(width: 12),
                                     Text(
                                       'Take Evening Stack',

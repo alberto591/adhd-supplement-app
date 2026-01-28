@@ -1,48 +1,48 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/safety_override.dart';
+import 'package:neurostack_app/domain/entities/routine_override.dart';
 
 void main() {
-  group('SafetyOverride', () {
-    test('should create SafetyOverride with all required fields', () {
+  group('RoutineOverride', () {
+    test('should create RoutineOverride with all required fields', () {
       final now = DateTime.now();
-      final override = SafetyOverride(
+      final override = RoutineOverride(
         id: 'override1',
         userId: 'user1',
-        interactionId: 'interaction1',
+        compatibilityId: 'compatibility1',
         timestamp: now,
       );
 
       expect(override.id, 'override1');
       expect(override.userId, 'user1');
-      expect(override.interactionId, 'interaction1');
+      expect(override.compatibilityId, 'compatibility1');
       expect(override.timestamp, now);
       expect(override.userReason, null);
       expect(override.isAcknowledged, false);
     });
 
-    test('should create SafetyOverride with optional fields', () {
+    test('should create RoutineOverride with optional fields', () {
       final now = DateTime.now();
-      final override = SafetyOverride(
+      final override = RoutineOverride(
         id: 'override1',
         userId: 'user1',
-        interactionId: 'interaction1',
+        compatibilityId: 'compatibility1',
         timestamp: now,
-        userReason: 'Doctor approved',
+        userReason: 'Advisor approved',
         isAcknowledged: true,
       );
 
-      expect(override.userReason, 'Doctor approved');
+      expect(override.userReason, 'Advisor approved');
       expect(override.isAcknowledged, true);
     });
 
     test('toJson should serialize correctly', () {
       final now = DateTime.now();
-      final override = SafetyOverride(
+      final override = RoutineOverride(
         id: 'override1',
         userId: 'user1',
-        interactionId: 'interaction1',
+        compatibilityId: 'compatibility1',
         timestamp: now,
-        userReason: 'Doctor approved',
+        userReason: 'Advisor approved',
         isAcknowledged: true,
       );
 
@@ -50,18 +50,18 @@ void main() {
 
       expect(json['id'], 'override1');
       expect(json['userId'], 'user1');
-      expect(json['interactionId'], 'interaction1');
+      expect(json['compatibilityId'], 'compatibility1');
       expect(json['timestamp'], now.toIso8601String());
-      expect(json['userReason'], 'Doctor approved');
+      expect(json['userReason'], 'Advisor approved');
       expect(json['isAcknowledged'], true);
     });
 
     test('toJson should handle null userReason', () {
       final now = DateTime.now();
-      final override = SafetyOverride(
+      final override = RoutineOverride(
         id: 'override1',
         userId: 'user1',
-        interactionId: 'interaction1',
+        compatibilityId: 'compatibility1',
         timestamp: now,
         userReason: null,
         isAcknowledged: false,
@@ -78,21 +78,21 @@ void main() {
       final json = {
         'id': 'override1',
         'userId': 'user1',
-        'interactionId': 'interaction1',
+        'compatibilityId': 'compatibility1',
         'timestamp': now.toIso8601String(),
-        'userReason': 'Doctor approved',
+        'userReason': 'Advisor approved',
         'isAcknowledged': true,
       };
 
-      final override = SafetyOverride.fromJson(json);
+      final override = RoutineOverride.fromJson(json);
 
       expect(override.id, 'override1');
       expect(override.userId, 'user1');
-      expect(override.interactionId, 'interaction1');
+      expect(override.compatibilityId, 'compatibility1');
       expect(override.timestamp.year, now.year);
       expect(override.timestamp.month, now.month);
       expect(override.timestamp.day, now.day);
-      expect(override.userReason, 'Doctor approved');
+      expect(override.userReason, 'Advisor approved');
       expect(override.isAcknowledged, true);
     });
 
@@ -101,13 +101,13 @@ void main() {
       final json = {
         'id': 'override1',
         'userId': 'user1',
-        'interactionId': 'interaction1',
+        'compatibilityId': 'compatibility1',
         'timestamp': now.toIso8601String(),
         'userReason': null,
         'isAcknowledged': false,
       };
 
-      final override = SafetyOverride.fromJson(json);
+      final override = RoutineOverride.fromJson(json);
 
       expect(override.userReason, null);
       expect(override.isAcknowledged, false);
@@ -118,33 +118,33 @@ void main() {
       final json = {
         'id': 'override1',
         'userId': 'user1',
-        'interactionId': 'interaction1',
+        'compatibilityId': 'compatibility1',
         'timestamp': now.toIso8601String(),
         'userReason': null,
       };
 
-      final override = SafetyOverride.fromJson(json);
+      final override = RoutineOverride.fromJson(json);
 
       expect(override.isAcknowledged, false);
     });
 
     test('toJson and fromJson should be reversible', () {
       final now = DateTime.now();
-      final original = SafetyOverride(
+      final original = RoutineOverride(
         id: 'override1',
         userId: 'user1',
-        interactionId: 'interaction1',
+        compatibilityId: 'compatibility1',
         timestamp: now,
-        userReason: 'Doctor approved',
+        userReason: 'Advisor approved',
         isAcknowledged: true,
       );
 
       final json = original.toJson();
-      final restored = SafetyOverride.fromJson(json);
+      final restored = RoutineOverride.fromJson(json);
 
       expect(restored.id, original.id);
       expect(restored.userId, original.userId);
-      expect(restored.interactionId, original.interactionId);
+      expect(restored.compatibilityId, original.compatibilityId);
       expect(restored.timestamp.year, original.timestamp.year);
       expect(restored.timestamp.month, original.timestamp.month);
       expect(restored.timestamp.day, original.timestamp.day);
@@ -154,17 +154,17 @@ void main() {
 
     test('toJson and fromJson should be reversible with null userReason', () {
       final now = DateTime.now();
-      final original = SafetyOverride(
+      final original = RoutineOverride(
         id: 'override1',
         userId: 'user1',
-        interactionId: 'interaction1',
+        compatibilityId: 'compatibility1',
         timestamp: now,
         userReason: null,
         isAcknowledged: false,
       );
 
       final json = original.toJson();
-      final restored = SafetyOverride.fromJson(json);
+      final restored = RoutineOverride.fromJson(json);
 
       expect(restored.userReason, null);
       expect(restored.isAcknowledged, false);

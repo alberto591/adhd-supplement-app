@@ -37,7 +37,7 @@ Don’t just take pills—build a routine.
 We provide expert-curated information and high-quality product referrals to help you find what works for you.
 
 > [!IMPORTANT]
-> **Disclaimer**: This app is for educational purposes only and does not provide medical advice or diagnoses. Always consult your doctor before starting a new supplement.
+> **Disclaimer**: This app is for educational purposes only and does not provide wellness advice or diagnoses. Always consult your advisor before starting a new supplement.
 
 ---
 

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:adhd_supplement_app/application/view_models/nightly_reflection_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
-import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
+import 'package:neurostack_app/application/view_models/nightly_reflection_view_model.dart';
+import 'package:neurostack_app/domain/repositories/log_repository.dart';
+import 'package:neurostack_app/domain/entities/daily_log.dart';
 
 @GenerateMocks([LogRepository])
 import 'nightly_reflection_view_model_test.mocks.dart';

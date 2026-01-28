@@ -80,7 +80,7 @@ final bgColor = isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
 | Count | Category | Examples |
 |-------|----------|----------|
 | 2 | Auth | Login, Signup |
-| 4 | Onboarding | Grace Period, Goals, Medication, Stack Setup |
+| 4 | Onboarding | Grace Period, Goals, Routine, Stack Setup |
 | 3 | Core | Dashboard, Daily Stack, Insights |
 | 4 | Gamification | Trophy Room, Level Up, Streak Saved/Recovery |
 | 4 | Settings | Profile, Privacy, Reminders, App Appearance |

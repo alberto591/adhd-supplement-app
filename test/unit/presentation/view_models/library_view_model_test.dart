@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/presentation/view_models/library_view_model.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/repositories/stack_repository.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
 import 'package:flutter/material.dart';
 
 // Fakes for cleaner testing
@@ -403,40 +403,6 @@ void main() {
           false);
 
       viewModel.filterByEvidence(null);
-      expect(viewModel.supplements.length, 3);
-    });
-
-    test('filterByStimulant handles Safe and Caution multi-select', () async {
-      fakeSupplementRepo.supplements = [
-        beneficialSupp.copyWith(
-            id: 'safe1',
-            name: 'Safe Supp',
-            isPrescription: false,
-            adhdMedInteractions: {}),
-        beneficialSupp.copyWith(
-            id: 'caution1', name: 'Caution Supp 1', isPrescription: true),
-        beneficialSupp.copyWith(
-            id: 'caution2',
-            name: 'Caution Supp 2',
-            adhdMedInteractions: {'Adderall': 'Interaction'}),
-      ];
-      await viewModel.initialize();
-
-      // Filter by Safe
-      viewModel.filterByStimulant('Safe');
-      expect(viewModel.supplements.length, 1);
-      expect(viewModel.supplements.first.id, 'safe1');
-
-      // Filter by Caution (now showing both)
-      viewModel.filterByStimulant('Caution');
-      expect(viewModel.supplements.length, 3);
-
-      // Deselect Safe (showing only Caution)
-      viewModel.filterByStimulant('Safe');
-      expect(viewModel.supplements.length, 2);
-      expect(viewModel.supplements.any((s) => s.id == 'safe1'), false);
-
-      viewModel.filterByStimulant(null);
       expect(viewModel.supplements.length, 3);
     });
 

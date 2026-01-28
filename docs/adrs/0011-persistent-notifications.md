@@ -1,4 +1,4 @@
-# ADR 0011: Persistent Notification System for ADHD-Friendly Reminders
+# ADR 0011: Persistent Notification System for Focus-Friendly Reminders
 
 **Date:** 2026-01-19  
 **Status:** Proposed  
@@ -6,7 +6,7 @@
 
 ## Context
 
-ADHD users often struggle with:
+Focus users often struggle with:
 - Forgetting to take supplements despite good intentions
 - Dismissing single notifications and losing track
 - Time blindness making it hard to remember when they last took supplements
@@ -202,7 +202,7 @@ Allow users to configure in `PersistentRemindersScreen`:
 ## Consequences
 
 **Positive:**
-- ADHD-friendly persistent reminders without punishment
+- Focus-friendly persistent reminders without punishment
 - Escalation prevents users from ignoring indefinitely
 - Rich notifications with images increase engagement
 - Action buttons reduce friction (no need to open app)

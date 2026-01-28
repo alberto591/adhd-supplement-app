@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:adhd_supplement_app/application/view_models/streak_view_model.dart';
-import 'package:adhd_supplement_app/infrastructure/services/streak_service.dart';
-import 'package:adhd_supplement_app/domain/repositories/streak_repository.dart';
-import 'package:adhd_supplement_app/domain/entities/streak.dart';
-import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
+import 'package:neurostack_app/application/view_models/streak_view_model.dart';
+import 'package:neurostack_app/infrastructure/services/streak_service.dart';
+import 'package:neurostack_app/domain/repositories/streak_repository.dart';
+import 'package:neurostack_app/domain/entities/streak.dart';
+import 'package:neurostack_app/domain/entities/daily_log.dart';
 
 @GenerateMocks([StreakService, StreakRepository])
 import 'streak_view_model_test.mocks.dart';

@@ -66,7 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
     storageBucket: 'adhd-supplement-app.firebasestorage.app',
-    iosBundleId: 'com.neurostack.app',
+    iosBundleId: 'com.neurostack2.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -75,6 +75,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
     storageBucket: 'adhd-supplement-app.firebasestorage.app',
-    iosBundleId: 'com.neurostack.app',
+    iosBundleId: 'com.neurostack2.app',
   );
 }

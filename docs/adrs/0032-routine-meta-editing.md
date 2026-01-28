@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-The initial routine management system (Stack Builder) used hardcoded slot names (Morning, Afternoon, etc.) for display purposes. ADHD users often have unique routine triggers (e.g., "Post-Workout", "Deep Work Preamble") that don't always map to a simple time-of-day category. To increase user agency and reduce friction, we needed a way to allow users to rename these routines while preserving their underlying slot categorization for scheduling purposes.
+The initial routine management system (Stack Builder) used hardcoded slot names (Morning, Afternoon, etc.) for display purposes. Focus users often have unique routine triggers (e.g., "Post-Workout", "Deep Work Preamble") that don't always map to a simple time-of-day category. To increase user agency and reduce friction, we needed a way to allow users to rename these routines while preserving their underlying slot categorization for scheduling purposes.
 
 ## Decision
 We implemented a routine-level "Meta-Editing" capability:

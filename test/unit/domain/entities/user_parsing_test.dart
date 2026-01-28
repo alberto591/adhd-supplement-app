@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
 
 void main() {
   test('User.fromJson should correctly parse ISO8601 createdAt string', () {

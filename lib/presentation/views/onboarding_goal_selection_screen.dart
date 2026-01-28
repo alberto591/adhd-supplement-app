@@ -186,7 +186,7 @@ class _OnboardingGoalSelectionScreenState
                       height: 56,
                       child: ElevatedButton(
                         onPressed: () => Navigator.pushNamed(
-                            context, '/onboarding/medication-safety'),
+                            context, '/onboarding/routine-optimization'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.accentGreen,
                           foregroundColor: const Color(
@@ -209,7 +209,7 @@ class _OnboardingGoalSelectionScreenState
                     const SizedBox(height: 16),
                     TextButton(
                       onPressed: () => Navigator.pushNamed(
-                          context, AppRouter.onboardingMedicationSafety),
+                          context, AppRouter.onboardingRoutineOptimization),
                       style: TextButton.styleFrom(
                         foregroundColor:
                             isDark ? Colors.grey[400] : Colors.grey[500],

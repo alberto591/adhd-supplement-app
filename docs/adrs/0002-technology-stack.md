@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-We need to build a performant, cross-platform mobile application for ADHD supplement education. The stack needs to support rapid development, reliable backend services, and easy state management.
+We need to build a performant, cross-platform mobile application for Focus supplement education. The stack needs to support rapid development, reliable backend services, and easy state management.
 
 ## Decision
 

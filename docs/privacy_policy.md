@@ -1,14 +1,14 @@
-# Privacy Policy for ADHD Supplement App
+# Privacy Policy for Focus Supplement App
 
 **Effective Date: January 24, 2026**
 
-This Privacy Policy describes how the ADHD Supplement App ("we," "our," or "us") collects, uses, and shares your information when you use our mobile application.
+This Privacy Policy describes how the Focus Supplement App ("we," "our," or "us") collects, uses, and shares your information when you use our mobile application.
 
 ## 1. Information We Collect
 
 ### 1.1 Personal Data
 - **Account Information**: If you create an account, we collect your email address and profile details.
-- **Health Data**: We collect information you voluntarily provide regarding your supplement intake, medication use, and symptom tracking. This data is sensitive and treated with higher security standards.
+- **Health Data**: We collect information you voluntarily provide regarding your supplement intake, routine use, and symptom tracking. This data is sensitive and treated with higher security standards.
 
 ### 1.2 Usage Data
 - We collect anonymous usage statistics (e.g., feature frequency, app crashes) to improve the user experience.

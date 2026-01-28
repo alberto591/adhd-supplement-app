@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/foundation.dart';
-import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
+import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
 import '../../config/locator.dart';
 import '../theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';

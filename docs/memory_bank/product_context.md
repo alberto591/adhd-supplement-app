@@ -1,18 +1,18 @@
 # Product Context - Why FocusStack Exists
 
 ## The Problem
-ADHD individuals face unique challenges with supplement management:
+Focus individuals face unique challenges with supplement management:
 
 1. **Time Blindness**: Forgetting to take supplements, missing windows, losing track of what was taken
-2. **Information Overload**: Conflicting advice online, no trusted source for ADHD-specific supplement info
-3. **Safety Risks**: Unknown interactions between ADHD medications (stimulants) and common supplements
+2. **Information Overload**: Conflicting advice online, no trusted source for Focus-specific supplement info
+3. **Safety Risks**: Unknown interactions between Focus routines (stimulants) and common supplements
 4. **Motivation Fragility**: Traditional streak apps punish missed days, triggering rejection sensitivity
 
 ## Why Existing Solutions Fail
 | App Type | Problem |
 |----------|---------|
-| Generic Pill Trackers | No ADHD context, no interaction checking, punitive streaks |
-| Health Apps | Overwhelming, too many features, not ADHD-optimized |
+| Generic Pill Trackers | No Focus context, no interaction checking, punitive streaks |
+| Health Apps | Overwhelming, too many features, not Focus-optimized |
 | Research Databases | Too technical, no actionable guidance |
 
 ## Our Solution Philosophy
@@ -24,19 +24,19 @@ ADHD individuals face unique challenges with supplement management:
 ## User Personas
 
 ### Primary: "Optimizing Oliver" (32, Software Engineer)
-- Diagnosed ADHD-PI at 28
+- Diagnosed Focus-PI at 28
 - Takes Vyvanse daily
 - Researches supplements but overwhelmed by conflicting info
-- Wants to optimize focus without risking medication interactions
+- Wants to optimize focus without risking routine interactions
 
 ### Secondary: "Struggling Sarah" (28, Project Manager)
-- Recently diagnosed ADHD-C
+- Recently diagnosed Focus-C
 - Started Adderall, experiencing side effects
 - Looking for natural support options
 - Time-blind, forgets routine consistently
 
 ## Competitive Landscape
-- **Medisafe**: Medical focus, not supplement-aware
+- **Medisafe**: Wellness focus, not supplement-aware
 - **Daylio**: Mood tracking, no supplement logic
 - **Pillow/Sleep Cycle**: Sleep only, no supplement correlation
-- **None**: Specifically designed for ADHD + supplement safety
+- **None**: Specifically designed for Focus + supplement safety

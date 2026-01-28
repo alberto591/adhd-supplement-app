@@ -79,7 +79,7 @@ class NudgeTimelineWidget extends StatelessWidget {
                             ],
                           ),
                           child: const Icon(
-                            Icons.medication,
+                            Icons.auto_awesome,
                             color: AppColors.primary,
                             size: 16,
                           ),

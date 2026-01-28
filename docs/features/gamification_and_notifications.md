@@ -1,6 +1,6 @@
 # Gamification & Notification System
 
-This document outlines the implementation and usage of the retention and engagement features in the ADHD Supplement App.
+This document outlines the implementation and usage of the retention and engagement features in the Focus Supplement App.
 
 ## 1. The Trophy Room (Gamification)
 Located at `/trophy-room`, this screen visualizes the user's consistency.
@@ -25,7 +25,7 @@ Located at `/notification-history`, this acts as the "Flight Recorder" for the u
 ### Key Components
 - **NotificationHistoryViewModel**: Manages the list of logs.
 - **NotificationLogItem**: The data model.
-  - `type`: `medication` (Pill Icon), `nudge` (Hand Icon), `achievement` (Trophy Icon).
+  - `type`: `routine` (Pill Icon), `nudge` (Hand Icon), `achievement` (Trophy Icon).
 - **Persistence**: 
   - *Current State*: Mocked in ViewModel.
   - *Future State*: Needs integration with `sqflite` or `hive` to persist logs across app restarts.

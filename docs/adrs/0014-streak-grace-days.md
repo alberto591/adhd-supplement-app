@@ -4,10 +4,10 @@
 Accepted
 
 ## Context
-Users with ADHD struggle with consistency due to executive function challenges. Traditional streak systems (miss one day = lose everything) are demotivating and unsustainable for this population.
+Users with Focus struggle with consistency due to executive function challenges. Traditional streak systems (miss one day = lose everything) are demotivating and unsustainable for this population.
 
 Research shows:
-- ADHD users benefit from forgiveness mechanisms
+- Focus users benefit from forgiveness mechanisms
 - All-or-nothing systems increase anxiety and abandonment
 - Sustainable habit building requires flexibility
 
@@ -30,7 +30,7 @@ We implemented a grace day system that forgives missed days while maintaining ac
 ## Consequences
 
 ### Positive
-- More sustainable for ADHD users
+- More sustainable for Focus users
 - Reduces anxiety and pressure
 - Maintains accountability (finite grace days)
 - Encourages long-term consistency over perfection
@@ -44,4 +44,4 @@ We implemented a grace day system that forgives missed days while maintaining ac
 ### Neutral
 - Grace days are a monthly budget (not per-streak)
 - System favors consistency over rigid daily adherence
-- Balances motivation with realistic ADHD challenges
+- Balances motivation with realistic Focus challenges

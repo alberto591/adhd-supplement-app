@@ -65,7 +65,7 @@ class FirebaseGamificationRepository implements GamificationRepository {
     GamificationBadge(
       id: 'safety_first',
       title: 'Safety First',
-      subtitle: 'Check 1 interaction',
+      subtitle: 'Check 1 compatibility',
       icon: Icons.verified_user,
       color: Colors.blue,
       xpReward: 100,
@@ -164,7 +164,7 @@ class FirebaseGamificationRepository implements GamificationRepository {
   }
 
   int _getXpToNextLevel(int level) {
-    // ADHD-friendly: Fast progression at first (gamification hook)
+    // Neurostack-friendly: Fast progression at first (gamification hook)
     if (level < 3) return 200; // Very fast first few levels
     if (level < 5) return 500;
     if (level < 10) return 1000;

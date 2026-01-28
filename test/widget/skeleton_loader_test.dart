@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/presentation/widgets/skeleton_loader.dart';
+import 'package:neurostack_app/presentation/widgets/skeleton_loader.dart';
 
 void main() {
   testWidgets('SkeletonLoader renders correctly', (WidgetTester tester) async {

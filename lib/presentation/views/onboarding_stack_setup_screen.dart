@@ -4,7 +4,7 @@ import '../navigation/app_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../../application/providers/auth_provider.dart';
-import '../../application/view_models/safety_view_model.dart';
+import '../../application/view_models/routine_safety_view_model.dart';
 import '../../config/locator.dart';
 
 class OnboardingStackSetupScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
     with SingleTickerProviderStateMixin {
   // Mock data for search/suggestions
   final TextEditingController _searchController = TextEditingController();
-  late SafetyViewModel _safetyViewModel;
+  late RoutineSafetyViewModel _safetyViewModel;
 
   int _walkthroughStep = 0; // 0: None, 1: Search, 2: Add, 3: Review
   late AnimationController _pulseController;
@@ -29,7 +29,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
     super.initState();
     final authProvider = context.read<AuthProvider>();
     final userId = authProvider.user?.id ?? 'onboarding_user';
-    _safetyViewModel = locator.get<SafetyViewModel>(param1: userId);
+    _safetyViewModel = locator.get<RoutineSafetyViewModel>(param1: userId);
 
     _pulseController = AnimationController(
       vsync: this,
@@ -37,7 +37,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
     )..repeat(reverse: true);
 
     // Initial check for default onboarding items
-    _safetyViewModel.checkInteractions(['vyvanse_id', 'vitamin_d3_id']);
+    _safetyViewModel.checkCompatibilitys(['protocol_a_id', 'vitamin_d3_id']);
 
     // Start walkthrough after a short delay
     Future.delayed(const Duration(milliseconds: 500), () {
@@ -179,7 +179,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            'Search and add the supplements you already take to check for interactions.',
+                            'Search and add the supplements you already take to check for compatibilitys.',
                             style: TextStyle(
                               color:
                                   isDark ? Colors.grey[400] : Colors.grey[600],
@@ -254,7 +254,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'SUGGESTED ADHD PAIRS',
+                                'SUGGESTED Neurostack PAIRS',
                                 style: TextStyle(
                                   color: isDark
                                       ? AppColors.primaryGold
@@ -339,7 +339,8 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                               spacing: 8,
                               runSpacing: 8,
                               children: [
-                                _buildSupplementTag('Vyvanse (30mg)', isDark),
+                                _buildSupplementTag(
+                                    'Routine Protocol Type A', isDark),
                                 _buildSupplementTag('Vitamin D3', isDark),
                                 _buildAddTag(isDark, primaryGold),
                               ],
@@ -428,7 +429,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
             right: 24,
             child: _buildWalkthroughStep(
               'Step 3: Safety Guard',
-              'We automatically check for interactions between your meds and supplements.',
+              'We automatically check for compatibilitys between your meds and supplements.',
               Icons.security,
             ),
           ),
@@ -507,12 +508,12 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             // Safety Banner
-            Consumer<SafetyViewModel>(
+            Consumer<RoutineSafetyViewModel>(
               builder: (context, safetyViewModel, child) {
-                final hasInteractions =
-                    safetyViewModel.currentInteractions.isNotEmpty;
+                final hasCompatibilitys =
+                    safetyViewModel.currentCompatibilitys.isNotEmpty;
                 final bannerColor =
-                    hasInteractions ? Colors.amber : primaryColor;
+                    hasCompatibilitys ? Colors.amber : primaryColor;
 
                 return Container(
                   margin: const EdgeInsets.only(bottom: 16),
@@ -527,7 +528,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                   child: Row(
                     children: [
                       Icon(
-                          hasInteractions
+                          hasCompatibilitys
                               ? Icons.warning_amber_rounded
                               : Icons.verified_user,
                           color: bannerColor),
@@ -537,7 +538,7 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              hasInteractions
+                              hasCompatibilitys
                                   ? 'SAFETY ALERT'
                                   : 'SAFETY SHIELD ACTIVE',
                               style: TextStyle(
@@ -549,9 +550,9 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              hasInteractions
-                                  ? 'Potential interaction detected in your stack.'
-                                  : 'Interaction Check: No risks found.',
+                              hasCompatibilitys
+                                  ? 'Potential compatibility detected in your stack.'
+                                  : 'Compatibility Check: No risks found.',
                               style: TextStyle(
                                 color: isDark
                                     ? bannerColor.withValues(alpha: 0.7)
@@ -563,15 +564,15 @@ class _OnboardingStackSetupScreenState extends State<OnboardingStackSetupScreen>
                           ],
                         ),
                       ),
-                      if (hasInteractions)
+                      if (hasCompatibilitys)
                         IconButton(
                           icon: Icon(Icons.info, color: bannerColor, size: 20),
                           onPressed: () {
                             Navigator.pushNamed(
                               context,
-                              AppRouter.safetyInteractionDetail,
+                              AppRouter.safetyCompatibilityDetail,
                               arguments:
-                                  safetyViewModel.currentInteractions.first,
+                                  safetyViewModel.currentCompatibilitys.first,
                             );
                           },
                         )

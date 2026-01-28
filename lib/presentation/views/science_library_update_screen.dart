@@ -53,8 +53,8 @@ class ScienceLibraryUpdateScreen extends StatelessWidget {
                             width: 256,
                             height: 256,
                             decoration: BoxDecoration(
-                              color:
-                                  primaryColor.withValues(alpha: isDark ? 0.1 : 0.2),
+                              color: primaryColor.withValues(
+                                  alpha: isDark ? 0.1 : 0.2),
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
@@ -112,7 +112,7 @@ class ScienceLibraryUpdateScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     // Body Text
                     Text(
-                      'We’ve updated our library with the latest clinical studies on ADHD management.',
+                      'We’ve updated our library with the latest research studies on Neurostack management.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -151,7 +151,7 @@ class ScienceLibraryUpdateScreen extends StatelessWidget {
                             textSecondary: textSecondary,
                             icon: Icons.science_outlined,
                             title: '3 New Supplements Added',
-                            subtitle: 'Clinical efficacy review',
+                            subtitle: 'Scientific efficacy review',
                           ),
                           Divider(
                               height: 1,
@@ -167,7 +167,7 @@ class ScienceLibraryUpdateScreen extends StatelessWidget {
                             textSecondary: textSecondary,
                             icon: Icons.health_and_safety_outlined,
                             title: 'Updated Safety Guidelines',
-                            subtitle: 'Adderall interaction update',
+                            subtitle: 'Protocol compatibility update',
                           ),
                         ],
                       ),

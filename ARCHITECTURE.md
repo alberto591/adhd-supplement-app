@@ -45,9 +45,9 @@ The app uses a custom design system with specific color palettes for different m
 - **Safety**: Amber warnings.
 - **Celebration**: Gold and Purple.
 
-## ADHD UX Principles
+## Focus UX Principles
 
-To accommodate users with ADHD, the app follows specific UI/UX patterns:
+To accommodate users with Focus, the app follows specific UI/UX patterns:
 - **Low Friction**: Multi-step actions are collapsed into single gestures (e.g., Swipe-to-take).
 - **Time Anchoring**: Abstract slots are converted to relative countdowns to solve time blindness.
 - **Aggressive Persistency**: Reminders use a standardized **3-Step Nudge Sequence** (+5m Soft, +15m Medium, +30m CRITICAL) to overcome time blindness.

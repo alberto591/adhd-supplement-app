@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:adhd_supplement_app/domain/entities/educational_article.dart';
+import 'package:neurostack_app/domain/entities/educational_article.dart';
 
 class EducationalArticleDetailScreen extends StatelessWidget {
   final EducationalArticle article;
@@ -306,7 +306,7 @@ class EducationalArticleDetailScreen extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.medication_liquid, color: primary, size: 18),
+                  Icon(Icons.auto_awesome, color: primary, size: 18),
                   const SizedBox(width: 8),
                   Text(
                     supp,

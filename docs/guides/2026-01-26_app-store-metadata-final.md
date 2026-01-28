@@ -2,34 +2,38 @@
 
 ## 📋 General Info
 - **App Name**: NeuroStack: Focus & Flow
-- **App Category**: Health & Fitness
-- **Release Status**: V1.0.0+2 (Signed AAB generated)
+- **App Category**: Productivity or Health & Fitness
+- **Release Status**: V1.0.0+11 (Signed AAB generated)
 
 ---
 
 ## ✍️ Text Listing
 
 ### Short Description (Max 80 chars)
-> Personalized habit anchors for daily focus and routine consistency.
+> Build consistent routines and master your daily focus with smart anchors.
 
 ### Full Description (Max 4000 chars)
-**Master Your Focus. Simplify Your Routine.**
+**Elevate Your Focus. Master Your Flow.**
 
-NeuroStack is the ultimate routine tracking companion designed for anyone seeking better daily focus and routine consistency. Whether you are managing complex daily stacks or simple vitamins, NeuroStack provides the clarity and evidence-backed insights you need to perform at your best.
+NeuroStack is the ultimate daily routine companion for anyone looking to build consistency and optimize their energy levels. Designed around high-contrast, distraction-free principles, it helps you manage your daily rituals without the friction that leads to burnout.
 
-Why NeuroStack?
-Traditional trackers are cluttered and overwhelming. NeuroStack uses high-clarity, high-contrast design principles to reduce cognitive load and help you stay on track without the "nagging" anxiety.
+**Why NeuroStack?**
+Many productivity tools are too complex. NeuroStack is built for the "Distracted High-Achiever." We use a high-contrast, clean interface to reduce cognitive noise, making it easier to stick to your plans and find your focus every single day.
 
-**🚀 Key Features:**
+**🚀 Core Optimization Features:**
 
-- **Smart "Nudge" Reminders**: Get gentle anchors for your morning, afternoon, evening, and night routines.
-- **Routine Intelligence**: Explore a curated database of focus-enhancing ingredients with evidence-based insights and timing rationale.
-- **Personalized "Stacks"**: Organize your daily routines into logical groups to simplify your ritual.
-- **Privacy First**: Your personal data is yours alone. We use secure Firebase encryption and provide easy tools for data deletion.
-- **Simple Progress Insights**: See your consistency patterns over time to understand what routines truly move the needle for your focus.
+- **Intelligent "Nudge" Anchors**: Establish morning, afternoon, evening, and night anchors. We provide the gentle structure needed to transition through your day smoothly.
+- **Routine Discovery**: Explore a library of focus-supporting nutrients and ingredients. Understand the science behind timing and protocols to get the most out of your daily routine.
+- **Custom Performance Stacks**: Group your nutrients and vitamins into logical, easy-to-follow daily stacks. Know exactly what your routine needs at any given moment.
+- **Privacy-First Architecture**: Your data is yours alone. We provide secure encryption and simple tools for managing and deleting your personal data.
+- **Consistency Visualizer**: Track your progress with high-level insights. Understand your trends and find the perfect balance for your peak performance.
+- **Focus-Optimized Interface**: Vibrant colors, minimalist layouts, and zero clutter help you engage without getting lost.
 
-**⚠️ Medical Disclaimer:**
-NeuroStack is an educational and organizational tool. It does not provide medical diagnoses, prescriptions, or treatment advice. Always consult with a qualified healthcare professional (Physician, Psychiatrist) before starting any new supplement or medication regimen, especially if you have an existing medical condition or are taking other prescriptions.
+**Who is this for?**
+If you struggle with consistency, time-blindness, or building new habits, NeuroStack is your anchor. It’s for the entrepreneurs, students, and professionals who want to optimize their daily performance through better rituals.
+
+**⚠️ Disclaimer:**
+NeuroStack is an educational management tool. It does not provide health advice, prescriptions, or wellness treatment. Always consult with a qualified health professional before starting any new dietary or wellness regimen, especially if you have pre-existing conditions or are following other professional protocols.
 
 ---
 
@@ -45,15 +49,15 @@ NeuroStack is an educational and organizational tool. It does not provide medica
 - **Format**: PNG or JPEG
 - **Size**: 1024 x 500 px
 - **Max Weight**: 15 MB
-- **Tip**: This is the first thing people see. Use a vibrant gradient background from the app's theme and clear text like "Your ADHD Brain, Optimized."
+- **Tip**: This is the first thing people see. Use a vibrant gradient background from the app's theme and clear text like "Your Daily Brain, Optimized."
 
 ### 3. Phone Screenshots (Essential)
 - **Amount**: 2–8 (At least 4 for promotion)
 - **Size**: 9:16 aspect ratio (e.g., 1080 x 1920 px)
 - **Suggested Screens to Capture**:
     1. **The Dashboard**: Showing the "Gentle Nudge" UI.
-    2. **Supplement Library**: Showing an evidence-based detail page.
-    3. **Privacy Settings**: Highlighting the "Clear Supplement History" and "Data Removal" buttons for trust.
+    2. **Protocol Library**: Showing an evidence-based detail page.
+    3. **Privacy Settings**: Highlighting the "Clear History" and "Data Removal" buttons for trust.
     4. **Analytics**: Showing focus stats over time.
 
 ### 4. Tablet Screenshots (Optional but Recommended)

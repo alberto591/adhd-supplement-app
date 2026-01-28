@@ -2,76 +2,76 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // --- Domain ---
-import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/symptom_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/streak_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/gamification_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/safety_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/article_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/community_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/referral_repository.dart';
-import 'package:adhd_supplement_app/domain/services/billing_service.dart';
-import 'package:adhd_supplement_app/domain/services/interaction_service.dart';
-import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
+import 'package:neurostack_app/domain/repositories/auth_repository.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/repositories/stack_repository.dart';
+import 'package:neurostack_app/domain/repositories/log_repository.dart';
+import 'package:neurostack_app/domain/repositories/checkin_repository.dart';
+import 'package:neurostack_app/domain/repositories/streak_repository.dart';
+import 'package:neurostack_app/domain/repositories/gamification_repository.dart';
+import 'package:neurostack_app/domain/repositories/routine_safety_repository.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/domain/repositories/article_repository.dart';
+import 'package:neurostack_app/domain/repositories/community_repository.dart';
+import 'package:neurostack_app/domain/repositories/referral_repository.dart';
+import 'package:neurostack_app/domain/services/billing_service.dart';
+import 'package:neurostack_app/domain/services/compatibility_service.dart';
+import 'package:neurostack_app/domain/services/analytics_service.dart';
 
 // --- Infrastructure ---
-import 'package:adhd_supplement_app/infrastructure/services/no_op_billing_service.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_auth_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_supplement_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_stack_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_log_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_symptom_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_streak_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_gamification_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_safety_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_article_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_community_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_referral_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/perplexity_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/fda_interaction_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/firebase_analytics_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/streak_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/sound_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/report_pdf_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/perplexity_service.dart';
+import 'package:neurostack_app/infrastructure/services/no_op_billing_service.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_auth_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_supplement_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_stack_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_log_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_checkin_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_streak_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_gamification_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_routine_safety_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_article_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_community_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_referral_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/perplexity_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/routine_data_service.dart';
+import 'package:neurostack_app/infrastructure/services/firebase_analytics_service.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/infrastructure/services/streak_service.dart';
+import 'package:neurostack_app/infrastructure/services/url_service.dart';
+import 'package:neurostack_app/infrastructure/services/sound_service.dart';
+import 'package:neurostack_app/infrastructure/services/routine_pdf_service.dart';
+import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
+import 'package:neurostack_app/infrastructure/services/perplexity_service.dart';
 
 // --- Application ---
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/application/services/haptic_service.dart';
-import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/symptom_checkin_viewmodel.dart';
-import 'package:adhd_supplement_app/application/view_models/subscription_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/privacy_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/notification_history_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/persistent_reminders_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/focus_buddies_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/trophy_room_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/community_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/history_log_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/article_detail_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/science_hub_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/refer_friend_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/nightly_reflection_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/doctor_export_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/chemist_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/theme_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/insights_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/global_search_view_model.dart';
-import 'package:adhd_supplement_app/application/view_models/pill_matcher_view_model.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/application/services/haptic_service.dart';
+import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
+import 'package:neurostack_app/application/view_models/routine_safety_view_model.dart';
+import 'package:neurostack_app/application/view_models/state_checkin_viewmodel.dart';
+import 'package:neurostack_app/application/view_models/subscription_view_model.dart';
+import 'package:neurostack_app/application/view_models/privacy_view_model.dart';
+import 'package:neurostack_app/application/view_models/notification_history_view_model.dart';
+import 'package:neurostack_app/application/view_models/persistent_reminders_view_model.dart';
+import 'package:neurostack_app/application/view_models/focus_buddies_view_model.dart';
+import 'package:neurostack_app/application/view_models/trophy_room_view_model.dart';
+import 'package:neurostack_app/application/view_models/community_view_model.dart';
+import 'package:neurostack_app/application/view_models/history_log_view_model.dart';
+import 'package:neurostack_app/application/view_models/article_detail_view_model.dart';
+import 'package:neurostack_app/application/view_models/science_hub_view_model.dart';
+import 'package:neurostack_app/application/view_models/refer_friend_view_model.dart';
+import 'package:neurostack_app/application/view_models/nightly_reflection_view_model.dart';
+import 'package:neurostack_app/application/view_models/advisor_report_view_model.dart';
+import 'package:neurostack_app/application/view_models/chemist_view_model.dart';
+import 'package:neurostack_app/application/view_models/theme_view_model.dart';
+import 'package:neurostack_app/application/view_models/insights_view_model.dart';
+import 'package:neurostack_app/application/view_models/global_search_view_model.dart';
+import 'package:neurostack_app/application/view_models/pill_matcher_view_model.dart';
 
 // --- Presentation ---
-import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
-import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
-import 'package:adhd_supplement_app/presentation/view_models/stack_builder_view_model.dart';
+import 'package:neurostack_app/presentation/view_models/daily_stack_view_model.dart';
+import 'package:neurostack_app/presentation/view_models/library_view_model.dart';
+import 'package:neurostack_app/presentation/view_models/stack_builder_view_model.dart';
 
 final locator = GetIt.instance;
 
@@ -91,7 +91,7 @@ void _setupCore(SharedPreferences prefs) {
   locator.registerLazySingleton<SoundService>(
       () => SoundService(locator<SettingsRepository>()));
   locator.registerLazySingleton<UrlService>(() => UrlService());
-  locator.registerLazySingleton<ReportPdfService>(() => ReportPdfService());
+  locator.registerLazySingleton<RoutinePdfService>(() => RoutinePdfService());
   locator.registerLazySingleton<SeedingService>(() => SeedingService());
 }
 
@@ -103,7 +103,7 @@ void _setupInfrastructure(SharedPreferences prefs) {
   locator
       .registerLazySingleton<NotificationService>(() => NotificationService());
   locator
-      .registerLazySingleton<InteractionService>(() => FDAInteractionService());
+      .registerLazySingleton<CompatibilityService>(() => RoutineDataService());
   locator.registerLazySingleton<StreakService>(() => StreakService());
   locator.registerLazySingleton<PerplexityService>(() => PerplexityService());
 
@@ -115,14 +115,14 @@ void _setupInfrastructure(SharedPreferences prefs) {
       .registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
   locator.registerLazySingleton<LogRepository>(
       () => FirebaseLogRepository(prefs: prefs));
-  locator.registerLazySingleton<SymptomRepository>(
-      () => FirebaseSymptomRepository());
+  locator.registerLazySingleton<CheckInRepository>(
+      () => FirebaseCheckInRepository());
   locator.registerLazySingleton<StreakRepository>(
       () => FirebaseStreakRepository());
   locator.registerLazySingleton<GamificationRepository>(
       () => FirebaseGamificationRepository());
-  locator.registerLazySingleton<SafetyRepository>(
-      () => FirebaseSafetyRepository());
+  locator.registerLazySingleton<RoutineSafetyRepository>(
+      () => FirebaseRoutineSafetyRepository());
   locator
       .registerLazySingleton<ArticleRepository>(() => FirebaseArticleRepository(
             perplexityService: locator<PerplexityService>(),
@@ -208,16 +208,16 @@ void _setupViewModels() {
     ),
   );
 
-  locator.registerFactoryParam<SymptomCheckInViewModel, String, void>(
-    (userId, _) => SymptomCheckInViewModel(
-      repository: locator<SymptomRepository>(),
+  locator.registerFactoryParam<StateCheckInViewModel, String, void>(
+    (userId, _) => StateCheckInViewModel(
+      repository: locator<CheckInRepository>(),
       userId: userId,
     ),
   );
 
-  locator.registerFactoryParam<SafetyViewModel, String, void>(
-    (userId, _) => SafetyViewModel(
-      repository: locator<SafetyRepository>(),
+  locator.registerFactoryParam<RoutineSafetyViewModel, String, void>(
+    (userId, _) => RoutineSafetyViewModel(
+      repository: locator<RoutineSafetyRepository>(),
       userId: userId,
     ),
   );
@@ -236,11 +236,11 @@ void _setupViewModels() {
     ),
   );
 
-  locator.registerFactoryParam<DoctorExportViewModel, String, void>(
-    (userId, _) => DoctorExportViewModel(
+  locator.registerFactoryParam<AdvisorReportViewModel, String, void>(
+    (userId, _) => AdvisorReportViewModel(
       logRepository: locator<LogRepository>(),
       authRepository: locator<AuthRepository>(),
-      pdfService: locator<ReportPdfService>(),
+      pdfService: locator<RoutinePdfService>(),
       userId: userId,
     ),
   );
@@ -264,7 +264,7 @@ void _setupViewModels() {
     (userId, _) => StackBuilderViewModel(
       stackRepository: locator<StackRepository>(),
       supplementRepository: locator<SupplementRepository>(),
-      safetyViewModel: locator<SafetyViewModel>(param1: userId),
+      safetyViewModel: locator<RoutineSafetyViewModel>(param1: userId),
       userId: userId,
     ),
   );

@@ -3,8 +3,8 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/firebase_auth_repository.dart';
-import 'package:adhd_supplement_app/domain/errors/failure.dart';
+import 'package:neurostack_app/infrastructure/repositories/firebase_auth_repository.dart';
+import 'package:neurostack_app/domain/errors/failure.dart';
 
 import 'firebase_auth_repository_test.mocks.dart';
 

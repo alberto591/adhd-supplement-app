@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
 import '../views/auth/login_screen.dart';
-import '../views/medical_disclaimer_screen.dart';
+import '../views/disclaimer_screen.dart';
 import '../views/daily_stack_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
@@ -21,7 +21,7 @@ class AuthWrapper extends StatelessWidget {
             );
           case AuthStatus.authenticated:
             if (auth.user?.hasCompletedOnboarding == false) {
-              return const MedicalDisclaimerScreen();
+              return const DisclaimerScreen();
             }
             return const DailyStackScreen();
           case AuthStatus.unauthenticated:

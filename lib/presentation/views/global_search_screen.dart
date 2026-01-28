@@ -233,7 +233,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             color: AppColors.primaryGold.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(Icons.medication, color: AppColors.primaryGold),
+          child: const Icon(Icons.auto_awesome, color: AppColors.primaryGold),
         ),
         title: Text(
           supplement.name,

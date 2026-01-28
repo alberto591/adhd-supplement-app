@@ -1,4 +1,4 @@
-# ADR 0040: Standardized 3-Step ADHD Nudge Cycle
+# ADR 0040: Standardized 3-Step Focus Nudge Cycle
 
 **Date:** 2026-01-24  
 **Status:** Accepted  
@@ -6,7 +6,7 @@
 
 ## Context
 
-ADHD users often experience "time blindness" and can easily dismiss or forget a single notification. While ADR 0011 established a 3-tier persistent notification system, it lacked a specific, automated escalation timeline that standardizes how the app "nudges" the user without requiring manual snoozing for every interval.
+Focus users often experience "time blindness" and can easily dismiss or forget a single notification. While ADR 0011 established a 3-tier persistent notification system, it lacked a specific, automated escalation timeline that standardizes how the app "nudges" the user without requiring manual snoozing for every interval.
 
 ## Decision
 

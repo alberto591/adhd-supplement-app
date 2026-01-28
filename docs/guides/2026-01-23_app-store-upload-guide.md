@@ -2,7 +2,7 @@
 
 Uploading to the Apple App Store is a more "locked-down" process than Android. In 2026, Apple has introduced stricter Privacy Manifests and Accessibility Nutrition Labels that you must complete, especially for a health-oriented app like yours.
 
-Here is the professional workflow to get your ADHD app from Antigravity to an iPhone.
+Here is the professional workflow to get your Focus app from Antigravity to an iPhone.
 
 ## 1. The Membership Requirement
 Unlike Android’s one-time fee, Apple requires a yearly subscription ($99 USD).
@@ -15,7 +15,7 @@ As of 2026, Apple "technically enforces" privacy declarations. If your code acce
 
 1. In Xcode, right-click your `Runner` folder and select **New File**.
 2. Choose **App Privacy File** (named `PrivacyInfo.xcprivacy`).
-3. **For your ADHD App**: You must declare why you are tracking "Health" data (supplements) and "Identifiers" (if using Firebase for user stacks).
+3. **For your Focus App**: You must declare why you are tracking "Health" data (supplements) and "Identifiers" (if using Firebase for user stacks).
     - *Example*: Define `NSPrivacyAccessedAPITypes` for any health-related APIs you use.
 
 ## 3. The Flutter Build Process
@@ -34,7 +34,7 @@ Once your code is ready in Antigravity, you need to generate the "IPA" (the iOS 
 While your app is "Processing" in Apple's cloud, you must fill out the storefront details:
 - **Screenshots**: Apple is strict. You need sets for 6.7" (Pro Max) and 5.5" (older Plus models). Use your Google Stitch designs as a template for these.
 - **Review Guidelines (Health)**: Because you offer supplement information, you must specify that the app is informational only.
-    - *Tip*: In the "App Review Information" notes, explicitly state: "This app provides educational content on supplements. It does not provide medical diagnoses or prescriptions."
+    - *Tip*: In the "App Review Information" notes, explicitly state: "This app provides educational content on supplements. It does not provide wellness diagnoses or prescriptions."
 - **Age Rating**: Mark it appropriately. Since it involves health and "unrestricted web access" (if your referral links open a browser), it will likely be 12+ or 17+.
 
 ## 5. The "Privacy Nutrition Label"
@@ -44,6 +44,6 @@ You must answer a series of questions in App Store Connect about the data you co
 - **Tracking**: If you use your affiliate links to track purchases across other sites, you must declare this under **Tracking**.
 
 ## Strategy for a Smooth Review
-Apple's human reviewers are very cautious about "Medical Advice." To avoid a rejection:
+Apple's human reviewers are very cautious about "Wellness Advice." To avoid a rejection:
 1. **Include a visible disclaimer** on the first screen (onboarding).
 2. **Provide a Demo Account**: In the review notes, give them a login so they can see all the supplement information without having to pay or sign up personally.

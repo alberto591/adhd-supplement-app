@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Track your ADHD supplements',
+                  'Track your Neurostack supplements',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,

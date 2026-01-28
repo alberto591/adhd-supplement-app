@@ -140,7 +140,7 @@ class _PersistentRemindersContentState
                 builder: (context) => AlertDialog(
                   title: const Text('Persistent Reminders'),
                   content: const Text(
-                    'These reminders will continue to nudge you until you take action. Perfect for ADHD time blindness!',
+                    'These reminders will continue to nudge you until you take action. Perfect for Neurostack time blindness!',
                   ),
                   actions: [
                     TextButton(

@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/presentation/view_models/stack_builder_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_interaction.dart';
+import 'package:neurostack_app/presentation/view_models/stack_builder_view_model.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/repositories/stack_repository.dart';
+import 'package:neurostack_app/application/view_models/routine_safety_view_model.dart';
+import 'package:neurostack_app/domain/entities/supplement_compatibility.dart';
 
 class FakeSupplementRepository implements SupplementRepository {
   List<Supplement> supplements = [];
@@ -57,11 +57,11 @@ class FakeStackRepository implements StackRepository {
       Stream.value([]);
 }
 
-class FakeSafetyViewModel extends Fake implements SafetyViewModel {
+class FakeRoutineSafetyViewModel extends Fake implements RoutineSafetyViewModel {
   @override
-  List<SupplementInteraction> get currentInteractions => [];
+  List<SupplementCompatibility> get currentCompatibilitys => [];
   @override
-  Future<void> checkInteractions(List<String> ids) async {}
+  Future<void> checkCompatibilitys(List<String> ids) async {}
 }
 
 void main() {
@@ -75,7 +75,7 @@ void main() {
     viewModel = StackBuilderViewModel(
       supplementRepository: fakeSupplementRepo,
       stackRepository: fakeStackRepo,
-      safetyViewModel: FakeSafetyViewModel(),
+      safetyViewModel: FakeRoutineSafetyViewModel(),
       userId: 'test-user',
     );
   });

@@ -10,7 +10,6 @@ typedef SupplementSaveCallback = Future<void> Function(
   List<String> benefits,
   String? evidence,
   String? form,
-  bool isSafe,
 );
 
 class CustomSupplementForm extends StatefulWidget {
@@ -32,7 +31,6 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
   final List<String> _benefits = [];
   final String _evidence = 'Moderate';
   final String _form = 'Capsule';
-  bool _isSafe = true;
 
   @override
   Widget build(BuildContext context) {
@@ -101,21 +99,7 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
                 onChanged: (v) => setState(() => _timeOfDay = v),
               ),
               const SizedBox(height: 24),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _isSafe,
-                    activeColor: AppColors.primaryGold,
-                    onChanged: (v) => setState(() => _isSafe = v ?? true),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'I have verified this doesn\'t interact with my ADHD meds.',
-                      style: GoogleFonts.lexend(fontSize: 12),
-                    ),
-                  ),
-                ],
-              ),
+              // Safety checkbox removed
               const SizedBox(height: 32),
               SizedBox(
                 width: double.infinity,
@@ -229,7 +213,6 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
         _benefits,
         _evidence,
         _form,
-        _isSafe,
       );
       Navigator.pop(context);
     }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/presentation/views/supplement_detail.dart';
+import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/presentation/views/supplement_detail.dart';
 
-/// ADHD-Friendly Home Screen with high-contrast cards and Focus Level badges
+/// Neurostack-Friendly Home Screen with high-contrast cards and Focus Level badges
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E1E1E),
         title: const Text(
-          'ADHD Supplements',
+          'Focus Supplements',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

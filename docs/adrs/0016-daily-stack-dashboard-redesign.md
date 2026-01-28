@@ -6,11 +6,11 @@
 
 ## Context
 
-The previous dashboard implementation provided a flat list of medications, which was difficult for users with ADHD to prioritize. User feedback indicated a need for better organization based on when medications should be taken throughout the day.
+The previous dashboard implementation provided a flat list of routines, which was difficult for users with Focus to prioritize. User feedback indicated a need for better organization based on when routines should be taken throughout the day.
 
 ## Decision
 
-Redesign the dashboard to use a "Daily Stack" approach, grouping medications into specific time-slots:
+Redesign the dashboard to use a "Daily Stack" approach, grouping routines into specific time-slots:
 - **Morning Focus**: Items scheduled before 12:00 PM or tagged as "morning".
 - **Afternoon**: Items scheduled between 12:00 PM and 6:00 PM.
 - **Evening Stack**: Items scheduled after 6:00 PM or tagged as "evening/bedtime".
@@ -36,4 +36,4 @@ Redesign the dashboard to use a "Daily Stack" approach, grouping medications int
 | Option | Rejected Because |
 |--------|------------------|
 | Keep flat list | Failed to address user prioritization needs. |
-| Automatic AI sorting | Overly complex for initial phase; manual scheduling is more predictable for medical adherence. |
+| Automatic AI sorting | Overly complex for initial phase; manual scheduling is more predictable for wellness adherence. |

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:adhd_supplement_app/presentation/theme/app_theme.dart';
-import 'package:adhd_supplement_app/utils/supplement_ui_helper.dart';
-import 'package:adhd_supplement_app/presentation/widgets/up_next_card.dart';
-import 'package:adhd_supplement_app/presentation/widgets/daily_progress_card.dart';
-import 'package:adhd_supplement_app/presentation/widgets/celebration_animation.dart';
-import 'package:adhd_supplement_app/presentation/widgets/medication_card.dart';
-import 'package:adhd_supplement_app/presentation/widgets/skeleton_loader.dart';
-import 'package:adhd_supplement_app/presentation/widgets/unified_bottom_nav.dart';
-import 'package:adhd_supplement_app/presentation/navigation/app_router.dart';
-import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/application/view_models/safety_view_model.dart';
-import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:neurostack_app/presentation/theme/app_theme.dart';
+import 'package:neurostack_app/utils/supplement_ui_helper.dart';
+import 'package:neurostack_app/presentation/widgets/up_next_card.dart';
+import 'package:neurostack_app/presentation/widgets/daily_progress_card.dart';
+import 'package:neurostack_app/presentation/widgets/celebration_animation.dart';
+import 'package:neurostack_app/presentation/widgets/routine_element_card.dart';
+import 'package:neurostack_app/presentation/widgets/skeleton_loader.dart';
+import 'package:neurostack_app/presentation/widgets/unified_bottom_nav.dart';
+import 'package:neurostack_app/presentation/navigation/app_router.dart';
+import 'package:neurostack_app/presentation/view_models/daily_stack_view_model.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/application/view_models/routine_safety_view_model.dart';
+import 'package:neurostack_app/config/locator.dart';
 
 class DailyStackScreen extends StatefulWidget {
   const DailyStackScreen({super.key});
@@ -24,7 +24,7 @@ class DailyStackScreen extends StatefulWidget {
 
 class _DailyStackScreenState extends State<DailyStackScreen> {
   late DailyStackViewModel _viewModel;
-  late SafetyViewModel _safetyViewModel;
+  late RoutineSafetyViewModel _safetyViewModel;
   bool _showCelebration = false;
 
   @override
@@ -36,7 +36,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
 
     // Create ViewModel instances
     _viewModel = locator.get<DailyStackViewModel>(param1: userId);
-    _safetyViewModel = locator.get<SafetyViewModel>(param1: userId);
+    _safetyViewModel = locator.get<RoutineSafetyViewModel>(param1: userId);
 
     // Initialize data
     _viewModel.initialize().then((_) {
@@ -48,7 +48,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
     final supplementIds = _viewModel.stacks
         .expand((stack) => stack.items.map((i) => i.supplementId))
         .toList();
-    _safetyViewModel.checkInteractions(supplementIds);
+    _safetyViewModel.checkCompatibilitys(supplementIds);
   }
 
   @override
@@ -79,7 +79,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
             // Main content
             SafeArea(
               bottom: false,
-              child: Consumer2<DailyStackViewModel, SafetyViewModel>(
+              child: Consumer2<DailyStackViewModel, RoutineSafetyViewModel>(
                 builder: (context, viewModel, safetyViewModel, child) {
                   // Show loading skeleton
                   if (viewModel.isLoading) {
@@ -423,7 +423,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                             vertical: 32),
                                         child: Center(
                                           child: Text(
-                                            'All supplements taken for today!',
+                                            'All elements completed for today!',
                                             style: TextStyle(
                                                 color: secondaryTextColor),
                                           ),
@@ -679,7 +679,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                       slot: title.toLowerCase());
                 }
               },
-              child: MedicationCard(
+              child: RoutineElementCard(
                 key: ValueKey('med_${title}_${stackItem.supplementId}'),
                 title: supplement?.name ?? 'Loading...',
                 dosage:

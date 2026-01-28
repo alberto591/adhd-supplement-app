@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:adhd_supplement_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
+import 'package:neurostack_app/infrastructure/repositories/shared_prefs_settings_repository.dart';
 
 void main() {
   late SharedPrefsSettingsRepository repository;
@@ -22,7 +22,7 @@ void main() {
       expect(repository.hasAcceptedDisclaimer(), true);
 
       // Verify in raw prefs
-      expect(prefs.getBool('accepted_medical_disclaimer'), true);
+      expect(prefs.getBool('accepted_general_disclaimer'), true);
     });
   });
 }

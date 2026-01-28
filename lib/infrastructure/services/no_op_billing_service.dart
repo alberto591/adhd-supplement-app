@@ -1,4 +1,4 @@
-import 'package:adhd_supplement_app/domain/services/billing_service.dart';
+import 'package:neurostack_app/domain/services/billing_service.dart';
 
 /// A no-op implementation of [BillingService] that always returns false/empty.
 /// Used to disable monetization features without removing code architecture.

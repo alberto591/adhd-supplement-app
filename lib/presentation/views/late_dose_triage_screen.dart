@@ -243,7 +243,7 @@ class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     final decision = _selectedOption == 0
-                        ? 'Took medication late'
+                        ? 'Logged entry late'
                         : (_selectedOption == 1
                             ? 'Skipped dose'
                             : 'Took on time');

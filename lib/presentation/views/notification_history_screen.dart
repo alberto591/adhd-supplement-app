@@ -116,8 +116,8 @@ class _NotificationTile extends StatelessWidget {
 
     IconData getIcon() {
       switch (notification.type) {
-        case NotificationType.medication:
-          return Icons.medication;
+        case NotificationType.routine:
+          return Icons.event_note;
         case NotificationType.nudge:
           return Icons
               .touch_app; // Use touch_app instead of circle_notifications
@@ -130,7 +130,7 @@ class _NotificationTile extends StatelessWidget {
 
     Color getColor() {
       switch (notification.type) {
-        case NotificationType.medication:
+        case NotificationType.routine:
           return AppColors.secondary;
         case NotificationType.nudge:
           return AppColors.primary;

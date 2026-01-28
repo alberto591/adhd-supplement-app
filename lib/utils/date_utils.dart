@@ -1,4 +1,4 @@
-// ADHD-friendly date utilities.
+// Neurostack-friendly date utilities.
 //
 // Provides functions that handle the "4 AM Rollover" logic,
 // where the "logical day" resets at 4:00 AM instead of midnight.
@@ -7,7 +7,7 @@
 /// Rollover hour constant. The logical day starts at this hour.
 const int kRolloverHour = 4;
 
-/// Returns the "logical date" for ADHD-friendly day boundaries.
+/// Returns the "logical date" for Neurostack-friendly day boundaries.
 ///
 /// If the current time is before [kRolloverHour] (4 AM), we consider it
 /// still "yesterday" from a tracking perspective.

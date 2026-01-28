@@ -3,7 +3,7 @@
 This document describes the initial user experience and stack configuration.
 
 ## Overview
-The app features a multi-step onboarding flow to help ADHD users get started without overwhelming them with choices.
+The app features a multi-step onboarding flow to help Focus users get started without overwhelming them with choices.
 
 ## Screens
 
@@ -14,7 +14,7 @@ A streamlined wizard that walks users through their first supplement stack setup
 
 **Flow:**
 1. Welcome message explaining the app's purpose.
-2. Medication input (for safety checking).
+2. Routine input (for safety checking).
 3. Quick supplement selection (Popular stacks: Focus, Sleep, Energy).
 4. Notification preferences.
 
@@ -79,4 +79,4 @@ Dashboard (Home)
 
 ## Related Features
 - **Stack Builder**: Users can modify stacks later via `StackBuilderScreen`.
-- **Medication Safety**: Inputs from onboarding feed into `SafetyGuard` for interaction checks.
+- **Routine Safety**: Inputs from onboarding feed into `SafetyGuard` for interaction checks.

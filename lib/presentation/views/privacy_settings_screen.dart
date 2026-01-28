@@ -150,7 +150,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Deleting your data is permanent. This will erase all your supplement tracking history, medication schedules, and profile information from both this device and any synced backups.',
+                      'Deleting your data is permanent. This will erase all your supplement tracking history, routine schedules, and profile information from both this device and any synced backups.',
                       style: TextStyle(
                         color: isDark
                             ? const Color(0xFF94A3B8)
@@ -564,7 +564,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildPolicySection('1. Data Collection',
-                    'We collect only the data necessary to provide our services. This includes your supplement logs, symptom checks, and basic profile information. All health data is stored locally on your device unless you enable cloud sync.'),
+                    'We collect only the data necessary to provide our services. This includes your supplement logs, state checks, and basic profile information. All health data is stored locally on your device unless you enable cloud sync.'),
                 _buildPolicySection('2. Data Usage',
                     'Your data is used solely to provide you with insights and track your progress. We do not sell your personal data to third parties.'),
                 _buildPolicySection('3. Security',

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
 
 void main() {
   group('StackItem', () {

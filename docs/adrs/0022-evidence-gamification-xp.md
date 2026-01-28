@@ -6,7 +6,7 @@
 
 ## Context
 
-The app aims to improve adherence for supplement stacks. Since ADHD users often struggle with long-term habit formation, a gamification layer was needed to provide immediate dopamine rewards for small wins (intake).
+The app aims to improve adherence for supplement stacks. Since Focus users often struggle with long-term habit formation, a gamification layer was needed to provide immediate dopamine rewards for small wins (intake).
 
 ## Decision
 
@@ -19,7 +19,7 @@ Rules:
 4. **Persistence**: XP is stored in the `User` entity and synced to Firestore/LocalStorage.
 
 ## Rationale
-- **Immediate Feedback**: ADHD minds crave immediate positive feedback. XP gain at the moment of intake provides this "micro-reward".
+- **Immediate Feedback**: Focus minds crave immediate positive feedback. XP gain at the moment of intake provides this "micro-reward".
 - **Visual Progress**: Leveling up acts as a long-term indicator of consistency that is more satisfying than just a calendar streak.
 - **Social Integration**: XP provides a baseline metric for the "Focus Buddies" feature to compare progress.
 

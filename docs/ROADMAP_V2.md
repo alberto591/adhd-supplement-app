@@ -18,4 +18,4 @@ This document tracks technical improvements, optimizations, and features deferre
 - [ ] Science Hub (Science Library & Education)
 - [ ] Advanced Insight Visualizations (V2)
 - [ ] Community Focus Buddy deep-integration
-- [ ] Medical Provider Export v2 (PDF formatting improvements)
+- [ ] Wellness Provider Export v2 (PDF formatting improvements)

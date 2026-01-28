@@ -49,7 +49,7 @@ class EmergencyContactScreen extends StatelessWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
-                      'If you are experiencing a life-threatening medical emergency, please call emergency services immediately.',
+                      'If you are experiencing a life-threatening general emergency, please call emergency services immediately.',
                       style: TextStyle(
                         color: isDark ? Colors.red[200] : Colors.red[800],
                         fontSize: 14,
@@ -90,7 +90,7 @@ class EmergencyContactScreen extends StatelessWidget {
             _buildContactCard(
               context,
               title: 'Poison Control Center',
-              subtitle: 'For accidental overdoses or interactions',
+              subtitle: 'For accidental overdoses or compatibilitys',
               number: '1-800-222-1222', // US Poison Control
               icon: Icons.local_hospital,
               color: Colors.orange,
@@ -137,13 +137,13 @@ class EmergencyContactScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Doctor / Pharmacy Placeholders
+            // Advisor / Pharmacy Placeholders
             _buildContactCard(
               context,
               title: 'Dr. Sarah Chen (Psychiatrist)',
               subtitle: 'Primary Prescriber',
               number: '555-0123',
-              icon: Icons.calendar_today, // Appointment/Doctor icon
+              icon: Icons.calendar_today, // Appointment/Advisor icon
               color: AppColors.primary,
               isDark: isDark,
             ),

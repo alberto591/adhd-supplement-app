@@ -1,19 +1,19 @@
-# Project Brief - ADHD Supplement App
+# Project Brief - Focus Supplement App
 
 ## Project Name
-**FocusStack** - ADHD Supplement Education & Tracking App
+**FocusStack** - Focus Supplement Education & Tracking App
 
 ## Core Purpose
-A mobile application helping ADHD individuals discover, track, and safely manage their supplement routines. The app prioritizes safety (medication-supplement interaction checking), consistency (streak tracking with grace periods), and education (science-backed research).
+A mobile application helping Focus individuals discover, track, and safely manage their supplement routines. The app prioritizes safety (routine-supplement interaction checking), consistency (streak tracking with grace periods), and education (science-backed research).
 
 ## Target Audience
-- Adults diagnosed with ADHD (primarily 25-45)
-- Users already taking ADHD medication (stimulants, non-stimulants)
+- Adults diagnosed with Focus (primarily 25-45)
+- Users already taking Focus routine (stimulants, non-stimulants)
 - Health-conscious individuals seeking to optimize cognitive function
 
 ## Core Value Proposition
-1. **Safety First**: Real-time medication-supplement interaction warnings
-2. **ADHD-Friendly UX**: Designed for time blindness, rejection sensitivity, and working memory challenges
+1. **Safety First**: Real-time routine-supplement interaction warnings
+2. **Focus-Friendly UX**: Designed for time blindness, rejection sensitivity, and working memory challenges
 3. **Science-Backed**: Research summaries in plain language
 4. **Monetization**: Affiliate links to recommended supplements
 

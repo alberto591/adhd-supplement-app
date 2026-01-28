@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/stack_drop_zone.dart';
 import '../widgets/library_item.dart';
-import '../widgets/safety_alert_banner.dart';
-import '../../application/view_models/safety_view_model.dart';
+import '../widgets/routine_alert_banner.dart';
+import '../../application/view_models/routine_safety_view_model.dart';
 import '../navigation/app_router.dart';
 import '../widgets/stack_presets_modal.dart';
 import '../../utils/supplement_ui_helper.dart';
@@ -92,7 +92,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor =
         isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
-    final safetyViewModel = context.watch<SafetyViewModel>();
+    final safetyViewModel = context.watch<RoutineSafetyViewModel>();
     final viewModel = context.watch<StackBuilderViewModel>();
 
     final libraryItems = _getLibraryItemData(viewModel);
@@ -239,20 +239,21 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                         ),
                                       ),
 
-                                    // Safety Alert Banner (Dynamic)
+                                    // Routine Alert Banner (Dynamic)
                                     if (safetyViewModel
-                                        .currentInteractions.isNotEmpty)
+                                        .currentCompatibilitys.isNotEmpty)
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
-                                        child: SafetyAlertBanner(
-                                          interaction: safetyViewModel
-                                              .currentInteractions.first,
+                                        child: RoutineAlertBanner(
+                                          compatibility: safetyViewModel
+                                              .currentCompatibilitys.first,
                                           onLearnMore: () {
                                             Navigator.pushNamed(
                                               context,
-                                              AppRouter.safetyInteractionDetail,
+                                              AppRouter
+                                                  .safetyCompatibilityDetail,
                                               arguments: safetyViewModel
-                                                  .currentInteractions.first,
+                                                  .currentCompatibilitys.first,
                                             );
                                           },
                                         ),
@@ -513,7 +514,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           Row(
                                             children: [
                                               const Text(
-                                                'Safety Status: ',
+                                                'Routine Status: ',
                                                 style: TextStyle(
                                                   color: AppColors
                                                       .textSecondaryDark,
@@ -525,13 +526,13 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                 safetyViewModel.isLoading
                                                     ? 'Checking...'
                                                     : (safetyViewModel
-                                                            .currentInteractions
+                                                            .currentCompatibilitys
                                                             .isEmpty
                                                         ? 'All Clear'
                                                         : 'Alert'),
                                                 style: TextStyle(
                                                   color: safetyViewModel
-                                                          .currentInteractions
+                                                          .currentCompatibilitys
                                                           .isEmpty
                                                       ? Colors.green
                                                       : Colors.amber,
@@ -562,18 +563,19 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                     child: Center(
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          if (safetyViewModel.currentInteractions.isNotEmpty) {
+                          if (safetyViewModel
+                              .currentCompatibilitys.isNotEmpty) {
                             Navigator.pushNamed(
                               context,
-                              AppRouter.safetyInteractionDetail,
+                              AppRouter.safetyCompatibilityDetail,
                               arguments:
-                                  safetyViewModel.currentInteractions.first,
+                                  safetyViewModel.currentCompatibilitys.first,
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                    'Analysis Complete: No interactions found.'),
+                                    'Analysis Complete: All items optimized.'),
                                 backgroundColor: Colors.green,
                                 duration: Duration(seconds: 2),
                               ),
@@ -581,20 +583,20 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                           }
                         },
                         icon: Icon(
-                            safetyViewModel.currentInteractions.isNotEmpty
+                            safetyViewModel.currentCompatibilitys.isNotEmpty
                                 ? Icons.warning
                                 : Icons.check_circle,
                             size: 24),
                         label: Text(
-                          safetyViewModel.currentInteractions.isNotEmpty
-                              ? 'Analyze Warnings'
-                              : 'Analyze Stack',
+                          safetyViewModel.currentCompatibilitys.isNotEmpty
+                              ? 'Review Insights'
+                              : 'Review Routine',
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              safetyViewModel.currentInteractions.isEmpty
+                              safetyViewModel.currentCompatibilitys.isEmpty
                                   ? AppColors.primary
                                   : Colors.amber[700],
                           foregroundColor: Colors.white,

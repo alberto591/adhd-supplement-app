@@ -21,7 +21,7 @@ class FirebaseReferralRepository implements ReferralRepository {
     }
 
     final referralCode = 'REF-${user.uid.substring(0, 5).toUpperCase()}';
-    final shareLink = 'https://adhd-stack.app/r/$referralCode';
+    final shareLink = 'https://neurostack.app/r/$referralCode';
 
     // Fetch users who used this code (assuming schema has 'referredBy')
     // This part assumes we track referrals. Since we likely don't yet,

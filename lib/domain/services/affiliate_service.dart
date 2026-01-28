@@ -13,9 +13,9 @@ enum UserRegion {
 class AffiliateService {
   // Affiliate tags for each region
   static const Map<UserRegion, String> _affiliateTags = {
-    UserRegion.us: 'adhdsupplements-20',
-    UserRegion.uk: 'adhdsupplements-21',
-    UserRegion.eu: 'adhdsupplements-22',
+    UserRegion.us: 'focussupplements-20',
+    UserRegion.uk: 'focussupplements-21',
+    UserRegion.eu: 'focussupplements-22',
   };
 
   // Base URLs for each Amazon regional store

@@ -176,7 +176,7 @@ class SupplementCard extends StatelessWidget {
                     if (tag.contains('bio')) icon = Icons.bolt;
                     if (tag.contains('Cognitive')) icon = Icons.psychology;
                     if (tag.contains('Daily')) icon = Icons.schedule;
-                    if (tag.contains('Stimulant')) icon = Icons.medication;
+                    if (tag.contains('Type A')) icon = Icons.auto_awesome;
 
                     return Row(
                       mainAxisSize: MainAxisSize.min,

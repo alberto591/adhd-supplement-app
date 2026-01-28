@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:adhd_supplement_app/presentation/views/insights_screen.dart';
-import 'package:adhd_supplement_app/application/view_models/insights_view_model.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
+import 'package:neurostack_app/presentation/views/insights_screen.dart';
+import 'package:neurostack_app/application/view_models/insights_view_model.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
 import 'package:get_it/get_it.dart';
 
 // Generate Mocks for ViewModel and AuthProvider

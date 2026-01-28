@@ -68,12 +68,12 @@ This template defines the **standard format** for all supplement entries in the 
 }
 ```
 
-### ADHD-Specific Data
+### Focus-Specific Data
 ```json
 {
-  "tldr": "One-sentence summary focused on ADHD benefits.",
+  "tldr": "One-sentence summary focused on Focus benefits.",
   
-  "adhdMedInteractions": {
+  "focusMedInteractions": {
     "Adderall": "How this supplement interacts with Adderall",
     "Vyvanse": "How this supplement interacts with Vyvanse",
     "Ritalin": "How this supplement interacts with Ritalin"
@@ -81,7 +81,7 @@ This template defines the **standard format** for all supplement entries in the 
   
   "contraindications": [                         // Who should avoid
     "People with X condition",
-    "Those taking Y medication"
+    "Those taking Y routine"
   ],
   
   "sideEffects": [                               // Potential adverse effects
@@ -140,14 +140,14 @@ This template defines the **standard format** for all supplement entries in the 
   "timingRationale": "Evening dosing supports natural melatonin production and muscle relaxation before sleep. Glycinate's calming effect makes it ideal for bedtime.",
   
   "studyLinks": {
-    "Magnesium supplementation for ADHD": "https://pubmed.ncbi.nlm.nih.gov/...",
+    "Magnesium supplementation for Focus": "https://pubmed.ncbi.nlm.nih.gov/...",
     "Sleep quality improvement": "https://pubmed.ncbi.nlm.nih.gov/..."
   },
   
   "tldr": "Highly bioavailable magnesium that improves sleep quality and reduces anxiety without morning grogginess.",
   
-  "adhdMedInteractions": {
-    "Adderall": "May help reduce muscle tension and improve sleep quality disrupted by stimulants. Take 4+ hours after medication.",
+  "focusMedInteractions": {
+    "Adderall": "May help reduce muscle tension and improve sleep quality disrupted by stimulants. Take 4+ hours after routine.",
     "Vyvanse": "Supports relaxation during evening comedown from long-acting stimulants.",
     "Ritalin": "No significant interaction; beneficial for sleep support."
   },
@@ -162,7 +162,7 @@ This template defines the **standard format** for all supplement entries in the 
     "Rare: mild drowsiness if taken during the day"
   ],
   
-  "notes": "Glycinate form is preferred over oxide or citrate for ADHD due to better absorption and fewer GI side effects."
+  "notes": "Glycinate form is preferred over oxide or citrate for Focus due to better absorption and fewer GI side effects."
 }
 ```
 
@@ -175,7 +175,7 @@ This template defines the **standard format** for all supplement entries in the 
 - Write in clear, accessible language (avoid excessive jargon)
 - Include specific, measurable benefits where possible
 - Provide actionable dosing guidance
-- Address common ADHD medication interactions
+- Address common Focus routine interactions
 
 ### ❌ DON'T:
 - Make unsubstantiated health claims
@@ -214,7 +214,7 @@ This template defines the **standard format** for all supplement entries in the 
 
 1. Research the supplement on PubMed, examine.com, or similar reputable sources
 2. Fill out all required fields using this template
-3. Verify ADHD medication interactions for safety
+3. Verify Focus routine interactions for safety
 4. Include at least 2 study links for credibility
 5. Review against quality standards checklist
 6. Test in the app to ensure proper display

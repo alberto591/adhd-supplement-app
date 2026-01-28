@@ -27,8 +27,8 @@ Perform targeted searches using the `search_web` tool:
 
 #### Amazon Search
 ```
-Query: "{supplement_name} {form} supplement ADHD {dosage}"
-Example: "Omega-3 EPA DHA supplement ADHD 1000mg"
+Query: "{supplement_name} {form} supplement Focus {dosage}"
+Example: "Omega-3 EPA DHA supplement Focus 1000mg"
 ```
 
 **Look for:**
@@ -81,15 +81,15 @@ final allLinks = affiliateService.getAllRegionLinks('B001U4OYGY');
 
 **Result format:**
 ```
-US:  https://www.amazon.com/dp/B001U4OYGY?tag=adhdsupplements-20
-UK:  https://www.amazon.co.uk/dp/B001U4OYGY?tag=adhdsupplements-21
-EU:  https://www.amazon.de/dp/B001U4OYGY?tag=adhdsupplements-22
+US:  https://www.amazon.com/dp/B001U4OYGY?tag=focussupplements-20
+UK:  https://www.amazon.co.uk/dp/B001U4OYGY?tag=focussupplements-21
+EU:  https://www.amazon.de/dp/B001U4OYGY?tag=focussupplements-22
 ```
 
 #### For iHerb:
 ```
-https://www.iherb.com/{product-id}?rcode=ADHDSUPP
-Example: https://www.iherb.com/81332?rcode=ADHDSUPP
+https://www.iherb.com/{product-id}?rcode=FocusSUPP
+Example: https://www.iherb.com/81332?rcode=FocusSUPP
 ```
 
 ### Step 5: Present Recommendation
@@ -136,7 +136,7 @@ Supplement(
 "Add L-Tyrosine supplement to the database"
 
 **Agent Actions:**
-1. Search: "L-Tyrosine supplement ADHD 500mg amazon"
+1. Search: "L-Tyrosine supplement Focus 500mg amazon"
 2. Identify top product: "NOW Foods L-Tyrosine 500mg"
 3. Extract ASIN: `B0013OQGO6`
 4. Generate links using `AffiliateService`

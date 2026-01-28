@@ -54,7 +54,7 @@ def audit_supplements():
         '"timingRationale"',
         '"dosageByWeight"',
         '"tldr"',
-        '"adhdMedInteractions"',
+        '"focusMedInteractions"',
         '"focusLevel"'
     ]
     

@@ -25,7 +25,7 @@ class FirebaseArticleRepository implements ArticleRepository {
           'Magnesium Glycinate helps regulate neurotransmitters GABA and Melatonin, promoting deeper REM cycles without morning grogginess.',
       category: 'SCIENCE',
       content: '''
-Magnesium is often called the "relaxation mineral" for a reason. In our modern, high-stress environment, magnesium depletion is rampant, especially among those with ADHD who may have higher metabolic demands due to stimulant medication or chronic stress.
+Magnesium is often called the "relaxation mineral" for a reason. In our modern, high-stress environment, magnesium depletion is rampant, especially among those with Neurostack who may have higher metabolic demands due to Type A routine element or chronic stress.
 
 Why Glycinate?
 Not all magnesium is created equal. Magnesium Glycinate is formed by combining elemental magnesium with the amino acid glycine. This form is highly bioavailable and less likely to cause laxative effects compared to Citrate or Oxide.

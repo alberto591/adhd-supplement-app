@@ -1,24 +1,24 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_interaction.dart';
+import 'package:neurostack_app/domain/entities/supplement_compatibility.dart';
 
 void main() {
-  group('SupplementInteraction', () {
+  group('SupplementCompatibility', () {
     test('should support value equality', () {
-      const interaction1 = SupplementInteraction(
+      const compatibility1 = SupplementCompatibility(
         id: '1',
         supplementAId: 'sup1',
         supplementBId: 'sup2',
-        severity: InteractionSeverity.critical,
+        severity: CompatibilityLevel.critical,
         description: 'Test description',
         recommendation: 'Test recommendation',
         scientificReferences: ['ref1'],
       );
 
-      const interaction2 = SupplementInteraction(
+      const compatibility2 = SupplementCompatibility(
         id: '1',
         supplementAId: 'sup1',
         supplementBId: 'sup2',
-        severity: InteractionSeverity.critical,
+        severity: CompatibilityLevel.critical,
         description: 'Test description',
         recommendation: 'Test recommendation',
         scientificReferences: ['ref1'],
@@ -29,22 +29,22 @@ void main() {
       // If it's a standard class without Equatable, strict equality checks reference.
       // Let's verify field values instead to be safe if Equatable isn't used.
 
-      expect(interaction1.id, interaction2.id);
-      expect(interaction1.severity, interaction2.severity);
+      expect(compatibility1.id, compatibility2.id);
+      expect(compatibility1.severity, compatibility2.severity);
     });
 
     test('should correctly identify critical severity', () {
-      const interaction = SupplementInteraction(
+      const compatibility = SupplementCompatibility(
         id: '1',
         supplementAId: 'a',
         supplementBId: 'b',
-        severity: InteractionSeverity.critical,
+        severity: CompatibilityLevel.critical,
         description: 'desc',
         recommendation: 'rec',
         scientificReferences: [],
       );
 
-      expect(interaction.severity, InteractionSeverity.critical);
+      expect(compatibility.severity, CompatibilityLevel.critical);
     });
   });
 }

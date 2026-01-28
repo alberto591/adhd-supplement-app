@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-ADHD coaching strategies emphasize immediate, multi-sensory feedback to increase the "surface area" of dopamine rewards for completing routine tasks. The app already featured visual feedback (Confetti, SnackBars), but lacked an auditory dimension. Adding a distinct "Success Sound" upon logging a dose creates a stronger cognitive seal for the action, making the habit formation loop more robust.
+Focus coaching strategies emphasize immediate, multi-sensory feedback to increase the "surface area" of dopamine rewards for completing routine tasks. The app already featured visual feedback (Confetti, SnackBars), but lacked an auditory dimension. Adding a distinct "Success Sound" upon logging a dose creates a stronger cognitive seal for the action, making the habit formation loop more robust.
 
 ## Decision
 We implemented a centralized audio feedback system:

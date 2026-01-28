@@ -381,7 +381,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                                     ),
                                     const SizedBox(height: 4),
                                     const Text(
-                                      'Press and hold an empty area on your home screen, tap the (+) button, and search for "ADHD Supps".',
+                                      'Press and hold an empty area on your home screen, tap the (+) button, and search for "Neurostack Supps".',
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 12,
@@ -645,7 +645,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.medication, color: primary, size: 20),
+                      Icon(Icons.auto_awesome, color: primary, size: 20),
                       Container(
                         width: 30,
                         height: 30,

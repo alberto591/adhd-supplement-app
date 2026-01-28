@@ -1,4 +1,4 @@
-# AI Coding Standards - ADHD Supplement App (Flutter)
+# AI Coding Standards - Focus Supplement App (Flutter)
 
 ## Overview
 **Version**: 2.0 (Hardened Flutter Standard)
@@ -20,7 +20,7 @@ lib/
 ## 2. State Management (2026 Standard)
 - **Riverpod 3.0 (Recommended)**: Use for its Offline Persistence API.
     - *Scenario*: User logs supplements in a basement (no signal) -> Save locally -> Sync later.
-- **BLoC 9.0 (Enterprise)**: Use for complex multi-step forms or strict medical audit trails.
+- **BLoC 9.0 (Enterprise)**: Use for complex multi-step forms or strict clinical audit trails.
 - **Avoid**: `setState` for anything beyond trivial UI toggles.
 
 ## 3. Mandatory Testing
@@ -39,7 +39,7 @@ Critical for May 2026 Android requirements.
 - **Verification**: Run `flutter build appbundle --analyze-size` and check for "16kb segment alignment".
 
 ## 5. Security & Accessibility (Health App Standard)
-- **Local Encryption**: Use `flutter_secure_storage` or encrypted Hive box for medication names. NEVER store plain text medical data.
+- **Local Encryption**: Use `flutter_secure_storage` or encrypted Hive box for medication names. NEVER store plain text clinical data.
 - **Accessibility (WCAG 2.1 AA)**:
     - **Contrast**: Minimum 4.5:1 ratio.
     - **Modes**: Provide "Low Stimulation Mode" (muted colors, no animations).
@@ -62,7 +62,7 @@ Future<Result<List<Supplement>>> fetchSupplements() async {
 }
 ```
 
-## 7. UX & Cognitive Load (ADHD Specific)
+## 7. UX & Cognitive Load (Focus Specific)
 - **Rule of 3**: Max 3 primary actions per screen.
 - **Feedback**: Immediate Haptic/Visual feedback for every interaction.
 - **Navigation**: Preference for flat navigation over deep stacks.

@@ -20,7 +20,7 @@ class LibraryViewModel extends ChangeNotifier {
   String _searchQuery = '';
   List<String> _selectedCategories = [];
   List<String> _selectedEvidenceLevels = [];
-  List<String> _selectedStimulantStatus = [];
+// _selectedClassAStatus removed
   List<String> _selectedForms = [];
   String _currentStatus = 'beneficial';
   bool _isLoading = false;
@@ -35,7 +35,7 @@ class LibraryViewModel extends ChangeNotifier {
   String? get selectedCategory =>
       _selectedCategories.isEmpty ? null : _selectedCategories.first;
   List<String> get selectedEvidenceLevels => _selectedEvidenceLevels;
-  List<String> get selectedStimulantStatus => _selectedStimulantStatus;
+// selectedClassAStatus removed
   List<String> get selectedForms => _selectedForms;
   String get currentStatus => _currentStatus;
   bool get isLoading => _isLoading;
@@ -86,7 +86,7 @@ class LibraryViewModel extends ChangeNotifier {
     String? timeOfDay,
     List<String> benefits = const [],
     String? evidenceLevel,
-    Map<String, String>? adhdMedInteractions,
+// focusMedCompatibilitys param removed
     String? form,
   }) async {
     _setLoading(true);
@@ -99,7 +99,7 @@ class LibraryViewModel extends ChangeNotifier {
         timeOfDay: timeOfDay,
         benefits: benefits,
         evidenceLevel: evidenceLevel,
-        adhdMedInteractions: adhdMedInteractions,
+// focusMedCompatibilitys constructor argument removed
         form: form,
         userId: _userId,
         isCustom: true,
@@ -164,19 +164,7 @@ class LibraryViewModel extends ChangeNotifier {
     _applyFilters();
   }
 
-  /// Filter by stimulant compatibility (Multi-select)
-  void filterByStimulant(String? status) {
-    if (status == null) {
-      _selectedStimulantStatus = [];
-    } else {
-      if (_selectedStimulantStatus.contains(status)) {
-        _selectedStimulantStatus.remove(status);
-      } else {
-        _selectedStimulantStatus.add(status);
-      }
-    }
-    _applyFilters();
-  }
+  // filterByClassA removed
 
   /// Filter by form (Multi-select)
   void filterByForm(String? form) {
@@ -203,7 +191,7 @@ class LibraryViewModel extends ChangeNotifier {
     _searchQuery = '';
     _selectedCategories = [];
     _selectedEvidenceLevels = [];
-    _selectedStimulantStatus = [];
+// _selectedClassAStatus reset removed
     _selectedForms = [];
     _currentStatus = 'beneficial';
     _applyFilters();
@@ -357,20 +345,7 @@ class LibraryViewModel extends ChangeNotifier {
         }
       }
 
-      // Stimulant compatibility filter (Multi-select: "Safe", "Caution")
-      if (_selectedStimulantStatus.isNotEmpty) {
-        final hasInteractions = s.adhdMedInteractions?.isNotEmpty ?? false;
-        final isSafe = !s.isPrescription && !hasInteractions;
-        final isCaution = s.isPrescription || hasInteractions;
-
-        bool matchesSafe = _selectedStimulantStatus.contains('Safe') && isSafe;
-        bool matchesCaution =
-            _selectedStimulantStatus.contains('Caution') && isCaution;
-
-        if (!matchesSafe && !matchesCaution) {
-          return false;
-        }
-      }
+      // Class A compatibility filter REMOVED
 
       // Form filter (Multi-select)
       if (_selectedForms.isNotEmpty) {

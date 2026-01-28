@@ -16,7 +16,7 @@ We will implement a **Region-Aware Affiliate Service**.
 
 ### Logic
 - **Detection**: Detect user region (US/UK/EU) based on device locale (or user selection).
-- **Tagging**: Store separate affiliate tags for each region (`adhdsupplements-20`, `adhdsupplements-21`, etc.).
+- **Tagging**: Store separate affiliate tags for each region (`focussupplements-20`, `focussupplements-21`, etc.).
 - **Routing**: `AffiliateService` dynamically constructs the URL based on the user's region and the product's ASIN.
 
 ### Skill Automation

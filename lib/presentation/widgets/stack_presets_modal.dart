@@ -25,7 +25,7 @@ class StackPresetsModal extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'ADHD Archetype Presets',
+                'Focus Archetype Presets',
                 style: GoogleFonts.lexend(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,

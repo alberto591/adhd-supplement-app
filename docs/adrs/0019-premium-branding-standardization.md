@@ -20,7 +20,7 @@ Core requirements:
 
 ## Rationale
 - **Brand Identity**: Establishes a premium, high-trust identity suitable for health and wellness supplements.
-- **ADHD Friendliness**: Lexend typography is specifically designed for improved readability.
+- **Focus Friendliness**: Lexend typography is specifically designed for improved readability.
 - **Visual Hierarchy**: Gold on dark/light backgrounds provides high contrast for call-to-action elements.
 - **Market Positioning**: Distinguishes the app as a "Pro" tool compared to generic hobbyist trackers.
 
@@ -40,5 +40,5 @@ Core requirements:
 | Option | Rejected Because |
 |--------|------------------|
 | Functional Color Coding | Hard for users to remember what orange vs purple meant; felt "busy" and less premium. |
-| System Font Default | Lacks the brand distinctiveness and ADHD-specific benefits of Lexend. |
+| System Font Default | Lacks the brand distinctiveness and Focus-specific benefits of Lexend. |
 | Mixed Theme (Gold & Blue) | Blue was retained only for "Utility" screens (e.g., Help) to separate support from the core habit-forming experience. |

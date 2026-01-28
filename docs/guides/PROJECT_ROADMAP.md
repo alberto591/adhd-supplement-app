@@ -1,11 +1,11 @@
 # Project Roadmap & Remaining Tasks
 
-This document serves as the primary reference for pending implementation tasks for the ADHD Supplement App. It consolidates technical debt, feature enhancements, and scientific audits.
+This document serves as the primary reference for pending implementation tasks for the Focus Supplement App. It consolidates technical debt, feature enhancements, and scientific audits.
 
 ## 1. App Store & Deployment
 - [ ] **Implementation of App Store Upload Guide**
     - [ ] Create `PrivacyInfo.xcprivacy` and declare data types.
-    - [ ] Add visible medical disclaimer on first-run onboarding.
+    - [ ] Add visible wellness disclaimer on first-run onboarding.
     - [ ] Configure Apple App Store Connect metadata (Screenshots, Nutrition Labels).
     - [ ] Set up a Demo Account for App Reviewers.
 
@@ -46,5 +46,5 @@ This document serves as the primary reference for pending implementation tasks f
 - [x] Supplement Standardization (51 items)
 - [x] Science Hub Infrastructure (FAQ, Research Library, Educational Content)
 - [x] Stack Builder Refactor (ViewModel-based, Reordering, Overflow fixed)
-- [x] Medication Safety Guard & Interactions
+- [x] Routine Safety Guard & Interactions
 - [x] Local Asset Asset Implementation (Eliminated broken external link placeholders)

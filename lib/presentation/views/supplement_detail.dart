@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:adhd_supplement_app/presentation/theme/app_theme.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
-import 'package:adhd_supplement_app/config/locator.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/presentation/widgets/dosage_calculator_card.dart';
-import 'package:adhd_supplement_app/domain/services/safety_guard.dart';
-import 'package:adhd_supplement_app/domain/entities/medication.dart';
-import 'package:adhd_supplement_app/presentation/widgets/medication_safety_alert.dart';
-import 'package:adhd_supplement_app/utils/supplement_ui_helper.dart';
+import 'package:neurostack_app/presentation/theme/app_theme.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/presentation/view_models/library_view_model.dart';
+import 'package:neurostack_app/config/locator.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/presentation/widgets/dosage_calculator_card.dart';
+import 'package:neurostack_app/domain/services/routine_compatibility_service.dart';
+import 'package:neurostack_app/domain/entities/routine_element.dart';
+import 'package:neurostack_app/presentation/widgets/routine_status_alert.dart';
+import 'package:neurostack_app/utils/supplement_ui_helper.dart';
 
-/// ADHD-Friendly Detail Screen with high contrast and clear sections
+/// Neurostack-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
   final Supplement supplement;
 
@@ -26,13 +26,13 @@ class SupplementDetail extends StatelessWidget {
     // Use a fresh ViewModel for this screen
     final libraryViewModel = locator.get<LibraryViewModel>(param1: userId);
 
-    // Safety logic for ADHD medications
+    // Optimization logic for routine elements
     final user = authProvider.user;
-    final userMedication = user?.currentMedication;
-    List<InteractionWarning> safetyWarnings = [];
+    final userElement = user?.currentElement;
+    List<CompatibilityGuidance> safetyWarnings = [];
 
-    if (userMedication != null) {
-      final guard = SafetyGuard([userMedication]);
+    if (userElement != null) {
+      final guard = RoutineCompatibilityService([userElement]);
       safetyWarnings = guard.checkSupplement(supplement);
     }
 
@@ -130,7 +130,7 @@ class SupplementDetail extends StatelessWidget {
                                           .withValues(alpha: 0.3)),
                                 ),
                                 child: Text(
-                                  'Clinically Flagged',
+                                  'Routine Flagged',
                                   style: GoogleFonts.lexend(
                                     color: const Color(0xFFEF4444),
                                     fontSize: 12,
@@ -190,7 +190,7 @@ class SupplementDetail extends StatelessWidget {
                                               size: 16),
                                           const SizedBox(width: 8),
                                           Text(
-                                            'NOT RECOMMENDED FOR ADHD',
+                                            'NOT RECOMMENDED FOR Neurostack',
                                             style: GoogleFonts.lexend(
                                               color: const Color(0xFFEF4444),
                                               fontSize: 10,
@@ -218,9 +218,9 @@ class SupplementDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 24),
 
-                        // Medication Safety Alert
+                        // Routine Status Alert
                         if (safetyWarnings.isNotEmpty)
-                          MedicationSafetyAlert(
+                          RoutineStatusAlert(
                             warnings: safetyWarnings,
                             isDark: isDark,
                           ),
@@ -341,7 +341,7 @@ class SupplementDetail extends StatelessWidget {
                       children: [
                         // Enhanced Benefits Section
                         _SectionCard(
-                          title: 'ADHD Specific Benefits',
+                          title: 'Neurostack Specific Benefits',
                           icon: Icons.psychology,
                           color: primaryGold,
                           items: supplement.detailedBenefits.isNotEmpty
@@ -430,7 +430,7 @@ class SupplementDetail extends StatelessWidget {
                             title: 'Risk Profile',
                             icon: Icons.error_outline,
                             color: const Color(0xFFEF4444),
-                            content: 'High clinical risk for ADHD',
+                            content: 'High routine risk for Neurostack',
                             isDark: isDark,
                           ),
                         const SizedBox(height: 24),
@@ -455,7 +455,7 @@ class SupplementDetail extends StatelessWidget {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: Text(
-                                  'Medical Disclaimer: Always consult your physician before altering your supplement regimen.',
+                                  'General Disclaimer: Always consult your advisor before altering your supplement regimen.',
                                   style: GoogleFonts.lexend(
                                     color: isDark
                                         ? Colors.grey[400]

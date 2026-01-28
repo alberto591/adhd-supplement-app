@@ -54,7 +54,7 @@ NEW_SUPPLEMENTS_BATCH2 = '''      {
         ],
         "tldr":
             "Extends dopamine availability by inhibiting COMT; provides neuroprotection and synergizes with L-theanine for focus.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "COMT inhibition may extend dopamine availability, potentially enhancing and prolonging stimulant effects. Monitor for overstimulation.",
           "Vyvanse":
@@ -90,7 +90,7 @@ NEW_SUPPLEMENTS_BATCH2 = '''      {
             "Morning dosing on empty stomach maximizes absorption (food reduces bioavailability by ~30%). Effects build over 2-4 weeks of consistent use. Some people split dose (morning + afternoon) for sustained glutathione production. Avoid evening dosing as it can be mildly energizing.",
         "scientificEvidenceRank": 79,
         "studyLinks": {
-          "NAC for impulse control and ADHD":
+          "NAC for impulse control and Focus":
               "https://pubmed.ncbi.nlm.nih.gov/31109635/",
           "Glutathione and neuroprotection":
               "https://pubmed.ncbi.nlm.nih.gov/29706149/",
@@ -112,7 +112,7 @@ NEW_SUPPLEMENTS_BATCH2 = '''      {
         ],
         "tldr":
             "Boosts glutathione for neuroprotection and modulates glutamate for improved impulse control and reduced compulsivity.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Provides antioxidant protection against stimulant-induced oxidative stress; may improve impulse control beyond medication effects.",
           "Vyvanse":
@@ -170,7 +170,7 @@ NEW_SUPPLEMENTS_BATCH2 = '''      {
         ],
         "tldr":
             "Potent acetylcholinesterase inhibitor with 24+ hour half-life; enhances memory and attention but requires cycling to prevent tolerance.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Complementary mechanism - enhances acetylcholine (attention/memory) while stimulants enhance dopamine (motivation/focus).",
           "Vyvanse":
@@ -228,7 +228,7 @@ NEW_SUPPLEMENTS_BATCH2 = '''      {
         ],
         "tldr":
             "Enhances cerebral blood flow and glucose utilization for improved mental clarity and processing speed.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Improved blood flow may enhance nutrient delivery to support stimulant-driven cognitive demands.",
           "Vyvanse":
@@ -287,7 +287,7 @@ NEW_SUPPLEMENTS_BATCH2 = '''      {
         ],
         "tldr":
             "Natural L-DOPA source for rapid dopamine boost; MUST be cycled to prevent receptor downregulation and depletion.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "⚠️ CAUTION: Combining may cause excessive dopamine and overstimulation. Use on non-medication days or cycle carefully.",
           "Vyvanse":

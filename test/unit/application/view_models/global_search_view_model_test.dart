@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:adhd_supplement_app/application/view_models/global_search_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/application/view_models/global_search_view_model.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/repositories/stack_repository.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
 
 @GenerateMocks([SupplementRepository, StackRepository])
 import 'global_search_view_model_test.mocks.dart';

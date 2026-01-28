@@ -66,7 +66,7 @@ locator.registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
 Multiple safety checking strategies that can be composed.
 ```dart
 class SafetyGuard { ... }
-class ADHDInteractionGuard { ... }
+class FocusInteractionGuard { ... }
 ```
 
 ### 7. Interactive Calculators (Logic Separation)
@@ -75,7 +75,7 @@ Weight-based dosage logic is encapsulated within the `DosageCalculatorCard` but 
 ### 6. Command/Action Pattern (Dashboard)
 Decoupling long-press and menu actions from screen builds.
 ```dart
-void _showMedicationOptions(BuildContext context, Supplement supplement) { ... }
+void _showRoutineOptions(BuildContext context, Supplement supplement) { ... }
 ```
 
 ## UI/UX Patterns (Gold Standard)
@@ -95,7 +95,7 @@ Standardized `UnifiedBottomNav` used across 5 root screens to prevent navigation
 5. **Profile** -> UserProfile
 
 ### 3. Safety-First Contrast
-Critical medication interactions use high-contrast red alerts (`#EF4444`) to ensure immediate recognition, while synergy notes use blue/amber.
+Critical routine interactions use high-contrast red alerts (`#EF4444`) to ensure immediate recognition, while synergy notes use blue/amber.
 
 ## Key Domain Entities
 | Entity | Purpose |
@@ -103,7 +103,7 @@ Critical medication interactions use high-contrast red alerts (`#EF4444`) to ens
 | `Supplement` | Catalog item with benefits, dosage, interactions |
 | `SupplementStack` | User's grouped supplements (Morning, Evening) |
 | `DailyLog` | Daily intake record with timestamps |
-| `User` | Profile with XP, Level, and `currentMedication` |
+| `User` | Profile with XP, Level, and `currentRoutine` |
 | `NightlyReflection` | Evening focus and sleep readiness data |
 | `Report` | PDF-generated summary for clinicians |
 

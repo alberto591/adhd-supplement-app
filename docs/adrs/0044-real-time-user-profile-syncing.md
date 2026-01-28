@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-XP and Level updates are critical for user retention in an ADHD-focused app. However, while `DailyStackViewModel` was correctly updating the Firestore document, the UI (often managed by `AuthProvider`) would not reflect these changes until the app was restarted or the user manually refreshed certain screens. This lack of immediate feedback broke the "Dopamine Loop" essential for gamification.
+XP and Level updates are critical for user retention in an Focus-focused app. However, while `DailyStackViewModel` was correctly updating the Firestore document, the UI (often managed by `AuthProvider`) would not reflect these changes until the app was restarted or the user manually refreshed certain screens. This lack of immediate feedback broke the "Dopamine Loop" essential for gamification.
 
 ## Decision
 Implement real-time profile syncing using Firestore snapshots.
@@ -20,5 +20,5 @@ Implement real-time profile syncing using Firestore snapshots.
 - **Negative**: Persistent listener increases Firestore read usage (mitigated by focus on simple user document).
 
 ## Compliance
-- **ADHD UI Optimizer**: Enhances "Instant Feedback" and "Gamification Engagement."
+- **Focus UI Optimizer**: Enhances "Instant Feedback" and "Gamification Engagement."
 - **Architecture**: Follows the Reactive Repository pattern.

@@ -19,5 +19,5 @@ We decided to make the daily intake logging system "slot-aware."
 - **Negative**: Increased complexity in the mapping between `SupplementStack` items and `DailyLog` entries.
 
 ## Compliance
-- **ADHD UI Optimizer**: Supports "Reward Consistency" and "Progress Visuals."
+- **Focus UI Optimizer**: Supports "Reward Consistency" and "Progress Visuals."
 - **Architecture**: Adheres to the Repository pattern by extending the `LogEntry` domain entity effectively.

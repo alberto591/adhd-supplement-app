@@ -4,7 +4,7 @@
 Proposed
 
 ## Context
-Users want the ability to track medications or supplements that are not present in our curated global database. These items should be private to the individual user and must not be visible to others. However, they should integrate seamlessly into the existing Library, Search, and daily routine (Stack) features.
+Users want the ability to track routines or supplements that are not present in our curated global database. These items should be private to the individual user and must not be visible to others. However, they should integrate seamlessly into the existing Library, Search, and daily routine (Stack) features.
 
 ## Decision
 We will implement a multi-tenancy model for supplements by:

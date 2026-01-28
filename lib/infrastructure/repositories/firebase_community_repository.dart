@@ -14,14 +14,14 @@ class FirebaseCommunityRepository implements CommunityRepository {
   static final List<CommunityPost> _seedPosts = [
     CommunityPost(
       id: '1',
-      username: 'ADHD Hacker',
-      userHandle: '@adhd_hacker',
+      username: 'Neurostack Hacker',
+      userHandle: '@focus_hacker',
       postedAt: DateTime.now().subtract(const Duration(minutes: 5)),
       category: 'Morning Routine',
       title:
           'Try setting a \'take supplement\' alarm 10 mins before your actual wake-up.',
       content:
-          'This helps the medication start working right as you need to get out of bed. No more morning fog!',
+          'This helps the routine start working right as you need to get out of bed. No more morning fog!',
       helpfulCount: 24,
       userColor: Colors.orange,
       userIconCodePoint: Icons.person.codePoint,

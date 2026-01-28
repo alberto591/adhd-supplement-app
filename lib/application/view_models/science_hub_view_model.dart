@@ -135,7 +135,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         id: 'faq-1',
         question: 'Can I take routines with my daily protocols?',
         answer:
-            'Most additions are safe to combine with your daily routine, but timing and specific interactions matter. **Critical exception: Vitamin C** must be taken 1+ hours BEFORE or 4+ hours AFTER certain sharp-focus alerts as it can reduce effectiveness by 30-50%. Caffeine should be used cautiously as it has additive focal effects. Always consult your advisor before adding new rituals, especially if you have multiple daily protocols.',
+            'Most additions are safe to combine with your daily routine, but timing and specific compatibilitys matter. **Critical exception: Vitamin C** must be taken 1+ hours BEFORE or 4+ hours AFTER certain sharp-focus alerts as it can reduce effectiveness by 30-50%. Caffeine should be used cautiously as it has additive focal effects. Always consult your advisor before adding new rituals, especially if you have multiple daily protocols.',
         category: 'Safety',
         relatedSupplements: ['Vitamin C', 'Caffeine', 'Magnesium'],
       ),
@@ -143,7 +143,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         id: 'faq-2',
         question: 'Why does timing matter for Vitamin C?',
         answer:
-            'Vitamin C (ascorbic acid) acidifies urine, which increases the excretion rate of certain focus-enhancing compounds. This can reduce blood levels of the active ingredients by 30-50%, significantly decreasing effectiveness. To avoid this interaction, take Vitamin C at least 1 hour before your morning intake or wait 4+ hours after. Evening intake is often the safest approach.',
+            'Vitamin C (ascorbic acid) acidifies urine, which increases the excretion rate of certain focus-enhancing compounds. This can reduce blood levels of the active ingredients by 30-50%, significantly decreasing effectiveness. To avoid this compatibility, take Vitamin C at least 1 hour before your morning intake or wait 4+ hours after. Evening intake is often the safest approach.',
         category: 'Dosing',
         relatedSupplements: ['Vitamin C'],
       ),
@@ -176,7 +176,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         id: 'faq-6',
         question: 'Is it safe to take multiple supplements together?',
         answer:
-            'Generally yes, but consider:\n\n**Synergistic combinations (good):**\n• Magnesium + B6 (enhances absorption)\n• Caffeine + L-Theanine (reduces jitters)\n• Omega-3 + Vitamin D (fat-soluble absorption)\n\n**Competitive absorption (separate timing):**\n• Zinc + Copper (compete for absorption)\n• Calcium + Magnesium (take separately)\n• High-dose Vitamin C + Copper (inhibits absorption)\n\n**Avoid combining:**\n• 5-HTP + Serotonin-affecting agents (risk of overload)\n• St. John\'s Wort + most protocols (extensive interactions)\n\nStart with 1-2 rituals and add gradually to identify what works.',
+            'Generally yes, but consider:\n\n**Synergistic combinations (good):**\n• Magnesium + B6 (enhances absorption)\n• Caffeine + L-Theanine (reduces jitters)\n• Omega-3 + Vitamin D (fat-soluble absorption)\n\n**Competitive absorption (separate timing):**\n• Zinc + Copper (compete for absorption)\n• Calcium + Magnesium (take separately)\n• High-dose Vitamin C + Copper (inhibits absorption)\n\n**Avoid combining:**\n• 5-HTP + Serotonin-affecting agents (risk of overload)\n• St. John\'s Wort + most protocols (extensive compatibilitys)\n\nStart with 1-2 rituals and add gradually to identify what works.',
         category: 'Safety',
         relatedSupplements: ['Magnesium', 'Zinc', '5-HTP', 'Omega-3'],
       ),
@@ -209,7 +209,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         id: 'faq-10',
         question: 'Are there routines I should avoid?',
         answer:
-            '**Avoid or use extreme caution:**\n\n• **St. John\'s Wort** - Extensive protocol interactions\n• **Kava Kava** - Liver considerations, restricted in several countries\n• **High-amount standalone B6 (>100mg)** - Risk of nerve sensitivity\n• **DMAE** - Weak evidence, unpredictable effects\n\n**Conditional (professional supervision required):**\n• **5-HTP** - NEVER with serotonin protocols\n• **Copper** - Often sufficient in diet; only add if deficient\n• **Mucuna Pruriens** - Must cycle; risk of baseline depletion\n\nAlways check "Avoid" category in the Library for detailed warnings.',
+            '**Avoid or use extreme caution:**\n\n• **St. John\'s Wort** - Extensive protocol compatibilitys\n• **Kava Kava** - Liver considerations, restricted in several countries\n• **High-amount standalone B6 (>100mg)** - Risk of nerve sensitivity\n• **DMAE** - Weak evidence, unpredictable effects\n\n**Conditional (professional supervision required):**\n• **5-HTP** - NEVER with serotonin protocols\n• **Copper** - Often sufficient in diet; only add if deficient\n• **Mucuna Pruriens** - Must cycle; risk of baseline depletion\n\nAlways check "Avoid" category in the Library for detailed warnings.',
         category: 'Safety',
         relatedSupplements: [
           'St. John\'s Wort',
@@ -231,7 +231,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         question:
             'What\'s the difference between "beneficial" and "conditional" supplements?',
         answer:
-            '**Beneficial additions:**\n• Strong safety profile for most people\n• Supported by research for cognitive function\n• Minimal protocol interactions\n• Example: Omega-3, Magnesium, B-Complex, Creatine\n\n**Conditional/Cautionary additions:**\n• Effective BUT have limitations or specific requirements\n• May have interactions or specific considerations\n• Example: Caffeine (additive stimulation), Melatonin (hormone), 5-HTP (serotonin interaction), Copper\n\nConditional doesn\'t mean "bad" - it means "use carefully with awareness of trade-offs." Many people benefit from conditional additions under proper guidance.',
+            '**Beneficial additions:**\n• Strong safety profile for most people\n• Supported by research for cognitive function\n• Minimal protocol compatibilitys\n• Example: Omega-3, Magnesium, B-Complex, Creatine\n\n**Conditional/Cautionary additions:**\n• Effective BUT have limitations or specific requirements\n• May have compatibilitys or specific considerations\n• Example: Caffeine (additive stimulation), Melatonin (hormone), 5-HTP (serotonin compatibility), Copper\n\nConditional doesn\'t mean "bad" - it means "use carefully with awareness of trade-offs." Many people benefit from conditional additions under proper guidance.',
         category: 'General',
         relatedSupplements: ['Caffeine', 'Melatonin', '5-HTP', 'Copper'],
       ),
@@ -249,7 +249,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         category: 'Essential Fatty Acids',
         evidenceQuality: EvidenceQuality.high,
         keyFindings:
-            'Meta-analysis showed a small but significant effect of omega-3 fatty acids in improving attention symptoms. Higher amounts of EPA were associated with greater efficacy.',
+            'Meta-analysis showed a small but significant effect of omega-3 fatty acids in improving attention variance. Higher amounts of EPA were associated with greater efficacy.',
         relatedSupplements: ['Omega-3 Fish Oil'],
       ),
       Study(
@@ -333,7 +333,7 @@ class ScienceHubViewModel extends ChangeNotifier {
         category: 'Nootropics',
         evidenceQuality: EvidenceQuality.moderate,
         keyFindings:
-            'N-Acetyl Cysteine significantly reduced impulsive behaviors in clinical trials, suggesting benefit for impulse control.',
+            'N-Acetyl Cysteine significantly reduced impulsive behaviors in research trials, suggesting benefit for impulse control.',
         relatedSupplements: ['N-Acetyl Cysteine (NAC)'],
       ),
     ];
@@ -346,12 +346,12 @@ class ScienceHubViewModel extends ChangeNotifier {
         title: 'Understanding Focus Neurotransmitter Support',
         summary:
             'A deep dive into how dopamine and norepinephrine affect neurodivergent brains and how nutrition can help.',
-        content: '''# Understanding ADHD Neurotransmitter Deficiencies
+        content: '''# Understanding Neurostack Neurotransmitter Deficiencies
 
-ADHD is increasingly understood not just as a behavioral disorder, but as a complex interplay of neurotransmitter systems that regulate attention, motivation, and executive function.
+Neurostack is increasingly understood not just as a behavioral disorder, but as a complex interplay of neurotransmitter systems that regulate attention, motivation, and executive function.
 
 ## The Dopamine Deficiency Hypothesis
-Dopamine is the brain's primary reward and motivation neurotransmitter. In many ADHD brains, there is evidence of lower dopamine receptor density or efficiency. This means that activities requiring sustained effort but offering delayed rewards are difficult to maintain because the brain isn't receiving the typical "dopamine reward" for that effort.
+Dopamine is the brain's primary reward and motivation neurotransmitter. In many Neurostack brains, there is evidence of lower dopamine receptor density or efficiency. This means that activities requiring sustained effort but offering delayed rewards are difficult to maintain because the brain isn't receiving the typical "dopamine reward" for that effort.
 
 ## Norepinephrine and Alertness
 Norepinephrine is crucial for alertness and filtering out irrelevant information. When norepinephrine levels are optimized, the "signal-to-noise ratio" in the brain improves, allowing you to focus on a single task while ignoring background distractions.
@@ -368,7 +368,7 @@ Understanding these biological foundations helps shift the perspective from a "l
         category: 'Neuroscience',
         relatedSupplements: ['L-Tyrosine', 'DL-Phenylalanine', 'B-Complex'],
         keyTakeaways: [
-          'ADHD is associated with lower dopamine availability.',
+          'Neurostack is associated with lower dopamine availability.',
           'Tyrosine is a precursor to dopamine.',
           'B6 is essential for neurotransmitter synthesis.'
         ],
@@ -378,10 +378,10 @@ Understanding these biological foundations helps shift the perspective from a "l
       ),
       EducationalArticle(
         id: '2',
-        title: 'The Gut-Brain Axis: Nutrition and ADHD',
+        title: 'The Gut-Brain Axis: Nutrition and Neurostack',
         summary:
             'How your dietary choices and gut microbiome influence focus, mood, and cognitive control.',
-        content: '''# The Gut-Brain Axis: Nutrition and ADHD
+        content: '''# The Gut-Brain Axis: Nutrition and Neurostack
 
 The saying "you are what you eat" takes on a new meaning when we examine the gut-brain axis—the bidirectional communication line between your digestive system and your brain.
 
@@ -389,10 +389,10 @@ The saying "you are what you eat" takes on a new meaning when we examine the gut
 The gut contains hundreds of millions of neurons, often called the enteric nervous system. Furthermore, an estimated 90% of the body's serotonin is produced in the gut, not the brain.
 
 ## Inflammation and Focus
-Inflammation in the digestive tract, often caused by food sensitivities or high sugar intake, can trigger systemic inflammation that crosses the blood-brain barrier. This is a common cause of "brain fog" and increased ADHD symptoms.
+Inflammation in the digestive tract, often caused by food sensitivities or high sugar intake, can trigger systemic inflammation. This is a common cause of "brain fog" and increased focus challenges.
 
 ## Probiotics and Executive Function
-Emerging research suggests that specific probiotic strains may help improve neurotransmitter balance and reduce the hyperactive symptoms of ADHD.
+Emerging research suggests that specific probiotic strains may help improve neurotransmitter balance and reduce the hyperactive patterns of neurodivergence.
 
 ## Practical Steps:
 1. **Reduce Refined Sugars:** Sugar spikes and crashes are the enemy of focus.
@@ -403,7 +403,7 @@ Emerging research suggests that specific probiotic strains may help improve neur
         category: 'Nutrition',
         relatedSupplements: ['Probiotics', 'Omega-3', 'Magnesium'],
         keyTakeaways: [
-          'High sugar diets can exacerbate ADHD symptoms.',
+          'High sugar diets can exacerbate energy crashes.',
           'Probiotics may improve executive function.',
           'Inflammation in the gut can lead to "brain fog".'
         ],
@@ -415,14 +415,14 @@ Emerging research suggests that specific probiotic strains may help improve neur
         id: '3',
         title: 'Morning vs. Evening: Optimizing Supplement Timing',
         summary:
-            'Why when you take your supplements matters as much as what you take for ADHD management.',
+            'Why when you take your supplements matters as much as what you take for Neurostack management.',
         content: '''# Morning vs. Evening: Optimizing Supplement Timing
 
 Your body's circadian rhythm significantly affects how you process nutrients. Taking the right supplement at the wrong time can sometimes lead to poor results or sleep disruption.
 
 ## The Morning Protocol: Stimulate and Focus
 The goal of the morning is to support neurotransmitter production and alertness.
-- **Pre-Medication:** L-Tyrosine or DLPA should be taken 30-60 minutes before breakfast on an empty stomach.
+- **Pre-Routine Item:** L-Tyrosine or DLPA should be taken 30-60 minutes before breakfast on an empty stomach.
 - **With Breakfast:** Omega-3s and Vitamin D require fat for absorption. Always take these with a meal.
 - **The B-Vitamin Rule:** B-Complex vitamins are energizing and should generally be taken before noon.
 
@@ -432,7 +432,7 @@ The goal of the evening is to reduce cortisol and support restorative sleep.
 - **Zinc:** Best taken in the evening to support endocrine health and recovery.
 - **L-Theanine:** Can be used in the evening to "quiet the brain" without causing drowsiness.
 
-## The Vitamin C Stimulant Rule
+## The Vitamin C Routine Rule
 **Warning:** Never take high-amount Vitamin C within 4 hours of your focus routine, as it can interfere with absorption and effectiveness.''',
         imageUrl:
             'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800',
@@ -452,12 +452,12 @@ The goal of the evening is to reduce cortisol and support restorative sleep.
         title: 'The Methylation Cycle and Focus',
         summary:
             'Exploring the genetic link between MTHFR mutations, methylation, and neurotransmitter balance.',
-        content: '''# The Methylation Cycle and ADHD
+        content: '''# The Methylation Cycle and Neurostack
 
 Methylation is a fundamental biochemical process that occurs billions of times every second in your body. It is responsible for "turning on" and "turning off" genes, repairing DNA, and crucially, producing neurotransmitters like Dopamine and Serotonin.
 
 ## The MTHFR Connection
-The MTHFR gene provides instructions for making an enzyme that processes folate. Many individuals with ADHD carry variants (like C677T or A1298C) that reduce this enzyme's efficiency by 30-70%.
+The MTHFR gene provides instructions for making an enzyme that processes folate. Many individuals with Neurostack carry variants (like C677T or A1298C) that reduce this enzyme's efficiency by 30-70%.
 
 ## Impacts on Brain Health:
 1. **BH4 Production:** Methylation is required to produce BH4, a critical cofactor for making dopamine and norepinephrine.
@@ -474,7 +474,7 @@ The MTHFR gene provides instructions for making an enzyme that processes folate.
         relatedSupplements: ['Methylfolate', 'Methyl-B12', 'TMG'],
         keyTakeaways: [
           'Methylation is critical for neurotransmitter synthesis.',
-          'MTHFR variants are common in the ADHD population.',
+          'MTHFR variants are common in the Neurostack population.',
           'Avoid synthetic folic acid if you have methylation issues.'
         ],
         readTime: '7 min',
@@ -486,7 +486,7 @@ The MTHFR gene provides instructions for making an enzyme that processes folate.
         title: 'Building Your First Focus Stack',
         summary:
             'A step-by-step guide to starting your journey with evidence-based supplementation.',
-        content: '''# Building Your First ADHD Supplement Stack
+        content: '''# Building Your First Neurostack Supplement Stack
 
 Starting a supplement protocol can be overwhelming. The "Daily Stack" approach focuses on foundational nutrients first, followed by targeted support.
 
@@ -497,15 +497,15 @@ Before adding advanced nootropics, ensure your brain has the basic building bloc
 - **B-Complex:** The "fuel" for neurotransmitter production.
 
 ## Step 2: Targeted Support (The "Nudges")
-Once your foundation is solid, look at your specific symptoms:
+Once your foundation is solid, look at your specific patterns:
 - **For Energy/Fatigue:** ALCAR or Rhodiola Rosea.
 - **For Focus/Clarity:** Bacopa Monnieri or Ginkgo Biloba.
 - **For Rebound/Crash:** L-Theanine or NAC.
 
 ## Step 3: Safety and Tracking
 - **The "One-at-a-Time" Rule:** Never start two new supplements on the same day. Wait 3-5 days between new additions to monitor effects.
-- **Consistent Logging:** Use the Daily Stack tracker to log your symptoms and identify what actually works for you.
-- **Consult Your Doctor:** Supplements can interact with medications. Always share your stack with your healthcare provider.''',
+- **Consistent Logging:** Use the Daily Stack tracker to log your patterns and identify what actually works for you.
+- **Consult Your Advisor:** Supplements can interact with your daily protocols. Always share your stack with your advisor.''',
         imageUrl:
             'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=800',
         category: 'Lifestyle',

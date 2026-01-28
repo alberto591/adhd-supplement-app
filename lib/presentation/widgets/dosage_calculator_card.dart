@@ -189,7 +189,7 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
           ],
           const SizedBox(height: 8),
           Text(
-            '*Calculations are based on representative clinical data. Consult your doctor for personal medical advice.',
+            '*Calculations are based on representative research data. Consult your advisor for personal general advice.',
             style: GoogleFonts.lexend(
               color: Colors.grey,
               fontSize: 10,

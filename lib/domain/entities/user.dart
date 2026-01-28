@@ -1,4 +1,4 @@
-import 'package:adhd_supplement_app/domain/entities/medication.dart';
+import 'package:neurostack_app/domain/entities/routine_element.dart';
 
 class User {
   final String id;
@@ -9,8 +9,8 @@ class User {
   final int xp;
   final int level;
   final bool hasCompletedOnboarding;
-  final String? adhdType; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
-  final Medication? currentMedication;
+  final String? focusStyle; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
+  final RoutineElement? currentElement;
   final List<String> unlockedAchievements;
   final List<String>
       activeEntitlements; // IDs of purchased entitlements (e.g. 'stack_builder')
@@ -24,8 +24,8 @@ class User {
     this.hasCompletedOnboarding = false,
     this.xp = 0,
     this.level = 1,
-    this.adhdType,
-    this.currentMedication,
+    this.focusStyle,
+    this.currentElement,
     this.unlockedAchievements = const [],
     this.activeEntitlements = const [],
   });
@@ -41,8 +41,8 @@ class User {
     bool? hasCompletedOnboarding,
     int? xp,
     int? level,
-    Object? adhdType = _unset,
-    Object? currentMedication = _unset,
+    Object? focusStyle = _unset,
+    Object? currentElement = _unset,
     List<String>? unlockedAchievements,
     List<String>? activeEntitlements,
   }) {
@@ -59,11 +59,11 @@ class User {
           hasCompletedOnboarding ?? this.hasCompletedOnboarding,
       xp: xp ?? this.xp,
       level: level ?? this.level,
-      adhdType:
-          identical(adhdType, _unset) ? this.adhdType : adhdType as String?,
-      currentMedication: identical(currentMedication, _unset)
-          ? this.currentMedication
-          : currentMedication as Medication?,
+      focusStyle:
+          identical(focusStyle, _unset) ? this.focusStyle : focusStyle as String?,
+      currentElement: identical(currentElement, _unset)
+          ? this.currentElement
+          : currentElement as RoutineElement?,
       unlockedAchievements: unlockedAchievements ?? this.unlockedAchievements,
       activeEntitlements: activeEntitlements ?? this.activeEntitlements,
     );
@@ -79,8 +79,8 @@ class User {
       'hasCompletedOnboarding': hasCompletedOnboarding,
       'xp': xp,
       'level': level,
-      'adhdType': adhdType,
-      'currentMedication': currentMedication?.toJson(),
+      'focusStyle': focusStyle,
+      'currentElement': currentElement?.toJson(),
       'unlockedAchievements': unlockedAchievements,
       'activeEntitlements': activeEntitlements,
     };
@@ -96,10 +96,10 @@ class User {
       hasCompletedOnboarding: json['hasCompletedOnboarding'] as bool? ?? false,
       xp: json['xp'] as int? ?? 0,
       level: json['level'] as int? ?? 1,
-      adhdType: json['adhdType'] as String?,
-      currentMedication: json['currentMedication'] != null
-          ? Medication.fromJson(
-              json['currentMedication'] as Map<String, dynamic>)
+      focusStyle: json['focusStyle'] as String?,
+      currentElement: json['currentElement'] != null
+          ? RoutineElement.fromJson(
+              json['currentElement'] as Map<String, dynamic>)
           : null,
       unlockedAchievements: (json['unlockedAchievements'] as List<dynamic>?)
               ?.map((e) => e as String)

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/application/view_models/notification_history_view_model.dart';
+import 'package:neurostack_app/application/view_models/notification_history_view_model.dart';
 
 void main() {
   late NotificationHistoryViewModel viewModel;

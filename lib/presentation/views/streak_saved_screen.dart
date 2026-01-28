@@ -9,7 +9,7 @@ class StreakSavedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Force dark mode look if desired, or respect system. The wireframe has both light/dark,
-    // user prompt usually implies functionality, checking prompt: "Streak Saved - ADHD Supplement Tracker"
+    // user prompt usually implies functionality, checking prompt: "Streak Saved - Neurostack Supplement Tracker"
     // The prompt HTML has `dark:bg-background-dark`. I'll support both.
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -145,7 +145,7 @@ class StreakSavedScreen extends StatelessWidget {
 
                     // Body Text
                     Text(
-                      "Don't sweat it! ADHD life happens. We protected your momentum so you can keep moving forward.",
+                      "Don't sweat it! Neurostack life happens. We protected your momentum so you can keep moving forward.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color:

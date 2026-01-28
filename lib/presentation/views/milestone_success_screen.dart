@@ -46,7 +46,7 @@ class _MilestoneSuccessScreenState extends State<MilestoneSuccessScreen>
   // ignore: unused_element
   void _shareMilestone() {
     Share.share(
-      'I just hit a ${widget.days}-day streak on FocusStack! 🚀 Optimizing my ADHD routine one day at a time.',
+      'I just hit a ${widget.days}-day streak on FocusStack! 🚀 Optimizing my Neurostack routine one day at a time.',
       subject: 'My FocusStack Milestone',
     );
   }

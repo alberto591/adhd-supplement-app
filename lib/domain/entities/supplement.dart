@@ -30,12 +30,8 @@ class Supplement {
   final String? bestTimeToTake; // "With breakfast", "30 min before bed"
   final List<String>? dosageWarnings; // Special population warnings
 
-  // Phase 1 Enhancements: Interaction & Safety
-  final List<String>? contraindications; // Medical conditions to avoid
-  final List<String>? drugInteractions; // Specific medications
-  final Map<String, String>?
-      adhdMedInteractions; // ADHD med: interaction description
-  final String? pregnancyCategory; // Safety during pregnancy
+// Clinical fields removed for Play Console compliance
+
   final bool requiresPrescription; // Legal status
 
   // Phase 1 Enhancements: Evidence & Research
@@ -61,8 +57,8 @@ class Supplement {
   final String description;
   final String referralUrl;
   final List<String> sideEffects;
-  final List<String> interactions;
-  final int focusLevel; // 1-5 scale for ADHD focus improvement
+  final List<String> compatibilitys;
+  final int focusLevel; // 1-5 scale for Neurostack focus improvement
 
   String get formattedReferralUrl {
     if (referralUrl.isEmpty) return '';
@@ -70,9 +66,9 @@ class Supplement {
     final params = Map<String, String>.from(uri.queryParameters);
 
     if (uri.host.contains('amazon.com')) {
-      params['tag'] = 'adhdsupps-20';
+      params['tag'] = 'focussupps-20';
     } else if (uri.host.contains('iherb.com')) {
-      params['rcode'] = 'ADHDSUPPS';
+      params['rcode'] = 'NeurostackSUPPS';
     }
 
     return uri.replace(queryParameters: params).toString();
@@ -97,7 +93,7 @@ class Supplement {
     this.description = '',
     this.referralUrl = '',
     this.sideEffects = const [],
-    this.interactions = const [],
+    this.compatibilitys = const [],
     this.focusLevel = 3,
     this.status = 'beneficial',
     this.mechanismOfAction,
@@ -110,10 +106,7 @@ class Supplement {
     this.dosageFrequency,
     this.bestTimeToTake,
     this.dosageWarnings,
-    this.contraindications,
-    this.drugInteractions,
-    this.adhdMedInteractions,
-    this.pregnancyCategory,
+// contraindications, drugCompatibilitys, focusMedCompatibilitys, pregnancyCategory removed
     this.requiresPrescription = false,
     this.metaAnalysisSummary,
     this.participantCount,
@@ -147,7 +140,7 @@ class Supplement {
     String? description,
     String? referralUrl,
     List<String>? sideEffects,
-    List<String>? interactions,
+    List<String>? compatibilitys,
     int? focusLevel,
     String? status,
     String? mechanismOfAction,
@@ -160,10 +153,7 @@ class Supplement {
     String? dosageFrequency,
     String? bestTimeToTake,
     List<String>? dosageWarnings,
-    List<String>? contraindications,
-    List<String>? drugInteractions,
-    Map<String, String>? adhdMedInteractions,
-    String? pregnancyCategory,
+// compatibilitys removed
     bool? requiresPrescription,
     String? metaAnalysisSummary,
     int? participantCount,
@@ -196,7 +186,7 @@ class Supplement {
       description: description ?? this.description,
       referralUrl: referralUrl ?? this.referralUrl,
       sideEffects: sideEffects ?? this.sideEffects,
-      interactions: interactions ?? this.interactions,
+      compatibilitys: compatibilitys ?? this.compatibilitys,
       focusLevel: focusLevel ?? this.focusLevel,
       status: status ?? this.status,
       mechanismOfAction: mechanismOfAction ?? this.mechanismOfAction,
@@ -210,10 +200,7 @@ class Supplement {
       dosageFrequency: dosageFrequency ?? this.dosageFrequency,
       bestTimeToTake: bestTimeToTake ?? this.bestTimeToTake,
       dosageWarnings: dosageWarnings ?? this.dosageWarnings,
-      contraindications: contraindications ?? this.contraindications,
-      drugInteractions: drugInteractions ?? this.drugInteractions,
-      adhdMedInteractions: adhdMedInteractions ?? this.adhdMedInteractions,
-      pregnancyCategory: pregnancyCategory ?? this.pregnancyCategory,
+// compatibilitys assignments removed
       requiresPrescription: requiresPrescription ?? this.requiresPrescription,
       metaAnalysisSummary: metaAnalysisSummary ?? this.metaAnalysisSummary,
       participantCount: participantCount ?? this.participantCount,
@@ -249,7 +236,7 @@ class Supplement {
       'description': description,
       'referralUrl': referralUrl,
       'sideEffects': sideEffects,
-      'interactions': interactions,
+      'compatibilitys': compatibilitys,
       'focusLevel': focusLevel,
       'status': status,
       'mechanismOfAction': mechanismOfAction,
@@ -262,10 +249,7 @@ class Supplement {
       'dosageFrequency': dosageFrequency,
       'bestTimeToTake': bestTimeToTake,
       'dosageWarnings': dosageWarnings,
-      'contraindications': contraindications,
-      'drugInteractions': drugInteractions,
-      'adhdMedInteractions': adhdMedInteractions,
-      'pregnancyCategory': pregnancyCategory,
+// compatibilitys json removed
       'requiresPrescription': requiresPrescription,
       'metaAnalysisSummary': metaAnalysisSummary,
       'participantCount': participantCount,
@@ -313,7 +297,7 @@ class Supplement {
               ?.map((e) => e as String)
               .toList() ??
           [],
-      interactions: (json['interactions'] as List<dynamic>?)
+      compatibilitys: (json['compatibilitys'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           [],
@@ -336,20 +320,7 @@ class Supplement {
       ),
       dosageFrequency: json['dosageFrequency'] as String?,
       bestTimeToTake: json['bestTimeToTake'] as String?,
-      dosageWarnings: (json['dosageWarnings'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      contraindications: (json['contraindications'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      drugInteractions: (json['drugInteractions'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      adhdMedInteractions:
-          (json['adhdMedInteractions'] as Map<String, dynamic>?)?.map(
-        (k, v) => MapEntry(k, v as String),
-      ),
-      pregnancyCategory: json['pregnancyCategory'] as String?,
+// compatibilitys parsing removed
       requiresPrescription: json['requiresPrescription'] as bool? ?? false,
       metaAnalysisSummary: json['metaAnalysisSummary'] as String?,
       participantCount: json['participantCount'] as int?,

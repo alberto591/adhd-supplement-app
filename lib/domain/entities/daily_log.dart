@@ -5,7 +5,7 @@ class DailyLog {
   final String userId;
   final DateTime date;
   final List<LogEntry> entries;
-  final Map<String, int>? symptomRatings; // symptom name -> rating (1-5)
+  final Map<String, int>? stateRatings; // state name -> rating (1-5)
   final int? moodScore; // From Backend Spec v1.0
   final int? focusScore; // From Backend Spec v1.0
   final String? notes;
@@ -16,7 +16,7 @@ class DailyLog {
     required this.userId,
     required this.date,
     required this.entries,
-    this.symptomRatings,
+    this.stateRatings,
     this.moodScore,
     this.focusScore,
     this.notes,
@@ -28,7 +28,7 @@ class DailyLog {
     String? userId,
     DateTime? date,
     List<LogEntry>? entries,
-    Map<String, int>? symptomRatings,
+    Map<String, int>? stateRatings,
     int? moodScore,
     int? focusScore,
     String? notes,
@@ -39,7 +39,7 @@ class DailyLog {
       userId: userId ?? this.userId,
       date: date ?? this.date,
       entries: entries ?? this.entries,
-      symptomRatings: symptomRatings ?? this.symptomRatings,
+      stateRatings: stateRatings ?? this.stateRatings,
       moodScore: moodScore ?? this.moodScore,
       focusScore: focusScore ?? this.focusScore,
       notes: notes ?? this.notes,
@@ -53,7 +53,7 @@ class DailyLog {
       'userId': userId,
       'date': date.toIso8601String(),
       'entries': entries.map((e) => e.toJson()).toList(),
-      'symptomRatings': symptomRatings,
+      'stateRatings': stateRatings,
       'moodScore': moodScore,
       'focusScore': focusScore,
       'notes': notes,
@@ -69,7 +69,7 @@ class DailyLog {
       entries: (json['entries'] as List<dynamic>)
           .map((e) => LogEntry.fromJson(e as Map<String, dynamic>))
           .toList(),
-      symptomRatings: (json['symptomRatings'] as Map<String, dynamic>?)?.map(
+      stateRatings: (json['stateRatings'] as Map<String, dynamic>?)?.map(
         (key, value) => MapEntry(key, value as int),
       ),
       moodScore: json['moodScore'] as int? ?? json['mood_score'] as int?,

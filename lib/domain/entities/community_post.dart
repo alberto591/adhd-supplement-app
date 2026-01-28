@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CommunityPost {
   final String id;
   final String username;
-  final String userHandle; // e.g. @adhd_hacker
+  final String userHandle; // e.g. @focus_hacker
   final DateTime postedAt;
   final String category; // e.g. Morning Routine
   final String title;

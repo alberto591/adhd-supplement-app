@@ -37,8 +37,8 @@ class PaywallScreen extends StatelessWidget {
                       const SizedBox(height: 32),
                       _buildValuePill('Unlock Deep Performance Insights'),
                       _buildValuePill('Unlimited Supplement Stacks'),
-                      _buildValuePill('Priority Med Interaction Checker'),
-                      _buildValuePill('Expert-Verified ADHD Science Hub'),
+                      _buildValuePill('Priority Med Compatibility Checker'),
+                      _buildValuePill('Expert-Verified Neurostack Science Hub'),
                       const SizedBox(height: 40),
                       _buildPricingSection(context),
                       const SizedBox(height: 32),
@@ -107,7 +107,7 @@ class PaywallScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         const Text(
-          'We are working hard to bring you the best ADHD optimization tools. These premium features will be available in our next major update.',
+          'We are working hard to bring you the best Neurostack optimization tools. These premium features will be available in our next major update.',
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey,

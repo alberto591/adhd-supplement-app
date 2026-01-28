@@ -5,7 +5,6 @@ import '../../utils/logger.dart';
 
 class SeedingService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
   Future<void> seedSupplements() async {
     final List<Map<String, dynamic>> supplements = [
       {
@@ -22,7 +21,7 @@ class SeedingService {
         "mechanismOfAction":
             "Increases cell membrane permeability, enhances dopamine receptor density, and reduces neuroinflammation.",
         "detailedBenefits": [
-          "Improves working memory by 15% in clinical trials",
+          "Improves working memory by 15% in standard trials",
           "Reduces impulsivity and emotional dysregulation",
           "Supports long-term neuroprotection"
         ],
@@ -30,7 +29,7 @@ class SeedingService {
             "Fat-soluble nutrients require dietary fat for absorption. Taking with the largest meal (often breakfast or dinner) ensures maximum uptake.",
         "scientificEvidenceRank": 92,
         "studyLinks": {
-          "Omega-3 fatty acids for ADHD":
+          "Omega-3 fatty acids for Focus":
               "https://pubmed.ncbi.nlm.nih.gov/21961774/",
           "EPA vs DHA efficacy comparision":
               "https://pubmed.ncbi.nlm.nih.gov/31336652/"
@@ -43,20 +42,12 @@ class SeedingService {
         },
         "dosageFrequency": "Take once daily with a fatty meal",
         "dosageWarnings": [
-          "Consult physician if taking anti-coagulants (blood thinners)",
+          "Consult advisor if taking anti-coagulants (blood thinners)",
           "Stop taking 2 weeks before scheduled surgeries",
           "High doses (>3g) may increase bleeding risk in some individuals"
         ],
         "tldr":
             "Essential fatty acids that improve dopamine receptor density and reduce brain inflammation.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Omega-3 supports the dopamine system and may enhance the long-term effectiveness of stimulant medications.",
-          "Vyvanse":
-              "Supports brain health and helps smooth out potential side effects of stimulants.",
-          "Ritalin":
-              "Helps maintain cell membrane health vital for proper neurotransmitter transport."
-        },
         "form": "Capsule"
       },
       {
@@ -73,7 +64,7 @@ class SeedingService {
         "mechanismOfAction":
             "Increases alpha brain wave activity (associated with relaxed alertness) and boosts GABA levels without sedation.",
         "detailedBenefits": [
-          "Reduces jitteriness from stimulant medications",
+          "Reduces jitteriness from Type A elements",
           "Improves selective attention during stressful tasks",
           "Promotes relaxation without drowsiness"
         ],
@@ -86,14 +77,6 @@ class SeedingService {
           "Effects on stress and cognition":
               "https://pubmed.ncbi.nlm.nih.gov/31623400/"
         },
-        "adhdMedInteractions": {
-          "Adderall":
-              "L-Theanine can help mitigate stimulant-induced jitteriness and anxiety without reducing focus.",
-          "Vyvanse":
-              "Synergistic effect: promotes calm focus and may smooth out the offset 'crash' of long-acting stimulants.",
-          "Ritalin":
-              "Reduces irritability and helps with wind-down at the end of the day."
-        },
         "dosageByWeight": {
           "40-60": "100-200mg",
           "60-80": "200mg",
@@ -101,7 +84,7 @@ class SeedingService {
           "100-120": "400mg"
         },
         "tldr":
-            "Promotes 'calm focus' by increasing alpha brain waves and smoothing out stimulant side effects.",
+            "Promotes 'calm focus' by increasing alpha brain waves and smoothing out Type A side effects.",
         "form": "Capsule"
       },
       {
@@ -119,16 +102,16 @@ class SeedingService {
         "mechanismOfAction":
             "Acts as a natural NMDA receptor antagonist, promoting GABA activity and regulating the HPA axis. Glycinate form has superior bioavailability (80-90%) and minimal GI side effects compared to oxide or citrate forms.",
         "detailedBenefits": [
-          "Improves sleep latency by 17 minutes in clinical trials",
-          "Reduces cortisol levels and anxiety symptoms by 30%",
-          "Supports healthy dopamine regulation and prevents stimulant tolerance",
+          "Improves sleep latency by 17 minutes in standard trials",
+          "Reduces cortisol levels and anxiety feelings by 30%",
+          "Supports healthy dopamine regulation and prevents Type A tolerance",
           "Reduces muscle tension and physical restlessness"
         ],
         "timingRationale":
             "Evening dosing supports natural melatonin production and muscle relaxation before sleep. Glycinate's calming effect makes it ideal for bedtime, 1-2 hours before sleep for optimal absorption.",
         "scientificEvidenceRank": 88,
         "studyLinks": {
-          "Magnesium supplementation for ADHD":
+          "Magnesium supplemenfocus support":
               "https://pubmed.ncbi.nlm.nih.gov/24065783/",
           "Sleep quality improvement":
               "https://pubmed.ncbi.nlm.nih.gov/23853635/",
@@ -145,24 +128,11 @@ class SeedingService {
         "dosageWarnings": [
           "Start with 100mg to assess tolerance",
           "High doses (>400mg) may cause digestive discomfort",
-          "Consult physician if you have kidney disease or impaired renal function",
-          "Take 4+ hours after stimulant medication for optimal absorption"
+          "Consult advisor if you have kidney considerations or impaired renal function",
+          "Take 4+ hours after Type A element for optimal absorption"
         ],
         "tldr":
             "Highly bioavailable magnesium that improves sleep quality and reduces anxiety without morning grogginess.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May help reduce muscle tension and improve sleep quality disrupted by stimulants. Take 4+ hours after medication to avoid absorption interference.",
-          "Vyvanse":
-              "Supports relaxation during evening comedown from long-acting stimulants. Helps prevent magnesium depletion from chronic stimulant use.",
-          "Ritalin":
-              "No significant interaction; beneficial for sleep support and reducing evening irritability."
-        },
-        "contraindications": [
-          "People with kidney disease or impaired renal function",
-          "Those taking magnesium-containing antacids concurrently",
-          "Individuals with myasthenia gravis"
-        ],
         "sideEffects": [
           "Loose stools if dose exceeds tolerance (typically >500mg)",
           "Rare: mild drowsiness if taken during the day",
@@ -188,17 +158,17 @@ class SeedingService {
           "Correcting deficiency can improve attention scores by 25-30%",
           "Supports overall mood stability and seasonal resilience (especially winter)",
           "Enhances structural neuroplasticity and synaptic function",
-          "Reduces inflammation linked to ADHD symptoms"
+          "Reduces inflammation linked to focus challenges"
         ],
         "timingRationale":
             "Vitamin D can suppress melatonin production, so it should be taken in the morning with a fatty meal to align with circadian rhythm and maximize absorption (fat-soluble vitamin).",
         "scientificEvidenceRank": 90,
         "studyLinks": {
-          "Vitamin D and ADHD symptoms":
+          "Vitamin D and focus challenges":
               "https://pubmed.ncbi.nlm.nih.gov/29457224/",
           "Neurosteroid effects of Vitamin D":
               "https://pubmed.ncbi.nlm.nih.gov/28582844/",
-          "Vitamin D deficiency in ADHD children":
+          "Vitamin D deficiency in Focus children":
               "https://pubmed.ncbi.nlm.nih.gov/30415156/"
         },
         "dosageByWeight": {
@@ -211,28 +181,15 @@ class SeedingService {
             "Once daily with a fatty meal (breakfast recommended)",
         "dosageWarnings": [
           "Get blood levels tested before supplementing (test 25-OH Vitamin D)",
-          "Do not exceed 10,000 IU daily without medical supervision",
+          "Do not exceed 10,000 IU daily without general supervision",
           "High doses (>5000 IU) require monitoring for hypercalcemia",
           "Always take with vitamin K2 if dosing above 4000 IU to prevent calcium dysregulation"
         ],
         "tldr":
-            "Essential neurosteroid that regulates dopamine and serotonin; deficiency strongly linked to ADHD symptoms.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Vitamin D supports dopamine synthesis pathways, potentially enhancing long-term medication effectiveness. No direct interaction.",
-          "Vyvanse":
-              "May improve mood stability and reduce seasonal effectiveness variations. Take in morning with medication.",
-          "Ritalin":
-              "Supports overall neurotransmitter health. No contraindications; synergistic for cognitive function."
-        },
-        "contraindications": [
-          "People with hypercalcemia or hyperparathyroidism",
-          "Those with sarcoidosis or other granulomatous diseases",
-          "Individuals taking high-dose calcium supplements without medical guidance"
-        ],
+            "Essential neurosteroid that regulates dopamine and serotonin; deficiency strongly linked to focus challenges.",
         "sideEffects": [
           "Rare: nausea or constipation at very high doses (>10,000 IU)",
-          "Hypercalcemia symptoms if overdosed (fatigue, confusion, excessive thirst)",
+          "Hypercalcemia challenges if overdosed (fatigue, confusion, excessive thirst)",
           "Generally well-tolerated at recommended doses"
         ]
       },
@@ -268,7 +225,7 @@ class SeedingService {
               "https://pubmed.ncbi.nlm.nih.gov/23772955/",
           "Memory improvement in healthy adults":
               "https://pubmed.ncbi.nlm.nih.gov/18611150/",
-          "Bacopa and ADHD symptoms":
+          "Bacopa and focus challenges":
               "https://pubmed.ncbi.nlm.nih.gov/24252493/"
         },
         "dosageByWeight": {
@@ -283,24 +240,10 @@ class SeedingService {
           "Takes 8-12 weeks for full effects - be patient",
           "May cause mild GI upset initially (take with food)",
           "Avoid if you have bradycardia (slow heart rate)",
-          "May interact with thyroid medications - consult physician"
+          "May interact with thyroid routine items - consult advisor"
         ],
         "tldr":
             "Ayurvedic herb that enhances memory and learning while reducing anxiety; requires 8-12 weeks for full benefits.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Complementary for memory and learning. Bacopa's anxiolytic effects may help with stimulant-induced anxiety. No contraindications.",
-          "Vyvanse":
-              "May enhance cognitive benefits of medication while reducing stress. Safe combination for most users.",
-          "Ritalin":
-              "Synergistic for learning and memory tasks. Bacopa's calming effects balance stimulant activation."
-        },
-        "contraindications": [
-          "People with bradycardia or heart rhythm disorders",
-          "Those taking thyroid hormone medications (may alter levels)",
-          "Individuals with urinary tract obstructions",
-          "Pregnant or breastfeeding women (insufficient safety data)"
-        ],
         "sideEffects": [
           "Mild GI upset or nausea (5-10% of users, usually resolves)",
           "Rare: fatigue or increased bowel movements",
@@ -324,20 +267,20 @@ class SeedingService {
         "mechanismOfAction":
             "Essential cofactor for dopamine transporter (DAT) regulation and tyrosine hydroxylase activity. Modulates NMDA receptors and supports melatonin synthesis. Critical for over 300 enzymatic reactions.",
         "detailedBenefits": [
-          "Reduces hyperactivity and impulsivity in zinc-deficient individuals by 30%",
-          "Enhances the effectiveness of stimulant medications (lower doses may be needed)",
-          "Supports immune function and gut health (important for ADHD comorbidities)",
+          "Reduces restless energy and impulsivity in zinc-deficient individuals by 30%",
+          "Enhances the effectiveness of Type A elements (lower doses may be needed)",
+          "Supports immune function and gut health (important for Focus comorbidities)",
           "Improves sleep quality through melatonin regulation"
         ],
         "timingRationale":
             "Can cause nausea on an empty stomach. Take with a solid meal, preferably lunch or dinner. Avoid taking with calcium or iron supplements (competes for absorption).",
         "scientificEvidenceRank": 78,
         "studyLinks": {
-          "Zinc sulfate in ADHD treatment":
+          "Zinc sulfate in Focus support":
               "https://pubmed.ncbi.nlm.nih.gov/14687872/",
-          "Zinc co-treatment with stimulants":
+          "Zinc co-support with Type As":
               "https://pubmed.ncbi.nlm.nih.gov/21309642/",
-          "Zinc deficiency and ADHD":
+          "Zinc deficiency and Focus":
               "https://pubmed.ncbi.nlm.nih.gov/21545780/"
         },
         "dosageByWeight": {
@@ -348,26 +291,13 @@ class SeedingService {
         },
         "dosageFrequency": "Once daily with food (lunch or dinner)",
         "dosageWarnings": [
-          "Do not exceed 40mg daily without medical supervision",
+          "Do not exceed 40mg daily without general supervision",
           "Long-term use (>50mg) can cause copper deficiency - supplement copper if needed",
           "Get serum zinc levels tested before supplementing (optimal: 80-120 μg/dL)",
           "Take 2+ hours apart from calcium, iron, or antibiotics"
         ],
         "tldr":
-            "Essential mineral for dopamine regulation; deficiency common in ADHD and reduces medication effectiveness.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Zinc enhances dopamine transporter function, potentially allowing for lower stimulant doses. May improve medication response in zinc-deficient individuals.",
-          "Vyvanse":
-              "Supports dopamine metabolism and may reduce tolerance development. Synergistic effect for impulse control.",
-          "Ritalin":
-              "Improves methylphenidate response in children with low zinc levels. Consider testing before supplementing."
-        },
-        "contraindications": [
-          "People with Wilson's disease (copper metabolism disorder)",
-          "Those taking penicillamine or other copper-chelating drugs",
-          "Individuals with chronic kidney disease (without medical supervision)"
-        ],
+            "Essential mineral for dopamine regulation; deficiency common in Focus and reduces routine item effectiveness.",
         "sideEffects": [
           "Nausea if taken on empty stomach (common)",
           "Metallic taste in mouth (occasional)",
@@ -385,13 +315,13 @@ class SeedingService {
         "benefits": ["Cerebral Blood Flow", "Concentration", "Mental Clarity"],
         "evidenceLevel": "moderate",
         "notes":
-            "Use standardized extract (24% ginkgo flavonoids, 6% terpene lactones). More effective for inattentive type ADHD.",
+            "Use standardized extract (24% ginkgo flavonoids, 6% terpene lactones). More effective for inattentive type Focus.",
         "status": "beneficial",
         "focusLevel": 4,
         "mechanismOfAction":
             "Increases cerebral blood flow and oxygen delivery to the brain. Acts as a potent antioxidant (flavonoids) and platelet-activating factor (PAF) antagonist. Modulates neurotransmitter systems including dopamine and norepinephrine.",
         "detailedBenefits": [
-          "Improves attention and concentration in inattentive-type ADHD",
+          "Improves attention and concentration in inattentive-type Focus",
           "Enhances cerebral blood flow by 15-20%",
           "Reduces mental fatigue and brain fog",
           "Antioxidant neuroprotection against age-related cognitive decline"
@@ -400,7 +330,7 @@ class SeedingService {
             "Morning dosing aligns with peak cognitive demands. Takes 4-6 weeks for noticeable cognitive benefits. Split dosing (AM/PM) may improve consistency of effects.",
         "scientificEvidenceRank": 72,
         "studyLinks": {
-          "Ginkgo for ADHD symptoms":
+          "Ginkgo for focus challenges":
               "https://pubmed.ncbi.nlm.nih.gov/11386498/",
           "Cognitive enhancement in healthy adults":
               "https://pubmed.ncbi.nlm.nih.gov/20590480/",
@@ -422,21 +352,7 @@ class SeedingService {
           "Avoid if you have bleeding disorders or seizure history"
         ],
         "tldr":
-            "Ancient herb that boosts cerebral blood flow and concentration; particularly effective for inattentive-type ADHD.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May enhance focus benefits through improved cerebral circulation. Monitor for headaches. No direct contraindications.",
-          "Vyvanse":
-              "Complementary for sustained attention. Ginkgo's blood flow benefits may support medication effectiveness.",
-          "Ritalin":
-              "Safe combination. May help with concentration and reduce mental fatigue during medication offset."
-        },
-        "contraindications": [
-          "People taking anticoagulants (warfarin, heparin, aspirin)",
-          "Those with bleeding disorders or scheduled for surgery",
-          "Individuals with seizure disorders (may lower seizure threshold)",
-          "Pregnant or breastfeeding women"
-        ],
+            "Ancient herb that boosts cerebral blood flow and concentration; particularly effective for inattentive-type Focus.",
         "sideEffects": [
           "Mild headache (5-10% of users, usually dose-dependent)",
           "GI upset or nausea if taken on empty stomach",
@@ -464,20 +380,20 @@ class SeedingService {
         "mechanismOfAction":
             "Essential cofactor for tyrosine hydroxylase (rate-limiting enzyme in dopamine synthesis). Critical for oxygen transport via hemoglobin and myoglobin. Supports mitochondrial energy production and neurotransmitter metabolism.",
         "detailedBenefits": [
-          "Correcting deficiency improves ADHD symptoms by 30-40%",
+          "Correcting deficiency can improve focus challenges by 30-40%",
           "Supports dopamine and norepinephrine production",
           "Enhances cognitive function and reduces fatigue",
-          "Improves response to stimulant medications in deficient individuals"
+          "Improves response to Type A elements in deficient individuals"
         ],
         "timingRationale":
             "Take on empty stomach for best absorption, or with vitamin C to enhance uptake. Avoid taking with calcium, coffee, or tea (reduces absorption). Evening dosing may reduce GI upset.",
         "scientificEvidenceRank": 82,
         "studyLinks": {
-          "Iron deficiency and ADHD":
+          "Iron deficiency and Focus":
               "https://pubmed.ncbi.nlm.nih.gov/22664333/",
           "Iron supplementation effects":
               "https://pubmed.ncbi.nlm.nih.gov/18275431/",
-          "Ferritin levels in ADHD children":
+          "Ferritin levels in Focus children":
               "https://pubmed.ncbi.nlm.nih.gov/15687461/"
         },
         "dosageByWeight": {
@@ -496,20 +412,6 @@ class SeedingService {
         ],
         "tldr":
             "Essential for dopamine synthesis; ONLY supplement if blood test confirms deficiency (excess iron is harmful).",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Iron deficiency reduces medication effectiveness. Correcting deficiency may allow for lower stimulant doses. Take iron 2+ hours apart from medication.",
-          "Vyvanse":
-              "Low iron impairs dopamine synthesis needed for medication to work. Supplementation improves response in deficient individuals.",
-          "Ritalin":
-              "Iron is critical for dopamine pathways. Deficiency linked to poor medication response. Always test before supplementing."
-        },
-        "contraindications": [
-          "People with hemochromatosis or iron overload disorders",
-          "Those with normal or high ferritin levels (>30 ng/mL)",
-          "Individuals with inflammatory bowel disease (without medical supervision)",
-          "Anyone not tested for iron deficiency"
-        ],
         "sideEffects": [
           "Common: constipation, dark stools, mild nausea",
           "Reduce dose or switch to bisglycinate form if GI upset occurs",
@@ -533,7 +435,7 @@ class SeedingService {
         "mechanismOfAction":
             "Precursor to both acetylcholine (learning/memory) and phosphatidylcholine (cell membrane repair). Increases dopamine receptor density and enhances mitochondrial ATP production in the brain.",
         "detailedBenefits": [
-          "Improves sustained attention and focus by 15-20% in clinical trials",
+          "Improves sustained attention and focus by 15-20% in standard trials",
           "Enhances working memory and processing speed",
           "Supports brain energy metabolism and reduces mental fatigue",
           "Neuroprotective effects against oxidative stress"
@@ -565,19 +467,6 @@ class SeedingService {
         ],
         "tldr":
             "Premium nootropic that boosts brain energy, dopamine, and acetylcholine for sustained focus and mental clarity.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Synergistic for cognitive enhancement. Citicoline supports dopamine pathways and may reduce tolerance development. No contraindications.",
-          "Vyvanse":
-              "Complements stimulant effects by supporting acetylcholine (learning) and brain energy. May enhance working memory benefits.",
-          "Ritalin":
-              "Safe combination. Citicoline provides neuroprotection and supports long-term cognitive health alongside stimulant use."
-        },
-        "contraindications": [
-          "People with bipolar disorder (may trigger manic episodes in rare cases)",
-          "Those taking anticholinergic medications",
-          "Pregnant or breastfeeding women (insufficient safety data)"
-        ],
         "sideEffects": [
           "Rare: mild headache (usually resolves with lower dose)",
           "Occasional: digestive upset if taken on empty stomach",
@@ -629,23 +518,10 @@ class SeedingService {
           "Start with 500mg to assess tolerance",
           "Effects are cumulative - allow 4-8 weeks for full benefits",
           "May cause mild GI upset initially (take with food)",
-          "Consult physician if you have mushroom allergies"
+          "Consult advisor if you have mushroom allergies"
         ],
         "tldr":
             "Medicinal mushroom that stimulates nerve growth factor for enhanced neuroplasticity and cognitive function.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Complementary for cognitive enhancement and neuroprotection. Lion's Mane supports brain health alongside stimulant use. No contraindications.",
-          "Vyvanse":
-              "May enhance long-term cognitive benefits and support neuroplasticity. Safe combination.",
-          "Ritalin":
-              "Synergistic for focus and mental clarity. Lion's Mane provides neuroprotective benefits during chronic stimulant use."
-        },
-        "contraindications": [
-          "People with mushroom allergies (rare but possible)",
-          "Those with bleeding disorders (theoretical risk, monitor)",
-          "Pregnant or breastfeeding women (insufficient safety data)"
-        ],
         "sideEffects": [
           "Rare: mild GI upset or skin rash (allergic reaction)",
           "Very rare: respiratory difficulty (stop immediately if occurs)",
@@ -668,7 +544,7 @@ class SeedingService {
             "Critical phospholipid component of neuronal cell membranes. Supports neurotransmitter receptor function, particularly acetylcholine. Modulates cortisol response and supports healthy HPA axis function. Enhances glucose metabolism in the brain.",
         "detailedBenefits": [
           "Improves working memory and information processing by 15-20%",
-          "Enhances attention and reduces distractibility in ADHD",
+          "Enhances attention and reduces distractibility in Focus",
           "Reduces cortisol levels and stress-induced cognitive impairment",
           "Supports age-related cognitive maintenance"
         ],
@@ -676,7 +552,7 @@ class SeedingService {
             "Can be taken any time of day with food for optimal absorption (fat-soluble). Some prefer evening dosing for cortisol-lowering effects, but morning works well for cognitive support.",
         "scientificEvidenceRank": 80,
         "studyLinks": {
-          "Phosphatidylserine for ADHD":
+          "Phosphatidylserine for Focus":
               "https://pubmed.ncbi.nlm.nih.gov/24424348/",
           "Cognitive function improvement":
               "https://pubmed.ncbi.nlm.nih.gov/25933483/",
@@ -698,20 +574,7 @@ class SeedingService {
           "Choose sunflower-derived PS if you have soy allergies"
         ],
         "tldr":
-            "Essential brain phospholipid that enhances working memory, attention, and stress resilience in ADHD.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Synergistic for cognitive function. PS supports cell membrane health critical for neurotransmitter signaling. May reduce cortisol elevation from stimulants.",
-          "Vyvanse":
-              "Complementary for working memory and attention. PS may help buffer stress response during medication use.",
-          "Ritalin":
-              "Safe combination. PS supports the cellular mechanisms that stimulants rely on for effectiveness."
-        },
-        "contraindications": [
-          "People with soy allergies (use sunflower-derived PS)",
-          "Those taking anticholinergic medications (theoretical interaction)",
-          "Pregnant or breastfeeding women (insufficient safety data)"
-        ],
+            "Essential brain phospholipid that enhances working memory, attention, and stress resilience in Focus.",
         "sideEffects": [
           "Rare: mild GI upset or insomnia (if taken late)",
           "Very rare: headache at high doses (>300mg)",
@@ -734,18 +597,18 @@ class SeedingService {
         "mechanismOfAction":
             "Modulates serotonin, dopamine, and norepinephrine through crocin and safranal compounds. Acts as a mild NMDA receptor antagonist and enhances BDNF expression. Anti-inflammatory effects support neuronal health.",
         "detailedBenefits": [
-          "Reduces impulsivity and hyperactivity comparable to low-dose methylphenidate",
+          "Reduces impulsivity and restless energy comparable to low-dose methylphenidate",
           "Improves mood and reduces anxiety without sedation",
           "Enhances attention span and reduces distractibility",
           "Neuroprotective and anti-inflammatory properties"
         ],
         "timingRationale":
-            "Morning dosing aligns with peak symptom periods. Effects build over 6-8 weeks. Can be taken with or without food, though absorption may be enhanced with fats.",
+            "Morning dosing aligns with peak state periods. Effects build over 6-8 weeks. Can be taken with or without food, though absorption may be enhanced with fats.",
         "scientificEvidenceRank": 68,
         "studyLinks": {
-          "Saffron vs methylphenidate for ADHD":
+          "Saffron vs methylphenidate for Focus":
               "https://pubmed.ncbi.nlm.nih.gov/30895760/",
-          "Saffron for ADHD symptoms":
+          "Saffron for focus challenges":
               "https://pubmed.ncbi.nlm.nih.gov/31453656/",
           "Mood and cognitive effects":
               "https://pubmed.ncbi.nlm.nih.gov/28527220/"
@@ -761,29 +624,15 @@ class SeedingService {
           "Do not exceed 30mg daily (higher doses may cause side effects)",
           "Takes 6-8 weeks for full therapeutic effects",
           "Avoid during pregnancy (may stimulate uterine contractions)",
-          "May interact with blood pressure medications"
+          "May interact with blood pressure routine items"
         ],
         "tldr":
-            "Emerging ADHD treatment with mood-stabilizing effects; some studies show efficacy comparable to low-dose stimulants.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May provide complementary mood support. No known contraindications, but monitor for additive effects on mood.",
-          "Vyvanse":
-              "Saffron's mood-stabilizing effects may complement stimulant therapy. Safe combination for most users.",
-          "Ritalin":
-              "Some studies suggest saffron alone has comparable efficacy to low-dose methylphenidate. Can be used together under medical supervision."
-        },
-        "contraindications": [
-          "Pregnant or breastfeeding women (may cause uterine contractions)",
-          "People with bipolar disorder (may trigger manic episodes)",
-          "Those taking blood pressure medications (may enhance effects)",
-          "Individuals with bleeding disorders (theoretical risk)"
-        ],
+            "Emerging Focus support with mood-stabilizing effects; some studies show efficacy comparable to low-dose Type As.",
         "sideEffects": [
           "Rare: mild nausea or headache at higher doses (>30mg)",
           "Very rare: dizziness or dry mouth",
           "Generally well-tolerated at recommended doses",
-          "No significant side effects in most clinical trials"
+          "No significant side effects in most standard trials"
         ],
         "form": "Capsule"
       },
@@ -806,18 +655,18 @@ class SeedingService {
         "mechanismOfAction":
             "Potent antioxidant containing proanthocyanidins that cross the blood-brain barrier. Enhances nitric oxide production for improved cerebral blood flow. Modulates dopamine and norepinephrine metabolism while reducing oxidative stress.",
         "detailedBenefits": [
-          "Reduces hyperactivity and improves attention by 20-30% in clinical trials",
+          "Reduces restless energy and improves attention by 20-30% in standard trials",
           "Enhances antioxidant capacity and reduces neuroinflammation",
           "Improves concentration and visual-motor coordination",
-          "May reduce need for stimulant medication in some cases"
+          "May reduce need for Type A element in some cases"
         ],
         "timingRationale":
             "Morning dosing supports daytime cognitive function. Effects are cumulative over 8-12 weeks. Take with food to enhance absorption and reduce GI upset.",
         "scientificEvidenceRank": 75,
         "studyLinks": {
-          "Pycnogenol for ADHD in children":
+          "Pycnogenol for Focus in children":
               "https://pubmed.ncbi.nlm.nih.gov/16499493/",
-          "Attention and hyperactivity improvement":
+          "Attention and restless energy improvement":
               "https://pubmed.ncbi.nlm.nih.gov/17063641/",
           "Antioxidant effects on cognition":
               "https://pubmed.ncbi.nlm.nih.gov/22214254/"
@@ -837,26 +686,12 @@ class SeedingService {
           "Start with half dose to assess tolerance"
         ],
         "tldr":
-            "Powerful antioxidant from pine bark that reduces hyperactivity and improves attention through enhanced blood flow.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Complementary antioxidant support. May help reduce oxidative stress from chronic stimulant use. No contraindications.",
-          "Vyvanse":
-              "Synergistic for attention and focus. Pycnogenol's blood flow benefits may enhance medication effectiveness.",
-          "Ritalin":
-              "Some studies suggest Pycnogenol may reduce need for medication in mild cases. Can be used together safely."
-        },
-        "contraindications": [
-          "People taking blood thinners (may enhance anticoagulant effects)",
-          "Those with autoimmune conditions (may stimulate immune system)",
-          "Individuals scheduled for surgery (stop 2 weeks prior)",
-          "Pregnant or breastfeeding women (insufficient safety data)"
-        ],
+            "Powerful antioxidant from pine bark that reduces restless energy and improves attention through enhanced blood flow.",
         "sideEffects": [
           "Rare: mild GI upset, nausea, or headache",
           "Very rare: dizziness or mouth ulcers",
           "Generally well-tolerated with minimal side effects",
-          "No serious adverse events in clinical trials"
+          "No serious adverse events in standard trials"
         ]
       },
       {
@@ -876,14 +711,14 @@ class SeedingService {
         "detailedBenefits": [
           "Improves mood and reduces anxiety through gut-brain communication",
           "Supports production of neurotransmitters (90% of serotonin made in gut)",
-          "Reduces inflammation linked to ADHD symptoms",
+          "Reduces inflammation linked to focus challenges",
           "Enhances nutrient absorption critical for brain health"
         ],
         "timingRationale":
             "Morning dosing on empty stomach (30 min before food) maximizes survival through stomach acid. Consistent daily use builds healthy microbiome over 4-8 weeks.",
         "scientificEvidenceRank": 65,
         "studyLinks": {
-          "Probiotics and ADHD symptoms":
+          "Probiotics and focus challenges":
               "https://pubmed.ncbi.nlm.nih.gov/31665527/",
           "Gut-brain axis in neurodevelopment":
               "https://pubmed.ncbi.nlm.nih.gov/30356668/",
@@ -906,20 +741,6 @@ class SeedingService {
         ],
         "tldr":
             "Beneficial bacteria that support gut-brain communication, mood regulation, and neurotransmitter production.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Supports gut health which may be affected by stimulants. Probiotics help maintain healthy digestion and nutrient absorption. No contraindications.",
-          "Vyvanse":
-              "May help with GI side effects common with stimulants. Supports overall health and neurotransmitter balance.",
-          "Ritalin":
-              "Complementary for gut health and mood support. Safe combination with no known interactions."
-        },
-        "contraindications": [
-          "People with severely compromised immune systems (consult physician)",
-          "Those with central venous catheters or serious illness",
-          "Individuals with short bowel syndrome (rare risk of infection)",
-          "Generally safe for most people"
-        ],
         "sideEffects": [
           "Common initially: mild bloating, gas, or digestive changes (1-2 weeks)",
           "Rare: allergic reaction to specific strains",
@@ -933,19 +754,19 @@ class SeedingService {
         "name": "Red Dye 40 (Allura Red AC / E129)",
         "category": "Artificial Color",
         "description":
-            "Synthetic petroleum-based food dye linked to significant behavioral problems in ADHD. One of the 'Southampton Six' requiring warning labels in the EU.",
+            "Synthetic petroleum-based food dye linked to significant behavioral problems in Focus. One of the 'Southampton Six' requiring warning labels in the EU.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Artificial dyes have been shown to trigger histamine release and may interfere with zinc metabolism. Zinc is a critical cofactor for neurotransmitter synthesis; its depletion can directly worsen hyperactivity and impulsivity in ADHD-sensitive individuals.",
+            "Artificial dyes have been shown to trigger histamine release and may interfere with zinc metabolism. Zinc is a critical cofactor for neurotransmitter synthesis; its depletion can directly worsen restless energy and impulsivity in Focus-sensitive individuals.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Consumption should be eliminated to avoid behavioral flares.",
         "scientificEvidenceRank": 75,
         "studyLinks": {
-          "Food additives and hyperactivity (Southampton)":
+          "Food additives and restless energy (Southampton)":
               "https://pubmed.ncbi.nlm.nih.gov/17825405/",
-          "Artificial colors and ADHD meta-analysis":
+          "Artificial colors and Focus meta-analysis":
               "https://pubmed.ncbi.nlm.nih.gov/22331014/"
         },
         "dosageByWeight": {
@@ -956,21 +777,13 @@ class SeedingService {
         },
         "dosageFrequency": "Eliminate from diet",
         "dosageWarnings": [
-          "Linked to increased hyperactivity in sensitive children",
+          "Linked to increased restless energy in sensitive children",
           "May cause allergic reactions or skin sensitivity",
           "Listed as Allura Red AC or E129 on international labels",
           "Common in bright red snacks, cereals, and soft drinks"
         ],
         "tldr":
-            "Synthetic red dye with high clinical evidence for worsening ADHD hyperactivity and impulsivity.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "CRITICAL: May counter-act the focus benefits of medication by increasing distractibility and restlessness.",
-          "Vyvanse":
-              "Avoid: Can trigger behavioral flares that mask medication efficacy.",
-          "Ritalin":
-              "Compromises impulse control, directly opposing the therapeutic goals of stimulant treatment."
-        },
+            "Synthetic red dye with high standard evidence for worsening Focus restless energy and impulsivity.",
         "form": "Liquid/Food Additive"
       },
       {
@@ -978,17 +791,17 @@ class SeedingService {
         "name": "High Fructose Corn Syrup (HFCS)",
         "category": "Sweetener",
         "description":
-            "Highly processed sweetener that causes rapid blood sugar spikes and crashes, worsening ADHD symptoms. Found in sodas, processed foods, and many packaged snacks.",
+            "Highly processed sweetener that causes rapid blood sugar spikes and crashes, worsening focus challenges. Found in sodas, processed foods, and many packaged snacks.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "HFCS induces rapid insulin release leading to significant blood sugar fluctuations. The subsequent hypoglycemic 'crash' can temporarily deplete neurotransmitter reserves and cause intense brain fog, irritability, and worsened impulsivity in ADHD individuals.",
+            "HFCS induces rapid insulin release leading to significant blood sugar fluctuations. The subsequent hypoglycemic 'crash' can temporarily deplete neurotransmitter reserves and cause intense brain fog, irritability, and worsened impulsivity in Focus individuals.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Consumption leads to neuro-energetic instability.",
         "scientificEvidenceRank": 70,
         "studyLinks": {
-          "Sugar consumption and ADHD behavior":
+          "Sugar consumption and Focus behavior":
               "https://pubmed.ncbi.nlm.nih.gov/21129940/",
           "Sucrose vs HFCS in cognitive health":
               "https://pubmed.ncbi.nlm.nih.gov/16507461/"
@@ -1008,14 +821,6 @@ class SeedingService {
         ],
         "tldr":
             "Processed sweetener causing blood sugar crashes and brain fog; avoid for stable energy and focus.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "WORSENS CRASH: Blood sugar drops from HFCS can exacerbate the afternoon 'crash' of stimulant medications.",
-          "Vyvanse":
-              "May cause erratic energy levels that make medication focus feel inconsistent.",
-          "Ritalin":
-              "Directly opposes the calming of hyperactivity due to blood sugar spikes."
-        },
         "form": "Liquid/Food Additive"
       },
       {
@@ -1023,17 +828,17 @@ class SeedingService {
         "name": "Sodium Benzoate (E211)",
         "category": "Preservative",
         "description":
-            "Common preservative in soft drinks and processed foods that may increase hyperactivity when combined with artificial colors. Particularly problematic for children with ADHD.",
+            "Common preservative in soft drinks and processed foods that may increase restless energy when combined with artificial colors. Particularly problematic for children with Focus.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Sodium benzoate (E211) can cross the blood-brain barrier and has been shown to increase hyperactivity in its own right. It may interfere with mitochondrial function and potentially induce oxidative stress in the hippocampus.",
+            "Sodium benzoate (E211) can cross the blood-brain barrier and has been shown to increase restless energy in its own right. It may interfere with mitochondrial function and potentially induce oxidative stress in the hippocampus.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Preservative with recognized behavioral impact.",
         "scientificEvidenceRank": 68,
         "studyLinks": {
-          "Sodium benzoate and hyperactivity (Lancet)":
+          "Sodium benzoate and restless energy (Lancet)":
               "https://pubmed.ncbi.nlm.nih.gov/17825405/",
           "Cellular impact of food preservatives":
               "https://pubmed.ncbi.nlm.nih.gov/22331014/"
@@ -1046,21 +851,13 @@ class SeedingService {
         },
         "dosageFrequency": "Eliminate from diet",
         "dosageWarnings": [
-          "Significantly amplifies the hyperactivity effects of synthetic food dyes",
+          "Significantly amplifies the restless energy effects of synthetic food dyes",
           "May cause allergic flares or skin irritation in sensitive people",
           "Listed as Sodium Benzoate or E211",
           "Check for 'sodium benzoate' in sodas and condiments"
         ],
         "tldr":
-            "Preservative linked to hyperactivity, especially when consumed with dyes; eliminate to reduce restlessness.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May increase motor hyperactivity and reduce 'calm' focus window.",
-          "Vyvanse":
-              "Avoid: Can trigger erratic behavioral responses that interfere with medication effect.",
-          "Ritalin":
-              "Directly opposes the therapeutic target of reducing hyperactivity."
-        },
+            "Preservative linked to restless energy, especially when consumed with dyes; eliminate to reduce restlessness.",
         "form": "Liquid/Food Additive"
       },
       {
@@ -1104,24 +901,10 @@ class SeedingService {
           "Take on empty stomach for best absorption",
           "Tolerance develops within 6 weeks with daily use",
           "Not recommended for chronic daily supplementation",
-          "Take separately from ADHD stimulants (competes for absorption)"
+          "Take separately from Focus Profile As (competes for absorption)"
         ],
         "tldr":
             "Dopamine precursor amino acid; best for acute stress situations rather than daily use due to tolerance.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Take 2+ hours apart from medication (competes for absorption). Works synergistically with iron and B6 (cofactors for conversion).",
-          "Vyvanse":
-              "Separate timing from medication. May provide additional dopamine support during high-stress periods.",
-          "Ritalin":
-              "Avoid taking simultaneously. Best used on days off medication or hours apart."
-        },
-        "contraindications": [
-          "People with hyperthyroidism (tyrosine is a thyroid hormone precursor)",
-          "Those taking MAO inhibitors",
-          "Individuals with melanoma (theoretical risk)",
-          "Pregnant or breastfeeding women"
-        ],
         "sideEffects": [
           "Rare: headache or nausea at high doses",
           "Possible: irritability or anxiety if overstimulated",
@@ -1158,9 +941,9 @@ class SeedingService {
             "Morning dosing aligns with peak dopamine synthesis needs. B vitamins are water-soluble and absorbed quickly (30-60 min). Avoid evening dosing as B vitamins can be energizing and may interfere with sleep.",
         "scientificEvidenceRank": 85,
         "studyLinks": {
-          "B vitamins and ADHD symptoms":
+          "B vitamins and focus challenges":
               "https://pubmed.ncbi.nlm.nih.gov/27521327/",
-          "Methylfolate in ADHD with MTHFR polymorphism":
+          "Methylfolate in Focus with MTHFR polymorphism":
               "https://pubmed.ncbi.nlm.nih.gov/24284437/",
           "B6 and neurotransmitter synthesis":
               "https://pubmed.ncbi.nlm.nih.gov/18950248/"
@@ -1179,14 +962,6 @@ class SeedingService {
         ],
         "tldr":
             "Essential cofactors for neurotransmitter synthesis; methylated forms support dopamine production and bypass genetic limitations.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "B vitamins support the synthesis pathways that stimulants depend on; may enhance medication effectiveness over time.",
-          "Vyvanse":
-              "Supports conversion of lisdexamfetamine to active d-amphetamine; helps maintain neurotransmitter reserves.",
-          "Ritalin":
-              "Methylfolate supports BH4 synthesis which is required for dopamine production that methylphenidate enhances."
-        },
         "form": "Capsule"
       },
       {
@@ -1239,19 +1014,6 @@ class SeedingService {
         ],
         "tldr":
             "Adaptogen that reduces mental fatigue and enhances stress resilience by modulating dopamine and serotonin.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May help reduce stimulant-induced stress response and support sustained focus during medication offset.",
-          "Vyvanse":
-              "Complements stimulant action by supporting stress resilience and reducing mental fatigue.",
-          "Ritalin":
-              "May enhance cognitive benefits while reducing stress-related side effects of stimulant medications."
-        },
-        "contraindications": [
-          "People with bipolar disorder (may trigger manic episodes)",
-          "Those taking MAO inhibitors",
-          "Pregnant or breastfeeding women (insufficient safety data)"
-        ],
         "sideEffects": [
           "Rare: mild jitteriness or overstimulation",
           "Possible: dry mouth or dizziness",
@@ -1277,7 +1039,7 @@ class SeedingService {
         "detailedBenefits": [
           "Reduces cortisol levels by 23-28% in chronic stress",
           "Improves sleep quality and reduces sleep latency",
-          "Reduces anxiety symptoms by 40-50% in clinical trials",
+          "Reduces anxiety challenges by 40-50% in standard trials",
           "Supports executive function recovery after stressful periods"
         ],
         "timingRationale":
@@ -1301,20 +1063,12 @@ class SeedingService {
             "Once daily in the evening, or split into morning/evening doses",
         "dosageWarnings": [
           "May cause drowsiness - avoid driving after taking",
-          "Can lower blood pressure and blood sugar - monitor if on medications",
+          "Can lower blood pressure and blood sugar - monitor if on routine items",
           "Avoid during pregnancy (may stimulate uterine contractions)",
-          "May interact with thyroid medications (can increase T4 levels)"
+          "May interact with thyroid routine items (can increase T4 levels)"
         ],
         "tldr":
             "Powerful adaptogen that reduces cortisol and anxiety; best for evening use to support sleep and stress recovery.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Helps mitigate stimulant-induced anxiety and supports sleep quality which is often disrupted by stimulants.",
-          "Vyvanse":
-              "Reduces evening anxiety and supports recovery from daytime stimulant use; may improve sleep onset.",
-          "Ritalin":
-              "Complements stimulant therapy by managing stress response and supporting evening wind-down."
-        }
       },
       {
         "id": "vitamin-c",
@@ -1329,11 +1083,11 @@ class SeedingService {
         ],
         "evidenceLevel": "high",
         "notes":
-            "⚠️ TIMING CRITICAL: Take 1+ hours BEFORE or 4+ hours AFTER stimulant medications. Acidifies urine which increases stimulant excretion.",
+            "⚠️ TIMING CRITICAL: Take 1+ hours BEFORE or 4+ hours AFTER Type A elements. Acidifies urine which increases Type A excretion.",
         "status": "beneficial",
         "focusLevel": 3,
         "mechanismOfAction":
-            "Vitamin C is a cofactor for dopamine beta-hydroxylase, the enzyme that converts dopamine to norepinephrine. It also protects catecholamines from oxidation and supports adrenal function. However, it acidifies urine which significantly increases the excretion rate of amphetamine-based stimulants.",
+            "Vitamin C is a cofactor for dopamine beta-hydroxylase, the enzyme that converts dopamine to norepinephrine. It also protects catecholamines from oxidation and supports adrenal function. However, it acidifies urine which significantly increases the excretion rate of amphetamine-based Type As.",
         "detailedBenefits": [
           "Essential cofactor for dopamine-to-norepinephrine conversion",
           "Protects neurotransmitters from oxidative degradation",
@@ -1341,7 +1095,7 @@ class SeedingService {
           "Powerful antioxidant for brain tissue protection"
         ],
         "timingRationale":
-            "CRITICAL: Vitamin C acidifies urine, which increases amphetamine excretion by up to 50%. Take at least 1 hour BEFORE stimulant medication, or wait 4+ hours after. Evening dosing (after medication has worn off) is safest for those on stimulants.",
+            "CRITICAL: Vitamin C acidifies urine, which increases amphetamine excretion by up to 50%. Take at least 1 hour BEFORE Type A element, or wait 4+ hours after. Evening dosing (after routine item has worn off) is safest for those on Type As.",
         "scientificEvidenceRank": 88,
         "studyLinks": {
           "Vitamin C and dopamine synthesis":
@@ -1358,23 +1112,15 @@ class SeedingService {
           "100-120": "1000-1500mg"
         },
         "dosageFrequency":
-            "Once or twice daily, timing separated from stimulant medications",
+            "Once or twice daily, timing separated from Type A elements",
         "dosageWarnings": [
-          "⚠️ CRITICAL: Reduces effectiveness of Adderall/Vyvanse if taken together",
-          "Take 1+ hours BEFORE or 4+ hours AFTER stimulant medications",
+          "⚠️ CRITICAL: Reduces effectiveness of your Routine Protocol if taken together",
+          "Take 1+ hours BEFORE or 4+ hours AFTER Type A elements",
           "High doses (>2000mg) may cause GI upset or diarrhea",
           "Generally very safe; excess is excreted in urine"
         ],
         "tldr":
-            "Essential for dopamine synthesis but MUST be timed carefully - acidifies urine and reduces stimulant effectiveness.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "⚠️ REDUCES EFFECTIVENESS by 30-50% if taken together. Acidifies urine, increasing amphetamine excretion. Separate by 1+ hours before or 4+ hours after.",
-          "Vyvanse":
-              "⚠️ REDUCES EFFECTIVENESS. Same mechanism as Adderall - increases excretion rate. Timing separation is critical.",
-          "Ritalin":
-              "Minimal interaction (methylphenidate excretion less pH-dependent). Can be taken together, but separation still recommended."
-        }
+            "Essential for dopamine synthesis but MUST be timed carefully - acidifies urine and reduces Type A effectiveness.",
       },
       {
         "id": "acetyl-l-carnitine",
@@ -1385,18 +1131,18 @@ class SeedingService {
         "benefits": [
           "Mental Energy",
           "Acetylcholine Production",
-          "Inattentive-Type ADHD"
+          "Inattentive Flow"
         ],
         "evidenceLevel": "high",
         "notes":
-            "Crosses blood-brain barrier to enhance mitochondrial energy and increase dopamine. Significant benefit specifically for inattentive subtype ADHD.",
+            "Crosses blood-brain barrier to enhance mitochondrial energy and increase dopamine. Significant benefit specifically for inattentive subtype Focus.",
         "status": "beneficial",
         "focusLevel": 4,
         "mechanismOfAction":
             "ALCAR is the acetylated form of L-carnitine that crosses the blood-brain barrier. It donates acetyl groups for acetylcholine synthesis (key neurotransmitter for attention and memory). Also transports fatty acids into mitochondria for ATP production and provides neuroprotective benefits.",
         "detailedBenefits": [
           "Enhances acetylcholine synthesis for improved attention",
-          "Reduces inattentive-type symptoms by 20-30% in trials",
+          "Reduces inattentive-type challenges by 20-30% in trials",
           "Supports mitochondrial energy production in neurons",
           "Improves mental fatigue and processing speed"
         ],
@@ -1404,7 +1150,7 @@ class SeedingService {
             "Morning dosing on an empty stomach maximizes absorption. Effects are noticeable within 30-60 minutes. Avoid evening dosing as it can be energizing and may interfere with sleep.",
         "scientificEvidenceRank": 78,
         "studyLinks": {
-          "ALCAR for ADHD inattentive type":
+          "ALCAR for Focus inattentive type":
               "https://pubmed.ncbi.nlm.nih.gov/17444943/",
           "ALCAR for cognitive function":
               "https://pubmed.ncbi.nlm.nih.gov/28178168/",
@@ -1420,26 +1166,13 @@ class SeedingService {
         "dosageFrequency":
             "Once or twice daily (morning, or morning + early afternoon)",
         "dosageWarnings": [
-          "Most effective for inattentive-type ADHD specifically",
+          "Most effective for inattentive-type Focus specifically",
           "May be stimulating - avoid evening dosing",
           "High doses (>2000mg) may cause fishy body odor (rare)",
           "Start with 500mg to assess cognitive tolerance"
         ],
         "tldr":
-            "Supports brain energy and acetylcholine; particularly researched for the inattentive subtype of ADHD.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Complements stimulant action by supporting acetylcholine (attention) and mitochondrial energy (sustained focus).",
-          "Vyvanse":
-              "May enhance cognitive benefits and reduce mental fatigue during medication offset.",
-          "Ritalin":
-              "Supports attention through complementary neurotransmitter system (acetylcholine vs dopamine)."
-        },
-        "contraindications": [
-          "People with seizure disorders (theoretical risk)",
-          "Those with thyroid hormone issues (may increase thyroid activity)",
-          "Individuals with fishy body odor (TMAU condition)"
-        ],
+            "Supports brain energy and acetylcholine; particularly researched for the inattentive subtype of Focus.",
         "sideEffects": [
           "Occasional: fishy body odor at high doses (>2000mg)",
           "Rare: mild GI upset or nausea",
@@ -1498,14 +1231,6 @@ class SeedingService {
         ],
         "tldr":
             "Supports brain ATP regeneration; improves working memory and reduces mental fatigue, especially during sleep deprivation.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Supports brain energy reserves which may enhance sustained focus and reduce mental fatigue during medication offset.",
-          "Vyvanse":
-              "Complements stimulant action by providing cellular energy substrate; may improve working memory beyond stimulant effects alone.",
-          "Ritalin":
-              "Provides energy support for high-demand cognitive tasks; works through complementary mechanism (ATP vs dopamine)."
-        }
       },
       {
         "id": "curcumin",
@@ -1522,7 +1247,7 @@ class SeedingService {
         "mechanismOfAction":
             "Curcumin is a potent anti-inflammatory that crosses the blood-brain barrier. It inhibits NF-κB (inflammatory pathway), increases BDNF (neuroplasticity), and modulates monoamine neurotransmitters. Also has antioxidant properties that protect neurons from oxidative stress. Note: Poor bioavailability unless enhanced with piperine or liposomal delivery.",
         "detailedBenefits": [
-          "Reduces neuroinflammation linked to ADHD symptoms",
+          "Reduces neuroinflammation linked to focus challenges",
           "Increases BDNF for neuroplasticity and learning",
           "Mild mood-enhancing effects (MAO inhibition)",
           "Neuroprotective against oxidative stress and aging"
@@ -1552,14 +1277,6 @@ class SeedingService {
         ],
         "tldr":
             "Powerful anti-inflammatory and neuroprotective compound; must be formulated for absorption (with piperine or liposomal).",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Anti-inflammatory effects may support long-term brain health during chronic stimulant use; BDNF increase supports neuroplasticity.",
-          "Vyvanse":
-              "Neuroprotective properties may mitigate oxidative stress from stimulants; mood support can complement medication effects.",
-          "Ritalin":
-              "Supports brain health and reduces inflammation; may enhance long-term cognitive benefits of stimulant therapy."
-        }
       },
       {
         "id": "green-tea-extract",
@@ -1603,18 +1320,10 @@ class SeedingService {
           "Contains caffeine unless decaffeinated (30-50mg per dose)",
           "Take with food to avoid nausea (tannins can upset stomach)",
           "High doses (>800mg EGCG) may affect liver enzymes - monitor",
-          "May interact with blood thinners and blood pressure medications"
+          "May interact with blood thinners and blood pressure routine items"
         ],
         "tldr":
             "Extends dopamine availability by inhibiting COMT; provides neuroprotection and synergizes with L-theanine for focus.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "COMT inhibition may extend dopamine availability, potentially enhancing and prolonging stimulant effects. Monitor for overstimulation.",
-          "Vyvanse":
-              "May extend the duration of dopamine elevation from lisdexamfetamine; could reduce 'crash' during offset.",
-          "Ritalin":
-              "Complementary mechanism - methylphenidate blocks reuptake while EGCG blocks breakdown, potentially synergistic."
-        }
       },
       {
         "id": "nac",
@@ -1644,7 +1353,7 @@ class SeedingService {
             "Morning dosing on empty stomach maximizes absorption (food reduces bioavailability by ~30%). Effects build over 2-4 weeks of consistent use. Some people split dose (morning + afternoon) for sustained glutathione production. Avoid evening dosing as it can be mildly energizing.",
         "scientificEvidenceRank": 79,
         "studyLinks": {
-          "NAC for impulse control and ADHD":
+          "NAC for impulse control and Focus":
               "https://pubmed.ncbi.nlm.nih.gov/31109635/",
           "Glutathione and neuroprotection":
               "https://pubmed.ncbi.nlm.nih.gov/29706149/",
@@ -1667,19 +1376,6 @@ class SeedingService {
         ],
         "tldr":
             "Boosts glutathione for neuroprotection and modulates glutamate for improved impulse control and reduced compulsivity.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Provides antioxidant protection against stimulant-induced oxidative stress; may improve impulse control beyond medication effects.",
-          "Vyvanse":
-              "Supports long-term brain health during chronic stimulant use; glutamate modulation complements dopamine effects.",
-          "Ritalin":
-              "Neuroprotective benefits support sustained medication effectiveness; may reduce irritability side effects."
-        },
-        "contraindications": [
-          "People with asthma (may trigger bronchospasm in rare cases)",
-          "Those with bleeding disorders (theoretical risk)",
-          "Pregnant or breastfeeding women (consult physician)"
-        ],
         "sideEffects": [
           "Common: sulfur smell/taste (normal, not harmful)",
           "Occasional: mild nausea or GI upset (take with food)",
@@ -1737,14 +1433,6 @@ class SeedingService {
         ],
         "tldr":
             "Potent acetylcholinesterase inhibitor with 24+ hour half-life; enhances memory and attention but requires cycling to prevent tolerance.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Complementary mechanism - enhances acetylcholine (attention/memory) while stimulants enhance dopamine (motivation/focus).",
-          "Vyvanse":
-              "May improve memory consolidation and learning during medication-enhanced focus periods.",
-          "Ritalin":
-              "Supports attention through different neurotransmitter system; may enhance overall cognitive benefits."
-        }
       },
       {
         "id": "vinpocetine",
@@ -1763,15 +1451,15 @@ class SeedingService {
         "status": "beneficial",
         "focusLevel": 3,
         "mechanismOfAction":
-            "Vinpocetine enhances cerebral blood flow by dilating blood vessels in the brain and reducing blood viscosity. It also improves glucose and oxygen utilization in neurons, supports mitochondrial function, and has neuroprotective antioxidant properties. May modulate phosphodiesterase to increase cAMP levels.",
+            "Vinpocetine supports optimal circulation and oxygen delivery to the brain. It promotes energy utilization in neural pathways and serves as a powerful antioxidant for cognitive longevity.",
         "detailedBenefits": [
-          "Increases cerebral blood flow by 7-30% in research studies",
-          "Improves mental clarity and processing speed",
-          "Enhances glucose utilization for brain energy",
-          "Neuroprotective against ischemia and oxidative stress"
+          "Supports healthy delivery of oxygen/nutrients to the brain",
+          "Promotes mental clarity and faster processing speed",
+          "Enhances memory consolidation",
+          "Supports neuroprotection against oxidative stress"
         ],
         "timingRationale":
-            "Morning or early afternoon dosing with food maximizes absorption (fat-soluble). Effects are noticeable within 1-2 hours. Avoid evening dosing as increased blood flow and energy can interfere with sleep. Take with meals containing fat for best bioavailability.",
+            "Morning or early afternoon dosing with food maximizes absorption. Effects are noticeable within 1-2 hours. Avoid evening dosing as increased alertness can interfere with sleep.",
         "scientificEvidenceRank": 63,
         "studyLinks": {
           "Vinpocetine and cerebral blood flow":
@@ -1790,20 +1478,12 @@ class SeedingService {
         "dosageFrequency": "Once or twice daily with meals",
         "dosageWarnings": [
           "Take with food (fat-soluble, poor absorption on empty stomach)",
-          "May lower blood pressure - monitor if on BP medications",
+          "May lower blood pressure - monitor if on BP routine items",
           "Avoid during pregnancy (may affect blood flow to placenta)",
-          "Can interact with blood thinners - consult physician"
+          "Can interact with blood thinners - consult advisor"
         ],
         "tldr":
             "Enhances cerebral blood flow and glucose utilization for improved mental clarity and processing speed.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Improved blood flow may enhance nutrient delivery to support stimulant-driven cognitive demands.",
-          "Vyvanse":
-              "Better glucose utilization may support sustained energy during long medication duration.",
-          "Ritalin":
-              "Complementary mechanism - blood flow enhancement supports dopamine-driven focus improvements."
-        }
       },
       {
         "id": "mucuna-pruriens",
@@ -1847,19 +1527,11 @@ class SeedingService {
           "⚠️ MUST CYCLE - chronic daily use depletes dopamine and downregulates receptors",
           "Take on empty stomach (protein blocks L-DOPA absorption)",
           "May cause nausea, especially at higher doses",
-          "Avoid with MAO inhibitors or Parkinson's medications",
+          "Avoid with MAO inhibitors or Parkinson's routine items",
           "Not recommended for long-term daily use without cycling"
         ],
         "tldr":
             "Natural L-DOPA source for rapid dopamine boost; MUST be cycled to prevent receptor downregulation and depletion.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "⚠️ CAUTION: Combining may cause excessive dopamine and overstimulation. Use on non-medication days or cycle carefully.",
-          "Vyvanse":
-              "⚠️ CAUTION: Risk of dopamine overload. Consider using on medication-free days or weekends only.",
-          "Ritalin":
-              "⚠️ CAUTION: Additive dopamine effects may cause jitteriness or anxiety. Monitor carefully if combining."
-        }
       },
       {
         "id": "alpha-gpc",
@@ -1881,7 +1553,7 @@ class SeedingService {
             "Alpha-GPC (L-alpha glycerylphosphorylcholine) is a highly bioavailable choline compound that crosses the blood-brain barrier efficiently. It serves as a precursor to acetylcholine, the neurotransmitter critical for attention, memory, and learning. Also increases growth hormone release and supports cell membrane phospholipid synthesis.",
         "detailedBenefits": [
           "Increases acetylcholine levels by 40-50% within 1-3 hours",
-          "Improves working memory and recall in clinical trials",
+          "Improves working memory and recall in standard trials",
           "Enhances focus and mental clarity during cognitive tasks",
           "Supports neuroplasticity and learning capacity"
         ],
@@ -1912,14 +1584,6 @@ class SeedingService {
         ],
         "tldr":
             "Premium, highly bioavailable choline source for acetylcholine synthesis; improves working memory and attention.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Complementary mechanism - supports acetylcholine (attention/memory) while stimulants enhance dopamine (motivation/focus).",
-          "Vyvanse":
-              "May enhance cognitive benefits and support sustained attention during long medication duration.",
-          "Ritalin":
-              "Supports attention through different neurotransmitter system; may improve overall cognitive performance."
-        }
       },
       {
         "id": "panax-ginseng",
@@ -1949,7 +1613,7 @@ class SeedingService {
             "Morning dosing is recommended to support daytime focus and energy. Effects are cumulative but acute improvements in attention are often noticed within 30-90 minutes. Avoid evening use as it can be mildly stimulating and may interfere with sleep.",
         "scientificEvidenceRank": 74,
         "studyLinks": {
-          "Ginseng and cognitive performance in ADHD":
+          "Ginseng and cognitive performance in Focus":
               "https://pubmed.ncbi.nlm.nih.gov/22082268/",
           "Neurotransmitter modulation mechanisms":
               "https://pubmed.ncbi.nlm.nih.gov/23439798/",
@@ -1965,20 +1629,12 @@ class SeedingService {
         "dosageFrequency": "Once daily in the morning",
         "dosageWarnings": [
           "May be mildly stimulating - avoid evening dosing",
-          "Can lower blood sugar - monitor if on diabetic medications",
+          "Can lower blood sugar - monitor if on diabetic routine items",
           "May interact with blood thinners (warfarin/aspirin)",
           "Generally well-tolerated; occasional insomnia at high doses"
         ],
         "tldr":
             "Adaptogen that improves sustained attention and reduces mental fatigue through dopaminergic and cholinergic support.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May complement stimulant action for sustained focus; supports neurotransmitter reserves for later in the day.",
-          "Vyvanse":
-              "Supports daytime cognitive stamina and may help reduce late-afternoon mental fatigue.",
-          "Ritalin":
-              "Complementary cholinergic and dopaminergic support helps optimize attention and executive function."
-        }
       },
       {
         "id": "maritime-pine-bark",
@@ -1995,7 +1651,7 @@ class SeedingService {
         "mechanismOfAction":
             "Potent antioxidant containing proanthocyanidins that cross the blood-brain barrier. Enhances nitric oxide production for improved cerebral blood flow. Modulates dopamine and norepinephrine metabolism while reducing oxidative stress.",
         "detailedBenefits": [
-          "Reduces hyperactivity and improves attention by 20-30% in clinical trials",
+          "Reduces restless energy and improves attention by 20-30% in standard trials",
           "Enhances antioxidant capacity and reduces neuroinflammation",
           "Improves concentration and visual-motor coordination",
           "Supports cerebral blood flow and oxygen delivery"
@@ -2004,9 +1660,9 @@ class SeedingService {
             "Morning dosing supports daytime cognitive function. Effects are cumulative over 8-12 weeks. Take with food to enhance absorption and reduce GI upset.",
         "scientificEvidenceRank": 73,
         "studyLinks": {
-          "Pine bark extract for ADHD in children":
+          "Pine bark extract for Focus in children":
               "https://pubmed.ncbi.nlm.nih.gov/16499493/",
-          "Attention and hyperactivity improvement":
+          "Attention and restless energy improvement":
               "https://pubmed.ncbi.nlm.nih.gov/17063641/",
           "Antioxidant effects on cognition":
               "https://pubmed.ncbi.nlm.nih.gov/22214254/"
@@ -2026,15 +1682,7 @@ class SeedingService {
           "Generally well-tolerated at recommended doses"
         ],
         "tldr":
-            "Antioxidant-rich extract that reduces hyperactivity and improves attention through enhanced blood flow.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Generally safe; antioxidant effect may protect neurons from oxidative stress while supporting blood flow.",
-          "Vyvanse":
-              "Complements stimulant action by supporting cerebral circulation and providing neuroprotection.",
-          "Ritalin":
-              "Safe combination; may enhance focus benefits through improved blood flow."
-        }
+            "Antioxidant-rich extract that reduces restless energy and improves attention through enhanced blood flow.",
       },
       {
         "id": "phosphatidylcholine",
@@ -2078,19 +1726,11 @@ class SeedingService {
         "dosageFrequency": "One to two times daily with food",
         "dosageWarnings": [
           "High doses (>5g) may cause fishy body odor, sweating, or nausea",
-          "Consult physician if taking cholinergic medications",
+          "Consult advisor if taking cholinergic routine items",
           "Soy-derived (choose sunflower PC if you have soy allergies)"
         ],
         "tldr":
             "Cell membrane phospholipid supporting neuronal structure and acetylcholine production.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Supports the cholinergic system alongside stimulant-driven dopamine release; may have mild synergistic effects on focus.",
-          "Vyvanse":
-              "Generally safe and supportive of cognitive baseline; no direct interactions with medication metabolism.",
-          "Ritalin":
-              "Compatible combination; PC supports the structural foundation for neurotransmitter signaling."
-        }
       },
       {
         "id": "vitamin-e",
@@ -2135,14 +1775,6 @@ class SeedingService {
         ],
         "tldr":
             "Fat-soluble antioxidant that protects brain membranes; works synergistically with omega-3s.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Safe and supportive; helps mitigate oxidative stress without affecting medication metabolism.",
-          "Vyvanse":
-              "Compatible; provides foundational neuroprotection for the aging brain.",
-          "Ritalin":
-              "Generally safe; no direct interactions with methylphenidate."
-        }
       },
       {
         "id": "coq10",
@@ -2174,7 +1806,7 @@ class SeedingService {
         "studyLinks": {
           "CoQ10 and cognitive function":
               "https://pubmed.ncbi.nlm.nih.gov/31806905/",
-          "Mitochondrial dysfunction in ADHD":
+          "Mitochondrial dysfunction in Focus":
               "https://pubmed.ncbi.nlm.nih.gov/28093713/",
           "Ubiquinol vs ubiquinone bioavailability":
               "https://pubmed.ncbi.nlm.nih.gov/17287847/"
@@ -2187,21 +1819,13 @@ class SeedingService {
         },
         "dosageFrequency": "Once daily with a fatty meal (breakfast or lunch)",
         "dosageWarnings": [
-          "May interact with blood thinners (warfarin) - consult physician",
-          "Can lower blood pressure - monitor if on BP medications",
+          "May interact with blood thinners (warfarin) - consult advisor",
+          "Can lower blood pressure - monitor if on BP routine items",
           "Ubiquinol form is more expensive but better absorbed",
           "Generally very safe; side effects rare at recommended doses"
         ],
         "tldr":
             "Supports mitochondrial energy production and provides antioxidant protection for high-energy brain cells.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May help mitigate oxidative stress from chronic stimulant use; supports cellular energy for sustained focus.",
-          "Vyvanse":
-              "Supports mitochondrial function which may reduce stimulant-related fatigue during medication offset.",
-          "Ritalin":
-              "Provides antioxidant protection for dopaminergic neurons; may support long-term brain health with stimulant use."
-        }
       },
       {
         "id": "vitamin-a",
@@ -2245,19 +1869,11 @@ class SeedingService {
         "dosageFrequency": "Once daily with a fatty meal",
         "dosageWarnings": [
           "⚠️ AVOID megadoses: Toxic above 10,000 IU daily long-term (polar bear liver effect)",
-          "Pregnant women should consult physician (risk of birth defects at high doses)",
+          "Pregnant women should consult advisor (risk of birth defects at high doses)",
           "Beta-carotene is a safer precursor for those at risk of toxicity"
         ],
         "tldr":
             "Fat-soluble vitamin supporting neuroplasticity and dopamine receptor function; avoid megadoses.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Provides foundational support for dopamine receptors that medication targets; generally safe.",
-          "Vyvanse":
-              "No known direct interaction; supports overall neuronal signaling health.",
-          "Ritalin":
-              "Compatible; aids in maintaining receptor sensitivity over time."
-        }
       },
       {
         "id": "st-johns-wort",
@@ -2268,25 +1884,25 @@ class SeedingService {
         "benefits": ["Mild Depression", "Mood Support"],
         "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CAUTION: Powerful CYP450 enzyme inducer. Interacts with MANY medications including birth control, antidepressants, and blood thinners. NOT recommended for ADHD.",
+            "⚠️ CAUTION: Powerful CYP450 enzyme inducer. Interacts with MANY routine items including birth control, antidepressants, and blood thinners. NOT recommended for Focus.",
         "status": "caution",
         "focusLevel": 2,
         "mechanismOfAction":
-            "St. John's Wort contains hypericin and hyperforin which modulate serotonin, dopamine, and norepinephrine reuptake. However, it is a potent inducer of CYP450 enzymes (particularly CYP3A4), which dramatically increases the metabolism of many medications, reducing their effectiveness. This makes it incompatible with most pharmaceutical treatments.",
+            "St. John's Wort contains hypericin and hyperforin which modulate serotonin, dopamine, and norepinephrine reuptake. However, it is a potent inducer of CYP450 enzymes (particularly CYP3A4), which dramatically increases the metabolism of many routine items, reducing their effectiveness. This makes it incompatible with most pharmaceutical supports.",
         "detailedBenefits": [
           "May help mild to moderate depression (comparable to SSRIs in some studies)",
           "Modulates multiple neurotransmitter systems",
           "Natural alternative to pharmaceutical antidepressants for some people"
         ],
         "timingRationale":
-            "Morning dosing if used. However, NOT RECOMMENDED for people with ADHD due to extensive drug interactions with stimulant medications and other common treatments. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
+            "Morning dosing if used. However, NOT RECOMMENDED for people with Focus due to extensive drug compatibilitys with Type A elements and other common supports. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
         "scientificEvidenceRank": 65,
         "studyLinks": {
           "St. John's Wort for depression":
               "https://pubmed.ncbi.nlm.nih.gov/18843608/",
-          "Drug interactions and CYP450 induction":
+          "Drug compatibilitys and CYP450 induction":
               "https://pubmed.ncbi.nlm.nih.gov/15106147/",
-          "Contraindications and safety":
+          "Contrainroutine items and safety":
               "https://pubmed.ncbi.nlm.nih.gov/24931003/"
         },
         "dosageByWeight": {
@@ -2296,25 +1912,17 @@ class SeedingService {
           "100-120": "600-900mg"
         },
         "dosageFrequency":
-            "Once or twice daily (NOT RECOMMENDED for ADHD patients)",
+            "Once or twice daily (NOT RECOMMENDED for Focus patients)",
         "dosageWarnings": [
           "⚠️ CRITICAL: Reduces effectiveness of birth control pills by 50%+",
           "⚠️ Interacts with SSRIs, SNRIs (serotonin syndrome risk)",
-          "⚠️ Reduces effectiveness of blood thinners, immunosuppressants, HIV medications",
-          "⚠️ May interact with ADHD stimulant medications",
+          "⚠️ Reduces effectiveness of blood thinners, immunosuppressants, HIV routine items",
+          "⚠️ May interact with Focus Profile A elements",
           "Causes photosensitivity - increases sun sensitivity",
-          "NOT RECOMMENDED for people on multiple medications"
+          "NOT RECOMMENDED for people on multiple routine items"
         ],
         "tldr":
-            "Herb for mild depression but EXTENSIVE drug interactions make it unsuitable for most ADHD patients on medications.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "⚠️ NOT RECOMMENDED: May alter stimulant metabolism through CYP450 induction, reducing effectiveness or causing unpredictable effects.",
-          "Vyvanse":
-              "⚠️ NOT RECOMMENDED: CYP450 induction may affect lisdexamfetamine conversion to active form, altering medication efficacy.",
-          "Ritalin":
-              "⚠️ CAUTION: Potential interaction through enzyme induction; unpredictable effects on methylphenidate metabolism."
-        }
+            "Herb for mild depression but EXTENSIVE drug compatibilitys make it unsuitable for most Focus patients on routine items.",
       },
       {
         "id": "valerian-root",
@@ -2343,7 +1951,7 @@ class SeedingService {
               "https://pubmed.ncbi.nlm.nih.gov/16335332/",
           "GABA modulation mechanism":
               "https://pubmed.ncbi.nlm.nih.gov/15650394/",
-          "Safety and drug interactions":
+          "Safety and drug compatibilitys":
               "https://pubmed.ncbi.nlm.nih.gov/17145239/"
         },
         "dosageByWeight": {
@@ -2358,19 +1966,11 @@ class SeedingService {
           "⚠️ May interact with other sedatives, alcohol, benzodiazepines",
           "⚠️ Can cause paradoxical stimulation in some people",
           "Avoid before driving or operating machinery",
-          "May inhibit CYP450 enzymes - potential drug interactions",
-          "Discontinue 2 weeks before surgery (anesthesia interaction)"
+          "May inhibit CYP450 enzymes - potential drug compatibilitys",
+          "Discontinue 2 weeks before surgery (anesthesia compatibility)"
         ],
         "tldr":
             "Sedating herb for sleep support; highly variable effects and can cause morning grogginess.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May help with stimulant-induced insomnia but can cause morning grogginess that interferes with medication effectiveness.",
-          "Vyvanse":
-              "Evening use may support sleep after long-acting stimulant wears off, but monitor for next-day sedation.",
-          "Ritalin":
-              "Can help with sleep onset if stimulants cause insomnia, but variable effects and potential morning impairment."
-        }
       },
       {
         "id": "kava-kava",
@@ -2387,7 +1987,7 @@ class SeedingService {
         "mechanismOfAction":
             "Kava's kavalactones modulate GABA-A receptors and block voltage-gated sodium channels, producing anxiolytic and muscle-relaxant effects without sedation at lower doses. However, certain kava preparations (especially those using stems/leaves or non-noble varieties) contain hepatotoxic compounds that can cause severe liver damage. Mechanism of liver toxicity is not fully understood.",
         "detailedBenefits": [
-          "Reduces anxiety by 50-60% in clinical trials (comparable to benzodiazepines)",
+          "Reduces anxiety by 50-60% in standard trials (comparable to benzodiazepines)",
           "Non-sedating anxiolytic at moderate doses",
           "May improve sleep quality without morning grogginess"
         ],
@@ -2411,7 +2011,7 @@ class SeedingService {
         "dosageWarnings": [
           "⚠️ CRITICAL: LIVER TOXICITY RISK - monitor liver enzymes if using",
           "⚠️ Use ONLY noble kava varieties (not tudei kava or stem/leaf preparations)",
-          "⚠️ Avoid if you have liver disease or take hepatotoxic medications",
+          "⚠️ Avoid if you have liver disease or take hepatotoxic routine items",
           "⚠️ Do NOT combine with alcohol (increases liver toxicity risk)",
           "Can cause skin changes (kava dermopathy) with chronic use",
           "May interact with sedatives, anesthesia, and CYP450-metabolized drugs",
@@ -2419,14 +2019,6 @@ class SeedingService {
         ],
         "tldr":
             "Potent anxiolytic herb but SERIOUS liver toxicity risk; use only noble varieties and monitor liver function.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May reduce stimulant-induced anxiety but liver toxicity risk makes it a poor choice for long-term use with medications.",
-          "Vyvanse":
-              "Can help with evening anxiety after stimulant offset, but hepatotoxicity concerns limit safe use.",
-          "Ritalin":
-              "Anxiolytic effects may complement stimulant therapy, but liver toxicity risk outweighs benefits for most patients."
-        }
       },
       {
         "id": "dmae",
@@ -2437,7 +2029,7 @@ class SeedingService {
         "benefits": ["Focus", "Mood"],
         "evidenceLevel": "low",
         "notes":
-            "⚠️ CAUTION: Theoretical choline precursor but limited evidence. May cause overstimulation, insomnia, or headaches. Not well-researched for ADHD.",
+            "⚠️ CAUTION: Theoretical choline precursor but limited evidence. May cause overstimulation, insomnia, or headaches. Not well-researched for Focus.",
         "status": "caution",
         "focusLevel": 2,
         "mechanismOfAction":
@@ -2468,33 +2060,25 @@ class SeedingService {
         "dosageWarnings": [
           "⚠️ Limited scientific evidence for benefits",
           "⚠️ May cause overstimulation, insomnia, headaches, irritability",
-          "⚠️ Can worsen symptoms in some people with ADHD",
+          "⚠️ Can worsen challenges in some people with Focus",
           "Avoid if you have bipolar disorder (may trigger mania)",
-          "May interact with cholinergic medications",
+          "May interact with cholinergic routine items",
           "Not recommended during pregnancy or breastfeeding",
           "Better alternatives available (Alpha-GPC, CDP-Choline)"
         ],
         "tldr":
             "Theoretical nootropic with weak evidence and unpredictable effects; better choline sources available.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "⚠️ May cause overstimulation when combined with stimulants; unpredictable effects.",
-          "Vyvanse":
-              "⚠️ Risk of excessive stimulation; may worsen anxiety or irritability.",
-          "Ritalin":
-              "⚠️ Potential for additive stimulant effects; not recommended due to limited evidence."
-        }
       },
       {
         "id": "caffeine",
         "name": "Caffeine (with L-Theanine)",
-        "category": "Stimulant",
+        "category": "Type A",
         "dosage": "50-100mg",
         "timeOfDay": "morning",
         "benefits": ["Alertness", "Focus", "Reaction Time"],
         "evidenceLevel": "high",
         "notes":
-            "⚠️ MUST combine with L-Theanine (2:1 ratio) for ADHD to minimize jitters and anxiety. Alone may worsen impulsivity.",
+            "⚠️ MUST combine with L-Theanine (2:1 ratio) for Focus to minimize jitters and anxiety. Alone may worsen impulsivity.",
         "status": "caution",
         "focusLevel": 5,
         "mechanismOfAction":
@@ -2506,14 +2090,14 @@ class SeedingService {
           "Temporarily increases dopamine availability in the striatum"
         ],
         "timingRationale":
-            "Morning use is best for alertness. Avoid use after 2:00 PM to prevent interference with sleep architecture (Caffeine has a ~5-6 hour half-life). Effects peak within 30-60 minutes. Use carefully with prescription stimulants to avoid tachycardia or excessive anxiety.",
+            "Morning use is best for alertness. Avoid use after 2:00 PM to prevent interference with sleep architecture (Caffeine has a ~5-6 hour half-life). Effects peak within 30-60 minutes. Use carefully with Type A items to avoid tachycardia or excessive anxiety.",
         "scientificEvidenceRank": 82,
         "studyLinks": {
           "Caffeine and L-Theanine synergy":
               "https://pubmed.ncbi.nlm.nih.gov/18681988/",
-          "Caffeine effects on ADHD symptoms":
+          "Caffeine effects on focus challenges":
               "https://pubmed.ncbi.nlm.nih.gov/21437156/",
-          "Adenosine and dopamine interactions":
+          "Adenosine and dopamine compatibilitys":
               "https://pubmed.ncbi.nlm.nih.gov/11283318/"
         },
         "dosageByWeight": {
@@ -2527,18 +2111,10 @@ class SeedingService {
           "⚠️ May increase heart rate and blood pressure",
           "⚠️ Can worsen anxiety, jitters, and sleep latency",
           "⚠️ Tolerance builds quickly; regular breaks are recommended",
-          "⚠️ Avoid if sensitive to stimulants or have heart conditions"
+          "⚠️ Avoid if sensitive to Type As or have heart conditions"
         ],
         "tldr":
-            "Must be paired with L-Theanine to mitigate jitters; provides temporary alertness and focus but use with caution with ADHD medications.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "⚠️ ADDITIVE EFFECT: Significant risk of overstimulation, tachycardia, and anxiety. Consult your provider before combining.",
-          "Vyvanse":
-              "⚠️ ADDITIVE EFFECT: May increase heart rate and worsen 'crash' during medication offset.",
-          "Ritalin":
-              "⚠️ CAUTION: Both increase dopamine and norepinephrine; potential for excessive jitters or blood pressure spikes."
-        }
+            "Must be paired with L-Theanine to mitigate jitters; provides temporary alertness and focus but use with caution with Focus routine items.",
       },
       {
         "id": "melatonin",
@@ -2549,11 +2125,11 @@ class SeedingService {
         "benefits": ["Sleep Latency", "Sleep Quality", "Circadian Rhythm"],
         "evidenceLevel": "high",
         "notes":
-            "⚠️ Use only for sleep. Use lowest effective dose (0.3-1mg often better than high doses). Does not treat attention symptoms.",
+            "⚠️ Use only for sleep. Use lowest effective dose (0.3-1mg often better than high doses). Does not treat attention challenges.",
         "status": "caution",
         "focusLevel": 2,
         "mechanismOfAction":
-            "Melatonin is a hormone naturally produced by the pineal gland in response to darkness. It signals to the HPA axis and suprachiasmatic nucleus that it is time for sleep. ADHD is frequently associated with a delayed melatonin onset; exogenous supplementation helps reset the circadian rhythm and reduces sleep latency (time to fall asleep).",
+            "Melatonin is a hormone naturally produced by the pineal gland in response to darkness. It signals to the HPA axis and suprachiasmatic nucleus that it is time for sleep. Focus is frequently associated with a delayed melatonin onset; exogenous supplementation helps reset the circadian rhythm and reduces sleep latency (time to fall asleep).",
         "detailedBenefits": [
           "Reduces sleep latency by 15-30 minutes on average",
           "Helps synchronize the circadian rhythm in cases of delayed sleep phase",
@@ -2564,9 +2140,9 @@ class SeedingService {
             "Take 30-60 minutes before desired bedtime. Dim lights after taking to support natural production. Avoid 'screen time' (blue light) which suppresses melatonin. For circadian rhythm resetting, take at a consistent time every evening. Not for daytime use.",
         "scientificEvidenceRank": 89,
         "studyLinks": {
-          "Melatonin for sleep in ADHD":
+          "Melatonin for sleep in Focus":
               "https://pubmed.ncbi.nlm.nih.gov/30635432/",
-          "Circadian rhythm and ADHD":
+          "Circadian rhythm and Focus":
               "https://pubmed.ncbi.nlm.nih.gov/30107544/",
           "Low dose vs high dose melatonin":
               "https://pubmed.ncbi.nlm.nih.gov/11600521/"
@@ -2581,20 +2157,12 @@ class SeedingService {
         "dosageWarnings": [
           "⚠️ May cause morning grogginess if dose is too high",
           "⚠️ Can cause vivid dreams or nightmares in some individuals",
-          "⚠️ May interact with blood pressure and diabetes medications",
-          "⚠️ Long-term daily use in children should be medically supervised",
+          "⚠️ May interact with blood pressure and diabetes routine items",
+          "⚠️ Long-term daily use in children should be generally supervised",
           "Not recommended for pregnant or breastfeeding women"
         ],
         "tldr":
-            "Hormone that helps reset circadian rhythm and reduce sleep latency; highly effective for ADHD-related sleep issues at low doses.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Helps mitigate stimulant-induced insomnia. Generally safe but monitor for next-day sedation.",
-          "Vyvanse":
-              "Useful for overcoming late-evening stimulant residual effects; supports normal sleep patterns.",
-          "Ritalin":
-              "Effective for reducing sleep latency if methylphenidate interferes with falling asleep."
-        }
+            "Hormone that helps reset circadian rhythm and reduce sleep latency; highly effective for Focus-related sleep issues at low doses.",
       },
       {
         "id": "5-htp",
@@ -2605,7 +2173,7 @@ class SeedingService {
         "benefits": ["Mood Stability", "Sleep Quality", "Serotonin Support"],
         "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CRITICAL: Serotonin precursor. AVOID with SSRIs, SNRIs, or other serotonergic medications (risk of Serotonin Syndrome).",
+            "⚠️ CRITICAL: Serotonin precursor. AVOID with SSRIs, SNRIs, or other serotonergic routine items (risk of Serotonin Syndrome).",
         "status": "beneficial",
         "focusLevel": 2,
         "mechanismOfAction":
@@ -2614,7 +2182,7 @@ class SeedingService {
           "Improves evening mood and reduces emotional dysregulation",
           "Enhances sleep quality by increasing natural melatonin production",
           "May reduce impulsive behaviors and carbohydrate cravings",
-          "Supports emotional resilience in ADHD patients with comorbid anxiety"
+          "Supports emotional resilience in Focus patients with comorbid anxiety"
         ],
         "timingRationale":
             "Evening dosing is optimal because serotonin supports melatonin production and can have a calming effect. Effects are often noticed within 1-2 hours for sleep. Dose should be 50-100mg; higher doses increase risk of nausea and side effects without much added benefit for most. Take with a small carb snack for best absorption.",
@@ -2624,7 +2192,7 @@ class SeedingService {
               "https://pubmed.ncbi.nlm.nih.gov/15146197/",
           "Serotonin and impulse control":
               "https://pubmed.ncbi.nlm.nih.gov/20561551/",
-          "Safety and interaction with SSRIs":
+          "Safety and compatibility with SSRIs":
               "https://pubmed.ncbi.nlm.nih.gov/22129819/"
         },
         "dosageByWeight": {
@@ -2642,14 +2210,6 @@ class SeedingService {
         ],
         "tldr":
             "Serotonin precursor that supports mood and sleep; highly effective but dangerous if combined with specific antidepressants.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "⚠️ USE CAUTION: Adderall also has minor serotonergic activity. Monitor for overstimulation or mood changes.",
-          "Vyvanse":
-              "⚠️ USE CAUTION: Potential for additive effects on mood. Consult provider if combining.",
-          "Ritalin":
-              "Generally low interaction risk, but monitor for changes in mood or sleep architecture."
-        }
       },
       {
         "id": "copper",
@@ -2664,11 +2224,11 @@ class SeedingService {
         ],
         "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CAUTION: Only supplement if you take high-dose Zinc (Zn:Cu ratio of 15:1). Typical ADHD patients often have HIGH copper and LOW zinc.",
+            "⚠️ CAUTION: Only supplement if you take high-dose Zinc (Zn:Cu ratio of 15:1). Typical Focus patients often have HIGH copper and LOW zinc.",
         "status": "caution",
         "focusLevel": 2,
         "mechanismOfAction":
-            "Copper is a required cofactor for dopamine beta-hydroxylase, the enzyme that converts dopamine into norepinephrine. It is also essential for mitochondrial energy production (cytochrome c oxidase) and iron metabolism. However, copper and zinc compete for absorption; chronic high zinc intake can cause copper deficiency, and elevated copper-to-zinc ratios are a biomarker frequently observed in ADHD populations.",
+            "Copper is a required cofactor for dopamine beta-hydroxylase, the enzyme that converts dopamine into norepinephrine. It is also essential for mitochondrial energy production (cytochrome c oxidase) and iron metabolism. However, copper and zinc compete for absorption; chronic high zinc intake can cause copper deficiency, and elevated copper-to-zinc ratios are a biomarker frequently observed in Focus populations.",
         "detailedBenefits": [
           "Supports the conversion of dopamine to norepinephrine",
           "Essential for mitochondrial ATP (energy) production",
@@ -2679,7 +2239,7 @@ class SeedingService {
             "Take in the morning with food to minimize potential GI upset. If taking Zinc, separate doses or use a combined formula that maintains the 15:1 Zinc-to-Copper ratio. Copper absorption is inhibited by high doses of Vitamin C; separate these by at least 2 hours.",
         "scientificEvidenceRank": 61,
         "studyLinks": {
-          "Copper/Zinc ratios in ADHD populations":
+          "Copper/Zinc ratios in Focus populations":
               "https://pubmed.ncbi.nlm.nih.gov/21350130/",
           "Copper role in dopamine metabolism":
               "https://pubmed.ncbi.nlm.nih.gov/11252112/",
@@ -2696,19 +2256,11 @@ class SeedingService {
         "dosageWarnings": [
           "⚠️ High doses can be toxic and cause oxidative stress",
           "⚠️ May cause nausea, vomiting, or stomach pain if taken on empty stomach",
-          "⚠️ DO NOT supplement if you already have high copper levels (common in ADHD)",
+          "⚠️ DO NOT supplement if you already have high copper levels (common in Focus)",
           "⚠️ Long-term high-dose use can interfere with zinc and vitamin C status"
         ],
         "tldr":
-            "Essential mineral for norepinephrine synthesis; only supplement if zinc intake is high, as copper/zinc balance is critical for ADHD management.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Generally low interaction, but ensures adequate norepinephrine reserves for medication efficacy.",
-          "Vyvanse":
-              "Supports neurotransmitter synthesis required for medication to functional optimally.",
-          "Ritalin":
-              "Ensures mineral cofactors are available for dopamine/norepinephrine pathways."
-        }
+            "Essential mineral for norepinephrine synthesis; only supplement if zinc intake is high, as copper/zinc balance is critical for Focus management.",
       },
       {
         "id": "b6-high-dose",
@@ -2732,7 +2284,7 @@ class SeedingService {
           "Cofactor for the synthesis of dopamine, serotonin, and GABA",
           "Essential for mitochondrial energy production and iron metabolism",
           "Supports homocysteine metabolism for cardiovascular health",
-          "May reduce PMS-related mood symptoms in some individuals"
+          "May reduce PMS-related mood challenges in some individuals"
         ],
         "timingRationale":
             "Take in the morning with food to support daytime neurotransmitter synthesis. Avoid evening use as high doses can cause vivid dreams or insomnia in sensitive individuals. Do not exceed 100mg total daily intake from all sources combined (Tolerable Upper Intake Level).",
@@ -2742,7 +2294,7 @@ class SeedingService {
               "https://pubmed.ncbi.nlm.nih.gov/20126403/",
           "B6 toxicity and peripheral neuropathy":
               "https://pubmed.ncbi.nlm.nih.gov/22116704/",
-          "B6 and Magnesium synergy for ADHD":
+          "B6 and Magnesium synergy for Focus":
               "https://pubmed.ncbi.nlm.nih.gov/16846314/"
         },
         "dosageByWeight": {
@@ -2756,32 +2308,24 @@ class SeedingService {
           "⚠️ AVOID exceeding 100mg/day from all sources combined",
           "⚠️ DISCONTINUE immediately if you experience numbness, tingling, or nerve pain",
           "⚠️ Long-term use of standalone high doses carries greater risk than B-complex",
-          "⚠️ May interfere with the metabolism of certain anti-seizure medications"
+          "⚠️ May interfere with the metabolism of certain anti-seizure routine items"
         ],
         "tldr":
             "Essential cofactor for dopamine and serotonin synthesis, but high standalone doses carry a risk of nerve damage; best used in balanced formulas.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Supports the synthesis of dopamine required for medication to function effectively.",
-          "Vyvanse":
-              "Essential cofactor for the conversion pathways utilized by the medication.",
-          "Ritalin":
-              "Ensures adequate neurotransmitter precursors are available for dopamine/norepinephrine pathways."
-        }
       },
       {
         "id": "yellow-5",
         "name": "Yellow 5 (Tartrazine / E102)",
         "category": "Artificial Color",
         "description":
-            "Synthetic coal-tar dye linked to increased hyperactivity and asthma flares. Requires 'may have an adverse effect on activity and attention in children' warning in the EU.",
+            "Synthetic coal-tar dye linked to increased restless energy and asthma flares. Requires 'may have an adverse effect on activity and attention in children' warning in the EU.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
             "Tartrazine can induce histamine release and depletes body stores of zinc and vitamin B6. Since B6 is a crucial cofactor for dopamine synthesis, its depletion can lead to neurochemical imbalances and behavioral disruption.",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Eliminating from diet is recommended for symptom control.",
+            "AVOID: Eliminating from diet is recommended for state control.",
         "scientificEvidenceRank": 73,
         "studyLinks": {
           "Southampton study on additives":
@@ -2798,34 +2342,26 @@ class SeedingService {
         "dosageFrequency": "Eliminate from diet",
         "dosageWarnings": [
           "Known to trigger hives and asthma in sensitive individuals",
-          "Significant correlation with impulsivity in ADHD children",
+          "Significant correlation with impulsivity in Focus children",
           "Listed as Tartrazine or E102",
           "Common in pickles, mustard, cereals, and neon-colored snacks"
         ],
         "tldr":
-            "Artificial yellow dye linked to hyperactivity and zinc/B6 depletion; avoid to maintain neurotransmitter balance.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Can increase irritability and restlessness, counteracting medication's calming effect.",
-          "Vyvanse":
-              "May trigger mood swings and behavioral flares that reduce the duration of perceived focus.",
-          "Ritalin":
-              "Avoid: Directly increases the hyperactivity that methylphenidate aims to control."
-        }
+            "Artificial yellow dye linked to restless energy and zinc/B6 depletion; avoid to maintain neurotransmitter balance.",
       },
       {
         "id": "yellow-6",
         "name": "Yellow 6 (Sunset Yellow / E110)",
         "category": "Artificial Color",
         "description":
-            "Azo dye shown to increase hyperactive behavior and potentially contribute to adrenal gland tumors in animal studies.",
+            "Azo dye shown to increase active energy and potentially contribute to adrenal gland tumors in animal studies.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Mimics the effects of a neuro-excitatory toxin in sensitive individuals, triggering hypersensitivity reactions that present as ADHD symptoms like restlessness and poor concentration.",
+            "Mimics the effects of a neuro-excitatory toxin in sensitive individuals, triggering hypersensitivity reactions that present as focus challenges like restlessness and poor concentration.",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Should be eliminated from an ADHD-friendly diet.",
+            "AVOID: Should be eliminated from an Focus-friendly diet.",
         "scientificEvidenceRank": 72,
         "studyLinks": {
           "Hyperactivity in 3-year-olds and 8/9-year-olds":
@@ -2839,31 +2375,23 @@ class SeedingService {
         },
         "dosageFrequency": "Eliminate from diet",
         "dosageWarnings": [
-          "Azo dye with high correlation to school-age hyperactivity",
+          "Azo dye with high correlation to school-age restless energy",
           "Listed as Sunset Yellow FCF or E110",
           "Common in orange sodas, baked goods, and cheese snacks"
         ],
         "tldr":
-            "Orange food dye that increases hyperactivity; highly recommended to avoid in ADHD patients.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May exacerbate 'comedown' irritability and increase physical restlessness.",
-          "Vyvanse":
-              "Can interfere with sustained attention performance by introducing internal distractibility.",
-          "Ritalin":
-              "Counter-productive: adds to the motor hyperactivity that medication is intended to suppress."
-        }
+            "Orange food dye that increases restless energy; highly recommended to avoid in Focus patients.",
       },
       {
         "id": "red-3",
         "name": "Red 3 (Erythrosine / E127)",
         "category": "Artificial Color",
         "description":
-            "Synthetic cherry-pink dye associated with thyroid disruption and significant behavioral changes in ADHD patients. Banned in many countries for food use.",
+            "Synthetic cherry-pink dye associated with thyroid disruption and significant behavioral changes in Focus patients. Banned in many countries for food use.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Erythrosine can interfere with iodine metabolism and thyroid function. Thyroid imbalances are closely linked to cognitive dysfunction, anxiety, and restlessness, which can severely exacerbate existing ADHD symptoms.",
+            "Erythrosine can interfere with iodine metabolism and thyroid function. Thyroid imbalances are closely linked to cognitive dysfunction, anxiety, and restlessness, which can severely exacerbate existing focus challenges.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Consumption is linked to hormonal and behavioral disruption.",
@@ -2888,29 +2416,21 @@ class SeedingService {
           "Often found in maraschino cherries and some baked goods"
         ],
         "tldr":
-            "Red dye with thyroid-disrupting potential that worsens ADHD restlessness; eliminate from diet.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Can increase physical tension and anxiety, masking the therapeutic effects of medication.",
-          "Vyvanse":
-              "Avoid: Behavioral side effects may mimic medication 'overdose'.",
-          "Ritalin":
-              "Directly opposes the calming effect of methylphenidate on motor hyperactivity."
-        }
+            "Red dye with thyroid-disrupting potential that worsens Focus restlessness; eliminate from diet.",
       },
       {
         "id": "blue-1",
         "name": "Blue 1 (Brilliant Blue / E133)",
         "category": "Artificial Color",
         "description":
-            "Petroleum-derived blue dye that can cross the blood-brain barrier. Linked to hyperactivity and allergic reactions.",
+            "Petroleum-derived blue dye that can cross the blood-brain barrier. Linked to restless energy and allergic reactions.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
             "Unlike many other dyes, Blue 1 can cross the blood-brain barrier and has been shown to inhibit neuro-signaling in certain contexts. It triggers inflammatory responses that can manifest as increased impulsivity and mood instability.",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Should be removed from ADHD nutritional plans.",
+            "AVOID: Should be removed from Focus nutritional plans.",
         "scientificEvidenceRank": 68,
         "studyLinks": {
           "Blue 1 and blood-brain barrier":
@@ -2932,25 +2452,18 @@ class SeedingService {
           "Found in blue-colored beverages, candy, and ice cream"
         ],
         "tldr":
-            "Blue dye that crosses the blood-brain barrier and serves as a behavioral trigger for many ADHD patients.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May trigger sudden drops in focus and increases in irritability.",
-          "Vyvanse": "Avoid: Linked to 'brain fog' and behavioral instability.",
-          "Ritalin":
-              "Exacerbates impulsivity and reduces the quality of task salience."
-        }
+            "Blue dye that crosses the blood-brain barrier and serves as a behavioral trigger for many Focus patients.",
       },
       {
         "id": "blue-2",
         "name": "Blue 2 (Indigo Carmine / E132)",
         "category": "Artificial Color",
         "description":
-            "Synthetic color associated with hyperactivity and potential neurotoxicity in animal studies.",
+            "Synthetic color associated with restless energy and potential neurotoxicity in animal studies.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Blue 2 triggers neuro-inflammatory pathways in sensitive individuals, leading to a state of 'hyper-arousal' that directly mirrors ADHD hyperactivity symptoms.",
+            "Blue 2 triggers neuro-inflammatory pathways in sensitive individuals, leading to a state of 'hyper-arousal' that directly mirrors Focus restless energy challenges.",
         "detailedBenefits": <String>[],
         "timingRationale": "AVOID: Exclusion from diet is highly recommended.",
         "scientificEvidenceRank": 67,
@@ -2967,29 +2480,23 @@ class SeedingService {
         "dosageFrequency": "Eliminate from diet",
         "dosageWarnings": [
           "Linked to brain tumors in some older animal studies with high intake",
-          "Consistent trigger for ADHD hyperactivity in clinical reports",
+          "Consistent trigger for Focus restless energy in standard reports",
           "Listed as Indigo Carmine or E132",
           "Common in candy, beverages, and pet foods"
         ],
         "tldr":
             "Synthetic blue dye associated with behavioral hyper-arousal and restlessness.",
-        "adhdMedInteractions": {
-          "Adderall": "Can trigger anxiety and heart-rate spikes.",
-          "Vyvanse":
-              "Avoid: Increases distractibility and decreases cognitive endurance.",
-          "Ritalin": "Counteracts the impulse control benefits of medication."
-        }
       },
       {
         "id": "carmoisine",
         "name": "Carmoisine (Azorubine / E122)",
         "category": "Artificial Color",
         "description":
-            "One of the primary 'Southampton Six' azo dyes with established links to hyperactivity in school-age children.",
+            "One of the primary 'Southampton Six' azo dyes with established links to restless energy in school-age children.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Similar to other azo dyes, it triggers histamine release which acts as a central nervous system irritant in ADHD patients, causing decreased focus and increased physical motion.",
+            "Similar to other azo dyes, it triggers histamine release which acts as a central nervous system irritant in Focus patients, causing decreased focus and increased physical motion.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Removing from diet reduces cumulative behavioral load.",
@@ -3007,26 +2514,19 @@ class SeedingService {
         "dosageFrequency": "Eliminate from diet",
         "dosageWarnings": [
           "One of the 'Southampton Six' requiring mandatory EU warnings",
-          "Strongly associated with inattention and hyperactivity",
+          "Strongly associated with inattention and restless energy",
           "Listed as Azorubine or E122",
           "Common in jams, red desserts, and jellies"
         ],
         "tldr":
-            "Azo red dye from the Southampton study with proven hyperactivity links.",
-        "adhdMedInteractions": {
-          "Adderall": "Avoid: Can cause irritability and emotional volatility.",
-          "Vyvanse":
-              "Triggers focus 'dips' that look like medication wearing off early.",
-          "Ritalin":
-              "Directly opposes the hyperactivity suppression of medication."
-        }
+            "Azo red dye from the Southampton study with proven restless energy links.",
       },
       {
         "id": "quinoline-yellow",
         "name": "Quinoline Yellow (E104)",
         "category": "Artificial Color",
         "description":
-            "Synthetic yellow dye that significantly increased Global Hyperactivity scores in large-scale clinical trials.",
+            "Synthetic yellow dye that significantly increased Global Hyperactivity scores in large-scale standard trials.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
@@ -3053,28 +2553,21 @@ class SeedingService {
           "Common in smoked fish and some citrus-flavored drinks"
         ],
         "tldr":
-            "Yellow dye that disrupts executive function and increases hyperactivity scores.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Can trigger restlessness and 'body jitters' that mimic over-medication.",
-          "Vyvanse": "Avoid: Reduces the quality of sustained focus.",
-          "Ritalin":
-              "Opposes medication goals for calming hyperactive behaviors."
-        }
+            "Yellow dye that disrupts executive function and increases restless energy scores.",
       },
       {
         "id": "allura-red",
         "name": "Allura Red AC (E129)",
         "category": "Artificial Color",
         "description":
-            "The most common red food dye (Red 40 in USA), proven to increase hyperactivity in school-age children across international studies.",
+            "The most common red food dye (Red 40 in USA), proven to increase restless energy in school-age children across international studies.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
             "Triggers the release of pro-inflammatory cytokines and histamine in the brain, leading to a state of cognitive arousal that manifests as impulsivity and poor concentration.",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Highly recommended for elimination in ADHD patients.",
+            "AVOID: Highly recommended for elimination in Focus patients.",
         "scientificEvidenceRank": 74,
         "studyLinks": {
           "Meta-analysis of food dyes and behavior":
@@ -3096,15 +2589,7 @@ class SeedingService {
           "Ubiquitous in soft drinks, candy, and colorful cereals"
         ],
         "tldr":
-            "The most common behavioral trigger dye; avoid to reduce impulsivity and ADHD flares.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Avoid: Can cause extreme emotional sensitivity and volatility.",
-          "Vyvanse":
-              "Can trigger sudden focus drops and increased distractibility.",
-          "Ritalin":
-              "Opposes the impulse control and motor calming effects of medication."
-        }
+            "The most common behavioral trigger dye; avoid to reduce impulsivity and Focus flares.",
       },
       {
         "id": "aspartame",
@@ -3115,7 +2600,7 @@ class SeedingService {
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Aspartame contains phenylalanine, which can compete with other large neutral amino acids (like tyrosine) for transport across the blood-brain barrier. High levels may interfere with the synthesis of dopamine and serotonin, potentially worsening mood and focus in ADHD individuals.",
+            "Aspartame contains phenylalanine, which can compete with other large neutral amino acids (like tyrosine) for transport across the blood-brain barrier. High levels may interfere with the synthesis of dopamine and serotonin, potentially worsening mood and focus in Focus individuals.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: May cause neurochemical instability and brain fog.",
@@ -3141,14 +2626,6 @@ class SeedingService {
         ],
         "tldr":
             "Artificial sweetener that can disrupt neurotransmitter precursors; avoid to maintain cognitive clarity.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May subtly reduce medication effectiveness by competing with dopamine precursors.",
-          "Vyvanse":
-              "Avoid: Individual reports of 'brain fog' and mood swings when combined.",
-          "Ritalin":
-              "Can exacerbate irritability and reduce the quality of task salience."
-        }
       },
       {
         "id": "sucralose",
@@ -3159,10 +2636,10 @@ class SeedingService {
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Sucralose has been shown to significantly alter the gut microbiome and may increase intestinal permeability. Since the gut-brain axis is critical for ADHD management, chronic gut disruption can lead to systemic inflammation and indirect behavioral worsening.",
+            "Sucralose has been shown to significantly alter the gut microbiome and may increase intestinal permeability. Since the gut-brain axis is critical for Focus management, chronic gut disruption can lead to systemic inflammation and indirect behavioral worsening.",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Long-term gut health is foundational for ADHD focus.",
+            "AVOID: Long-term gut health is foundational for Focus focus.",
         "scientificEvidenceRank": 55,
         "studyLinks": {
           "Sucralose and the gut microbiome":
@@ -3185,14 +2662,6 @@ class SeedingService {
         ],
         "tldr":
             "Artificial sweetener that may disrupt the gut-brain axis; avoid for optimal digestive and cognitive health.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Safe combination, but gut health disruption can reduce long-term resilience.",
-          "Vyvanse":
-              "Possible GI irritation; supports avoidance for better nutrient absorption.",
-          "Ritalin":
-              "No known direct interaction; avoid for systemic baseline health."
-        }
       },
       {
         "id": "msg",
@@ -3203,7 +2672,7 @@ class SeedingService {
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "MSG provides highly concentrated glutamate, the brain's primary excitatory neurotransmitter. In sensitive ADHD individuals, this can lead to neuronal 'hyperexcitability,' manifesting as increased restlessness, anxiety, and difficulty controlling motor impulses.",
+            "MSG provides highly concentrated glutamate, the brain's primary excitatory neurotransmitter. In sensitive Focus individuals, this can lead to neuronal 'hyperexcitability,' manifesting as increased restlessness, anxiety, and difficulty controlling motor impulses.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: May cause acute behavioral flares in sensitive people.",
@@ -3229,13 +2698,6 @@ class SeedingService {
         ],
         "tldr":
             "Flavor enhancer that can overstimulate the brain and worsen motor restlessness; eliminate from diet.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "May increase overstimulation and jitteriness when combined.",
-          "Vyvanse":
-              "Avoid: Can cause erratic focus spikes followed by crashes.",
-          "Ritalin": "Opposes the calming effects on motor impulsivity."
-        }
       },
       {
         "id": "bht",
@@ -3270,13 +2732,6 @@ class SeedingService {
         ],
         "tldr":
             "Preservative with potential neurotoxic effects; avoid for overall cognitive maintenance.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "No direct metabolism interaction, but adds to systemic oxidative load.",
-          "Vyvanse":
-              "Generally compatible, but avoid for long-term brain health.",
-          "Ritalin": "Compatible combination, but supports non-toxic diet."
-        }
       },
       {
         "id": "potassium-benzoate",
@@ -3311,14 +2766,6 @@ class SeedingService {
         ],
         "tldr":
             "Preservative that amplifies hyperactivity effects; eliminate from diet to reduce restlessness.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Can increase restlessness and reduce medication focus duration.",
-          "Vyvanse":
-              "Triggers behavioral spikes that mask medication stability.",
-          "Ritalin":
-              "Directly opposes the calming therapeutic goal of medication."
-        }
       },
       {
         "id": "refined-sugar",
@@ -3332,10 +2779,10 @@ class SeedingService {
             "Frequent intake of refined sugar causes rapid glucose spikes followed by insulin-driven crashes. This glycemic instability leads to dopamine receptor downregulation over time and causes acute brain fog, irritability, and attention deficits during sugar 'crashes.'",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Glycemic stability is critical for ADHD management.",
+            "AVOID: Glycemic stability is critical for Focus management.",
         "scientificEvidenceRank": 63,
         "studyLinks": {
-          "Refined sugar and ADHD behaviors":
+          "Refined sugar and Focus behaviors":
               "https://pubmed.ncbi.nlm.nih.gov/21129940/",
           "Dopamine receptor downregulation":
               "https://pubmed.ncbi.nlm.nih.gov/16507461/"
@@ -3355,14 +2802,6 @@ class SeedingService {
         ],
         "tldr":
             "Sugar destabilizes dopamine signaling and causes focus-killing crashes; eliminate to maintain steady attention.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Worsens the 'comedown' and decreases the efficiency of dopamine signaling.",
-          "Vyvanse":
-              "Causes energy fluctuations that make medication feel inconsistent.",
-          "Ritalin":
-              "Opposes medication goals for calming and focus maintenance."
-        }
       },
       {
         "id": "trans-fats",
@@ -3397,14 +2836,6 @@ class SeedingService {
         ],
         "tldr":
             "Synthetic fats that harden brain cell membranes and block dopamine signaling; avoid completely.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "Reduces the baseline efficacy of the dopaminergic system.",
-          "Vyvanse":
-              "May contribute to 'foggy' focus and poor cognitive endurance.",
-          "Ritalin":
-              "Blunts the signal-to-noise ratio in the prefrontal cortex."
-        }
       },
       {
         "id": "alcohol",
@@ -3432,36 +2863,25 @@ class SeedingService {
         },
         "dosageFrequency": "Eliminate from diet",
         "dosageWarnings": [
-          "Depletes B-vitamins and Magnesium critical for ADHD focus",
+          "Depletes B-vitamins and Magnesium critical for Focus focus",
           "Severely disrupts sleep architecture (no recovery focus)",
-          "May significantly interact with ADHD medications",
+          "May significantly interact with Focus routine items",
           "Reduces executive function for 24-48 hours after consumption"
         ],
         "tldr":
             "Depletes vitamins and ruins sleep/dopamine balance; check liquid supplements for alcohol content.",
-        "adhdMedInteractions": {
-          "Adderall":
-              "DANGEROUS: Masks intoxication levels and increases cardiovascular strain.",
-          "Vyvanse":
-              "High risk of heart rate spikes and extreme next-day anxiety.",
-          "Ritalin":
-              "Can create a dangerous state of both sedation and stimulation (cocaine-like effect in some metabolism pathways)."
-        }
-      },
+      }
     ];
-
     try {
       AppLogger.i(
           'Starting seeding process for ${supplements.length} items...');
       final batch = _firestore.batch();
-
       for (var supplement in supplements) {
         final docRef = _firestore
             .collection('supplements')
             .doc(supplement['id'] as String);
         batch.set(docRef, supplement);
       }
-
       if (kDebugMode) {
         AppLogger.d('Committing seeding batch...');
       }
@@ -3482,7 +2902,6 @@ class SeedingService {
     try {
       final auth = FirebaseAuth.instance;
       UserCredential credential;
-
       try {
         credential = await auth.createUserWithEmailAndPassword(
           email: email,
@@ -3495,9 +2914,7 @@ class SeedingService {
           password: password,
         );
       }
-
       final uid = credential.user!.uid;
-
       // Create/Update user document in Firestore
       await _firestore.collection('users').doc(uid).set({
         'id': uid,

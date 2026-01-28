@@ -3,7 +3,7 @@
 This document details the retention and motivation systems built into the app.
 
 ## Overview
-The app uses "White Hat" gamification to encourage consistency without creating anxiety. See [ADR-005](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/adrs/005-gamification-strategy.md) for design philosophy.
+The app uses "White Hat" gamification to encourage consistency without creating anxiety. See [ADR-005](file:///Users/lycanbeats/Desktop/focus_supplement_app/docs/adrs/005-gamification-strategy.md) for design philosophy.
 
 ## Screens
 
@@ -91,7 +91,7 @@ Users start with 3 grace days per month. These:
 - Are used automatically when a day is missed.
 
 **Purpose:**
-Prevents the "broken streak = quit app" cycle common in ADHD users with RSD (Rejection Sensitive Dysphoria).
+Prevents the "broken streak = quit app" cycle common in Focus users with RSD (Rejection Sensitive Dysphoria).
 
 ## Related Features
 See also: [Gamification and Notifications](gamification_and_notifications.md).

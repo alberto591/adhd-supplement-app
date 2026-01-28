@@ -88,7 +88,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Optimize your routine with clinical-grade tools',
+                          'Optimize your routine with professional tools',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.lexend(
                             fontSize: 16,
@@ -142,18 +142,18 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       children: [
                         _buildFeatureCard(
                           icon: Icons.health_and_safety,
-                          title: 'Advanced Safety Interaction Checker',
+                          title: 'Advanced Routine Optimization Checker',
                           description:
-                              'Cross-reference supplements with common medications safely.',
+                              'Cross-reference supplements with your routine optimally.',
                           primaryGold: primaryGold,
                           isDark: isDark,
                         ),
                         const SizedBox(height: 16),
                         _buildFeatureCard(
                           icon: Icons.assignment,
-                          title: 'Detailed Doctor Export Reports',
+                          title: 'Detailed Routine Reports',
                           description:
-                              'Generate professional PDFs of your stack to share with specialists.',
+                              'Generate professional PDFs of your stack to share with advisors.',
                           primaryGold: primaryGold,
                           isDark: isDark,
                         ),
@@ -171,7 +171,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           icon: Icons.menu_book,
                           title: 'Exclusive Science Library Content',
                           description:
-                              'Deep dives into the latest ADHD research and biohacking data.',
+                              'Deep dives into the latest Neurostack research and biohacking data.',
                           primaryGold: primaryGold,
                           isDark: isDark,
                         ),

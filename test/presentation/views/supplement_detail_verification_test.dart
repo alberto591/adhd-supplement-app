@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:adhd_supplement_app/presentation/views/supplement_detail.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/presentation/view_models/library_view_model.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:neurostack_app/presentation/views/supplement_detail.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/presentation/view_models/library_view_model.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/config/locator.dart';
 import 'package:mockito/mockito.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
 
 class MockLibraryViewModel extends Mock implements LibraryViewModel {}
 
@@ -81,7 +81,7 @@ void main() {
     expect(find.text('Take it in the morning.'), findsOneWidget);
 
     // Verify Detailed Benefits
-    expect(find.text('ADHD Specific Benefits'), findsOneWidget);
+    expect(find.text('Neurostack Specific Benefits'), findsOneWidget);
     expect(find.text('Benefit A'), findsOneWidget);
     expect(find.text('Benefit B'), findsOneWidget);
 

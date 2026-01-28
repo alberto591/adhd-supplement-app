@@ -2,35 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/locator.dart';
 import '../../application/providers/auth_provider.dart';
-import '../../application/view_models/symptom_checkin_viewmodel.dart';
-import '../../application/view_models/safety_view_model.dart';
+import '../../application/view_models/state_checkin_viewmodel.dart';
+import '../../application/view_models/routine_safety_view_model.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/signup_screen.dart';
 import '../views/auth/forgot_password_screen.dart';
 import '../views/splash_screen.dart';
 import '../views/daily_stack_screen.dart';
-// import '../views/insights_screen.dart';
+import '../views/insights_screen.dart';
 import '../views/level_up_screen.dart';
 import '../views/library_screen.dart';
 import '../views/stack_builder_screen.dart';
 import '../views/streak_saved_screen.dart';
 import '../views/streak_recovery_screen.dart';
 import '../views/onboarding_grace_period_screen.dart';
-import '../views/medication_safety_screen.dart';
+import '../views/routine_status_screen.dart';
 import '../views/onboarding_goal_selection_screen.dart';
 import '../views/onboarding_stack_setup_screen.dart';
 import '../views/visual_pill_matcher_screen.dart';
 import '../views/persistent_reminders_screen.dart';
-import '../views/safety_detail_screen.dart';
+import '../views/compatibility_detail_screen.dart';
 import '../views/weekly_review_screen.dart';
 import '../views/user_profile_screen.dart';
 import '../view_models/library_view_model.dart';
 import '../views/home_widgets_preview_screen.dart';
-import '../views/doctor_export_screen.dart';
+import '../views/advisor_report_screen.dart';
 import '../views/history_log_screen.dart';
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/presentation/view_models/stack_builder_view_model.dart';
+import 'package:neurostack_app/domain/repositories/stack_repository.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/presentation/view_models/stack_builder_view_model.dart';
 import '../views/community_screen.dart';
 import '../views/trophy_room_screen.dart';
 import '../views/science_hub_screen.dart';
@@ -39,33 +39,32 @@ import '../views/focus_buddies_screen.dart';
 import '../views/privacy_settings_screen.dart';
 // import '../views/nightly_reflection_screen.dart';
 import '../views/refer_friend_screen.dart';
-import '../views/insights_screen.dart';
 import 'auth_wrapper.dart';
 
-import '../views/daily_symptom_checkin_screen.dart';
+import '../views/daily_state_checkin_screen.dart';
 import '../views/quick_setup_wizard_screen.dart';
 import '../views/notification_reliability_setup_screen.dart';
 import '../views/late_dose_triage_screen.dart';
-import '../views/safety_interaction_detail_screen.dart';
-import '../views/safety_override_confirmation_screen.dart';
+import '../views/routine_confirmation_screen.dart';
 import '../views/system_health_screen.dart';
 import '../views/science_library_update_screen.dart';
 import '../views/developer_handoff_logic_triggers_screen.dart';
 import '../views/help_and_support_screen.dart';
 import '../views/ai_search_screen.dart';
-import '../views/article_detail_screen.dart';
 import '../views/milestone_success_screen.dart';
 import '../views/notification_history_screen.dart';
 import '../views/emergency_contact_screen.dart';
 import '../views/first_stack_success_screen.dart';
 import '../views/educational_article_detail_screen.dart';
-import '../views/medical_disclaimer_screen.dart';
+import '../views/article_detail_screen.dart';
+import '../views/disclaimer_screen.dart';
 import '../views/supplement_detail.dart';
 import '../views/global_search_screen.dart';
 import '../views/paywall_screen.dart';
 import '../../domain/entities/supplement.dart';
-import '../../domain/entities/supplement_interaction.dart';
+import '../../domain/entities/supplement_compatibility.dart';
 import '../../domain/entities/educational_article.dart';
+import '../../domain/entities/routine_element.dart';
 
 class AppRouter {
   // Route names
@@ -74,9 +73,9 @@ class AppRouter {
   static const String signup = '/signup';
   static const String forgotPassword = '/forgot-password';
   static const String onboardingGracePeriod = '/onboarding/grace-period';
-  static const String onboardingMedicalDisclaimer =
-      '/onboarding/usage-agreement';
-  static const String onboardingMedicationSafety = '/onboarding/routine-safety';
+  static const String onboardingDisclaimer = '/onboarding-disclaimer';
+  static const String onboardingRoutineOptimization =
+      '/onboarding/routine-optimization';
   static const String onboardingGoals = '/onboarding/goals';
   static const String onboardingStackSetup = '/onboarding/stack-setup';
   static const String home = '/';
@@ -92,14 +91,14 @@ class AppRouter {
   static const String levelUp = '/level-up';
   static const String streakSaved = '/streak-saved';
   static const String streakRecovery = '/streak-recovery';
-  static const String safetyDetail = '/safety-detail';
+  static const String safetyDetail = '/optimization-detail';
   static const String widgetsPreview = '/widgets-preview';
-  static const String doctorExport = '/professional-export';
+  static const String advisorReport = '/advisor-report';
   static const String historyLog = '/history-log';
   static const String community = '/community';
   static const String trophyRoom = '/trophy-room';
   static const String scienceHub = '/science-hub';
-  static const String chemist = '/chemist';
+  static const String chemist = '/mixer';
   static const String focusBuddies = '/focus-buddies';
   static const String privacySettings = '/privacy-settings';
   // static const String nightlyReflection = '/nightly-reflection';
@@ -109,13 +108,12 @@ class AppRouter {
   static const String routineAdherence = '/routine-adherence';
   static const String subscription = '/subscription';
   static const String paywall = '/paywall';
-  static const String symptomCheckin = '/symptom-checkin';
+  static const String stateCheckin = '/state-checkin';
   static const String quickSetup = '/quick-setup';
   static const String notificationReliability = '/notification-reliability';
   static const String lateDoseTriage = '/late-dose-triage';
-  static const String safetyInteractionDetail = '/safety-interaction-detail';
-  static const String safetyOverrideConfirmation =
-      '/safety-override-confirmation';
+  static const String safetyCompatibilityDetail = '/compatibility-detail';
+  static const String safetyOverrideConfirmation = '/optimization-confirmation';
   static const String helpAndSupport = '/help-and-support';
   static const String systemHealth = '/system-health';
   static const String scienceUpdate = '/science-update';
@@ -150,17 +148,15 @@ class AppRouter {
       case forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
 
-      case onboardingMedicalDisclaimer:
-        return MaterialPageRoute(
-            builder: (_) => const MedicalDisclaimerScreen());
+      case onboardingDisclaimer:
+        return MaterialPageRoute(builder: (_) => const DisclaimerScreen());
 
       case onboardingGracePeriod:
         return MaterialPageRoute(
             builder: (_) => const OnboardingGracePeriodScreen());
 
-      case onboardingMedicationSafety:
-        return MaterialPageRoute(
-            builder: (_) => const MedicationSafetyScreen());
+      case onboardingRoutineOptimization:
+        return MaterialPageRoute(builder: (_) => const RoutineStatusScreen());
 
       case onboardingGoals:
         return MaterialPageRoute(
@@ -219,7 +215,7 @@ class AppRouter {
             }
 
             final userId = authProvider.user?.id ?? '';
-            final safetyVM = locator<SafetyViewModel>(param1: userId);
+            final safetyVM = locator<RoutineSafetyViewModel>(param1: userId);
             return MultiProvider(
               providers: [
                 ChangeNotifierProvider.value(value: safetyVM),
@@ -262,22 +258,25 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const StreakRecoveryScreen());
 
       case safetyDetail:
-        return MaterialPageRoute(builder: (_) => const SafetyDetailScreen());
+        final guidance = settings.arguments as CompatibilityGuidance;
+        return MaterialPageRoute(
+          builder: (_) => CompatibilityDetailScreen(guidance: guidance),
+        );
 
       case widgetsPreview:
         return MaterialPageRoute(
             builder: (_) => const HomeWidgetsPreviewScreen());
 
-      case doctorExport:
+      case advisorReport:
         return MaterialPageRoute(
           builder: (context) {
             final authProvider =
                 Provider.of<AuthProvider>(context, listen: false);
 
             if (!authProvider.canAccess('pro')) {
-              return const PaywallScreen(returnTo: doctorExport);
+              return const PaywallScreen(returnTo: advisorReport);
             }
-            return DoctorExportScreen.withProvider();
+            return AdvisorReportScreen.withProvider();
           },
         );
 
@@ -321,15 +320,15 @@ class AppRouter {
             builder: (_) => PaywallScreen(returnTo: returnTo));
       case referFriend:
         return MaterialPageRoute(builder: (_) => const ReferFriendScreen());
-      case symptomCheckin:
+      case stateCheckin:
         return MaterialPageRoute(
           builder: (context) {
             final authProvider =
                 Provider.of<AuthProvider>(context, listen: false);
             final userId = authProvider.user?.id ?? 'demo_user';
             return ChangeNotifierProvider(
-              create: (_) => locator<SymptomCheckInViewModel>(param1: userId),
-              child: const DailySymptomCheckinScreen(),
+              create: (_) => locator<StateCheckInViewModel>(param1: userId),
+              child: const DailyStateCheckinScreen(),
             );
           },
           fullscreenDialog: true,
@@ -349,18 +348,18 @@ class AppRouter {
           fullscreenDialog: true,
         );
 
-      case safetyInteractionDetail:
-        final interaction = settings.arguments as SupplementInteraction;
+      case safetyCompatibilityDetail:
+        final compatibility = settings.arguments as SupplementCompatibility;
         return MaterialPageRoute(
           builder: (_) =>
-              SafetyInteractionDetailScreen(interaction: interaction),
+              CompatibilityDetailScreen(compatibility: compatibility),
         );
 
       case safetyOverrideConfirmation:
-        final interaction = settings.arguments as SupplementInteraction;
+        final compatibility = settings.arguments as SupplementCompatibility;
         return MaterialPageRoute(
           builder: (_) =>
-              SafetyOverrideConfirmationScreen(interaction: interaction),
+              RoutineOverrideConfirmationScreen(compatibility: compatibility),
         );
 
       case systemHealth:

@@ -258,10 +258,10 @@ class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
                             title: 'Safety Interlock',
                             status: 'PROTECTED',
                             statusColor: Colors.redAccent,
-                            code: 'await validateInteraction(context)',
+                            code: 'await validateCompatibility(context)',
                             codeColor: Colors.redAccent,
                             description:
-                                'Blocks intake logging if a high-risk medication interaction is detected.',
+                                'Blocks intake logging if a high-risk interaction is detected.',
                           ),
                           const SizedBox(height: 12),
                           _buildLogicCard(

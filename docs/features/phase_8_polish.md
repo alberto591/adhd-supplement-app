@@ -2,7 +2,7 @@
 
 **Status:** Completed  
 **Phase Duration:** January 2026  
-**Related ADR:** [ADR 0012: Phase 8 UI Polish](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/adrs/0012-phase-8-ui-polish.md)
+**Related ADR:** [ADR 0012: Phase 8 UI Polish](file:///Users/lycanbeats/Desktop/focus_supplement_app/docs/adrs/0012-phase-8-ui-polish.md)
 
 ## Overview
 
@@ -10,7 +10,7 @@ Phase 8 focused on completing all incomplete button implementations across the a
 
 ## Screens Fixed
 
-### [FocusBuddiesScreen](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/presentation/views/focus_buddies_screen.dart)
+### [FocusBuddiesScreen](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/presentation/views/focus_buddies_screen.dart)
 
 Fixed 3 dead button interactions:
 
@@ -30,7 +30,7 @@ Fixed 3 dead button interactions:
 - **After:** Navigation to `AppRouter.historyLog`
 - Opens history log screen
 
-### [WeeklyReviewScreen](file:///Users/lycanbeats/Desktop/adhd_supplement_app/lib/presentation/views/weekly_review_screen.dart)
+### [WeeklyReviewScreen](file:///Users/lycanbeats/Desktop/focus_supplement_app/lib/presentation/views/weekly_review_screen.dart)
 
 Enhanced "Share Progress" button:
 

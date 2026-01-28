@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:adhd_supplement_app/application/view_models/persistent_reminders_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/application/view_models/persistent_reminders_view_model.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
 
 @GenerateMocks([SettingsRepository, NotificationService])
 import 'persistent_reminders_view_model_test.mocks.dart';

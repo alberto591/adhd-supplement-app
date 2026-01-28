@@ -1,4 +1,4 @@
-# 2026 Professional Standard for ADHD Health & Referral Apps
+# 2026 Professional Standard for Neurostack Health & Referral Apps
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
@@ -23,7 +23,7 @@ analyzer:
 
 linter:
   rules:
-    # Performance & ADHD UX Rules
+    # Performance & Neurostack UX Rules
     - prefer_const_constructors          # The #1 Flutter rule
     - prefer_const_literals_to_create_immutables
     - avoid_unnecessary_containers      # Keeps widget tree shallow

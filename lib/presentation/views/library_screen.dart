@@ -489,8 +489,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             String? timeOfDay,
             List<String> benefits,
             String? evidence,
-            String? form,
-            bool isSafe) async {
+            String? form) async {
           final messenger = ScaffoldMessenger.of(context);
           try {
             await _viewModel.createCustomSupplement(
@@ -501,7 +500,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
               benefits: benefits,
               evidenceLevel: evidence,
               form: form,
-              adhdMedInteractions: isSafe ? {} : {'Stimulants': 'Caution'},
+// focusMedCompatibilitys: isSafe ... removed
             );
             messenger.showSnackBar(
               const SnackBar(content: Text('Custom supplement created!')),
@@ -1022,25 +1021,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         const SizedBox(height: 24),
                         /* 
                         _buildFilterSectionMulti(
-                          'Evidence Strength',
-                          ['High', 'Moderate', 'Low'],
-                          viewModel.selectedEvidenceLevels,
-                          (val) => viewModel.filterByEvidence(val),
-                          isDark,
-                        ),
-                        const SizedBox(height: 24),
-                        _buildFilterSectionMulti(
-                          'Stimulant Compatible',
-                          ['Safe', 'Caution'],
-                          viewModel.selectedStimulantStatus,
-                          (val) => viewModel.filterByStimulant(val),
-                          isDark,
-                        ),
-                        _buildFilterSectionMulti(
-                          'Form',
-                          ['Capsule', 'Tablet', 'Liquid', 'Powder'],
-                          viewModel.selectedForms,
-                          (val) => viewModel.filterByForm(val),
+                          'Element Synergy',
+                          ['Optimized', 'Standard'],
+                          [],
+                          (val) => {},
                           isDark,
                         ),
                         */

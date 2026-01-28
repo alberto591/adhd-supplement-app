@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/utils/date_utils.dart';
+import 'package:neurostack_app/utils/date_utils.dart';
 
 void main() {
   group('getLogicalDate', () {

@@ -6,7 +6,7 @@
 
 ## Context
 
-ADHD users often struggle with large blocks of text and dense information (the "wall of text" effect). The supplement detail screen provides critical safety and scientific data, but displaying all of it simultaneously can cause cognitive overwhelm, leading users to skip reading important warnings or technical mechanics.
+Focus users often struggle with large blocks of text and dense information (the "wall of text" effect). The supplement detail screen provides critical safety and scientific data, but displaying all of it simultaneously can cause cognitive overwhelm, leading users to skip reading important warnings or technical mechanics.
 
 ## Decision
 
@@ -31,5 +31,5 @@ Implement a **Contextual Disclosure** pattern in the `SupplementDetailScreen` us
 - **Hidden Information**: Crucial safety warnings could theoretically be hidden if placed in a collapsed section (Mitigation: Safety alerts are ALWAYS displayed as banners at the top of the screen).
 
 ## Mitigations
-- Safety-critical warnings (Medication Interactions) are NEVER placed in collapsible sections; they remain as prominent, high-contrast banners.
+- Safety-critical warnings (Routine Interactions) are NEVER placed in collapsible sections; they remain as prominent, high-contrast banners.
 - Expanded states are maintained during the session to avoid frustrating users who are trying to cross-reference data.

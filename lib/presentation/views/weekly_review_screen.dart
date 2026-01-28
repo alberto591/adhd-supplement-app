@@ -214,7 +214,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                               builder: (context) => AlertDialog(
                                 title: const Text('Share Weekly Progress'),
                                 content: const Text(
-                                  'Share your weekly supplement progress with your doctor, accountability partner, or social media.',
+                                  'Share your weekly supplement progress with your advisor, accountability partner, or social media.',
                                 ),
                                 actions: [
                                   TextButton(

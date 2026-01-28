@@ -1,6 +1,6 @@
-# ADHD Supplement App
+# Focus Supplement App
 
-A cross-platform mobile application built with Flutter for ADHD supplement education and referral tracking.
+A cross-platform mobile application built with Flutter for Focus supplement education and referral tracking.
 
 ## Architecture
 
@@ -31,4 +31,4 @@ This project uses a hybrid of **Hexagonal Architecture** and **MVVM**:
 
 ## Release & Versioning
 
-For details on how to build and version the app for Google Play and Apple App Store, see the [Release & Versioning Guide](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/guides/2026-01-26_release-versioning-guide.md).
+For details on how to build and version the app for Google Play and Apple App Store, see the [Release & Versioning Guide](file:///Users/lycanbeats/Desktop/focus_supplement_app/docs/guides/2026-01-26_release-versioning-guide.md).

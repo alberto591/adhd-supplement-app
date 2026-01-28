@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/presentation/views/quick_setup_wizard_screen.dart';
+import 'package:neurostack_app/presentation/views/quick_setup_wizard_screen.dart';
 
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
-import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/config/locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -26,8 +26,8 @@ void main() {
       home: QuickSetupWizardScreen(),
     ));
 
-    // Initially shows Medical Disclaimer
-    expect(find.text('Medical Disclaimer'), findsOneWidget);
+    // Initially shows General Disclaimer
+    expect(find.text('General Disclaimer'), findsOneWidget);
     expect(find.byType(Checkbox), findsOneWidget);
 
     // Accept disclaimer

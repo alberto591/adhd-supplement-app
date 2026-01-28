@@ -27,7 +27,7 @@ class CachedImage extends StatelessWidget {
   /// Optional custom widget to show on error.
   final Widget? errorWidget;
 
-  /// A wrapper around [CachedNetworkImage] with ADHD-friendly loading states.
+  /// A wrapper around [CachedNetworkImage] with Neurostack-friendly loading states.
   ///
   /// This widget provides:
   /// - Automatic [SkeletonLoader] shimmer while loading.

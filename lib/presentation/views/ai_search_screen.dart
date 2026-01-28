@@ -147,7 +147,7 @@ class _AiSearchScreenState extends State<AiSearchScreen> {
                     ),
                     child: Text(
                       _response.isEmpty
-                          ? 'Results will appear here. Ask about interactions, dosages, or benefits.'
+                          ? 'Results will appear here. Ask about compatibilitys, dosages, or benefits.'
                           : _response,
                       style: GoogleFonts.lexend(
                         fontSize: 16,

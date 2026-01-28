@@ -12,7 +12,7 @@ class ArticleDetailScreen extends StatefulWidget {
   ///
   /// Features:
   /// - Sliver-based parallax header with article image.
-  /// - TL;DR Summary card for quick scanning (ADHD-friendly).
+  /// - TL;DR Summary card for quick scanning (Neurostack-friendly).
   /// - Author profiles and related reading suggestions.
   /// - Consistent loading/error states using [ArticleDetailViewModel].
   final String articleId;

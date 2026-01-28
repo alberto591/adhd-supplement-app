@@ -28,8 +28,8 @@ We have refactored the `InsightsScreen` into a streamlined **Insights V2** archi
     - Uses a local `AnimationController` and `CustomPainter` to render floating "golden embers" behind the streak icon.
     - Provides a "premium" feel without overwhelming the user.
 
-4.  **Doctor Export Integration**:
-    - Added direct access to the `DoctorExportScreen` (ADR 0021) from the Insights dashboard, linking personal progress with professional care.
+4.  **Advisor Export Integration**:
+    - Added direct access to the `AdvisorExportScreen` (ADR 0021) from the Insights dashboard, linking personal progress with professional care.
 
 ## Implementation Details
 

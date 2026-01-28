@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/application/view_models/theme_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/application/view_models/theme_view_model.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
 
 class MockSettingsRepository implements SettingsRepository {
   ThemeMode themeMode = ThemeMode.system;

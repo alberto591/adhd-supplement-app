@@ -569,7 +569,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                   isDark,
                   Icons.sync_problem,
                   Colors.red,
-                  'Drug Interactions',
+                  'Drug Compatibilitys',
                   'Common contraindications to discuss with your MD...',
                 ),
               ),

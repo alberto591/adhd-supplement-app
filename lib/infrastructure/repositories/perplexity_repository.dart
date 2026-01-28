@@ -1,4 +1,4 @@
-import 'package:adhd_supplement_app/infrastructure/services/perplexity_service.dart';
+import 'package:neurostack_app/infrastructure/services/perplexity_service.dart';
 
 abstract class PerplexityRepository {
   Future<String> search(String query, {String? systemPrompt});

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
-import 'package:adhd_supplement_app/domain/entities/medication.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
+import 'package:neurostack_app/domain/entities/routine_element.dart';
 
 void main() {
   group('User Entity', () {
@@ -31,22 +31,22 @@ void main() {
       expect(updatedUser.unlockedAchievements, contains('badge_2'));
     });
 
-    test('should copyWith currentMedication correctly', () {
-      final med = Medication.fromName('Adderall XR', dosage: 20);
-      final updatedUser = baseUser.copyWith(currentMedication: med);
+    test('should copyWith currentRoutineElement correctly', () {
+      final med = RoutineElement.fromName('Adderall XR', dosage: 20);
+      final updatedUser = baseUser.copyWith(currentElement: med);
 
-      expect(updatedUser.currentMedication, isNotNull);
-      expect(updatedUser.currentMedication?.name, 'Adderall XR');
-      expect(updatedUser.currentMedication?.dosageMg, 20);
+      expect(updatedUser.currentElement, isNotNull);
+      expect(updatedUser.currentElement?.name, 'Adderall XR');
+      expect(updatedUser.currentElement?.dosage, 20);
     });
 
     test('should serialize unlockedAchievements and medication to JSON', () {
-      final med = Medication.fromName('Vyvanse', dosage: 30);
+      final med = RoutineElement.fromName('Vyvanse', dosage: 30);
       final user = baseUser.copyWith(
         unlockedAchievements: ['badge_1'],
         level: 5,
         xp: 500,
-        currentMedication: med,
+        currentElement: med,
       );
 
       final json = user.toJson();
@@ -55,8 +55,8 @@ void main() {
       expect(json['unlockedAchievements'], contains('badge_1'));
       expect(json['level'], 5);
       expect(json['xp'], 500);
-      expect(json['currentMedication'], isNotNull);
-      expect(json['currentMedication']['name'], 'Vyvanse');
+      expect(json['currentElement'], isNotNull);
+      expect(json['currentElement']['name'], 'Vyvanse');
     });
 
     test('should deserialize unlockedAchievements and medication from JSON',
@@ -68,11 +68,11 @@ void main() {
         'level': 2,
         'xp': 100,
         'unlockedAchievements': ['badge_3', 'badge_4'],
-        'currentMedication': {
+        'currentElement': {
           'id': 'm1',
           'name': 'Concerta',
-          'type': 'stimulant',
-          'dosageMg': 18.0,
+          'type': 'typeA',
+          'dosage': 18.0,
         },
       };
 
@@ -81,9 +81,9 @@ void main() {
       expect(user.level, 2);
       expect(user.unlockedAchievements.length, 2);
       expect(user.unlockedAchievements, contains('badge_3'));
-      expect(user.currentMedication, isNotNull);
-      expect(user.currentMedication?.name, 'Concerta');
-      expect(user.currentMedication?.type, MedicationType.stimulant);
+      expect(user.currentElement, isNotNull);
+      expect(user.currentElement?.name, 'Concerta');
+      expect(user.currentElement?.type, ElementCategory.typeA);
     });
 
     test('should handle missing unlockedAchievements in JSON gracefully', () {

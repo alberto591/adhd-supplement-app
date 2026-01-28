@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/presentation/widgets/cached_image.dart';
-import 'package:adhd_supplement_app/presentation/widgets/skeleton_loader.dart';
+import 'package:neurostack_app/presentation/widgets/cached_image.dart';
+import 'package:neurostack_app/presentation/widgets/skeleton_loader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {

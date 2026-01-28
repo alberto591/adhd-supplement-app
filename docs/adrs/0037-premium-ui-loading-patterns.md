@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-Standard Flutter loading indicators (like `CircularProgressIndicator`) create high visual contrast and perceived "stop-and-go" motion, which can be distracting for ADHD users. Furthermore, generic loaders do not provide context about the layout being loaded, leading to potential "layout shift" once data arrives. To align with our premium design standards and ADHD-friendly UX, a more cohesive loading strategy was needed.
+Standard Flutter loading indicators (like `CircularProgressIndicator`) create high visual contrast and perceived "stop-and-go" motion, which can be distracting for Focus users. Furthermore, generic loaders do not provide context about the layout being loaded, leading to potential "layout shift" once data arrives. To align with our premium design standards and Focus-friendly UX, a more cohesive loading strategy was needed.
 
 ## Decision
 We implemented a standardized "Shimmer" loading pattern using the `SkeletonLoader` widget:

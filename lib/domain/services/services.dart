@@ -1,7 +1,8 @@
 /// Exports all domain services
 library;
 
-export 'adhd_interaction_guard.dart';
+export 'compatibility_service.dart';
+export 'routine_optimization_guard.dart';
 export 'affiliate_service.dart';
-export 'safety_guard.dart';
-export 'interaction_service.dart';
+export 'routine_compatibility_service.dart';
+// export 'compatibility_service.dart'; // Removed

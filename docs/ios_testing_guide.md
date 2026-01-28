@@ -1,6 +1,6 @@
 # Testing on iOS
 
-This guide outlines the steps to build and test the ADHD Supplement App on iOS devices or simulators.
+This guide outlines the steps to build and test the Focus Supplement App on iOS devices or simulators.
 
 ## Prerequisites
 1.  **Xcode**: Ensure you have Xcode installed (from the Mac App Store).

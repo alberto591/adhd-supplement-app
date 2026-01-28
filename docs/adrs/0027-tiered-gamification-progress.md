@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-ADHD users benefit from immediate, clear, and tiered rewards that break down long-term goals into manageable chunks. The previous gamification system was binary (earned/locked) and lacked granularity, which could lead to loss of motivation for longer milestones.
+Focus users benefit from immediate, clear, and tiered rewards that break down long-term goals into manageable chunks. The previous gamification system was binary (earned/locked) and lacked granularity, which could lead to loss of motivation for longer milestones.
 
 ## Decision
 We decided to implement a tiered badge system and real-time progress visualization:

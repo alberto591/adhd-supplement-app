@@ -102,8 +102,8 @@ class NotificationService {
   }) async {
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
-      'adhd_channel',
-      'ADHD Notifications',
+      'focus_channel',
+      'Focus Notifications',
       channelDescription: 'Supplement reminders and notifications',
       importance: Importance.max,
       priority: Priority.high,
@@ -125,8 +125,8 @@ class NotificationService {
   }) async {
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
-      'adhd_channel',
-      'ADHD Notifications',
+      'focus_channel',
+      'Focus Notifications',
       channelDescription: 'Supplement reminders and notifications',
       importance: Importance.max,
       priority: Priority.high,
@@ -160,8 +160,8 @@ class NotificationService {
   }) async {
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
-      'adhd_channel',
-      'ADHD Notifications',
+      'focus_channel',
+      'Focus Notifications',
       channelDescription: 'Supplement reminders and notifications',
       importance: Importance.max,
       priority: Priority.high,

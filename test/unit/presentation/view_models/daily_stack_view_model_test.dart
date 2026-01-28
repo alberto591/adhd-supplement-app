@@ -1,20 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/presentation/view_models/daily_stack_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/presentation/view_models/daily_stack_view_model.dart';
+import 'package:neurostack_app/domain/repositories/stack_repository.dart';
+import 'package:neurostack_app/domain/repositories/log_repository.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/repositories/auth_repository.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
-import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/domain/entities/daily_log.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/sound_service.dart';
+import 'package:neurostack_app/domain/services/analytics_service.dart';
+import 'package:neurostack_app/infrastructure/services/sound_service.dart';
 
 // Fakes for cleaner manual testing without mockito's "when" null-safety issues
 class FakeStackRepository implements StackRepository {
@@ -356,7 +356,7 @@ void main() {
     description: 'Relaxation',
     referralUrl: '',
     sideEffects: [],
-    interactions: [],
+    compatibilitys: [],
     focusLevel: 3,
   );
 

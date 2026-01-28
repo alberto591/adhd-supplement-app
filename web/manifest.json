@@ -1,6 +1,6 @@
 {
-    "name": "adhd_supplement_app",
-    "short_name": "adhd_supplement_app",
+    "name": "neurostack_app",
+    "short_name": "neurostack_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

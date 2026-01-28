@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/notification_log_item.dart';
+import 'package:neurostack_app/domain/entities/notification_log_item.dart';
 
 void main() {
   group('NotificationLogItem', () {
@@ -10,14 +10,14 @@ void main() {
         title: 'Reminder',
         body: 'Time to take your supplements',
         timestamp: now,
-        type: NotificationType.medication,
+        type: NotificationType.routine,
       );
 
       expect(item.id, 'notif1');
       expect(item.title, 'Reminder');
       expect(item.body, 'Time to take your supplements');
       expect(item.timestamp, now);
-      expect(item.type, NotificationType.medication);
+      expect(item.type, NotificationType.routine);
       expect(item.isRead, isFalse);
     });
 
@@ -53,4 +53,3 @@ void main() {
     });
   });
 }
-

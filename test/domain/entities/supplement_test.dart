@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
 
 void main() {
   group('Supplement', () {
@@ -24,7 +24,7 @@ void main() {
       expect(supplement.description, '');
       expect(supplement.referralUrl, '');
       expect(supplement.sideEffects, isEmpty);
-      expect(supplement.interactions, isEmpty);
+      expect(supplement.compatibilitys, isEmpty);
       expect(supplement.focusLevel, 3);
     });
 
@@ -44,7 +44,7 @@ void main() {
         description: 'Helps with sleep and relaxation.',
         referralUrl: 'https://example.com/magnesium',
         sideEffects: ['Diarrhea'],
-        interactions: ['Other meds'],
+        compatibilitys: ['Other meds'],
         focusLevel: 4,
       );
 
@@ -59,7 +59,7 @@ void main() {
       expect(supplement.description, isNotEmpty);
       expect(supplement.referralUrl, 'https://example.com/magnesium');
       expect(supplement.sideEffects, ['Diarrhea']);
-      expect(supplement.interactions, ['Other meds']);
+      expect(supplement.compatibilitys, ['Other meds']);
       expect(supplement.focusLevel, 4);
     });
 
@@ -79,7 +79,7 @@ void main() {
         description: 'Original description',
         referralUrl: 'https://example.com/magnesium',
         sideEffects: ['Diarrhea'],
-        interactions: ['Other meds'],
+        compatibilitys: ['Other meds'],
         focusLevel: 3,
       );
 
@@ -106,7 +106,7 @@ void main() {
       expect(updated.description, original.description);
       expect(updated.referralUrl, original.referralUrl);
       expect(updated.sideEffects, original.sideEffects);
-      expect(updated.interactions, original.interactions);
+      expect(updated.compatibilitys, original.compatibilitys);
       expect(updated.focusLevel, 5);
     });
 
@@ -126,7 +126,7 @@ void main() {
         description: 'Original description',
         referralUrl: 'https://example.com/magnesium',
         sideEffects: ['Diarrhea'],
-        interactions: ['Other meds'],
+        compatibilitys: ['Other meds'],
         focusLevel: 3,
       );
 
@@ -146,7 +146,7 @@ void main() {
       expect(updated.description, original.description);
       expect(updated.referralUrl, original.referralUrl);
       expect(updated.sideEffects, original.sideEffects);
-      expect(updated.interactions, original.interactions);
+      expect(updated.compatibilitys, original.compatibilitys);
       expect(updated.focusLevel, original.focusLevel);
     });
 
@@ -166,7 +166,7 @@ void main() {
         description: 'Description',
         referralUrl: 'https://example.com/magnesium',
         sideEffects: ['Diarrhea'],
-        interactions: ['Other meds'],
+        compatibilitys: ['Other meds'],
         focusLevel: 4,
       );
 
@@ -186,7 +186,7 @@ void main() {
       expect(json['description'], 'Description');
       expect(json['referralUrl'], 'https://example.com/magnesium');
       expect(json['sideEffects'], ['Diarrhea']);
-      expect(json['interactions'], ['Other meds']);
+      expect(json['compatibilitys'], ['Other meds']);
       expect(json['focusLevel'], 4);
     });
 
@@ -206,7 +206,7 @@ void main() {
         'description': 'Description',
         'referralUrl': 'https://example.com/magnesium',
         'sideEffects': ['Diarrhea'],
-        'interactions': ['Other meds'],
+        'compatibilitys': ['Other meds'],
         'focusLevel': 4,
       };
 
@@ -226,7 +226,7 @@ void main() {
       expect(supplement.description, 'Description');
       expect(supplement.referralUrl, 'https://example.com/magnesium');
       expect(supplement.sideEffects, ['Diarrhea']);
-      expect(supplement.interactions, ['Other meds']);
+      expect(supplement.compatibilitys, ['Other meds']);
       expect(supplement.focusLevel, 4);
     });
 
@@ -246,7 +246,7 @@ void main() {
         // description missing -> ''
         // referralUrl missing -> ''
         // sideEffects missing -> []
-        // interactions missing -> []
+        // compatibilitys missing -> []
         // focusLevel missing -> 3
       };
 
@@ -260,7 +260,7 @@ void main() {
       expect(supplement.description, '');
       expect(supplement.referralUrl, '');
       expect(supplement.sideEffects, isEmpty);
-      expect(supplement.interactions, isEmpty);
+      expect(supplement.compatibilitys, isEmpty);
       expect(supplement.focusLevel, 3);
     });
 
@@ -280,7 +280,7 @@ void main() {
         description: 'Description',
         referralUrl: 'https://example.com/magnesium',
         sideEffects: ['Diarrhea'],
-        interactions: ['Other meds'],
+        compatibilitys: ['Other meds'],
         focusLevel: 4,
       );
 
@@ -301,7 +301,7 @@ void main() {
       expect(restored.description, original.description);
       expect(restored.referralUrl, original.referralUrl);
       expect(restored.sideEffects, original.sideEffects);
-      expect(restored.interactions, original.interactions);
+      expect(restored.compatibilitys, original.compatibilitys);
       expect(restored.focusLevel, original.focusLevel);
     });
   });

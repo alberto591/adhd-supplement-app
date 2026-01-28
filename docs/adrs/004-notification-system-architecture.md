@@ -4,13 +4,13 @@
 Accepted
 
 ## Context
-ADHD users frequently struggle with **Time Blindness** and **Working Memory Deficits**. 
+Focus users frequently struggle with **Time Blindness** and **Working Memory Deficits**. 
 Standard mobile push notifications are often:
 1.  Missed entirely (phone in another room).
 2.  Dismissed reflexively (to clear the screen) and immediately forgotten.
 3.  Sources of anxiety ("What did I just miss?").
 
-We need a system that ensures critical health reminders (medication, hydration) are persistent and reviewable, acting as an external memory aid.
+We need a system that ensures critical health reminders (routine, hydration) are persistent and reviewable, acting as an external memory aid.
 
 ## Decision
 We will implement a **Dual-Layer Notification System**:

@@ -1,12 +1,12 @@
-# Launch Strategy: ADHD Supplement App
+# Launch Strategy: Focus Supplement App
 
 "From Beta to Breakthrough: A 3-Phase Growth Plan"
 
 ## Phase 1: Pre-Launch (Waitlist & Beta)
 - **Goal**: Build 500+ high-intent emails.
 - **Channels**:
-  - **Reddit**: Engagement in r/ADHD, r/supplements (no spam, value-first).
-  - **TikTok/Shorts**: "3 Stacks for ADHD Focus" series.
+  - **Reddit**: Engagement in r/Focus, r/supplements (no spam, value-first).
+  - **TikTok/Shorts**: "3 Stacks for Focus Focus" series.
 - **Tactic**: Offer "Lifetime Pro" for the first 100 beta testers.
 
 ## Phase 2: Launch Day (Product Hunt & App Store)
@@ -14,10 +14,10 @@
 - **Channels**: 
   - **Product Hunt**: Launch at 12:01 AM PST.
   - **Email Blast**: Notify the waitlist.
-  - **Twitter/X**: Engage with ADHD influencers.
+  - **Twitter/X**: Engage with Focus influencers.
 - **Promo**: 50% off Annual Pro for the first 48 hours.
 
 ## Phase 3: Post-Launch (Viral Loop & SEO)
 - **Goal**: Sustainable organic growth.
 - **Tactic**: activate the **Referral Program** (Gift 1 Month, Get 1 Grace Day).
-- **SEO**: Deploy Programmatic SEO pages for "Is [Supplement] good for ADHD?".
+- **SEO**: Deploy Programmatic SEO pages for "Is [Supplement] good for Focus?".

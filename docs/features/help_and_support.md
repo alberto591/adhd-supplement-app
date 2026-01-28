@@ -28,7 +28,7 @@ Displays individual help articles in a reader-friendly format.
 
 **Features:**
 - Markdown rendering.
-- TL;DR summary at the top (for ADHD-friendly skimming).
+- TL;DR summary at the top (for Focus-friendly skimming).
 - "Was this helpful?" feedback buttons.
 - Share button.
 

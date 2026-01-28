@@ -14,7 +14,7 @@ The main profile hub.
 
 **Sections:**
 - **Profile Info**: Name, email, profile picture.
-- **Medication List**: Currently taking (for safety checks).
+- **Routine List**: Currently taking (for safety checks).
 - **Preferences**: Notification times, units (mg/mcg).
 - **Logout**: Signs user out of Firebase Auth.
 

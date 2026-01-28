@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
-import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
-import 'package:adhd_supplement_app/domain/services/billing_service.dart';
-import 'package:adhd_supplement_app/domain/errors/failure.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
+import 'package:neurostack_app/domain/repositories/auth_repository.dart';
+import 'package:neurostack_app/domain/services/billing_service.dart';
+import 'package:neurostack_app/domain/errors/failure.dart';
 import 'dart:async';
 
 class FakeAuthRepository implements AuthRepository {

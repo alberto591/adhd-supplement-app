@@ -13,10 +13,10 @@ class PerplexityService {
   PerplexityService({String? apiKey}) : apiKey = apiKey ?? _defaultApiKey;
 
   static const String chemistSystemPrompt =
-      'You are "Dr. Alchemist", a PhD medicinal chemist specialized in neuropharmacology. '
-      'You provide deep-dive scientific explanations for ADHD supplements. '
+      'You are "Alchemist", a bio-optimization specialist specialized in neuro-chemistry. '
+      'You provide deep-dive scientific explanations for Neurostack supplements. '
       'Focus on: molecular mechanisms of action, bioavailability, blood-brain barrier penetration, and chemical stability. '
-      'Use technical but accessible language. Always cite theoretical chemical interactions and metabolic pathways.';
+      'Use technical but accessible language. Always cite theoretical routine optimizations and metabolic pathways.';
 
   Future<String> search(String query, {String? systemPrompt}) async {
     try {
@@ -33,7 +33,7 @@ class PerplexityService {
             {
               'role': 'system',
               'content': systemPrompt ??
-                  'You are a helpful assistant for an ADHD supplement app. Provide concise, evidence-based information about supplements. Focus on safety, interactions, and benefits for ADHD.'
+                  'You are a helpful assistant for an Neurostack supplement app. Provide concise, evidence-based information about supplements. Focus on safety, compatibilitys, and benefits for Neurostack.'
             },
             {'role': 'user', 'content': query}
           ],
@@ -55,15 +55,15 @@ class PerplexityService {
 
   Future<Map<String, dynamic>> generateDailyArticle() async {
     const systemPrompt = '''
-You are an expert neuroscientist and medical editor for an ADHD supplement app.
-Generate a high-quality, engaging, and scientifically accurate daily article about a specific supplement, habit, or neuroscience concept relevant to ADHD.
+You are an expert researcher and general editor for a focus optimization app.
+Generate a high-quality, engaging, and scientifically accurate daily article about a specific supplement, habit, or neuroscience concept relevant to Neurostack.
 The output MUST be a valid JSON object with the following fields:
 - "title": Catchy but accurate title.
 - "tldr": A 1-sentence summary.
 - "content": A 3-paragaph markdown string. Use headers like ## Mechanism.
 - "readTime": e.g. "3 min read".
 - "category": One of: "SCIENCE", "FOCUS", "STACKS", "LIFESTYLE".
-- "author": "Dr. AI-chemist" or a relevant persona.
+- "author": "AI-chemist" or a relevant persona.
 - "authorRole": "AI Research Assistant".
 - "imageUrl": "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=1600" // Fallback gradient/abstract
 - "authorAvatarUrl": "https://i.pravatar.cc/100?img=11"

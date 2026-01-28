@@ -3,7 +3,7 @@
 This document covers the mood/symptom logging and data analysis features.
 
 ## Overview
-Users can track their ADHD symptoms (focus, mood, energy) daily to correlate with supplement intake.
+Users can track their Focus symptoms (focus, mood, energy) daily to correlate with supplement intake.
 
 ## Components
 

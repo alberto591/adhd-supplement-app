@@ -54,7 +54,7 @@ NEW_SUPPLEMENTS = '''      {
         ],
         "tldr":
             "Adaptogen that reduces mental fatigue and enhances stress resilience by modulating dopamine and serotonin.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "May help reduce stimulant-induced stress response and support sustained focus during medication offset.",
           "Vyvanse":
@@ -112,7 +112,7 @@ NEW_SUPPLEMENTS = '''      {
         ],
         "tldr":
             "Powerful adaptogen that reduces cortisol and anxiety; best for evening use to support sleep and stress recovery.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Helps mitigate stimulant-induced anxiety and supports sleep quality which is often disrupted by stimulants.",
           "Vyvanse":
@@ -170,7 +170,7 @@ NEW_SUPPLEMENTS = '''      {
         ],
         "tldr":
             "Essential for dopamine synthesis but MUST be timed carefully - acidifies urine and reduces stimulant effectiveness.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "⚠️ REDUCES EFFECTIVENESS by 30-50% if taken together. Acidifies urine, increasing amphetamine excretion. Separate by 1+ hours before or 4+ hours after.",
           "Vyvanse":
@@ -228,7 +228,7 @@ NEW_SUPPLEMENTS = '''      {
         ],
         "tldr":
             "Supports acetylcholine synthesis and mitochondrial energy; improves mental clarity and reduces fatigue.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Complements stimulant action by supporting acetylcholine (attention) and mitochondrial energy (sustained focus).",
           "Vyvanse":
@@ -286,7 +286,7 @@ NEW_SUPPLEMENTS = '''      {
         ],
         "tldr":
             "Supports brain ATP regeneration; improves working memory and reduces mental fatigue, especially during sleep deprivation.",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Supports brain energy reserves which may enhance sustained focus and reduce mental fatigue during medication offset.",
           "Vyvanse":
@@ -313,7 +313,7 @@ NEW_SUPPLEMENTS = '''      {
         "mechanismOfAction":
             "Curcumin is a potent anti-inflammatory that crosses the blood-brain barrier. It inhibits NF-κB (inflammatory pathway), increases BDNF (neuroplasticity), and modulates monoamine neurotransmitters. Also has antioxidant properties that protect neurons from oxidative stress. Note: Poor bioavailability unless enhanced with piperine or liposomal delivery.",
         "detailedBenefits": [
-          "Reduces neuroinflammation linked to ADHD symptoms",
+          "Reduces neuroinflammation linked to Focus symptoms",
           "Increases BDNF for neuroplasticity and learning",
           "Mild mood-enhancing effects (MAO inhibition)",
           "Neuroprotective against oxidative stress and aging"
@@ -344,7 +344,7 @@ NEW_SUPPLEMENTS = '''      {
         ],
         "tldr":
             "Powerful anti-inflammatory and neuroprotective compound; must be formulated for absorption (with piperine or liposomal).",
-        "adhdMedInteractions": {
+        "focusMedInteractions": {
           "Adderall":
               "Anti-inflammatory effects may support long-term brain health during chronic stimulant use; BDNF increase supports neuroplasticity.",
           "Vyvanse":

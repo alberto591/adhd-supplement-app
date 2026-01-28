@@ -1,6 +1,6 @@
 # Feature Documentation Index
 
-This directory contains comprehensive documentation for all features in the ADHD Supplement App.
+This directory contains comprehensive documentation for all features in the Focus Supplement App.
 
 ## Core Feature Areas
 
@@ -10,8 +10,8 @@ The heart of the app - routine tracking, intake logging, and streak management.
 - Daily logging, history browsing, supplement library
 
 ### 🛡️ [Safety & Interactions](safety_and_interactions.md)
-Medication-supplement interaction checking and safety warnings.
-- `SafetyGuard`, `ADHDInteractionGuard`, `SafetyViewModel`
+Routine-supplement interaction checking and safety warnings.
+- `SafetyGuard`, `FocusInteractionGuard`, `SafetyViewModel`
 - Interaction rules, warning severities, override flows
 
 ### 💰 [Affiliate & Monetization](affiliate_monetization.md)
@@ -50,8 +50,8 @@ Achievement system, badge unlocking, and streak mechanics.
 - Grace days, milestone celebrations
 
 ### 🩺 [Clinical Tools](clinical_tools.md)
-Doctor communication and medication management features.
-- `DoctorExportScreen`, `VisualPillMatcherScreen`, `LateDoseTriageScreen`
+Advisor communication and routine management features.
+- `AdvisorExportScreen`, `VisualPillMatcherScreen`, `LateDoseTriageScreen`
 - PDF reports, pill identification, dose timing guidance
 
 ### 💬 [Help & Support](help_and_support.md)

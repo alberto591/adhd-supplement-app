@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/application/view_models/privacy_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/auth_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
-import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
-import 'package:adhd_supplement_app/config/locator.dart';
+import 'package:neurostack_app/application/view_models/privacy_view_model.dart';
+import 'package:neurostack_app/domain/repositories/auth_repository.dart';
+import 'package:neurostack_app/domain/repositories/log_repository.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
+import 'package:neurostack_app/domain/entities/daily_log.dart';
+import 'package:neurostack_app/config/locator.dart';
 import 'package:flutter/material.dart';
 
 class MockAuthRepository implements AuthRepository {

@@ -23,10 +23,10 @@ class NotificationHistoryViewModel extends ChangeNotifier {
     _notifications = [
       NotificationLogItem(
         id: '1',
-        title: 'Morning Stack Reminder',
-        body: 'Time to take your morning stack! 💊',
+        title: 'Morning Routine Reminder',
+        body: 'Time for your morning routine! 🚀',
         timestamp: DateTime.now().subtract(const Duration(minutes: 30)),
-        type: NotificationType.medication,
+        type: NotificationType.routine,
       ),
       NotificationLogItem(
         id: '2',
@@ -38,7 +38,7 @@ class NotificationHistoryViewModel extends ChangeNotifier {
       NotificationLogItem(
         id: '3',
         title: 'Evening Reflection',
-        body: 'How did your day go? Log your symptoms.',
+        body: 'How did your day go? Check in with yourself.',
         timestamp: DateTime.now().subtract(const Duration(days: 1, hours: 4)),
         type: NotificationType.system,
       ),

@@ -9,7 +9,7 @@
 
 ### Phase 8-9: Logic & Interaction Polish
 - [x] Resolved all 13 dead interaction priorities.
-- [x] Implemented Refer-a-Friend, Nightly Reflection, and Doctor Export logic.
+- [x] Implemented Refer-a-Friend, Nightly Reflection, and Advisor Export logic.
 - [x] Functional persistence for widget preferences and app appearance.
 
 ### Phase 10: Advanced Features
@@ -24,7 +24,7 @@
 
 ### Phase 12: Supplement Intelligence (Season 2 Foundation)
 - [x] **Dosage Logic**: Automated weight-based calculation widget.
-- [x] **Medication Safety**: High-contrast interaction alerts for ADHD meds.
+- [x] **Routine Safety**: High-contrast interaction alerts for Focus meds.
 - [x] **TL;DR Generation**: Concise one-sentence summaries for busy minds.
 - [x] **Data Refactor**: Syncing `Supplement` entity with clinical metadata.
 

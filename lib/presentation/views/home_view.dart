@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:adhd_supplement_app/application/view_models/supplement_view_model.dart';
-import 'package:adhd_supplement_app/presentation/views/supplement_detail.dart';
+import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
+import 'package:neurostack_app/presentation/views/supplement_detail.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -13,7 +13,7 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ADHD Education'),
+        title: const Text('Neurostack Education'),
         centerTitle: true,
       ),
       body: Consumer<SupplementViewModel>(

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
+import 'package:neurostack_app/domain/entities/daily_log.dart';
 
 void main() {
   group('DailyLog', () {
@@ -27,12 +27,12 @@ void main() {
         userId: 'user1',
         date: now,
         entries: [],
-        symptomRatings: {'focus': 4, 'energy': 3},
+        stateRatings: {'focus': 4, 'energy': 3},
         notes: 'Feeling good today',
         createdAt: now,
       );
 
-      expect(log.symptomRatings, {'focus': 4, 'energy': 3});
+      expect(log.stateRatings, {'focus': 4, 'energy': 3});
       expect(log.notes, 'Feeling good today');
     });
 
@@ -43,14 +43,14 @@ void main() {
         userId: 'user1',
         date: now,
         entries: [],
-        symptomRatings: {'focus': 3},
+        stateRatings: {'focus': 3},
         notes: 'Original notes',
         createdAt: now,
       );
 
       final updated = original.copyWith(
         notes: 'Updated notes',
-        symptomRatings: {'focus': 5},
+        stateRatings: {'focus': 5},
       );
 
       expect(updated.id, original.id);
@@ -58,7 +58,7 @@ void main() {
       expect(updated.date, original.date);
       expect(updated.entries, original.entries);
       expect(updated.notes, 'Updated notes');
-      expect(updated.symptomRatings, {'focus': 5});
+      expect(updated.stateRatings, {'focus': 5});
       expect(updated.createdAt, original.createdAt);
     });
 
@@ -75,7 +75,7 @@ void main() {
             status: LogStatus.taken,
           )
         ],
-        symptomRatings: {'focus': 3},
+        stateRatings: {'focus': 3},
         notes: 'Original notes',
         createdAt: now,
       );
@@ -87,7 +87,7 @@ void main() {
       expect(updated.date, original.date);
       expect(updated.entries, original.entries);
       expect(updated.notes, original.notes);
-      expect(updated.symptomRatings, original.symptomRatings);
+      expect(updated.stateRatings, original.stateRatings);
       expect(updated.createdAt, original.createdAt);
     });
 
@@ -105,7 +105,7 @@ void main() {
             skippedReason: null,
           ),
         ],
-        symptomRatings: {'focus': 4},
+        stateRatings: {'focus': 4},
         notes: 'Test notes',
         createdAt: now,
       );
@@ -117,7 +117,7 @@ void main() {
       expect(json['date'], now.toIso8601String());
       expect(json['entries'], isA<List<dynamic>>());
       expect(json['entries'].length, 1);
-      expect(json['symptomRatings'], {'focus': 4});
+      expect(json['stateRatings'], {'focus': 4});
       expect(json['notes'], 'Test notes');
       expect(json['createdAt'], now.toIso8601String());
     });
@@ -136,7 +136,7 @@ void main() {
             'skippedReason': null,
           }
         ],
-        'symptomRatings': {'focus': 4, 'energy': 3},
+        'stateRatings': {'focus': 4, 'energy': 3},
         'notes': 'Test notes',
         'createdAt': now.toIso8601String(),
       };
@@ -150,7 +150,7 @@ void main() {
       expect(log.date.day, now.day);
       expect(log.entries.length, 1);
       expect(log.entries.first.supplementId, 'sup1');
-      expect(log.symptomRatings, {'focus': 4, 'energy': 3});
+      expect(log.stateRatings, {'focus': 4, 'energy': 3});
       expect(log.notes, 'Test notes');
     });
 
@@ -166,7 +166,7 @@ void main() {
 
       final log = DailyLog.fromJson(json);
 
-      expect(log.symptomRatings, null);
+      expect(log.stateRatings, null);
       expect(log.notes, null);
     });
 
@@ -184,7 +184,7 @@ void main() {
             skippedReason: 'Forgot',
           ),
         ],
-        symptomRatings: {'focus': 4},
+        stateRatings: {'focus': 4},
         notes: 'Test notes',
         createdAt: now,
       );
@@ -200,7 +200,7 @@ void main() {
       expect(restored.entries.first.taken, original.entries.first.taken);
       expect(restored.entries.first.skippedReason,
           original.entries.first.skippedReason);
-      expect(restored.symptomRatings, original.symptomRatings);
+      expect(restored.stateRatings, original.stateRatings);
       expect(restored.notes, original.notes);
     });
   });

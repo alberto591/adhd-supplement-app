@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:adhd_supplement_app/config/locator.dart';
-import 'package:adhd_supplement_app/presentation/views/insights_screen.dart';
-import 'package:adhd_supplement_app/presentation/views/science_hub_screen.dart';
-import 'package:adhd_supplement_app/application/view_models/science_hub_view_model.dart';
-import 'package:adhd_supplement_app/presentation/widgets/unified_bottom_nav.dart';
-import 'package:adhd_supplement_app/domain/entities/article.dart';
-import 'package:adhd_supplement_app/application/providers/auth_provider.dart';
-import 'package:adhd_supplement_app/domain/entities/user.dart';
-import 'package:adhd_supplement_app/application/view_models/insights_view_model.dart';
+import 'package:neurostack_app/config/locator.dart';
+import 'package:neurostack_app/presentation/views/insights_screen.dart';
+import 'package:neurostack_app/presentation/views/science_hub_screen.dart';
+import 'package:neurostack_app/application/view_models/science_hub_view_model.dart';
+import 'package:neurostack_app/presentation/widgets/unified_bottom_nav.dart';
+import 'package:neurostack_app/domain/entities/article.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
+import 'package:neurostack_app/application/view_models/insights_view_model.dart';
 
-import 'package:adhd_supplement_app/domain/entities/faq_item.dart';
-import 'package:adhd_supplement_app/domain/entities/study.dart';
-import 'package:adhd_supplement_app/domain/entities/educational_article.dart';
-import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
+import 'package:neurostack_app/domain/entities/faq_item.dart';
+import 'package:neurostack_app/domain/entities/study.dart';
+import 'package:neurostack_app/domain/entities/educational_article.dart';
+import 'package:neurostack_app/infrastructure/services/url_service.dart';
 
 class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   bool get isLoading => false;

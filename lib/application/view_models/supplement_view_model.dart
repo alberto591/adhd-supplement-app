@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/url_service.dart';
-import 'package:adhd_supplement_app/utils/logger.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/services/analytics_service.dart';
+import 'package:neurostack_app/infrastructure/services/url_service.dart';
+import 'package:neurostack_app/utils/logger.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
 
 class SupplementViewModel extends ChangeNotifier {
   final SupplementRepository _repository;

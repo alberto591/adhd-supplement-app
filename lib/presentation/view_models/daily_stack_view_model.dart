@@ -665,8 +665,8 @@ class DailyStackViewModel extends ChangeNotifier {
     }
   }
 
-  /// Save symptom ratings for today
-  Future<void> saveSymptomRatings(Map<String, int> ratings) async {
+  /// Save state ratings for today
+  Future<void> saveStateRatings(Map<String, int> ratings) async {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
@@ -679,7 +679,7 @@ class DailyStackViewModel extends ChangeNotifier {
           createdAt: now,
         );
 
-    final updatedLog = log.copyWith(symptomRatings: ratings);
+    final updatedLog = log.copyWith(stateRatings: ratings);
     await _logRepository.saveLog(updatedLog);
     _todayLog = updatedLog;
     notifyListeners();

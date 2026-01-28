@@ -18,7 +18,7 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   static const String _keyReducedMotion = 'reduced_motion_enabled';
   static const String _keyHapticFeedback = 'haptic_feedback_enabled';
   static const String _keyFontSizeScale = 'font_size_scale';
-  static const String _keyAcceptedDisclaimer = 'accepted_medical_disclaimer';
+  static const String _keyAcceptedDisclaimer = 'accepted_general_disclaimer';
   static const String _soundsEnabledKey = 'sounds_enabled';
   static const String _lastLibDownloadKey = 'last_library_download_time';
 

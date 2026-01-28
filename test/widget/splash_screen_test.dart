@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:get_it/get_it.dart';
-import 'package:adhd_supplement_app/presentation/views/splash_screen.dart';
-import 'package:adhd_supplement_app/domain/repositories/settings_repository.dart';
-import 'package:adhd_supplement_app/infrastructure/services/notification_service.dart';
-import 'package:adhd_supplement_app/infrastructure/services/seeding_service.dart';
-import 'package:adhd_supplement_app/domain/repositories/supplement_repository.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement.dart';
-import 'package:adhd_supplement_app/presentation/navigation/app_router.dart';
+import 'package:neurostack_app/presentation/views/splash_screen.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:neurostack_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
+import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
+import 'package:neurostack_app/domain/entities/supplement.dart';
+import 'package:neurostack_app/presentation/navigation/app_router.dart';
 
 // Mocks
 class MockSettingsRepository extends Mock implements SettingsRepository {

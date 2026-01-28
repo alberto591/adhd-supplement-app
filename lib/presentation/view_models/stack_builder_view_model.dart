@@ -3,19 +3,19 @@ import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/stack_repository.dart';
-import '../../application/view_models/safety_view_model.dart';
+import '../../application/view_models/routine_safety_view_model.dart';
 import '../../utils/logger.dart';
 
 class StackBuilderViewModel extends ChangeNotifier {
   final StackRepository _stackRepository;
   final SupplementRepository _supplementRepository;
-  final SafetyViewModel _safetyViewModel;
+  final RoutineSafetyViewModel _safetyViewModel;
   final String _userId;
 
   StackBuilderViewModel({
     required StackRepository stackRepository,
     required SupplementRepository supplementRepository,
-    required SafetyViewModel safetyViewModel,
+    required RoutineSafetyViewModel safetyViewModel,
     required String userId,
   })  : _stackRepository = stackRepository,
         _supplementRepository = supplementRepository,
@@ -83,7 +83,7 @@ class StackBuilderViewModel extends ChangeNotifier {
         updatedAt: DateTime.now(),
       ),
     );
-    _checkInteractions();
+    _checkCompatibilitys();
   }
 
   Future<void> selectSlot(String slot) async {
@@ -121,7 +121,7 @@ class StackBuilderViewModel extends ChangeNotifier {
     _currentStack =
         _currentStack!.copyWith(items: updatedItems, updatedAt: DateTime.now());
 
-    _checkInteractions();
+    _checkCompatibilitys();
     notifyListeners();
     saveStack(silent: true);
   }
@@ -167,7 +167,7 @@ class StackBuilderViewModel extends ChangeNotifier {
     _currentStack =
         _currentStack!.copyWith(items: updatedItems, updatedAt: DateTime.now());
 
-    _checkInteractions();
+    _checkCompatibilitys();
     notifyListeners();
     saveStack(silent: true);
   }
@@ -235,7 +235,7 @@ class StackBuilderViewModel extends ChangeNotifier {
       return 'Expert Tip: You have a robust stack. Remember to "cycle" certain nootropics to maintain receptor sensitivity.';
     }
 
-    return 'Building a great routine! Each item here supports your ADHD cognitive profile.';
+    return 'Building a great routine! Each item here supports your Neurostack cognitive profile.';
   }
 
   /// Applies a pre-configured stack archetype.
@@ -278,16 +278,16 @@ class StackBuilderViewModel extends ChangeNotifier {
         items: presetItems,
         updatedAt: DateTime.now(),
       );
-      _checkInteractions();
+      _checkCompatibilitys();
       notifyListeners();
       saveStack(silent: true);
     }
   }
 
-  void _checkInteractions() {
+  void _checkCompatibilitys() {
     if (_currentStack == null) return;
     final ids = _currentStack!.items.map((i) => i.supplementId).toList();
-    _safetyViewModel.checkInteractions(ids);
+    _safetyViewModel.checkCompatibilitys(ids);
   }
 
   void _setLoading(bool loading) {

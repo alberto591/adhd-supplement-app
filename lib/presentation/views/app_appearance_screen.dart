@@ -387,7 +387,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                                     color: isDark ? Colors.white : Colors.black,
                                     fontWeight: FontWeight.w500,
                                   )),
-                              subtitle: Text('Vibrate on interactions',
+                              subtitle: Text('Vibrate on compatibilitys',
                                   style: GoogleFonts.lexend(
                                     color: Colors.grey,
                                     fontSize: 12,

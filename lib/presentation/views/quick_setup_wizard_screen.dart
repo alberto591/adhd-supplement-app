@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
-import '../widgets/medical_disclaimer_widget.dart';
+import '../widgets/disclaimer_widget.dart';
 import '../../domain/repositories/settings_repository.dart';
 
 class QuickSetupWizardScreen extends StatefulWidget {
@@ -196,7 +196,7 @@ class _QuickSetupWizardScreenState extends State<QuickSetupWizardScreen> {
   Widget _buildStepContent(bool isDark) {
     switch (_currentStep) {
       case -1:
-        return MedicalDisclaimerWidget(
+        return DisclaimerWidget(
           isDark: isDark,
           isChecked: _disclaimerAccepted,
           onChecked: (v) => setState(() => _disclaimerAccepted = v ?? false),

@@ -21,11 +21,11 @@ This document serves as the technical "Source of Truth" for building the FocusSt
   - If > 0, decrement by 1 and preserve the `current_streak`.
   - If 0, reset `current_streak` to 0.
 
-## 2. Safety & Medical Engine
+## 2. Safety & Wellness Engine
 
 ### Real-time Interaction Scan
 - **Trigger**: Adding a supplement to a Stack or during initial Onboarding.
-- **Logic**: Cross-reference `new_supplement_id` with User `medication_ids` (e.g., Stimulants).
+- **Logic**: Cross-reference `new_supplement_id` with User `routine_ids` (e.g., Stimulants).
 - **Conflict Handling**: If a conflict exists (e.g., Vitamin C + Amphetamines), return the `Safety_Alert` object and block "Taken" until a `Safety_Override` is confirmed.
 
 ### Late Dose Triage
@@ -74,8 +74,8 @@ This document serves as the technical "Source of Truth" for building the FocusSt
 ### Primary Bottom Nav (V1.0)
 - **Today**: Daily checklist and focus state.
 - **Library**: Supplement encyclopedia and stack creation.
-- **Hub**: (Gated) Expert-verified ADHD science and community.
-- **Profile**: Settings, gamification levels, and medical configuration.
+- **Hub**: (Gated) Expert-verified Focus science and community.
+- **Profile**: Settings, gamification levels, and wellness configuration.
 
 ## 6. Premium Gating & V1.0 Strategy
 

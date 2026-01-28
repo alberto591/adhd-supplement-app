@@ -21,6 +21,6 @@ For the initial Version 1.0 release, the application will be distributed as a fr
 - **Neutral**: Requires manual updating of flags when transitioning to active revenue in V2.0.
 
 ## Compliance
-- **ADHD UI Optimizer**: Simplifies navigation and reduces cognitive load by removing the redundant "Stacks" tab.
+- **Focus UI Optimizer**: Simplifies navigation and reduces cognitive load by removing the redundant "Stacks" tab.
 - **Med-Safety Checker**: Ensures users are notified that advanced safety features are part of the upcoming Pro tier.
 - **Architecture**: Maintains clean separation by gating at the Router level and using the existing `AuthProvider` for entitlement checks.

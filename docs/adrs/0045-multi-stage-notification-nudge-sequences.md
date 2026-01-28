@@ -6,7 +6,7 @@
 
 ## Context
 
-ADHD users face significant challenges with "time blindness" and task switching. A single notification is often dismissed and immediately forgotten. ADR 0040 established the concept of a 3-step nudge cycle, but the initial implementation relied on the View Model to schedule individual notifications. This led to fragmented logic and potential inconsistencies in how sequences were handled.
+Focus users face significant challenges with "time blindness" and task switching. A single notification is often dismissed and immediately forgotten. ADR 0040 established the concept of a 3-step nudge cycle, but the initial implementation relied on the View Model to schedule individual notifications. This led to fragmented logic and potential inconsistencies in how sequences were handled.
 
 ## Decision
 

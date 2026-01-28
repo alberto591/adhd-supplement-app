@@ -4,10 +4,10 @@
 Accepted
 
 ## Context
-Gamification is a powerful tool for retention, but in the context of ADHD and mental health apps, it carries risks:
+Gamification is a powerful tool for retention, but in the context of Focus and mental health apps, it carries risks:
 1.  **Predatory Mechanisms**: Loot boxes, infinite scrolls, and "shame" mechanics (e.g., losing a streak due to illness) can be harmful.
 2.  **Dopamine Burnout**: Over-stimulating users can lead to quick engagement followed by abandonment.
-3.  **Rejection Sensitivity**: ADHD users often suffer from Rejection Sensitive Dysphoria (RSD). Punishing them for missing a day can cause them to quit the app entirely to avoid the negative feeling.
+3.  **Rejection Sensitivity**: Focus users often suffer from Rejection Sensitive Dysphoria (RSD). Punishing them for missing a day can cause them to quit the app entirely to avoid the negative feeling.
 
 ## Decision
 We will adopt a **"White Hat" / Supportive Gamification** strategy:

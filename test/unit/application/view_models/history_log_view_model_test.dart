@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:adhd_supplement_app/application/view_models/history_log_view_model.dart';
-import 'package:adhd_supplement_app/domain/repositories/log_repository.dart';
-import 'package:adhd_supplement_app/domain/repositories/stack_repository.dart';
-import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
-import 'package:adhd_supplement_app/domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/application/view_models/history_log_view_model.dart';
+import 'package:neurostack_app/domain/repositories/log_repository.dart';
+import 'package:neurostack_app/domain/repositories/stack_repository.dart';
+import 'package:neurostack_app/domain/entities/daily_log.dart';
+import 'package:neurostack_app/domain/entities/supplement_stack.dart';
 
 @GenerateMocks([LogRepository, StackRepository])
 import 'history_log_view_model_test.mocks.dart';

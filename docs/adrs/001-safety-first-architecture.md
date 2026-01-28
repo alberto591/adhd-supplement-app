@@ -3,12 +3,12 @@
 **Status**: Accepted
 **Date**: 2026-01-19
 **Context**:
-Building an ADHD supplement app requires strict safety controls. Users may be on prescription medication (Stimulants/Non-Stimulants). Recommending supplements without cross-referencing interactions poses a significant health risk and legal liability.
+Building an Focus supplement app requires strict safety controls. Users may be on prescription routine (Stimulants/Non-Stimulants). Recommending supplements without cross-referencing interactions poses a significant health risk and legal liability.
 
 **Decision**:
 We implement a "Safety-First" architecture where:
 1.  **Middleware Intercept**: Any "Add to Stack" action is intercepted by `SafetyViewModel`.
-2.  **Interaction Matrix**: A local interaction database checks `Supplement` vs `UserMedication`.
+2.  **Interaction Matrix**: A local interaction database checks `Supplement` vs `UserRoutine`.
 3.  **Hard Stops**: High-risk interactions (e.g., Vitamin C + Vyvanse < 2hrs) trigger blocking modals, not just toast warnings.
 4.  **Audit Logs**: All overrides are logged in `SafetyOverride` entity for liability tracking.
 

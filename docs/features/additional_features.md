@@ -93,12 +93,12 @@ Guides users through enabling critical notification permissions.
 4. Test notification delivery.
 
 **Why This Matters:**
-ADHD users depend on reminders. This ensures notifications aren't silently dropped.
+Focus users depend on reminders. This ensures notifications aren't silently dropped.
 
 ### 7. `PersistentRemindersScreen`
 **Location**: `lib/presentation/views/persistent_reminders_screen.dart`
 
-Configure recurring nudges and medication reminders.
+Configure recurring nudges and routine reminders.
 
 **Settings:**
 - Reminder times (e.g., 8 AM, 2 PM, 8 PM).
@@ -111,10 +111,10 @@ UI only. Requires integration with `NotificationService` scheduled notifications
 
 ## Miscellaneous
 
-### 8. `MedicationSafetyScreen`
-**Location**: `lib/presentation/views/medication_safety_screen.dart`
+### 8. `RoutineSafetyScreen`
+**Location**: `lib/presentation/views/routine_safety_screen.dart`
 
-Educational screen about medication-supplement interactions.
+Educational screen about routine-supplement interactions.
 
 **Content:**
 - Why timing matters.

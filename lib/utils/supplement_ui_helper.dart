@@ -15,7 +15,7 @@ class SupplementUIHelper {
       case 'herbal':
         return Icons.spa;
       case 'protocol':
-        return Icons.medication;
+        return Icons.auto_awesome;
       case 'focus_agent':
         return Icons.bolt;
       default:

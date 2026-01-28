@@ -9,7 +9,7 @@ import sys
 def inject_library_methods():
     """Inject _showAddToStackSheet and _buildStackOption into library_screen.dart"""
     
-    file_path = "/Users/lycanbeats/Desktop/adhd_supplement_app/lib/presentation/views/library_screen.dart"
+    file_path = "/Users/lycanbeats/Desktop/focus_supplement_app/lib/presentation/views/library_screen.dart"
     
     with open(file_path, 'r') as f:
         lines = f.readlines()
@@ -26,7 +26,7 @@ def inject_library_methods():
         return False
     
     # Read the methods from the helper file
-    with open("/Users/lycanbeats/Desktop/adhd_supplement_app/lib/presentation/views/_library_screen_methods.dart", 'r') as f:
+    with open("/Users/lycanbeats/Desktop/focus_supplement_app/lib/presentation/views/_library_screen_methods.dart", 'r') as f:
         helper_content = f.read()
     
     # Extract just the methods (skip the comment header)
@@ -46,7 +46,7 @@ def inject_library_methods():
 def inject_doctor_export_methods():
     """Inject _emailDoctor and _shareReport into doctor_export_screen.dart"""
     
-    file_path = "/Users/lycanbeats/Desktop/adhd_supplement_app/lib/presentation/views/doctor_export_screen.dart"
+    file_path = "/Users/lycanbeats/Desktop/focus_supplement_app/lib/presentation/views/doctor_export_screen.dart"
     
     with open(file_path, 'r') as f:
         lines = f.readlines()
@@ -63,7 +63,7 @@ def inject_doctor_export_methods():
         return False
     
     # Read the methods from the helper file
-    with open("/Users/lycanbeats/Desktop/adhd_supplement_app/lib/presentation/views/_doctor_export_methods.dart", 'r') as f:
+    with open("/Users/lycanbeats/Desktop/focus_supplement_app/lib/presentation/views/_doctor_export_methods.dart", 'r') as f:
         helper_content = f.read()
     
     # Extract just the methods (skip the comment header)

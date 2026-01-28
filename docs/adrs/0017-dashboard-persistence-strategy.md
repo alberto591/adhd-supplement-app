@@ -6,7 +6,7 @@
 
 ## Context
 
-The redesigned dashboard requires real-time tracking of medication intake and historical data for streak calculations. We needed to decide whether to create a new persistence model or leverage existing infrastructure.
+The redesigned dashboard requires real-time tracking of routine intake and historical data for streak calculations. We needed to decide whether to create a new persistence model or leverage existing infrastructure.
 
 ## Decision
 
@@ -31,5 +31,5 @@ Reuse the existing `DailyLog` entity and `LogRepository` to track dashboard inte
 
 | Option | Rejected Because |
 |--------|------------------|
-| New `MedicationLog` entity | Redundant; would require syncing data between two logs for accurate analytics. |
+| New `RoutineLog` entity | Redundant; would require syncing data between two logs for accurate analytics. |
 | Local-only state | Doesn't support cross-device sync or long-term trend analysis. |

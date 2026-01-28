@@ -19,7 +19,7 @@ Calculation Logic:
 4. **Focus Correlation**: Comparison of consistency percentages against focus score trends within the same window.
 
 ## Rationale
-- **Clinical Relevance**: Weekly comparison is a standard rhythm for monitoring medication changes.
+- **Clinical Relevance**: Weekly comparison is a standard rhythm for monitoring routine changes.
 - **Actionable Insights**: Telling a user "Your focus is up 5% compared to last week" is more motivating than "Your focus is 7.2 today".
 - **Data Integrity**: Using 14 days of data ensures that a single "bad day" doesn't skew the trend disproportionately.
 
@@ -37,6 +37,6 @@ Calculation Logic:
 
 | Option | Rejected Because |
 |--------|------------------|
-| Month-over-Month | Too long a feedback loop for ADHD users; trends would be stale by the time they show up. |
+| Month-over-Month | Too long a feedback loop for Focus users; trends would be stale by the time they show up. |
 | Lifetime Average | Doesn't account for recent stack changes or life stress; irrelevant for short-term adjustments. |
 | Raw Data Only | High cognitive load for the user to interpret their own charts. |

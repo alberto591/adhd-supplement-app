@@ -20,7 +20,7 @@ The tabs are defined as:
 5. **Profile**: User Settings & Achievements.
 
 ## Rationale
-- **Cognitive Load**: A single, consistent navigation pattern reduces the effort required for ADHD users to navigate the app.
+- **Cognitive Load**: A single, consistent navigation pattern reduces the effort required for Focus users to navigate the app.
 - **Wireframe Alignment**: Aligns with the "Developer Handoff" specifications for a standardized navigation footer.
 - **Navigation Flux**: Eliminates dead-ends by ensuring the main app states are always one tap away.
 - **UI Consistency**: Standardizes the "Deep Focus" visual style (Gold Theme) across the footer.
@@ -42,4 +42,4 @@ The tabs are defined as:
 |--------|------------------|
 | Floating Action Button (FAB) Nav | Difficult to scale beyond 2-3 actions; creates visual clutter over important list content. |
 | Drawer-only Navigation | Too many taps to reach core features like "Stacks" or "Insights". |
-| Adaptive Navigation | Increased implementation complexity; doesn't provide the stable "anchor" needed for ADHD friendliness. |
+| Adaptive Navigation | Increased implementation complexity; doesn't provide the stable "anchor" needed for Focus friendliness. |

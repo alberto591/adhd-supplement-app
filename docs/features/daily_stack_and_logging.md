@@ -1,12 +1,12 @@
 # Daily Stack & Logging System
 
-This document covers the safety mechanisms that prevent harmful supplement-medication interactions and identifies substances to avoid.
+This document covers the safety mechanisms that prevent harmful supplement-routine interactions and identifies substances to avoid.
 
 ## 1. Avoid List (Supplement Status)
 The app categorizes supplements into three delivery statuses:
-- **Beneficial**: Recommended and safe for general ADHD support.
+- **Beneficial**: Recommended and safe for general Focus support.
 - **Avoid**: Specifically flagged as harmful or ineffective (e.g., Red Dye 40, HFCS).
-- **Neutral**: Supporting items with no significant ADHD impact.
+- **Neutral**: Supporting items with no significant Focus impact.
 
 **Safety Enforcement:**
 - **Library Toggles**: Users can switch between "Recommended" and "Avoid List" views.

@@ -1,4 +1,4 @@
-import 'package:adhd_supplement_app/domain/services/analytics_service.dart';
+import 'package:neurostack_app/domain/services/analytics_service.dart';
 import '../../utils/logger.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 

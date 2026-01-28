@@ -81,14 +81,14 @@ class _ChemistScreenState extends State<ChemistScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Dr. Alchemist',
+                        'Alchemist',
                         style: GoogleFonts.lexend(
                           fontWeight: FontWeight.bold,
                           color: isDark ? Colors.white : Colors.black,
                         ),
                       ),
                       Text(
-                        'PhD Neuropharmacology Assistant',
+                        'Bio-optimization Specialist',
                         style: GoogleFonts.lexend(
                           fontSize: 11,
                           color: isDark ? Colors.grey : Colors.grey[700],
@@ -188,7 +188,7 @@ class _ChemistScreenState extends State<ChemistScreen> {
               style: GoogleFonts.lexend(
                   color: isDark ? Colors.white : Colors.black),
               decoration: InputDecoration(
-                hintText: 'Ask about chemical interactions...',
+                hintText: 'Ask about routine optimizations...',
                 hintStyle: GoogleFonts.lexend(color: Colors.grey, fontSize: 13),
                 filled: true,
                 fillColor:
@@ -226,7 +226,7 @@ class _ChemistScreenState extends State<ChemistScreen> {
               size: 64, color: AppColors.primaryGold.withValues(alpha: 0.5)),
           const SizedBox(height: 24),
           Text(
-            'Ask Dr. Alchemist',
+            'Ask Alchemist',
             style: GoogleFonts.lexend(
               fontSize: 20,
               fontWeight: FontWeight.bold,

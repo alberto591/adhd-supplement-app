@@ -51,7 +51,7 @@ This document provides detailed answers for the App Privacy section in App Store
   - Supplement intake logs
   - Dosage information
   - Timing of supplement consumption
-  - ADHD diagnosis type (optional)
+  - Focus diagnosis type (optional)
   - Symptom check-ins (mood, focus ratings)
   
 - **How is it used?**
@@ -192,7 +192,7 @@ We **DO NOT** collect:
 - ✅ Privacy Policy available in-app
 - ✅ Clear data collection disclosures
 - ✅ User consent required
-- ✅ Medical disclaimer provided
+- ✅ Clinical disclaimer provided
 
 ---
 
@@ -209,7 +209,7 @@ https://gist.github.com/[username]/[gist-id]
 ### Age Rating
 **Recommended**: 12+ (due to health tracking features)
 
-### Medical Disclaimer
+### Clinical Disclaimer
 **Required**: Yes (already included in app and privacy policy)
 
 ---
@@ -220,7 +220,7 @@ https://gist.github.com/[username]/[gist-id]
 - [ ] All data types accurately disclosed
 - [ ] Third-party SDKs listed (Firebase, RevenueCat)
 - [ ] User control features verified (delete account, export data)
-- [ ] Medical disclaimer visible in app
+- [ ] Clinical disclaimer visible in app
 - [ ] Age rating set to 12+
 - [ ] Screenshots show clean status bar (no low battery, etc.)
 

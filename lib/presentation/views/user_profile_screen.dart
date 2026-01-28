@@ -78,28 +78,26 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  void _showAdhdTypeDialog(BuildContext context, User? user) {
+  void _showNeurostackTypeDialog(BuildContext context, User? user) {
     if (user == null) return;
 
     final types = [
-      'Combined Type',
-      'Predominantly Inattentive',
-      'Predominantly Hyperactive-Impulsive',
+      'Dynamic Mix (Combined)',
+      'Flow Seeker (Inattentive)',
+      'High Energy (Hyperactive)',
     ];
 
-    String? selectedType = user.adhdType ?? types[0];
+    String? selectedType = user.focusStyle ?? types[0];
 
     showDialog<void>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('ADHD Diagnosis Type'),
+          title: const Text('Focus Style'),
           content: RadioGroup<String>(
             groupValue: selectedType,
             onChanged: (value) {
-              if (value != null) {
-                setState(() => selectedType = value);
-              }
+              setState(() => selectedType = value);
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -119,7 +117,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             TextButton(
               onPressed: () async {
                 if (selectedType != null) {
-                  final updatedUser = user.copyWith(adhdType: selectedType);
+                  final updatedUser = user.copyWith(focusStyle: selectedType);
                   await context.read<AuthProvider>().updateProfile(updatedUser);
                   if (context.mounted) Navigator.pop(context);
                 }
@@ -136,10 +134,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Medical Disclaimer'),
+        title: const Text('General Disclaimer'),
         content: const SingleChildScrollView(
           child: Text(
-            'The information provided in this app is for educational and informational purposes only and is not intended as medical advice. \n\nAlways consult with a qualified healthcare professional regarding any medical condition or treatment. \n\nDo not disregard professional medical advice or delay in seeking it because of something you have read in this application.',
+            'The information provided in this app is for educational and informational purposes only and is not intended as ritual advice. \n\nAlways consult with a qualified wellness advisor regarding any general routine or protocol. \n\nDo not disregard professional advisor guidance or delay in seeking it because of something you have read in this application.',
           ),
         ),
         actions: [
@@ -233,19 +231,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
                 const SizedBox(height: 4),
 
-                // Health & Medication Section
-                const _SectionHeader(title: 'Health & Medication'),
+                // Health & Routine Section
+                const _SectionHeader(title: 'Health & Routine'),
                 _SettingsGroup(
                   children: [
                     Consumer<AuthProvider>(
                       builder: (context, auth, _) => _SettingsTile(
                         icon: Icons.psychology,
                         iconColor: AppColors.primary,
-                        title: 'ADHD Diagnosis',
-                        subtitle: auth.user?.adhdType ?? 'Not set',
+                        title: 'Focus Profile',
+                        subtitle: auth.user?.focusStyle ?? 'Not set',
                         trailing:
                             const Icon(Icons.chevron_right, color: Colors.grey),
-                        onTap: () => _showAdhdTypeDialog(context, auth.user),
+                        onTap: () =>
+                            _showNeurostackTypeDialog(context, auth.user),
                       ),
                     ),
                   ],
@@ -408,7 +407,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.description_outlined,
                       iconColor: Colors.grey,
-                      title: 'Medical Disclaimer',
+                      title: 'General Disclaimer',
                       subtitle: 'Crucial health & usage info',
                       trailing: const Icon(Icons.open_in_new,
                           size: 18, color: Colors.grey),

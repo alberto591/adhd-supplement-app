@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:adhd_supplement_app/domain/entities/daily_log.dart';
-import 'package:adhd_supplement_app/domain/entities/streak.dart';
-import 'package:adhd_supplement_app/infrastructure/services/streak_service.dart';
+import 'package:neurostack_app/domain/entities/daily_log.dart';
+import 'package:neurostack_app/domain/entities/streak.dart';
+import 'package:neurostack_app/infrastructure/services/streak_service.dart';
 
 void main() {
   late StreakService streakService;

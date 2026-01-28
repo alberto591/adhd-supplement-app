@@ -8,7 +8,7 @@ import 'dart:async';
 
 /// ViewModel for global search functionality across supplements and stacks.
 ///
-/// This ViewModel implements an ADHD-friendly search experience with:
+/// This ViewModel implements an Neurostack-friendly search experience with:
 /// - **Debounced search**: 300ms delay prevents excessive API calls during typing
 /// - **Parallel execution**: Searches supplements and stacks simultaneously
 /// - **Instant feedback**: Loading state updates immediately on query change
@@ -91,7 +91,7 @@ class GlobalSearchViewModel extends ChangeNotifier {
   /// 5. Schedules search execution after 300ms debounce
   ///
   /// The debounce prevents excessive API calls during rapid typing,
-  /// which is especially important for ADHD users who may type quickly.
+  /// which is especially important for Neurostack users who may type quickly.
   ///
   /// Example:
   /// ```dart
