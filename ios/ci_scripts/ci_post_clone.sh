@@ -6,7 +6,7 @@ set -e
 # Make sure we are in the root of the repo
 cd $CI_PRIMARY_REPOSITORY_PATH
 
-echo "🚀 Starting ci_post_clone.sh (V4)"
+echo "🚀 Starting ci_post_clone.sh (V5: Network Proof)"
 echo "📂 Current directory: $(pwd)"
 
 # Define Flutter settings
@@ -57,22 +57,45 @@ else
     fi
 fi
 
-# 5. Install CocoaPods
+# 5. Install CocoaPods with Retries (ANTIFLAKE)
 echo "🥥 Installing Pods..."
 cd ios
 
-# Explicitly check for Flutter.xcframework before pod install to fail fast if missing
+# Explicitly check for Flutter.xcframework
 FLUTTER_XCFRAMEWORK="$FLUTTER_HOME/bin/cache/artifacts/engine/ios/Flutter.xcframework"
 if [ ! -d "$FLUTTER_XCFRAMEWORK" ]; then
     echo "🔥 FATAL: Flutter.xcframework NOT FOUND at $FLUTTER_XCFRAMEWORK"
-    echo "Directory listing of $FLUTTER_HOME/bin/cache/artifacts/engine/ios/:"
-    ls -R "$FLUTTER_HOME/bin/cache/artifacts/engine/ios/" || echo "Directory does not exist."
     exit 1
 else
     echo "✅ Flutter.xcframework found at $FLUTTER_XCFRAMEWORK"
 fi
 
-pod install --repo-update
+# Retry loop definition
+MAX_RETRIES=3
+COUNT=0
+SUCCESS=false
+
+set +e # Temporarily disable exit-on-error for the loop
+
+while [ $COUNT -lt $MAX_RETRIES ]; do
+    echo "🥥 Pod install attempt $(($COUNT + 1))..."
+    # Using --repo-update to ensure fresh specs, but capturing output
+    if pod install --repo-update; then
+        SUCCESS=true
+        break
+    else
+        echo "⚠️ Pod install failed (Attempt $(($COUNT + 1))). Retrying in 15s..."
+        COUNT=$(($COUNT + 1))
+        sleep 15
+    fi
+done
+
+set -e # Re-enable exit-on-error
+
+if [ "$SUCCESS" = false ]; then
+    echo "🔥 FATAL: Pod install failed after $MAX_RETRIES attempts. Check network logs."
+    exit 1
+fi
 
 echo "🎉 ci_post_clone.sh completed successfully."
 exit 0
