@@ -1,5 +1,5 @@
-# 1. Set the global platform to iOS 15.4 (aligned with Xcode/Swift requirements)
-platform :ios, '15.4'
+# 1. Set the global platform to iOS 26.2 (aligned with Xcode/Swift requirements)
+platform :ios, '26.2'
 
 # Optimizations
 install! 'cocoapods', :disable_input_output_paths => true
@@ -41,7 +41,7 @@ post_install do |installer|
     
     target.build_configurations.each do |config|
       # Force stable deployment target
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.4'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '26.2'
       
       # Force Swift 5.0 to avoid Swift 6 concurrency/strictness errors in pods
       config.build_settings['SWIFT_VERSION'] = '5.0'
