@@ -54,13 +54,15 @@ post_install do |installer|
 
       # Fix BoringSSL-GRPC 'unsupported option -G' error on Xcode 16+
       if target.name == 'BoringSSL-GRPC'
-        cflags = config.build_settings['OTHER_CFLAGS'] || ['$(inherited)']
-        if cflags.is_a?(Array)
-          cflags.delete('-G')
-        elsif cflags.is_a?(String)
-          cflags = cflags.gsub('-G', ' ')
+        ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS'].each do |flag_name|
+          flags = config.build_settings[flag_name] || ['$(inherited)']
+          if flags.is_a?(Array)
+            flags.delete('-G')
+          elsif flags.is_a?(String)
+            flags = flags.gsub('-G', ' ')
+          end
+          config.build_settings[flag_name] = flags
         end
-        config.build_settings['OTHER_CFLAGS'] = cflags
       end
     end
   end
