@@ -75,7 +75,20 @@ post_install do |installer|
             file.settings['COMPILER_FLAGS'] = scrubbed_flags
           end
         end
+        end
       end
+    end
+  end
+
+  # Fix gRPC-Core 'missing template argument list' error on Xcode 16+
+  # Patch basic_seq.h to remove invalid 'template' keyword
+  # See: https://github.com/grpc/grpc/pull/35889
+  Dir.glob("Pods/**/basic_seq.h").each do |file|
+    text = File.read(file)
+    if text.include?("Traits::template CallSeqFactory")
+      puts "Patching #{file} to fix gRPC template error..."
+      new_contents = text.gsub("Traits::template CallSeqFactory", "Traits::CallSeqFactory")
+      File.open(file, "w") { |f| f.puts new_contents }
     end
   end
 end
