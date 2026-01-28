@@ -54,6 +54,18 @@ post_install do |installer|
 
       # Fix "Include of non-modular header inside framework module" error for Firebase (Xcode 16)
       config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+      
+      # Explicitly suppress non-modular include errors for all pods
+      ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS'].each do |flag_name|
+        flags = config.build_settings[flag_name] || ['$(inherited)']
+        new_flag = '-Wno-non-modular-include-in-framework-module'
+        if flags.is_a?(Array)
+          flags << new_flag unless flags.include?(new_flag)
+        elsif flags.is_a?(String)
+          flags += " #{new_flag}" unless flags.include?(new_flag)
+        end
+        config.build_settings[flag_name] = flags
+      end
 
       # Fix BoringSSL-GRPC 'unsupported option -G' error on Xcode 16+
       if target.name == 'BoringSSL-GRPC'
