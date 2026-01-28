@@ -75,7 +75,6 @@ post_install do |installer|
             file.settings['COMPILER_FLAGS'] = scrubbed_flags
           end
         end
-        end
       end
     end
   end
