@@ -20,3 +20,19 @@
 
 # Ignore missing Play Core classes (standard Flutter release build fix)
 -dontwarn com.google.android.play.core.**
+
+# gRPC / BoringSSL (Ensure native methods are preserved)
+-keep class io.grpc.** { *; }
+-keep class com.google.protobuf.** { *; }
+-dontwarn io.grpc.**
+
+# App Specific Natives
+-keep class com.neurostack2.app.MainActivity { *; }
+
+# OkHttp (Used by many plugins)
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
