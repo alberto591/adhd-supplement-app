@@ -51,6 +51,17 @@ post_install do |installer|
       
       # Enable compatibility for modern architectures
       config.build_settings['ENABLE_BITCODE'] = 'NO'
+
+      # Fix BoringSSL-GRPC 'unsupported option -G' error on Xcode 16+
+      if target.name == 'BoringSSL-GRPC'
+        cflags = config.build_settings['OTHER_CFLAGS'] || ['$(inherited)']
+        if cflags.is_a?(Array)
+          cflags.delete('-G')
+        elsif cflags.is_a?(String)
+          cflags = cflags.gsub('-G', ' ')
+        end
+        config.build_settings['OTHER_CFLAGS'] = cflags
+      end
     end
   end
 end
