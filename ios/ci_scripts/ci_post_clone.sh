@@ -19,6 +19,11 @@ if [ -d "$FLUTTER_HOME" ]; then
     rm -rf "$FLUTTER_HOME"
 fi
 
+
+# Force HTTP/1.1 for git to avoid HTTP/2 stream errors (curl 92)
+echo "🌐 Configuring Git to use HTTP/1.1..."
+git config --global http.version HTTP/1.1
+
 echo "📦 Installing Flutter ($FLUTTER_CHANNEL)..."
 git clone https://github.com/flutter/flutter.git --depth 1 -b $FLUTTER_CHANNEL $FLUTTER_HOME
 
@@ -45,8 +50,10 @@ flutter pub global activate flutterfire_cli
 
 # 4. FORCE Build Config (Provenance: V6 Fix)
 # We do BOTH precache AND config-only build to be 100% sure.
+# We append "|| true" because this might trigger "pod install" which can fail due to network (curl 92).
+# We have a robust manual pod install loop later (Step 6) to handle that.
 echo "🔨 Running flutter build ios --config-only (Force Config)..."
-flutter build ios --config-only --no-codesign --no-pub
+flutter build ios --config-only --no-codesign --no-pub || echo "⚠️ 'flutter build --config-only' had issues (likely network/pods). Continuing to robust pod install..."
 
 # 5. Verify Generated Config
 echo "🧐 Verifying ios/Flutter/Generated.xcconfig..."
