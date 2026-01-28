@@ -13,7 +13,7 @@
 │                    Application Layer                         │
 │  ┌───────────────────┐  ┌──────────────────────────────────┐│
 │  │   Use Cases       │  │        ViewModels (MVVM)         ││
-│  │   (Services)      │  │ DailyStack, Library, Symptom     ││
+│  │   (Services)      │  │ DailyStack, Library, Routine      ││
 │  └─────────┬─────────┘  └──────────────────────────────────┘│
 └────────────┼────────────────────────────────────────────────┘
              │
@@ -23,7 +23,7 @@
 │  │ Entities │  │  Services  │  │      Repositories        │ │
 │  │Supplement│  │SafetyGuard │  │    (Port Interfaces)     │ │
 │  │  Stack   │  │ Affiliate  │  │                          │ │
-│  │ DailyLog │  │            │  │                          │ │
+│  │ DailyState│  │            │  │                          │ │
 │  └──────────┘  └────────────┘  └──────────────────────────┘ │
 └─────────────────────────────────────────────────────────────┘
              │
@@ -42,8 +42,8 @@
 ViewModels manage screen state and expose reactive getters.
 ```dart
 class DailyStackViewModel extends ChangeNotifier {
-  List<SupplementStack> _stacks = [];
-  List<SupplementStack> get stacks => _stacks;
+  List<RoutineStack> _stacks = [];
+  List<RoutineStack> get stacks => _stacks;
 }
 ```
 
@@ -66,7 +66,7 @@ locator.registerLazySingleton<StackRepository>(() => FirebaseStackRepository());
 Multiple safety checking strategies that can be composed.
 ```dart
 class SafetyGuard { ... }
-class FocusInteractionGuard { ... }
+class RoutineCompatibilityService { ... }
 ```
 
 ### 7. Interactive Calculators (Logic Separation)
@@ -86,13 +86,12 @@ Standardized branding applied to all primary user-facing screens.
 - **Colors**: `primaryGold` (#D4AF37) for all primary actions/status.
 - **Card Style**: Standardized `boxShadow` and `borderRadius: 16`.
 
-### 2. Unified Navigation (5-Tab)
-Standardized `UnifiedBottomNav` used across 5 root screens to prevent navigation drift.
+### 2. Streamlined Navigation (3-Tab)
+Standardized `UnifiedBottomNav` used across 3 root screens to simplify the user journey.
 1. **Today** -> Dashboard
-2. **Stacks** -> DailyStack
-3. **Insights** -> SuccessStats
-4. **Library** -> ScienceHub/Discovery
-5. **Profile** -> UserProfile
+2. **Library** -> ScienceHub/Discovery
+3. **Profile** -> UserProfile
+*Note: Premium "Hub" is accessible via contextual triggers.*
 
 ### 3. Safety-First Contrast
 Critical routine interactions use high-contrast red alerts (`#EF4444`) to ensure immediate recognition, while synergy notes use blue/amber.
@@ -100,12 +99,12 @@ Critical routine interactions use high-contrast red alerts (`#EF4444`) to ensure
 ## Key Domain Entities
 | Entity | Purpose |
 |--------|---------|
-| `Supplement` | Catalog item with benefits, dosage, interactions |
-| `SupplementStack` | User's grouped supplements (Morning, Evening) |
-| `DailyLog` | Daily intake record with timestamps |
-| `User` | Profile with XP, Level, and `currentRoutine` |
-| `NightlyReflection` | Evening focus and sleep readiness data |
-| `Report` | PDF-generated summary for clinicians |
+| `Supplement` | Catalog item with benefits, dosage, compatibility |
+| `RoutineStack` | User's grouped items (Morning, Evening) |
+| `DailyState` | Daily check-in record with focus levels |
+| `User` | Profile with XP, Level, and `currentFocusStyle` |
+| `NightlyReflection` | Evening focus and energy readiness data |
+| `ProtocolReport` | PDF-generated summary for clinicians/self |
 
 ## Navigation Architecture
 Centralized routing via `AppRouter` using a mix of `MaterialPageRoute` (standard) and `UnifiedBottomNav` (persistent root).

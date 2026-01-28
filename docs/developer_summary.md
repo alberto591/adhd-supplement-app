@@ -1,6 +1,6 @@
-# FocusStack: Developer Handoff Summary
+# NeuroStack: Developer Handoff Summary
 
-This document serves as the technical "Source of Truth" for building the FocusStack backend and integrating it with the frontend.
+This document serves as the technical "Source of Truth" for building the NeuroStack backend and integrating it with the frontend.
 
 ## 1. Core Logic & State Triggers
 
@@ -26,7 +26,7 @@ This document serves as the technical "Source of Truth" for building the FocusSt
 ### Real-time Interaction Scan
 - **Trigger**: Adding a supplement to a Stack or during initial Onboarding.
 - **Logic**: Cross-reference `new_supplement_id` with User `routine_ids` (e.g., Stimulants).
-- **Conflict Handling**: If a conflict exists (e.g., Vitamin C + Amphetamines), return the `Safety_Alert` object and block "Taken" until a `Safety_Override` is confirmed.
+- **Conflict Handling**: If a compatibility note exists (e.g., specific protocol timing conflicts), serve the `Compatibility_Alert` and ensure visibility before logging.
 
 ### Late Dose Triage
 - **Trigger**: User attempts to log a stack > 3 hours after scheduled time.
@@ -58,6 +58,7 @@ This document serves as the technical "Source of Truth" for building the FocusSt
 - `timestamp`
 - `mood_score`
 - `focus_score`
+- `energy_score`
 - `status` (taken/skipped/late)
 
 ## 4. Frontend-Backend Syncing

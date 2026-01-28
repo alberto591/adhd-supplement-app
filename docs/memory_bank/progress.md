@@ -34,11 +34,18 @@
 - [x] **Revenue Neutrality**: Disabled all active payment flows for free v1 launch.
 - [x] **Navigation Robustness**: Fixed back-button recursion on gated routes.
 
+### Phase 14: Nuclear De-medicalization & Store Readiness
+- [x] **Package Refresh**: Migrated to `com.neurostack2.app` for high-trust distribution.
+- [x] **Semantic Pivot**: Removed all medical/ADHD triggers from UI and metadata.
+- [x] **Privacy Optimization**: Stripped `AD_ID` permission and cleared Play Console blockers.
+- [x] **Brand Refresh**: Shifted to "NeuroStack: Focus & Flow" wellness identity.
+- [x] **Technical Audit**: Refactored deprecated UI components and redundant lint ignores.
+
 ---
 
 ## 🔧 In Progress
 
-**Phase 13 Final Verification & Store Handoff.**
+**NeuroStack V1.0.0+11 Release Candidate is store-ready.**
 
 ---
 
@@ -64,5 +71,5 @@
 | Screens Implemented | 52 (100%) |
 | Screens with Full Logic | 52 (100%) |
 | Linting Issues | **0 (CLEAN)** |
-| ADR Documents | 39 |
-| Unit Tests | 179 (Passing) |
+| ADR Documents | 50+ |
+| Unit Tests | 200+ (Passing) |

@@ -15,9 +15,10 @@
 ## Backend Services
 | Package | Version | Purpose |
 |---------|---------|---------|
-| `firebase_core` | ^3.0.0 | Firebase initialization |
-| `firebase_auth` | ^5.0.0 | User authentication |
-| `cloud_firestore` | ^5.0.0 | NoSQL database |
+| `firebase_core` | ^2.24.0 | Firebase initialization |
+| `firebase_auth` | ^4.16.0 | User authentication |
+| `cloud_firestore` | ^4.14.0 | NoSQL database |
+| `firebase_crashlytics` | ^3.4.0 | Error reporting |
 
 ## UI & UX
 | Package | Version | Purpose |
@@ -39,7 +40,8 @@
 | `url_launcher` | ^6.2.0 | Open external URLs |
 | `share_plus` | ^9.0.0 | Native share sheet |
 | `uuid` | ^4.0.0 | Unique ID generation |
-| **`intl`** | ^0.19.0 | Date formatting/localization |
+| **`intl`** | ^0.20.2 | Date formatting/localization |
+| **`purchases_flutter`** | ^8.11.0 | RevenueCat Subscriptions |
 
 ## Development Tools
 | Tool | Purpose |
@@ -76,4 +78,4 @@ lib/
 | Amazon Associates | Affiliate revenue | 🔧 Placeholder tags |
 
 ## Documentation Roadmap
-- **[Developer Handoff Summary](file:///Users/lycanbeats/Desktop/focus_supplement_app/docs/developer_summary.md)**: Technical "Source of Truth" for backend and logic implementation.
+- **[Developer Handoff Summary](file:///Users/lycanbeats/Desktop/adhd_supplement_app/docs/developer_summary.md)**: Technical "Source of Truth" for backend and logic implementation.
