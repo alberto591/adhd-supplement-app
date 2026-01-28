@@ -240,7 +240,7 @@ class SeedingService {
           "Takes 8-12 weeks for full effects - be patient",
           "May cause mild GI upset initially (take with food)",
           "Avoid if you have bradycardia (slow heart rate)",
-          "May interact with thyroid routine items - consult advisor"
+          "May interact with thyroid elements - consult advisor"
         ],
         "tldr":
             "Ayurvedic herb that enhances memory and learning while reducing anxiety; requires 8-12 weeks for full benefits.",
@@ -624,7 +624,7 @@ class SeedingService {
           "Do not exceed 30mg daily (higher doses may cause side effects)",
           "Takes 6-8 weeks for full therapeutic effects",
           "Avoid during pregnancy (may stimulate uterine contractions)",
-          "May interact with blood pressure routine items"
+          "May interact with blood pressure elements"
         ],
         "tldr":
             "Emerging Focus support with mood-stabilizing effects; some studies show efficacy comparable to low-dose Type As.",
@@ -1063,9 +1063,9 @@ class SeedingService {
             "Once daily in the evening, or split into morning/evening doses",
         "dosageWarnings": [
           "May cause drowsiness - avoid driving after taking",
-          "Can lower blood pressure and blood sugar - monitor if on routine items",
+          "Can lower blood pressure and blood sugar - monitor if on elements",
           "Avoid during pregnancy (may stimulate uterine contractions)",
-          "May interact with thyroid routine items (can increase T4 levels)"
+          "May interact with thyroid elements (can increase T4 levels)"
         ],
         "tldr":
             "Powerful adaptogen that reduces cortisol and anxiety; best for evening use to support sleep and stress recovery.",
@@ -1320,7 +1320,7 @@ class SeedingService {
           "Contains caffeine unless decaffeinated (30-50mg per dose)",
           "Take with food to avoid nausea (tannins can upset stomach)",
           "High doses (>800mg EGCG) may affect liver enzymes - monitor",
-          "May interact with blood thinners and blood pressure routine items"
+          "May interact with blood thinners and blood pressure elements"
         ],
         "tldr":
             "Extends dopamine availability by inhibiting COMT; provides neuroprotection and synergizes with L-theanine for focus.",
@@ -1478,7 +1478,7 @@ class SeedingService {
         "dosageFrequency": "Once or twice daily with meals",
         "dosageWarnings": [
           "Take with food (fat-soluble, poor absorption on empty stomach)",
-          "May lower blood pressure - monitor if on BP routine items",
+          "May lower blood pressure - monitor if on BP elements",
           "Avoid during pregnancy (may affect blood flow to placenta)",
           "Can interact with blood thinners - consult advisor"
         ],
@@ -1527,7 +1527,7 @@ class SeedingService {
           "⚠️ MUST CYCLE - chronic daily use depletes dopamine and downregulates receptors",
           "Take on empty stomach (protein blocks L-DOPA absorption)",
           "May cause nausea, especially at higher doses",
-          "Avoid with MAO inhibitors or Parkinson's routine items",
+          "Avoid with MAO inhibitors or Parkinson's elements",
           "Not recommended for long-term daily use without cycling"
         ],
         "tldr":
@@ -1629,7 +1629,7 @@ class SeedingService {
         "dosageFrequency": "Once daily in the morning",
         "dosageWarnings": [
           "May be mildly stimulating - avoid evening dosing",
-          "Can lower blood sugar - monitor if on diabetic routine items",
+          "Can lower blood sugar - monitor if on diabetic elements",
           "May interact with blood thinners (warfarin/aspirin)",
           "Generally well-tolerated; occasional insomnia at high doses"
         ],
@@ -1726,7 +1726,7 @@ class SeedingService {
         "dosageFrequency": "One to two times daily with food",
         "dosageWarnings": [
           "High doses (>5g) may cause fishy body odor, sweating, or nausea",
-          "Consult advisor if taking cholinergic routine items",
+          "Consult advisor if taking cholinergic elements",
           "Soy-derived (choose sunflower PC if you have soy allergies)"
         ],
         "tldr":
@@ -1820,7 +1820,7 @@ class SeedingService {
         "dosageFrequency": "Once daily with a fatty meal (breakfast or lunch)",
         "dosageWarnings": [
           "May interact with blood thinners (warfarin) - consult advisor",
-          "Can lower blood pressure - monitor if on BP routine items",
+          "Can lower blood pressure - monitor if on BP elements",
           "Ubiquinol form is more expensive but better absorbed",
           "Generally very safe; side effects rare at recommended doses"
         ],
@@ -1884,11 +1884,11 @@ class SeedingService {
         "benefits": ["Mild Depression", "Mood Support"],
         "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CAUTION: Powerful CYP450 enzyme inducer. Interacts with MANY routine items including birth control, antidepressants, and blood thinners. NOT recommended for Focus.",
+            "⚠️ CAUTION: Powerful CYP450 enzyme inducer. Interacts with MANY elements including birth control, antidepressants, and blood thinners. NOT recommended for Focus.",
         "status": "caution",
         "focusLevel": 2,
         "mechanismOfAction":
-            "St. John's Wort contains hypericin and hyperforin which modulate serotonin, dopamine, and norepinephrine reuptake. However, it is a potent inducer of CYP450 enzymes (particularly CYP3A4), which dramatically increases the metabolism of many routine items, reducing their effectiveness. This makes it incompatible with most pharmaceutical supports.",
+            "St. John's Wort contains hypericin and hyperforin which modulate serotonin, dopamine, and norepinephrine reuptake. However, it is a potent inducer of CYP450 enzymes (particularly CYP3A4), which dramatically increases the metabolism of many elements, reducing their effectiveness. This makes it incompatible with most pharmaceutical supports.",
         "detailedBenefits": [
           "May help mild to moderate depression (comparable to SSRIs in some studies)",
           "Modulates multiple neurotransmitter systems",
@@ -1902,7 +1902,7 @@ class SeedingService {
               "https://pubmed.ncbi.nlm.nih.gov/18843608/",
           "Drug compatibilitys and CYP450 induction":
               "https://pubmed.ncbi.nlm.nih.gov/15106147/",
-          "Contrainroutine items and safety":
+          "Contrainelements and safety":
               "https://pubmed.ncbi.nlm.nih.gov/24931003/"
         },
         "dosageByWeight": {
@@ -1912,17 +1912,17 @@ class SeedingService {
           "100-120": "600-900mg"
         },
         "dosageFrequency":
-            "Once or twice daily (NOT RECOMMENDED for Focus patients)",
+            "Once or twice daily (NOT RECOMMENDED for Focus users)",
         "dosageWarnings": [
           "⚠️ CRITICAL: Reduces effectiveness of birth control pills by 50%+",
           "⚠️ Interacts with SSRIs, SNRIs (serotonin syndrome risk)",
-          "⚠️ Reduces effectiveness of blood thinners, immunosuppressants, HIV routine items",
+          "⚠️ Reduces effectiveness of blood thinners, immunosuppressants, HIV elements",
           "⚠️ May interact with Focus Profile A elements",
           "Causes photosensitivity - increases sun sensitivity",
-          "NOT RECOMMENDED for people on multiple routine items"
+          "NOT RECOMMENDED for people on multiple elements"
         ],
         "tldr":
-            "Herb for mild depression but EXTENSIVE drug compatibilitys make it unsuitable for most Focus patients on routine items.",
+            "Herb for mild depression but EXTENSIVE drug compatibilitys make it unsuitable for most Focus users on elements.",
       },
       {
         "id": "valerian-root",
@@ -2011,7 +2011,7 @@ class SeedingService {
         "dosageWarnings": [
           "⚠️ CRITICAL: LIVER TOXICITY RISK - monitor liver enzymes if using",
           "⚠️ Use ONLY noble kava varieties (not tudei kava or stem/leaf preparations)",
-          "⚠️ Avoid if you have liver disease or take hepatotoxic routine items",
+          "⚠️ Avoid if you have liver disease or take hepatotoxic elements",
           "⚠️ Do NOT combine with alcohol (increases liver toxicity risk)",
           "Can cause skin changes (kava dermopathy) with chronic use",
           "May interact with sedatives, anesthesia, and CYP450-metabolized drugs",
@@ -2062,7 +2062,7 @@ class SeedingService {
           "⚠️ May cause overstimulation, insomnia, headaches, irritability",
           "⚠️ Can worsen challenges in some people with Focus",
           "Avoid if you have bipolar disorder (may trigger mania)",
-          "May interact with cholinergic routine items",
+          "May interact with cholinergic elements",
           "Not recommended during pregnancy or breastfeeding",
           "Better alternatives available (Alpha-GPC, CDP-Choline)"
         ],
@@ -2114,7 +2114,7 @@ class SeedingService {
           "⚠️ Avoid if sensitive to Type As or have heart conditions"
         ],
         "tldr":
-            "Must be paired with L-Theanine to mitigate jitters; provides temporary alertness and focus but use with caution with Focus routine items.",
+            "Must be paired with L-Theanine to mitigate jitters; provides temporary alertness and focus but use with caution with Focus elements.",
       },
       {
         "id": "melatonin",
@@ -2157,7 +2157,7 @@ class SeedingService {
         "dosageWarnings": [
           "⚠️ May cause morning grogginess if dose is too high",
           "⚠️ Can cause vivid dreams or nightmares in some individuals",
-          "⚠️ May interact with blood pressure and diabetes routine items",
+          "⚠️ May interact with blood pressure and diabetes elements",
           "⚠️ Long-term daily use in children should be generally supervised",
           "Not recommended for pregnant or breastfeeding women"
         ],
@@ -2173,7 +2173,7 @@ class SeedingService {
         "benefits": ["Mood Stability", "Sleep Quality", "Serotonin Support"],
         "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CRITICAL: Serotonin precursor. AVOID with SSRIs, SNRIs, or other serotonergic routine items (risk of Serotonin Syndrome).",
+            "⚠️ CRITICAL: Serotonin precursor. AVOID with SSRIs, SNRIs, or other serotonergic elements (risk of Serotonin Syndrome).",
         "status": "beneficial",
         "focusLevel": 2,
         "mechanismOfAction":
@@ -2182,7 +2182,7 @@ class SeedingService {
           "Improves evening mood and reduces emotional dysregulation",
           "Enhances sleep quality by increasing natural melatonin production",
           "May reduce impulsive behaviors and carbohydrate cravings",
-          "Supports emotional resilience in Focus patients with comorbid anxiety"
+          "Supports emotional resilience in Focus users with comorbid anxiety"
         ],
         "timingRationale":
             "Evening dosing is optimal because serotonin supports melatonin production and can have a calming effect. Effects are often noticed within 1-2 hours for sleep. Dose should be 50-100mg; higher doses increase risk of nausea and side effects without much added benefit for most. Take with a small carb snack for best absorption.",
@@ -2224,7 +2224,7 @@ class SeedingService {
         ],
         "evidenceLevel": "moderate",
         "notes":
-            "⚠️ CAUTION: Only supplement if you take high-dose Zinc (Zn:Cu ratio of 15:1). Typical Focus patients often have HIGH copper and LOW zinc.",
+            "⚠️ CAUTION: Only supplement if you take high-dose Zinc (Zn:Cu ratio of 15:1). Typical Focus users often have HIGH copper and LOW zinc.",
         "status": "caution",
         "focusLevel": 2,
         "mechanismOfAction":
@@ -2308,7 +2308,7 @@ class SeedingService {
           "⚠️ AVOID exceeding 100mg/day from all sources combined",
           "⚠️ DISCONTINUE immediately if you experience numbness, tingling, or nerve pain",
           "⚠️ Long-term use of standalone high doses carries greater risk than B-complex",
-          "⚠️ May interfere with the metabolism of certain anti-seizure routine items"
+          "⚠️ May interfere with the metabolism of certain anti-seizure elements"
         ],
         "tldr":
             "Essential cofactor for dopamine and serotonin synthesis, but high standalone doses carry a risk of nerve damage; best used in balanced formulas.",
@@ -2380,14 +2380,14 @@ class SeedingService {
           "Common in orange sodas, baked goods, and cheese snacks"
         ],
         "tldr":
-            "Orange food dye that increases restless energy; highly recommended to avoid in Focus patients.",
+            "Orange food dye that increases restless energy; highly recommended to avoid in Focus users.",
       },
       {
         "id": "red-3",
         "name": "Red 3 (Erythrosine / E127)",
         "category": "Artificial Color",
         "description":
-            "Synthetic cherry-pink dye associated with thyroid disruption and significant behavioral changes in Focus patients. Banned in many countries for food use.",
+            "Synthetic cherry-pink dye associated with thyroid disruption and significant behavioral changes in Focus users. Banned in many countries for food use.",
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
@@ -2452,7 +2452,7 @@ class SeedingService {
           "Found in blue-colored beverages, candy, and ice cream"
         ],
         "tldr":
-            "Blue dye that crosses the blood-brain barrier and serves as a behavioral trigger for many Focus patients.",
+            "Blue dye that crosses the blood-brain barrier and serves as a behavioral trigger for many Focus users.",
       },
       {
         "id": "blue-2",
@@ -2496,7 +2496,7 @@ class SeedingService {
         "status": "avoid",
         "focusLevel": 1,
         "mechanismOfAction":
-            "Similar to other azo dyes, it triggers histamine release which acts as a central nervous system irritant in Focus patients, causing decreased focus and increased physical motion.",
+            "Similar to other azo dyes, it triggers histamine release which acts as a central nervous system irritant in Focus users, causing decreased focus and increased physical motion.",
         "detailedBenefits": <String>[],
         "timingRationale":
             "AVOID: Removing from diet reduces cumulative behavioral load.",
@@ -2567,7 +2567,7 @@ class SeedingService {
             "Triggers the release of pro-inflammatory cytokines and histamine in the brain, leading to a state of cognitive arousal that manifests as impulsivity and poor concentration.",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Highly recommended for elimination in Focus patients.",
+            "AVOID: Highly recommended for elimination in Focus users.",
         "scientificEvidenceRank": 74,
         "studyLinks": {
           "Meta-analysis of food dyes and behavior":

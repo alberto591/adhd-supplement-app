@@ -47,25 +47,25 @@ class DefaultFirebaseOptions {
     apiKey: 'dummy-api-key',
     appId: '1:123456789:web:dummy-app-id',
     messagingSenderId: '123456789',
-    projectId: 'adhd-supplement-app',
-    authDomain: 'adhd-supplement-app.firebaseapp.com',
-    storageBucket: 'adhd-supplement-app.appspot.com',
+    projectId: 'neurostack-app',
+    authDomain: 'neurostack-app.firebaseapp.com',
+    storageBucket: 'neurostack-app.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBo9QF3oAS-F4GbBEkEIOY6o230_jZRBlg',
     appId: '1:93466359350:android:1aa4eb1af7506870f20a97',
     messagingSenderId: '93466359350',
-    projectId: 'adhd-supplement-app',
-    storageBucket: 'adhd-supplement-app.firebasestorage.app',
+    projectId: 'neurostack-app',
+    storageBucket: 'neurostack-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDLTcPuiQcaVjmQqAyFT6VJiTQ-WWC4m7w',
     appId: '1:93466359350:ios:acafee8b05086757f20a97',
     messagingSenderId: '93466359350',
-    projectId: 'adhd-supplement-app',
-    storageBucket: 'adhd-supplement-app.firebasestorage.app',
+    projectId: 'neurostack-app',
+    storageBucket: 'neurostack-app.firebasestorage.app',
     iosBundleId: 'com.neurostack2.app',
   );
 
@@ -73,8 +73,8 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyDLTcPuiQcaVjmQqAyFT6VJiTQ-WWC4m7w',
     appId: '1:93466359350:ios:ea28d62154476bd3f20a97',
     messagingSenderId: '93466359350',
-    projectId: 'adhd-supplement-app',
-    storageBucket: 'adhd-supplement-app.firebasestorage.app',
+    projectId: 'neurostack-app',
+    storageBucket: 'neurostack-app.firebasestorage.app',
     iosBundleId: 'com.neurostack2.app',
   );
 }
