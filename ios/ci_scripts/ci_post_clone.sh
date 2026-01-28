@@ -40,6 +40,9 @@ flutter config --no-analytics
 echo "🔄 Running flutter pub get..."
 flutter pub get
 
+echo "🔥 Installing FlutterFire CLI..."
+flutter pub global activate flutterfire_cli
+
 # 4. FORCE Build Config (Provenance: V6 Fix)
 # We do BOTH precache AND config-only build to be 100% sure.
 echo "🔨 Running flutter build ios --config-only (Force Config)..."
