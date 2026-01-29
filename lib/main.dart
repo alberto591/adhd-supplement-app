@@ -25,12 +25,15 @@ void main() async {
 
   // Initialize Firebase with error handling
   try {
-    // Note: On web, this requires firebase_options.dart or manual configuration
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    if (Firebase.apps.isNotEmpty) {
+      AppLogger.i('Firebase already initialized');
+    } else {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      AppLogger.i('Firebase initialized successfully');
+    }
     firebaseInitialized = true;
-    AppLogger.i('Firebase initialized successfully');
 
     // Initialize Crashlytics (disabled in debug mode)
     if (!kDebugMode) {
