@@ -178,7 +178,45 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                           ),
                           TextSpan(
                               text:
-                                  '. If you miss a dose, your streak doesn\'t reset. Our heart icon saves your flame so you can pick up right where you left off—no shame, just progress.'),
+                                  '. If you miss a serving, your streak doesn\'t reset. Our heart icon saves your flame so you can pick up right where you left off—no pressure, just progress.'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    // Non-Medical Disclaimer
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? Colors.red.withValues(alpha: 0.1)
+                            : Colors.red.withValues(alpha: 0.05),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isDark
+                              ? Colors.red.withValues(alpha: 0.3)
+                              : Colors.red.withValues(alpha: 0.2),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.medical_information_outlined,
+                            color: isDark ? Colors.red[300] : Colors.red[700],
+                            size: 20,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'NOT A MEDICAL DEVICE. For wellness & organization only. Consult a professional for health decisions.',
+                              style: TextStyle(
+                                color:
+                                    isDark ? Colors.red[200] : Colors.red[800],
+                                fontSize: 11,
+                                height: 1.3,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

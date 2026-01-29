@@ -90,7 +90,7 @@ class EmergencyContactScreen extends StatelessWidget {
             _buildContactCard(
               context,
               title: 'Poison Control Center',
-              subtitle: 'For accidental overdoses or compatibilitys',
+              subtitle: 'For accidental excessive intakees or compatibilitys',
               number: '1-800-222-1222', // US Poison Control
               icon: Icons.local_hospital,
               color: Colors.orange,

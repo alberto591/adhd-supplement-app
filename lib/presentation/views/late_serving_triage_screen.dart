@@ -3,14 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 
-class LateDoseTriageScreen extends StatefulWidget {
-  const LateDoseTriageScreen({super.key});
+class LateServingTriageScreen extends StatefulWidget {
+  const LateServingTriageScreen({super.key});
 
   @override
-  State<LateDoseTriageScreen> createState() => _LateDoseTriageScreenState();
+  State<LateServingTriageScreen> createState() =>
+      _LateServingTriageScreenState();
 }
 
-class _LateDoseTriageScreenState extends State<LateDoseTriageScreen> {
+class _LateServingTriageScreenState extends State<LateServingTriageScreen> {
   int _selectedOption = 0; // 0: Took now, 1: Skipped, 2: Took on time
 
   @override

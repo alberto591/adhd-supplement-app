@@ -47,7 +47,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
           'Yes! You can add the same supplement to multiple stacks (e.g., Morning and Afternoon). Taking it in one slot won\'t hide it in the other.',
     },
     {
-      'question': 'What if I miss a dose?',
+      'question': 'What if I miss a serving?',
       'answer':
           'No problem! You can tap the "..." menu on any item to "Skip for this Slot". This tracks your consistency accurately without penalty.',
     },

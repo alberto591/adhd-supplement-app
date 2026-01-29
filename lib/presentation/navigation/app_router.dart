@@ -344,7 +344,7 @@ class AppRouter {
 
       case lateDoseTriage:
         return MaterialPageRoute(
-          builder: (_) => const LateDoseTriageScreen(),
+          builder: (_) => const LateServingTriageScreen(),
           fullscreenDialog: true,
         );
 
