@@ -46,8 +46,14 @@ void main() async {
       };
     }
   } catch (e) {
-    AppLogger.e('Firebase initialization error', e);
-    initializationError = e.toString();
+    if (e.toString().contains('[core/duplicate-app]')) {
+      AppLogger.w(
+          'Firebase initialized was already initialized (caught error)');
+      firebaseInitialized = true;
+    } else {
+      AppLogger.e('Firebase initialization error', e);
+      initializationError = e.toString();
+    }
   }
 
   // Setup Dependency Injection only if Firebase is ready OR if we can handle the lack of it
