@@ -36,19 +36,75 @@ target 'Runner' do
 end
 
 post_install do |installer|
-  # Fix for both Pods project and Main project
-  projects = [installer.pods_project, installer.aggregate_targets[0].user_project]
+  # 1. Apply config to PODS project targets
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
 
-  projects.each do |project|
-    project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # Force stable deployment target
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.4'
+
+      # Fix legacy flag interference
+      config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'NO'
+
+      # Enable compatibility for modern architectures (Bitcode deprecation)
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+
+      # Fix "Include of non-modular header inside framework module" (Xcode 16)
+      config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+      
+      # Explicitly suppress non-modular include errors
+      ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS'].each do |flag_name|
+        flags = config.build_settings[flag_name] || ['$(inherited)']
+        new_flag = '-Wno-non-modular-include-in-framework-module'
+        if flags.is_a?(Array)
+          flags << new_flag unless flags.include?(new_flag)
+        elsif flags.is_a?(String)
+          flags += " #{new_flag}" unless flags.include?(new_flag)
+        end
+        config.build_settings[flag_name] = flags
+      end
+
+      # Enforce Swift 5.0 to avoid Swift 6 concurrency/strictness errors
+      config.build_settings['SWIFT_VERSION'] = '5.0'
+
+      # Fix BoringSSL-GRPC 'unsupported option -G' error on Xcode 16+
+      if target.name == 'BoringSSL-GRPC'
+        # Scrub target-level flags
+        ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS'].each do |flag_name|
+          flags = config.build_settings[flag_name] || ['$(inherited)']
+          if flags.is_a?(Array)
+            flags.delete('-G')
+          elsif flags.is_a?(String)
+            flags = flags.gsub('-G', ' ')
+          end
+          config.build_settings[flag_name] = flags
+        end
+
+        # Scrub individual file-level flags
+        target.source_build_phase.files.each do |file|
+          if file.settings && file.settings['COMPILER_FLAGS']
+            current_flags = file.settings['COMPILER_FLAGS']
+            scrubbed_flags = current_flags.split(' ').reject { |f| f == '-G' || f == '-GCC_WARN_INHIBIT_ALL_WARNINGS' }.join(' ')
+            file.settings['COMPILER_FLAGS'] = scrubbed_flags
+          end
+        end
+      end
+    end
+  end
+
+  # 2. Apply config to USER project (Runner) targets
+  installer.aggregate_targets.each do |aggregate_target|
+    # Ensure usage of the user project
+    user_project = aggregate_target.user_project
+    next if user_project.nil?
+
+    user_project.targets.each do |target|
       target.build_configurations.each do |config|
-        # 1. Force stable deployment target
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.4'
-
-        # 2. Fix "Include of non-modular header inside framework module" (Xcode 16)
+        # Fix "Include of non-modular header inside framework module" (Xcode 16)
         config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
         
-        # 3. Explicitly suppress non-modular include errors
+        # Explicitly suppress non-modular include errors
         ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS'].each do |flag_name|
           flags = config.build_settings[flag_name] || ['$(inherited)']
           new_flag = '-Wno-non-modular-include-in-framework-module'
@@ -60,43 +116,14 @@ post_install do |installer|
           config.build_settings[flag_name] = flags
         end
 
-        # 4. Enforce Swift 5.0 to avoid Swift 6 concurrency/strictness errors
+        # Force stable deployment target
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.4'
+
+         # Enforce Swift 5.0
         config.build_settings['SWIFT_VERSION'] = '5.0'
-        
-        # 5. Bitcode is deprecated
+
+        # Bitcode is deprecated
         config.build_settings['ENABLE_BITCODE'] = 'NO'
-      end
-    end
-  end
-
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-
-    target.build_configurations.each do |config|
-      # Fix legacy flag interference
-      config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'NO'
-
-      # Fix BoringSSL-GRPC 'unsupported option -G' error on Xcode 16+
-      if target.name == 'BoringSSL-GRPC'
-        # 1. Scrub target-level flags
-        ['OTHER_CFLAGS', 'OTHER_CPLUSPLUSFLAGS'].each do |flag_name|
-          flags = config.build_settings[flag_name] || ['$(inherited)']
-          if flags.is_a?(Array)
-            flags.delete('-G')
-          elsif flags.is_a?(String)
-            flags = flags.gsub('-G', ' ')
-          end
-          config.build_settings[flag_name] = flags
-        end
-
-        # 2. Scrub individual file-level flags (the aggressive scrub)
-        target.source_build_phase.files.each do |file|
-          if file.settings && file.settings['COMPILER_FLAGS']
-            current_flags = file.settings['COMPILER_FLAGS']
-            scrubbed_flags = current_flags.split(' ').reject { |f| f == '-G' || f == '-GCC_WARN_INHIBIT_ALL_WARNINGS' }.join(' ')
-            file.settings['COMPILER_FLAGS'] = scrubbed_flags
-          end
-        end
       end
     end
   end
