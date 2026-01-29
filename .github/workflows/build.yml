@@ -45,6 +45,38 @@ jobs:
           name: ios-build
           path: build/ios/iphoneos/*.app
 
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Android (.aab)
+        run: flutter build appbundle --release
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build
+          path: build/app/outputs/bundle/release/*.aab
+
 # old settings
 
 # name: Flutter Build
