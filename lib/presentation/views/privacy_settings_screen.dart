@@ -112,24 +112,24 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                 ],
               ),
 
-              // Secure Access Section
-              _buildSectionHeader('Secure Access', isDark),
-              _buildSettingsContainer(
-                context,
-                children: [
-                  _buildToggleTile(
-                    context,
-                    title: 'Biometric Lock',
-                    subtitle: 'Require FaceID or TouchID',
-                    value: viewModel.biometricLockEnabled,
-                    onChanged: (val) => viewModel.setBiometricLockEnabled(val),
-                    icon: Icons.fingerprint,
-                    iconColor: primaryBlue,
-                    isFirst: true,
-                    isLast: true,
-                  ),
-                ],
-              ),
+              // Secure Access Section (Hidden for v1.0 - pending local_auth)
+              // _buildSectionHeader('Secure Access', isDark),
+              // _buildSettingsContainer(
+              //   context,
+              //   children: [
+              //     _buildToggleTile(
+              //       context,
+              //       title: 'Biometric Lock',
+              //       subtitle: 'Require FaceID or TouchID',
+              //       value: viewModel.biometricLockEnabled,
+              //       onChanged: (val) => viewModel.setBiometricLockEnabled(val),
+              //       icon: Icons.fingerprint,
+              //       iconColor: primaryBlue,
+              //       isFirst: true,
+              //       isLast: true,
+              //     ),
+              //   ],
+              // ),
 
               // Data Control Section
               _buildSectionHeader('Data Control', isDark),
