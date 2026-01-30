@@ -148,8 +148,8 @@ class _InsightsContent extends StatelessWidget {
                         isDark, primaryGold),
                     const SizedBox(height: 16),
 
-                    // Science Hub Nudge
-                    _buildScienceNudge(context, isDark),
+                    // Strategy Hub Nudge
+                    _buildStrategyNudge(context, isDark),
                     const SizedBox(height: 16),
 
                     // Export Button
@@ -458,7 +458,7 @@ class _InsightsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildScienceNudge(BuildContext context, bool isDark) {
+  Widget _buildStrategyNudge(BuildContext context, bool isDark) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -477,10 +477,11 @@ class _InsightsContent extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.science_outlined, color: AppColors.primaryBlue),
+              const Icon(Icons.lightbulb_outlined,
+                  color: AppColors.primaryBlue),
               const SizedBox(width: 8),
               Text(
-                'Scientific Insight',
+                'Strategic Insight',
                 style: GoogleFonts.lexend(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -503,7 +504,7 @@ class _InsightsContent extends StatelessWidget {
           const SizedBox(height: 16),
           TextButton(
             onPressed: () =>
-                Navigator.pushReplacementNamed(context, AppRouter.scienceHub),
+                Navigator.pushReplacementNamed(context, AppRouter.strategyHub),
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
               minimumSize: Size.zero,
@@ -513,7 +514,7 @@ class _InsightsContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Explore Science Hub',
+                  'Explore Strategy Hub',
                   style: GoogleFonts.lexend(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

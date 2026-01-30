@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-import '../../application/view_models/state_checkin_viewmodel.dart';
+import '../../application/view_models/focus_checkin_view_model.dart';
 import '../theme/app_theme.dart';
 
-class DailyStateCheckinScreen extends StatefulWidget {
-  const DailyStateCheckinScreen({super.key});
+class DailyFocusCheckinScreen extends StatefulWidget {
+  const DailyFocusCheckinScreen({super.key});
 
   @override
-  State<DailyStateCheckinScreen> createState() =>
-      _DailyStateCheckinScreenState();
+  State<DailyFocusCheckinScreen> createState() =>
+      _DailyFocusCheckinScreenState();
 }
 
-class _DailyStateCheckinScreenState extends State<DailyStateCheckinScreen>
+class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _celebrationController;
   Timer? _debounceTimer;
@@ -29,7 +29,7 @@ class _DailyStateCheckinScreenState extends State<DailyStateCheckinScreen>
     _notesController = TextEditingController();
   }
 
-  void _onNotesChanged(String value, StateCheckInViewModel viewModel) {
+  void _onNotesChanged(String value, FocusCheckInViewModel viewModel) {
     viewModel.setNotes(value);
 
     _debounceTimer?.cancel();
@@ -48,7 +48,7 @@ class _DailyStateCheckinScreenState extends State<DailyStateCheckinScreen>
 
   void _submitCheckIn(BuildContext context) async {
     final viewModel =
-        Provider.of<StateCheckInViewModel>(context, listen: false);
+        Provider.of<FocusCheckInViewModel>(context, listen: false);
     final navigator = Navigator.of(context);
     final success = await viewModel.submitCheckIn();
     if (success && mounted) {
@@ -120,7 +120,7 @@ class _DailyStateCheckinScreenState extends State<DailyStateCheckinScreen>
               ),
 
               // Sliders
-              Consumer<StateCheckInViewModel>(
+              Consumer<FocusCheckInViewModel>(
                 builder: (context, viewModel, child) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -199,7 +199,7 @@ class _DailyStateCheckinScreenState extends State<DailyStateCheckinScreen>
                         ),
                         onChanged: (value) => _onNotesChanged(
                             value,
-                            Provider.of<StateCheckInViewModel>(context,
+                            Provider.of<FocusCheckInViewModel>(context,
                                 listen: false)),
                       ),
                     ),
@@ -210,7 +210,7 @@ class _DailyStateCheckinScreenState extends State<DailyStateCheckinScreen>
               // Action Buttons
               Padding(
                 padding: const EdgeInsets.fromLTRB(24, 32, 24, 40),
-                child: Consumer<StateCheckInViewModel>(
+                child: Consumer<FocusCheckInViewModel>(
                   builder: (context, viewModel, child) {
                     return Column(
                       children: [

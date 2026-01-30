@@ -18,6 +18,9 @@ class FirebaseSupplementRepository implements SupplementRepository {
     if (_userCache.containsKey(cacheKey)) return _userCache[cacheKey]!;
 
     try {
+      AppLogger.d(
+          'DEBUG: getAllSupplements called for userId: $userId, projectId: ${_firestore.app.options.projectId}');
+
       // 1. Fetch Global Supplements
       final globalSnapshot = await _firestore
           .collection('supplements')
@@ -28,10 +31,12 @@ class FirebaseSupplementRepository implements SupplementRepository {
           .map((doc) => Supplement.fromJson({...doc.data(), 'id': doc.id}))
           .toList();
 
+      AppLogger.d('DEBUG: Global supplements found: ${globalSupps.length}');
+
       List<Supplement> results = globalSupps;
 
       // 2. Fetch Custom Supplements if userId provided
-      if (userId != null) {
+      if (userId != null && userId.isNotEmpty) {
         final customSnapshot = await _firestore
             .collection('users')
             .doc(userId)
@@ -47,12 +52,16 @@ class FirebaseSupplementRepository implements SupplementRepository {
                 }))
             .toList();
 
+        AppLogger.d(
+            'DEBUG: Custom supplements found for user $userId: ${customSupps.length}');
         results = [...globalSupps, ...customSupps];
       }
 
+      AppLogger.d('DEBUG: Total supplements combined: ${results.length}');
       _userCache[cacheKey] = results;
       return results;
     } catch (e) {
+      AppLogger.e('DEBUG: Fetching supplements failed: $e');
       AppLogger.w('Fetching supplements failed, falling back to cache', e);
       try {
         final globalSnapshot = await _firestore

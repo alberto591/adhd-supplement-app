@@ -13,7 +13,7 @@ class SeedingService {
         "category": "Essential Fatty Acids",
         "dosage": "1000mg",
         "timeOfDay": "morning",
-        "benefits": ["Focus", "Brain Health", "Mood"],
+        "benefits": ["Focus", "Brain Performance", "Mood"],
         "evidenceLevel": "high",
         "notes": "Take with food for better absorption",
         "status": "beneficial",
@@ -269,7 +269,7 @@ class SeedingService {
         "detailedBenefits": [
           "Reduces restless energy and impulsivity in zinc-deficient individuals by 30%",
           "Enhances the effectiveness of Type A elements (lower doses may be needed)",
-          "Supports immune function and gut health (important for Focus comorbidities)",
+          "Supports immune function and gut health (important for Focus performance)",
           "Improves sleep quality through melatonin regulation"
         ],
         "timingRationale":
@@ -712,7 +712,7 @@ class SeedingService {
           "Improves mood and reduces anxiety through gut-brain communication",
           "Supports production of neurotransmitters (90% of serotonin made in gut)",
           "Reduces inflammation linked to focus challenges",
-          "Enhances nutrient absorption critical for brain health"
+          "Enhances nutrient absorption critical for brain function"
         ],
         "timingRationale":
             "Morning dosing on empty stomach (30 min before food) maximizes survival through stomach acid. Consistent daily use builds healthy microbiome over 4-8 weeks.",
@@ -722,7 +722,7 @@ class SeedingService {
               "https://pubmed.ncbi.nlm.nih.gov/31665527/",
           "Gut-brain axis in neurodevelopment":
               "https://pubmed.ncbi.nlm.nih.gov/30356668/",
-          "Microbiome and mental health":
+          "Microbiome and cognitive wellness":
               "https://pubmed.ncbi.nlm.nih.gov/31758907/"
         },
         "dosageByWeight": {
@@ -803,7 +803,7 @@ class SeedingService {
         "studyLinks": {
           "Sugar consumption and Focus behavior":
               "https://pubmed.ncbi.nlm.nih.gov/21129940/",
-          "Sucrose vs HFCS in cognitive health":
+          "Sucrose vs HFCS in cognitive function":
               "https://pubmed.ncbi.nlm.nih.gov/16507461/"
         },
         "dosageByWeight": {
@@ -1241,7 +1241,7 @@ class SeedingService {
         "benefits": ["Anti-Inflammatory", "Neuroprotection", "Mood Support"],
         "evidenceLevel": "moderate",
         "notes":
-            "Must be formulated for bioavailability (with piperine/black pepper or liposomal). Powerful anti-inflammatory for brain health.",
+            "Must be formulated for bioavailability (with piperine/black pepper or liposomal). Powerful anti-inflammatory for brain function.",
         "status": "beneficial",
         "focusLevel": 3,
         "mechanismOfAction":
@@ -2639,7 +2639,7 @@ class SeedingService {
             "Sucralose has been shown to significantly alter the gut microbiome and may increase intestinal permeability. Since the gut-brain axis is critical for Focus management, chronic gut disruption can lead to systemic inflammation and indirect behavioral worsening.",
         "detailedBenefits": <String>[],
         "timingRationale":
-            "AVOID: Long-term gut health is foundational for Focus focus.",
+            "AVOID: Long-term gut health is foundational for focused performance.",
         "scientificEvidenceRank": 55,
         "studyLinks": {
           "Sucralose and the gut microbiome":
@@ -2922,6 +2922,7 @@ class SeedingService {
         'displayName': 'Test User',
         'createdAt': DateTime.now().toIso8601String(),
         'hasCompletedOnboarding': true,
+        'goals': <String>['Better Sleep', 'Mental Clarity'],
         'unlockedAchievements': <String>[],
       });
       AppLogger.i('Test user configured successfully: $email');

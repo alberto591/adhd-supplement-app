@@ -6,10 +6,10 @@ import '../../domain/entities/study.dart';
 import '../../domain/entities/educational_article.dart';
 import '../../domain/repositories/article_repository.dart';
 
-class ScienceHubViewModel extends ChangeNotifier {
+class StrategyHubViewModel extends ChangeNotifier {
   final ArticleRepository _repository;
 
-  ScienceHubViewModel(this._repository);
+  StrategyHubViewModel(this._repository);
 
   String _searchQuery = '';
   String get searchQuery => _searchQuery;
@@ -122,7 +122,7 @@ class ScienceHubViewModel extends ChangeNotifier {
       _loadStudies();
       _loadEducationalArticles();
     } catch (e) {
-      AppLogger.e('Error loading science hub data', e);
+      AppLogger.e('Error loading strategy hub data', e);
     }
 
     _isLoading = false;

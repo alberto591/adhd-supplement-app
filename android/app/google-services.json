@@ -1,8 +1,8 @@
 {
   "project_info": {
     "project_number": "93466359350",
-    "project_id": "neurostack-app",
-    "storage_bucket": "neurostack-app.firebasestorage.app"
+    "project_id": "adhd-supplement-app",
+    "storage_bucket": "adhd-supplement-app.firebasestorage.app"
   },
   "client": [
     {

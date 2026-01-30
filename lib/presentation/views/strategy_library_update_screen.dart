@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
-class ScienceLibraryUpdateScreen extends StatelessWidget {
-  const ScienceLibraryUpdateScreen({super.key});
+class StrategyLibraryUpdateScreen extends StatelessWidget {
+  const StrategyLibraryUpdateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class ScienceLibraryUpdateScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 32, bottom: 16),
               child: Text(
-                'SCIENCE REFRESH',
+                'STRATEGY REFRESH',
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -192,7 +192,7 @@ class ScienceLibraryUpdateScreen extends StatelessWidget {
                             context); // Close for now, logic needed to open specific tab
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text('Science Library updated!')),
+                              content: Text('Strategy Library updated!')),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -208,7 +208,7 @@ class ScienceLibraryUpdateScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'View New Science',
+                            'View New Strategy',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

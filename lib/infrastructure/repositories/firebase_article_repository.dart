@@ -125,10 +125,11 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
       }
 
       // 3. If missing, Generate New via Perplexity
-      if (_perplexityService != null) {
+      final perplexity = _perplexityService;
+      if (perplexity != null) {
         AppLogger.i('Generating new Daily Article via AI: $dailyId');
         try {
-          final articleData = await _perplexityService!.generateDailyArticle();
+          final articleData = await perplexity.generateDailyArticle();
 
           // Add ID and dates
           articleData['id'] = dailyId;

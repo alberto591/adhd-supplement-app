@@ -31,7 +31,15 @@ void main() async {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      AppLogger.i('Firebase initialized successfully');
+      final options = Firebase.app().options;
+      AppLogger.i('Firebase initialized successfully.');
+      AppLogger.i('Project ID from Options: ${options.projectId}');
+      AppLogger.i('App ID from Options: ${options.appId}');
+      AppLogger.i('API Key from Options: ${options.apiKey}');
+      AppLogger.i('Messaging Sender ID: ${options.messagingSenderId}');
+      if (options.storageBucket != null) {
+        AppLogger.i('Storage Bucket: ${options.storageBucket}');
+      }
     }
     firebaseInitialized = true;
 

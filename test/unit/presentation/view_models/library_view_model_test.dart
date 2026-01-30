@@ -6,6 +6,9 @@ import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
 import 'package:neurostack_app/domain/repositories/stack_repository.dart';
 import 'package:neurostack_app/domain/repositories/settings_repository.dart';
 import 'package:neurostack_app/infrastructure/services/notification_service.dart';
+import 'package:neurostack_app/domain/entities/user.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import 'package:neurostack_app/infrastructure/services/perplexity_service.dart';
 import 'package:flutter/material.dart';
 
 // Fakes for cleaner testing
@@ -197,10 +200,74 @@ class FakeSettingsRepository implements SettingsRepository {
   Future<void> setLastLibraryDownloadTime(DateTime time) async {}
 }
 
+class FakePerplexityService implements PerplexityService {
+  @override
+  final String apiKey = 'test-key';
+
+  @override
+  final String baseUrl = 'test-url';
+
+  @override
+  Future<String> search(String query, {String? systemPrompt}) async =>
+      'Test result';
+
+  @override
+  Future<Map<String, dynamic>> generateDailyArticle() async => {};
+
+  @override
+  Future<List<Map<String, String>>> getPersonalizedRecommendations({
+    required List<String> goals,
+    List<String> currentStack = const [],
+  }) async =>
+      [];
+}
+
+// FakeAuthProvider removed - utilizing StubAuthProvider
+
+// Using Mockito-style fake or simple stub if Mockito isn't available.
+// Actually, extending ChangeNotifier directly is easier for AuthProvider.
+class StubAuthProvider extends ChangeNotifier implements AuthProvider {
+  User? _user;
+  @override
+  User? get user => _user;
+
+  void setUser(User? u) {
+    _user = u;
+    notifyListeners();
+  }
+
+  // Stubs for other members to satisfy interface
+  @override
+  AuthStatus get status => AuthStatus.authenticated;
+  @override
+  String? get errorMessage => null;
+  @override
+  bool get isAuthenticated => true;
+  @override
+  bool get isPremium => false;
+  @override
+  bool canAccess(String id) => false;
+  @override
+  Future<void> refreshEntitlements() async {}
+  @override
+  Future<void> signIn(String e, String p) async {}
+  @override
+  Future<void> signUp(String e, String p, String n) async {}
+  @override
+  Future<void> signInAnonymously() async {}
+  @override
+  Future<void> sendPasswordResetEmail(String e) async {}
+  @override
+  Future<void> signOut() async {}
+  @override
+  Future<void> updateProfile(User u) async {}
+}
+
 void main() {
   late LibraryViewModel viewModel;
   late FakeSupplementRepository fakeSupplementRepo;
   late FakeStackRepository fakeStackRepo;
+  late StubAuthProvider stubAuthProvider;
   const String userId = 'test-user';
 
   const beneficialSupp = Supplement(
@@ -226,10 +293,13 @@ void main() {
   setUp(() {
     fakeSupplementRepo = FakeSupplementRepository();
     fakeStackRepo = FakeStackRepository();
+    stubAuthProvider = StubAuthProvider();
     viewModel = LibraryViewModel(
       supplementRepository: fakeSupplementRepo,
       stackRepository: fakeStackRepo,
       settingsRepository: FakeSettingsRepository(),
+      perplexityService: FakePerplexityService(),
+      authProvider: stubAuthProvider,
       userId: userId,
     );
   });
@@ -463,6 +533,27 @@ void main() {
         // But for reproduction, let's assert the CORRECT behavior and watch it fail.
         expect(viewModel.supplements[1].name, 'beta');
         expect(viewModel.supplements[2].name, 'Gamma');
+      });
+    });
+    group('AI Recommendations', () {
+      test('fetchAiRecommendations updates state correctly on success',
+          () async {
+        final mockService = FakePerplexityService();
+        // Since we already have a viewModel in setUp, we use its mocked service
+        // but we need to control the output for this specific test if needed.
+        // For simplicity with Stub implementation:
+        await viewModel.fetchAiRecommendations();
+
+        expect(viewModel.isAiLoading, false);
+        expect(viewModel.aiRecommendations, isEmpty); // Fake returns empty list
+      });
+
+      test('fetchAiRecommendations handles empty goals with fallback',
+          () async {
+        stubAuthProvider.setUser(null); // No goals
+        await viewModel.fetchAiRecommendations();
+        // The implementation should still call the service with effectiveGoals
+        expect(viewModel.isAiLoading, false);
       });
     });
   });

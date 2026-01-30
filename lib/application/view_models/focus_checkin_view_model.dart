@@ -3,11 +3,11 @@ import '../../domain/entities/daily_state_checkin.dart';
 import '../../domain/repositories/checkin_repository.dart';
 import 'package:uuid/uuid.dart';
 
-class StateCheckInViewModel extends ChangeNotifier {
+class FocusCheckInViewModel extends ChangeNotifier {
   final CheckInRepository _repository;
   final String _userId;
 
-  StateCheckInViewModel({
+  FocusCheckInViewModel({
     required CheckInRepository repository,
     required String userId,
   })  : _repository = repository,

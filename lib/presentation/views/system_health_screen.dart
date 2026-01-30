@@ -287,7 +287,7 @@ class SystemHealthScreen extends StatelessWidget {
             ),
           ),
           Text(
-            'System Health',
+            'System Status',
             style: GoogleFonts.lexend(
               fontSize: 18,
               fontWeight: FontWeight.bold,

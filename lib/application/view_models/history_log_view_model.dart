@@ -158,7 +158,9 @@ class HistoryLogViewModel extends ChangeNotifier {
           );
 
       // 2. Get user stacks to find what SHOULD have been taken
-      final stacks = await _stackRepository!.getUserStacks(_userId);
+      final stackRepo = _stackRepository;
+      if (stackRepo == null) return;
+      final stacks = await stackRepo.getUserStacks(_userId);
       final allScheduledItems = stacks.expand((s) => s.items).toList();
 
       // 3. Identify missed items (scheduled but no entry)

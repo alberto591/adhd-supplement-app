@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import '../../application/providers/auth_provider.dart';
 import '../../domain/entities/supplement.dart';
+import '../../infrastructure/services/perplexity_service.dart';
 import '../../domain/entities/supplement_stack.dart';
 import '../../domain/repositories/supplement_repository.dart';
 import '../../domain/repositories/stack_repository.dart';
@@ -12,17 +14,27 @@ class LibraryViewModel extends ChangeNotifier {
   final SupplementRepository _supplementRepository;
   final StackRepository _stackRepository;
   final SettingsRepository _settingsRepository;
+  final PerplexityService _perplexityService;
+  final AuthProvider _authProvider;
   final String _userId;
 
   // State
   List<Supplement> _allSupplements = [];
   List<Supplement> _filteredSupplements = [];
+// _categories removed as it is calculated via getter
+
+  // AI State
+  List<Map<String, String>> _aiRecommendations = [];
+  bool _isAiLoading = false;
+  String? _aiError;
+
+  // Filters
   String _searchQuery = '';
   List<String> _selectedCategories = [];
   List<String> _selectedEvidenceLevels = [];
 // _selectedClassAStatus removed
   List<String> _selectedForms = [];
-  String _currentStatus = 'beneficial';
+  late String _currentStatus;
   bool _isLoading = false;
   String? _error = '';
   bool _isDisposed = false;
@@ -38,6 +50,10 @@ class LibraryViewModel extends ChangeNotifier {
 // selectedClassAStatus removed
   List<String> get selectedForms => _selectedForms;
   String get currentStatus => _currentStatus;
+  List<String> get userGoals => _authProvider.user?.goals ?? [];
+  List<Map<String, String>> get aiRecommendations => _aiRecommendations;
+  bool get isAiLoading => _isAiLoading;
+  String? get aiError => _aiError;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
@@ -54,11 +70,20 @@ class LibraryViewModel extends ChangeNotifier {
     required SupplementRepository supplementRepository,
     required StackRepository stackRepository,
     required SettingsRepository settingsRepository,
+    required PerplexityService perplexityService,
+    required AuthProvider authProvider,
     required String userId,
   })  : _supplementRepository = supplementRepository,
         _stackRepository = stackRepository,
         _settingsRepository = settingsRepository,
-        _userId = userId;
+        _perplexityService = perplexityService,
+        _authProvider = authProvider,
+        _userId = userId {
+    _currentStatus = (_authProvider.user?.goals.isNotEmpty ?? false)
+        ? 'recommended'
+        : 'beneficial';
+    _authProvider.addListener(_applyFilters);
+  }
 
   /// Initialize - load all supplements
   Future<void> initialize() async {
@@ -69,6 +94,12 @@ class LibraryViewModel extends ChangeNotifier {
       final fetched =
           await _supplementRepository.getAllSupplements(userId: _userId);
       _allSupplements = _deduplicateSupplements(fetched);
+
+      // Auto-set status if goals exist
+      if (_authProvider.user != null && _authProvider.user!.goals.isNotEmpty) {
+        _currentStatus = 'recommended';
+      }
+
       _applyFilters();
     } catch (e) {
       _error = 'Failed to load supplements: $e';
@@ -113,6 +144,39 @@ class LibraryViewModel extends ChangeNotifier {
       AppLogger.e(_error ?? 'Creation failed');
     } finally {
       _setLoading(false);
+    }
+  }
+
+  /// Fetch AI Recommendations
+  Future<void> fetchAiRecommendations() async {
+    _isAiLoading = true;
+    _aiError = null;
+    notifyListeners();
+
+    // Get latest goals from auth provider
+    final goals = _authProvider.user?.goals ?? [];
+
+    // Fallback if no goals are selected, so the button always works
+    final effectiveGoals = goals.isEmpty
+        ? ['General Cognitive Performance', 'Brain Health']
+        : goals;
+
+    try {
+      final recommendations =
+          await _perplexityService.getPersonalizedRecommendations(
+        goals: effectiveGoals,
+      );
+      AppLogger.d('Fetched ${recommendations.length} AI Recommendations');
+      _aiRecommendations = recommendations;
+
+      // Also refresh the library list to reflect the goals analyzed
+      _applyFilters();
+    } catch (e) {
+      _aiError = 'Analysis failed. Please try again.';
+      AppLogger.e('AI Recommendation Error: $e');
+    } finally {
+      _isAiLoading = false;
+      notifyListeners();
     }
   }
 
@@ -191,7 +255,7 @@ class LibraryViewModel extends ChangeNotifier {
     _searchQuery = '';
     _selectedCategories = [];
     _selectedEvidenceLevels = [];
-// _selectedClassAStatus reset removed
+    // _selectedClassAStatus reset removed
     _selectedForms = [];
     _currentStatus = 'beneficial';
     _applyFilters();
@@ -324,9 +388,49 @@ class LibraryViewModel extends ChangeNotifier {
   // Private helpers
 
   void _applyFilters() {
+    final stopwatch = Stopwatch()..start();
+    final userGoals = _authProvider.user?.goals ?? [];
+
     _filteredSupplements = _allSupplements.where((s) {
       // Status filter (Primary)
-      if (s.status != _currentStatus) {
+      if (_currentStatus == 'recommended') {
+        final goals = _authProvider.user?.goals ?? [];
+        // If "recommended" tab is selected, we filter by supplements that match user goals
+        if (goals.isEmpty) {
+          // Fallback: If no goals, show "beneficial" items with high evidence
+          if (s.status != 'beneficial' ||
+              s.evidenceLevel?.toLowerCase() != 'high') {
+            return false;
+          }
+        } else {
+          // Smart Matching: Map goals to relevant keywords
+          final keywords = goals.expand(_getKeywordsForGoal).toSet();
+
+          if (keywords.isEmpty) {
+            // Fallback if no keywords generated
+            if (s.status != 'beneficial' ||
+                s.evidenceLevel?.toLowerCase() != 'high') {
+              return false;
+            }
+          }
+
+          // Check if any benefit contains any of our smart keywords
+          final hasMatchingBenefit = s.benefits.any((benefit) {
+            final lowerBenefit = benefit.toLowerCase();
+            return keywords.any((k) => lowerBenefit.contains(k));
+          });
+
+          if (hasMatchingBenefit) return true;
+
+          // Fallback to high evidence ONLY if we don't have enough matched benefits
+          // This keeps the list focused on goals.
+          if (s.evidenceLevel?.toLowerCase() == 'high') {
+            // For high evidence, we still show it but it's secondary
+            return true;
+          }
+          return false;
+        }
+      } else if (s.status != _currentStatus) {
         return false;
       }
 
@@ -344,8 +448,6 @@ class LibraryViewModel extends ChangeNotifier {
           return false;
         }
       }
-
-      // Class A compatibility filter REMOVED
 
       // Form filter (Multi-select)
       if (_selectedForms.isNotEmpty) {
@@ -369,11 +471,14 @@ class LibraryViewModel extends ChangeNotifier {
       return true;
     }).toList();
 
+    AppLogger.d(
+        'Applied filters: status=$_currentStatus, goals=${userGoals.length}, results=${_filteredSupplements.length}, time=${stopwatch.elapsedMilliseconds}ms');
     notifyListeners();
   }
 
   @override
   void dispose() {
+    _authProvider.removeListener(_applyFilters);
     _isDisposed = true;
     super.dispose();
   }
@@ -383,6 +488,27 @@ class LibraryViewModel extends ChangeNotifier {
     if (!_isDisposed) {
       super.notifyListeners();
     }
+  }
+
+  List<String> _getKeywordsForGoal(String goal) {
+    final lowerGoal = goal.toLowerCase();
+
+    // Map specific onboarding goals to broad benefit keywords
+    if (lowerGoal.contains('sleep')) {
+      return ['sleep', 'rest', 'insomnia', 'bedtime', 'calm'];
+    }
+    if (lowerGoal.contains('mental') || lowerGoal.contains('fog')) {
+      return ['focus', 'memory', 'cognitive', 'brain', 'clarity'];
+    }
+    if (lowerGoal.contains('emotional') || lowerGoal.contains('mood')) {
+      return ['mood', 'anxiety', 'stress', 'emotional', 'calm'];
+    }
+    if (lowerGoal.contains('energy')) {
+      return ['energy', 'fatigue', 'alertness', 'vitality'];
+    }
+
+    // Fallback: use significant words (skip 'better', 'improve', etc)
+    return lowerGoal.split(' ').where((w) => w.length > 3).toList();
   }
 
   void _setLoading(bool loading) {

@@ -3,14 +3,15 @@ import 'package:http/http.dart' as http;
 
 class PerplexityService {
   final String apiKey;
+  final http.Client _client;
   final String baseUrl = 'https://api.perplexity.ai/chat/completions';
 
-  // In a real production app, use an environment variable or secure config.
-  // For this private request, we use the key provided by the user.
   static const String _defaultApiKey =
       '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';
 
-  PerplexityService({String? apiKey}) : apiKey = apiKey ?? _defaultApiKey;
+  PerplexityService({String? apiKey, http.Client? client})
+      : apiKey = apiKey ?? _defaultApiKey,
+        _client = client ?? http.Client();
 
   static const String chemistSystemPrompt =
       'You are "Alchemist", a bio-optimization specialist specialized in neuro-chemistry. '
@@ -20,7 +21,7 @@ class PerplexityService {
 
   Future<String> search(String query, {String? systemPrompt}) async {
     try {
-      final response = await http.post(
+      final response = await _client.post(
         Uri.parse(baseUrl),
         headers: {
           'Authorization': 'Bearer $apiKey',
@@ -75,7 +76,7 @@ Do not include markdown code blocks (like ```json) in the response, just the raw
         'Generate the daily article for ${DateTime.now().toIso8601String()}. Focus on something different than standard Magnesium or Caffeine if possible, maybe a lesser known nootropic or behavioral protocol.';
 
     try {
-      final response = await http.post(
+      final response = await _client.post(
         Uri.parse(baseUrl),
         headers: {
           'Authorization': 'Bearer $apiKey',
@@ -111,6 +112,81 @@ Do not include markdown code blocks (like ```json) in the response, just the raw
       }
     } catch (e) {
       throw Exception('Perplexity API Error: $e');
+    }
+  }
+
+  Future<List<Map<String, String>>> getPersonalizedRecommendations({
+    required List<String> goals,
+    List<String> currentStack = const [],
+  }) async {
+    const systemPrompt = '''
+You are a senior neuro-chemist and supplement advisor.
+Analyze the user's goals and current stack to provide the TOP 3 most effective supplement recommendations.
+You must ensure safety and synergy.
+Output strictly JSON in this format:
+[
+  {
+    "name": "Exact Supplement Name",
+    "reason": "1-sentence specific explanation linking biochemistry to their specific goal."
+  }
+]
+Do not include markdown formatting like ```json.
+''';
+
+    final prompt =
+        'User Goals: ${goals.join(", ")}. Current Stack: ${currentStack.join(", ")}. What are the best 3 additions?';
+
+    try {
+      final response = await _client.post(
+        Uri.parse(baseUrl),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'model': 'sonar-reasoning-pro',
+          'messages': [
+            {'role': 'system', 'content': systemPrompt},
+            {'role': 'user', 'content': prompt}
+          ],
+          'max_tokens': 1000,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final content = data['choices'][0]['message']['content'] as String;
+        // More robust JSON extraction for arrays
+        String cleanJson = content.trim();
+        if (cleanJson.contains('[') && cleanJson.contains(']')) {
+          final start = cleanJson.indexOf('[');
+          final end = cleanJson.lastIndexOf(']') + 1;
+          cleanJson = cleanJson.substring(start, end);
+        } else {
+          // Fallback to existing cleaning if no brackets found (though it will likely fail)
+          cleanJson =
+              cleanJson.replaceAll('```json', '').replaceAll('```', '').trim();
+        }
+
+        try {
+          final List<dynamic> parsed = jsonDecode(cleanJson) as List<dynamic>;
+          return parsed
+              .map((item) => {
+                    'name': item['name'].toString(),
+                    'reason': item['reason'].toString(),
+                  })
+              .toList();
+        } catch (e) {
+          throw Exception(
+              'Failed to decode AI JSON: $cleanJson\nOriginal: $content');
+        }
+      } else {
+        throw Exception(
+            'Failed to fetch recommendations: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Perplexity Recommendations Error: $e');
     }
   }
 }

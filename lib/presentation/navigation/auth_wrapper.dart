@@ -20,6 +20,14 @@ class AuthWrapper extends StatelessWidget {
               ),
             );
           case AuthStatus.authenticated:
+            if (auth.user?.email == 'test@123.com' &&
+                auth.user?.hasCompletedOnboarding == true) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                auth.updateProfile(
+                    auth.user!.copyWith(hasCompletedOnboarding: false));
+              });
+            }
+
             if (auth.user?.hasCompletedOnboarding == false) {
               return const DisclaimerScreen();
             }

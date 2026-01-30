@@ -27,7 +27,7 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
   String _name = '';
   String _category = 'Vitamin';
   String? _dosage;
-  String? _timeOfDay = 'Morning';
+  final String _timeOfDay = 'Morning';
   final List<String> _benefits = [];
   final String _evidence = 'Moderate';
   final String _form = 'Capsule';
@@ -91,13 +91,7 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
                 hint: 'e.g. 500mg',
                 onChanged: (v) => _dosage = v,
               ),
-              const SizedBox(height: 16),
-              _buildDropdown(
-                label: 'Usual Timing',
-                value: _timeOfDay,
-                items: ['Morning', 'Afternoon', 'Evening', 'Night'],
-                onChanged: (v) => setState(() => _timeOfDay = v),
-              ),
+              // Usual Timing field removed per user request
               const SizedBox(height: 24),
               // Safety checkbox removed
               const SizedBox(height: 32),

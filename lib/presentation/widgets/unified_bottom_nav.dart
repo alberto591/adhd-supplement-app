@@ -25,7 +25,7 @@ class UnifiedBottomNav extends StatelessWidget {
         routeName = AppRouter.library;
         break;
       case 2:
-        routeName = AppRouter.scienceHub;
+        routeName = AppRouter.strategyHub;
         break;
       case 3:
         routeName = AppRouter.profile;

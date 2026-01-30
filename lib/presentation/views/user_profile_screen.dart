@@ -232,7 +232,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 const SizedBox(height: 4),
 
                 // Health & Routine Section
-                const _SectionHeader(title: 'Health & Routine'),
+                const _SectionHeader(title: 'Focus & Routine'),
                 _SettingsGroup(
                   children: [
                     Consumer<AuthProvider>(

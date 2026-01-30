@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:neurostack_app/application/view_models/state_checkin_viewmodel.dart';
+import 'package:neurostack_app/application/view_models/focus_checkin_view_model.dart';
 import 'package:neurostack_app/domain/entities/daily_state_checkin.dart';
 import 'package:neurostack_app/domain/repositories/checkin_repository.dart';
 
@@ -10,7 +10,8 @@ class MockCheckInRepository implements CheckInRepository {
 
   void setHasCheckedInToday(bool value) => _hasCheckedInToday = value;
   void setShouldThrow(bool value) => _shouldThrow = value;
-  void setCheckIns(List<DailyStateCheckIn> checkIns) => _checkIns.addAll(checkIns);
+  void setCheckIns(List<DailyStateCheckIn> checkIns) =>
+      _checkIns.addAll(checkIns);
 
   @override
   Future<void> logCheckIn(DailyStateCheckIn checkIn) async {
@@ -70,12 +71,12 @@ class MockCheckInRepository implements CheckInRepository {
 
 void main() {
   late MockCheckInRepository mockRepository;
-  late StateCheckInViewModel viewModel;
+  late FocusCheckInViewModel viewModel;
   const userId = 'user1';
 
   setUp(() {
     mockRepository = MockCheckInRepository();
-    viewModel = StateCheckInViewModel(
+    viewModel = FocusCheckInViewModel(
       repository: mockRepository,
       userId: userId,
     );

@@ -584,7 +584,7 @@ class CommunityScreen extends StatelessWidget {
           Navigator.of(context)
               .popUntil((route) => route.settings.name == AppRouter.dashboard);
         } else if (index == 2) {
-          Navigator.pushReplacementNamed(context, AppRouter.scienceHub);
+          Navigator.pushReplacementNamed(context, AppRouter.strategyHub);
         } else if (index == 3) {
           Navigator.pushReplacementNamed(context, AppRouter.profile);
         }

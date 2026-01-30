@@ -10,8 +10,9 @@ class UrlService {
 
   Future<bool> _launch(Uri url,
       {LaunchMode mode = LaunchMode.platformDefault}) async {
-    if (_launcher != null) {
-      return _launcher!(url, mode: mode);
+    final launcher = _launcher;
+    if (launcher != null) {
+      return launcher(url, mode: mode);
     }
     return launchUrl(url, mode: mode);
   }

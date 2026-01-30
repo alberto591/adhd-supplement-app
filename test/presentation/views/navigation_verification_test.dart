@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:neurostack_app/config/locator.dart';
 import 'package:neurostack_app/presentation/views/insights_screen.dart';
-import 'package:neurostack_app/presentation/views/science_hub_screen.dart';
-import 'package:neurostack_app/application/view_models/science_hub_view_model.dart';
+import 'package:neurostack_app/presentation/views/strategy_hub_screen.dart';
+import 'package:neurostack_app/application/view_models/strategy_hub_view_model.dart';
 import 'package:neurostack_app/presentation/widgets/unified_bottom_nav.dart';
 import 'package:neurostack_app/domain/entities/article.dart';
 import 'package:neurostack_app/application/providers/auth_provider.dart';
@@ -56,8 +56,8 @@ class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   bool get isPremium => true;
 }
 
-class MockScienceHubViewModel extends ChangeNotifier
-    implements ScienceHubViewModel {
+class MockStrategyHubViewModel extends ChangeNotifier
+    implements StrategyHubViewModel {
   @override
   bool get isLoading => false;
   String? get error => null;
@@ -137,8 +137,8 @@ class MockUrlService implements UrlService {
 void main() {
   setUp(() {
     locator.reset();
-    locator
-        .registerFactory<ScienceHubViewModel>(() => MockScienceHubViewModel());
+    locator.registerFactory<StrategyHubViewModel>(
+        () => MockStrategyHubViewModel());
     locator.registerFactory<InsightsViewModel>(() => MockInsightsViewModel());
     locator.registerLazySingleton<UrlService>(() => MockUrlService());
   });
@@ -166,7 +166,7 @@ void main() {
     expect(nav.currentIndex, 3); // Insights is under Profile (index 3)
   });
 
-  testWidgets('ScienceHubScreen renders without crashing',
+  testWidgets('StrategyHubScreen renders without crashing',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MultiProvider(
@@ -176,7 +176,7 @@ void main() {
           ),
         ],
         child: const MaterialApp(
-          home: ScienceHubScreen(),
+          home: StrategyHubScreen(),
         ),
       ),
     );

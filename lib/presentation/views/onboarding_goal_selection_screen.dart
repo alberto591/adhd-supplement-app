@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../widgets/goal_selection_card.dart';
 import '../navigation/app_router.dart';
+import 'package:provider/provider.dart';
+import '../../application/providers/auth_provider.dart';
+import '../../utils/logger.dart';
 
 class OnboardingGoalSelectionScreen extends StatefulWidget {
   const OnboardingGoalSelectionScreen({super.key});
@@ -76,7 +79,7 @@ class _OnboardingGoalSelectionScreenState
                         ),
                       ),
                       const SizedBox(width: 8),
-                      for (int i = 0; i < 4; i++) ...[
+                      for (int i = 0; i < 1; i++) ...[
                         Container(
                           width: 8,
                           height: 8,
@@ -85,7 +88,7 @@ class _OnboardingGoalSelectionScreenState
                             shape: BoxShape.circle,
                           ),
                         ),
-                        if (i < 3) const SizedBox(width: 8),
+                        if (i < 0) const SizedBox(width: 8),
                       ],
                     ],
                   ),
@@ -185,8 +188,30 @@ class _OnboardingGoalSelectionScreenState
                       width: double.infinity,
                       height: 56,
                       child: ElevatedButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, '/onboarding/routine-optimization'),
+                        onPressed: () async {
+                          final auth = context.read<AuthProvider>();
+                          final user = auth.user;
+
+                          if (user != null) {
+                            try {
+                              // Persist the selected goals to Firestore
+                              await auth
+                                  .updateProfile(
+                                    user.copyWith(
+                                        goals: _selectedGoals.toList()),
+                                  )
+                                  .timeout(const Duration(seconds: 3));
+                            } catch (e) {
+                              AppLogger.w(
+                                  'Failed to save onboarding goals: $e');
+                              // We proceed anyway to not block the user
+                            }
+                          }
+
+                          if (!context.mounted) return;
+                          Navigator.pushNamed(
+                              context, AppRouter.onboardingGracePeriod);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.accentGreen,
                           foregroundColor: const Color(
@@ -208,8 +233,27 @@ class _OnboardingGoalSelectionScreenState
                     ),
                     const SizedBox(height: 16),
                     TextButton(
-                      onPressed: () => Navigator.pushNamed(
-                          context, AppRouter.onboardingRoutineOptimization),
+                      onPressed: () async {
+                        final auth = context.read<AuthProvider>();
+                        final user = auth.user;
+
+                        if (user != null) {
+                          try {
+                            // If they skip, we clear any previous selections
+                            await auth
+                                .updateProfile(
+                                  user.copyWith(goals: []),
+                                )
+                                .timeout(const Duration(seconds: 2));
+                          } catch (e) {
+                            AppLogger.w('Failed to clear onboarding goals: $e');
+                          }
+                        }
+
+                        if (!context.mounted) return;
+                        Navigator.pushNamed(
+                            context, AppRouter.onboardingGracePeriod);
+                      },
                       style: TextButton.styleFrom(
                         foregroundColor:
                             isDark ? Colors.grey[400] : Colors.grey[500],

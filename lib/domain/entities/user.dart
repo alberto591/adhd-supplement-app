@@ -9,7 +9,9 @@ class User {
   final int xp;
   final int level;
   final bool hasCompletedOnboarding;
-  final String? focusStyle; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
+  final List<String> goals;
+  final String?
+      focusStyle; // e.g., 'Combined Type', 'Inattentive', 'Hyperactive'
   final RoutineElement? currentElement;
   final List<String> unlockedAchievements;
   final List<String>
@@ -22,6 +24,7 @@ class User {
     this.photoUrl,
     required this.createdAt,
     this.hasCompletedOnboarding = false,
+    this.goals = const [],
     this.xp = 0,
     this.level = 1,
     this.focusStyle,
@@ -39,6 +42,7 @@ class User {
     Object? photoUrl = _unset,
     DateTime? createdAt,
     bool? hasCompletedOnboarding,
+    List<String>? goals,
     int? xp,
     int? level,
     Object? focusStyle = _unset,
@@ -57,10 +61,12 @@ class User {
       createdAt: createdAt ?? this.createdAt,
       hasCompletedOnboarding:
           hasCompletedOnboarding ?? this.hasCompletedOnboarding,
+      goals: goals ?? this.goals,
       xp: xp ?? this.xp,
       level: level ?? this.level,
-      focusStyle:
-          identical(focusStyle, _unset) ? this.focusStyle : focusStyle as String?,
+      focusStyle: identical(focusStyle, _unset)
+          ? this.focusStyle
+          : focusStyle as String?,
       currentElement: identical(currentElement, _unset)
           ? this.currentElement
           : currentElement as RoutineElement?,
@@ -77,6 +83,7 @@ class User {
       'photoUrl': photoUrl,
       'createdAt': createdAt.toIso8601String(),
       'hasCompletedOnboarding': hasCompletedOnboarding,
+      'goals': goals,
       'xp': xp,
       'level': level,
       'focusStyle': focusStyle,
@@ -94,6 +101,9 @@ class User {
       photoUrl: json['photoUrl'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       hasCompletedOnboarding: json['hasCompletedOnboarding'] as bool? ?? false,
+      goals:
+          (json['goals'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
       xp: json['xp'] as int? ?? 0,
       level: json['level'] as int? ?? 1,
       focusStyle: json['focusStyle'] as String?,

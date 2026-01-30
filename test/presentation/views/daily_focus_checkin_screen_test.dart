@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:mockito/mockito.dart';
-import 'package:neurostack_app/presentation/views/daily_state_checkin_screen.dart';
-import 'package:neurostack_app/application/view_models/state_checkin_viewmodel.dart';
+import 'package:neurostack_app/presentation/views/daily_focus_checkin_screen.dart';
+import 'package:neurostack_app/application/view_models/focus_checkin_view_model.dart';
 import 'package:neurostack_app/domain/repositories/checkin_repository.dart';
 import 'package:neurostack_app/domain/entities/daily_state_checkin.dart';
 
@@ -30,13 +30,18 @@ class MockCheckInRepository extends Mock implements CheckInRepository {
   Future<DailyStateCheckIn?> getLatestCheckIn(String userId) async => null;
 }
 
+// New Mock ViewModel
+class MockFocusCheckInViewModel extends Mock implements FocusCheckInViewModel {}
+
 void main() {
   late MockCheckInRepository mockRepository;
-  late StateCheckInViewModel viewModel;
+  late FocusCheckInViewModel viewModel; // Changed from StateCheckInViewModel
 
   setUp(() {
     mockRepository = MockCheckInRepository();
-    viewModel = StateCheckInViewModel(
+    // Initialize viewModel with real instance and mock repository
+    viewModel = FocusCheckInViewModel(
+      // Changed from StateCheckInViewModel
       repository: mockRepository,
       userId: 'test-user',
     );
@@ -46,12 +51,12 @@ void main() {
     return MaterialApp(
       home: ChangeNotifierProvider.value(
         value: viewModel,
-        child: const DailyStateCheckinScreen(),
+        child: const DailyFocusCheckinScreen(),
       ),
     );
   }
 
-  testWidgets('DailyStateCheckinScreen renders correctly',
+  testWidgets('DailyFocusCheckinScreen renders correctly',
       (WidgetTester tester) async {
     await tester.pumpWidget(createScreen());
 

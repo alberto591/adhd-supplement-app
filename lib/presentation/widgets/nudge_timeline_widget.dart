@@ -7,11 +7,13 @@ class NudgeTimelineWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E242E) : Colors.white, // Slightly lighter dark background for card
+        color: isDark
+            ? const Color(0xFF1E242E)
+            : Colors.white, // Slightly lighter dark background for card
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isDark ? Colors.grey[800]! : Colors.grey[200]!,
@@ -33,32 +35,37 @@ class NudgeTimelineWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-                
+
                 // Active Progress (up to center)
-                Positioned(
-                  left: 0,
-                  right: MediaQuery.of(context).size.width * 0.4, // Roughly to center
-                  child: Container(
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(2),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: Container(
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                
+
                 // -15m Marker
                 Positioned(
-                  left: 60,
-                  bottom: 30,
-                  child: _buildMarker(context, '-15M', isActive: true, isSmall: true),
+                  left: 40,
+                  bottom: 12,
+                  child: _buildMarker(context, '-15M',
+                      isActive: true, isSmall: true),
                 ),
-                
+
                 // Dose Marker (Center)
                 Positioned(
                   left: 0,
                   right: 0,
-                  bottom: 25,
+                  bottom: 4,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -67,9 +74,11 @@ class NudgeTimelineWidget extends StatelessWidget {
                           width: 32,
                           height: 32,
                           decoration: BoxDecoration(
-                            color: isDark ? const Color(0xFF101822) : Colors.white,
+                            color:
+                                isDark ? const Color(0xFF101822) : Colors.white,
                             shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.primary, width: 4),
+                            border:
+                                Border.all(color: AppColors.primary, width: 4),
                             boxShadow: [
                               BoxShadow(
                                 color: AppColors.primary.withValues(alpha: 0.3),
@@ -97,26 +106,29 @@ class NudgeTimelineWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 // +5m Marker
                 Positioned(
-                  right: 100,
-                  bottom: 30,
-                  child: _buildMarker(context, '+5M', isActive: true, isSmall: true),
+                  right: 80,
+                  bottom: 12,
+                  child: _buildMarker(context, '+5M',
+                      isActive: true, isSmall: true),
                 ),
-                
-                 // +10m Marker
+
+                // +10m Marker
                 Positioned(
-                  right: 60,
-                  bottom: 30,
-                  child: _buildMarker(context, '+10M', isActive: false, isSmall: true),
+                  right: 45,
+                  bottom: 12,
+                  child: _buildMarker(context, '+10M',
+                      isActive: false, isSmall: true),
                 ),
-                
-                 // +15m Marker
+
+                // +15m Marker
                 Positioned(
-                  right: 20,
-                  bottom: 30,
-                  child: _buildMarker(context, '+15M', isActive: false, isSmall: true),
+                  right: 10,
+                  bottom: 12,
+                  child: _buildMarker(context, '+15M',
+                      isActive: false, isSmall: true),
                 ),
               ],
             ),
@@ -136,9 +148,10 @@ class NudgeTimelineWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildMarker(BuildContext context, String label, {required bool isActive, required bool isSmall}) {
+  Widget _buildMarker(BuildContext context, String label,
+      {required bool isActive, required bool isSmall}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -146,7 +159,11 @@ class NudgeTimelineWidget extends StatelessWidget {
           width: isSmall ? 16 : 24,
           height: isSmall ? 16 : 24,
           decoration: BoxDecoration(
-            color: isActive ? AppColors.primary : (isDark ? Colors.grey[700]!.withValues(alpha: 0.5) : Colors.grey[300]),
+            color: isActive
+                ? AppColors.primary
+                : (isDark
+                    ? Colors.grey[700]!.withValues(alpha: 0.5)
+                    : Colors.grey[300]),
             shape: BoxShape.circle,
             border: Border.all(
               color: isDark ? const Color(0xFF101822) : Colors.white,
@@ -158,8 +175,10 @@ class NudgeTimelineWidget extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: isActive 
-                ? (isDark ? Colors.grey[400] : Colors.grey[600]) // Text color for active/past markers
+            color: isActive
+                ? (isDark
+                    ? Colors.grey[400]
+                    : Colors.grey[600]) // Text color for active/past markers
                 : (isDark ? Colors.grey[700] : Colors.grey[400]),
             fontSize: 10,
             fontWeight: FontWeight.bold,

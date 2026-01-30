@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
+import '../../application/providers/auth_provider.dart';
+import '../../utils/logger.dart';
 
 class OnboardingGracePeriodScreen extends StatelessWidget {
   const OnboardingGracePeriodScreen({super.key});
@@ -57,7 +60,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'Step 3 of 4',
+                        'Step 2 of 2',
                         style: TextStyle(
                           color: isDark ? Colors.white : Colors.black,
                           fontSize: 16,
@@ -65,7 +68,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '75% Complete',
+                        '100% Complete',
                         style: TextStyle(
                           color: isDark ? Colors.grey[400] : Colors.grey[500],
                           fontSize: 14,
@@ -83,7 +86,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                     ),
                     child: FractionallySizedBox(
                       alignment: Alignment.centerLeft,
-                      widthFactor: 0.75,
+                      widthFactor: 1.0,
                       child: Container(
                         decoration: BoxDecoration(
                           color: AppColors.primary,
@@ -97,22 +100,22 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
             ),
 
             Expanded(
-              child: Padding(
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 16), // Spacing from top bar
                     // Hero Illustration
                     SizedBox(
-                      width: 300,
-                      height: 300,
+                      width: 220,
+                      height: 220,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
                           // Blur Effect
                           Container(
-                            width: 280,
-                            height: 280,
+                            width: 200,
+                            height: 200,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: AppColors.primary
@@ -121,8 +124,8 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                           ),
                           // Image
                           Container(
-                            width: 250,
-                            height: 250,
+                            width: 180,
+                            height: 180,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               image: const DecorationImage(
@@ -220,6 +223,8 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    const SizedBox(
+                        height: 24), // Bottom spacing for center content
                   ],
                 ),
               ),
@@ -233,8 +238,30 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(
-                          context, AppRouter.onboardingStackSetup),
+                      onPressed: () async {
+                        final auth = context.read<AuthProvider>();
+                        final user = auth.user;
+
+                        // Start the update but don't let it block navigation indefinitely
+                        // if Firestore is having connectivity/permission issues.
+                        if (user != null) {
+                          try {
+                            await auth
+                                .updateProfile(
+                                    user.copyWith(hasCompletedOnboarding: true))
+                                .timeout(const Duration(seconds: 2));
+                          } catch (e) {
+                            AppLogger.w(
+                                'Onboarding completion update failed/timed out: $e');
+                            // We still proceed to dashboard; the flag will be synced
+                            // eventually or handles by AuthWrapper retry logic.
+                          }
+                        }
+
+                        if (!context.mounted) return;
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AppRouter.dashboard, (route) => false);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
@@ -252,15 +279,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                       child: const Text('Got it!'),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    "You're almost there. Just one more step!",
-                    style: TextStyle(
-                      color: isDark ? Colors.grey[500] : Colors.grey[400],
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

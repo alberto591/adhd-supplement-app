@@ -149,6 +149,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         ),
                         child: Row(
                           children: [
+                            // 1. Browse Tab
                             Expanded(
                               child: GestureDetector(
                                 onTap: () =>
@@ -176,7 +177,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Recommended',
+                                    'Browse',
                                     style: GoogleFonts.lexend(
                                       fontSize: 13,
                                       fontWeight: viewModel.currentStatus ==
@@ -194,6 +195,53 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                               ),
                             ),
+                            // 2. For You Tab
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () =>
+                                    viewModel.filterByStatus('recommended'),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        viewModel.currentStatus == 'recommended'
+                                            ? (isDark
+                                                ? const Color(0xFF2D3748)
+                                                : Colors.white)
+                                            : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow:
+                                        viewModel.currentStatus == 'recommended'
+                                            ? [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withValues(alpha: 0.05),
+                                                  blurRadius: 4,
+                                                  offset: const Offset(0, 2),
+                                                )
+                                              ]
+                                            : null,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'For You',
+                                    style: GoogleFonts.lexend(
+                                      fontSize: 13,
+                                      fontWeight: viewModel.currentStatus ==
+                                              'recommended'
+                                          ? FontWeight.bold
+                                          : FontWeight.w500,
+                                      color: viewModel.currentStatus ==
+                                              'recommended'
+                                          ? (isDark
+                                              ? Colors.white
+                                              : const Color(0xFF0F172A))
+                                          : Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // 3. Avoid Tab
                             Expanded(
                               child: GestureDetector(
                                 onTap: () => viewModel.filterByStatus('avoid'),
@@ -219,7 +267,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Avoid List',
+                                    'Avoid',
                                     style: GoogleFonts.lexend(
                                       fontSize: 13,
                                       fontWeight:
@@ -377,6 +425,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ],
                               ),
                             ),
+
+                            // AI Chemist Section (Only in For You)
+                            if (viewModel.currentStatus == 'recommended')
+                              _buildAiChemistSection(
+                                  context, viewModel, isDark),
 
                             // Section Header
                             Padding(
@@ -1075,6 +1128,225 @@ class _LibraryScreenState extends State<LibraryScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildAiChemistSection(
+      BuildContext context, LibraryViewModel viewModel, bool isDark) {
+    if (viewModel.isAiLoading) {
+      return Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground(isDark),
+          borderRadius: BorderRadius.circular(16),
+          border:
+              Border.all(color: AppColors.primaryGold.withValues(alpha: 0.3)),
+        ),
+        child: Column(
+          children: [
+            const CircularProgressIndicator(color: AppColors.primaryGold),
+            const SizedBox(height: 16),
+            Text(
+              'Analyzing bio-chemistry...',
+              style: GoogleFonts.lexend(
+                  color: isDark ? Colors.white70 : Colors.black87),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (viewModel.aiRecommendations.isEmpty) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: isDark
+                ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
+                : [const Color(0xFFF1F5F9), Colors.white],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border:
+              Border.all(color: AppColors.primaryGold.withValues(alpha: 0.3)),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryGold.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            )
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.primaryGold.withValues(alpha: 0.2),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.science,
+                  color: AppColors.primaryGold, size: 24),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'AI Chemist Analysis',
+                    style: GoogleFonts.lexend(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    viewModel.aiError ??
+                        'Get custom picks based on your goals.',
+                    style: GoogleFonts.lexend(
+                      fontSize: 12,
+                      color: viewModel.aiError != null
+                          ? Colors.red[400]
+                          : (isDark ? Colors.grey[400] : Colors.grey[600]),
+                    ),
+                  ),
+                  if (viewModel.userGoals.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    _buildGoalChips(viewModel.userGoals, isDark),
+                  ],
+                ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () => viewModel.fetchAiRecommendations(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryGold,
+                foregroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+              ),
+              child: Text(
+                'Analyze',
+                style: GoogleFonts.lexend(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          child: Row(
+            children: [
+              const Icon(Icons.auto_awesome,
+                  color: AppColors.primaryGold, size: 16),
+              const SizedBox(width: 8),
+              Text(
+                'CHEMIST SELECTIONS',
+                style: GoogleFonts.lexend(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                  color: AppColors.primaryGold,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (viewModel.userGoals.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 12),
+            child: _buildGoalChips(viewModel.userGoals, isDark),
+          ),
+        SizedBox(
+          height: 140,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: viewModel.aiRecommendations.length,
+            itemBuilder: (context, index) {
+              final rec = viewModel.aiRecommendations[index];
+              return Container(
+                width: 260,
+                margin: const EdgeInsets.only(right: 12),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.cardBackground(isDark),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                      color: AppColors.primaryGold.withValues(alpha: 0.3)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      rec['name'] ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.lexend(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: isDark ? Colors.white : Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: Text(
+                        rec['reason'] ?? '',
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.lexend(
+                          fontSize: 12,
+                          height: 1.4,
+                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 24),
+      ],
+    );
+  }
+
+  Widget _buildGoalChips(List<String> goals, bool isDark) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: goals.map((goal) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: AppColors.primaryGold.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(20),
+            border:
+                Border.all(color: AppColors.primaryGold.withValues(alpha: 0.2)),
+          ),
+          child: Text(
+            goal,
+            style: GoogleFonts.lexend(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: AppColors.primaryGold,
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 

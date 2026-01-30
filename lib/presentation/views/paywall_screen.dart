@@ -38,7 +38,8 @@ class PaywallScreen extends StatelessWidget {
                       _buildValuePill('Unlock Deep Performance Insights'),
                       _buildValuePill('Unlimited Supplement Stacks'),
                       _buildValuePill('Priority Med Compatibility Checker'),
-                      _buildValuePill('Expert-Verified Neurostack Science Hub'),
+                      _buildValuePill(
+                          'Expert-Verified Neurostack Strategy Hub'),
                       const SizedBox(height: 40),
                       _buildPricingSection(context),
                       const SizedBox(height: 32),

@@ -48,7 +48,7 @@ import 'package:neurostack_app/application/providers/auth_provider.dart';
 import 'package:neurostack_app/application/services/haptic_service.dart';
 import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
 import 'package:neurostack_app/application/view_models/routine_safety_view_model.dart';
-import 'package:neurostack_app/application/view_models/state_checkin_viewmodel.dart';
+import 'package:neurostack_app/application/view_models/focus_checkin_view_model.dart';
 import 'package:neurostack_app/application/view_models/subscription_view_model.dart';
 import 'package:neurostack_app/application/view_models/privacy_view_model.dart';
 import 'package:neurostack_app/application/view_models/notification_history_view_model.dart';
@@ -58,7 +58,7 @@ import 'package:neurostack_app/application/view_models/trophy_room_view_model.da
 import 'package:neurostack_app/application/view_models/community_view_model.dart';
 import 'package:neurostack_app/application/view_models/history_log_view_model.dart';
 import 'package:neurostack_app/application/view_models/article_detail_view_model.dart';
-import 'package:neurostack_app/application/view_models/science_hub_view_model.dart';
+import 'package:neurostack_app/application/view_models/strategy_hub_view_model.dart';
 import 'package:neurostack_app/application/view_models/refer_friend_view_model.dart';
 import 'package:neurostack_app/application/view_models/nightly_reflection_view_model.dart';
 import 'package:neurostack_app/application/view_models/advisor_report_view_model.dart';
@@ -164,8 +164,8 @@ void _setupViewModels() {
       () => CommunityViewModel(locator<CommunityRepository>()));
   locator.registerFactory(
       () => ArticleDetailViewModel(locator<ArticleRepository>()));
-  locator
-      .registerFactory(() => ScienceHubViewModel(locator<ArticleRepository>()));
+  locator.registerFactory(
+      () => StrategyHubViewModel(locator<ArticleRepository>()));
   locator.registerFactory(
       () => ReferFriendViewModel(locator<ReferralRepository>()));
   locator
@@ -191,6 +191,8 @@ void _setupViewModels() {
       supplementRepository: locator<SupplementRepository>(),
       stackRepository: locator<StackRepository>(),
       settingsRepository: locator<SettingsRepository>(),
+      perplexityService: locator<PerplexityService>(),
+      authProvider: locator<AuthProvider>(),
       userId: userId,
     ),
   );
@@ -208,8 +210,8 @@ void _setupViewModels() {
     ),
   );
 
-  locator.registerFactoryParam<StateCheckInViewModel, String, void>(
-    (userId, _) => StateCheckInViewModel(
+  locator.registerFactoryParam<FocusCheckInViewModel, String, void>(
+    (userId, _) => FocusCheckInViewModel(
       repository: locator<CheckInRepository>(),
       userId: userId,
     ),

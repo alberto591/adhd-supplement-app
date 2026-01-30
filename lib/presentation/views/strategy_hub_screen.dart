@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/locator.dart';
-import '../../application/view_models/science_hub_view_model.dart';
+import '../../application/view_models/strategy_hub_view_model.dart';
 import '../../domain/entities/article.dart';
 import '../../domain/entities/faq_item.dart';
 import '../../domain/entities/study.dart';
@@ -14,15 +14,15 @@ import '../widgets/unified_bottom_nav.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../widgets/skeleton_loader.dart';
 
-class ScienceHubScreen extends StatefulWidget {
-  const ScienceHubScreen({super.key});
+class StrategyHubScreen extends StatefulWidget {
+  const StrategyHubScreen({super.key});
 
   @override
-  State<ScienceHubScreen> createState() => _ScienceHubScreenState();
+  State<StrategyHubScreen> createState() => _StrategyHubScreenState();
 }
 
-class _ScienceHubScreenState extends State<ScienceHubScreen> {
-  late ScienceHubViewModel _viewModel;
+class _StrategyHubScreenState extends State<StrategyHubScreen> {
+  late StrategyHubViewModel _viewModel;
   bool _isSearchVisible = false;
   final TextEditingController _searchController = TextEditingController();
   final UrlService _urlService = locator<UrlService>();
@@ -30,7 +30,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
   @override
   void initState() {
     super.initState();
-    _viewModel = locator<ScienceHubViewModel>();
+    _viewModel = locator<StrategyHubViewModel>();
     _viewModel.loadData();
   }
 
@@ -51,7 +51,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
       value: _viewModel,
       child: Scaffold(
         backgroundColor: isDark ? bgDark : bgLight,
-        body: Consumer<ScienceHubViewModel>(
+        body: Consumer<StrategyHubViewModel>(
           builder: (context, viewModel, child) {
             if (viewModel.isLoading) {
               return _buildSkeleton(context, isDark);
@@ -116,7 +116,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            hintText: 'Search science, studies, FAQs...',
+            hintText: 'Search strategies, studies, FAQs...',
             hintStyle: GoogleFonts.lexend(color: Colors.grey),
             border: InputBorder.none,
           ),
@@ -158,7 +158,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
             Navigator.pushReplacementNamed(context, AppRouter.dashboard),
       ),
       title: Text(
-        'Science Hub',
+        'Strategy Hub',
         style: GoogleFonts.lexend(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -237,7 +237,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: const Text(
-                    'ARTICLE OF THE DAY',
+                    'STRATEGY OF THE DAY',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 10,
@@ -271,7 +271,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
                     const Icon(Icons.verified, color: Colors.yellow, size: 16),
                     const SizedBox(width: 4),
                     const Text(
-                      'High Evidence', // Static for now, could be dynamic
+                      'High Impact',
                       style: TextStyle(color: Colors.white70, fontSize: 12),
                     ),
                   ],
@@ -287,8 +287,8 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
   Widget _buildCategories(bool isDark, Color primary) {
     final categories = [
       {'icon': null, 'label': 'All Resources', 'active': true},
-      {'icon': Icons.manage_search, 'label': 'Research', 'active': false},
-      {'icon': Icons.shield, 'label': 'Safety', 'active': false},
+      {'icon': Icons.manage_search, 'label': 'Techniques', 'active': false},
+      {'icon': Icons.shield, 'label': 'Protocols', 'active': false},
       {'icon': Icons.forum, 'label': 'Success Stories', 'active': false},
     ];
 
@@ -360,7 +360,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Evidence-Based Research',
+                'Proven Strategies',
                 style: TextStyle(
                   color: isDark ? Colors.white : const Color(0xFF111418),
                   fontSize: 20,
@@ -703,7 +703,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
     );
   }
 
-  Widget _buildSearchResultsHeader(ScienceHubViewModel viewModel) {
+  Widget _buildSearchResultsHeader(StrategyHubViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
       child: Column(
@@ -730,7 +730,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
   }
 
   Widget _buildResearchLibrary(BuildContext context, bool isDark, Color primary,
-      ScienceHubViewModel viewModel) {
+      StrategyHubViewModel viewModel) {
     final categories = [
       'All',
       'Essential Fatty Acids',
@@ -813,7 +813,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
   }
 
   Widget _buildEducationalContent(BuildContext context, bool isDark,
-      Color primary, ScienceHubViewModel viewModel) {
+      Color primary, StrategyHubViewModel viewModel) {
     final categories = ['All', 'Neuroscience', 'Nutrition', 'Lifestyle'];
 
     return Padding(
@@ -897,7 +897,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
   }
 
   Widget _buildFaqSection(BuildContext context, bool isDark, Color primary,
-      ScienceHubViewModel viewModel) {
+      StrategyHubViewModel viewModel) {
     final categories = ['All', 'General', 'Safety', 'Dosing'];
 
     return Padding(
@@ -961,7 +961,7 @@ class _ScienceHubScreenState extends State<ScienceHubScreen> {
           ),
           const SizedBox(height: 16),
           // FAQ items
-          ...viewModel.filteredFaqs.map((faq) => _FaqCard(
+          ...viewModel.filteredFaqs.map<Widget>((faq) => _FaqCard(
                 faq: faq,
                 isDark: isDark,
                 primary: primary,

@@ -65,7 +65,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
         return SingleChildScrollView(
           child: Column(
             children: [
-              _buildSectionHeader('Your Health Data', isDark),
+              _buildSectionHeader('Your Activity Data', isDark),
               _buildSettingsContainer(
                 context,
                 children: [

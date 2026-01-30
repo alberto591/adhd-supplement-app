@@ -1,26 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:neurostack_app/application/view_models/state_checkin_viewmodel.dart';
+import 'package:neurostack_app/application/view_models/focus_checkin_view_model.dart';
 import 'package:neurostack_app/domain/repositories/checkin_repository.dart';
 
 @GenerateMocks([CheckInRepository])
-import 'state_checkin_viewmodel_test.mocks.dart';
+import 'focus_checkin_view_model_test.mocks.dart';
 
 void main() {
-  late StateCheckInViewModel viewModel;
+  late FocusCheckInViewModel viewModel;
   late MockCheckInRepository mockRepository;
   const testUserId = 'user_123';
 
   setUp(() {
     mockRepository = MockCheckInRepository();
-    viewModel = StateCheckInViewModel(
+    viewModel = FocusCheckInViewModel(
       repository: mockRepository,
       userId: testUserId,
     );
   });
 
-  group('StateCheckInViewModel', () {
+  group('FocusCheckInViewModel', () {
     test('initial state has default values', () {
       expect(viewModel.focusLevel, 50.0);
       expect(viewModel.energyLevel, 50.0);
