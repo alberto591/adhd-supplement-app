@@ -327,6 +327,45 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               const SizedBox(height: 16),
+                              if (supplement.studyLinks.isNotEmpty)
+                                _CollapsibleInfoCard(
+                                  title: 'Scientific Evidence',
+                                  icon: Icons.menu_book_outlined,
+                                  color: Colors.teal,
+                                  isDark: isDark,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: supplement.studyLinks.entries
+                                        .map((entry) => Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 12),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const Icon(Icons.link,
+                                                      size: 16,
+                                                      color: Colors.teal),
+                                                  const SizedBox(width: 8),
+                                                  Expanded(
+                                                    child: Text(
+                                                      entry.key,
+                                                      style: GoogleFonts.lexend(
+                                                        color: Colors.blue,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
                             ],
                           ),
                       ],

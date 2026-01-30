@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
+import '../../utils/logger.dart';
 
 class PersistentRemindersViewModel extends ChangeNotifier {
   final SettingsRepository _settingsRepository;
@@ -125,33 +126,38 @@ class PersistentRemindersViewModel extends ChangeNotifier {
   }
 
   Future<void> _scheduleOrCancelNotifications() async {
-    // 1000 is the ID for the daily reminder sequence (Morning Slot)
-    if (_nudgeModeEnabled) {
-      await _notificationService.scheduleRecurringNudgeSequence(
-        slot: NotificationSlot.morning,
-        title: 'Time for your daily stack!',
-        body: 'Keep your streak alive. Take your supplements now.',
-        hour: _nudgeTime.hour,
-        minute: _nudgeTime.minute,
-        mode: _notificationMode,
-      );
+    try {
+      // 1000 is the ID for the daily reminder sequence (Morning Slot)
+      if (_nudgeModeEnabled) {
+        await _notificationService.scheduleRecurringNudgeSequence(
+          slot: NotificationSlot.morning,
+          title: 'Time for your daily stack!',
+          body: 'Keep your streak alive. Take your supplements now.',
+          hour: _nudgeTime.hour,
+          minute: _nudgeTime.minute,
+          mode: _notificationMode,
+        );
 
-      // Evening Summary (20:00) - Uses Evening Slot Base ID (3000)
-      await _notificationService.scheduleRecurringNotification(
-        id: NotificationSlot.evening.baseId,
-        title: 'Daily Summary 🌙',
-        body: 'Tap to see your progress for today!',
-        hour: 20,
-        minute: 0,
-      );
-    } else {
-      // Cancel sequence range (max 15 for persistent)
-      final morningBase = NotificationSlot.morning.baseId;
-      for (int i = 0; i < 15; i++) {
-        await _notificationService.cancelNotification(morningBase + i);
+        // Evening Summary (20:00) - Uses Evening Slot Base ID (3000)
+        await _notificationService.scheduleRecurringNotification(
+          id: NotificationSlot.evening.baseId,
+          title: 'Daily Summary 🌙',
+          body: 'Tap to see your progress for today!',
+          hour: 20,
+          minute: 0,
+        );
+      } else {
+        // Cancel sequence range (max 15 for persistent)
+        final morningBase = NotificationSlot.morning.baseId;
+        for (int i = 0; i < 15; i++) {
+          await _notificationService.cancelNotification(morningBase + i);
+        }
+        await _notificationService
+            .cancelNotification(NotificationSlot.evening.baseId);
       }
-      await _notificationService
-          .cancelNotification(NotificationSlot.evening.baseId);
+    } catch (e) {
+      AppLogger.e('Failed to update notification schedule', e);
+      // We do not rethrow so that the UI can still update its state
     }
   }
 
