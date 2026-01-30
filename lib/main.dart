@@ -31,6 +31,12 @@ void main() async {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+      // Explicitly enable persistence for offline-first experience
+      FirebaseFirestore.instance.settings = const Settings(
+        persistenceEnabled: true,
+        cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+      );
+
       final options = Firebase.app().options;
       AppLogger.i('Firebase initialized successfully.');
       AppLogger.i('Project ID from Options: ${options.projectId}');
