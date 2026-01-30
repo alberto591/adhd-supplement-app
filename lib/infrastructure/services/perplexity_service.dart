@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../utils/logger.dart';
 
 class PerplexityService {
   final String apiKey;
@@ -38,7 +39,7 @@ class PerplexityService {
             },
             {'role': 'user', 'content': query}
           ],
-          'max_tokens': 1024,
+          'max_tokens': 4000,
         }),
       );
 
@@ -150,21 +151,25 @@ Do not include markdown formatting like ```json.
             {'role': 'system', 'content': systemPrompt},
             {'role': 'user', 'content': prompt}
           ],
-          'max_tokens': 1000,
+          // Reasoning models need more tokens for chain-of-thought
+          'max_tokens': 4000,
         }),
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final content = data['choices'][0]['message']['content'] as String;
-        // More robust JSON extraction for arrays
+        // Robust JSON extraction using Regex to find the array
         String cleanJson = content.trim();
-        if (cleanJson.contains('[') && cleanJson.contains(']')) {
-          final start = cleanJson.indexOf('[');
-          final end = cleanJson.lastIndexOf(']') + 1;
-          cleanJson = cleanJson.substring(start, end);
+
+        // Try to find a JSON array pattern [ ... ]
+        final jsonPattern = RegExp(r'\[.*\]', dotAll: true);
+        final match = jsonPattern.firstMatch(cleanJson);
+
+        if (match != null) {
+          cleanJson = match.group(0)!;
         } else {
-          // Fallback to existing cleaning if no brackets found (though it will likely fail)
+          // Fallback cleanup
           cleanJson =
               cleanJson.replaceAll('```json', '').replaceAll('```', '').trim();
         }
@@ -178,8 +183,10 @@ Do not include markdown formatting like ```json.
                   })
               .toList();
         } catch (e) {
-          throw Exception(
-              'Failed to decode AI JSON: $cleanJson\nOriginal: $content');
+          // Log the raw content for debugging
+          AppLogger.e('AI JSON Parse Error: $e');
+          AppLogger.d('Raw Content: $content');
+          throw Exception('Failed to decode AI JSON. Content: $content');
         }
       } else {
         throw Exception(
