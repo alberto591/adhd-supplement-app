@@ -322,7 +322,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => locator<UrlService>().launchUri(
-                                'https://adhd-supplement-app.web.app/privacy'),
+                                'https://neurostack-app.web.app/privacy'),
                         ),
                         const TextSpan(text: '\n\n'),
                         TextSpan(
@@ -334,7 +334,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => locator<UrlService>().launchUri(
-                                'https://adhd-supplement-app.web.app/delete-data'),
+                                'https://neurostack-app.web.app/delete-data'),
                         ),
                       ],
                     ),

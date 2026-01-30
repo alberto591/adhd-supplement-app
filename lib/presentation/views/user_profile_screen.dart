@@ -412,8 +412,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       subtitle: 'Legal information',
                       trailing: const Icon(Icons.open_in_new,
                           size: 18, color: Colors.grey),
-                      onTap: () => locator<UrlService>().launchUri(
-                          'https://adhd-supplement-app.web.app/privacy'),
+                      onTap: () => locator<UrlService>()
+                          .launchUri('https://neurostack-app.web.app/privacy'),
                     ),
                     const SizedBox(height: 2),
                     _SettingsTile(
