@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../config/locator.dart';
 import '../../application/providers/auth_provider.dart';
@@ -18,6 +19,7 @@ import '../views/streak_recovery_screen.dart';
 import '../views/onboarding_grace_period_screen.dart';
 
 import '../views/onboarding_goal_selection_screen.dart';
+import '../views/onboarding_explainer_screen.dart';
 
 import '../views/visual_pill_matcher_screen.dart';
 import '../views/persistent_reminders_screen.dart';
@@ -74,6 +76,7 @@ class AppRouter {
   static const String signup = '/signup';
   static const String forgotPassword = '/forgot-password';
   static const String onboardingGracePeriod = '/onboarding/grace-period';
+  static const String onboardingExplainer = '/onboarding/explainer';
   static const String onboardingDisclaimer = '/onboarding-disclaimer';
 
   static const String onboardingGoals = '/onboarding/goals';
@@ -147,6 +150,10 @@ class AppRouter {
 
       case forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+
+      case onboardingExplainer:
+        return MaterialPageRoute(
+            builder: (_) => const OnboardingExplainerScreen());
 
       case onboardingDisclaimer:
         return MaterialPageRoute(builder: (_) => const DisclaimerScreen());
@@ -303,10 +310,12 @@ class AppRouter {
       case focusBuddies:
         if (!FeatureFlags.focusBuddies) {
           return MaterialPageRoute(
-            builder: (_) => Scaffold(
-              appBar: AppBar(title: const Text('Coming Soon')),
-              body:
-                  const Center(child: Text('Focus Buddies is coming in v1.1')),
+            builder: (context) => Scaffold(
+              appBar:
+                  AppBar(title: Text(AppLocalizations.of(context)!.comingSoon)),
+              body: Center(
+                  child: Text(
+                      AppLocalizations.of(context)!.focusBuddiesComingSoon)),
             ),
           );
         }

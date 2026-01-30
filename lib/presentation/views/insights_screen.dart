@@ -10,6 +10,7 @@ import '../navigation/app_router.dart';
 import '../widgets/unified_bottom_nav.dart';
 import '../widgets/skeleton_loader.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 /// The main Insights screen.
 ///
@@ -58,7 +59,7 @@ class _InsightsContent extends StatelessWidget {
               Navigator.pushReplacementNamed(context, AppRouter.dashboard),
         ),
         title: Text(
-          'Insights',
+          AppLocalizations.of(context)!.insightsTitle,
           style: GoogleFonts.lexend(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
@@ -125,7 +126,7 @@ class _InsightsContent extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Here is your progress so far.',
+                      AppLocalizations.of(context)!.progressSoFar,
                       style: GoogleFonts.lexend(
                         fontSize: 14,
                         color: Colors.grey[600],
@@ -165,7 +166,7 @@ class _InsightsContent extends StatelessWidget {
                         label: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('Export Report for Advisor',
+                            Text(AppLocalizations.of(context)!.exportReport,
                                 style: GoogleFonts.lexend(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -257,7 +258,7 @@ class _InsightsContent extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  '$streak Day Streak',
+                  AppLocalizations.of(context)!.dayStreak(streak),
                   style: GoogleFonts.lexend(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -266,7 +267,7 @@ class _InsightsContent extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'You are building a powerful habit!',
+                  AppLocalizations.of(context)!.powerfulHabit,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lexend(
                     fontSize: 14,
@@ -299,7 +300,7 @@ class _InsightsContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '30-Day Consistency',
+            AppLocalizations.of(context)!.consistency30Day,
             style: GoogleFonts.lexend(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -344,7 +345,7 @@ class _InsightsContent extends StatelessWidget {
                 ),
               ),
               Text(
-                'Target: 80%+',
+                AppLocalizations.of(context)!.targetConsistency,
                 style: GoogleFonts.lexend(
                   fontSize: 12,
                   color: Colors.grey[500],
@@ -373,7 +374,7 @@ class _InsightsContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Weekly Focus Trend',
+                AppLocalizations.of(context)!.weeklyFocusTrend,
                 style: GoogleFonts.lexend(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -388,7 +389,7 @@ class _InsightsContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  '7-Day View',
+                  AppLocalizations.of(context)!.sevenDayView,
                   style: GoogleFonts.lexend(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -442,7 +443,15 @@ class _InsightsContent extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+            children: [
+              AppLocalizations.of(context)!.mondayAbbr,
+              AppLocalizations.of(context)!.tuesdayAbbr,
+              AppLocalizations.of(context)!.wednesdayAbbr,
+              AppLocalizations.of(context)!.thursdayAbbr,
+              AppLocalizations.of(context)!.fridayAbbr,
+              AppLocalizations.of(context)!.saturdayAbbr,
+              AppLocalizations.of(context)!.sundayAbbr,
+            ]
                 .map((day) => Text(
                       day,
                       style: GoogleFonts.lexend(
@@ -481,7 +490,7 @@ class _InsightsContent extends StatelessWidget {
                   color: AppColors.primaryBlue),
               const SizedBox(width: 8),
               Text(
-                'Strategic Insight',
+                AppLocalizations.of(context)!.strategicInsight,
                 style: GoogleFonts.lexend(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -492,7 +501,7 @@ class _InsightsContent extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Did you know? Magnesium supports over 300 enzymatic reactions in your body, many of which are responsible for neurotransmitter production.',
+            AppLocalizations.of(context)!.magnesiumFact,
             style: GoogleFonts.lexend(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -514,7 +523,7 @@ class _InsightsContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Explore Strategy Hub',
+                  AppLocalizations.of(context)!.exploreStrategyHub,
                   style: GoogleFonts.lexend(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

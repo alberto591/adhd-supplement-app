@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
@@ -62,8 +63,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
     if (mounted) {
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Routine optimization active! 🎉'),
+          SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.routineOptimizationActive),
             backgroundColor: AppColors.primary,
           ),
         );
@@ -138,7 +140,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                       color: AppColors.primaryGold),
                                   onPressed: () =>
                                       _showPresetsSheet(context, viewModel),
-                                  tooltip: 'Archetype Presets',
+                                  tooltip: AppLocalizations.of(context)!
+                                      .archetypePresets,
                                 ),
                                 TextButton(
                                   onPressed: viewModel.isLoading
@@ -151,9 +154,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           child: CircularProgressIndicator(
                                               strokeWidth: 2),
                                         )
-                                      : const Text(
-                                          'Save',
-                                          style: TextStyle(
+                                      : Text(
+                                          AppLocalizations.of(context)!.save,
+                                          style: const TextStyle(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -183,7 +186,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                       const SizedBox(height: 16),
                                       ElevatedButton(
                                         onPressed: () => viewModel.initialize(),
-                                        child: const Text('Retry'),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .retry),
                                       ),
                                     ],
                                   ),
@@ -268,7 +273,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Library',
+                                            AppLocalizations.of(context)!
+                                                .library,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleLarge
@@ -284,9 +290,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                             onPressed: () =>
                                                 Navigator.pushNamed(
                                                     context, AppRouter.library),
-                                            child: const Text(
-                                              'View All',
-                                              style: TextStyle(
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .viewAll,
+                                              style: const TextStyle(
                                                 color: AppColors.primary,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600,
@@ -320,7 +327,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           onChanged: (v) =>
                                               viewModel.updateSearchQuery(v),
                                           decoration: InputDecoration(
-                                            hintText: 'Search supplements...',
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .searchSupplements,
                                             hintStyle: TextStyle(
                                               fontSize: 14,
                                               color: isDark
@@ -393,8 +402,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                viewModel.currentStack?.name ??
-                                                    '${viewModel.selectedSlot.capitalize()} Stack',
+                                                AppLocalizations.of(context)!
+                                                    .stackName(viewModel
+                                                        .selectedSlot
+                                                        .capitalize()),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headlineSmall
@@ -409,7 +420,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                               ),
                                               const SizedBox(height: 2),
                                               Text(
-                                                'Routine for ${viewModel.selectedSlot.capitalize()}',
+                                                AppLocalizations.of(context)!
+                                                    .routineFor(viewModel
+                                                        .selectedSlot
+                                                        .capitalize()),
                                                 style: const TextStyle(
                                                   color: AppColors
                                                       .textSecondaryDark,
@@ -438,7 +452,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                       child: StackDropZone(
                                         currentItems: currentStackData,
                                         instructionText:
-                                            'Drag supplements here to build your ${viewModel.selectedSlot.toLowerCase()} routine.',
+                                            AppLocalizations.of(context)!
+                                                .dragSupplements(viewModel
+                                                    .selectedSlot
+                                                    .toLowerCase()),
                                         onItemDropped: (id) =>
                                             _handleItemDropped(viewModel, id),
                                         onItemRemoved: (index) =>
@@ -503,7 +520,12 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Total Items: ${viewModel.currentStack?.items.length ?? 0}',
+                                            AppLocalizations.of(context)!
+                                                .totalItems(viewModel
+                                                        .currentStack
+                                                        ?.items
+                                                        .length ??
+                                                    0),
                                             style: const TextStyle(
                                               color:
                                                   AppColors.textSecondaryDark,
@@ -513,9 +535,10 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                           ),
                                           Row(
                                             children: [
-                                              const Text(
-                                                'Routine Status: ',
-                                                style: TextStyle(
+                                              Text(
+                                                AppLocalizations.of(context)!
+                                                    .routineStatus,
+                                                style: const TextStyle(
                                                   color: AppColors
                                                       .textSecondaryDark,
                                                   fontWeight: FontWeight.w600,
@@ -524,12 +547,18 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                                               ),
                                               Text(
                                                 safetyViewModel.isLoading
-                                                    ? 'Checking...'
+                                                    ? AppLocalizations.of(
+                                                            context)!
+                                                        .checking
                                                     : (safetyViewModel
                                                             .currentCompatibilitys
                                                             .isEmpty
-                                                        ? 'All Clear'
-                                                        : 'Alert'),
+                                                        ? AppLocalizations.of(
+                                                                context)!
+                                                            .allClear
+                                                        : AppLocalizations.of(
+                                                                context)!
+                                                            .alert),
                                                 style: TextStyle(
                                                   color: safetyViewModel
                                                           .currentCompatibilitys
@@ -573,11 +602,11 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'Analysis Complete: All items optimized.'),
+                              SnackBar(
+                                content: Text(AppLocalizations.of(context)!
+                                    .analysisComplete),
                                 backgroundColor: Colors.green,
-                                duration: Duration(seconds: 2),
+                                duration: const Duration(seconds: 2),
                               ),
                             );
                           }
@@ -589,8 +618,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                             size: 24),
                         label: Text(
                           safetyViewModel.currentCompatibilitys.isNotEmpty
-                              ? 'Review Insights'
-                              : 'Review Routine',
+                              ? AppLocalizations.of(context)!.reviewInsights
+                              : AppLocalizations.of(context)!.reviewRoutine,
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
@@ -646,7 +675,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Customize ${supplement.name}',
+              AppLocalizations.of(context)!
+                  .customizeSupplement(supplement.name),
               style: GoogleFonts.lexend(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -659,9 +689,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
               autofocus: true,
               style: TextStyle(color: isDark ? Colors.white : Colors.black),
               decoration: InputDecoration(
-                labelText: 'Dosage Instructions',
+                labelText: AppLocalizations.of(context)!.dosageInstructions,
                 labelStyle: const TextStyle(color: AppColors.primary),
-                hintText: 'e.g., 500mg once daily',
+                hintText: AppLocalizations.of(context)!.dosageHint,
                 hintStyle:
                     TextStyle(color: isDark ? Colors.white38 : Colors.grey),
                 enabledBorder: UnderlineInputBorder(
@@ -691,8 +721,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('Update Reward',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(AppLocalizations.of(context)!.updateReward,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -729,7 +759,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Edit Routine Details',
+              AppLocalizations.of(context)!.editRoutineDetails,
               style: GoogleFonts.lexend(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -742,9 +772,9 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
               autofocus: true,
               style: TextStyle(color: isDark ? Colors.white : Colors.black),
               decoration: InputDecoration(
-                labelText: 'Routine Name',
+                labelText: AppLocalizations.of(context)!.routineName,
                 labelStyle: const TextStyle(color: AppColors.primary),
-                hintText: 'e.g., Pre-Workout, Early Bird',
+                hintText: AppLocalizations.of(context)!.routineNameHint,
                 hintStyle:
                     TextStyle(color: isDark ? Colors.white38 : Colors.grey),
                 enabledBorder: UnderlineInputBorder(
@@ -773,8 +803,8 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('Save Details',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(AppLocalizations.of(context)!.saveDetails,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],

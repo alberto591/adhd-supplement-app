@@ -245,19 +245,19 @@ class _FirebaseErrorScreen extends StatelessWidget {
                 color: Color(0xFF6C63FF),
               ),
               const SizedBox(height: 24),
-              const Text(
-                'Connection Issue',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.connectionIssue,
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF2D3142),
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
-                'We couldn\'t connect to our services. This might be due to a poor connection or maintenance.',
+              Text(
+                AppLocalizations.of(context)!.connectionIssueMessage,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Color(0xFF9094A6),
                 ),
@@ -297,9 +297,9 @@ class _FirebaseErrorScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Try Again',
-                  style: TextStyle(color: Colors.white),
+                child: Text(
+                  AppLocalizations.of(context)!.tryAgain,
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ],

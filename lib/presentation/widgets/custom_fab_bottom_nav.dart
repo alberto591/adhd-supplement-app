@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class CustomFabBottomNav extends StatelessWidget {
   final int selectedIndex;
@@ -30,11 +31,15 @@ class CustomFabBottomNav extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(Icons.dashboard, 'Today', 0),
-              _buildNavItem(Icons.history, 'History', 1),
+              _buildNavItem(
+                  Icons.dashboard, AppLocalizations.of(context)!.navToday, 0),
+              _buildNavItem(
+                  Icons.history, AppLocalizations.of(context)!.navHistory, 1),
               const SizedBox(width: 48), // Spacer for FAB
-              _buildNavItem(Icons.insights, 'Trends', 2),
-              _buildNavItem(Icons.person, 'Profile', 3),
+              _buildNavItem(
+                  Icons.insights, AppLocalizations.of(context)!.navTrends, 2),
+              _buildNavItem(
+                  Icons.person, AppLocalizations.of(context)!.navProfile, 3),
             ],
           ),
         ),

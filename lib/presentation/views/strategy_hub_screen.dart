@@ -13,6 +13,7 @@ import '../theme/app_theme.dart';
 import '../widgets/unified_bottom_nav.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../widgets/skeleton_loader.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class StrategyHubScreen extends StatefulWidget {
   const StrategyHubScreen({super.key});
@@ -116,7 +117,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            hintText: 'Search strategies, studies, FAQs...',
+            hintText: AppLocalizations.of(context)!.searchStrategies,
             hintStyle: GoogleFonts.lexend(color: Colors.grey),
             border: InputBorder.none,
           ),
@@ -158,7 +159,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
             Navigator.pushReplacementNamed(context, AppRouter.dashboard),
       ),
       title: Text(
-        'Strategy Hub',
+        AppLocalizations.of(context)!.strategyHubTitle,
         style: GoogleFonts.lexend(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -236,9 +237,9 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                     color: primary,
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: const Text(
-                    'STRATEGY OF THE DAY',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.strategyOfTheDay,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
@@ -270,9 +271,10 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                     const SizedBox(width: 16),
                     const Icon(Icons.verified, color: Colors.yellow, size: 16),
                     const SizedBox(width: 4),
-                    const Text(
-                      'High Impact',
-                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    Text(
+                      AppLocalizations.of(context)!.highImpact,
+                      style:
+                          const TextStyle(color: Colors.white70, fontSize: 12),
                     ),
                   ],
                 ),
@@ -286,10 +288,26 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
 
   Widget _buildCategories(bool isDark, Color primary) {
     final categories = [
-      {'icon': null, 'label': 'All Resources', 'active': true},
-      {'icon': Icons.manage_search, 'label': 'Techniques', 'active': false},
-      {'icon': Icons.shield, 'label': 'Protocols', 'active': false},
-      {'icon': Icons.forum, 'label': 'Success Stories', 'active': false},
+      {
+        'icon': null,
+        'label': AppLocalizations.of(context)!.allResources,
+        'active': true
+      },
+      {
+        'icon': Icons.manage_search,
+        'label': AppLocalizations.of(context)!.techniques,
+        'active': false
+      },
+      {
+        'icon': Icons.shield,
+        'label': AppLocalizations.of(context)!.protocols,
+        'active': false
+      },
+      {
+        'icon': Icons.forum,
+        'label': AppLocalizations.of(context)!.successStories,
+        'active': false
+      },
     ];
 
     return SingleChildScrollView(
@@ -360,7 +378,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Proven Strategies',
+                AppLocalizations.of(context)!.provenStrategies,
                 style: TextStyle(
                   color: isDark ? Colors.white : const Color(0xFF111418),
                   fontSize: 20,
@@ -369,7 +387,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                 ),
               ),
               Text(
-                'View All',
+                AppLocalizations.of(context)!.viewAll,
                 style: TextStyle(
                   color: primary,
                   fontSize: 14,
@@ -385,7 +403,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                   context,
                   isDark,
                   primary,
-                  'HIGH EVIDENCE', // Mock badge
+                  AppLocalizations.of(context)!.highEvidence, // Mock badge
                   article.readTime,
                   article.title,
                   article.tldr,
@@ -504,7 +522,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                   Row(
                     children: [
                       Text(
-                        'Read Full Analysis',
+                        AppLocalizations.of(context)!.readFullAnalysis,
                         style: TextStyle(
                           color: primary,
                           fontSize: 12,
@@ -543,7 +561,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Safety & Usage Guides',
+            AppLocalizations.of(context)!.safetyUsageGuides,
             style: TextStyle(
               color: isDark ? Colors.white : const Color(0xFF111418),
               fontSize: 20,
@@ -559,8 +577,8 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                   isDark,
                   Icons.warning_amber,
                   primary,
-                  'Dosage Best Practices',
-                  'Avoiding tolerance and maximizing efficacy...',
+                  AppLocalizations.of(context)!.dosageBestPractices,
+                  AppLocalizations.of(context)!.dosageSubtitle,
                 ),
               ),
               const SizedBox(width: 16),
@@ -569,8 +587,8 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                   isDark,
                   Icons.sync_problem,
                   Colors.red,
-                  'Drug Compatibilitys',
-                  'Common contraindications to discuss with your MD...',
+                  AppLocalizations.of(context)!.drugInteractions,
+                  AppLocalizations.of(context)!.drugInteractionsSubtitle,
                 ),
               ),
             ],
@@ -627,7 +645,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'User Insights',
+            AppLocalizations.of(context)!.userInsights,
             style: TextStyle(
               color: isDark ? Colors.white : const Color(0xFF111418),
               fontSize: 20,
@@ -683,7 +701,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                           ),
                         ),
                         Text(
-                          'Verified User • Stack: Omega-3 + Mg',
+                          '${AppLocalizations.of(context)!.verifiedUser} • Stack: Omega-3 + Mg',
                           style: TextStyle(
                             color: isDark
                                 ? const Color(0xFF94A3B8)
@@ -710,7 +728,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Search Results',
+            AppLocalizations.of(context)!.searchResults,
             style: GoogleFonts.lexend(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -718,7 +736,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Showing matches for "${viewModel.searchQuery}"',
+            AppLocalizations.of(context)!.showingMatches(viewModel.searchQuery),
             style: GoogleFonts.lexend(
               fontSize: 14,
               color: Colors.grey,
@@ -745,7 +763,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Research Library',
+            AppLocalizations.of(context)!.researchLibrary,
             style: TextStyle(
               color: isDark ? Colors.white : const Color(0xFF111418),
               fontSize: 20,

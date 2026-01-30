@@ -12,7 +12,7 @@ void main() {
   late StrategyHubViewModel viewModel;
   late MockArticleRepository mockRepository;
 
-  final testArticle = Article(
+  const testArticle = Article(
     id: '1',
     title: 'Test Article',
     author: 'Test Author',

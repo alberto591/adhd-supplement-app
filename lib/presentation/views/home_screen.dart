@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
@@ -15,9 +16,9 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E1E1E),
-        title: const Text(
-          'Focus Supplements',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.focusSupplements,
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 24,
@@ -93,18 +94,18 @@ class _SupplementCard extends StatelessWidget {
     }
   }
 
-  String _getFocusLabel(int level) {
+  String _getFocusLabel(BuildContext context, int level) {
     switch (level) {
       case 5:
-        return 'Excellent';
+        return AppLocalizations.of(context)!.focusLevelExcellent;
       case 4:
-        return 'Very Good';
+        return AppLocalizations.of(context)!.focusLevelVeryGood;
       case 3:
-        return 'Good';
+        return AppLocalizations.of(context)!.focusLevelGood;
       case 2:
-        return 'Moderate';
+        return AppLocalizations.of(context)!.focusLevelModerate;
       default:
-        return 'Low';
+        return AppLocalizations.of(context)!.focusLevelLow;
     }
   }
 
@@ -170,7 +171,7 @@ class _SupplementCard extends StatelessWidget {
                     _FocusBadge(
                       level: supplement.focusLevel,
                       color: focusColor,
-                      label: _getFocusLabel(supplement.focusLevel),
+                      label: _getFocusLabel(context, supplement.focusLevel),
                     ),
                   ],
                 ),
@@ -237,14 +238,14 @@ class _SupplementCard extends StatelessWidget {
                       ),
                       elevation: 0,
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.shopping_cart, size: 20),
-                        SizedBox(width: 8),
+                        const Icon(Icons.shopping_cart, size: 20),
+                        const SizedBox(width: 8),
                         Text(
-                          'Buy Now',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.buyNow,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),

@@ -1021,6 +1021,65 @@ class DailyStackViewModel extends ChangeNotifier {
     notifyListeners(); // Ensure UI redraws after cache update
   }
 
+  /// Remove a supplement from a specific stack (slot)
+  Future<void> removeSupplementFromStack(
+      String supplementId, String slot) async {
+    final normalizedSlot = slot.toLowerCase();
+    AppLogger.i(
+        'Removing supplement $supplementId from stack: $normalizedSlot');
+
+    // Find the matching stack
+    final stackIndex = _stacks.indexWhere((s) {
+      final stackSlot = _getSlotFromName(s.name);
+      return stackSlot == normalizedSlot ||
+          s.timeOfDay?.toLowerCase() == normalizedSlot;
+    });
+
+    if (stackIndex == -1) {
+      AppLogger.w('No stack found for slot: $normalizedSlot');
+      return;
+    }
+
+    final stack = _stacks[stackIndex];
+    final updatedItems =
+        stack.items.where((item) => item.supplementId != supplementId).toList();
+
+    if (updatedItems.length == stack.items.length) {
+      AppLogger.w('Supplement $supplementId not found in stack: ${stack.name}');
+      return;
+    }
+
+    final updatedStack = stack.copyWith(
+      items: updatedItems,
+      updatedAt: DateTime.now(),
+    );
+
+    try {
+      // Update local state for immediate feedback
+      _stacks[stackIndex] = updatedStack;
+
+      // Also remove from today's log if it was taken/skipped to clear it from dashboard
+      await _deleteFromTodayLog(supplementId, slot: normalizedSlot);
+
+      notifyListeners();
+
+      // Persist to repository
+      await _stackRepository.saveStack(_userId, updatedStack);
+
+      await _analyticsService
+          .logEvent('supplement_removed_from_stack', parameters: {
+        'supplement_id': supplementId,
+        'slot': normalizedSlot,
+      });
+
+      AppLogger.i('Successfully removed $supplementId from ${stack.name}');
+    } catch (e) {
+      _error = 'Failed to remove supplement: $e';
+      AppLogger.e(_error!);
+      notifyListeners();
+    }
+  }
+
   @override
   void dispose() {
     _isDisposed = true;

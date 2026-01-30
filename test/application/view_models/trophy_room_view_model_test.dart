@@ -45,9 +45,9 @@ void main() {
 
       // Wait for the constructor's async call to complete
       // Since it's fire-and-forget in constructor, let's wait a tick
-      await Future.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
       // Wait for any async gaps
-      await Future.delayed(const Duration(milliseconds: 10));
+      await Future<void>.delayed(const Duration(milliseconds: 10));
 
       expect(viewModel.isLoading, false);
       expect(viewModel.profile, isNotNull);
@@ -60,8 +60,8 @@ void main() {
 
       viewModel = TrophyRoomViewModel(mockRepository, 'test_user');
 
-      await Future.delayed(Duration.zero);
-      await Future.delayed(const Duration(milliseconds: 10));
+      await Future<void>.delayed(Duration.zero);
+      await Future<void>.delayed(const Duration(milliseconds: 10));
 
       expect(viewModel.isLoading, false);
       expect(viewModel.error, contains('Network Error'));

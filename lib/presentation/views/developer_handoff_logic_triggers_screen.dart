@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
@@ -168,7 +169,10 @@ class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(4),
                                                 ),
-                                                child: Text('ENCRYPTED',
+                                                child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .encryptedStatus,
                                                     style: GoogleFonts.lexend(
                                                         color: Colors.black,
                                                         fontWeight:
@@ -194,7 +198,9 @@ class DeveloperHandoffLogicTriggersScreen extends StatelessWidget {
                                             shape: BoxShape.circle),
                                       ),
                                       const SizedBox(width: 8),
-                                      Text('System State: Synchronized',
+                                      Text(
+                                          AppLocalizations.of(context)!
+                                              .systemSynchronized,
                                           style: GoogleFonts.lexend(
                                               color: Colors.white70,
                                               fontSize: 12,

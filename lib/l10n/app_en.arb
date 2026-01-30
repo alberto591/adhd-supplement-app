@@ -2,5 +2,479 @@
   "helloWorld": "Hello World!",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
-  }
+  },
+  "connectionIssue": "Connection Issue",
+  "connectionIssueMessage": "We couldn't connect to our services. This might be due to a poor connection or maintenance.",
+  "tryAgain": "Try Again",
+  "neurostackEducation": "Neurostack Education",
+  "premiumSupplement": "Premium Supplement",
+  "notRecommended": "NOT RECOMMENDED FOR Neurostack",
+  "routineFlagged": "Routine Flagged",
+  "tldrBanner": "FOR BUSY MINDS (TL;DR)",
+  "mechanismOfAction": "Mechanism of Action",
+  "timingStrategy": "Timing Strategy",
+  "scientificEvidence": "Scientific Evidence",
+  "neurostackBenefits": "Neurostack Specific Benefits",
+  "optimalDosage": "Optimal Dosage",
+  "criticalCautions": "Critical Cautions",
+  "addToStack": "Add to Stack",
+  "riskProfile": "Risk Profile",
+  "riskProfileMessage": "High routine risk for Neurostack",
+  "generalDisclaimer": "General Disclaimer: Always consult your advisor before altering your supplement regimen.",
+  "addToDailyStack": "Add to Daily Stack",
+  "addToStackSubtitle": "Select which time slot to add {supplementName} to.",
+  "@addToStackSubtitle": {
+    "placeholders": {
+      "supplementName": {
+        "type": "String"
+      }
+    }
+  },
+  "removeFromSchedule": "Remove from Schedule",
+  "removeConfirmTitle": "Remove from Schedule?",
+  "removeConfirmMessage": "Are you sure you want to remove {supplementName} from your {slot} schedule?",
+  "@removeConfirmMessage": {
+    "placeholders": {
+      "supplementName": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "remove": "Remove",
+  "snoozeLabel": "Snooze (5m)",
+  "skipForNow": "Skip for this slot",
+  "morningStack": "🌅 Morning Stack",
+  "morningStackSubtitle": "Best for focus and energy",
+  "afternoonStack": "☀️ Afternoon Stack",
+  "afternoonStackSubtitle": "Mid-day mental boost",
+  "eveningStack": "🌇 Evening Stack",
+  "eveningStackSubtitle": "For relaxation and recovery",
+  "nightStack": "🌙 Night Stack",
+  "nightStackSubtitle": "Sleep support",
+  "addedToStack": "Added {supplementName} to {stackName}",
+  "@addedToStack": {
+    "placeholders": {
+      "supplementName": {
+        "type": "String"
+      },
+      "stackName": {
+        "type": "String"
+      }
+    }
+  },
+  "errorSyncing": "Error syncing: {error}",
+  "@errorSyncing": {
+    "placeholders": {
+      "error": {
+        "type": "Object"
+      }
+    }
+  },
+  "focusRating": "Focus Rating",
+  "expandAll": "Expand All",
+  "collapseAll": "Collapse All",
+  "retry": "Retry",
+  "noStacksConfigured": "No stacks configured",
+  "goToLibrary": "Go to Library",
+  "allCompleted": "All elements completed for today!",
+  "snooze": "Snooze (5m)",
+  "skipSlot": "Skip for this slot",
+  "viewDetails": "View Details",
+  "markAllTaken": "Mark all as taken",
+  "upNext": "Up Next",
+  "taken": "Taken",
+  "morning": "Morning",
+  "afternoon": "Afternoon",
+  "evening": "Evening",
+  "night": "Night",
+  "today": "TODAY",
+  "snoozedMessage": "Snoozed for 5 minutes 💤",
+  "detailsNotAvailable": "Details not available",
+  "insightsTitle": "Insights",
+  "progressSoFar": "Here is your progress so far.",
+  "exportReport": "Export Report for Advisor",
+  "dayStreak": "{streak} Day Streak",
+  "@dayStreak": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "powerfulHabit": "You are building a powerful habit!",
+  "consistency30Day": "30-Day Consistency",
+  "targetConsistency": "Target: 80%+",
+  "weeklyFocusTrend": "Weekly Focus Trend",
+  "sevenDayView": "7-Day View",
+  "strategicInsight": "Strategic Insight",
+  "magnesiumFact": "Did you know? Magnesium supports over 300 enzymatic reactions in your body, many of which are responsible for neurotransmitter production.",
+  "exploreStrategyHub": "Explore Strategy Hub",
+  "mondayAbbr": "M",
+  "tuesdayAbbr": "T",
+  "wednesdayAbbr": "W",
+  "thursdayAbbr": "T",
+  "fridayAbbr": "F",
+  "saturdayAbbr": "S",
+  "sundayAbbr": "S",
+  "libraryTitle": "LIBRARY",
+  "browse": "Browse",
+  "forYou": "For You",
+  "avoid": "Avoid",
+  "categories": "CATEGORIES",
+  "all": "All",
+  "searchSupplements": "Search supplements...",
+  "substancesToAvoid": "Substances to Avoid",
+  "allSupplements": "All Supplements",
+  "showingItems": "Showing {count} items",
+  "@showingItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noSupplementsFound": "No supplements found",
+  "customSupplementCreated": "Custom supplement created!",
+  "failedToCreate": "Failed to create: {error}",
+  "categoryFocus": "Focus",
+  "categoryMemory": "Memory",
+  "categoryEnergy": "Energy",
+  "categoryCalm": "Calm",
+  "categoryMood": "Mood",
+  "categoryLongevity": "Longevity",
+  "strategyHubTitle": "Strategy Hub",
+  "searchStrategies": "Search strategies, studies, FAQs...",
+  "strategyOfTheDay": "STRATEGY OF THE DAY",
+  "highImpact": "High Impact",
+  "allResources": "All Resources",
+  "techniques": "Techniques",
+  "protocols": "Protocols",
+  "successStories": "Success Stories",
+  "provenStrategies": "Proven Strategies",
+  "viewAll": "View All",
+  "highEvidence": "HIGH EVIDENCE",
+  "readFullAnalysis": "Read Full Analysis",
+  "safetyUsageGuides": "Safety & Usage Guides",
+  "dosageBestPractices": "Dosage Best Practices",
+  "dosageSubtitle": "Avoiding tolerance and maximizing efficacy...",
+  "drugInteractions": "Drug Interactions",
+  "drugInteractionsSubtitle": "Common contraindications to discuss with your MD...",
+  "userInsights": "User Insights",
+  "verifiedUser": "Verified User",
+  "searchResults": "Search Results",
+  "showingMatches": "Showing matches for \"{query}\"",
+  "@showingMatches": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "researchLibrary": "Research Library",
+  "appAppearance": "App Appearance",
+  "makeItYours": "Make it yours",
+  "previewOnHome": "Preview on Home Screen",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeNature": "Nature",
+  "chooseIcon": "Choose your icon",
+  "iconClassic": "Classic Focus",
+  "iconClassicSub": "The original vibe",
+  "iconMinimalist": "Minimalist",
+  "iconMinimalistSub": "Clean & simple",
+  "iconStealth": "Stealth Mode",
+  "iconStealthSub": "Low distraction",
+  "iconDopamine": "Dopamine Hit",
+  "iconDopamineSub": "Burst of energy",
+  "accessibilitySensory": "Accessibility & Sensory",
+  "reducedMotion": "Reduced Motion",
+  "reducedMotionSub": "Minimize animations & flashing",
+  "hapticFeedback": "Haptic Feedback",
+  "hapticFeedbackSub": "Vibrate on interactions",
+  "fontSizeScaling": "Font Size Scaling",
+  "iosIconNote": "iOS will show a system confirmation when you change the app icon.",
+  "iconUpdateComing": "Icon customization coming in next update!",
+  "applyNewIcon": "Apply New Icon",
+  "cloudSync": "CLOUD SYNC",
+  "syncingJourney": "Syncing your focus journey...",
+  "optimizingSchedule": "Optimizing your personal schedule for maximum clarity.",
+  "progressLabel": "PROGRESS",
+  "runInBackground": "Run in background",
+  "editProfile": "Edit Profile",
+  "displayName": "Display Name",
+  "enterYourName": "Enter your name",
+  "cancel": "Cancel",
+  "save": "Save",
+  "focusStyle": "Focus Style",
+  "disclaimerText": "The information provided in this app is for educational and informational purposes only and is not intended as medical advice. \\n\\nAlways consult with a qualified wellness advisor regarding any routine or protocol. \\n\\nDo not disregard professional advisor guidance or delay in seeking it because of something you have read in this application.",
+  "close": "Close",
+  "settings": "Settings",
+  "focusAndRoutine": "Focus & Routine",
+  "focusProfile": "Focus Profile",
+  "appSettings": "App Settings",
+  "smartReminders": "Smart Reminders (Nudge)",
+  "scheduledFor": "Scheduled for {time}",
+  "@scheduledFor": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "privacySecurity": "Privacy & Security",
+  "privacySecuritySub": "Biometrics & data controls",
+  "offlineLibrary": "Offline Library",
+  "downloading": "Downloading...",
+  "offlineLibrarySub": "Keep supplements available offline",
+  "libraryDownloadedOn": "Library already downloaded on {date}",
+  "@libraryDownloadedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "update": "Update",
+  "soundEffects": "Sound Effects",
+  "soundEffectsSub": "Play sounds on completion",
+  "progressSupport": "Progress & Support",
+  "insightsSub": "Your streaks & consistency",
+  "helpCenter": "Help Center",
+  "helpCenterSub": "FAQs, contact & guides",
+  "privacyPolicy": "Privacy Policy",
+  "privacyPolicySub": "Legal information",
+  "disclaimerSub": "Crucial health & usage info",
+  "logOut": "Log Out",
+  "logOutConfirm": "Are you sure you want to log out?",
+  "versionInfo": "Version {version} • Proudly built for focus",
+  "@versionInfo": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryDownloadedSuccess": "Library downloaded for offline use",
+  "downloadFailed": "Download failed: {error}",
+  "@downloadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "focusHero": "Focus Hero",
+  "levelLabel": "LVL {level}",
+  "@levelLabel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "search": "SEARCH",
+  "searchHint": "Search supplements, stacks...",
+  "noResultsFound": "No results found",
+  "trySearchingFor": "Try searching for:",
+  "searchForSupplements": "Search for supplements",
+  "findWhatYouNeed": "Find what you need quickly",
+  "popularSearches": "Popular searches:",
+  "supplements": "Supplements",
+  "yourStacks": "Your Stacks",
+  "stackBuilder": "Stack Builder",
+  "archetypePresets": "Archetype Presets",
+  "stackName": "{slot} Stack",
+  "@stackName": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "routineFor": "Routine for {slot}",
+  "@routineFor": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "dragSupplements": "Drag supplements here to build your {slot} routine.",
+  "@dragSupplements": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisComplete": "Analysis Complete: All items optimized.",
+  "reviewInsights": "Review Insights",
+  "reviewRoutine": "Review Routine",
+  "customizeSupplement": "Customize {name}",
+  "@customizeSupplement": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dosageInstructions": "Dosage Instructions",
+  "dosageHint": "e.g., 500mg once daily",
+  "updateReward": "Update Reward",
+  "editRoutineDetails": "Edit Routine Details",
+  "routineName": "Routine Name",
+  "routineNameHint": "e.g., Pre-Workout, Early Bird",
+  "saveDetails": "Save Details",
+  "routineOptimizationActive": "Routine optimization active! 🎉",
+  "errorSavingStack": "Error saving stack",
+  "checking": "Checking...",
+  "allClear": "All Clear",
+  "alert": "Alert",
+  "totalItems": "Total Items: {count}",
+  "@totalItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "routineStatus": "Routine Status: ",
+  "categoryOmega3": "Omega-3",
+  "categoryMinerals": "Minerals",
+  "categoryVitamins": "Vitamins",
+  "categoryNootropics": "Nootropics",
+  "categoryHerbal": "Herbal",
+  "categoryEnergy": "Energy",
+  "categoryCalm": "Calm",
+  "categoryMood": "Mood",
+  "categoryLongevity": "Longevity",
+  "insights": "Insights",
+  "library": "Library",
+  "comingSoon": "Coming Soon",
+  "focusBuddiesComingSoon": "Focus Buddies is coming in v1.1",
+  "emailLaunchError": "Could not launch email app",
+  "reportGenerationError": "Failed to generate report",
+  "emailAdvisor": "Email Advisor",
+  "shareCopy": "Share Copy",
+  "aiAnalysis": "AI Analysis",
+  "close": "Close",
+  "shareWeeklyProgress": "Share Weekly Progress",
+  "cancel": "Cancel",
+  "progressShared": "Progress shared!",
+  "share": "Share",
+  "restorePurchases": "Restore",
+  "retryingConnection": "Retrying connection...",
+  "workOffline": "Work Offline",
+  "alreadyHaveAccount": "Already have an account? Login",
+  "encryptedStatus": "ENCRYPTED",
+  "systemSynchronized": "System State: Synchronized",
+  "tryAgain": "Try Again",
+  "exportFullReport": "Export Full Report",
+  "focusSupplements": "Focus Supplements",
+  "buyNow": "Buy Now",
+  "focusLevelExcellent": "Excellent",
+  "focusLevelVeryGood": "Very Good",
+  "focusLevelGood": "Good",
+  "focusLevelModerate": "Moderate",
+  "focusLevelLow": "Low",
+  "dailyCompletion": "Daily Completion",
+  "streakPrefix": "You're on a ",
+  "streakSuffix": "-day streak!",
+  "dontHaveAccount": "Don't have an account? Sign up",
+  "skipLogin": "Skip Login (Dev Mode)",
+  "graceDayPhilosophy": "Grace Day Philosophy",
+  "step2of2": "Step 2 of 2",
+  "complete100": "100% Complete",
+  "lifeHappens": "Life happens.\nWe've got you.",
+  "weBelieveIn": "We believe in ",
+  "graceDays": "Grace Days",
+  "graceDaysDescription": ". If you miss a serving, your streak doesn't reset. Our heart icon saves your flame so you can pick up right where you left off—no pressure, just progress.",
+  "medicalDisclaimer": "NOT A MEDICAL DEVICE. For wellness & organization only. Consult a professional for health decisions.",
+  "gotIt": "Got it!",
+  "usageAgreement": "Usage Agreement",
+  "usageAgreementIntro": "Please read this carefully before you begin your journey with Daily Stack.",
+  "generalInformation": "General Information",
+  "generalInformationContent": "NeuroStack is a lifestyle efficiency tool. The information provided is for educational purposes and is not intended to replace professional guidance or support.",
+  "consultProfessional": "Consult Your Professional",
+  "consultProfessionalContent": "Always seek the advice of a qualified professional advisor before starting any new routine, especially if you have sensitive requirements or specific daily protocols.",
+  "personalResponsibility": "Personal Responsibility",
+  "personalResponsibilityContent": "By using this application, you acknowledge that you are responsible for your own health decisions and that Daily Stack is not liable for any adverse effects resulting from use of the information provided.",
+  "iUnderstandAgree": "I Understand & Agree",
+  "goalMentalClarity": "Mental Clarity",
+  "goalMentalClarityDesc": "Reduce brain fog and improve focus.",
+  "goalBetterSleep": "Better Sleep",
+  "goalBetterSleepDesc": "Wind down and improve rest quality.",
+  "goalEmotionalBalance": "Emotional Balance",
+  "goalEmotionalBalanceDesc": "Manage mood swings and reactivity.",
+  "goalEnergyLevels": "Energy Levels",
+  "goalEnergyLevelsDesc": "Consistent energy throughout the day.",
+  "whatsYourFocus": "What's your focus today?",
+  "pickGoals": "Pick your primary goals to help us tailor your supplement routine.",
+  "next": "Next",
+  "chooseLater": "I'll choose later",
+  "navToday": "Today",
+  "navLibrary": "Library",
+  "navProfile": "Profile",
+  "navHistory": "History",
+  "navTrends": "Trends",
+  "morningStackLabel": "Morning Stack",
+  "afternoonStackLabel": "Afternoon Stack",
+  "eveningStackLabel": "Evening Stack",
+  "nightStackLabel": "Night Stack",
+  "goodMorning": "Good Morning,",
+  "goodAfternoon": "Good Afternoon,",
+  "goodEvening": "Good Evening,",
+  "rankNovice": "Novice",
+  "rankApprentice": "Apprentice",
+  "rankAdept": "Focus Adept",
+  "rankWarrior": "Mental Warrior",
+  "rankMaster": "Zen Master",
+  "progressToLevel": "Progress to Lvl {level}",
+  "@progressToLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "memberSince": "Member since {date}",
+  "@memberSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "achievements": "ACHIEVEMENTS",
+  "unlocked": "UNLOCKED",
+  "locked": "LOCKED",
+  "target": "Target",
+  "progress": "Progress",
+  "achieved": "Achieved!",
+  "keepUsingApp": "Keep using the app to unlock this achievement!",
+  "achievement7DayWarriorTitle": "7-Day Warrior",
+  "achievement7DayWarriorDesc": "Maintain a 7-day streak",
+  "achievement7DayWarriorTarget": "Complete 7 consecutive days",
+  "achievementEarlyBirdTitle": "Early Bird",
+  "achievementEarlyBirdDesc": "Logged a dose before 8 AM",
+  "achievementEarlyBirdTarget": "Log a supplement before 8:00 AM",
+  "achievementFocusMasterTitle": "Focus Master",
+  "achievementFocusMasterDesc": "Reach Level 5",
+  "achievementFocusMasterTarget": "Reach Level 5",
+  "achievementAlphaHeroTitle": "Alpha Hero",
+  "achievementAlphaHeroDesc": "Early app supporter",
+  "achievementAlphaHeroTarget": "Be an early supporter of Daily Stack",
+  "welcomeTitle": "Welcome to NeuroStack",
+  "welcomeSubtitle": "Your daily companion for tracking supplements and optimizing your mind.",
+  "featureTrackerTitle": "Daily Tracker",
+  "featureTrackerDesc": "Track your daily supplement intakes and monitor your streaks.",
+  "featureLibraryTitle": "Knowledge Library",
+  "featureLibraryDesc": "Access scientific insights for different cognitive areas.",
+  "featureLibraryDesc": "Access scientific insights for different cognitive areas.",
+  "continueButton": "Continue",
+  "getStarted": "Get Started",
+  "loginAction": "I already have an account"
 }

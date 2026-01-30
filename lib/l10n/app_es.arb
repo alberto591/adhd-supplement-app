@@ -1,3 +1,467 @@
 {
-    "helloWorld": "¡Hola Mundo!"
+    "helloWorld": "¡Hola Mundo!",
+    "@helloWorld": {
+        "description": "El saludo convencional del programador recién nacido"
+    },
+    "connectionIssue": "Problema de Conexión",
+    "connectionIssueMessage": "Non pudimos conectarnos a nuestros servicios. Esto puede deberse a una mala conexión o mantenimiento.",
+    "tryAgain": "Intentar de Nuevo",
+    "neurostackEducation": "Educación Neurostack",
+    "premiumSupplement": "Suplemento Premium",
+    "notRecommended": "NO RECOMENDADO para Neurostack",
+    "routineFlagged": "Rutina Marcada",
+    "tldrBanner": "PARA MENTES OCUPADAS (TL;DR)",
+    "mechanismOfAction": "Mecanismo de Acción",
+    "timingStrategy": "Estrategia de Tiempo",
+    "scientificEvidence": "Evidencia Científica",
+    "neurostackBenefits": "Beneficios específicos de Neurostack",
+    "optimalDosage": "Dosis Óptima",
+    "criticalCautions": "Precaucioni Críticas",
+    "addToStack": "Añadir al Stack",
+    "riskProfile": "Perfil de Riesgo",
+    "riskProfileMessage": "Alto riesgo de rutina para Neurostack",
+    "generalDisclaimer": "Aviso General: Consulte siempre a su asesor antes de alterar su régimen de suplementos.",
+    "addToDailyStack": "Añadir al Stack Diario",
+    "addToStackSubtitle": "Selecciona en qué franja horaria añadir {supplementName}.",
+    "@addToStackSubtitle": {
+        "placeholders": {
+            "supplementName": {
+                "type": "String"
+            }
+        }
+    },
+    "removeFromSchedule": "Eliminar de la Programación",
+    "removeConfirmTitle": "¿Eliminar de la Programación?",
+    "removeConfirmMessage": "¿Estás seguro de que deseas eliminar {supplementName} de tu programación de {slot}?",
+    "@removeConfirmMessage": {
+        "placeholders": {
+            "supplementName": {
+                "type": "String"
+            },
+            "slot": {
+                "type": "String"
+            }
+        }
+    },
+    "remove": "Eliminar",
+    "snoozeLabel": "Posponer (5m)",
+    "skipForNow": "Omitir para esta franja",
+    "morningStack": "🌅 Stack de la Mañana",
+    "morningStackSubtitle": "Ideal para el enfoque y la energía",
+    "afternoonStack": "☀️ Stack de la Tarde",
+    "afternoonStackSubtitle": "Impulso mental de mediodía",
+    "eveningStack": "🌇 Stack de la Tarde/Noche",
+    "eveningStackSubtitle": "Para la relajación y recuperación",
+    "nightStack": "🌙 Stack de la Noche",
+    "nightStackSubtitle": "Apoyo para el sueño",
+    "addedToStack": "Se ha añadido {supplementName} a {stackName}",
+    "@addedToStack": {
+        "placeholders": {
+            "supplementName": {
+                "type": "String"
+            },
+            "stackName": {
+                "type": "String"
+            }
+        }
+    },
+    "errorSyncing": "Error al sincronizar: {error}",
+    "@errorSyncing": {
+        "placeholders": {
+            "error": {
+                "type": "Object"
+            }
+        }
+    },
+    "focusRating": "Calificación del Enfoque",
+    "expandAll": "Expandir todo",
+    "collapseAll": "Contraer todo",
+    "retry": "Reintentar",
+    "noStacksConfigured": "No hay stacks configurados",
+    "goToLibrary": "Ir a la Biblioteca",
+    "allCompleted": "¡Todos los elementos completados por hoy!",
+    "snooze": "Posponer (5m)",
+    "skipSlot": "Saltar para esta franja",
+    "viewDetails": "Ver detalles",
+    "markAllTaken": "Marcar todo como tomado",
+    "upNext": "Próximo",
+    "taken": "Tomado",
+    "morning": "Mañana",
+    "afternoon": "Tarde",
+    "evening": "Noche",
+    "night": "Noche",
+    "today": "HOY",
+    "snoozedMessage": "Pospuesto por 5 minutos 💤",
+    "detailsNotAvailable": "Detalles no disponibles",
+    "insightsTitle": "Insights",
+    "progressSoFar": "Aquí está tu progreso hasta ahora.",
+    "exportReport": "Exportar informe para el asesor",
+    "dayStreak": "Racha de {streak} días",
+    "@dayStreak": {
+        "placeholders": {
+            "streak": {
+                "type": "int"
+            }
+        }
+    },
+    "powerfulHabit": "¡Estás construyendo un hábito poderoso!",
+    "consistency30Day": "Consistencia de 30 días",
+    "targetConsistency": "Objetivo: 80%+",
+    "weeklyFocusTrend": "Tendencia de enfoque semanal",
+    "sevenDayView": "Vista de 7 días",
+    "strategicInsight": "Insight Estratégico",
+    "magnesiumFact": "¿Sabías que? El magnesio apoya más de 300 reacciones enzimáticas en tu cuerpo, muchas de las cuales son responsables de la producción de neurotransmisores.",
+    "exploreStrategyHub": "Explorar Strategy Hub",
+    "mondayAbbr": "L",
+    "tuesdayAbbr": "M",
+    "wednesdayAbbr": "M",
+    "thursdayAbbr": "J",
+    "fridayAbbr": "V",
+    "saturdayAbbr": "S",
+    "sundayAbbr": "D",
+    "libraryTitle": "BIBLIOTECA",
+    "browse": "Explorar",
+    "forYou": "Para ti",
+    "avoid": "Evitar",
+    "categories": "CATEGORÍAS",
+    "all": "Todos",
+    "searchSupplements": "Buscar suplementos...",
+    "substancesToAvoid": "Sustancias a evitar",
+    "allSupplements": "Todos los suplementos",
+    "showingItems": "Mostrando {count} elementos",
+    "@showingItems": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "noSupplementsFound": "No se encontraron suplementos",
+    "customSupplementCreated": "¡Suplemento personalizado creado!",
+    "failedToCreate": "Error al crear: {error}",
+    "categoryFocus": "Enfoque",
+    "categoryMemory": "Memoria",
+    "categoryEnergy": "Energía",
+    "categoryCalm": "Calma",
+    "categoryMood": "Estado de ánimo",
+    "categoryLongevity": "Longevidad",
+    "strategyHubTitle": "Strategy Hub",
+    "searchStrategies": "Buscar estrategias, estudios, FAQs...",
+    "strategyOfTheDay": "ESTRATEGIA DEL DÍA",
+    "highImpact": "Alto Impacto",
+    "allResources": "Todos los recursos",
+    "techniques": "Técnicas",
+    "protocols": "Protocolos",
+    "successStories": "Historias de éxito",
+    "provenStrategies": "Estrategias probadas",
+    "viewAll": "Ver todo",
+    "highEvidence": "ALTA EVIDENCIA",
+    "readFullAnalysis": "Leer análisis completo",
+    "safetyUsageGuides": "Guías de seguridad y uso",
+    "dosageBestPractices": "Mejores prácticas de dosificación",
+    "dosageSubtitle": "Evitando la tolerancia y maximizando la eficacia...",
+    "drugInteractions": "Interacciones farmacológicas",
+    "drugInteractionsSubtitle": "Contraindicaciones comunes para discutir con su médico...",
+    "userInsights": "Insights del usuario",
+    "verifiedUser": "Usuario verificado",
+    "searchResults": "Resultados de búsqueda",
+    "showingMatches": "Mostrando resultados para \"{query}\"",
+    "@showingMatches": {
+        "placeholders": {
+            "query": {
+                "type": "String"
+            }
+        }
+    },
+    "researchLibrary": "Biblioteca de investigación",
+    "appAppearance": "Apariencia de la aplicación",
+    "makeItYours": "Hazla tuya",
+    "previewOnHome": "Vista previa en la pantalla de inicio",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "themeNature": "Naturaleza",
+    "chooseIcon": "Elige tu icono",
+    "iconClassic": "Enfoque clásico",
+    "iconClassicSub": "La vibra original",
+    "iconMinimalist": "Minimalista",
+    "iconMinimalistSub": "Limpio y simple",
+    "iconStealth": "Modo sigilo",
+    "iconStealthSub": "Baja distracción",
+    "iconDopamine": "Golpe de dopamina",
+    "iconDopamineSub": "Explosión de energía",
+    "accessibilitySensory": "Accesibilidad y sensorial",
+    "reducedMotion": "Movimiento reducido",
+    "reducedMotionSub": "Minimizar animaciones y destellos",
+    "hapticFeedback": "Retroalimentación háptica",
+    "hapticFeedbackSub": "Vibrar en las interacciones",
+    "fontSizeScaling": "Escalado del tamaño de fuente",
+    "iosIconNote": "iOS mostrará una confirmación del sistema cuando cambies el icono de la aplicación.",
+    "iconUpdateComing": "¡La personalización de iconos llegará en la próxima actualización!",
+    "applyNewIcon": "Aplicar nuevo icono",
+    "cloudSync": "SINCRONIZACIÓN EN LA NUBE",
+    "syncingJourney": "Sincronizando su viaje de enfoque...",
+    "optimizingSchedule": "Optimizando su horario personal para una máxima claridad.",
+    "progressLabel": "PROGRESO",
+    "runInBackground": "Ejecutar en segundo plano",
+    "editProfile": "Editar perfil",
+    "displayName": "Nombre visible",
+    "enterYourName": "Introduce tu nombre",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "focusStyle": "Estilo de enfoque",
+    "generalDisclaimer": "Aviso General",
+    "disclaimerText": "La información proporcionada en esta aplicación es solo para fines educativos e informativos y no pretende ser un consejo médico. \\n\\nConsulte siempre con un asesor de bienestar calificado con respecto a cualquier rutina o protocolo. \\n\\nNo ignore la guía de un asesor profesional ni demore en buscarla debido a algo que haya leído en esta aplicación.",
+    "close": "Cerrar",
+    "settings": "Ajustes",
+    "focusAndRoutine": "Enfoque y rutina",
+    "focusProfile": "Perfil de enfoque",
+    "appSettings": "Ajustes de la aplicación",
+    "smartReminders": "Recordatorios inteligentes (Nudge)",
+    "scheduledFor": "Programado para {time}",
+    "@scheduledFor": {
+        "placeholders": {
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "privacySecurity": "Privacidad y seguridad",
+    "privacySecuritySub": "Biometría y controles de datos",
+    "offlineLibrary": "Biblioteca fuera de línea",
+    "downloading": "Descargando...",
+    "offlineLibrarySub": "Mantener los suplementos disponibles fuera de línea",
+    "libraryDownloadedOn": "Biblioteca ya descargada el {date}",
+    "@libraryDownloadedOn": {
+        "placeholders": {
+            "date": {
+                "type": "String"
+            }
+        }
+    },
+    "update": "Actualizar",
+    "soundEffects": "Efectos de sonido",
+    "soundEffectsSub": "Reproducir sonidos al completar",
+    "progressSupport": "Progreso y soporte",
+    "insightsSub": "Tus rachas y consistencia",
+    "helpCenter": "Centro de ayuda",
+    "helpCenterSub": "FAQs, contacto y guías",
+    "privacyPolicy": "Política de privacidad",
+    "privacyPolicySub": "Información legal",
+    "disclaimerSub": "Información crucial sobre salud y uso",
+    "logOut": "Cerrar sesión",
+    "logOutConfirm": "¿Estás seguro de que quieres cerrar sesión?",
+    "versionInfo": "Versión {version} • Orgullosamente construido para el enfoque",
+    "@versionInfo": {
+        "placeholders": {
+            "version": {
+                "type": "String"
+            }
+        }
+    },
+    "libraryDownloadedSuccess": "Biblioteca descargada para uso fuera de línea",
+    "downloadFailed": "Error en la descarga: {error}",
+    "@downloadFailed": {
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "focusHero": "Héroe del enfoque",
+    "levelLabel": "LVL {level}",
+    "@levelLabel": {
+        "placeholders": {
+            "level": {
+                "type": "int"
+            }
+        }
+    },
+    "search": "BUSCAR",
+    "searchHint": "Buscar suplementos, stacks...",
+    "noResultsFound": "No se encontraron resultados",
+    "trySearchingFor": "Intenta buscar:",
+    "searchForSupplements": "Buscar suplementos",
+    "findWhatYouNeed": "Encuentra lo que necesitas rápidamente",
+    "popularSearches": "Búsquedas populares:",
+    "supplements": "Suplementos",
+    "yourStacks": "Tus Stacks",
+    "stackBuilder": "Constructor de Stacks",
+    "archetypePresets": "Ajustes de arquetipo",
+    "stackName": "Stack de {slot}",
+    "@stackName": {
+        "placeholders": {
+            "slot": {
+                "type": "String"
+            }
+        }
+    },
+    "routineFor": "Rutina para {slot}",
+    "@routineFor": {
+        "placeholders": {
+            "slot": {
+                "type": "String"
+            }
+        }
+    },
+    "dragSupplements": "Arrastra suplementos aquí para construir tu rutina de {slot}.",
+    "@dragSupplements": {
+        "placeholders": {
+            "slot": {
+                "type": "String"
+            }
+        }
+    },
+    "analysisComplete": "Análisis completo: Todos los elementos optimizados.",
+    "reviewInsights": "Revisar insights",
+    "reviewRoutine": "Revisar rutina",
+    "customizeSupplement": "Personalizar {name}",
+    "@customizeSupplement": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "dosageInstructions": "Instrucciones de dosificación",
+    "dosageHint": "ej. 500mg una vez al día",
+    "updateReward": "Actualizar recompensa",
+    "editRoutineDetails": "Editar detalles de la rutina",
+    "routineName": "Nombre de la rutina",
+    "routineNameHint": "ej. Pre-Entrenamiento, Madrugador",
+    "saveDetails": "Guardar detalles",
+    "routineOptimizationActive": "¡Optimización de rutina activa! 🎉",
+    "errorSavingStack": "Error al guardar el stack",
+    "checking": "Comprobando...",
+    "allClear": "Todo despejado",
+    "alert": "Alerta",
+    "totalItems": "Artículos totales: {count}",
+    "@totalItems": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "routineStatus": "Estado de la rutina: ",
+    "categoryOmega3": "Omega-3",
+    "categoryMinerals": "Minerales",
+    "categoryVitamins": "Vitaminas",
+    "categoryNootropics": "Nootrópicos",
+    "categoryHerbal": "Herbario",
+    "categoryEnergy": "Energía",
+    "categoryCalm": "Calma",
+    "categoryMood": "Estado de ánimo",
+    "categoryLongevity": "Longevidad",
+    "insights": "Insights",
+    "library": "Biblioteca",
+    "comingSoon": "Próximamente",
+    "focusBuddiesComingSoon": "Focus Buddies llegará en la v1.1",
+    "emailLaunchError": "No se pudo abrir la aplicación de correo",
+    "reportGenerationError": "Error al generar el informe",
+    "emailAdvisor": "Enviar correo al asesor",
+    "shareCopy": "Compartir copia",
+    "aiAnalysis": "Análisis de IA",
+    "close": "Cerrar",
+    "shareWeeklyProgress": "Compartir progreso semanal",
+    "cancel": "Cancelar",
+    "progressShared": "¡Progreso compartido!",
+    "share": "Compartir",
+    "restorePurchases": "Restaurar",
+    "retryingConnection": "Reintentando conexión...",
+    "workOffline": "Trabajar sin conexión",
+    "alreadyHaveAccount": "¿Ya tienes cuenta? Inicia sesión",
+    "encryptedStatus": "ENCRIPTADO",
+    "systemSynchronized": "Estado del sistema: Sincronizado",
+  "tryAgain": "Intentar de nuevo",
+  "exportFullReport": "Exportar reporte completo",
+  "focusSupplements": "Suplementos de enfoque",
+  "buyNow": "Comprar ahora",
+  "focusLevelExcellent": "Excelente",
+  "focusLevelVeryGood": "Muy bueno",
+  "focusLevelGood": "Bueno",
+  "focusLevelModerate": "Moderado",
+  "focusLevelLow": "Bajo",
+  "dailyCompletion": "Finalización diaria",
+  "streakPrefix": "¡Llevas una racha de ",
+  "streakSuffix": " días!",
+  "dontHaveAccount": "¿No tienes cuenta? Regístrate",
+  "skipLogin": "Saltar inicio de sesión (Dev)",
+  "graceDayPhilosophy": "Filosofía del Día de Gracia",
+  "step2of2": "Paso 2 de 2",
+  "complete100": "100% Completado",
+  "lifeHappens": "La vida pasa.\nTe cubrimos.",
+  "weBelieveIn": "Creemos en los ",
+  "graceDays": "Días de Gracia",
+  "graceDaysDescription": ". Si te saltas una toma, tu racha no se reinicia. Nuestro ícono de corazón guarda tu llama para que puedas retomar justo donde lo dejaste, sin presión, solo progreso.",
+  "medicalDisclaimer": "NO ES UN DISPOSITIVO MÉDICO. Solo para bienestar y organización. Consulta a un profesional para decisiones de salud.",
+  "gotIt": "¡Entendido!",
+  "usageAgreement": "Acuerdo de Uso",
+  "usageAgreementIntro": "Por favor, lee esto cuidadosamente antes de comenzar tu viaje con Daily Stack.",
+  "generalInformation": "Información General",
+  "generalInformationContent": "NeuroStack es una herramienta de eficiencia de estilo de vida. La información proporcionada es para fines educativos y no pretende reemplazar la orientación o apoyo profesional.",
+  "consultProfessional": "Consulta a tu Profesional",
+  "consultProfessionalContent": "Siempre busca el consejo de un asesor profesional calificado antes de comenzar cualquier nueva rutina, especialmente si tienes requisitos sensibles o protocolos diarios específicos.",
+  "personalResponsibility": "Responsabilidad Personal",
+  "personalResponsibilityContent": "Al usar esta aplicación, reconoces que eres responsable de tus propias decisiones de salud y que Daily Stack no es responsable de ningún efecto adverso resultante del uso de la información proporcionada.",
+  "iUnderstandAgree": "Entiendo y Acepto",
+  "goalMentalClarity": "Claridad Mental",
+  "goalMentalClarityDesc": "Reduce la niebla mental y mejora el enfoque.",
+  "goalBetterSleep": "Mejor Sueño",
+  "goalBetterSleepDesc": "Relájate y mejora la calidad del descanso.",
+  "goalEmotionalBalance": "Equilibrio Emocional",
+  "goalEmotionalBalanceDesc": "Maneja los cambios de humor y la reactividad.",
+  "goalEnergyLevels": "Niveles de Energía",
+  "goalEnergyLevelsDesc": "Energía consistente durante todo el día.",
+  "whatsYourFocus": "¿Cuál es tu enfoque hoy?",
+  "pickGoals": "Elige tus objetivos principales para ayudarnos a adaptar tu rutina de suplementos.",
+  "next": "Siguiente",
+  "chooseLater": "Elegiré más tarde",
+  "navToday": "Hoy",
+  "navLibrary": "Biblioteca",
+  "navProfile": "Perfil",
+  "navHistory": "Historial",
+  "navTrends": "Tendencias",
+  "morningStackLabel": "Stack de Mañana",
+  "afternoonStackLabel": "Stack de Tarde",
+  "eveningStackLabel": "Stack de Tarde/Noche",
+  "nightStackLabel": "Stack de la Noche",
+  "goodMorning": "Buenos Días,",
+  "goodAfternoon": "Buenas Tardes,",
+  "goodEvening": "Buenas Noches,",
+  "rankNovice": "Novato",
+  "rankApprentice": "Aprendiz",
+  "rankAdept": "Adepto del Enfoque",
+  "rankWarrior": "Guerrero Mental",
+  "rankMaster": "Maestro Zen",
+  "progressToLevel": "Progreso al Nivel {level}",
+  "memberSince": "Miembro desde {date}",
+  "achievements": "LOGROS",
+  "unlocked": "DESBLOQUEADO",
+  "locked": "BLOQUEADO",
+  "target": "Objetivo",
+  "progress": "Progreso",
+  "achieved": "¡Logrado!",
+  "keepUsingApp": "¡Sigue usando la app para desbloquear este logro!",
+  "achievement7DayWarriorTitle": "Guerrero de 7 Días",
+  "achievement7DayWarriorDesc": "Mantén una racha de 7 días",
+  "achievement7DayWarriorTarget": "Completa 7 días consecutivos",
+  "achievementEarlyBirdTitle": "Madrugador",
+  "achievementEarlyBirdDesc": "Dosis registrada antes de las 8 AM",
+  "achievementEarlyBirdTarget": "Registra un suplemento antes de las 8:00 AM",
+  "achievementFocusMasterTitle": "Maestro del Enfoque",
+  "achievementFocusMasterDesc": "Alcanza el Nivel 5",
+  "achievementFocusMasterTarget": "Alcanza el Nivel 5",
+  "achievementAlphaHeroTitle": "Héroe Alpha",
+  "achievementAlphaHeroDesc": "Colaborador temprano",
+  "achievementAlphaHeroTarget": "Sé un colaborador temprano de Daily Stack",
+  "welcomeTitle": "Bienvenido a NeuroStack",
+  "welcomeSubtitle": "Tu compañero diario para rastrear suplementos y optimizar tu mente.",
+  "featureTrackerTitle": "Rastreador Diario",
+  "featureTrackerDesc": "Rastrea tus tomas diarias de suplementos y monitorea tus rachas.",
+  "featureLibraryTitle": "Biblioteca de Conocimiento",
+  "featureLibraryDesc": "Accede a insights científicos para diferentes áreas cognitivas.",
+  "featureLibraryDesc": "Accede a insights científicos para diferentes áreas cognitivas.",
+  "continueButton": "Continuar",
+  "getStarted": "Comenzar",
+  "loginAction": "Ya tengo una cuenta"
 }

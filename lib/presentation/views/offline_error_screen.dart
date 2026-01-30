@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 
@@ -177,12 +178,13 @@ class OfflineErrorScreen extends StatelessWidget {
                               // Default retry logic: close screen and let parent retry
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Retrying connection...')),
+                                SnackBar(
+                                    content: Text(AppLocalizations.of(context)!
+                                        .retryingConnection)),
                               );
                             },
                         icon: const Icon(Icons.refresh),
-                        label: const Text('Try Again'),
+                        label: Text(AppLocalizations.of(context)!.tryAgain),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primaryGold,
                           foregroundColor: Colors.white,
@@ -227,7 +229,7 @@ class OfflineErrorScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        child: const Text('Work Offline'),
+                        child: Text(AppLocalizations.of(context)!.workOffline),
                       ),
                     ),
                   ],

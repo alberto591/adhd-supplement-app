@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neurostack_app/utils/supplement_ui_helper.dart';
 import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
-import '../../utils/supplement_ui_helper.dart';
 import '../widgets/unified_bottom_nav.dart';
 import '../widgets/custom_supplement_form.dart';
 import '../widgets/skeleton_loader.dart';
@@ -11,6 +11,7 @@ import '../../config/locator.dart';
 import '../../domain/entities/supplement.dart';
 import '../../application/providers/auth_provider.dart';
 import '../navigation/app_router.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -80,7 +81,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         ),
                         Expanded(
                           child: Text(
-                            'LIBRARY',
+                            AppLocalizations.of(context)!.libraryTitle,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lexend(
                               fontWeight: FontWeight.bold,
@@ -177,7 +178,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Browse',
+                                    AppLocalizations.of(context)!.browse,
                                     style: GoogleFonts.lexend(
                                       fontSize: 13,
                                       fontWeight: viewModel.currentStatus ==
@@ -223,7 +224,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'For You',
+                                    AppLocalizations.of(context)!.forYou,
                                     style: GoogleFonts.lexend(
                                       fontSize: 13,
                                       fontWeight: viewModel.currentStatus ==
@@ -267,7 +268,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Avoid',
+                                    AppLocalizations.of(context)!.avoid,
                                     style: GoogleFonts.lexend(
                                       fontSize: 13,
                                       fontWeight:
@@ -299,7 +300,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 4),
                                 child: Text(
-                                  'CATEGORIES',
+                                  AppLocalizations.of(context)!.categories,
                                   style: GoogleFonts.lexend(
                                     color: isDark
                                         ? const Color(0xFF64748B)
@@ -382,10 +383,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                           Expanded(
                                             child: TextField(
                                               controller: _searchController,
-                                              decoration: const InputDecoration(
-                                                hintText:
-                                                    'Search supplements...',
-                                                hintStyle: TextStyle(
+                                              decoration: InputDecoration(
+                                                hintText: AppLocalizations.of(
+                                                        context)!
+                                                    .searchSupplements,
+                                                hintStyle: const TextStyle(
                                                     color: Color(0xFF9DA8B9),
                                                     fontSize: 15),
                                                 border: InputBorder.none,
@@ -440,9 +442,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 children: [
                                   Text(
                                     viewModel.currentStatus == 'avoid'
-                                        ? 'Substances to Avoid'
+                                        ? AppLocalizations.of(context)!
+                                            .substancesToAvoid
                                         : (viewModel.selectedCategory ??
-                                            'All Supplements'),
+                                            AppLocalizations.of(context)!
+                                                .allSupplements),
                                     style: GoogleFonts.lexend(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -452,7 +456,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                     ),
                                   ),
                                   Text(
-                                    'Showing ${viewModel.supplements.length} items',
+                                    AppLocalizations.of(context)!.showingItems(
+                                        viewModel.supplements.length),
                                     style: GoogleFonts.lexend(
                                       color: isDark
                                           ? const Color(0xFF64748B)
@@ -476,7 +481,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                           size: 48, color: Colors.grey),
                                       const SizedBox(height: 16),
                                       Text(
-                                        'No supplements found',
+                                        AppLocalizations.of(context)!
+                                            .noSupplementsFound,
                                         style: GoogleFonts.lexend(
                                             color:
                                                 AppColors.textTertiary(isDark),
@@ -544,6 +550,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             String? evidence,
             String? form) async {
           final messenger = ScaffoldMessenger.of(context);
+          final l10n = AppLocalizations.of(context)!;
           try {
             await _viewModel.createCustomSupplement(
               name: name,
@@ -556,11 +563,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
 // focusMedCompatibilitys: isSafe ... removed
             );
             messenger.showSnackBar(
-              const SnackBar(content: Text('Custom supplement created!')),
+              SnackBar(content: Text(l10n.customSupplementCreated)),
             );
           } catch (e) {
             messenger.showSnackBar(
-              SnackBar(content: Text('Failed to create: $e')),
+              SnackBar(content: Text(l10n.failedToCreate(e.toString()))),
             );
           }
         },
@@ -572,6 +579,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     final viewModel =
         context.read<LibraryViewModel>(); // Capture VM from parent context
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
@@ -587,7 +595,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Add to Stack',
+                AppLocalizations.of(context)!.addToDailyStack,
                 style: GoogleFonts.lexend(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -596,7 +604,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Select which stack to add ${supplement.name}',
+                AppLocalizations.of(context)!
+                    .addToStackSubtitle(supplement.name),
                 style: GoogleFonts.lexend(
                   fontSize: 14,
                   color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -605,32 +614,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
               const SizedBox(height: 24),
               _buildStackOption(
                 context,
-                '🌅 Morning Stack',
-                'Best for focus and energy',
-                () {
-                  Navigator.pop(context);
-                  final messenger = ScaffoldMessenger.of(context);
-                  messenger.showSnackBar(
-                    SnackBar(
-                      backgroundColor: AppColors.primaryGold,
-                      content: Text('Added ${supplement.name} to Morning Stack',
-                          style: const TextStyle(color: Colors.black)),
-                    ),
-                  );
-                  viewModel
-                      .addToStack(supplement, 'Morning Stack')
-                      .catchError((Object e) {
-                    messenger.showSnackBar(
-                      SnackBar(content: Text('Error syncing: $e')),
-                    );
-                  });
-                },
-              ),
-              const SizedBox(height: 12),
-              _buildStackOption(
-                context,
-                '☀️ Afternoon Stack',
-                'Sustained focus and energy',
+                l10n.morningStack,
+                l10n.morningStackSubtitle,
                 () {
                   Navigator.pop(context);
                   final messenger = ScaffoldMessenger.of(context);
@@ -638,7 +623,32 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     SnackBar(
                       backgroundColor: AppColors.primaryGold,
                       content: Text(
-                          'Added ${supplement.name} to Afternoon Stack',
+                          l10n.addedToStack(supplement.name, l10n.morning),
+                          style: const TextStyle(color: Colors.black)),
+                    ),
+                  );
+                  viewModel
+                      .addToStack(supplement, 'Morning Stack')
+                      .catchError((Object e) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(l10n.errorSyncing(e.toString()))),
+                    );
+                  });
+                },
+              ),
+              const SizedBox(height: 12),
+              _buildStackOption(
+                context,
+                AppLocalizations.of(context)!.afternoonStack,
+                AppLocalizations.of(context)!.afternoonStackSubtitle,
+                () {
+                  Navigator.pop(context);
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.showSnackBar(
+                    SnackBar(
+                      backgroundColor: AppColors.primaryGold,
+                      content: Text(
+                          l10n.addedToStack(supplement.name, l10n.afternoon),
                           style: const TextStyle(color: Colors.black)),
                     ),
                   );
@@ -646,7 +656,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       .addToStack(supplement, 'Afternoon Stack')
                       .catchError((Object e) {
                     messenger.showSnackBar(
-                      SnackBar(content: Text('Error syncing: $e')),
+                      SnackBar(content: Text(l10n.errorSyncing(e.toString()))),
                     );
                   });
                 },
@@ -654,15 +664,16 @@ class _LibraryScreenState extends State<LibraryScreen> {
               const SizedBox(height: 12),
               _buildStackOption(
                 context,
-                '🌇 Evening Stack',
-                'For relaxation and recovery',
+                AppLocalizations.of(context)!.eveningStack,
+                AppLocalizations.of(context)!.eveningStackSubtitle,
                 () {
                   Navigator.pop(context);
                   final messenger = ScaffoldMessenger.of(context);
                   messenger.showSnackBar(
                     SnackBar(
                       backgroundColor: AppColors.primaryGold,
-                      content: Text('Added ${supplement.name} to Evening Stack',
+                      content: Text(
+                          l10n.addedToStack(supplement.name, l10n.evening),
                           style: const TextStyle(color: Colors.black)),
                     ),
                   );
@@ -670,7 +681,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       .addToStack(supplement, 'Evening Stack')
                       .catchError((Object e) {
                     messenger.showSnackBar(
-                      SnackBar(content: Text('Error syncing: $e')),
+                      SnackBar(content: Text(l10n.errorSyncing(e.toString()))),
                     );
                   });
                 },
@@ -678,15 +689,16 @@ class _LibraryScreenState extends State<LibraryScreen> {
               const SizedBox(height: 12),
               _buildStackOption(
                 context,
-                '🌙 Night Stack',
-                'Sleep support',
+                AppLocalizations.of(context)!.nightStack,
+                AppLocalizations.of(context)!.nightStackSubtitle,
                 () {
                   Navigator.pop(context);
                   final messenger = ScaffoldMessenger.of(context);
                   messenger.showSnackBar(
                     SnackBar(
                       backgroundColor: AppColors.primaryGold,
-                      content: Text('Added ${supplement.name} to Night Stack',
+                      content: Text(
+                          l10n.addedToStack(supplement.name, l10n.night),
                           style: const TextStyle(color: Colors.black)),
                     ),
                   );
@@ -694,7 +706,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       .addToStack(supplement, 'Night Stack')
                       .catchError((Object e) {
                     messenger.showSnackBar(
-                      SnackBar(content: Text('Error syncing: $e')),
+                      SnackBar(content: Text(l10n.errorSyncing(e.toString()))),
                     );
                   });
                 },
@@ -898,7 +910,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     ],
                   ),
                   Text(
-                    supplement.category,
+                    SupplementUIHelper.getLocalizedCategory(
+                        context, supplement.category),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: GoogleFonts.lexend(

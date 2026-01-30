@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neurostack_app/utils/supplement_ui_helper.dart';
 import 'package:provider/provider.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/global_search_view_model.dart';
@@ -9,6 +10,7 @@ import '../navigation/app_router.dart';
 import '../widgets/skeleton_loader.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_stack.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class GlobalSearchScreen extends StatefulWidget {
   const GlobalSearchScreen({super.key});
@@ -62,7 +64,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(
-            'SEARCH',
+            AppLocalizations.of(context)!.search,
             style: GoogleFonts.lexend(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -96,7 +98,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                   style: GoogleFonts.lexend(
                       color: isDark ? Colors.white : Colors.black),
                   decoration: InputDecoration(
-                    hintText: 'Search supplements, stacks...',
+                    hintText: AppLocalizations.of(context)!.searchHint,
                     hintStyle: GoogleFonts.lexend(color: Colors.grey),
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 16),
@@ -170,8 +172,10 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                       children: [
                         // Supplements
                         if (viewModel.supplementResults.isNotEmpty) ...[
-                          _buildSectionHeader('Supplements',
-                              viewModel.supplementResults.length, isDark),
+                          _buildSectionHeader(
+                              AppLocalizations.of(context)!.supplements,
+                              viewModel.supplementResults.length,
+                              isDark),
                           const SizedBox(height: 12),
                           ...viewModel.supplementResults.map((supplement) =>
                               _buildSupplementCard(supplement, isDark)),
@@ -180,8 +184,10 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
                         // Stacks
                         if (viewModel.stackResults.isNotEmpty) ...[
-                          _buildSectionHeader('Your Stacks',
-                              viewModel.stackResults.length, isDark),
+                          _buildSectionHeader(
+                              AppLocalizations.of(context)!.yourStacks,
+                              viewModel.stackResults.length,
+                              isDark),
                           const SizedBox(height: 12),
                           ...viewModel.stackResults
                               .map((stack) => _buildStackCard(stack, isDark)),
@@ -243,7 +249,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           ),
         ),
         subtitle: Text(
-          supplement.category,
+          SupplementUIHelper.getLocalizedCategory(context, supplement.category),
           style: GoogleFonts.lexend(
             fontSize: 12,
             color: Colors.grey,
@@ -336,7 +342,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             const Icon(Icons.search_off, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              'No results found',
+              AppLocalizations.of(context)!.noResultsFound,
               style: GoogleFonts.lexend(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -345,7 +351,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Try searching for:',
+              AppLocalizations.of(context)!.trySearchingFor,
               style: GoogleFonts.lexend(color: Colors.grey),
             ),
             const SizedBox(height: 16),
@@ -372,7 +378,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             const Icon(Icons.search, size: 64, color: AppColors.primaryGold),
             const SizedBox(height: 16),
             Text(
-              'Search for supplements',
+              AppLocalizations.of(context)!.searchForSupplements,
               style: GoogleFonts.lexend(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -381,12 +387,12 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Find what you need quickly',
+              AppLocalizations.of(context)!.findWhatYouNeed,
               style: GoogleFonts.lexend(color: Colors.grey),
             ),
             const SizedBox(height: 24),
             Text(
-              'Popular searches:',
+              AppLocalizations.of(context)!.popularSearches,
               style: GoogleFonts.lexend(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

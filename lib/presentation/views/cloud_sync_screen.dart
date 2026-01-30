@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class CloudSyncScreen extends StatelessWidget {
   final double progress; // 0.0 to 1.0
@@ -32,7 +33,7 @@ class CloudSyncScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           right: 40.0), // Balance the back button
                       child: Text(
-                        'CLOUD SYNC',
+                        AppLocalizations.of(context)!.cloudSync,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: (isDark ? Colors.white : Colors.black)
@@ -61,7 +62,7 @@ class CloudSyncScreen extends StatelessWidget {
 
                     // Headline
                     Text(
-                      'Syncing your focus journey...',
+                      AppLocalizations.of(context)!.syncingJourney,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: isDark ? Colors.white : Colors.black,
@@ -75,7 +76,7 @@ class CloudSyncScreen extends StatelessWidget {
 
                     // Subtext
                     Text(
-                      'Optimizing your personal schedule for maximum clarity.',
+                      AppLocalizations.of(context)!.optimizingSchedule,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: isDark
@@ -101,9 +102,9 @@ class CloudSyncScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text(
-                                'PROGRESS',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.progressLabel,
+                                style: const TextStyle(
                                   color: AppColors.primary,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -164,9 +165,9 @@ class CloudSyncScreen extends StatelessWidget {
                 onPressed: () {},
                 icon: const Icon(Icons.download_for_offline_outlined,
                     color: AppColors.textSecondaryLight),
-                label: const Text(
-                  'Run in background',
-                  style: TextStyle(
+                label: Text(
+                  AppLocalizations.of(context)!.runInBackground,
+                  style: const TextStyle(
                     color: AppColors.textSecondaryLight,
                     fontWeight: FontWeight.w500,
                   ),

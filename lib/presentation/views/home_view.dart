@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
 import 'package:neurostack_app/presentation/views/supplement_detail.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -13,7 +14,7 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Neurostack Education'),
+        title: Text(AppLocalizations.of(context)!.neurostackEducation),
         centerTitle: true,
       ),
       body: Consumer<SupplementViewModel>(

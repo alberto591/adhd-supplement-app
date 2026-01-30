@@ -7,6 +7,7 @@ import '../../domain/repositories/settings_repository.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/theme_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class AppAppearanceScreen extends StatefulWidget {
   const AppAppearanceScreen({super.key});
@@ -98,7 +99,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
         title: Column(
           children: [
             Text(
-              'App Appearance',
+              AppLocalizations.of(context)!.appAppearance,
               style: GoogleFonts.lexend(
                 color: isDark ? Colors.white : AppColors.textPrimaryLight,
                 fontSize: 18,
@@ -106,7 +107,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
               ),
             ),
             Text(
-              'Make it yours',
+              AppLocalizations.of(context)!.makeItYours,
               style: GoogleFonts.lexend(
                 color: AppColors.textTertiary(isDark),
                 fontSize: 12,
@@ -129,7 +130,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
                       child: Text(
-                        'Preview on Home Screen',
+                        AppLocalizations.of(context)!.previewOnHome,
                         style: GoogleFonts.lexend(
                           color: isDark
                               ? Colors.white
@@ -284,9 +285,15 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                         ),
                         child: Row(
                           children: [
-                            _buildWallpaperOption('Light', isDark),
-                            _buildWallpaperOption('Dark', isDark),
-                            _buildWallpaperOption('Nature', isDark),
+                            _buildWallpaperOption(
+                                AppLocalizations.of(context)!.themeLight,
+                                isDark),
+                            _buildWallpaperOption(
+                                AppLocalizations.of(context)!.themeDark,
+                                isDark),
+                            _buildWallpaperOption(
+                                AppLocalizations.of(context)!.themeNature,
+                                isDark),
                           ],
                         ),
                       ),
@@ -296,7 +303,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        'Choose your icon',
+                        AppLocalizations.of(context)!.chooseIcon,
                         style: GoogleFonts.lexend(
                           color:
                               isDark ? Colors.white : const Color(0xFF111418),
@@ -319,14 +326,26 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                         mainAxisSpacing: 16,
                         childAspectRatio: 1.1, // Adjust for card shape
                         children: [
-                          _buildIconCard('Classic Focus', 'The original vibe',
-                              Icons.psychology, isDark),
-                          _buildIconCard('Minimalist', 'Clean & simple',
-                              Icons.radio_button_checked, isDark),
-                          _buildIconCard('Stealth Mode', 'Low distraction',
-                              Icons.visibility_off, isDark),
-                          _buildIconCard('Dopamine Hit', 'Burst of energy',
-                              Icons.bolt, isDark),
+                          _buildIconCard(
+                              AppLocalizations.of(context)!.iconClassic,
+                              AppLocalizations.of(context)!.iconClassicSub,
+                              Icons.psychology,
+                              isDark),
+                          _buildIconCard(
+                              AppLocalizations.of(context)!.iconMinimalist,
+                              AppLocalizations.of(context)!.iconMinimalistSub,
+                              Icons.radio_button_checked,
+                              isDark),
+                          _buildIconCard(
+                              AppLocalizations.of(context)!.iconStealth,
+                              AppLocalizations.of(context)!.iconStealthSub,
+                              Icons.visibility_off,
+                              isDark),
+                          _buildIconCard(
+                              AppLocalizations.of(context)!.iconDopamine,
+                              AppLocalizations.of(context)!.iconDopamineSub,
+                              Icons.bolt,
+                              isDark),
                         ],
                       ),
                     ),
@@ -337,7 +356,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        'Accessibility & Sensory',
+                        AppLocalizations.of(context)!.accessibilitySensory,
                         style: GoogleFonts.lexend(
                           color:
                               isDark ? Colors.white : const Color(0xFF111418),
@@ -362,12 +381,15 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                         child: Column(
                           children: [
                             SwitchListTile(
-                              title: Text('Reduced Motion',
+                              title: Text(
+                                  AppLocalizations.of(context)!.reducedMotion,
                                   style: GoogleFonts.lexend(
                                     color: isDark ? Colors.white : Colors.black,
                                     fontWeight: FontWeight.w500,
                                   )),
-                              subtitle: Text('Minimize animations & flashing',
+                              subtitle: Text(
+                                  AppLocalizations.of(context)!
+                                      .reducedMotionSub,
                                   style: GoogleFonts.lexend(
                                     color: Colors.grey,
                                     fontSize: 12,
@@ -382,12 +404,15 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                                     ? Colors.grey[800]
                                     : Colors.grey[200]),
                             SwitchListTile(
-                              title: Text('Haptic Feedback',
+                              title: Text(
+                                  AppLocalizations.of(context)!.hapticFeedback,
                                   style: GoogleFonts.lexend(
                                     color: isDark ? Colors.white : Colors.black,
                                     fontWeight: FontWeight.w500,
                                   )),
-                              subtitle: Text('Vibrate on compatibilitys',
+                              subtitle: Text(
+                                  AppLocalizations.of(context)!
+                                      .hapticFeedbackSub,
                                   style: GoogleFonts.lexend(
                                     color: Colors.grey,
                                     fontSize: 12,
@@ -410,7 +435,9 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text('Font Size Scaling',
+                                      Text(
+                                          AppLocalizations.of(context)!
+                                              .fontSizeScaling,
                                           style: GoogleFonts.lexend(
                                             color: isDark
                                                 ? Colors.white
@@ -474,7 +501,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'iOS will show a system confirmation when you change the app icon.',
+                AppLocalizations.of(context)!.iosIconNote,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.lexend(
                   color: isDark ? Colors.grey[400] : Colors.grey[500],
@@ -490,9 +517,10 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                   onPressed: () {
                     // TODO: Implement platform channel for icon change
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text(
-                              'Icon customization coming in next update!')),
+                      SnackBar(
+                        content: Text(
+                            AppLocalizations.of(context)!.iconUpdateComing),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -511,7 +539,7 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                           size: 24), // magic_button proxy
                       const SizedBox(width: 8),
                       Text(
-                        'Apply New Icon',
+                        AppLocalizations.of(context)!.applyNewIcon,
                         style: GoogleFonts.lexend(
                           fontSize: 16,
                           fontWeight: FontWeight.bold, // Extrabold proxy

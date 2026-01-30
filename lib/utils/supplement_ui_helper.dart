@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class SupplementUIHelper {
   static IconData getIconForCategory(String category) {
@@ -47,6 +48,47 @@ class SupplementUIHelper {
 
     // Fallback to category
     return getIconForCategory(category);
+  }
+
+  static String getLocalizedCategory(BuildContext context, String category) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (category.toLowerCase()) {
+      case 'essential fatty acids':
+      case 'omega-3':
+        return l10n.categoryOmega3;
+      case 'mineral':
+      case 'minerals':
+      case 'minerale':
+      case 'minerali':
+        return l10n.categoryMinerals;
+      case 'vitamin':
+      case 'vitamins':
+      case 'vitamina':
+      case 'vitamine':
+        return l10n.categoryVitamins;
+      case 'nootropic':
+      case 'nootropics':
+      case 'nootropo':
+      case 'nootropi':
+        return l10n.categoryNootropics;
+      case 'herbal':
+      case 'erbale':
+        return l10n.categoryHerbal;
+      case 'energy':
+      case 'energia':
+        return l10n.categoryEnergy;
+      case 'calm':
+      case 'calma':
+        return l10n.categoryCalm;
+      case 'mood':
+      case 'umore':
+        return l10n.categoryMood;
+      case 'longevity':
+      case 'longevità':
+        return l10n.categoryLongevity;
+      default:
+        return category;
+    }
   }
 
   static Color getColorForCategory(String category) {

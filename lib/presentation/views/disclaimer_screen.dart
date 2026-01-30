@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 
@@ -39,7 +40,7 @@ class DisclaimerScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
                     Text(
-                      'Usage Agreement',
+                      AppLocalizations.of(context)!.usageAgreement,
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -49,7 +50,7 @@ class DisclaimerScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Please read this carefully before you begin your journey with Daily Stack.',
+                      AppLocalizations.of(context)!.usageAgreementIntro,
                       style: TextStyle(
                         fontSize: 18,
                         color: isDark ? Colors.grey[300] : Colors.grey[700],
@@ -60,22 +61,23 @@ class DisclaimerScreen extends StatelessWidget {
                     _buildDisclaimerCard(
                       context,
                       isDark,
-                      'General Information',
-                      'NeuroStack is a lifestyle efficiency tool. The information provided is for educational purposes and is not intended to replace professional guidance or support.',
+                      AppLocalizations.of(context)!.generalInformation,
+                      AppLocalizations.of(context)!.generalInformationContent,
                     ),
                     const SizedBox(height: 16),
                     _buildDisclaimerCard(
                       context,
                       isDark,
-                      'Consult Your Professional',
-                      'Always seek the advice of a qualified professional advisor before starting any new routine, especially if you have sensitive requirements or specific daily protocols.',
+                      AppLocalizations.of(context)!.consultProfessional,
+                      AppLocalizations.of(context)!.consultProfessionalContent,
                     ),
                     const SizedBox(height: 16),
                     _buildDisclaimerCard(
                       context,
                       isDark,
-                      'Personal Responsibility',
-                      'By using this application, you acknowledge that you are responsible for your own health decisions and that Daily Stack is not liable for any adverse effects resulting from use of the information provided.',
+                      AppLocalizations.of(context)!.personalResponsibility,
+                      AppLocalizations.of(context)!
+                          .personalResponsibilityContent,
                     ),
                     const SizedBox(height: 40),
                   ],
@@ -165,9 +167,9 @@ class DisclaimerScreen extends StatelessWidget {
             ),
             elevation: 0,
           ),
-          child: const Text(
-            'I Understand & Agree',
-            style: TextStyle(
+          child: Text(
+            AppLocalizations.of(context)!.iUnderstandAgree,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
@@ -109,7 +110,8 @@ class _AdvisorReportScreenState extends State<AdvisorReportScreen> {
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not launch email app')),
+          SnackBar(
+              content: Text(AppLocalizations.of(context)!.emailLaunchError)),
         );
       }
     }
@@ -143,7 +145,9 @@ class _AdvisorReportScreenState extends State<AdvisorReportScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to generate report: $e')),
+          SnackBar(
+              content: Text(
+                  '${AppLocalizations.of(context)!.reportGenerationError}: $e')),
         );
       }
     }
@@ -368,9 +372,9 @@ class _AdvisorReportScreenState extends State<AdvisorReportScreen> {
                             child: ElevatedButton.icon(
                               onPressed: _shareReport,
                               icon: const Icon(Icons.upload_file, size: 20),
-                              label: const Text(
-                                'Export Full Report',
-                                style: TextStyle(
+                              label: Text(
+                                AppLocalizations.of(context)!.exportFullReport,
+                                style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               style: ElevatedButton.styleFrom(
@@ -393,7 +397,8 @@ class _AdvisorReportScreenState extends State<AdvisorReportScreen> {
                               TextButton.icon(
                                 onPressed: _emailAdvisor,
                                 icon: const Icon(Icons.email, size: 18),
-                                label: const Text('Email Advisor'),
+                                label: Text(
+                                    AppLocalizations.of(context)!.emailAdvisor),
                                 style: TextButton.styleFrom(
                                   foregroundColor: isDark
                                       ? Colors.grey[400]
@@ -412,7 +417,8 @@ class _AdvisorReportScreenState extends State<AdvisorReportScreen> {
                               TextButton.icon(
                                 onPressed: _shareReport, // Same share logic
                                 icon: const Icon(Icons.ios_share, size: 18),
-                                label: const Text('Share Copy'),
+                                label: Text(
+                                    AppLocalizations.of(context)!.shareCopy),
                                 style: TextButton.styleFrom(
                                   foregroundColor: isDark
                                       ? Colors.grey[400]

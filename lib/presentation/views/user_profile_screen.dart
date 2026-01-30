@@ -17,6 +17,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../application/view_models/supplement_view_model.dart';
 import '../../infrastructure/services/url_service.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -50,12 +51,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Profile'),
+        title: Text(AppLocalizations.of(context)!.editProfile),
         content: TextField(
           controller: nameController,
-          decoration: const InputDecoration(
-            labelText: 'Display Name',
-            hintText: 'Enter your name',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.displayName,
+            hintText: AppLocalizations.of(context)!.enterYourName,
           ),
         ),
         actions: [
@@ -94,7 +95,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Focus Style'),
+          title: Text(AppLocalizations.of(context)!.focusStyle),
           content: RadioGroup<String>(
             groupValue: selectedType,
             onChanged: (value) {
@@ -123,7 +124,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   if (context.mounted) Navigator.pop(context);
                 }
               },
-              child: const Text('Save'),
+              child: Text(AppLocalizations.of(context)!.save),
             ),
           ],
         ),
@@ -135,16 +136,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('General Disclaimer'),
-        content: const SingleChildScrollView(
+        title: Text(AppLocalizations.of(context)!.generalDisclaimer),
+        content: SingleChildScrollView(
           child: Text(
-            'The information provided in this app is for educational and informational purposes only and is not intended as ritual advice. \n\nAlways consult with a qualified wellness advisor regarding any general routine or protocol. \n\nDo not disregard professional advisor guidance or delay in seeking it because of something you have read in this application.',
+            AppLocalizations.of(context)!.disclaimerText,
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(AppLocalizations.of(context)!.close),
           ),
         ],
       ),
@@ -200,7 +201,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               Navigator.pushReplacementNamed(context, AppRouter.dashboard),
         ),
         title: Text(
-          'Settings',
+          AppLocalizations.of(context)!.settings,
           style: GoogleFonts.lexend(
             color: isDark ? Colors.white : const Color(0xFF111418),
             fontSize: 18,
@@ -233,14 +234,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 const SizedBox(height: 4),
 
                 // Health & Routine Section
-                const _SectionHeader(title: 'Focus & Routine'),
+                _SectionHeader(
+                    title: AppLocalizations.of(context)!.focusAndRoutine),
                 _SettingsGroup(
                   children: [
                     Consumer<AuthProvider>(
                       builder: (context, auth, _) => _SettingsTile(
                         icon: Icons.psychology,
                         iconColor: AppColors.primary,
-                        title: 'Focus Profile',
+                        title: AppLocalizations.of(context)!.focusProfile,
                         subtitle: auth.user?.focusStyle ?? 'Not set',
                         trailing:
                             const Icon(Icons.chevron_right, color: Colors.grey),
@@ -252,7 +254,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
 
                 // App Settings Section
-                const _SectionHeader(title: 'App Settings'),
+                _SectionHeader(
+                    title: AppLocalizations.of(context)!.appSettings),
                 _SettingsGroup(
                   children: [
                     Consumer<PersistentRemindersViewModel>(
@@ -260,9 +263,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         return _SettingsTile(
                           icon: Icons.notifications_active,
                           iconColor: AppColors.primary,
-                          title: 'Smart Reminders (Nudge)',
-                          subtitle:
-                              'Scheduled for ${remVM.nudgeTime.format(context)}',
+                          title: AppLocalizations.of(context)!.smartReminders,
+                          subtitle: AppLocalizations.of(context)!
+                              .scheduledFor(remVM.nudgeTime.format(context)),
                           trailing: Switch(
                             value: remVM.nudgeModeEnabled,
                             activeThumbColor: AppColors.primary,
@@ -278,8 +281,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.lock_outline,
                       iconColor: AppColors.primary,
-                      title: 'Privacy & Security',
-                      subtitle: 'Biometrics & data controls',
+                      title: AppLocalizations.of(context)!.privacySecurity,
+                      subtitle:
+                          AppLocalizations.of(context)!.privacySecuritySub,
                       trailing:
                           const Icon(Icons.chevron_right, color: Colors.grey),
                       onTap: () => Navigator.pushNamed(
@@ -292,10 +296,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         return _SettingsTile(
                           icon: Icons.download_for_offline,
                           iconColor: AppColors.primary,
-                          title: 'Offline Library',
+                          title: AppLocalizations.of(context)!.offlineLibrary,
                           subtitle: isDownloading
-                              ? 'Downloading...'
-                              : 'Keep supplements available offline',
+                              ? AppLocalizations.of(context)!.downloading
+                              : AppLocalizations.of(context)!.offlineLibrarySub,
                           trailing: isDownloading
                               ? const SizedBox(
                                   width: 20,
@@ -323,10 +327,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     scaffoldMessenger.showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                            'Library already downloaded on $dateStr'),
+                                            AppLocalizations.of(context)!
+                                                .libraryDownloadedOn(dateStr)),
                                         duration: const Duration(seconds: 3),
                                         action: SnackBarAction(
-                                          label: 'Update',
+                                          label: AppLocalizations.of(context)!
+                                              .update,
                                           onPressed: () async {
                                             await _downloadLibrary(
                                                 context, suppVM);
@@ -345,8 +351,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.volume_up_outlined,
                       iconColor: AppColors.primary,
-                      title: 'Sound Effects',
-                      subtitle: 'Play sounds on completion',
+                      title: AppLocalizations.of(context)!.soundEffects,
+                      subtitle: AppLocalizations.of(context)!.soundEffectsSub,
                       trailing: Consumer<ThemeViewModel>(
                         builder: (context, themeVM, _) => Switch(
                           value: themeVM.soundsEnabled,
@@ -360,7 +366,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
 
                 // Progress & Community
-                const _SectionHeader(title: 'Progress & Support'),
+                _SectionHeader(
+                    title: AppLocalizations.of(context)!.progressSupport),
                 _SettingsGroup(
                   children: [
                     Consumer<AuthProvider>(
@@ -369,8 +376,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         return _SettingsTile(
                           icon: Icons.monitor_heart,
                           iconColor: Colors.purple,
-                          title: 'Insights',
-                          subtitle: 'Your streaks & consistency',
+                          title: AppLocalizations.of(context)!.insights,
+                          subtitle: AppLocalizations.of(context)!.insightsSub,
                           onTap: () {
                             if (isPremium) {
                               Navigator.pushNamed(context, AppRouter.insights);
@@ -397,8 +404,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.help_outline,
                       iconColor: AppColors.primaryGold,
-                      title: 'Help Center',
-                      subtitle: 'FAQs, contact & guides',
+                      title: AppLocalizations.of(context)!.helpCenter,
+                      subtitle: AppLocalizations.of(context)!.helpCenterSub,
                       trailing:
                           const Icon(Icons.chevron_right, color: Colors.grey),
                       onTap: () => Navigator.pushNamed(
@@ -408,8 +415,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.privacy_tip_outlined,
                       iconColor: AppColors.primaryGold,
-                      title: 'Privacy Policy',
-                      subtitle: 'Legal information',
+                      title: AppLocalizations.of(context)!.privacyPolicy,
+                      subtitle: AppLocalizations.of(context)!.privacyPolicySub,
                       trailing: const Icon(Icons.open_in_new,
                           size: 18, color: Colors.grey),
                       onTap: () => locator<UrlService>()
@@ -419,8 +426,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.description_outlined,
                       iconColor: Colors.grey,
-                      title: 'General Disclaimer',
-                      subtitle: 'Crucial health & usage info',
+                      title: AppLocalizations.of(context)!.generalDisclaimer,
+                      subtitle: AppLocalizations.of(context)!.disclaimerSub,
                       trailing: const Icon(Icons.open_in_new,
                           size: 18, color: Colors.grey),
                       onTap: () => _showDisclaimer(context),
@@ -479,9 +486,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         final confirm = await showDialog<bool>(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: const Text('Log Out'),
-                            content:
-                                const Text('Are you sure you want to log out?'),
+                            title: Text(AppLocalizations.of(context)!.logOut),
+                            content: Text(
+                                AppLocalizations.of(context)!.logOutConfirm),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context, false),
@@ -491,7 +498,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 onPressed: () => Navigator.pop(context, true),
                                 style: TextButton.styleFrom(
                                     foregroundColor: Colors.red),
-                                child: const Text('Log Out'),
+                                child:
+                                    Text(AppLocalizations.of(context)!.logOut),
                               ),
                             ],
                           ),
@@ -518,7 +526,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       },
                       icon: Icon(Icons.logout, color: Colors.red[400]),
                       label: Text(
-                        'Log Out',
+                        AppLocalizations.of(context)!.logOut,
                         style: GoogleFonts.lexend(
                           color: Colors.red[400],
                           fontSize: 16,
@@ -542,7 +550,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Version 2.4.1 (102) • Proudly built for focus',
+                    AppLocalizations.of(context)!.versionInfo('2.4.1 (102)'),
                     style: GoogleFonts.lexend(
                       color: isDark ? Colors.grey[600] : Colors.grey[500],
                       fontSize: 12,
@@ -566,10 +574,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       if (context.mounted) {
         scaffoldMessenger.removeCurrentSnackBar();
         scaffoldMessenger.showSnackBar(
-          const SnackBar(
-            content: Text('Library downloaded for offline use'),
+          SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.libraryDownloadedSuccess),
             backgroundColor: Colors.green,
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
@@ -578,7 +587,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         scaffoldMessenger.removeCurrentSnackBar();
         scaffoldMessenger.showSnackBar(
           SnackBar(
-            content: Text('Download failed: ${e.toString()}'),
+            content: Text(
+                AppLocalizations.of(context)!.downloadFailed(e.toString())),
             backgroundColor: Colors.red,
             duration: const Duration(seconds: 3),
           ),
@@ -606,8 +616,9 @@ class _ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final userName =
-        user?.displayName ?? user?.email.split('@').first ?? 'Focus Hero';
+    final userName = user?.displayName ??
+        user?.email.split('@').first ??
+        AppLocalizations.of(context)!.focusHero;
 
     // XP and Level Logic
     final xp = user?.xp ?? 0;
@@ -724,7 +735,7 @@ class _ProfileHeader extends StatelessWidget {
                     ],
                   ),
                   child: Text(
-                    'LVL $level',
+                    AppLocalizations.of(context)!.levelLabel(level),
                     style: GoogleFonts.lexend(
                       color: Colors.white,
                       fontSize: 12,
@@ -748,7 +759,7 @@ class _ProfileHeader extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          _getGreeting(),
+                          _getGreeting(context),
                           style: GoogleFonts.lexend(
                             color: isDark
                                 ? Colors.grey[400]
@@ -766,7 +777,7 @@ class _ProfileHeader extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            _getRank(level).toUpperCase(),
+                            _getRank(context, level).toUpperCase(),
                             style: GoogleFonts.lexend(
                               color: AppColors.primary,
                               fontSize: 10,
@@ -807,7 +818,7 @@ class _ProfileHeader extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Progress to Lvl ${level + 1}',
+                      AppLocalizations.of(context)!.progressToLevel(level + 1),
                       style: GoogleFonts.lexend(
                         fontSize: 10,
                         color: isDark ? Colors.grey[500] : Colors.grey[600],
@@ -855,7 +866,7 @@ class _ProfileHeader extends StatelessWidget {
                     color: Colors.orange[500], size: 18),
                 const SizedBox(width: 6),
                 Text(
-                  '$streakCount Day Streak',
+                  AppLocalizations.of(context)!.dayStreak(streakCount),
                   style: GoogleFonts.lexend(
                     color: isDark ? Colors.white : const Color(0xFF111418),
                     fontSize: 14,
@@ -869,7 +880,8 @@ class _ProfileHeader extends StatelessWidget {
           // Member Since
           const SizedBox(height: 12),
           Text(
-            'Member since ${_formatDate(user?.createdAt)}',
+            AppLocalizations.of(context)!
+                .memberSince(_formatDate(user?.createdAt)),
             style: GoogleFonts.lexend(
               color: isDark ? Colors.grey[600] : const Color(0xFF94A3B8),
               fontSize: 12,
@@ -888,11 +900,12 @@ class _ProfileHeader extends StatelessWidget {
     );
   }
 
-  String _getGreeting() {
+  String _getGreeting(BuildContext context) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning,';
-    if (hour < 17) return 'Good Afternoon,';
-    return 'Good Evening,';
+    final l10n = AppLocalizations.of(context)!;
+    if (hour < 12) return l10n.goodMorning;
+    if (hour < 17) return l10n.goodAfternoon;
+    return l10n.goodEvening;
   }
 
   String _formatDate(DateTime? date) {
@@ -900,32 +913,33 @@ class _ProfileHeader extends StatelessWidget {
     return DateFormat('MMM yyyy').format(date);
   }
 
-  String _getRank(int level) {
-    if (level < 5) return 'Novice';
-    if (level < 10) return 'Apprentice';
-    if (level < 20) return 'Focus Adept';
-    if (level < 50) return 'Mental Warrior';
-    return 'Zen Master';
+  String _getRank(BuildContext context, int level) {
+    final l10n = AppLocalizations.of(context)!;
+    if (level < 5) return l10n.rankNovice;
+    if (level < 10) return l10n.rankApprentice;
+    if (level < 20) return l10n.rankAdept;
+    if (level < 50) return l10n.rankWarrior;
+    return l10n.rankMaster;
   }
 }
 
 class _Achievement {
   final String id;
-  final String title;
-  final String description;
+  final String titleKey;
+  final String descriptionKey;
   final IconData icon;
   final Color color;
-  final String targetDescription;
+  final String targetKey;
   final int? targetValue;
   final String? targetUnit;
 
   const _Achievement({
     required this.id,
-    required this.title,
-    required this.description,
+    required this.titleKey,
+    required this.descriptionKey,
     required this.icon,
     required this.color,
-    required this.targetDescription,
+    required this.targetKey,
     this.targetValue,
     this.targetUnit,
   });
@@ -934,9 +948,9 @@ class _Achievement {
 final List<_Achievement> _allAchievements = [
   const _Achievement(
     id: '7_day_warrior',
-    title: '7-Day Warrior',
-    description: 'Maintain a 7-day streak',
-    targetDescription: 'Complete 7 consecutive days',
+    titleKey: 'achievement7DayWarriorTitle',
+    descriptionKey: 'achievement7DayWarriorDesc',
+    targetKey: 'achievement7DayWarriorTarget',
     targetValue: 7,
     targetUnit: 'days',
     icon: Icons.bolt,
@@ -944,17 +958,17 @@ final List<_Achievement> _allAchievements = [
   ),
   const _Achievement(
     id: 'early_bird',
-    title: 'Early Bird',
-    description: 'Logged a dose before 8 AM',
-    targetDescription: 'Log a supplement before 8:00 AM',
+    titleKey: 'achievementEarlyBirdTitle',
+    descriptionKey: 'achievementEarlyBirdDesc',
+    targetKey: 'achievementEarlyBirdTarget',
     icon: Icons.wb_sunny,
     color: Colors.amber,
   ),
   const _Achievement(
     id: 'focus_master',
-    title: 'Focus Master',
-    description: 'Reach Level 5',
-    targetDescription: 'Reach Level 5',
+    titleKey: 'achievementFocusMasterTitle',
+    descriptionKey: 'achievementFocusMasterDesc',
+    targetKey: 'achievementFocusMasterTarget',
     targetValue: 5,
     targetUnit: 'level',
     icon: Icons.psychology,
@@ -962,13 +976,61 @@ final List<_Achievement> _allAchievements = [
   ),
   const _Achievement(
     id: 'alpha_hero',
-    title: 'Alpha Hero',
-    description: 'Early app supporter',
-    targetDescription: 'Be an early supporter of Daily Stack',
+    titleKey: 'achievementAlphaHeroTitle',
+    descriptionKey: 'achievementAlphaHeroDesc',
+    targetKey: 'achievementAlphaHeroTarget',
     icon: Icons.auto_awesome,
     color: AppColors.primaryGold,
   ),
 ];
+
+String _getAchievementTitle(BuildContext context, String key) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (key) {
+    case 'achievement7DayWarriorTitle':
+      return l10n.achievement7DayWarriorTitle;
+    case 'achievementEarlyBirdTitle':
+      return l10n.achievementEarlyBirdTitle;
+    case 'achievementFocusMasterTitle':
+      return l10n.achievementFocusMasterTitle;
+    case 'achievementAlphaHeroTitle':
+      return l10n.achievementAlphaHeroTitle;
+    default:
+      return 'Achievement';
+  }
+}
+
+String _getAchievementDesc(BuildContext context, String key) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (key) {
+    case 'achievement7DayWarriorDesc':
+      return l10n.achievement7DayWarriorDesc;
+    case 'achievementEarlyBirdDesc':
+      return l10n.achievementEarlyBirdDesc;
+    case 'achievementFocusMasterDesc':
+      return l10n.achievementFocusMasterDesc;
+    case 'achievementAlphaHeroDesc':
+      return l10n.achievementAlphaHeroDesc;
+    default:
+      return '';
+  }
+}
+
+String _getAchievementTarget(BuildContext context, String key) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (key) {
+    case 'achievement7DayWarriorTarget':
+      return l10n.achievement7DayWarriorTarget;
+    case 'achievementEarlyBirdTarget':
+      return l10n.achievementEarlyBirdTarget;
+    case 'achievementFocusMasterTarget':
+      return l10n.achievementFocusMasterTarget;
+    case 'achievementAlphaHeroTarget':
+      return l10n.achievementAlphaHeroTarget;
+    default:
+      return '';
+  }
+}
 
 void _showAchievementDialog(
   BuildContext context,
@@ -1011,7 +1073,7 @@ void _showAchievementDialog(
               ),
               const SizedBox(height: 16),
               Text(
-                achievement.title,
+                _getAchievementTitle(context, achievement.titleKey),
                 style: GoogleFonts.lexend(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -1030,7 +1092,9 @@ void _showAchievementDialog(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  isUnlocked ? 'UNLOCKED' : 'LOCKED',
+                  isUnlocked
+                      ? AppLocalizations.of(context)!.unlocked
+                      : AppLocalizations.of(context)!.locked,
                   style: GoogleFonts.lexend(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -1040,7 +1104,7 @@ void _showAchievementDialog(
               ),
               const SizedBox(height: 16),
               Text(
-                achievement.description,
+                _getAchievementDesc(context, achievement.descriptionKey),
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   color: isDark ? Colors.grey[300] : Colors.grey[800],
@@ -1068,7 +1132,7 @@ void _showAchievementDialog(
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Target',
+                          AppLocalizations.of(context)!.target,
                           style: GoogleFonts.lexend(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -1079,7 +1143,7 @@ void _showAchievementDialog(
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      achievement.targetDescription,
+                      _getAchievementTarget(context, achievement.targetKey),
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: isDark ? Colors.white : Colors.black87,
@@ -1094,7 +1158,7 @@ void _showAchievementDialog(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Progress',
+                            AppLocalizations.of(context)!.progress,
                             style: GoogleFonts.lexend(
                               fontSize: 11,
                               color:
@@ -1136,7 +1200,7 @@ void _showAchievementDialog(
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            'Achieved!',
+                            AppLocalizations.of(context)!.achieved,
                             style: GoogleFonts.lexend(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -1152,7 +1216,7 @@ void _showAchievementDialog(
               if (!isUnlocked) ...[
                 const SizedBox(height: 16),
                 Text(
-                  "Keep using the app to unlock this achievement!",
+                  AppLocalizations.of(context)!.keepUsingApp,
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     color: Colors.grey,
@@ -1171,7 +1235,7 @@ void _showAchievementDialog(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('Close'),
+                child: Text(AppLocalizations.of(context)!.close),
               ),
             ],
           ),
@@ -1200,7 +1264,7 @@ class _AchievementsCarousel extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Text(
-            'ACHIEVEMENTS',
+            AppLocalizations.of(context)!.achievements,
             style: GoogleFonts.lexend(
               fontSize: 10,
               fontWeight: FontWeight.bold,
@@ -1284,7 +1348,7 @@ class _AchievementsCarousel extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        achievement.title,
+                        _getAchievementTitle(context, achievement.titleKey),
                         style: GoogleFonts.lexend(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,

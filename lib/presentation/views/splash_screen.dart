@@ -3,6 +3,8 @@ import '../../config/locator.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
 import '../../utils/logger.dart';
+import 'package:provider/provider.dart';
+import '../../application/providers/auth_provider.dart';
 import '../navigation/app_router.dart';
 import '../theme/app_theme.dart';
 
@@ -68,8 +70,13 @@ class _SplashScreenState extends State<SplashScreen>
       await Future<void>.delayed(const Duration(milliseconds: 1500));
 
       if (mounted) {
-        // Navigate to Home (AuthWrapper)
-        Navigator.of(context).pushReplacementNamed(AppRouter.home);
+        final authProvider = Provider.of<AuthProvider>(context, listen: false);
+        if (authProvider.isAuthenticated) {
+          Navigator.of(context).pushReplacementNamed(AppRouter.home);
+        } else {
+          Navigator.of(context)
+              .pushReplacementNamed(AppRouter.onboardingExplainer);
+        }
       }
     } catch (e) {
       AppLogger.e('Initialization failed during Splash', e);

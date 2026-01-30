@@ -33,6 +33,7 @@ Manages the user's daily routine and intake logging.
 - `markSupplementTaken(String supplementId)`: Logs intake.
 - `markSupplementSkipped(String supplementId, {String? reason})`: Logs a skip.
 - `toggleSupplement(String supplementId)`: Toggle taken/untaken.
+- `removeSupplementFromStack(String supplementId, String slot)`: Removes a supplement from a specific routine.
 - `isSupplementTaken(String supplementId)`: Check status.
 - `saveSymptomRatings(Map<String, int> ratings)`: Save mood/focus/energy ratings.
 - `_getLogicalToday()`: Implementation of the **4 AM Rollover Rule**. Treats time before 4 AM as the previous calendar day to accommodate late-night users.

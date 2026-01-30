@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import '../../theme/app_theme.dart';
@@ -36,7 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
         _passwordController.text,
       );
 
-      // AuthWrapper will handle redirection
+      if (mounted) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRouter.home,
+          (route) => false,
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -205,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton(
                   onPressed: () =>
                       AppRouter.navigateTo(context, AppRouter.signup),
-                  child: const Text('Don\'t have an account? Sign up'),
+                  child: Text(AppLocalizations.of(context)!.dontHaveAccount),
                 ),
 
                 const SizedBox(height: 32),
@@ -215,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   OutlinedButton(
                     onPressed: () =>
                         context.read<AuthProvider>().signInAnonymously(),
-                    child: const Text('Skip Login (Dev Mode)'),
+                    child: Text(AppLocalizations.of(context)!.skipLogin),
                   ),
               ],
             ),

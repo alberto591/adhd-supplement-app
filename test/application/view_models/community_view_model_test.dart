@@ -26,7 +26,7 @@ void main() {
       viewModel = CommunityViewModel(mockRepository);
 
       // Wait for constructor calls
-      await Future.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
 
       expect(viewModel.isLoading, false);
       verify(mockRepository.getPosts(category: '#All')).called(1);
@@ -52,7 +52,7 @@ void main() {
       when(mockRepository.toggleHelpful('p1')).thenAnswer((_) async => {});
 
       viewModel = CommunityViewModel(mockRepository);
-      await Future.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
 
       // Act
       await viewModel.toggleHelpful('p1');
@@ -83,7 +83,7 @@ void main() {
       when(mockRepository.toggleHelpful('p1')).thenThrow(Exception('Fail'));
 
       viewModel = CommunityViewModel(mockRepository);
-      await Future.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
 
       // Act
       await viewModel.toggleHelpful('p1');

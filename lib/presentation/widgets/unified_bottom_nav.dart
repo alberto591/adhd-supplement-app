@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 import '../../application/providers/auth_provider.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class UnifiedBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -76,7 +77,7 @@ class UnifiedBottomNav extends StatelessWidget {
                     context,
                     index: 0,
                     icon: Icons.calendar_today,
-                    label: 'Today',
+                    label: AppLocalizations.of(context)!.navToday,
                     isSelected: currentIndex == 0,
                     primaryColor: primaryColor,
                     unselectedColor: unselectedColor!,
@@ -85,7 +86,7 @@ class UnifiedBottomNav extends StatelessWidget {
                     context,
                     index: 1,
                     icon: Icons.auto_stories,
-                    label: 'Library',
+                    label: AppLocalizations.of(context)!.navLibrary,
                     isSelected: currentIndex == 1,
                     primaryColor: primaryColor,
                     unselectedColor: unselectedColor,
@@ -94,7 +95,7 @@ class UnifiedBottomNav extends StatelessWidget {
                     context,
                     index: 3,
                     icon: Icons.account_circle,
-                    label: 'Profile',
+                    label: AppLocalizations.of(context)!.navProfile,
                     isSelected: currentIndex == 3,
                     primaryColor: primaryColor,
                     unselectedColor: unselectedColor,

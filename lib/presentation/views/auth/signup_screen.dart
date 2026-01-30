@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../theme/app_theme.dart';
 import '../../navigation/app_router.dart';
@@ -207,7 +208,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 // Login Link
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Already have an account? Login'),
+                  child: Text(AppLocalizations.of(context)!.alreadyHaveAccount),
                 ),
               ],
             ),

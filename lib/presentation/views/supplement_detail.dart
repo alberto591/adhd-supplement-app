@@ -11,6 +11,7 @@ import 'package:neurostack_app/domain/services/routine_compatibility_service.dar
 import 'package:neurostack_app/domain/entities/routine_element.dart';
 import 'package:neurostack_app/presentation/widgets/routine_status_alert.dart';
 import 'package:neurostack_app/utils/supplement_ui_helper.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 /// Neurostack-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
@@ -130,7 +131,7 @@ class SupplementDetail extends StatelessWidget {
                                           .withValues(alpha: 0.3)),
                                 ),
                                 child: Text(
-                                  'Routine Flagged',
+                                  AppLocalizations.of(context)!.routineFlagged,
                                   style: GoogleFonts.lexend(
                                     color: const Color(0xFFEF4444),
                                     fontSize: 12,
@@ -190,7 +191,8 @@ class SupplementDetail extends StatelessWidget {
                                               size: 16),
                                           const SizedBox(width: 8),
                                           Text(
-                                            'NOT RECOMMENDED FOR Neurostack',
+                                            AppLocalizations.of(context)!
+                                                .notRecommended,
                                             style: GoogleFonts.lexend(
                                               color: const Color(0xFFEF4444),
                                               fontSize: 10,
@@ -203,7 +205,8 @@ class SupplementDetail extends StatelessWidget {
                                     ),
                                   ] else
                                     Text(
-                                      'Premium Supplement',
+                                      AppLocalizations.of(context)!
+                                          .premiumSupplement,
                                       style: GoogleFonts.lexend(
                                         color: primaryGold,
                                         fontSize: 14,
@@ -216,7 +219,7 @@ class SupplementDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 12),
 
                         // Routine Status Alert
                         if (safetyWarnings.isNotEmpty)
@@ -247,7 +250,8 @@ class SupplementDetail extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'FOR BUSY MINDS (TL;DR)',
+                                        AppLocalizations.of(context)!
+                                            .tldrBanner,
                                         style: GoogleFonts.lexend(
                                           color: primaryGold,
                                           fontSize: 10,
@@ -272,7 +276,7 @@ class SupplementDetail extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 16),
                         ],
 
                         // Description
@@ -284,7 +288,7 @@ class SupplementDetail extends StatelessWidget {
                             height: 1.6,
                           ),
                         ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 16),
 
                         // Intelligence Grid (Mechanism & Timing)
                         if (supplement.mechanismOfAction != null ||
@@ -293,7 +297,8 @@ class SupplementDetail extends StatelessWidget {
                             children: [
                               if (supplement.mechanismOfAction != null)
                                 _CollapsibleInfoCard(
-                                  title: 'Mechanism of Action',
+                                  title: AppLocalizations.of(context)!
+                                      .mechanismOfAction,
                                   icon: Icons.science_outlined,
                                   color: Colors.blue,
                                   isDark: isDark,
@@ -311,7 +316,8 @@ class SupplementDetail extends StatelessWidget {
                               const SizedBox(height: 16),
                               if (supplement.timingRationale != null)
                                 _CollapsibleInfoCard(
-                                  title: 'Timing Strategy',
+                                  title: AppLocalizations.of(context)!
+                                      .timingStrategy,
                                   icon: Icons.access_time_filled,
                                   color: Colors.purple,
                                   isDark: isDark,
@@ -326,10 +332,12 @@ class SupplementDetail extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                              /*
                               const SizedBox(height: 16),
                               if (supplement.studyLinks.isNotEmpty)
                                 _CollapsibleInfoCard(
-                                  title: 'Scientific Evidence',
+                                  title: AppLocalizations.of(context)!
+                                      .scientificEvidence,
                                   icon: Icons.menu_book_outlined,
                                   color: Colors.teal,
                                   isDark: isDark,
@@ -366,6 +374,7 @@ class SupplementDetail extends StatelessWidget {
                                         .toList(),
                                   ),
                                 ),
+                              */
                             ],
                           ),
                       ],
@@ -380,7 +389,8 @@ class SupplementDetail extends StatelessWidget {
                       children: [
                         // Enhanced Benefits Section
                         _SectionCard(
-                          title: 'Neurostack Specific Benefits',
+                          title:
+                              AppLocalizations.of(context)!.neurostackBenefits,
                           icon: Icons.psychology,
                           color: primaryGold,
                           items: supplement.detailedBenefits.isNotEmpty
@@ -402,7 +412,7 @@ class SupplementDetail extends StatelessWidget {
                                 ?.isNotEmpty ==
                             true) ...[
                           _InfoCard(
-                            title: 'Optimal Dosage',
+                            title: AppLocalizations.of(context)!.optimalDosage,
                             icon: Icons.timer_outlined,
                             color: primaryGold,
                             content: supplement.dosage ??
@@ -416,7 +426,8 @@ class SupplementDetail extends StatelessWidget {
                         // Side Effects Section
                         if (supplement.sideEffects.isNotEmpty)
                           _SectionCard(
-                            title: 'Critical Cautions',
+                            title:
+                                AppLocalizations.of(context)!.criticalCautions,
                             icon: Icons.warning_amber_rounded,
                             color: const Color(0xFFF59E0B), // Amber-500
                             items: supplement.sideEffects,
@@ -451,7 +462,8 @@ class SupplementDetail extends StatelessWidget {
                                             size: 24),
                                         const SizedBox(width: 12),
                                         Text(
-                                          'Add to Stack',
+                                          AppLocalizations.of(context)!
+                                              .addToStack,
                                           style: GoogleFonts.lexend(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -466,10 +478,11 @@ class SupplementDetail extends StatelessWidget {
                           )
                         else
                           _InfoCard(
-                            title: 'Risk Profile',
+                            title: AppLocalizations.of(context)!.riskProfile,
                             icon: Icons.error_outline,
                             color: const Color(0xFFEF4444),
-                            content: 'High routine risk for Neurostack',
+                            content: AppLocalizations.of(context)!
+                                .riskProfileMessage,
                             isDark: isDark,
                           ),
                         const SizedBox(height: 24),
@@ -494,7 +507,8 @@ class SupplementDetail extends StatelessWidget {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: Text(
-                                  'General Disclaimer: Always consult your advisor before altering your supplement regimen.',
+                                  AppLocalizations.of(context)!
+                                      .generalDisclaimer,
                                   style: GoogleFonts.lexend(
                                     color: isDark
                                         ? Colors.grey[400]
@@ -554,7 +568,7 @@ class SupplementDetail extends StatelessWidget {
                 ),
               ),
               Text(
-                'Add to Daily Stack',
+                AppLocalizations.of(context)!.addToDailyStack,
                 style: GoogleFonts.lexend(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -563,7 +577,8 @@ class SupplementDetail extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Select which time slot to add ${supplement.name} to.',
+                AppLocalizations.of(context)!
+                    .addToStackSubtitle(supplement.name),
                 style: GoogleFonts.lexend(color: Colors.grey, fontSize: 14),
               ),
               const SizedBox(height: 24),
@@ -574,23 +589,31 @@ class SupplementDetail extends StatelessWidget {
                     children: [
                       _buildStackOption(
                           context,
-                          '🌅 Morning Stack',
-                          'Best for focus and energy',
+                          AppLocalizations.of(context)!.morningStack,
+                          AppLocalizations.of(context)!.morningStackSubtitle,
                           'Morning Stack',
                           viewModel),
                       const SizedBox(height: 12),
-                      _buildStackOption(context, '☀️ Afternoon Stack',
-                          'Mid-day mental boost', 'Afternoon Stack', viewModel),
+                      _buildStackOption(
+                          context,
+                          AppLocalizations.of(context)!.afternoonStack,
+                          AppLocalizations.of(context)!.afternoonStackSubtitle,
+                          'Afternoon Stack',
+                          viewModel),
                       const SizedBox(height: 12),
                       _buildStackOption(
                           context,
-                          '🌇 Evening Stack',
-                          'For relaxation and recovery',
+                          AppLocalizations.of(context)!.eveningStack,
+                          AppLocalizations.of(context)!.eveningStackSubtitle,
                           'Evening Stack',
                           viewModel),
                       const SizedBox(height: 12),
-                      _buildStackOption(context, '🌙 Night Stack',
-                          'Sleep support', 'Night Stack', viewModel),
+                      _buildStackOption(
+                          context,
+                          AppLocalizations.of(context)!.nightStack,
+                          AppLocalizations.of(context)!.nightStackSubtitle,
+                          'Night Stack',
+                          viewModel),
                     ],
                   ),
                 ),
@@ -613,13 +636,16 @@ class SupplementDetail extends StatelessWidget {
         messenger.showSnackBar(
           SnackBar(
             backgroundColor: AppColors.primaryGold,
-            content: Text('Added ${supplement.name} to $stackName',
+            content: Text(
+                AppLocalizations.of(context)!
+                    .addedToStack(supplement.name, title),
                 style: const TextStyle(color: Colors.black)),
           ),
         );
+        final l10n = AppLocalizations.of(context)!;
         viewModel.addToStack(supplement, stackName).catchError((Object e) {
           messenger.showSnackBar(
-            SnackBar(content: Text('Error syncing: $e')),
+            SnackBar(content: Text(l10n.errorSyncing(e.toString()))),
           );
         });
       },
@@ -688,7 +714,7 @@ class _FocusLevelIndicator extends StatelessWidget {
           }),
           const SizedBox(width: 8),
           Text(
-            'Focus Rating',
+            AppLocalizations.of(context)!.focusRating,
             style: GoogleFonts.lexend(
               color: Colors.white,
               fontSize: 12,
@@ -748,12 +774,14 @@ class _SectionCard extends StatelessWidget {
                 child: Icon(icon, color: color, size: 20),
               ),
               const SizedBox(width: 12),
-              Text(
-                title,
-                style: GoogleFonts.lexend(
-                  color: isDark ? Colors.white : Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  title,
+                  style: GoogleFonts.lexend(
+                    color: isDark ? Colors.white : Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -38,7 +39,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-          'Grace Day Philosophy',
+          AppLocalizations.of(context)!.graceDayPhilosophy,
           style: TextStyle(
             color: isDark ? Colors.white : Colors.black,
             fontSize: 18,
@@ -60,7 +61,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'Step 2 of 2',
+                        AppLocalizations.of(context)!.step2of2,
                         style: TextStyle(
                           color: isDark ? Colors.white : Colors.black,
                           fontSize: 16,
@@ -68,7 +69,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '100% Complete',
+                        AppLocalizations.of(context)!.complete100,
                         style: TextStyle(
                           color: isDark ? Colors.grey[400] : Colors.grey[500],
                           fontSize: 14,
@@ -149,7 +150,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                     const SizedBox(height: 32),
 
                     Text(
-                      'Life happens.\nWe\'ve got you.',
+                      AppLocalizations.of(context)!.lifeHappens,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: isDark ? Colors.white : Colors.black,
@@ -170,18 +171,19 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                           height: 1.5,
                           fontFamily: 'Lexend', // Ensure font is consistent
                         ),
-                        children: const [
-                          TextSpan(text: 'We believe in '),
+                        children: [
                           TextSpan(
-                            text: 'Grace Days',
-                            style: TextStyle(
+                              text: AppLocalizations.of(context)!.weBelieveIn),
+                          TextSpan(
+                            text: AppLocalizations.of(context)!.graceDays,
+                            style: const TextStyle(
                               color: AppColors.primary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
-                              text:
-                                  '. If you miss a serving, your streak doesn\'t reset. Our heart icon saves your flame so you can pick up right where you left off—no pressure, just progress.'),
+                              text: AppLocalizations.of(context)!
+                                  .graceDaysDescription),
                         ],
                       ),
                     ),
@@ -210,7 +212,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'NOT A MEDICAL DEVICE. For wellness & organization only. Consult a professional for health decisions.',
+                              AppLocalizations.of(context)!.medicalDisclaimer,
                               style: TextStyle(
                                 color:
                                     isDark ? Colors.red[200] : Colors.red[800],
@@ -276,7 +278,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      child: const Text('Got it!'),
+                      child: Text(AppLocalizations.of(context)!.gotIt),
                     ),
                   ),
                   const SizedBox(height: 24),

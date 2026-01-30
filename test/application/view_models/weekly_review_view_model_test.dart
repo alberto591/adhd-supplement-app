@@ -85,7 +85,6 @@ void main() {
     });
 
     test('fetchWeeklyStats calculates consistency map', () async {
-      final now = DateTime.now();
       // Let's mocking logs for today (Mon) and yesterday (Sun)
       // Assuming today is Mon for stable test mapping is tricky without injecting clock,
       // but logic uses DateTime.now().

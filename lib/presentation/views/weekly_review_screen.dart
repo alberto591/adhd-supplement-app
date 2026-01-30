@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/weekly_win_card.dart';
@@ -90,13 +91,15 @@ class WeeklyReviewScreen extends StatelessWidget {
                             showDialog<void>(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: const Text('AI Analysis'),
+                                title: Text(
+                                    AppLocalizations.of(context)!.aiAnalysis),
                                 content: Text(
                                     'Your consistency has improved by ${viewModel.focusImprovement.toStringAsFixed(1)}% compared to last week. Great job maintaining your streak!'),
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text('Close'),
+                                    child: Text(
+                                        AppLocalizations.of(context)!.close),
                                   ),
                                 ],
                               ),
@@ -212,26 +215,31 @@ class WeeklyReviewScreen extends StatelessWidget {
                             showDialog<void>(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: const Text('Share Weekly Progress'),
+                                title: Text(AppLocalizations.of(context)!
+                                    .shareWeeklyProgress),
                                 content: const Text(
                                   'Share your weekly supplement progress with your advisor, accountability partner, or social media.',
                                 ),
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text('Cancel'),
+                                    child: Text(
+                                        AppLocalizations.of(context)!.cancel),
                                   ),
                                   TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Progress shared!'),
+                                        SnackBar(
+                                          content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .progressShared),
                                         ),
                                       );
                                     },
-                                    child: const Text('Share'),
+                                    child: Text(
+                                        AppLocalizations.of(context)!.share),
                                   ),
                                 ],
                               ),

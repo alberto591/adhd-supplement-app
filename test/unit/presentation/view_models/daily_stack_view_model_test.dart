@@ -31,7 +31,14 @@ class FakeStackRepository implements StackRepository {
   Future<SupplementStack?> getStack(String userId) async => null;
 
   @override
-  Future<void> saveStack(String userId, SupplementStack stack) async {}
+  Future<void> saveStack(String userId, SupplementStack stack) async {
+    final index = stacks.indexWhere((s) => s.id == stack.id);
+    if (index != -1) {
+      stacks[index] = stack;
+    } else {
+      stacks.add(stack);
+    }
+  }
 
   @override
   Stream<List<SupplementStack>> watchUserStacks(String userId) =>
@@ -844,6 +851,54 @@ void main() {
             log.entries.where((e) => e.status == LogStatus.taken);
         expect(takenEntries.length, 2);
         expect(takenEntries.every((e) => e.slot == 'morning'), true);
+      });
+
+      test('removeSupplementFromStack removes item and updates stack',
+          () async {
+        fakeStackRepo.stacks = [morningStack, eveningStack];
+        await viewModel.initialize();
+
+        expect(
+            viewModel.eveningItems.any((i) => i.supplementId == 'supp1'), true);
+
+        await viewModel.removeSupplementFromStack('supp1', 'evening');
+
+        // Verify updated in ViewModel lists
+        expect(viewModel.eveningItems.any((i) => i.supplementId == 'supp1'),
+            false);
+
+        // Verify updated in repository stacks
+        final savedEveningStack =
+            fakeStackRepo.stacks.firstWhere((s) => s.id == 'stack_evening');
+        expect(savedEveningStack.items.any((i) => i.supplementId == 'supp1'),
+            false);
+      });
+
+      test('removeSupplementFromStack cleans up today\'s log entry', () async {
+        fakeStackRepo.stacks = [morningStack, eveningStack];
+        fakeLogRepo.todayLog = DailyLog(
+          id: 'log1',
+          userId: userId,
+          date: DateTime.now(),
+          entries: [
+            LogEntry(
+              supplementId: 'supp1',
+              takenAt: DateTime.now(),
+              status: LogStatus.taken,
+              slot: 'evening',
+            ),
+          ],
+          createdAt: DateTime.now(),
+        );
+
+        await viewModel.initialize();
+        expect(viewModel.isSupplementTaken('supp1', slot: 'evening'), true);
+
+        await viewModel.removeSupplementFromStack('supp1', 'evening');
+
+        // Verify log entry is removed
+        expect(viewModel.isSupplementTaken('supp1', slot: 'evening'), false);
+        expect(fakeLogRepo.todayLog!.entries.isEmpty, true);
       });
     });
   });

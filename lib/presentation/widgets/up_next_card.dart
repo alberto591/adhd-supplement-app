@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class UpNextCard extends StatelessWidget {
   final String title;
@@ -33,7 +34,7 @@ class UpNextCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Up Next',
+                AppLocalizations.of(context)!.upNext,
                 style: TextStyle(
                   color: textColor,
                   fontSize: 18,
@@ -144,7 +145,9 @@ class UpNextCard extends StatelessWidget {
                       child: ElevatedButton.icon(
                         onPressed: onTakeAll,
                         icon: const Icon(Icons.done_all, size: 20),
-                        label: const Text('Mark all as Taken'),
+                        label: Text(
+                          AppLocalizations.of(context)!.markAllTaken,
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.accentGreen,
                           foregroundColor: const Color(0xFF111814),

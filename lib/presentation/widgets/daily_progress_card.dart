@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../theme/app_theme.dart';
 
 class DailyProgressCard extends StatelessWidget {
@@ -37,9 +38,9 @@ class DailyProgressCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Daily Completion',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.dailyCompletion,
+            style: const TextStyle(
               color: Colors.grey,
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -54,13 +55,13 @@ class DailyProgressCard extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    const Text(
-                      "You're on a ",
-                      style: TextStyle(fontSize: 16),
+                    Text(
+                      AppLocalizations.of(context)!.streakPrefix,
+                      style: const TextStyle(fontSize: 16),
                     ),
                     Flexible(
                       child: Text(
-                        "$streakCount-day streak!",
+                        "$streakCount${AppLocalizations.of(context)!.streakSuffix}",
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

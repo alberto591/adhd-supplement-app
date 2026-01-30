@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../widgets/goal_selection_card.dart';
 import '../navigation/app_router.dart';
@@ -19,28 +20,34 @@ class _OnboardingGoalSelectionScreenState
   // Using a Set to allow multiple selections
   final Set<String> _selectedGoals = {'Better Sleep'};
 
-  final List<Map<String, dynamic>> _goals = [
-    {
-      'title': 'Mental Clarity',
-      'description': 'Reduce brain fog and improve focus.',
-      'icon': Icons.auto_awesome,
-    },
-    {
-      'title': 'Better Sleep',
-      'description': 'Wind down and improve rest quality.',
-      'icon': Icons.bedtime,
-    },
-    {
-      'title': 'Emotional Balance',
-      'description': 'Manage mood swings and reactivity.',
-      'icon': Icons.favorite,
-    },
-    {
-      'title': 'Energy Levels',
-      'description': 'Consistent energy throughout the day.',
-      'icon': Icons.bolt,
-    },
-  ];
+  List<Map<String, dynamic>> _getGoals(BuildContext context) {
+    return [
+      {
+        'id': 'Mental Clarity',
+        'title': AppLocalizations.of(context)!.goalMentalClarity,
+        'description': AppLocalizations.of(context)!.goalMentalClarityDesc,
+        'icon': Icons.auto_awesome,
+      },
+      {
+        'id': 'Better Sleep',
+        'title': AppLocalizations.of(context)!.goalBetterSleep,
+        'description': AppLocalizations.of(context)!.goalBetterSleepDesc,
+        'icon': Icons.bedtime,
+      },
+      {
+        'id': 'Emotional Balance',
+        'title': AppLocalizations.of(context)!.goalEmotionalBalance,
+        'description': AppLocalizations.of(context)!.goalEmotionalBalanceDesc,
+        'icon': Icons.favorite,
+      },
+      {
+        'id': 'Energy Levels',
+        'title': AppLocalizations.of(context)!.goalEnergyLevels,
+        'description': AppLocalizations.of(context)!.goalEnergyLevelsDesc,
+        'icon': Icons.bolt,
+      },
+    ];
+  }
 
   void _toggleGoal(String title) {
     setState(() {
@@ -102,7 +109,7 @@ class _OnboardingGoalSelectionScreenState
                       children: [
                         const SizedBox(height: 8),
                         Text(
-                          'What\'s your focus today?',
+                          AppLocalizations.of(context)!.whatsYourFocus,
                           style: TextStyle(
                             color:
                                 isDark ? Colors.white : const Color(0xFF111713),
@@ -114,7 +121,7 @@ class _OnboardingGoalSelectionScreenState
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'Pick your primary goals to help us tailor your supplement routine.',
+                          AppLocalizations.of(context)!.pickGoals,
                           style: TextStyle(
                             color: isDark ? Colors.grey[400] : Colors.grey[500],
                             fontSize: 16,
@@ -136,16 +143,17 @@ class _OnboardingGoalSelectionScreenState
                             childAspectRatio:
                                 0.75, // Adjusted to prevent overflow
                           ),
-                          itemCount: _goals.length,
+                          itemCount: _getGoals(context).length,
                           itemBuilder: (context, index) {
-                            final goal = _goals[index];
+                            final goal = _getGoals(context)[index];
+                            final id = goal['id'] as String;
                             final title = goal['title'] as String;
                             return GoalSelectionCard(
                               title: title,
                               description: goal['description'] as String,
                               icon: goal['icon'] as IconData,
-                              isSelected: _selectedGoals.contains(title),
-                              onTap: () => _toggleGoal(title),
+                              isSelected: _selectedGoals.contains(id),
+                              onTap: () => _toggleGoal(id),
                             );
                           },
                         ),
@@ -222,9 +230,9 @@ class _OnboardingGoalSelectionScreenState
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        child: const Text(
-                          'Next',
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)!.next,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -258,9 +266,9 @@ class _OnboardingGoalSelectionScreenState
                         foregroundColor:
                             isDark ? Colors.grey[400] : Colors.grey[500],
                       ),
-                      child: const Text(
-                        'I\'ll choose later',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.chooseLater,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           decoration: TextDecoration.underline,
