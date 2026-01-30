@@ -16,6 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../application/view_models/supplement_view_model.dart';
+import '../../infrastructure/services/url_service.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -402,6 +403,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           const Icon(Icons.chevron_right, color: Colors.grey),
                       onTap: () => Navigator.pushNamed(
                           context, AppRouter.helpAndSupport),
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.privacy_tip_outlined,
+                      iconColor: AppColors.primaryGold,
+                      title: 'Privacy Policy',
+                      subtitle: 'Legal information',
+                      trailing: const Icon(Icons.open_in_new,
+                          size: 18, color: Colors.grey),
+                      onTap: () => locator<UrlService>()
+                          .launchUri('https://neurostack-app.web.app/privacy'),
                     ),
                     const SizedBox(height: 2),
                     _SettingsTile(
