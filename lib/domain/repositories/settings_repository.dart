@@ -57,7 +57,10 @@ abstract class SettingsRepository {
   bool hasAcceptedDisclaimer();
   Future<void> setAcceptedDisclaimer(bool accepted);
 
-  // Offline Library
   DateTime? getLastLibraryDownloadTime();
   Future<void> setLastLibraryDownloadTime(DateTime time);
+
+  // AI Recommendations Cache
+  List<Map<String, String>> getAiRecommendations();
+  Future<void> setAiRecommendations(List<Map<String, String>> recommendations);
 }

@@ -65,6 +65,7 @@ import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_compatibility.dart';
 import '../../domain/entities/educational_article.dart';
 import '../../domain/entities/routine_element.dart';
+import '../../config/feature_flags.dart';
 
 class AppRouter {
   // Route names
@@ -300,6 +301,15 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ChemistScreen.withProvider());
 
       case focusBuddies:
+        if (!FeatureFlags.focusBuddies) {
+          return MaterialPageRoute(
+            builder: (_) => Scaffold(
+              appBar: AppBar(title: const Text('Coming Soon')),
+              body:
+                  const Center(child: Text('Focus Buddies is coming in v1.1')),
+            ),
+          );
+        }
         return MaterialPageRoute(
             builder: (_) => FocusBuddiesScreen.withProvider());
 

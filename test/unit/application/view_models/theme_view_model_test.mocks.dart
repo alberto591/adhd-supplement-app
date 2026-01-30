@@ -402,4 +402,25 @@ class MockSettingsRepository extends _i1.Mock
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  List<Map<String, String>> getAiRecommendations() => (super.noSuchMethod(
+        Invocation.method(
+          #getAiRecommendations,
+          [],
+        ),
+        returnValue: <Map<String, String>>[],
+      ) as List<Map<String, String>>);
+
+  @override
+  _i4.Future<void> setAiRecommendations(
+          List<Map<String, String>>? recommendations) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setAiRecommendations,
+          [recommendations],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

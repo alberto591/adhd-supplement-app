@@ -50,8 +50,8 @@ void main() {
       () => AuthProvider(locator<AuthRepository>(), locator<BillingService>()),
     );
 
-    locator
-        .registerLazySingleton<RoutineSafetyRepository>(() => _FakeRoutineSafetyRepository());
+    locator.registerLazySingleton<RoutineSafetyRepository>(
+        () => _FakeRoutineSafetyRepository());
     locator.registerFactoryParam<RoutineSafetyViewModel, String, void>(
       (userId, _) => RoutineSafetyViewModel(
         repository: locator<RoutineSafetyRepository>(),
@@ -190,7 +190,8 @@ class _FakeRoutineSafetyRepository implements RoutineSafetyRepository {
   Future<List<RoutineOverride>> getRoutineOverrides(String userId) async => [];
 
   @override
-  Future<SupplementCompatibility?> getCompatibilityById(String id) async => null;
+  Future<SupplementCompatibility?> getCompatibilityById(String id) async =>
+      null;
 }
 
 class _FakeSettingsRepository implements SettingsRepository {
@@ -301,6 +302,12 @@ class _FakeSettingsRepository implements SettingsRepository {
   DateTime? getLastLibraryDownloadTime() => null;
   @override
   Future<void> setLastLibraryDownloadTime(DateTime time) async {}
+
+  @override
+  List<Map<String, String>> getAiRecommendations() => [];
+  @override
+  Future<void> setAiRecommendations(
+      List<Map<String, String>> recommendations) async {}
 }
 
 class _FakeNotificationService implements NotificationService {

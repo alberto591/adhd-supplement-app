@@ -183,6 +183,13 @@ class MockSettingsRepository implements SettingsRepository {
 
   @override
   Future<void> setSoundsEnabled(bool enabled) async {}
+
+  @override
+  List<Map<String, String>> getAiRecommendations() => [];
+
+  @override
+  Future<void> setAiRecommendations(
+      List<Map<String, String>> recommendations) async {}
 }
 
 void main() {

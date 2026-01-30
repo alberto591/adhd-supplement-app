@@ -1,130 +1,16 @@
 Analyzing adhd_supplement_app...                                
 
-  error • Undefined name 'typeAElements' • lib/domain/services/routine_optimization_guard.dart:62:20 • undefined_identifier
-warning • The type of trigger can't be inferred; a type must be explicitly provided • lib/domain/services/routine_optimization_guard.dart:63:15 • inference_failure_on_untyped_parameter
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Pattern'.  • lib/domain/services/routine_optimization_guard.dart:63:49 • argument_type_not_assignable
-  error • Target of URI doesn't exist: 'adhd_routine_guard.dart' • lib/domain/services/services.dart:5:8 • uri_does_not_exist
-  error • The method 'checkOptimization' isn't defined for the type 'RoutineOptimizationGuard' • lib/infrastructure/services/routine_data_service.dart:19:54 • undefined_method
-  error • Target of URI doesn't exist: '../../domain/entities/medication.dart' • lib/presentation/views/compatibility_detail_screen.dart:2:8 • uri_does_not_exist
-  error • Undefined class 'CompatibilityGuidance' • lib/presentation/views/compatibility_detail_screen.dart:8:9 • undefined_class
-warning • The type of ref can't be inferred; a type must be explicitly provided • lib/presentation/views/compatibility_detail_screen.dart:134:44 • inference_failure_on_untyped_parameter
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'String'.  • lib/presentation/views/compatibility_detail_screen.dart:147:29 • argument_type_not_assignable
-  error • Undefined class 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:205:34 • undefined_class
-  error • Undefined class 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:267:24 • undefined_class
-  error • The body might complete normally, causing 'null' to be returned, but the return type, 'Color', is a potentially non-nullable type • lib/presentation/views/compatibility_detail_screen.dart:273:9 • body_might_complete_normally
-  error • Undefined class 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:273:22 • undefined_class
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:275:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:277:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:279:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:281:12 • undefined_identifier
-  error • The body might complete normally, causing 'null' to be returned, but the return type, 'IconData', is a potentially non-nullable type • lib/presentation/views/compatibility_detail_screen.dart:286:12 • body_might_complete_normally
-  error • Undefined class 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:286:24 • undefined_class
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:288:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:290:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:292:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:294:12 • undefined_identifier
-  error • The body might complete normally, causing 'null' to be returned, but the return type, 'String', is a potentially non-nullable type • lib/presentation/views/compatibility_detail_screen.dart:299:10 • body_might_complete_normally
-  error • Undefined class 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:299:23 • undefined_class
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:301:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:303:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:305:12 • undefined_identifier
-  error • Undefined name 'GuidanceLevel' • lib/presentation/views/compatibility_detail_screen.dart:307:12 • undefined_identifier
-  error • The getter 'onboardingRoutineOptimization' isn't defined for the type 'AppRouter' • lib/presentation/views/onboarding_goal_selection_screen.dart:212:46 • undefined_getter
-  error • Missing concrete implementation of 'abstract class State<T extends StatefulWidget> with Diagnosticable.build' • lib/presentation/views/user_profile_screen.dart:27:7 • non_abstract_class_inherits_abstract_member
-warning • The declaration '_showEditProfileDialog' isn't referenced • lib/presentation/views/user_profile_screen.dart:45:8 • unused_element
-  error • The element type 'dynamic' can't be assigned to the list type 'Widget' • lib/presentation/views/user_profile_screen.dart:61:11 • list_element_type_not_assignable
-  error • The element type 'dynamic' can't be assigned to the list type 'Widget' • lib/presentation/views/user_profile_screen.dart:65:11 • list_element_type_not_assignable
-warning • The declaration '_showAdhdTypeDialog' isn't referenced • lib/presentation/views/user_profile_screen.dart:81:8 • unused_element
-warning • The value of the local variable 'selectedType' isn't used • lib/presentation/views/user_profile_screen.dart:90:13 • unused_local_variable
-  error • Too many positional arguments: 0 expected, but 1 found • lib/presentation/views/user_profile_screen.dart:96:19 • extra_positional_arguments_could_be_named
-  error • Undefined name 'value' • lib/presentation/views/user_profile_screen.dart:96:49 • undefined_identifier
-  error • Expected to find ')' • lib/presentation/views/user_profile_screen.dart:96:55 • expected_token
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:98:16 • expected_executable
-   info • An uninitialized variable should have an explicit type annotation • lib/presentation/views/user_profile_screen.dart:99:15 • prefer_typing_uninitialized_variables
-warning • The type of child can't be inferred without either a type or initializer • lib/presentation/views/user_profile_screen.dart:99:15 • inference_failure_on_uninitialized_variable
-  error • Expected to find ';' • lib/presentation/views/user_profile_screen.dart:99:15 • expected_token
-  error • Variables must be declared using the keywords 'const', 'final', 'var' or a type name • lib/presentation/views/user_profile_screen.dart:99:15 • missing_const_final_var_or_type
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:99:20 • expected_executable
-   info • The function 'Column' should have a return type but doesn't • lib/presentation/views/user_profile_screen.dart:99:22 • always_declare_return_types
-   info • The variable name 'Column' isn't a lowerCamelCase identifier • lib/presentation/views/user_profile_screen.dart:99:22 • non_constant_identifier_names
-warning • The return type of 'Column' can't be inferred • lib/presentation/views/user_profile_screen.dart:99:22 • inference_failure_on_function_return_type
-  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/presentation/views/user_profile_screen.dart:100:29 • named_parameter_outside_group
-  error • Using a colon as the separator before a default value is no longer supported • lib/presentation/views/user_profile_screen.dart:100:29 • obsolete_colon_for_default_value
-  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/presentation/views/user_profile_screen.dart:101:25 • named_parameter_outside_group
-  error • Using a colon as the separator before a default value is no longer supported • lib/presentation/views/user_profile_screen.dart:101:25 • obsolete_colon_for_default_value
-  error • Methods can't be invoked in constant expressions • lib/presentation/views/user_profile_screen.dart:101:27 • const_eval_method_invocation
-  error • A function body must be provided • lib/presentation/views/user_profile_screen.dart:111:16 • missing_function_body
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:111:16 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:112:13 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:112:14 • expected_executable
-   info • An uninitialized variable should have an explicit type annotation • lib/presentation/views/user_profile_screen.dart:113:13 • prefer_typing_uninitialized_variables
-warning • The type of actions can't be inferred without either a type or initializer • lib/presentation/views/user_profile_screen.dart:113:13 • inference_failure_on_uninitialized_variable
-  error • Expected to find ';' • lib/presentation/views/user_profile_screen.dart:113:13 • expected_token
-  error • Variables must be declared using the keywords 'const', 'final', 'var' or a type name • lib/presentation/views/user_profile_screen.dart:113:13 • missing_const_final_var_or_type
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:113:20 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:113:22 • expected_executable
-   info • The function 'TextButton' should have a return type but doesn't • lib/presentation/views/user_profile_screen.dart:114:13 • always_declare_return_types
-   info • The variable name 'TextButton' isn't a lowerCamelCase identifier • lib/presentation/views/user_profile_screen.dart:114:13 • non_constant_identifier_names
-warning • The return type of 'TextButton' can't be inferred • lib/presentation/views/user_profile_screen.dart:114:13 • inference_failure_on_function_return_type
-  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/presentation/views/user_profile_screen.dart:115:24 • named_parameter_outside_group
-  error • Using a colon as the separator before a default value is no longer supported • lib/presentation/views/user_profile_screen.dart:115:24 • obsolete_colon_for_default_value
-  error • The default value of an optional parameter must be constant • lib/presentation/views/user_profile_screen.dart:115:26 • non_constant_default_value
-  error • Undefined name 'context' • lib/presentation/views/user_profile_screen.dart:115:46 • undefined_identifier
-  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/presentation/views/user_profile_screen.dart:116:20 • named_parameter_outside_group
-  error • Using a colon as the separator before a default value is no longer supported • lib/presentation/views/user_profile_screen.dart:116:20 • obsolete_colon_for_default_value
-  error • A function body must be provided • lib/presentation/views/user_profile_screen.dart:117:14 • missing_function_body
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:117:14 • expected_executable
-   info • The function 'TextButton' should have a return type but doesn't • lib/presentation/views/user_profile_screen.dart:118:13 • always_declare_return_types
-   info • The variable name 'TextButton' isn't a lowerCamelCase identifier • lib/presentation/views/user_profile_screen.dart:118:13 • non_constant_identifier_names
-warning • The return type of 'TextButton' can't be inferred • lib/presentation/views/user_profile_screen.dart:118:13 • inference_failure_on_function_return_type
-  error • The name 'TextButton' is already defined • lib/presentation/views/user_profile_screen.dart:118:13 • duplicate_definition
-  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/presentation/views/user_profile_screen.dart:119:24 • named_parameter_outside_group
-  error • Using a colon as the separator before a default value is no longer supported • lib/presentation/views/user_profile_screen.dart:119:24 • obsolete_colon_for_default_value
-  error • The default value of an optional parameter must be constant • lib/presentation/views/user_profile_screen.dart:119:26 • non_constant_default_value
-  error • Undefined name 'selectedType' • lib/presentation/views/user_profile_screen.dart:120:21 • undefined_identifier
-  error • Undefined name 'user' • lib/presentation/views/user_profile_screen.dart:121:39 • undefined_identifier
-  error • Undefined name 'selectedType' • lib/presentation/views/user_profile_screen.dart:121:63 • undefined_identifier
-  error • Undefined name 'context' • lib/presentation/views/user_profile_screen.dart:122:25 • undefined_identifier
-  error • Undefined name 'context' • lib/presentation/views/user_profile_screen.dart:123:23 • undefined_identifier
-  error • Undefined name 'context' • lib/presentation/views/user_profile_screen.dart:123:54 • undefined_identifier
-  error • Named parameters must be enclosed in curly braces ('{' and '}') • lib/presentation/views/user_profile_screen.dart:126:20 • named_parameter_outside_group
-  error • Using a colon as the separator before a default value is no longer supported • lib/presentation/views/user_profile_screen.dart:126:20 • obsolete_colon_for_default_value
-  error • A function body must be provided • lib/presentation/views/user_profile_screen.dart:127:14 • missing_function_body
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:127:14 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:128:11 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:128:12 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:129:9 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:129:10 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:130:7 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:130:8 • expected_executable
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:131:5 • expected_executable
-  error • Unexpected text ';' • lib/presentation/views/user_profile_screen.dart:131:6 • unexpected_token
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:132:3 • expected_executable
-  error • The element type 'dynamic' can't be assigned to the list type 'Widget' • lib/presentation/views/user_profile_screen.dart:145:11 • list_element_type_not_assignable
-  error • Undefined name '_dailyStackViewModel' • lib/presentation/views/user_profile_screen.dart:214:47 • undefined_identifier
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget?'.  • lib/presentation/views/user_profile_screen.dart:219:20 • argument_type_not_assignable
-  error • The function '_showEditProfileDialog' isn't defined • lib/presentation/views/user_profile_screen.dart:228:25 • undefined_function
-  error • The function '_showAdhdTypeDialog' isn't defined • lib/presentation/views/user_profile_screen.dart:247:38 • undefined_function
-  error • The method 'icon' isn't defined for the type 'Function' • lib/presentation/views/user_profile_screen.dart:465:39 • undefined_method
-  error • The element type 'dynamic' can't be assigned to the list type 'Widget' • lib/presentation/views/user_profile_screen.dart:474:31 • list_element_type_not_assignable
-  error • The element type 'dynamic' can't be assigned to the list type 'Widget' • lib/presentation/views/user_profile_screen.dart:478:31 • list_element_type_not_assignable
-  error • The named parameter 'style' isn't defined • lib/presentation/views/user_profile_screen.dart:480:33 • undefined_named_parameter
-  error • The method 'styleFrom' isn't defined for the type 'Function' • lib/presentation/views/user_profile_screen.dart:480:51 • undefined_method
-  error • The method 'styleFrom' isn't defined for the type 'Function' • lib/presentation/views/user_profile_screen.dart:516:41 • undefined_method
-  error • Expected a method, getter, setter or operator declaration • lib/presentation/views/user_profile_screen.dart:577:1 • expected_executable
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget?'.  • lib/presentation/views/user_profile_screen.dart:630:14 • argument_type_not_assignable
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget'.  • lib/presentation/views/user_profile_screen.dart:733:24 • argument_type_not_assignable
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget?'.  • lib/presentation/views/user_profile_screen.dart:792:20 • argument_type_not_assignable
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget?'.  • lib/presentation/views/user_profile_screen.dart:976:18 • argument_type_not_assignable
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget?'.  • lib/presentation/views/user_profile_screen.dart:1047:24 • argument_type_not_assignable
-  error • The named parameter 'crossAxisAlignment' isn't defined • lib/presentation/views/user_profile_screen.dart:1048:19 • undefined_named_parameter
-  error • A value of type 'dynamic' can't be returned from the method 'build' because it has a return type of 'Widget' • lib/presentation/views/user_profile_screen.dart:1185:12 • return_of_invalid_type
-  error • The named parameter 'crossAxisAlignment' isn't defined • lib/presentation/views/user_profile_screen.dart:1186:7 • undefined_named_parameter
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget?'.  • lib/presentation/views/user_profile_screen.dart:1248:26 • argument_type_not_assignable
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget?'.  • lib/presentation/views/user_profile_screen.dart:1333:14 • argument_type_not_assignable
-  error • The argument type 'dynamic' can't be assigned to the parameter type 'Widget'.  • lib/presentation/views/user_profile_screen.dart:1382:26 • argument_type_not_assignable
-  error • The named parameter 'crossAxisAlignment' isn't defined • lib/presentation/views/user_profile_screen.dart:1383:21 • undefined_named_parameter
+  error • The method 'jsonDecode' isn't defined for the type 'SharedPrefsSettingsRepository' • lib/infrastructure/repositories/shared_prefs_settings_repository.dart:243:37 • undefined_method
+  error • The argument type 'dynamic' can't be assigned to the parameter type 'Map<dynamic, dynamic>'.  • lib/infrastructure/repositories/shared_prefs_settings_repository.dart:244:58 • argument_type_not_assignable
+  error • The method 'jsonEncode' isn't defined for the type 'SharedPrefsSettingsRepository' • lib/infrastructure/repositories/shared_prefs_settings_repository.dart:253:51 • undefined_method
+  error • Missing concrete implementations of 'abstract class SettingsRepository.getAiRecommendations' and 'abstract class SettingsRepository.setAiRecommendations' • test/application/view_models/persistent_reminders_view_model_test.dart:8:7 • non_abstract_class_inherits_abstract_member
+  error • Missing concrete implementations of 'abstract class SettingsRepository.getAiRecommendations' and 'abstract class SettingsRepository.setAiRecommendations' • test/application/view_models/privacy_view_model_test.dart:95:7 • non_abstract_class_inherits_abstract_member
+  error • Missing concrete implementations of 'abstract class SettingsRepository.getAiRecommendations' and 'abstract class SettingsRepository.setAiRecommendations' • test/application/view_models/supplement_view_model_test.dart:74:7 • non_abstract_class_inherits_abstract_member
+  error • Missing concrete implementations of 'abstract class SettingsRepository.getAiRecommendations' and 'abstract class SettingsRepository.setAiRecommendations' • test/application/view_models/theme_view_model_test.dart:7:7 • non_abstract_class_inherits_abstract_member
+  error • Missing concrete implementations of 'abstract class SettingsRepository.getAiRecommendations' and 'abstract class SettingsRepository.setAiRecommendations' • test/presentation/views/quick_setup_wizard_screen_test.dart:114:7 • non_abstract_class_inherits_abstract_member
+   info • Use 'const' with the constructor to improve performance • test/unit/application/view_models/strategy_hub_view_model_test.dart:15:23 • prefer_const_constructors
 warning • The diagnostic 'must_be_immutable' doesn't need to be ignored here because it's already being ignored • test/unit/infrastructure/repositories/firebase_auth_repository_test.mocks.dart:1867:12 • duplicate_ignore
 warning • The diagnostic 'must_be_immutable' doesn't need to be ignored here because it's already being ignored • test/unit/infrastructure/repositories/firebase_auth_repository_test.mocks.dart:2563:12 • duplicate_ignore
+warning • The value of the local variable 'mockService' isn't used • test/unit/presentation/view_models/library_view_model_test.dart:555:15 • unused_local_variable
 
-126 issues found. (ran in 8.2s)
+12 issues found. (ran in 8.3s)

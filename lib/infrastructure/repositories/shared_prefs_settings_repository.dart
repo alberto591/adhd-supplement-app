@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/repositories/settings_repository.dart';
@@ -21,6 +22,7 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   static const String _keyAcceptedDisclaimer = 'accepted_general_disclaimer';
   static const String _soundsEnabledKey = 'sounds_enabled';
   static const String _lastLibDownloadKey = 'last_library_download_time';
+  static const String _keyAiRecommendations = 'ai_recommendations_cache';
 
   @override
   Future<void> init() async {
@@ -232,5 +234,23 @@ class SharedPrefsSettingsRepository implements SettingsRepository {
   @override
   Future<void> setAcceptedDisclaimer(bool accepted) async {
     await _prefs.setBool(_keyAcceptedDisclaimer, accepted);
+  }
+
+  @override
+  List<Map<String, String>> getAiRecommendations() {
+    final str = _prefs.getString(_keyAiRecommendations);
+    if (str == null) return [];
+    try {
+      final List<dynamic> decoded = jsonDecode(str) as List<dynamic>;
+      return decoded.map((e) => Map<String, String>.from(e as Map)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  @override
+  Future<void> setAiRecommendations(
+      List<Map<String, String>> recommendations) async {
+    await _prefs.setString(_keyAiRecommendations, jsonEncode(recommendations));
   }
 }

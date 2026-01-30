@@ -149,6 +149,13 @@ class MockSettingsRepository implements SettingsRepository {
   bool hasAcceptedDisclaimer() => true;
   @override
   Future<void> setAcceptedDisclaimer(bool accepted) async {}
+
+  @override
+  List<Map<String, String>> getAiRecommendations() => [];
+
+  @override
+  Future<void> setAiRecommendations(
+      List<Map<String, String>> recommendations) async {}
 }
 
 class MockUrlService extends UrlService {

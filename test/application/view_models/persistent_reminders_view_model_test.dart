@@ -154,6 +154,13 @@ class _FakeSettingsRepository implements SettingsRepository {
   Future<void> setLastLibraryDownloadTime(DateTime time) async {
     lastDownloadTime = time;
   }
+
+  @override
+  List<Map<String, String>> getAiRecommendations() => [];
+
+  @override
+  Future<void> setAiRecommendations(
+      List<Map<String, String>> recommendations) async {}
 }
 
 class _FakeNotificationService extends NotificationService {

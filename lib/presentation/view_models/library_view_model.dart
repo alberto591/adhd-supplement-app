@@ -95,6 +95,9 @@ class LibraryViewModel extends ChangeNotifier {
           await _supplementRepository.getAllSupplements(userId: _userId);
       _allSupplements = _deduplicateSupplements(fetched);
 
+      // Load cached AI recommendations
+      _aiRecommendations = _settingsRepository.getAiRecommendations();
+
       // Auto-set status if goals exist
       if (_authProvider.user != null && _authProvider.user!.goals.isNotEmpty) {
         _currentStatus = 'recommended';
@@ -168,6 +171,9 @@ class LibraryViewModel extends ChangeNotifier {
       );
       AppLogger.d('Fetched ${recommendations.length} AI Recommendations');
       _aiRecommendations = recommendations;
+
+      // Save to cache
+      await _settingsRepository.setAiRecommendations(recommendations);
 
       // Also refresh the library list to reflect the goals analyzed
       _applyFilters();
@@ -493,22 +499,78 @@ class LibraryViewModel extends ChangeNotifier {
   List<String> _getKeywordsForGoal(String goal) {
     final lowerGoal = goal.toLowerCase();
 
-    // Map specific onboarding goals to broad benefit keywords
+    // Map specific onboarding goals to broad benefit keywords (Semantic Matching)
     if (lowerGoal.contains('sleep')) {
-      return ['sleep', 'rest', 'insomnia', 'bedtime', 'calm'];
+      return [
+        'sleep',
+        'rest',
+        'insomnia',
+        'bedtime',
+        'calm',
+        'relaxation',
+        'melatonin',
+        'circadian',
+        'night'
+      ];
     }
-    if (lowerGoal.contains('mental') || lowerGoal.contains('fog')) {
-      return ['focus', 'memory', 'cognitive', 'brain', 'clarity'];
+    if (lowerGoal.contains('mental') ||
+        lowerGoal.contains('fog') ||
+        lowerGoal.contains('focus') ||
+        lowerGoal.contains('productivity')) {
+      return [
+        'focus',
+        'memory',
+        'cognitive',
+        'brain',
+        'clarity',
+        'concentration',
+        'alertness',
+        'productivity',
+        'learning',
+        'study',
+        'work',
+        'information processing'
+      ];
     }
-    if (lowerGoal.contains('emotional') || lowerGoal.contains('mood')) {
-      return ['mood', 'anxiety', 'stress', 'emotional', 'calm'];
+    if (lowerGoal.contains('emotional') ||
+        lowerGoal.contains('mood') ||
+        lowerGoal.contains('stress') ||
+        lowerGoal.contains('anxiety')) {
+      return [
+        'mood',
+        'anxiety',
+        'stress',
+        'emotional',
+        'calm',
+        'resilience',
+        'stabilization',
+        'irritation',
+        'relaxation',
+        'cortisol'
+      ];
     }
-    if (lowerGoal.contains('energy')) {
-      return ['energy', 'fatigue', 'alertness', 'vitality'];
+    if (lowerGoal.contains('energy') ||
+        lowerGoal.contains('fatigue') ||
+        lowerGoal.contains('alertness')) {
+      return [
+        'energy',
+        'fatigue',
+        'alertness',
+        'vitality',
+        'stamina',
+        'endurance',
+        'wakefulness',
+        'mitochondria',
+        'physical'
+      ];
     }
 
     // Fallback: use significant words (skip 'better', 'improve', etc)
-    return lowerGoal.split(' ').where((w) => w.length > 3).toList();
+    return lowerGoal
+        .split(' ')
+        .where((w) =>
+            w.length > 3 && !['better', 'improve', 'increase'].contains(w))
+        .toList();
   }
 
   void _setLoading(bool loading) {
