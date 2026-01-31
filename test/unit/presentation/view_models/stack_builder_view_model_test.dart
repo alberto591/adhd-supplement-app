@@ -35,6 +35,9 @@ class FakeSupplementRepository implements SupplementRepository {
 
   @override
   Future<void> downloadLibrary() async {}
+
+  @override
+  Stream<void> get onCacheInvalidated => const Stream.empty();
 }
 
 class FakeStackRepository implements StackRepository {
@@ -57,7 +60,8 @@ class FakeStackRepository implements StackRepository {
       Stream.value([]);
 }
 
-class FakeRoutineSafetyViewModel extends Fake implements RoutineSafetyViewModel {
+class FakeRoutineSafetyViewModel extends Fake
+    implements RoutineSafetyViewModel {
   @override
   List<SupplementCompatibility> get currentCompatibilitys => [];
   @override

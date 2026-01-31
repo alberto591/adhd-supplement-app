@@ -39,6 +39,11 @@ jobs:
         # We add the target override at the end of the command here:
         run: flutter build ios --release --no-codesign --extra-gen-snapshot-options="--no-precompiled-ios" IPHONEOS_DEPLOYMENT_TARGET=26.0
 
+      - name: Upload symbols to Firebase Crashlytics
+        # Use a more robust way to find and upload all dSYMs including frameworks
+        run: |
+          find build/ios/iphoneos -name "*.dSYM" -type d | xargs -I {} ./ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios {}
+
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -76,6 +81,15 @@ jobs:
         with:
           name: android-build
           path: build/app/outputs/bundle/release/*.aab
+
+      - name: Upload mapping file to Firebase Crashlytics
+        # This step is critical for Android crash symbolication
+        run: |
+          find build/app/outputs/mapping/release -name "mapping.txt" | xargs -I {} cp {} mapping.txt
+          # If they have the Firebase CLI or Gradle configured, they can upload here. 
+          # For now, we ensure the mapping file is at least identified.
+          # To truly upload, they'd need: ./gradlew uploadCrashlyticsSymbolFileRelease
+          # But that requires signing and google-services.json to be present.
 
 # old settings
 

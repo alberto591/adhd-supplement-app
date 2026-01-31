@@ -6,6 +6,7 @@ import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
 import '../../config/locator.dart';
 import '../theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:neurostack_app/application/view_models/supplement_view_model.dart';
 
 class SystemHealthScreen extends StatelessWidget {
   const SystemHealthScreen({super.key});
@@ -192,6 +193,11 @@ class SystemHealthScreen extends StatelessWidget {
                         try {
                           final seedingService = locator<SeedingService>();
                           await seedingService.seedSupplements();
+
+                          // Force refresh of local cache to get new translations
+                          await locator<SupplementViewModel>()
+                              .downloadLibraryForOffline();
+
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

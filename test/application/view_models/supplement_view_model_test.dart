@@ -69,6 +69,9 @@ class MockSupplementRepository implements SupplementRepository {
 
   @override
   Future<void> downloadLibrary() async {}
+
+  @override
+  Stream<void> get onCacheInvalidated => const Stream.empty();
 }
 
 class MockSettingsRepository implements SettingsRepository {

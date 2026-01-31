@@ -28,4 +28,7 @@ abstract class SupplementRepository {
 
   /// Force download all supplements to local cache for offline use
   Future<void> downloadLibrary();
+
+  /// Stream that emits when the cache is invalidated/refreshed
+  Stream<void> get onCacheInvalidated;
 }

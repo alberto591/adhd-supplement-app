@@ -174,6 +174,9 @@ class _FakeSupplementRepository implements SupplementRepository {
 
   @override
   Future<void> downloadLibrary() async {}
+
+  @override
+  Stream<void> get onCacheInvalidated => const Stream.empty();
 }
 
 class _FakeRoutineSafetyRepository implements RoutineSafetyRepository {

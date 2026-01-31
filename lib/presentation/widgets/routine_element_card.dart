@@ -152,22 +152,14 @@ class RoutineElementCard extends StatelessWidget {
                       ),
                   ] else ...[
                     // Primary Action: Mark as Taken
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        if (statusText != null && !isTaken && !isSkipped)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              statusText!,
-                              style: TextStyle(
-                                color: statusColor ?? Colors.grey,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        GestureDetector(
+                    Builder(
+                      builder: (context) {
+                        final isWide = MediaQuery.of(context).size.width > 600;
+                        final hasStatus =
+                            statusText != null && !isTaken && !isSkipped;
+
+                        // Shared Button Widget
+                        final takeButton = GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () {
                             AppLogger.d('Take button HIT for $title');
@@ -205,8 +197,49 @@ class RoutineElementCard extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                      ],
+                        );
+
+                        if (isWide && hasStatus) {
+                          // iPad/Wide: Row Layout [Status] -- [Button]
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                statusText!,
+                                style: TextStyle(
+                                  color: statusColor ?? Colors.grey,
+                                  fontSize: 13, // Slightly larger for iPad
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              takeButton,
+                            ],
+                          );
+                        } else {
+                          // Mobile: Column Layout
+                          // [Status]
+                          // [Button]
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              if (hasStatus)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Text(
+                                    statusText!,
+                                    style: TextStyle(
+                                      color: statusColor ?? Colors.grey,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              takeButton,
+                            ],
+                          );
+                        }
+                      },
                     ),
                   ],
                 ],

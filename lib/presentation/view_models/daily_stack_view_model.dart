@@ -39,6 +39,7 @@ class DailyStackViewModel extends ChangeNotifier {
   final Set<String> _collapsedStackIds = {};
   bool _allCollapsed = false;
   StreamSubscription<List<SupplementStack>>? _stackSubscription;
+  StreamSubscription<void>? _cacheSubscription;
 
   // Time-based slots
   List<StackItem> get morningItems => _getItemsForSlot('morning');
@@ -297,6 +298,13 @@ class DailyStackViewModel extends ChangeNotifier {
         _soundService = soundService,
         _userId = userId;
 
+  /// Force refresh of cached supplements (e.g. after language change)
+  Future<void> refreshSupplements() async {
+    _supplementCache.clear();
+    await _cacheSupplements();
+    notifyListeners();
+  }
+
   /// Initialize the view model - load stacks, today's log, and streak
   Future<void> initialize() async {
     _setLoading(true);
@@ -353,6 +361,14 @@ class DailyStackViewModel extends ChangeNotifier {
         });
       });
 
+      // Listen for library cache invalidation (fixes translation updates)
+      _cacheSubscription?.cancel();
+      _cacheSubscription = _supplementRepository.onCacheInvalidated.listen((_) {
+        AppLogger.i(
+            'REACTIVE UPDATE: Supplement cache invalidated. Refreshing view...');
+        refreshSupplements();
+      });
+
       _snoozedSupplements.clear();
 
       // Check for achievements on load
@@ -388,7 +404,7 @@ class DailyStackViewModel extends ChangeNotifier {
     _snoozedSupplements.remove(supplementId);
     AppLogger.d('Marking supplement as taken: $supplementId (Slot: $slot)');
     HapticFeedback.heavyImpact();
-    _soundService.playTriumphant();
+    _soundService.playSuccess();
     final now = DateTime.now();
     final entry = LogEntry(
       supplementId: supplementId,
@@ -428,7 +444,7 @@ class DailyStackViewModel extends ChangeNotifier {
     AppLogger.d(
         'Batch marking ${supplementIds.length} supplements as taken (Slot: $slot)');
     HapticFeedback.heavyImpact();
-    _soundService.playTriumphant();
+    _soundService.playSuccess();
 
     final now = DateTime.now();
     final newEntries = supplementIds.map((id) {
@@ -1107,6 +1123,7 @@ class DailyStackViewModel extends ChangeNotifier {
   void dispose() {
     _isDisposed = true;
     _stackSubscription?.cancel();
+    _cacheSubscription?.cancel();
     super.dispose();
   }
 

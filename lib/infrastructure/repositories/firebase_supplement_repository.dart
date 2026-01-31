@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 import '../../domain/entities/supplement.dart';
 import '../../domain/repositories/supplement_repository.dart';
 import '../../utils/logger.dart';
@@ -8,6 +9,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
 
   // In-memory cache: "userId" (or "global") -> List<Supplement>
   final Map<String, List<Supplement>> _userCache = {};
+  final _cacheController = StreamController<void>.broadcast();
 
   FirebaseSupplementRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
@@ -296,6 +298,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
 
       // Update in-memory global cache as well
       _userCache['global'] = supplements;
+      _cacheController.add(null);
 
       AppLogger.i('Library download complete: ${supplements.length} items.');
     } catch (e) {
@@ -303,4 +306,7 @@ class FirebaseSupplementRepository implements SupplementRepository {
       rethrow;
     }
   }
+
+  @override
+  Stream<void> get onCacheInvalidated => _cacheController.stream;
 }

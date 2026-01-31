@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+
 import '../theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../navigation/app_router.dart';
@@ -435,47 +435,44 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ],
                 ),
 
-                // Developer Tools Section (Debug Only)
-                if (kDebugMode) ...[
-                  const _SectionHeader(title: 'Developer Tools (Debug)'),
-                  _SettingsGroup(
-                    children: [
-                      _SettingsTile(
-                        icon: Icons.monitor_heart,
-                        iconColor: AppColors.primaryGold,
-                        title: 'System Health',
-                        subtitle: 'Check app diagnostics',
-                        trailing:
-                            const Icon(Icons.chevron_right, color: Colors.grey),
-                        onTap: () => Navigator.pushNamed(
-                            context, AppRouter.systemHealth),
-                      ),
-                      const SizedBox(height: 2),
-                      _SettingsTile(
-                        icon: Icons.science,
-                        iconColor: AppColors.primaryGold,
-                        title: 'Science Update',
-                        subtitle: 'Preview update screen',
-                        trailing:
-                            const Icon(Icons.chevron_right, color: Colors.grey),
-                        onTap: () => Navigator.pushNamed(
-                            context, AppRouter.scienceUpdate),
-                      ),
-                      const SizedBox(height: 2),
-                      _SettingsTile(
-                        icon: Icons.code,
-                        iconColor: AppColors.primaryGold,
-                        title: 'Logic Triggers',
-                        subtitle: 'Backend spec handoff',
-                        trailing:
-                            const Icon(Icons.chevron_right, color: Colors.grey),
-                        onTap: () => Navigator.pushNamed(
-                            context, AppRouter.developerHandoff),
-                      ),
-                    ],
-                  ),
-                ],
-
+                // Developer Tools Section (Always visible for testing)
+                const _SectionHeader(title: 'Developer Tools'),
+                _SettingsGroup(
+                  children: [
+                    _SettingsTile(
+                      icon: Icons.monitor_heart,
+                      iconColor: AppColors.primaryGold,
+                      title: 'System Health',
+                      subtitle: 'Check app diagnostics',
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRouter.systemHealth),
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.science,
+                      iconColor: AppColors.primaryGold,
+                      title: 'Science Update',
+                      subtitle: 'Preview update screen',
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRouter.scienceUpdate),
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.code,
+                      iconColor: AppColors.primaryGold,
+                      title: 'Logic Triggers',
+                      subtitle: 'Backend spec handoff',
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () => Navigator.pushNamed(
+                          context, AppRouter.developerHandoff),
+                    ),
+                  ],
+                ),
                 // Logout Button
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
