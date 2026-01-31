@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
 
@@ -6,7 +7,7 @@ void main() {
     test(
         'defaultSupplements should contain trilingual translations for all items',
         () {
-      final supplements = SeedingService.defaultSupplements;
+      const supplements = SeedingService.defaultSupplements;
       final errors = <String>[];
 
       final requiredLanguages = ['it', 'es'];
@@ -47,7 +48,7 @@ void main() {
       }
 
       if (errors.isNotEmpty) {
-        print('Localization Errors found:\n${errors.join('\n')}');
+        debugPrint('Localization Errors found:\n${errors.join('\n')}');
       }
       expect(errors.isEmpty, isTrue,
           reason: 'Found ${errors.length} localization errors');

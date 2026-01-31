@@ -1553,7 +1553,7 @@ class SeedingService {
               "È stato dimostrato che i coloranti artificiali innescano il rilascio di istamina e possono interferire con il metabolismo dello zinco. Lo zinco è un cofattore critico per la sintesi dei neurotrasmettitori; la sua deplezione può peggiorare direttamente l'energia irrequieta e l'impulsività.",
           "timingRationale":
               "EVITARE: Il consumo dovrebbe essere eliminato per evitare riacutizzazioni comportamentali.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Collegato a un aumento dell'irrequietezza nei bambini sensibili",
@@ -1572,7 +1572,7 @@ class SeedingService {
               "Se ha demostrado que los colorantes artificiales desencadenan la liberación de histamina y pueden interferir con el metabolismo del zinc. El zinc es un cofactor crítico para la síntesis de neurotransmisores; su agotamiento puede empeorar directamente la energía inquieta y la impulsividad.",
           "timingRationale":
               "EVITAR: El consumo debe eliminarse para evitar brotes de comportamiento.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Vinculado a un aumento de la inquietud en niños sensibles",
@@ -1630,7 +1630,7 @@ class SeedingService {
               "L'HFCS induce un rapido rilascio di insulina portando a significative fluttuazioni della glicemia. Il successivo 'crollo' ipoglicemico può esaurire temporaneamente le riserve di neurotrasmettitori e causare nebbia cerebrale intensa, irritabilità e peggioramento dell'impulsività.",
           "timingRationale":
               "EVITARE: Il consumo porta a instabilità neuro-energetica.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Causa rapidi picchi di zucchero nel sangue seguiti da crolli",
@@ -1649,7 +1649,7 @@ class SeedingService {
               "El JMAF induce una liberación rápida de insulina que conduce a fluctuaciones significativas de azúcar en la sangre. El posterior 'choque' hipoglucémico puede agotar temporalmente las reservas de neurotransmisores y causar niebla mental intensa, irritabilidad y empeoramiento de la impulsividad.",
           "timingRationale":
               "EVITAR: El consumo conduce a inestabilidad neuroenergética.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Causa picos rápidos de azúcar en la sangre seguidos de caídas",
@@ -1707,7 +1707,7 @@ class SeedingService {
               "Il benzoato di sodio (E211) può attraversare la barriera emato-encefalica ed è stato dimostrato che aumenta l'energia irrequieta di per sé. Può interferire con la funzione mitocondriale e potenzialmente indurre stress ossidativo nell'ippocampo.",
           "timingRationale":
               "EVITARE: Conservante con impatto comportamentale riconosciuto.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Amplifica significativamente gli effetti dell'energia irrequieta dei coloranti alimentari sintetici",
@@ -1726,7 +1726,7 @@ class SeedingService {
               "El benzoato de sodio (E211) puede cruzar la barrera hematoencefálica y se ha demostrado que aumenta la energía inquieta por sí mismo. Puede interferir con la función mitocondrial y potencialmente inducir estrés oxidativo en el hipocampo.",
           "timingRationale":
               "EVITAR: Conservante con impacto conductual reconocido.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Amplifica significativamente los efectos de la energía inquieta de los colorantes alimentarios sintéticos",
@@ -4689,7 +4689,7 @@ class SeedingService {
               "La tartrazina può indurre il rilascio di istamina e impoverire le riserve corporee di zinco e vitamina B6. Poiché la B6 è un cofattore cruciale per la sintesi della dopamina, la sua deplezione può portare a squilibri neurochimici e disturbi comportamentali.",
           "timingRationale":
               "EVITARE: L'eliminazione dalla dieta è raccomandata per il controllo dello stato.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Noto per innescare orticaria e asma in individui sensibili",
@@ -4708,7 +4708,7 @@ class SeedingService {
               "La tartrazina puede inducir la liberación de histamina y agotar las reservas corporales de zinc y vitamina B6. Dado que la B6 es un cofactor crucial para la síntesis de dopamina, su agotamiento puede provocar desequilibrios neuroquímicos y trastornos del comportamiento.",
           "timingRationale":
               "EVITAR: Se recomienda eliminar de la dieta para el control del estado.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Conocido por desencadenar urticaria y asma en individuos sensibles",
@@ -4762,7 +4762,7 @@ class SeedingService {
               "Imita gli effetti di una tossina neuro-eccitatoria in individui sensibili, scatenando reazioni di ipersensibilità che si presentano come sfide di concentrazione come irrequietezza e scarsa concentrazione.",
           "timingRationale":
               "EVITARE: Dovrebbe essere eliminato da una dieta amica del Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Colorante azoico con alta correlazione con l'irrequietezza in età scolare",
@@ -4780,7 +4780,7 @@ class SeedingService {
               "Imita los efectos de una toxina neuroexcitatoria en individuos sensibles, desencadenando reacciones de hipersensibilidad que se presentan como desafíos de concentración como inquietud y falta de concentración.",
           "timingRationale":
               "EVITAR: Debe eliminarse de una dieta amigable con Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Colorante azoico con alta correlación con la inquietud en edad escolar",
@@ -4836,7 +4836,7 @@ class SeedingService {
               "L'eritrosina può interferire con il metabolismo dello iodio e la funzione tiroidea. Gli squilibri tiroidei sono strettamente legati a disfunzioni cognitive, ansia e irrequietezza, che possono esacerbare gravemente le sfide di concentrazione esistenti.",
           "timingRationale":
               "EVITARE: Il consumo è collegato a disturbi ormonali e comportamentali.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Vietato dalla FDA per l'uso in cosmetici/farmaci a causa del rischio di cancro nei ratti",
@@ -4855,7 +4855,7 @@ class SeedingService {
               "La eritrosina puede interferir con el metabolismo del yodo y la función tiroidea. Los desequilibrios tiroideos están estrechamente relacionados con la disfunción cognitiva, la ansiedad y la inquietud, lo que puede exacerbar gravemente los desafíos de concentración existentes.",
           "timingRationale":
               "EVITAR: El consumo está relacionado con la alteración hormonal y conductual.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Prohibido por la FDA para uso en cosméticos/medicamentos debido al riesgo de cáncer en ratas",
@@ -4912,7 +4912,7 @@ class SeedingService {
               "A differenza di molti altri coloranti, il Blu 1 può attraversare la barriera emato-encefalica ed è stato dimostrato che inibisce la neuro-segnalazione in certi contesti. Innesca risposte infiammatorie che possono manifestarsi come maggiore impulsività e instabilità dell'umore.",
           "timingRationale":
               "EVITARE: Dovrebbe essere rimosso dai piani nutrizionali Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Può attraversare direttamente la barriera emato-encefalica",
@@ -4931,7 +4931,7 @@ class SeedingService {
               "A diferencia de muchos otros colorantes, el Azul 1 puede cruzar la barrera hematoencefálica y se ha demostrado que inhibe la neuroseñalización en ciertos contextos. Desencadena respuestas inflamatorias que pueden manifestarse como aumento de la impulsividad e inestabilidad del estado de ánimo.",
           "timingRationale":
               "EVITAR: Debe eliminarse de los planes nutricionales de Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Puede cruzar directamente la barrera hematoencefálica",
@@ -4985,7 +4985,7 @@ class SeedingService {
               "Il Blu 2 innesca percorsi neuro-infiammatori in individui sensibili, portando a uno stato di 'iper-eccitazione' che rispecchia direttamente le sfide di energia irrequieta del Focus.",
           "timingRationale":
               "EVITARE: L'esclusione dalla dieta è altamente raccomandata.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Collegato a tumori cerebrali in alcuni vecchi studi su animali con alta assunzione",
@@ -5004,7 +5004,7 @@ class SeedingService {
               "El Azul 2 desencadena vías neuroinflamatorias en individuos sensibles, llevando a un estado de 'hiperexcitación' que refleja directamente los desafíos de energía inquieta de Focus.",
           "timingRationale":
               "EVITAR: Se recomienda encarecidamente la exclusión de la dieta.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Vinculado a tumores cerebrales en algunos estudios animales antiguos con alta ingesta",
@@ -5059,7 +5059,7 @@ class SeedingService {
               "Simile ad altri coloranti azoici, innesca il rilascio di istamina che agisce come un irritante del sistema nervoso centrale negli utenti Focus, causando diminuzione della concentrazione e aumento del movimento fisico.",
           "timingRationale":
               "EVITARE: La rimozione dalla dieta riduce il carico comportamentale cumulativo.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Colorante azoico vietato negli USA e in altri paesi",
@@ -5078,7 +5078,7 @@ class SeedingService {
               "Al igual que otros tintes azoicos, desencadena la liberación de histamina que actúa como un irritante del sistema nervioso central en los usuarios de Focus, causando una disminución de la concentración y un aumento del movimiento físico.",
           "timingRationale":
               "EVITAR: Eliminar de la dieta reduce la carga conductual acumulada.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Colorante azoico prohibido en EE. UU. y otros países",
@@ -5133,7 +5133,7 @@ class SeedingService {
               "Causa eccitazione del sistema nervoso centrale e può indurre risposte simil-allergiche che disturbano la funzione della corteccia prefrontale (l'area responsabile del controllo esecutivo).",
           "timingRationale":
               "EVITARE: L'eliminazione dalla dieta riduce l'interferenza comportamentale.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Associato a iperattività e orticaria in individui sensibili",
@@ -5152,7 +5152,7 @@ class SeedingService {
               "Causa excitación del sistema nervioso central y puede inducir respuestas similares a las alérgicas que interrumpen la función de la corteza prefrontal (el área responsable del control ejecutivo).",
           "timingRationale":
               "EVITAR: La eliminación de la dieta reduce la interferencia conductual.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Asociado con hiperactividad y urticaria en personas sensibles",
@@ -5208,7 +5208,7 @@ class SeedingService {
               "Innesca il rilascio di citochine pro-infiammatorie e istamina nel cervello, portando a uno stato di eccitazione cognitiva che si manifesta come impulsività e scarsa concentrazione.",
           "timingRationale":
               "EVITARE: Altamente raccomandato per l'eliminazione negli utenti Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Il colorante scatenante più comune nella dieta occidentale",
@@ -5227,7 +5227,7 @@ class SeedingService {
               "Desencadena la liberación de citocinas proinflamatorias e histamina en el cerebro, lo que lleva a un estado de excitación cognitiva que se manifiesta como impulsividad y falta de concentración.",
           "timingRationale":
               "EVITAR: Muy recomendado para su eliminación en usuarios de Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "El tinte desencadenante más común en la dieta occidental",
@@ -5284,7 +5284,7 @@ class SeedingService {
               "L'aspartame contiene fenilalanina, che può competere con altri grandi aminoacidi neutri (come la tirosina) per il trasporto attraverso la barriera emato-encefalica. Alti livelli possono interferire con la sintesi di dopamina e serotonina, peggiorando potenzialmente l'umore e la concentrazione negli individui Focus.",
           "timingRationale":
               "EVITARE: Può causare instabilità neurochimica e nebbia cerebrale.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Contiene fenilalanina (pericolo per chi soffre di PKU)",
@@ -5303,7 +5303,7 @@ class SeedingService {
               "El aspartamo contiene fenilalanina, que puede competir con otros aminoácidos neutros grandes (como la tirosina) por el transporte a través de la barrera hematoencefálica. Los niveles altos pueden interferir con la síntesis de dopamina y serotonina, empeorando potencialmente el estado de ánimo y la concentración en personas con Focus.",
           "timingRationale":
               "EVITAR: Puede causar inestabilidad neuroquímica y niebla cerebral.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Contiene fenilalanina (peligro para PKU)",
@@ -5360,7 +5360,7 @@ class SeedingService {
               "È stato dimostrato che il sucralosio altera significativamente il microbioma intestinale e può aumentare la permeabilità intestinale. Poiché l'asse intestino-cervello è critico per la gestione del Focus, la perturbazione cronica dell'intestino può portare a infiammazione sistemica e peggioramento comportamentale indiretto.",
           "timingRationale":
               "EVITARE: La salute intestinale a lungo termine è fondamentale per prestazioni focalizzate.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Può alterare il microbioma intestinale (asse intestino-cervello)",
@@ -5379,7 +5379,7 @@ class SeedingService {
               "Se ha demostrado que la sucralosa altera significativamente el microbioma intestinal y puede aumentar la permeabilidad intestinal. Dado que el eje intestino-cerebro es fundamental para el control de Focus, la alteración intestinal crónica puede provocar inflamación sistémica y un empeoramiento indirecto del comportamiento.",
           "timingRationale":
               "EVITAR: La salud intestinal a largo plazo es fundamental para un rendimiento concentrado.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Puede alterar el microbioma intestinal (eje intestino-cerebro)",
@@ -5436,7 +5436,7 @@ class SeedingService {
               "L'MSG fornisce glutammato altamente concentrato, il principale neurotrasmettitore eccitatorio del cervello. Negli individui Focus sensibili, questo può portare a 'ipereccitabilità' neuronale, manifestandosi come aumento dell'irrequietezza, ansia e difficoltà nel controllo degli impulsi motori.",
           "timingRationale":
               "EVITARE: Può causare riacutizzazioni comportamentali acute nelle persone sensibili.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Eccitotossina che può sovrastimolare i neuroni",
@@ -5455,7 +5455,7 @@ class SeedingService {
               "El GMS proporciona glutamato altamente concentrado, el principal neurotransmisor excitatorio del cerebro. En personas sensibles con Focus, esto puede conducir a una 'hiperexcitabilidad' neuronal, que se manifiesta como un aumento de la inquietud, ansiedad y dificultad para controlar los impulsos motores.",
           "timingRationale":
               "EVITAR: Puede causar brotes de comportamiento agudos en personas sensibles.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Excitotoxina que puede sobreestimular las neuronas",
@@ -5510,7 +5510,7 @@ class SeedingService {
               "Il BHT può indurre marcatori di stress ossidativo nel cervello ed è stato collegato a tossicità comportamentale ad alti livelli. Può interferire con gli effetti neuroprotettivi degli antiossidanti e dei lipidi come gli omega-3.",
           "timingRationale":
               "EVITARE: Conservante con riconosciuto potenziale neuro-infiammatorio.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Conservante sintetico con alto potenziale ossidativo",
@@ -5529,7 +5529,7 @@ class SeedingService {
               "El BHT puede inducir marcadores de estrés oxidativo en el cerebro y se ha relacionado con la toxicidad conductual en niveles altos. Puede interferir con los efectos neuroprotectores de los antioxidantes y lípidos como el omega-3.",
           "timingRationale":
               "EVITAR: Conservante con reconocido potencial neuroinflamatorio.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Conservante sintético con alto potencial oxidativo",
@@ -5584,7 +5584,7 @@ class SeedingService {
               "Come il benzoato di sodio, può aumentare l'iperattività motoria e può contribuire all'infiammazione sistemica e allo stress mitocondriale, in particolare se consumato con coloranti sintetici.",
           "timingRationale":
               "EVITARE: Il consumo è collegato a disturbi comportamentali.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare dalla dieta",
           "dosageWarnings": [
             "Può formare benzene (un cancerogeno) se combinato con la Vitamina C",
@@ -5603,7 +5603,7 @@ class SeedingService {
               "Al igual que el benzoato de sodio, puede aumentar la hiperactividad motora y puede contribuir a la inflamación sistémica y al estrés mitocondrial, particularmente cuando se consume con colorantes sintéticos.",
           "timingRationale":
               "EVITAR: El consumo está relacionado con la alteración del comportamiento.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar de la dieta",
           "dosageWarnings": [
             "Puede formar benceno (un carcinógeno) cuando se combina con Vitamina C",
@@ -5660,7 +5660,7 @@ class SeedingService {
               "L'assunzione frequente di zucchero raffinato provoca rapidi picchi di glucosio seguiti da crolli guidati dall'insulina. Questa instabilità glicemica porta alla down-regulation dei recettori della dopamina nel tempo e causa nebbia cerebrale acuta, irritabilità e deficit di attenzione durante i 'crolli' di zucchero.",
           "timingRationale":
               "EVITARE: La stabilità glicemica è fondamentale per la gestione del Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Ridurre drasticamente o eliminare",
           "dosageWarnings": [
             "Causa picchi di glucosio seguiti da cali che rovinano il focus",
@@ -5679,7 +5679,7 @@ class SeedingService {
               "La ingesta frecuente de azúcar refinada provoca picos rápidos de glucosa seguidos de caídas impulsadas por la insulina. Esta inestabilidad glucémica conduce a la regulación a la baja de los receptores de dopamina con el tiempo y causa niebla cerebral aguda, irritabilidad y déficit de atención durante las 'caídas' de azúcar.",
           "timingRationale":
               "EVITAR: La estabilidad glucémica es fundamental para el control de Focus.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Reducir drásticamente o eliminar",
           "dosageWarnings": [
             "Causa picos de glucosa seguidos de caídas que arruinan el enfoque",
@@ -5734,7 +5734,7 @@ class SeedingService {
               "I grassi trans possono incorporarsi fisicamente nelle membrane delle cellule neuronali, riducendo la loro fluidità. Questa interferenza attenua la funzione di proteine critiche come il trasportatore della dopamina e i recettori dei neurotrasmettitori, compromettendo direttamente l'elaborazione cognitiva e la trasduzione del segnale.",
           "timingRationale":
               "EVITARE: Interferisce con le fondamenta della segnalazione neuronale.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminare completamente",
           "dosageWarnings": [
             "Interferisce direttamente con i benefici neuroprotettivi degli Omega-3",
@@ -5753,7 +5753,7 @@ class SeedingService {
               "Las grasas trans pueden incorporarse físicamente a las membranas de las células neuronales, reduciendo su fluidez. Esta interferencia atenúa la función de proteínas críticas como el transportador de dopamina y los receptores de neurotransmisores, lo que afecta directamente el procesamiento cognitivo y la transducción de señales.",
           "timingRationale":
               "EVITAR: Interfiere con la base de la señalización neuronal.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Eliminar completamente",
           "dosageWarnings": [
             "Interfiere directamente con los beneficios neuroprotectores del Omega-3",
@@ -5808,7 +5808,7 @@ class SeedingService {
               "L'alcol disturba la regolazione fine del sistema dopaminergico e causa ansia da rimbalzo. Compromette significativamente la corteccia prefrontale (funzione esecutiva) ed esaurisce le vitamine B e il magnesio, che sono cofattori essenziali per la sintesi dei neurotrasmettitori. Rovina anche l'architettura del sonno REM, vitale per il recupero cognitivo.",
           "timingRationale":
               "EVITARE: Il consumo disturba lo sviluppo neurologico e il recupero cognitivo.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Evitare o limitare rigorosamente",
           "dosageWarnings": [
             "Esaurisce le vitamine B e il magnesio, critici per il focus",
@@ -5827,7 +5827,7 @@ class SeedingService {
               "El alcohol altera el ajuste fino del sistema de dopamina y causa ansiedad de rebote. Perjudica significativamente la corteza prefrontal (función ejecutiva) y agota las vitaminas B y el magnesio, que son cofactores esenciales para la síntesis de neurotransmisores. También arruina la arquitectura del sueño REM, vital para la recuperación cognitiva.",
           "timingRationale":
               "EVITAR: El consumo altera el neurodesarrollo y la recuperación cognitiva.",
-          "detailedBenefits": [],
+          "detailedBenefits": <String>[],
           "dosageFrequency": "Evitar o limitar estrictamente",
           "dosageWarnings": [
             "Agota las vitaminas B y el magnesio, críticos para el enfoque",
@@ -5844,7 +5844,7 @@ class SeedingService {
 
   Future<void> seedSupplements() async {
     try {
-      final supplements = defaultSupplements;
+      const supplements = defaultSupplements;
       AppLogger.i(
           'Starting seeding process for ${supplements.length} items...');
       final batch = _firestore.batch();
