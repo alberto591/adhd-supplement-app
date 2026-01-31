@@ -86,87 +86,90 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                   if (viewModel.isLoading) {
                     return SafeArea(
                       bottom: false,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // App bar skeleton
-                            const SizedBox(height: 12),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SkeletonLoader(
-                                  height: 24,
-                                  width: 24,
-                                  borderRadius: 12,
-                                ),
-                                SkeletonLoader(
-                                  height: 24,
-                                  width: 120,
-                                  borderRadius: 12,
-                                ),
-                                Row(
-                                  children: [
-                                    SkeletonLoader(
-                                      height: 24,
-                                      width: 24,
-                                      borderRadius: 12,
-                                    ),
-                                    SizedBox(width: 16),
-                                    SkeletonLoader(
-                                      height: 24,
-                                      width: 24,
-                                      borderRadius: 12,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 32),
-                            // Progress section skeleton
-                            const SkeletonLoader(
-                              height: 16,
-                              width: 150,
-                              borderRadius: 8,
-                            ),
-                            const SizedBox(height: 12),
-                            const SkeletonLoader(
-                              height: 10,
-                              borderRadius: 999,
-                            ),
-                            const SizedBox(height: 8),
-                            const SkeletonLoader(
-                              height: 12,
-                              width: 180,
-                              borderRadius: 6,
-                            ),
-                            const SizedBox(height: 32),
-                            // Up Next card skeleton
-                            const SkeletonLoader(
-                              height: 120,
-                              borderRadius: 16,
-                            ),
-                            const SizedBox(height: 32),
-                            // Stack Details header skeleton
-                            const SkeletonLoader(
-                              height: 20,
-                              width: 140,
-                              borderRadius: 8,
-                            ),
-                            const SizedBox(height: 16),
-                            // Stack items skeletons
-                            ...List.generate(
-                              3,
-                              (_) => const Padding(
-                                padding: EdgeInsets.only(bottom: 12),
-                                child: SkeletonLoader(
-                                  height: 80,
-                                  borderRadius: 16,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // App bar skeleton
+                              const SizedBox(height: 12),
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SkeletonLoader(
+                                    height: 24,
+                                    width: 24,
+                                    borderRadius: 12,
+                                  ),
+                                  SkeletonLoader(
+                                    height: 24,
+                                    width: 120,
+                                    borderRadius: 12,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SkeletonLoader(
+                                        height: 24,
+                                        width: 24,
+                                        borderRadius: 12,
+                                      ),
+                                      SizedBox(width: 16),
+                                      SkeletonLoader(
+                                        height: 24,
+                                        width: 24,
+                                        borderRadius: 12,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 32),
+                              // Progress section skeleton
+                              const SkeletonLoader(
+                                height: 16,
+                                width: 150,
+                                borderRadius: 8,
+                              ),
+                              const SizedBox(height: 12),
+                              const SkeletonLoader(
+                                height: 10,
+                                borderRadius: 999,
+                              ),
+                              const SizedBox(height: 8),
+                              const SkeletonLoader(
+                                height: 12,
+                                width: 180,
+                                borderRadius: 6,
+                              ),
+                              const SizedBox(height: 32),
+                              // Up Next card skeleton
+                              const SkeletonLoader(
+                                height: 120,
+                                borderRadius: 16,
+                              ),
+                              const SizedBox(height: 32),
+                              // Stack Details header skeleton
+                              const SkeletonLoader(
+                                height: 20,
+                                width: 140,
+                                borderRadius: 8,
+                              ),
+                              const SizedBox(height: 16),
+                              // Stack items skeletons
+                              ...List.generate(
+                                3,
+                                (_) => const Padding(
+                                  padding: EdgeInsets.only(bottom: 12),
+                                  child: SkeletonLoader(
+                                    height: 80,
+                                    borderRadius: 16,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );
