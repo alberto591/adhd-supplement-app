@@ -7,7 +7,24 @@ class SoundService {
   final SettingsRepository _settingsRepository;
 
   SoundService(this._settingsRepository) {
-    // Pre-load or configure if needed
+    _configureAudio();
+  }
+
+  void _configureAudio() {
+    AudioPlayer.global.setAudioContext(AudioContext(
+      iOS: AudioContextIOS(
+        category: AVAudioSessionCategory.ambient,
+        options: const {
+          AVAudioSessionOptions.mixWithOthers,
+          AVAudioSessionOptions.duckOthers,
+        },
+      ),
+      android: const AudioContextAndroid(
+        contentType: AndroidContentType.sonification,
+        usageType: AndroidUsageType.assistanceSonification,
+        audioFocus: AndroidAudioFocus.none,
+      ),
+    ));
   }
 
   Future<void> playSuccess() async {

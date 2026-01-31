@@ -227,16 +227,38 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                         ),
                                       ),
                                       const SizedBox(height: 4),
-                                      Text(
-                                        viewModel.greeting,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineSmall
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: textColor,
-                                            ),
-                                      ),
+                                      Builder(builder: (context) {
+                                        final hour = DateTime.now().hour;
+                                        final l10n =
+                                            AppLocalizations.of(context)!;
+                                        String greeting;
+                                        if (hour >= 5 && hour < 12) {
+                                          greeting = l10n.goodMorning;
+                                        } else if (hour >= 12 && hour < 17) {
+                                          greeting = l10n.goodAfternoon;
+                                        } else if (hour >= 17 && hour < 21) {
+                                          greeting = l10n.goodEvening;
+                                        } else {
+                                          greeting = l10n.goodNight;
+                                        }
+
+                                        // Remove trailing comma if present (common in ARB keys)
+                                        if (greeting.endsWith(',')) {
+                                          greeting = greeting.substring(
+                                              0, greeting.length - 1);
+                                        }
+
+                                        return Text(
+                                          greeting,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: textColor,
+                                              ),
+                                        );
+                                      }),
                                     ],
                                   ),
                                 ),
@@ -352,7 +374,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   if (viewModel.morningItems.isNotEmpty)
                                     _buildSlotSection(
                                         context,
-                                        AppLocalizations.of(context)!.morning,
+                                        'morning',
                                         viewModel.morningItems,
                                         isDark,
                                         textColor,
@@ -362,7 +384,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   if (viewModel.afternoonItems.isNotEmpty)
                                     _buildSlotSection(
                                         context,
-                                        AppLocalizations.of(context)!.afternoon,
+                                        'afternoon',
                                         viewModel.afternoonItems,
                                         isDark,
                                         textColor,
@@ -372,7 +394,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   if (viewModel.eveningItems.isNotEmpty)
                                     _buildSlotSection(
                                         context,
-                                        AppLocalizations.of(context)!.evening,
+                                        'evening',
                                         viewModel.eveningItems,
                                         isDark,
                                         textColor,
@@ -382,7 +404,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                   if (viewModel.nightItems.isNotEmpty)
                                     _buildSlotSection(
                                         context,
-                                        AppLocalizations.of(context)!.night,
+                                        'night',
                                         viewModel.nightItems,
                                         isDark,
                                         textColor,
@@ -599,7 +621,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
 
   Widget _buildSlotSection(
     BuildContext context,
-    String title,
+    String slot,
     List<StackItem> items,
     bool isDark,
     Color textColor,
@@ -607,14 +629,33 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
   ) {
     if (items.isEmpty) return const SizedBox.shrink();
 
+    final l10n = AppLocalizations.of(context)!;
+    String title;
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        title = l10n.morning;
+        break;
+      case 'afternoon':
+        title = l10n.afternoon;
+        break;
+      case 'evening':
+        title = l10n.evening;
+        break;
+      case 'night':
+        title = l10n.night;
+        break;
+      default:
+        title = slot;
+    }
+
     final isCollapsed =
-        _viewModel.collapsedStackIds.contains(title.toLowerCase());
+        _viewModel.collapsedStackIds.contains(slot.toLowerCase());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkWell(
-          onTap: () => _viewModel.toggleStackExpansion(title.toLowerCase()),
+          onTap: () => _viewModel.toggleStackExpansion(slot.toLowerCase()),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 16, top: 12),
             child: Row(
@@ -662,7 +703,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                   onPressed: () async {
                     for (final item in items) {
                       await _viewModel.markSupplementTaken(item.supplementId,
-                          slot: title.toLowerCase());
+                          slot: slot.toLowerCase());
                     }
                     if (mounted) {
                       setState(() => _showCelebration = true);
@@ -691,7 +732,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
           ...items.map((stackItem) {
             final supplement = _viewModel.getSupplement(stackItem.supplementId);
             final isTaken = _viewModel.isSupplementTaken(stackItem.supplementId,
-                slot: title.toLowerCase());
+                slot: slot.toLowerCase());
 
             return Dismissible(
               key: Key('dismiss_${title}_${stackItem.supplementId}'),
@@ -722,10 +763,10 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                     setState(() => _showCelebration = true);
                   }
                   await _viewModel.toggleSupplement(stackItem.supplementId,
-                      slot: title.toLowerCase());
+                      slot: slot.toLowerCase());
                 } else {
                   await _viewModel.markSupplementSkipped(stackItem.supplementId,
-                      slot: title.toLowerCase());
+                      slot: slot.toLowerCase());
                 }
               },
               child: RoutineElementCard(
@@ -745,12 +786,12 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                         _viewModel.getItemTimeStatus(stackItem),
                 onTake: () => _viewModel.markSupplementTaken(
                     stackItem.supplementId,
-                    slot: title.toLowerCase()),
+                    slot: slot.toLowerCase()),
                 onMoreOptions: () => _showItemOptions(
                     context,
                     supplement?.name ?? 'Supplement',
                     stackItem.supplementId,
-                    title),
+                    slot),
                 onTap: () {
                   if (supplement != null) {
                     Navigator.pushNamed(context, AppRouter.supplementDetail,
@@ -778,6 +819,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
       timeLabel: upcoming['timeLabel'] as String,
       itemCount: items.length,
       imagePath: upcoming['imagePath'] as String,
+      slot: slot,
       onTakeAll: () async {
         final ids = items.map((i) => i.supplementId).toList();
         await viewModel.markBatchTaken(ids, slot: slot);

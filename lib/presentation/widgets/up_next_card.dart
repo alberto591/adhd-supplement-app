@@ -8,6 +8,7 @@ class UpNextCard extends StatelessWidget {
   final String timeLabel;
   final int itemCount;
   final String imagePath;
+  final String? slot;
   final VoidCallback? onTakeAll;
 
   const UpNextCard({
@@ -17,6 +18,7 @@ class UpNextCard extends StatelessWidget {
     required this.timeLabel,
     required this.itemCount,
     required this.imagePath,
+    this.slot,
     this.onTakeAll,
   });
 
@@ -25,6 +27,32 @@ class UpNextCard extends StatelessWidget {
     // Capture theme brightness
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : AppColors.textPrimaryLight;
+    final l10n = AppLocalizations.of(context)!;
+
+    String displayTitle = title;
+    if (slot != null) {
+      switch (slot!.toLowerCase()) {
+        case 'morning':
+          displayTitle = l10n.morning;
+          break;
+        case 'afternoon':
+          displayTitle = l10n.afternoon;
+          break;
+        case 'evening':
+          displayTitle = l10n.evening;
+          break;
+        case 'night':
+          displayTitle = l10n.night;
+          break;
+      }
+    }
+
+    String displaySubtitle = subtitle;
+    if (slot != null) {
+      displaySubtitle = slot!.toLowerCase() == 'morning'
+          ? l10n.startYourDay
+          : l10n.stayOnTrack;
+    }
 
     return Column(
       children: [
@@ -34,7 +62,7 @@ class UpNextCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AppLocalizations.of(context)!.upNext,
+                l10n.upNext,
                 style: TextStyle(
                   color: textColor,
                   fontSize: 18,
@@ -49,7 +77,7 @@ class UpNextCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  title,
+                  displayTitle,
                   style: const TextStyle(
                     color: AppColors.primaryGold,
                     fontSize: 12,
@@ -107,7 +135,7 @@ class UpNextCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title.toUpperCase(),
+                      displayTitle.toUpperCase(),
                       style: const TextStyle(
                         color: AppColors.primaryGold,
                         fontSize: 10,
@@ -117,13 +145,14 @@ class UpNextCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      subtitle,
+                      displaySubtitle,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const SizedBox(height: 4),
                     const SizedBox(height: 4),
                     Row(
                       children: [

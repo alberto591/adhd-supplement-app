@@ -475,16 +475,6 @@ void main() {
           true);
     });
 
-    test('greeting is one of the valid options', () {
-      final validGreetings = [
-        'Good Morning',
-        'Good Afternoon',
-        'Good Evening',
-        'Good Night'
-      ];
-      expect(validGreetings.contains(viewModel.greeting), true);
-    });
-
     test('markSupplementTaken increments user XP and cancels nudges', () async {
       final initialUser = User(
         id: userId,

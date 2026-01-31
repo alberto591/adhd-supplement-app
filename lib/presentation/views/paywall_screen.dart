@@ -3,6 +3,7 @@ import '../../config/locator.dart';
 import '../../application/view_models/subscription_view_model.dart';
 import 'package:provider/provider.dart';
 import '../navigation/app_router.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class PaywallScreen extends StatelessWidget {
   final String? returnTo;
@@ -11,6 +12,7 @@ class PaywallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ChangeNotifierProvider(
       create: (_) => locator<SubscriptionViewModel>(),
       child: Scaffold(
@@ -33,17 +35,16 @@ class PaywallScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(24.0),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      _buildHeader(),
+                      _buildHeader(l10n),
                       const SizedBox(height: 32),
-                      _buildValuePill('Unlock Deep Performance Insights'),
-                      _buildValuePill('Unlimited Supplement Stacks'),
-                      _buildValuePill('Priority Med Compatibility Checker'),
-                      _buildValuePill(
-                          'Expert-Verified Neurostack Strategy Hub'),
+                      _buildValuePill(l10n.proDeepInsights),
+                      _buildValuePill(l10n.proUnlimitedStacks),
+                      _buildValuePill(l10n.proMedCompatibility),
+                      _buildValuePill(l10n.proStrategyHub),
                       const SizedBox(height: 40),
-                      _buildPricingSection(context),
+                      _buildPricingSection(context, l10n),
                       const SizedBox(height: 32),
-                      _buildFooter(context),
+                      _buildFooter(context, l10n),
                     ]),
                   ),
                 ),
@@ -78,7 +79,7 @@ class PaywallScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -88,9 +89,9 @@ class PaywallScreen extends StatelessWidget {
             color: Colors.amber.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: const Text(
-            'COMING IN VERSION 2.0',
-            style: TextStyle(
+          child: Text(
+            l10n.comingInVersion2,
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 12,
@@ -98,18 +99,18 @@ class PaywallScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        const Text(
-          'Pro Features Coming Soon',
-          style: TextStyle(
+        Text(
+          l10n.proFeaturesComingSoon,
+          style: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
             letterSpacing: -1,
           ),
         ),
         const SizedBox(height: 12),
-        const Text(
-          'We are working hard to bring you the best Neurostack optimization tools. These premium features will be available in our next major update.',
-          style: TextStyle(
+        Text(
+          l10n.proFeaturesDescription,
+          style: const TextStyle(
             fontSize: 16,
             color: Colors.grey,
             height: 1.4,
@@ -152,7 +153,7 @@ class PaywallScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPricingSection(BuildContext context) {
+  Widget _buildPricingSection(BuildContext context, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -163,22 +164,22 @@ class PaywallScreen extends StatelessWidget {
           width: 2,
         ),
       ),
-      child: const Column(
+      child: Column(
         children: [
-          Icon(Icons.auto_awesome, size: 48, color: Colors.amber),
-          SizedBox(height: 16),
+          const Icon(Icons.auto_awesome, size: 48, color: Colors.amber),
+          const SizedBox(height: 16),
           Text(
-            'Free for Early Adopters',
-            style: TextStyle(
+            l10n.proFreeForEarlyAdopters,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
-            'All core features are free. Premium tools are under development.',
+            l10n.proFreeDescription,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.grey,
               fontSize: 14,
             ),
@@ -188,7 +189,7 @@ class PaywallScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter(BuildContext context) {
+  Widget _buildFooter(BuildContext context, AppLocalizations l10n) {
     return Column(
       children: [
         SizedBox(
@@ -210,9 +211,9 @@ class PaywallScreen extends StatelessWidget {
               ),
               elevation: 0,
             ),
-            child: const Text(
-              'Back to App',
-              style: TextStyle(
+            child: Text(
+              l10n.proBackToApp,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -220,9 +221,9 @@ class PaywallScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-        const Text(
-          'You will be notified when Pro features launch!',
-          style: TextStyle(
+        Text(
+          l10n.proLaunchNotification,
+          style: const TextStyle(
             fontSize: 12,
             color: Colors.grey,
           ),

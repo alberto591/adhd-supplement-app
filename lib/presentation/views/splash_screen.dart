@@ -71,6 +71,16 @@ class _SplashScreenState extends State<SplashScreen>
 
       if (mounted) {
         final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+        // Wait for auth verification to complete
+        int retries = 0;
+        while (authProvider.status == AuthStatus.initial && retries < 30) {
+          await Future<void>.delayed(const Duration(milliseconds: 100));
+          retries++;
+        }
+
+        if (!mounted) return;
+
         if (authProvider.isAuthenticated) {
           Navigator.of(context).pushReplacementNamed(AppRouter.home);
         } else {

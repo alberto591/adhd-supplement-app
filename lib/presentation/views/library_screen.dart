@@ -320,7 +320,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                     _buildFilterChip(
                                       context,
                                       Icons.all_inclusive,
-                                      'All',
+                                      AppLocalizations.of(context)!.all,
                                       viewModel.selectedCategories.isEmpty,
                                       primaryGold,
                                       () => viewModel.filterByCategory(null),
@@ -334,7 +334,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                           context,
                                           SupplementUIHelper.getIconForCategory(
                                               category),
-                                          category,
+                                          SupplementUIHelper
+                                              .getLocalizedCategory(
+                                                  context, category),
                                           viewModel.selectedCategories
                                               .contains(category),
                                           primaryGold,
@@ -829,6 +831,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     required Supplement supplement,
     required bool isDark,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     final isGold = supplement.evidenceLevel?.toLowerCase() == 'high';
 
     return InkWell(
@@ -898,7 +901,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            'CUSTOM',
+                            l10n.customTag,
                             style: GoogleFonts.lexend(
                               fontSize: 8,
                               fontWeight: FontWeight.bold,
@@ -933,11 +936,12 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   try {
                     await _viewModel.deleteCustomSupplement(supplement.id);
                     messenger.showSnackBar(
-                      const SnackBar(content: Text('Supplement deleted')),
+                      SnackBar(content: Text(l10n.supplementDeleted)),
                     );
                   } catch (e) {
                     messenger.showSnackBar(
-                      SnackBar(content: Text('Delete failed: $e')),
+                      SnackBar(
+                          content: Text(l10n.failedToDelete(e.toString()))),
                     );
                   }
                 },
@@ -986,7 +990,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       borderRadius: BorderRadius.circular(8)),
                 ),
                 child: Text(
-                  supplement.status == 'avoid' ? 'WHY?' : 'ADD',
+                  supplement.status == 'avoid' ? l10n.why : l10n.add,
                   style: GoogleFonts.lexend(
                       fontWeight: FontWeight.bold, fontSize: 11),
                 ),
@@ -1038,6 +1042,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   void _showFiltersDrawer(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     showModalBottomSheet<void>(
       context: context,
@@ -1070,7 +1075,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       padding: const EdgeInsets.all(24),
                       children: [
                         Text(
-                          'Advanced Filters',
+                          l10n.advancedFilters,
                           style: GoogleFonts.lexend(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -1078,7 +1083,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         ),
                         const SizedBox(height: 32),
                         _buildFilterSectionMulti(
-                          'Categories',
+                          l10n.categories,
                           viewModel.categories,
                           viewModel.selectedCategories,
                           (val) => viewModel.filterByCategory(val),
@@ -1103,7 +1108,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   viewModel.clearFilters();
                                 },
                                 child: Text(
-                                  'Clear All',
+                                  l10n.clearAll,
                                   style: GoogleFonts.lexend(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
@@ -1124,7 +1129,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   ),
                                 ),
                                 child: Text(
-                                  'Show Results',
+                                  l10n.showResults,
                                   style: GoogleFonts.lexend(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -1146,6 +1151,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   Widget _buildAiChemistSection(
       BuildContext context, LibraryViewModel viewModel, bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
     if (viewModel.isAiLoading) {
       return Container(
         margin: const EdgeInsets.all(16),
@@ -1161,7 +1167,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             const CircularProgressIndicator(color: AppColors.primaryGold),
             const SizedBox(height: 16),
             Text(
-              'Analyzing bio-chemistry...',
+              l10n.analyzingBiochemistry,
               style: GoogleFonts.lexend(
                   color: isDark ? Colors.white70 : Colors.black87),
             ),
@@ -1210,7 +1216,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'AI Chemist Analysis',
+                    l10n.aiChemistAnalysis,
                     style: GoogleFonts.lexend(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -1219,8 +1225,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    viewModel.aiError ??
-                        'Get custom picks based on your goals.',
+                    viewModel.aiError ?? l10n.getCustomPicks,
                     style: GoogleFonts.lexend(
                       fontSize: 12,
                       color: viewModel.aiError != null
@@ -1246,7 +1251,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
               ),
               child: Text(
-                'Analyze',
+                l10n.analyze,
                 style: GoogleFonts.lexend(fontWeight: FontWeight.bold),
               ),
             ),
@@ -1266,7 +1271,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   color: AppColors.primaryGold, size: 16),
               const SizedBox(width: 8),
               Text(
-                'CHEMIST SELECTIONS',
+                l10n.chemistSelections,
                 style: GoogleFonts.lexend(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -1406,7 +1411,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   ),
                 ),
                 child: Text(
-                  option,
+                  SupplementUIHelper.getLocalizedCategory(context, option),
                   style: GoogleFonts.lexend(
                     fontSize: 12,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,

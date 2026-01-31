@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 typedef SupplementSaveCallback = Future<void> Function(
   String name,
@@ -25,7 +26,7 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
   final _formKey = GlobalKey<FormState>();
 
   String _name = '';
-  String _category = 'Vitamin';
+  late String _category;
   String? _dosage;
   final String _timeOfDay = 'Morning';
   final List<String> _benefits = [];
@@ -33,8 +34,24 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
   final String _form = 'Capsule';
 
   @override
+  void initState() {
+    super.initState();
+    _category = 'Vitamin'; // Still use internal keys for consistency
+  }
+
+  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+
+    // Use a map for internal category keys to localized display names
+    final categoryMap = {
+      'Vitamin': l10n.catVitamin,
+      'Mineral': l10n.catMineral,
+      'Herbal': l10n.catHerbal,
+      'Amino Acid': l10n.catAminoAcid,
+      'Other': l10n.catOther,
+    };
 
     return Container(
       padding: EdgeInsets.only(
@@ -64,7 +81,7 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
                 ),
               ),
               Text(
-                'Add Custom Supplement',
+                l10n.addCustomSupplement,
                 style: GoogleFonts.lexend(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -73,22 +90,23 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
               ),
               const SizedBox(height: 24),
               _buildTextField(
-                label: 'Supplement Name',
-                hint: 'e.g. Lion\'s Mane',
+                label: l10n.supplementName,
+                hint: l10n.nameHint,
                 onChanged: (v) => _name = v,
-                validator: (v) => v?.isEmpty == true ? 'Required' : null,
+                validator: (v) => v?.isEmpty == true ? l10n.required : null,
               ),
               const SizedBox(height: 16),
               _buildDropdown(
-                label: 'Category',
+                label: l10n.category,
                 value: _category,
-                items: ['Vitamin', 'Mineral', 'Herbal', 'Amino Acid', 'Other'],
+                items: categoryMap.keys.toList(),
+                displayNames: categoryMap,
                 onChanged: (v) => setState(() => _category = v!),
               ),
               const SizedBox(height: 16),
               _buildTextField(
-                label: 'Dosage (Optional)',
-                hint: 'e.g. 500mg',
+                label: l10n.dosageOptional,
+                hint: l10n.dosageHint,
                 onChanged: (v) => _dosage = v,
               ),
               // Usual Timing field removed per user request
@@ -108,7 +126,7 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
                     ),
                   ),
                   child: Text(
-                    'Save Supplement',
+                    l10n.saveSupplement,
                     style: GoogleFonts.lexend(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -164,6 +182,7 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
     required String label,
     required String? value,
     required List<String> items,
+    required Map<String, String> displayNames,
     required void Function(String?) onChanged,
   }) {
     return Column(
@@ -189,7 +208,8 @@ class _CustomSupplementFormState extends State<CustomSupplementForm> {
             ),
           ),
           items: items
-              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .map((e) =>
+                  DropdownMenuItem(value: e, child: Text(displayNames[e] ?? e)))
               .toList(),
           onChanged: onChanged,
         ),

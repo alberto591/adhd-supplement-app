@@ -130,7 +130,9 @@ class DailyStackViewModel extends ChangeNotifier {
       case 'night':
         return 'Night';
       default:
-        return slot;
+        // Capitalize default
+        if (slot.isEmpty) return slot;
+        return slot[0].toUpperCase() + slot.substring(1).toLowerCase();
     }
   }
 
@@ -219,21 +221,6 @@ class DailyStackViewModel extends ChangeNotifier {
   bool get hasSkippedItems {
     return _stacks
         .any((s) => s.items.any((i) => isSupplementSkipped(i.supplementId)));
-  }
-
-  /// Get dynamic greeting based on time of day
-  String get greeting {
-    final hour = DateTime.now().hour;
-    if (hour >= 5 && hour < 12) {
-      return 'Good Morning';
-    }
-    if (hour >= 12 && hour < 17) {
-      return 'Good Afternoon';
-    }
-    if (hour >= 17 && hour < 21) {
-      return 'Good Evening';
-    }
-    return 'Good Night';
   }
 
   /// Calculate today's progress as a percentage (0.0 - 1.0)
