@@ -33,7 +33,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                   size: 16,
                 ),
                 padding: EdgeInsets.zero,
-                onPressed: () {},
+                onPressed: () => Navigator.pop(context),
               ),
             ),
           ),
