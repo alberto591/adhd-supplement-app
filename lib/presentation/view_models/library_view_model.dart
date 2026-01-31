@@ -398,55 +398,47 @@ class LibraryViewModel extends ChangeNotifier {
     final userGoals = _authProvider.user?.goals ?? [];
 
     _filteredSupplements = _allSupplements.where((s) {
-      // Status filter (Primary)
+      // 1. Status/Eligibility Filter (The "Foundation")
+      bool matchesStatus = false;
+
       if (_currentStatus == 'recommended') {
         final goals = _authProvider.user?.goals ?? [];
-        // If "recommended" tab is selected, we filter by supplements that match user goals
         if (goals.isEmpty) {
-          // Fallback: If no goals, show "beneficial" items with high evidence
-          if (s.status != 'beneficial' ||
-              s.evidenceLevel?.toLowerCase() != 'high') {
-            return false;
-          }
+          // Fallback: Show high evidence beneficial items
+          matchesStatus = s.status == 'beneficial' &&
+              s.evidenceLevel?.toLowerCase() == 'high';
         } else {
-          // Smart Matching: Map goals to relevant keywords
           final keywords = goals.expand(_getKeywordsForGoal).toSet();
-
           if (keywords.isEmpty) {
-            // Fallback if no keywords generated
-            if (s.status != 'beneficial' ||
-                s.evidenceLevel?.toLowerCase() != 'high') {
-              return false;
-            }
+            matchesStatus = s.status == 'beneficial' &&
+                s.evidenceLevel?.toLowerCase() == 'high';
+          } else {
+            // Check benefits matching
+            final hasMatchingBenefit = s.benefits.any((benefit) {
+              final lowerBenefit = benefit.toLowerCase();
+              return keywords.any((k) => lowerBenefit.contains(k));
+            });
+
+            // Matches if benefit matches OR high evidence
+            matchesStatus =
+                hasMatchingBenefit || s.evidenceLevel?.toLowerCase() == 'high';
           }
-
-          // Check if any benefit contains any of our smart keywords
-          final hasMatchingBenefit = s.benefits.any((benefit) {
-            final lowerBenefit = benefit.toLowerCase();
-            return keywords.any((k) => lowerBenefit.contains(k));
-          });
-
-          if (hasMatchingBenefit) return true;
-
-          // Fallback to high evidence ONLY if we don't have enough matched benefits
-          // This keeps the list focused on goals.
-          if (s.evidenceLevel?.toLowerCase() == 'high') {
-            // For high evidence, we still show it but it's secondary
-            return true;
-          }
-          return false;
         }
-      } else if (s.status != _currentStatus) {
-        return false;
+      } else {
+        // Simple status match for 'beneficial' or 'avoid'
+        matchesStatus = s.status == _currentStatus;
       }
 
-      // Category filter (Multi-select)
+      // If it doesn't even match the basic status/recommendation tab, drop it
+      if (!matchesStatus) return false;
+
+      // 2. Category filter (Multi-select)
       if (_selectedCategories.isNotEmpty &&
           !_selectedCategories.contains(s.category)) {
         return false;
       }
 
-      // Evidence filter (Multi-select)
+      // 3. Evidence filter (Multi-select)
       if (_selectedEvidenceLevels.isNotEmpty) {
         if (s.evidenceLevel == null ||
             !_selectedEvidenceLevels.any(
@@ -455,7 +447,7 @@ class LibraryViewModel extends ChangeNotifier {
         }
       }
 
-      // Form filter (Multi-select)
+      // 4. Form filter (Multi-select)
       if (_selectedForms.isNotEmpty) {
         if (s.form == null ||
             !_selectedForms
@@ -464,7 +456,7 @@ class LibraryViewModel extends ChangeNotifier {
         }
       }
 
-      // Search filter (local)
+      // 5. Search filter (local)
       if (_searchQuery.isNotEmpty) {
         final query = _searchQuery.toLowerCase();
         final nameMatch = s.name.toLowerCase().contains(query);

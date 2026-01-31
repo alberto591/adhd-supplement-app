@@ -22,6 +22,8 @@ class Supplement {
   final Map<String, String> studyLinks; // title: url
   final String? userId; // Owner of the supplement (null for global)
   final bool isCustom; // Whether this is a user-created supplement
+  final Map<String, Map<String, dynamic>>?
+      translations; // locale: { field: value }
 
   // Phase 1 Enhancements: Dosage Intelligence
   final Map<String, String>?
@@ -119,6 +121,7 @@ class Supplement {
     this.tldr,
     this.userId,
     this.isCustom = false,
+    this.translations,
   });
 
   Supplement copyWith({
@@ -166,6 +169,7 @@ class Supplement {
     String? tldr,
     String? userId,
     bool? isCustom,
+    Map<String, Map<String, dynamic>>? translations,
   }) {
     return Supplement(
       id: id ?? this.id,
@@ -213,6 +217,7 @@ class Supplement {
       tldr: tldr ?? this.tldr,
       userId: userId ?? this.userId,
       isCustom: isCustom ?? this.isCustom,
+      translations: translations ?? this.translations,
     );
   }
 
@@ -262,6 +267,7 @@ class Supplement {
       'tldr': tldr,
       'userId': userId,
       'isCustom': isCustom,
+      'translations': translations,
     };
   }
 
@@ -337,6 +343,28 @@ class Supplement {
       tldr: json['tldr'] as String?,
       userId: json['userId'] as String?,
       isCustom: json['isCustom'] as bool? ?? false,
+      translations: (json['translations'] as Map<String, dynamic>?)?.map(
+        (k, v) => MapEntry(k, Map<String, dynamic>.from(v as Map)),
+      ),
     );
+  }
+
+  /// Helper to get a localized field or fallback to the default
+  String getLocalizedField(
+      String fieldName, String defaultValue, String locale) {
+    if (translations == null || !translations!.containsKey(locale)) {
+      return defaultValue;
+    }
+    return translations![locale]![fieldName] as String? ?? defaultValue;
+  }
+
+  /// Helper for List fields
+  List<String> getLocalizedListField(
+      String fieldName, List<String> defaultList, String locale) {
+    if (translations == null || !translations!.containsKey(locale)) {
+      return defaultList;
+    }
+    final localized = translations![locale]![fieldName] as List<dynamic>?;
+    return localized?.map((e) => e as String).toList() ?? defaultList;
   }
 }

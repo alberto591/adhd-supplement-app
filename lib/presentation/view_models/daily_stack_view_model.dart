@@ -332,6 +332,7 @@ class DailyStackViewModel extends ChangeNotifier {
 
       // Cache supplements for display
       await _cacheSupplements();
+      await _processEmergencyCleanup(); // Cleanup stale references
       notifyListeners();
 
       // Listen for future updates
@@ -1006,6 +1007,41 @@ class DailyStackViewModel extends ChangeNotifier {
     }));
 
     notifyListeners(); // Ensure UI redraws after cache update
+  }
+
+  /// Emergency cleanup for stale supplement references (Requested by user)
+  Future<void> _processEmergencyCleanup() async {
+    const targetId = 'mtWLM7ov7flnmZEflZgw';
+    bool cleanupPerformed = false;
+
+    // We work on a copy to avoid concurrent modification issues
+    final updatedStacks = List<SupplementStack>.from(_stacks);
+
+    for (int i = 0; i < updatedStacks.length; i++) {
+      final stack = updatedStacks[i];
+      final originalItemCount = stack.items.length;
+      final newItems =
+          stack.items.where((it) => it.supplementId != targetId).toList();
+
+      if (newItems.length != originalItemCount) {
+        // This stack had the bad ID
+        AppLogger.i(
+            'CLEANUP: Removing stale supplement $targetId from stack ${stack.name}');
+        final updatedStack = stack.copyWith(
+          items: newItems,
+          updatedAt: DateTime.now(),
+        );
+        await _stackRepository.saveStack(_userId, updatedStack);
+        updatedStacks[i] = updatedStack;
+        cleanupPerformed = true;
+      }
+    }
+
+    if (cleanupPerformed) {
+      _stacks = updatedStacks;
+      AppLogger.i('Emergency cleanup for $targetId completed successfully.');
+      notifyListeners();
+    }
   }
 
   /// Remove a supplement from a specific stack (slot)

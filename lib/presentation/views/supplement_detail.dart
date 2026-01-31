@@ -41,6 +41,32 @@ class SupplementDetail extends StatelessWidget {
     const bgDark = AppColors.backgroundPremiumDark;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? bgDark : AppColors.backgroundPremiumLight;
+    final locale = Localizations.localeOf(context).languageCode;
+
+    // Localized strings from supplement entity
+    final localizedName =
+        supplement.getLocalizedField('name', supplement.name, locale);
+    final localizedDescription = supplement.getLocalizedField(
+        'description', supplement.description, locale);
+    final localizedMoa = supplement.mechanismOfAction != null
+        ? supplement.getLocalizedField(
+            'mechanismOfAction', supplement.mechanismOfAction!, locale)
+        : null;
+    final localizedTiming = supplement.timingRationale != null
+        ? supplement.getLocalizedField(
+            'timingRationale', supplement.timingRationale!, locale)
+        : null;
+    final localizedTldr = supplement.tldr != null
+        ? supplement.getLocalizedField('tldr', supplement.tldr!, locale)
+        : null;
+    final localizedBenefits = supplement.getLocalizedListField(
+        'detailedBenefits',
+        supplement.detailedBenefits.isNotEmpty
+            ? supplement.detailedBenefits
+            : supplement.benefits,
+        locale);
+    final localizedSideEffects = supplement.getLocalizedListField(
+        'sideEffects', supplement.sideEffects, locale);
 
     return ChangeNotifierProvider<LibraryViewModel>.value(
       value: libraryViewModel,
@@ -161,7 +187,7 @@ class SupplementDetail extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    supplement.name,
+                                    localizedName,
                                     style: GoogleFonts.lexend(
                                       color:
                                           isDark ? Colors.white : Colors.black,
@@ -229,7 +255,7 @@ class SupplementDetail extends StatelessWidget {
                           ),
 
                         // TL;DR Banner
-                        if (supplement.tldr != null) ...[
+                        if (localizedTldr != null) ...[
                           Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
@@ -261,7 +287,7 @@ class SupplementDetail extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        supplement.tldr!,
+                                        localizedTldr,
                                         style: GoogleFonts.lexend(
                                           color: isDark
                                               ? Colors.white
@@ -281,7 +307,7 @@ class SupplementDetail extends StatelessWidget {
 
                         // Description
                         Text(
-                          supplement.description,
+                          localizedDescription,
                           style: GoogleFonts.lexend(
                             color: isDark ? Colors.grey[400] : Colors.grey[700],
                             fontSize: 16,
@@ -291,11 +317,10 @@ class SupplementDetail extends StatelessWidget {
                         const SizedBox(height: 16),
 
                         // Intelligence Grid (Mechanism & Timing)
-                        if (supplement.mechanismOfAction != null ||
-                            supplement.timingRationale != null)
+                        if (localizedMoa != null || localizedTiming != null)
                           Column(
                             children: [
-                              if (supplement.mechanismOfAction != null)
+                              if (localizedMoa != null)
                                 _CollapsibleInfoCard(
                                   title: AppLocalizations.of(context)!
                                       .mechanismOfAction,
@@ -303,7 +328,7 @@ class SupplementDetail extends StatelessWidget {
                                   color: Colors.blue,
                                   isDark: isDark,
                                   child: Text(
-                                    supplement.mechanismOfAction!,
+                                    localizedMoa,
                                     style: GoogleFonts.lexend(
                                       color: isDark
                                           ? Colors.grey[300]
@@ -314,7 +339,7 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               const SizedBox(height: 16),
-                              if (supplement.timingRationale != null)
+                              if (localizedTiming != null)
                                 _CollapsibleInfoCard(
                                   title: AppLocalizations.of(context)!
                                       .timingStrategy,
@@ -322,7 +347,7 @@ class SupplementDetail extends StatelessWidget {
                                   color: Colors.purple,
                                   isDark: isDark,
                                   child: Text(
-                                    supplement.timingRationale!,
+                                    localizedTiming,
                                     style: GoogleFonts.lexend(
                                       color: isDark
                                           ? Colors.grey[300]
@@ -393,9 +418,7 @@ class SupplementDetail extends StatelessWidget {
                               AppLocalizations.of(context)!.neurostackBenefits,
                           icon: Icons.psychology,
                           color: primaryGold,
-                          items: supplement.detailedBenefits.isNotEmpty
-                              ? supplement.detailedBenefits
-                              : supplement.benefits,
+                          items: localizedBenefits,
                           isDark: isDark,
                         ),
                         const SizedBox(height: 24),
@@ -424,13 +447,13 @@ class SupplementDetail extends StatelessWidget {
                         ],
 
                         // Side Effects Section
-                        if (supplement.sideEffects.isNotEmpty)
+                        if (localizedSideEffects.isNotEmpty)
                           _SectionCard(
                             title:
                                 AppLocalizations.of(context)!.criticalCautions,
                             icon: Icons.warning_amber_rounded,
                             color: const Color(0xFFF59E0B), // Amber-500
-                            items: supplement.sideEffects,
+                            items: localizedSideEffects,
                             isDark: isDark,
                           ),
                         const SizedBox(height: 40),
@@ -577,8 +600,9 @@ class SupplementDetail extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                AppLocalizations.of(context)!
-                    .addToStackSubtitle(supplement.name),
+                AppLocalizations.of(context)!.addToStackSubtitle(
+                    supplement.getLocalizedField('name', supplement.name,
+                        Localizations.localeOf(context).languageCode)),
                 style: GoogleFonts.lexend(color: Colors.grey, fontSize: 14),
               ),
               const SizedBox(height: 24),
@@ -633,12 +657,15 @@ class SupplementDetail extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
         final messenger = ScaffoldMessenger.of(context);
+        final locale = Localizations.localeOf(context).languageCode;
+        final currentLocalizedName =
+            supplement.getLocalizedField('name', supplement.name, locale);
         messenger.showSnackBar(
           SnackBar(
             backgroundColor: AppColors.primaryGold,
             content: Text(
                 AppLocalizations.of(context)!
-                    .addedToStack(supplement.name, title),
+                    .addedToStack(currentLocalizedName, title),
                 style: const TextStyle(color: Colors.black)),
           ),
         );

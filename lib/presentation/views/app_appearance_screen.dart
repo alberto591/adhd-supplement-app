@@ -75,6 +75,19 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? bgDark : bgLight;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Responsive grid calculations
+    int crossAxisCount = 2;
+    double childAspectRatio = 1.1;
+
+    if (screenWidth > 1200) {
+      crossAxisCount = 4;
+      childAspectRatio = 1.1;
+    } else if (screenWidth > 800) {
+      crossAxisCount = 3;
+      childAspectRatio = 1.1;
+    }
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -321,10 +334,11 @@ class _AppAppearanceScreenState extends State<AppAppearanceScreen> {
                       child: GridView.count(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 2,
+                        crossAxisCount: crossAxisCount,
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 16,
-                        childAspectRatio: 1.1, // Adjust for card shape
+                        childAspectRatio:
+                            childAspectRatio, // Adjust for card shape
                         children: [
                           _buildIconCard(
                               AppLocalizations.of(context)!.iconClassic,

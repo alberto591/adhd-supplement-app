@@ -28,6 +28,22 @@ class TrophyRoomScreen extends StatelessWidget {
     const primaryGold = AppColors.primaryGold;
     const bgDark = Color(0xFF190F23);
     const bgLight = Color(0xFFF7F5F8);
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Responsive grid calculations
+    int crossAxisCount = 2;
+    double childAspectRatio = 0.85;
+
+    if (screenWidth > 1200) {
+      crossAxisCount = 5;
+      childAspectRatio = 0.85;
+    } else if (screenWidth > 900) {
+      crossAxisCount = 4;
+      childAspectRatio = 0.85;
+    } else if (screenWidth > 600) {
+      crossAxisCount = 3;
+      childAspectRatio = 0.85;
+    }
 
     return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
@@ -57,7 +73,11 @@ class TrophyRoomScreen extends StatelessWidget {
                             isDark, primaryGold, viewModel.recentWins),
                         const SizedBox(height: 32),
                         _buildTrophyGrid(
-                            isDark, primaryGold, viewModel.allGridBadges),
+                            isDark,
+                            primaryGold,
+                            viewModel.allGridBadges,
+                            crossAxisCount,
+                            childAspectRatio),
                         const SizedBox(
                             height: 120), // Bottom padding for fixed button
                       ],
@@ -346,7 +366,11 @@ class TrophyRoomScreen extends StatelessWidget {
   }
 
   Widget _buildTrophyGrid(
-      bool isDark, Color primary, List<GamificationBadge> badges) {
+      bool isDark,
+      Color primary,
+      List<GamificationBadge> badges,
+      int crossAxisCount,
+      double childAspectRatio) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -364,10 +388,10 @@ class TrophyRoomScreen extends StatelessWidget {
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
+            crossAxisCount: crossAxisCount,
             mainAxisSpacing: 16,
             crossAxisSpacing: 16,
-            childAspectRatio: 0.85,
+            childAspectRatio: childAspectRatio,
             children: badges
                 .map((badge) => _buildTrophyCard(
                       isDark,

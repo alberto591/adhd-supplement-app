@@ -62,6 +62,22 @@ class _OnboardingGoalSelectionScreenState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Responsive grid calculations
+    int crossAxisCount = 2;
+    double childAspectRatio = 0.75;
+
+    if (screenWidth > 1200) {
+      crossAxisCount = 4;
+      childAspectRatio = 0.9;
+    } else if (screenWidth > 800) {
+      crossAxisCount = 3;
+      childAspectRatio = 0.85;
+    } else if (screenWidth > 600) {
+      crossAxisCount = 2;
+      childAspectRatio = 1.0;
+    }
 
     return Scaffold(
       backgroundColor:
@@ -104,62 +120,70 @@ class _OnboardingGoalSelectionScreenState
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8),
-                        Text(
-                          AppLocalizations.of(context)!.whatsYourFocus,
-                          style: TextStyle(
-                            color:
-                                isDark ? Colors.white : const Color(0xFF111713),
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            height: 1.1,
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          AppLocalizations.of(context)!.pickGoals,
-                          style: TextStyle(
-                            color: isDark ? Colors.grey[400] : Colors.grey[500],
-                            fontSize: 16,
-                            height: 1.5,
-                          ),
-                        ),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1000),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8),
+                            Text(
+                              AppLocalizations.of(context)!.whatsYourFocus,
+                              style: TextStyle(
+                                color: isDark
+                                    ? Colors.white
+                                    : const Color(0xFF111713),
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                height: 1.1,
+                                letterSpacing: -0.5,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              AppLocalizations.of(context)!.pickGoals,
+                              style: TextStyle(
+                                color: isDark
+                                    ? Colors.grey[400]
+                                    : Colors.grey[500],
+                                fontSize: 16,
+                                height: 1.5,
+                              ),
+                            ),
 
-                        const SizedBox(height: 32),
+                            const SizedBox(height: 32),
 
-                        // Grid layout
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            childAspectRatio:
-                                0.75, // Adjusted to prevent overflow
-                          ),
-                          itemCount: _getGoals(context).length,
-                          itemBuilder: (context, index) {
-                            final goal = _getGoals(context)[index];
-                            final id = goal['id'] as String;
-                            final title = goal['title'] as String;
-                            return GoalSelectionCard(
-                              title: title,
-                              description: goal['description'] as String,
-                              icon: goal['icon'] as IconData,
-                              isSelected: _selectedGoals.contains(id),
-                              onTap: () => _toggleGoal(id),
-                            );
-                          },
+                            // Grid layout
+                            GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: childAspectRatio,
+                              ),
+                              itemCount: _getGoals(context).length,
+                              itemBuilder: (context, index) {
+                                final goal = _getGoals(context)[index];
+                                final id = goal['id'] as String;
+                                final title = goal['title'] as String;
+                                return GoalSelectionCard(
+                                  title: title,
+                                  description: goal['description'] as String,
+                                  icon: goal['icon'] as IconData,
+                                  isSelected: _selectedGoals.contains(id),
+                                  onTap: () => _toggleGoal(id),
+                                );
+                              },
+                            ),
+
+                            const SizedBox(
+                                height: 100), // Spacing for bottom bar
+                          ],
                         ),
-
-                        const SizedBox(height: 100), // Spacing for bottom bar
-                      ],
+                      ),
                     ),
                   ),
                 ),

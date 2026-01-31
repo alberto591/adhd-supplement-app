@@ -48,7 +48,25 @@ class SeedingService {
         ],
         "tldr":
             "Essential fatty acids that improve dopamine receptor density and reduce brain inflammation.",
-        "form": "Capsule"
+        "form": "Capsule",
+        "translations": {
+          "it": {
+            "name": "Olio di Pesce Omega-3",
+            "description":
+                "Acidi grassi essenziali fondamentali per la salute del cervello, la funzione cognitiva e la regolazione dell'umore.",
+            "mechanismOfAction":
+                "Aumenta la permeabilità della membrana cellulare, migliora la densità dei recettori della dopamina e riduce la neuroinfiammazione.",
+            "detailedBenefits": [
+              "Migliora la memoria di lavoro del 15% nei test standard",
+              "Riduce l'impulsività e la disregolazione emotiva",
+              "Supporta la neuroprotezione a lungo termine"
+            ],
+            "timingRationale":
+                "I nutrienti liposolubili richiedono grassi alimentari per l'assorbimento. L'assunzione con il pasto più abbondante garantisce il massimo assorbimento.",
+            "tldr":
+                "Acidi grassi essenziali che migliorano la densità dei recettori della dopamina e riducono l'infiammazione cerebrale."
+          }
+        }
       },
       {
         "id": "l-theanine",
@@ -138,7 +156,31 @@ class SeedingService {
           "Rare: mild drowsiness if taken during the day",
           "Very rare: nausea if taken on empty stomach"
         ],
-        "form": "Capsule"
+        "form": "Capsule",
+        "translations": {
+          "it": {
+            "name": "Magnesio Glicinato",
+            "description":
+                "Un minerale essenziale coinvolto in oltre 300 reazioni biochimiche. La forma glicinata è altamente biodisponibile e delicata sullo stomaco.",
+            "mechanismOfAction":
+                "Agisce come un antagonista naturale del recettore NMDA, promuovendo l'attività del GABA e regolando l'asse HPA. La forma glicinata ha una biodisponibilità superiore (80-90%) e minimi effetti collaterali gastrointestinali.",
+            "detailedBenefits": [
+              "Migliora la latenza del sonno di 17 minuti nei test standard",
+              "Riduce i livelli di cortisolo e le sensazioni di ansia del 30%",
+              "Supporta una sana regolazione della dopamina",
+              "Riduce la tensione muscolare e l'irrequietezza fisica"
+            ],
+            "timingRationale":
+                "Il dosaggio serale supporta la produzione naturale di melatonina e il rilassamento muscolare prima del sonno. Ideale 1-2 ore prima di andare a dormire.",
+            "tldr":
+                "Magnesio altamente biodisponibile che migliora la qualità del sonno e riduce l'ansia senza stordimento mattutino.",
+            "sideEffects": [
+              "Feci molli se la dose supera la tolleranza",
+              "Raro: lieve sonnolenza se assunto durante il giorno",
+              "Molto raro: nausea se assunto a stomaco vuoto"
+            ]
+          }
+        }
       },
       {
         "id": "vitamin-d",
@@ -2210,6 +2252,25 @@ class SeedingService {
         ],
         "tldr":
             "Serotonin precursor that supports mood and sleep; highly effective but dangerous if combined with specific antidepressants.",
+        "translations": {
+          "it": {
+            "name": "5-HTP (5-Idrossitriptofano)",
+            "description":
+                "Il 5-HTP è un composto che il corpo produce dall'aminoacido triptofano. È un precursore del neurotrasmettitore serotonina, che svolge un ruolo fondamentale nella regolazione dell'umore, del sonno e dei comportamenti impulsivi.",
+            "mechanismOfAction":
+                "Il 5-HTP è il precursore immediato della serotonina (5-HT). A differenza del triptofano, attraversa la barriera emato-encefalica in modo molto efficiente. Viene direttamente decarbossilato in serotonina, che regola l'umore e il controllo degli impulsi. La serotonina è anche un precursore della melatonina, supportando l'architettura naturale del sonno.",
+            "detailedBenefits": [
+              "Migliora l'umore serale e riduce la disregolazione emotiva",
+              "Migliora la qualità del sonno aumentando la produzione naturale di melatonina",
+              "Può ridurre i comportamenti impulsivi e la voglia di carboidrati",
+              "Supporta la resilienza emotiva negli utenti Focus con ansia correlata"
+            ],
+            "timingRationale":
+                "Il dosaggio serale è ottimale perché la serotonina supporta la produzione di melatonina e ha un effetto calmante. Gli effetti sono spesso notati entro 1-2 ore per il sonno. Assumere con un piccolo spuntino di carboidrati per un migliore assorbimento.",
+            "tldr":
+                "Precursore della serotonina che supporta l'umore e il sonno; altamente efficace ma pericoloso se combinato con specifici antidepressivi."
+          }
+        }
       },
       {
         "id": "copper",

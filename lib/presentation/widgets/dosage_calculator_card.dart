@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../../domain/entities/supplement.dart';
 import '../theme/app_theme.dart';
 
@@ -54,19 +55,27 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
     final calculatedDosage = _calculateDosage();
     const primaryGold = AppColors.primaryGold;
 
+    final locale = Localizations.localeOf(context).languageCode;
+    final localizedFrequency = widget.supplement.dosageFrequency != null
+        ? widget.supplement.getLocalizedField(
+            'dosageFrequency', widget.supplement.dosageFrequency!, locale)
+        : null;
+    final localizedWarnings = widget.supplement.getLocalizedListField(
+        'dosageWarnings', widget.supplement.dosageWarnings ?? [], locale);
+
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: widget.isDark ? const Color(0xFF2D2616) : Colors.white,
+        color: widget.isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: primaryGold.withValues(alpha: 0.2),
+          color: primaryGold.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -86,7 +95,7 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Dosage Calculator',
+                AppLocalizations.of(context)!.dosageCalculator,
                 style: GoogleFonts.lexend(
                   color: widget.isDark ? Colors.white : Colors.black,
                   fontSize: 18,
@@ -97,7 +106,7 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
           ),
           const SizedBox(height: 20),
           Text(
-            'Your Weight: ${_currentWeight.round()} kg',
+            AppLocalizations.of(context)!.yourWeight(_currentWeight.round()),
             style: GoogleFonts.lexend(
               color: widget.isDark ? Colors.grey[300] : Colors.grey[800],
               fontSize: 15,
@@ -133,7 +142,7 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
             child: Column(
               children: [
                 Text(
-                  'RECOMMENDED DOSAGE',
+                  AppLocalizations.of(context)!.recommendedDosageTitle,
                   style: GoogleFonts.lexend(
                     color: primaryGold,
                     fontSize: 10,
@@ -143,17 +152,18 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  calculatedDosage ?? 'Outside standard range*',
+                  calculatedDosage ??
+                      AppLocalizations.of(context)!.outsideStandardRange,
                   style: GoogleFonts.lexend(
                     color: widget.isDark ? Colors.white : Colors.black,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                if (widget.supplement.dosageFrequency != null) ...[
+                if (localizedFrequency != null) ...[
                   const SizedBox(height: 4),
                   Text(
-                    widget.supplement.dosageFrequency!,
+                    localizedFrequency,
                     style: GoogleFonts.lexend(
                       color: Colors.grey,
                       fontSize: 14,
@@ -163,10 +173,9 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
               ],
             ),
           ),
-          if (widget.supplement.dosageWarnings != null &&
-              widget.supplement.dosageWarnings!.isNotEmpty) ...[
+          if (localizedWarnings.isNotEmpty) ...[
             const SizedBox(height: 16),
-            ...widget.supplement.dosageWarnings!.map((warning) => Padding(
+            ...localizedWarnings.map((warning) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +198,7 @@ class _DosageCalculatorCardState extends State<DosageCalculatorCard> {
           ],
           const SizedBox(height: 8),
           Text(
-            '*Calculations are based on representative research data. Consult your advisor for personal general advice.',
+            AppLocalizations.of(context)!.dosageDisclaimer,
             style: GoogleFonts.lexend(
               color: Colors.grey,
               fontSize: 10,
