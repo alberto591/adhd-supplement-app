@@ -13,7 +13,7 @@ class SoundService {
   void _configureAudio() {
     AudioPlayer.global.setAudioContext(AudioContext(
       iOS: AudioContextIOS(
-        category: AVAudioSessionCategory.ambient,
+        category: AVAudioSessionCategory.playback,
         options: const {
           AVAudioSessionOptions.mixWithOthers,
           AVAudioSessionOptions.duckOthers,
