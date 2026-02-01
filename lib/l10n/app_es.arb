@@ -16,6 +16,11 @@
     "scientificEvidence": "Evidencia Científica",
     "neurostackBenefits": "Beneficios específicos de Neurostack",
     "optimalDosage": "Dosis Óptima",
+    "dosageCalculator": "Calculadora de Dosis",
+    "yourWeight": "Tu Peso: {weight} kg",
+    "recommendedDosageTitle": "DOSIS RECOMENDADA",
+    "outsideStandardRange": "Fuera del rango estándar*",
+    "dosageDisclaimer": "*Los cálculos se basan en datos de investigación representativos. Consulte a su asesor para obtener consejos generales personales.",
     "criticalCautions": "Precaucioni Críticas",
     "addToStack": "Añadir al Stack",
     "riskProfile": "Perfil de Riesgo",
@@ -211,8 +216,7 @@
     "cancel": "Cancelar",
     "save": "Guardar",
     "focusStyle": "Estilo de enfoque",
-    "generalDisclaimer": "Aviso General",
-    "disclaimerText": "La información proporcionada en esta aplicación es solo para fines educativos e informativos y no pretende ser un consejo médico. \\n\\nConsulte siempre con un asesor de bienestar calificado con respecto a cualquier rutina o protocolo. \\n\\nNo ignore la guía de un asesor profesional ni demore en buscarla debido a algo que haya leído en esta aplicación.",
+    "disclaimerText": "La información proporcionada en esta aplicación es solo para fines educativos e informativos y no pretende ser un consejo médico. \\n\\nSiempre consulte con un asesor de bienestar calificado con respecto a cualquier rutina o protocolo. \\n\\nNo ignore la guía de un asesor profesional ni retrase su búsqueda debido a algo que haya leído en esta aplicación.",
     "close": "Cerrar",
     "settings": "Ajustes",
     "focusAndRoutine": "Enfoque y rutina",
@@ -474,7 +478,21 @@
   "rankWarrior": "Guerrero Mental",
   "rankMaster": "Maestro Zen",
   "progressToLevel": "Progreso al Nivel {level}",
+  "@progressToLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "memberSince": "Miembro desde {date}",
+  "@memberSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "achievements": "LOGROS",
   "unlocked": "DESBLOQUEADO",
   "locked": "BLOQUEADO",
@@ -495,12 +513,33 @@
   "achievementAlphaHeroDesc": "Colaborador temprano",
   "achievementAlphaHeroTarget": "Sé un colaborador temprano de Daily Stack",
   "welcomeTitle": "Bienvenido a NeuroStack",
-  "welcomeSubtitle": "Tu compañero diario para rastrear suplementos y optimizar tu mente.",
+  "welcomeSubtitle": "Protocolos respaldados por la ciencia para mentes de alto rendimiento. Organiza, rastrea y optimiza tu rutina diaria con precisión clínica.",
   "featureTrackerTitle": "Rastreador Diario",
   "featureTrackerDesc": "Rastrea tus tomas diarias de suplementos y monitorea tus rachas.",
   "featureLibraryTitle": "Biblioteca de Conocimiento",
   "featureLibraryDesc": "Accede a insights científicos para diferentes áreas cognitivas.",
-  "featureLibraryDesc": "Accede a insights científicos para diferentes áreas cognitivas.",
+  "featureSmartTitle": "Stacks Inteligentes",
+  "featureSmartDesc": "Organiza tu rutina en franjas horarias: Mañana, Tarde, Tarde/Noche y Noche.",
+  "featurePrivacyTitle": "Privacidad Primero",
+  "featurePrivacyDesc": "Tu viaje de enfoque está encriptado y almacenado de forma segura en tu dispositivo.",
+  "featureIntelligenceTitle": "Inteligencia de Suplementos",
+  "featureIntelligenceDesc": "Accede a rangos de evidencia científica y datos de estudios clínicos.",
+  "researchParticipants": "{count} participantes en los estudios",
+  "@researchParticipants": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreLabel": "Puntuación: {rank}/100",
+  "@scoreLabel": {
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
   "continueButton": "Continuar",
   "getStarted": "Comenzar",
   "loginAction": "Ya tengo una cuenta"

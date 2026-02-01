@@ -84,6 +84,36 @@ class OnboardingExplainerScreen extends StatelessWidget {
                       isDark: isDark,
                     ),
 
+                    const SizedBox(height: 24),
+
+                    // Feature 3: Smart Stacks
+                    _FeatureRow(
+                      icon: Icons.auto_awesome_motion_rounded,
+                      title: l10n.featureSmartTitle,
+                      description: l10n.featureSmartDesc,
+                      isDark: isDark,
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Feature 4: Supplement Intelligence
+                    _FeatureRow(
+                      icon: Icons.psychology_outlined,
+                      title: l10n.featureIntelligenceTitle,
+                      description: l10n.featureIntelligenceDesc,
+                      isDark: isDark,
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Feature 5: Privacy
+                    _FeatureRow(
+                      icon: Icons.lock_outline_rounded,
+                      title: l10n.featurePrivacyTitle,
+                      description: l10n.featurePrivacyDesc,
+                      isDark: isDark,
+                    ),
+
                     const Spacer(flex: 2),
 
                     // Get Started Button

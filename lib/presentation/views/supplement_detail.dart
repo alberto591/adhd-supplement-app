@@ -67,6 +67,8 @@ class SupplementDetail extends StatelessWidget {
         locale);
     final localizedSideEffects = supplement.getLocalizedListField(
         'sideEffects', supplement.sideEffects, locale);
+    final localizedDosageWarnings = supplement.getLocalizedListField(
+        'dosageWarnings', supplement.dosageWarnings ?? [], locale);
 
     return ChangeNotifierProvider<LibraryViewModel>.value(
       value: libraryViewModel,
@@ -247,6 +249,15 @@ class SupplementDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
+                        // Scientific Evidence Badge
+                        if (supplement.scientificEvidenceRank != null) ...[
+                          _ScientificEvidenceBadge(
+                              rank: supplement.scientificEvidenceRank,
+                              participantCount: supplement.participantCount,
+                              isDark: isDark),
+                          const SizedBox(height: 16),
+                        ],
+
                         // Routine Status Alert
                         if (safetyWarnings.isNotEmpty)
                           RoutineStatusAlert(
@@ -412,6 +423,15 @@ class SupplementDetail extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        // Safety Warning Card (New Intelligence)
+                        if (localizedDosageWarnings.isNotEmpty) ...[
+                          _SafetyWarningCard(
+                            warnings: localizedDosageWarnings,
+                            isDark: isDark,
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+
                         // Enhanced Benefits Section
                         _SectionCard(
                           title:
@@ -719,6 +739,29 @@ class _FocusLevelIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String labelText;
+    final l10n = AppLocalizations.of(context)!;
+
+    switch (level) {
+      case 5:
+        labelText = l10n.focusLevelExcellent;
+        break;
+      case 4:
+        labelText = l10n.focusLevelVeryGood;
+        break;
+      case 3:
+        labelText = l10n.focusLevelGood;
+        break;
+      case 2:
+        labelText = l10n.focusLevelModerate;
+        break;
+      case 1:
+        labelText = l10n.focusLevelLow;
+        break;
+      default:
+        labelText = l10n.focusLevelGood;
+    }
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -731,21 +774,36 @@ class _FocusLevelIndicator extends StatelessWidget {
         children: [
           ...List.generate(5, (index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 1),
               child: Icon(
                 index < level ? Icons.star : Icons.star_border,
                 color: color,
-                size: 16,
+                size: 14,
               ),
             );
           }),
           const SizedBox(width: 8),
           Text(
-            AppLocalizations.of(context)!.focusRating,
+            labelText.toUpperCase(),
             style: GoogleFonts.lexend(
               color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.5,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            width: 1,
+            height: 10,
+            color: Colors.white24,
+          ),
+          Text(
+            l10n.focusRating,
+            style: GoogleFonts.lexend(
+              color: Colors.white70,
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
@@ -974,6 +1032,174 @@ class _CollapsibleInfoCard extends StatelessWidget {
             child,
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ScientificEvidenceBadge extends StatelessWidget {
+  final int? rank;
+  final int? participantCount;
+  final bool isDark;
+
+  const _ScientificEvidenceBadge({
+    required this.rank,
+    this.participantCount,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (rank == null) return const SizedBox.shrink();
+
+    String label;
+    Color color;
+    IconData icon;
+
+    if (rank! >= 90) {
+      label = 'Class A Evidence';
+      color = AppColors.primaryGold;
+      icon = Icons.verified;
+    } else if (rank! >= 70) {
+      label = 'Class B Evidence';
+      color = Colors.lightBlueAccent;
+      icon = Icons.science;
+    } else if (rank! >= 40) {
+      label = 'Class C Evidence';
+      color = Colors.orangeAccent;
+      icon = Icons.biotech;
+    } else {
+      label = 'User Reported';
+      color = Colors.grey;
+      icon = Icons.person_outline;
+    }
+
+    final l10n = AppLocalizations.of(context)!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: color.withValues(alpha: 0.3)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 16, color: color),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: GoogleFonts.lexend(
+                  color: color,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                width: 1,
+                height: 12,
+                color: color.withValues(alpha: 0.3),
+              ),
+              Text(
+                l10n.scoreLabel(rank!),
+                style: GoogleFonts.lexend(
+                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (participantCount != null && participantCount! > 0) ...[
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Row(
+              children: [
+                Icon(Icons.people_outline,
+                    size: 14,
+                    color: isDark ? Colors.grey[500] : Colors.grey[500]),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.researchParticipants(participantCount!),
+                  style: GoogleFonts.lexend(
+                    color: isDark ? Colors.grey[500] : Colors.grey[600],
+                    fontSize: 11,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _SafetyWarningCard extends StatelessWidget {
+  final List<String> warnings;
+  final bool isDark;
+
+  const _SafetyWarningCard({required this.warnings, required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEF4444).withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(20),
+        border:
+            Border.all(color: const Color(0xFFEF4444).withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.medical_information, color: Color(0xFFEF4444)),
+              const SizedBox(width: 12),
+              Text(
+                'Safety & Dosage Warnings', // Could be localized later if needed or passed in
+                style: GoogleFonts.lexend(
+                  color: const Color(0xFFEF4444),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...warnings.map((warning) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 6),
+                      child:
+                          Icon(Icons.circle, size: 6, color: Color(0xFFEF4444)),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        warning,
+                        style: GoogleFonts.lexend(
+                          color: isDark ? Colors.grey[300] : Colors.grey[800],
+                          fontSize: 14,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+        ],
       ),
     );
   }

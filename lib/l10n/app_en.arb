@@ -513,12 +513,33 @@
   "achievementAlphaHeroDesc": "Early app supporter",
   "achievementAlphaHeroTarget": "Be an early supporter of Daily Stack",
   "welcomeTitle": "Welcome to NeuroStack",
-  "welcomeSubtitle": "Your daily companion for tracking supplements and optimizing your mind.",
+  "welcomeSubtitle": "The science-backed protocol for high-performance minds. Organize, track, and optimize your daily routine with clinical precision.",
   "featureTrackerTitle": "Daily Tracker",
   "featureTrackerDesc": "Track your daily supplement intakes and monitor your streaks.",
   "featureLibraryTitle": "Knowledge Library",
   "featureLibraryDesc": "Access scientific insights for different cognitive areas.",
-  "featureLibraryDesc": "Access scientific insights for different cognitive areas.",
+  "featureSmartTitle": "Smart Stacks",
+  "featureSmartDesc": "Organize your routine into Morning, Afternoon, Evening, and Night slots.",
+  "featurePrivacyTitle": "Privacy First",
+  "featurePrivacyDesc": "Your focus journey is encrypted and stored securely on your device.",
+  "featureIntelligenceTitle": "Supplement Intelligence",
+  "featureIntelligenceDesc": "Access scientific evidence ranks and participant data from clinical studies.",
+  "researchParticipants": "{count} participants across studies",
+  "@researchParticipants": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreLabel": "Score: {rank}/100",
+  "@scoreLabel": {
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
   "continueButton": "Continue",
   "getStarted": "Get Started",
   "loginAction": "I already have an account"

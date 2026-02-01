@@ -499,12 +499,33 @@
   "achievementAlphaHeroDesc": "Sostenitore iniziale",
   "achievementAlphaHeroTarget": "Sii un sostenitore iniziale di Daily Stack",
   "welcomeTitle": "Benvenuto in NeuroStack",
-  "welcomeSubtitle": "Il tuo compagno quotidiano per tracciare integratori e ottimizzare la tua mente.",
+  "welcomeSubtitle": "Protocolli supportati dalla scienza per menti ad alte prestazioni. Organizza, traccia e ottimizza la tua routine quotidiana con precisione clinica.",
   "featureTrackerTitle": "Tracker Quotidiano",
   "featureTrackerDesc": "Traccia le tue assunzioni giornaliere di integratori e monitora le tue strisce.",
   "featureLibraryTitle": "Libreria di Conoscenza",
   "featureLibraryDesc": "Accedi a intuizioni scientifiche per diverse aree cognitive.",
-  "featureLibraryDesc": "Accedi a intuizioni scientifiche per diverse aree cognitive.",
+  "featureSmartTitle": "Stack Intelligenti",
+  "featureSmartDesc": "Organizza la tua routine in fasce orarie: Mattina, Pomeriggio, Sera e Notte.",
+  "featurePrivacyTitle": "Privacy al Primo Posto",
+  "featurePrivacyDesc": "Il tuo percorso è crittografato e memorizzato in modo sicuro sul tuo dispositivo.",
+  "featureIntelligenceTitle": "Intelligence Supplementi",
+  "featureIntelligenceDesc": "Accedi ai ranghi di evidenza scientifica e ai dati tra gli studi clinici.",
+  "researchParticipants": "{count} partecipanti tra gli studi",
+  "@researchParticipants": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreLabel": "Punteggio: {rank}/100",
+  "@scoreLabel": {
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
   "continueButton": "Continua",
   "getStarted": "Inizia",
   "loginAction": "Ho già un account"

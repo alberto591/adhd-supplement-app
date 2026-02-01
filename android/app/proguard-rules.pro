@@ -32,7 +32,20 @@
 # OkHttp (Used by many plugins)
 -keepattributes Signature
 -keepattributes *Annotation*
+-keepattributes EnclosingMethod
+-keepattributes InnerClasses
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
 -dontwarn okio.**
+
+# GSON & Flutter Local Notifications (Fixes TypeToken crash)
+# Preserves generic signatures needed for de-serialization of scheduled notifications
+-keep class com.google.gson.** { *; }
+-keep class com.google.gson.reflect.Token { *; }
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+-keep class * implements com.google.gson.reflect.TypeToken
+-keep class com.dexterous.flutterlocalnotifications.** { *; }
+-keep public class com.dexterous.flutterlocalnotifications.models.** { *; }
+
