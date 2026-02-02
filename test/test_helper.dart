@@ -12,6 +12,8 @@ import 'package:mockito/mockito.dart';
 Widget createTestableWidget({
   required Widget child,
   List<SingleChildWidget>? providers,
+  Route<dynamic>? Function(RouteSettings)? onGenerateRoute,
+  String? initialRoute,
 }) {
   return MultiProvider(
     providers: providers ??
@@ -29,7 +31,9 @@ Widget createTestableWidget({
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('en')],
-      home: child,
+      home: initialRoute == null ? child : null,
+      initialRoute: initialRoute,
+      onGenerateRoute: onGenerateRoute,
     ),
   );
 }
@@ -44,6 +48,9 @@ void setupTestLocator(void Function() registerMocks) {
 class MockAuthProvider extends Mock implements AuthProvider {
   @override
   bool get isAuthenticated => true;
+
+  @override
+  AuthStatus get status => AuthStatus.authenticated;
 
   // Add other common getters as needed
 }

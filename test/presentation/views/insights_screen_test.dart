@@ -8,6 +8,7 @@ import 'package:neurostack_app/application/view_models/insights_view_model.dart'
 import 'package:neurostack_app/application/providers/auth_provider.dart';
 import 'package:neurostack_app/domain/entities/user.dart';
 import 'package:get_it/get_it.dart';
+import '../../test_helper.dart' hide MockAuthProvider;
 
 // Generate Mocks for ViewModel and AuthProvider
 @GenerateMocks([InsightsViewModel, AuthProvider])
@@ -38,13 +39,11 @@ void main() {
   });
 
   Widget createWidgetUnderTest() {
-    return MultiProvider(
+    return createTestableWidget(
       providers: [
         ChangeNotifierProvider<AuthProvider>.value(value: mockAuthProvider),
       ],
-      child: MaterialApp(
-        home: InsightsScreen(viewModel: mockViewModel),
-      ),
+      child: InsightsScreen(viewModel: mockViewModel),
     );
   }
 

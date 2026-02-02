@@ -9,9 +9,8 @@ import 'package:neurostack_app/application/providers/auth_provider.dart';
 import 'package:neurostack_app/domain/entities/supplement.dart';
 import 'package:neurostack_app/domain/entities/supplement_stack.dart';
 import 'package:neurostack_app/domain/entities/user.dart';
-// ignore: unused_import
-import 'package:neurostack_app/config/locator.dart';
 import 'package:get_it/get_it.dart';
+import '../../test_helper.dart' hide MockAuthProvider;
 
 @GenerateMocks([GlobalSearchViewModel, AuthProvider])
 import 'global_search_screen_test.mocks.dart';
@@ -55,17 +54,16 @@ void main() {
   });
 
   Widget createTestWidget() {
-    return ChangeNotifierProvider<AuthProvider>.value(
-      value: mockAuthProvider,
-      child: MaterialApp(
-        onGenerateRoute: (settings) {
-          return MaterialPageRoute(
-            builder: (context) =>
-                Scaffold(body: Text('Route: ${settings.name}')),
-          );
-        },
-        home: const GlobalSearchScreen(),
-      ),
+    return createTestableWidget(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>.value(value: mockAuthProvider),
+      ],
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(body: Text('Route: ${settings.name}')),
+        );
+      },
+      child: const GlobalSearchScreen(),
     );
   }
 

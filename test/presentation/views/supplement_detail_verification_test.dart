@@ -8,6 +8,7 @@ import 'package:neurostack_app/application/providers/auth_provider.dart';
 import 'package:neurostack_app/config/locator.dart';
 import 'package:mockito/mockito.dart';
 import 'package:neurostack_app/domain/entities/user.dart';
+import '../../test_helper.dart';
 
 class MockLibraryViewModel extends Mock implements LibraryViewModel {}
 
@@ -54,15 +55,13 @@ void main() {
     );
 
     await tester.pumpWidget(
-      MultiProvider(
+      createTestableWidget(
         providers: [
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => MockAuthProvider(),
           ),
         ],
-        child: const MaterialApp(
-          home: SupplementDetail(supplement: supplement),
-        ),
+        child: const SupplementDetail(supplement: supplement),
       ),
     );
 

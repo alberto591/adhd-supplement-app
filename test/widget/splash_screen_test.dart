@@ -9,6 +9,9 @@ import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
 import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
 import 'package:neurostack_app/domain/entities/supplement.dart';
 import 'package:neurostack_app/presentation/navigation/app_router.dart';
+import 'package:provider/provider.dart';
+import 'package:neurostack_app/application/providers/auth_provider.dart';
+import '../test_helper.dart';
 
 // Mocks
 class MockSettingsRepository extends Mock implements SettingsRepository {
@@ -139,9 +142,9 @@ void main() {
 
   testWidgets('SplashScreen initializes services and navigates',
       (WidgetTester tester) async {
-    // Build SplashScreen wrapped in MaterialApp to handle navigation
+    // Build SplashScreen wrapped in providers to handle initialization dependencies
     await tester.pumpWidget(
-      MaterialApp(
+      createTestableWidget(
         initialRoute: AppRouter.splash,
         onGenerateRoute: (settings) {
           debugPrint('DEBUG: Generated route for ${settings.name}');
@@ -153,8 +156,14 @@ void main() {
             return MaterialPageRoute(
                 builder: (_) => const SplashScreen(isFirebaseReady: true));
           }
+          if (settings.name == AppRouter.onboardingExplainer) {
+            return MaterialPageRoute(
+                builder: (_) =>
+                    const Scaffold(body: Text('Onboarding Screen')));
+          }
           return null;
         },
+        child: const SplashScreen(isFirebaseReady: true),
       ),
     );
 

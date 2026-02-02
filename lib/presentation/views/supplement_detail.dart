@@ -368,7 +368,6 @@ class SupplementDetail extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              /*
                               const SizedBox(height: 16),
                               if (supplement.studyLinks.isNotEmpty)
                                 _CollapsibleInfoCard(
@@ -410,7 +409,6 @@ class SupplementDetail extends StatelessWidget {
                                         .toList(),
                                   ),
                                 ),
-                              */
                             ],
                           ),
                       ],

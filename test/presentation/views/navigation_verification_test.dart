@@ -15,6 +15,7 @@ import 'package:neurostack_app/domain/entities/faq_item.dart';
 import 'package:neurostack_app/domain/entities/study.dart';
 import 'package:neurostack_app/domain/entities/educational_article.dart';
 import 'package:neurostack_app/infrastructure/services/url_service.dart';
+import '../../test_helper.dart' hide MockAuthProvider;
 
 class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   bool get isLoading => false;
@@ -146,15 +147,13 @@ void main() {
   testWidgets('InsightsScreen renders and has correct bottom nav index',
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MultiProvider(
+      createTestableWidget(
         providers: [
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => MockAuthProvider(),
           ),
         ],
-        child: const MaterialApp(
-          home: InsightsScreen(),
-        ),
+        child: const InsightsScreen(),
       ),
     );
     await tester.pump();
@@ -169,15 +168,13 @@ void main() {
   testWidgets('StrategyHubScreen renders without crashing',
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MultiProvider(
+      createTestableWidget(
         providers: [
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => MockAuthProvider(),
           ),
         ],
-        child: const MaterialApp(
-          home: StrategyHubScreen(),
-        ),
+        child: const StrategyHubScreen(),
       ),
     );
     await tester.pump();
