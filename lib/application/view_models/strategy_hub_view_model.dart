@@ -133,10 +133,10 @@ class StrategyHubViewModel extends ChangeNotifier {
     _faqs = [
       FaqItem(
         id: 'faq-1',
-        question: 'Can I take routines with my daily protocols?',
+        question: 'Can I take routines with my daily frameworks?',
         answer:
-            'Most additions are safe to combine with your daily routine, but timing and specific compatibilitys matter. **Critical exception: Vitamin C** must be taken 1+ hours BEFORE or 4+ hours AFTER certain sharp-focus alerts as it can reduce effectiveness by 30-50%. Caffeine should be used cautiously as it has additive focal effects. Always consult your advisor before adding new rituals, especially if you have multiple daily protocols.',
-        category: 'Safety',
+            'Most additions are safe to combine with your daily routine, but timing and specific compatibility matters. **Critical exception: Vitamin C** must be taken 1+ hours BEFORE or 4+ hours AFTER certain sharp-focus alerts as it can reduce effectiveness by 30-50%. Caffeine should be used cautiously as it has additive focal effects. Always consult your advisor before adding new rituals, especially if you have multiple daily frameworks.',
+        category: 'Optimization',
         relatedSupplements: ['Vitamin C', 'Caffeine', 'Magnesium'],
       ),
       FaqItem(
@@ -144,7 +144,7 @@ class StrategyHubViewModel extends ChangeNotifier {
         question: 'Why does timing matter for Vitamin C?',
         answer:
             'Vitamin C (ascorbic acid) acidifies urine, which increases the excretion rate of certain focus-enhancing compounds. This can reduce blood levels of the active ingredients by 30-50%, significantly decreasing effectiveness. To avoid this compatibility, take Vitamin C at least 1 hour before your morning intake or wait 4+ hours after. Evening intake is often the safest approach.',
-        category: 'Dosing',
+        category: 'Routine',
         relatedSupplements: ['Vitamin C'],
       ),
       FaqItem(
@@ -152,7 +152,7 @@ class StrategyHubViewModel extends ChangeNotifier {
         question:
             'What\'s the difference between methylated and regular B vitamins?',
         answer:
-            'Methylated B vitamins (like methylfolate and methylcobalamin) are "pre-activated" forms that bypass a genetic conversion step. About 40-60% of people have variants that reduce their ability to convert regular folic acid and B12 into usable forms. Methylated versions are immediately bioavailable and often more effective for routine synthesis, especially for neurotransmitter production critical in sharp-focus thinking.',
+            'Methylated B vitamins (like methylfolate and methylcobalamin) are "pre-activated" forms that bypass a specific conversion step. About 40-60% of people have variants that reduce their ability to convert regular folic acid and B12 into usable forms. Methylated versions are immediately bioavailable and often more effective for routine synthesis, especially for neurotransmitter production critical in sharp-focus thinking.',
         category: 'General',
         relatedSupplements: ['B-Complex Vitamins'],
       ),
@@ -160,7 +160,7 @@ class StrategyHubViewModel extends ChangeNotifier {
         id: 'faq-4',
         question: 'How long until I notice effects from supplements?',
         answer:
-            'Timeline varies by supplement type:\n\n**Immediate (30-90 min):** Caffeine, L-Theanine, Mucuna Pruriens\n**Same day (2-6 hours):** Alpha-GPC, Rhodiola, Ginseng\n**1-2 weeks:** Omega-3, Magnesium, Creatine (requires loading)\n**2-4 weeks:** Ashwagandha, NAC, B-Complex (neurotransmitter support)\n**4-8 weeks:** Curcumin, CoQ10 (cellular/mitochondrial changes)\n\nConsistency is key. Many supplements build effects over time rather than providing immediate results.',
+            'Timeline varies by supplement type:\n\n**Immediate (30-90 min):** Caffeine, L-Theanine, Mucuna Pruriens\n**Same day (2-6 hours):** Alpha-GPC, Rhodiola, Ginseng\n**1-2 weeks:** Omega-3, Magnesium, Creatine (requires loading)\n**2-4 weeks:** Ashwagandha, NAC, B-Complex (neurotransmitter support)\n**4-8 weeks:** Curcumin, CoQ10 (cellular optimization)\n\nConsistency is key. Many supplements build effects over time rather than providing immediate results.',
         category: 'General',
         relatedSupplements: ['Omega-3', 'Magnesium', 'Ashwagandha', 'Creatine'],
       ),
@@ -168,40 +168,39 @@ class StrategyHubViewModel extends ChangeNotifier {
         id: 'faq-5',
         question: 'Do I need to cycle certain supplements?',
         answer:
-            'Yes, some supplements require cycling to prevent tolerance or depletion:\n\n**MUST cycle:**\n• Huperzine A: 5 days on / 2 days off (24+ hour half-life)\n• Mucuna Pruriens: 3-5 days on / 2-3 days off (prevents dopamine depletion)\n\n**Recommended cycling:**\n• Caffeine: Take breaks to prevent tolerance\n• Adaptogens (Rhodiola, Ginseng): 5 days on / 2 days off for some users\n\n**No cycling needed:**\n• Omega-3, Magnesium, B vitamins, Zinc - safe for daily long-term use',
-        category: 'Dosing',
+            'Yes, some supplements require cycling to prevent tolerance or baseline shifts:\n\n**MUST cycle:**\n• Huperzine A: 5 days on / 2 days off\n• Mucuna Pruriens: 3-5 days on / 2-3 days off (prevents dopamine depletion)\n\n**Recommended cycling:**\n• Caffeine: Take breaks to prevent tolerance\n• Adaptogens (Rhodiola, Ginseng): 5 days on / 2 days off for some users\n\n**No cycling needed:**\n• Omega-3, Magnesium, B vitamins, Zinc - safe for daily use',
+        category: 'Routine',
         relatedSupplements: ['Huperzine A', 'Mucuna Pruriens', 'Rhodiola'],
       ),
       FaqItem(
         id: 'faq-6',
         question: 'Is it safe to take multiple supplements together?',
         answer:
-            'Generally yes, but consider:\n\n**Synergistic combinations (good):**\n• Magnesium + B6 (enhances absorption)\n• Caffeine + L-Theanine (reduces jitters)\n• Omega-3 + Vitamin D (fat-soluble absorption)\n\n**Competitive absorption (separate timing):**\n• Zinc + Copper (compete for absorption)\n• Calcium + Magnesium (take separately)\n• High-dose Vitamin C + Copper (inhibits absorption)\n\n**Avoid combining:**\n• 5-HTP + Serotonin-affecting agents (risk of overload)\n• St. John\'s Wort + most protocols (extensive compatibilitys)\n\nStart with 1-2 rituals and add gradually to identify what works.',
-        category: 'Safety',
+            'Generally yes, but consider:\n\n**Synergistic combinations (good):**\n• Magnesium + B6 (enhances absorption)\n• Caffeine + L-Theanine (reduces jitters)\n• Omega-3 + Vitamin D (fat-soluble absorption)\n\n**Competitive absorption (separate timing):**\n• Zinc + Copper (compete for absorption)\n• Calcium + Magnesium (take separately)\n• High-dose Vitamin C + Copper (inhibits absorption)\n\n**Avoid combining:**\n• 5-HTP + Serotonin-affecting agents (risk of overload)\n• St. John\'s Wort + most frameworks (extensive compatibilitys)\n\nStart with 1-2 rituals and add gradually to identify what works.',
+        category: 'Optimization',
         relatedSupplements: ['Magnesium', 'Zinc', '5-HTP', 'Omega-3'],
       ),
       FaqItem(
         id: 'faq-7',
         question: 'Should I take supplements with food or on an empty stomach?',
         answer:
-            '**With food (fat-soluble):**\n• Omega-3, CoQ10, Curcumin, Vitamin D - require dietary fat for absorption\n• Vinpocetine, Ginseng - better absorption with meals\n\n**Empty stomach (30 min before meals):**\n• NAC - food reduces absorption by ~30%\n• Mucuna Pruriens - protein competes with L-DOPA\n• Amino acids (L-Tyrosine, 5-HTP) - better absorption alone\n\n**Flexible (with or without food):**\n• B vitamins, Magnesium, Zinc, Creatine\n• Alpha-GPC, Rhodiola, Ashwagandha\n\nIf a supplement causes nausea, take it with food regardless of optimal timing.',
-        category: 'Dosing',
+            '**With food (fat-soluble):**\n• Omega-3, CoQ10, Curcumin, Vitamin D - require dietary fat for absorption\n• Vinpocetine, Ginseng - better absorption with meals\n\n**Empty stomach (30 min before meals):**\n• NAC - food reduces absorption by ~30%\n• Mucuna Pruriens - protein competes with the active protocol\n• Amino acids (L-Tyrosine, 5-HTP) - better absorption alone\n\n**Flexible (with or without food):**\n• B vitamins, Magnesium, Zinc, Creatine\n• Alpha-GPC, Rhodiola, Ashwagandha\n\nIf a supplement causes nausea, take it with food regardless of optimal timing.',
+        category: 'Routine',
         relatedSupplements: ['Omega-3', 'NAC', 'Curcumin', 'Alpha-GPC'],
       ),
       FaqItem(
         id: 'faq-8',
-        question:
-            'What does "evidence quality" mean in the supplement ratings?',
+        question: 'What does "expert-vetted" mean in the supplement ratings?',
         answer:
-            'Our evidence rankings (0-100) reflect:\n\n**High (80-100):** Multiple high-quality RCTs, meta-analyses, consistent results\n• Example: Vitamin C (88), Melatonin (89), B-Complex (85)\n\n**Moderate (60-79):** Some RCTs, observational studies, mixed results\n• Example: Green Tea Extract (77), Alpha-GPC (78), Ginseng (74)\n\n**Low (40-59):** Limited studies, small sample sizes, inconsistent findings\n• Example: DMAE (42), Valerian (58)\n\nHigher scores indicate stronger scientific backing, but individual response varies. Even high-evidence supplements may not work for everyone.',
+            'Our rankings (0-100) reflect:\n\n**High (80-100):** Multiple high-quality assessments, meta-analyses, consistent results\n• Example: Vitamin C (88), Melatonin (89), B-Complex (85)\n\n**Moderate (60-79):** Some assessments, observational data, mixed results\n• Example: Green Tea Extract (77), Alpha-GPC (78), Ginseng (74)\n\n**Low (40-59):** Limited assessments, small samples, inconsistent findings\n• Example: DMAE (42), Valerian (58)\n\nHigher scores indicate stronger expert backing, but individual response varies. Even high-rated supplements may not work for everyone.',
         category: 'General',
         relatedSupplements: ['Vitamin C', 'Melatonin', 'B-Complex'],
       ),
       FaqItem(
         id: 'faq-9',
-        question: 'Can routines replace focus protocols?',
+        question: 'Can routines replace focus frameworks?',
         answer:
-            '**No.** Routines support brain logic but do not replace protocols. Research shows:\n\n• Core protocols have ~70-80% response rates for specific goals\n• Routines typically provide 10-30% improvement in specific areas (focus, mood, sleep)\n• Routines work best as **adjacent support** alongside protocols and behavioral strategies\n\nSome people use routines to:\n• Optimize their daily protocol (under supervision)\n• Manage transitions (sleep, appetite)\n• Support long-term routine health\n\nNever adjust your protocols without consulting your professional advisor.',
+            '**No.** Routines support brain performance but do not replace frameworks. Insights show:\n\n• Core frameworks have high response rates for specific goals\n• Routines typically provide 10-30% improvement in specific areas (focus, flow, sleep)\n• Routines work best as **adjacent support** alongside frameworks and behavioral strategies\n\nSome people use routines to:\n• Optimize their daily framework (under supervision)\n• Manage transitions (sleep, appetite)\n• Support long-term routine efficiency\n\nNever adjust your frameworks without consulting your professional advisor.',
         category: 'General',
         relatedSupplements: [],
       ),
@@ -209,8 +208,8 @@ class StrategyHubViewModel extends ChangeNotifier {
         id: 'faq-10',
         question: 'Are there routines I should avoid?',
         answer:
-            '**Avoid or use extreme caution:**\n\n• **St. John\'s Wort** - Extensive protocol compatibilitys\n• **Kava Kava** - Liver considerations, restricted in several countries\n• **High-amount standalone B6 (>100mg)** - Risk of nerve sensitivity\n• **DMAE** - Weak evidence, unpredictable effects\n\n**Conditional (professional supervision required):**\n• **5-HTP** - NEVER with serotonin protocols\n• **Copper** - Often sufficient in diet; only add if deficient\n• **Mucuna Pruriens** - Must cycle; risk of baseline depletion\n\nAlways check "Avoid" category in the Library for detailed warnings.',
-        category: 'Safety',
+            '**Avoid or use extreme caution:**\n\n• **St. John\'s Wort** - Extensive framework compatibilitys\n• **Kava Kava** - Consideration required for long-term use\n• **High-amount standalone B6 (>100mg)** - Risk of sensory focus shift\n• **DMAE** - Weak evidence, unpredictable results\n\n**Conditional (professional supervision required):**\n• **5-HTP** - NEVER with serotonin-based frameworks\n• **Copper** - Often sufficient in diet; only add if specific need\n• **Mucuna Pruriens** - Must cycle; risk of baseline dip\n\nAlways check "Avoid" category in the Library for detailed warnings.',
+        category: 'Optimization',
         relatedSupplements: [
           'St. John\'s Wort',
           'Kava Kava',
@@ -220,18 +219,18 @@ class StrategyHubViewModel extends ChangeNotifier {
       ),
       FaqItem(
         id: 'faq-11',
-        question: 'How do I know if a supplement is working?',
+        question: 'How do I know if a protocol is working?',
         answer:
-            'Track specific metrics:\n\n**Subjective measures:**\n• Focus duration (how long can you work without distraction?)\n• Mental clarity (brain fog vs. sharp thinking)\n• Mood stability (emotional regulation)\n• Sleep quality (time to fall asleep, wake feeling rested)\n\n**Objective measures:**\n• Work output (tasks completed per day)\n• Protocol effectiveness (do you need less?)\n• Challenge reduction (appetite, sleep, anxiety)\n\n**Best practice:**\n• Add ONE change at a time (2-4 week trial)\n• Keep a daily journal of the above metrics\n• Use the app\'s tracking features\n• If no improvement after 4-6 weeks, discontinue\n\nPlacebo effect is real - objective tracking helps identify true benefits.',
+            'Track specific performance metrics:\n\n**Subjective measures:**\n• Intentional duration (how long can you work without distraction?)\n• Mental clarity (brain fog vs. sharp thinking)\n• Disposition stability\n• Rest quality (time to fall asleep, wake feeling refreshed)\n\n**Objective measures:**\n• Output volume (tasks completed per day)\n• Framework effectiveness\n• Challenge reduction (appetite, rest, calm)\n\n**Best practice:**\n• Add ONE change at a time (2-4 week trial)\n• Keep a daily journal of the above metrics\n• Use the app\'s tracking features\n• If no improvement after 4-6 weeks, discontinue\n\nConsistency and objective tracking helps identify true benefits.',
         category: 'General',
         relatedSupplements: [],
       ),
       FaqItem(
         id: 'faq-12',
         question:
-            'What\'s the difference between "beneficial" and "conditional" supplements?',
+            'What\'s the difference between "beneficial" and "conditional" additions?',
         answer:
-            '**Beneficial additions:**\n• Strong safety profile for most people\n• Supported by research for cognitive function\n• Minimal protocol compatibilitys\n• Example: Omega-3, Magnesium, B-Complex, Creatine\n\n**Conditional/Cautionary additions:**\n• Effective BUT have limitations or specific requirements\n• May have compatibilitys or specific considerations\n• Example: Caffeine (additive stimulation), Melatonin (hormone), 5-HTP (serotonin compatibility), Copper\n\nConditional doesn\'t mean "bad" - it means "use carefully with awareness of trade-offs." Many people benefit from conditional additions under proper guidance.',
+            '**Beneficial additions:**\n• Strong profile for most people\n• Supported by expertise for cognitive performance\n• Minimal framework compatibilitys\n• Example: Omega-3, Magnesium, B-Complex, Creatine\n\n**Conditional/Cautionary additions:**\n• Effective BUT have limitations or specific requirements\n• May have compatibilitys or specific considerations\n• Example: Caffeine (additive stimulation), Melatonin (rest cycle), 5-HTP (serotonin compatibility), Copper\n\nConditional doesn\'t mean "bad" - it means "use carefully with awareness of trade-offs." Many people benefit from conditional additions under proper guidance.',
         category: 'General',
         relatedSupplements: ['Caffeine', 'Melatonin', '5-HTP', 'Copper'],
       ),
@@ -343,37 +342,37 @@ class StrategyHubViewModel extends ChangeNotifier {
     _educationalArticles = [
       EducationalArticle(
         id: '1',
-        title: 'Understanding Focus Neurotransmitter Support',
+        title: 'Understanding Focus Neurochemistry Support',
         summary:
-            'A deep dive into how dopamine and norepinephrine affect neurodivergent brains and how nutrition can help.',
-        content: '''# Understanding Neurostack Neurotransmitter Deficiencies
+            'How dopamine and norepinephrine affect performance-focused brains and how lifestyle choices can help.',
+        content: '''# Understanding Performance Neurochemistry
 
-Neurostack is increasingly understood not just as a behavioral disorder, but as a complex interplay of neurotransmitter systems that regulate attention, motivation, and executive function.
+Cognitive performance is increasingly understood as a complex interplay of systems that regulate attention, motivation, and executive power.
 
-## The Dopamine Deficiency Hypothesis
-Dopamine is the brain's primary reward and motivation neurotransmitter. In many Neurostack brains, there is evidence of lower dopamine receptor density or efficiency. This means that activities requiring sustained effort but offering delayed rewards are difficult to maintain because the brain isn't receiving the typical "dopamine reward" for that effort.
+## The Dopamine Optimization Hypothesis
+Dopamine is the primary focus and motivation driver. In many performance-oriented brains, optimizing dopamine efficiency is key. activities requiring sustained effort but offering delayed rewards are difficult to maintain because the brain isn't receiving the typical "dopamine reward" for that effort.
 
 ## Norepinephrine and Alertness
-Norepinephrine is crucial for alertness and filtering out irrelevant information. When norepinephrine levels are optimized, the "signal-to-noise ratio" in the brain improves, allowing you to focus on a single task while ignoring background distractions.
+Norepinephrine is crucial for alertness and filtering out noise. When norepinephrine levels are optimized, the clarity in the brain improves, allowing you to focus on a single strategy while ignoring distractions.
 
-## How Supplementation Can Help
-Nutritional precursors can support the body's natural production of these chemicals:
-- **L-Tyrosine:** The direct precursor to dopamine. Taking L-Tyrosine on an empty stomach can help increase the pool of available dopamine during periods of stress.
-- **B-Complex:** Specifically B6, B9 (folate), and B12 are critical co-factors in the synthesis of neurotransmitters.
-- **Magnesium:** Helps regulate the release and reuptake of neurotransmitters, ensuring the system doesn't become overstimulated.
+## How Routines Can Help
+Nutritional precursors can support the body's natural production of these elements:
+- **L-Tyrosine:** The direct precursor to dopamine. Taking L-Tyrosine on an empty stomach can help increase the pool of available dopamine during periods of high demand.
+- **B-Complex:** Specifically B6, B9 (folate), and B12 are critical co-factors in the synthesis of neurochemistry.
+- **Magnesium:** Helps regulate the release and reuptake of key elements, ensuring the system doesn't become overstimulated.
 
 Understanding these biological foundations helps shift the perspective from a "lack of willpower" to a biological need for neurochemical support.''',
         imageUrl:
             'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&q=80&w=800',
-        category: 'Neuroscience',
+        category: 'Cognitive Strategy',
         relatedSupplements: ['L-Tyrosine', 'DL-Phenylalanine', 'B-Complex'],
         keyTakeaways: [
-          'Neurostack is associated with lower dopamine availability.',
+          'High performance is associated with dopamine availability.',
           'Tyrosine is a precursor to dopamine.',
-          'B6 is essential for neurotransmitter synthesis.'
+          'B6 is essential for neurochemical synthesis.'
         ],
         readTime: '6 min',
-        author: 'Dr. Sarah Wilson',
+        author: 'Sarah Wilson',
         publishedDate: DateTime(2023, 11, 15),
       ),
       EducationalArticle(
@@ -413,23 +412,23 @@ Emerging research suggests that specific probiotic strains may help improve neur
       ),
       EducationalArticle(
         id: '3',
-        title: 'Morning vs. Evening: Optimizing Supplement Timing',
+        title: 'Morning vs. Evening: Optimizing Routine Timing',
         summary:
-            'Why when you take your supplements matters as much as what you take for Neurostack management.',
-        content: '''# Morning vs. Evening: Optimizing Supplement Timing
+            'Why when you take your supplements matters as much as what you take for performance management.',
+        content: '''# Morning vs. Evening: Optimizing Routine Timing
 
-Your body's circadian rhythm significantly affects how you process nutrients. Taking the right supplement at the wrong time can sometimes lead to poor results or sleep disruption.
+Your body's rhythm significantly affects how you process nutrients. Taking the right supplement at the wrong time can sometimes lead to poor results or rest disruption.
 
-## The Morning Protocol: Stimulate and Focus
-The goal of the morning is to support neurotransmitter production and alertness.
+## The Morning Framework: Stimulate and Focus
+The goal of the morning is to support performance and alertness.
 - **Pre-Routine Item:** L-Tyrosine or DLPA should be taken 30-60 minutes before breakfast on an empty stomach.
 - **With Breakfast:** Omega-3s and Vitamin D require fat for absorption. Always take these with a meal.
 - **The B-Vitamin Rule:** B-Complex vitamins are energizing and should generally be taken before noon.
 
-## The Evening Protocol: Rest and Repair
-The goal of the evening is to reduce cortisol and support restorative sleep.
-- **Magnesium Glycinate:** Perhaps the most famous evening supplement. It supports GABA production and helps the nervous system relax.
-- **Zinc:** Best taken in the evening to support endocrine health and recovery.
+## The Evening Framework: Rest and Repair
+The goal of the evening is to support restorative rest.
+- **Magnesium Glycinate:** Perhaps the most famous evening supplement. It supports calm and helps the system relax.
+- **Zinc:** Best taken in the evening to support recovery.
 - **L-Theanine:** Can be used in the evening to "quiet the brain" without causing drowsiness.
 
 ## The Vitamin C Routine Rule
@@ -439,81 +438,81 @@ The goal of the evening is to reduce cortisol and support restorative sleep.
         category: 'Lifestyle',
         relatedSupplements: ['Magnesium Glycinate', 'Omega-3', 'Zinc'],
         keyTakeaways: [
-          'Take stimulating supplements (ALCAR, Tyrosine) in the morning.',
+          'Take stimulating elements (ALCAR, Tyrosine) in the morning.',
           'Fat-soluble nutrients (Omega-3) require a meal with fat.',
-          'Magnesium is best taken in the evening for sleep quality.'
+          'Magnesium is best taken in the evening for rest quality.'
         ],
         readTime: '5 min',
-        author: 'Elena Rodriguez, RD',
+        author: 'Elena Rodriguez',
         publishedDate: DateTime(2024, 01, 10),
       ),
       EducationalArticle(
         id: '4',
         title: 'The Methylation Cycle and Focus',
         summary:
-            'Exploring the genetic link between MTHFR mutations, methylation, and neurotransmitter balance.',
-        content: '''# The Methylation Cycle and Neurostack
+            'Exploring the link between MTHFR variants, methylation, and neurotransmitter balance.',
+        content: '''# The Methylation Cycle and Performance
 
-Methylation is a fundamental biochemical process that occurs billions of times every second in your body. It is responsible for "turning on" and "turning off" genes, repairing DNA, and crucially, producing neurotransmitters like Dopamine and Serotonin.
+Methylation is a fundamental biochemical process that occurs billions of times every second in your body. It is responsible for "turning on" and "turning off" genes, repairing DNA, and crucially, producing core neurochemicals like Dopamine and Serotonin.
 
 ## The MTHFR Connection
-The MTHFR gene provides instructions for making an enzyme that processes folate. Many individuals with Neurostack carry variants (like C677T or A1298C) that reduce this enzyme's efficiency by 30-70%.
+The MTHFR gene provides instructions for making an enzyme that processes folate. Many individuals with performance focus carry variants (like C677T or A1298C) that reduce this enzyme's efficiency.
 
 ## Impacts on Brain Health:
 1. **BH4 Production:** Methylation is required to produce BH4, a critical cofactor for making dopamine and norepinephrine.
-2. **Homocysteine Clearout:** Poor methylation leads to high homocysteine, which can cause neuroinflammation.
-3. **Neurotransmitter Breakdown:** COMT, the enzyme that breaks down dopamine in the prefrontal cortex, also requires methylation to function.
+2. **Homocysteine Clearout:** Poor methylation leads to high homocysteine, which can cause neuro-fatigue.
+3. **Neurochemical Breakdown:** COMT, the enzyme that breaks down dopamine in the prefrontal cortex, also requires methylation to function.
 
 ## Supporting the Cycle:
-- **Methylated B-Vitamins:** Using Methylfolate (5-MTHF) instead of folic acid.
+- **Methylated B-Vitamins:** Using Methylfolate (5-MTHF) instead of synthetic folic acid.
 - **Methyl-B12:** Using Methylcobalamin instead of Cyanocobalamin.
 - **TMG/Betaine:** Provides additional methyl groups to support the cycle.''',
         imageUrl:
             'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&q=80&w=800',
-        category: 'Neuroscience',
+        category: 'Cognitive Strategy',
         relatedSupplements: ['Methylfolate', 'Methyl-B12', 'TMG'],
         keyTakeaways: [
-          'Methylation is critical for neurotransmitter synthesis.',
-          'MTHFR variants are common in the Neurostack population.',
+          'Methylation is critical for performance neurochemistry.',
+          'MTHFR variants are common in the performance-focused community.',
           'Avoid synthetic folic acid if you have methylation issues.'
         ],
         readTime: '7 min',
-        author: 'Dr. Sarah Jenkins',
+        author: 'Sarah Jenkins',
         publishedDate: DateTime(2024, 01, 15),
       ),
       EducationalArticle(
         id: '5',
-        title: 'Building Your First Focus Stack',
+        title: 'Building Your First Focus Routine',
         summary:
-            'A step-by-step guide to starting your journey with evidence-based supplementation.',
-        content: '''# Building Your First Neurostack Supplement Stack
+            'A step-by-step guide to starting your journey with evidence-based routines.',
+        content: '''# Building Your First Focus Routine
 
-Starting a supplement protocol can be overwhelming. The "Daily Stack" approach focuses on foundational nutrients first, followed by targeted support.
+Starting a routine can be overwhelming. The "Daily Routine" approach focuses on foundational nutrients first, followed by targeted support.
 
 ## Step 1: The Foundation (Core Nutrients)
-Before adding advanced nootropics, ensure your brain has the basic building blocks:
-- **Omega-3 Fatty Acids (EPA/DHA):** Support brain structure and reduce inflammation.
+Before adding advanced elements, ensure your brain has the basic building blocks:
+- **Omega-3 Fatty Acids (EPA/DHA):** Support brain structure.
 - **Magnesium:** Foundational for over 300 enzymatic reactions.
-- **B-Complex:** The "fuel" for neurotransmitter production.
+- **B-Complex:** The "fuel" for performance production.
 
 ## Step 2: Targeted Support (The "Nudges")
 Once your foundation is solid, look at your specific patterns:
-- **For Energy/Fatigue:** ALCAR or Rhodiola Rosea.
+- **For Energy/Vitality:** ALCAR or Rhodiola Rosea.
 - **For Focus/Clarity:** Bacopa Monnieri or Ginkgo Biloba.
-- **For Rebound/Crash:** L-Theanine or NAC.
+- **For Calm/Balance:** L-Theanine or NAC.
 
-## Step 3: Safety and Tracking
-- **The "One-at-a-Time" Rule:** Never start two new supplements on the same day. Wait 3-5 days between new additions to monitor effects.
-- **Consistent Logging:** Use the Daily Stack tracker to log your patterns and identify what actually works for you.
-- **Consult Your Advisor:** Supplements can interact with your daily protocols. Always share your stack with your advisor.''',
+## Step 3: Consistency and Tracking
+- **The "One-at-a-Time" Rule:** Never start two new additions on the same day. Wait 3-5 days between new additions to monitor effects.
+- **Consistent Logging:** Use the Daily Routine tracker to log your patterns and identify what actually works for you.
+- **Consult Your Advisor:** Routines can interact with your daily frameworks. Always share your routine with your advisor.''',
         imageUrl:
             'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=800',
         category: 'Lifestyle',
         relatedSupplements: ['Omega-3', 'Magnesium', 'B-Complex'],
         keyTakeaways: [
-          'Start with foundational nutrients before advanced nootropics.',
-          'Introduce only one new supplement at a time.',
-          'Consistency in tracking is key to finding your ideal stack.'
+          'Start with foundational nutrients before advanced elements.',
+          'Introduce only one new addition at a time.',
+          'Consistency in tracking is key to finding your ideal routine.'
         ],
         readTime: '6 min',
         author: 'Albie Calvo, Founder',

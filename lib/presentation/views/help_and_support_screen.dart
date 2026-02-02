@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
+import '../../config/app_config.dart';
 
 class HelpAndSupportScreen extends StatefulWidget {
   const HelpAndSupportScreen({super.key});
@@ -21,7 +22,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
     final String body = Uri.encodeComponent(_feedbackController.text);
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'support@focusstack.app',
+      path: AppConfig.supportEmail,
       query: 'subject=$subject&body=$body',
     );
 

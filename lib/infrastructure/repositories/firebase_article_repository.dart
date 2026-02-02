@@ -15,7 +15,7 @@ class FirebaseArticleRepository implements ArticleRepository {
     Article(
       id: '1',
       title: 'The Science of Magnesium & Sleep',
-      author: 'Dr. Sarah Chen, PhD',
+      author: 'Sarah Chen, Performance Specialist',
       authorRole: 'Neuroscience Researcher',
       authorAvatarUrl: 'https://i.pravatar.cc/100?img=5',
       readTime: '4 min read',
@@ -37,7 +37,7 @@ Magnesium plays a crucial role in regulating neurotransmitters, which send messa
     Article(
       id: '2',
       title: 'Vitamin D3 & Focus Regulation',
-      author: 'Dr. Andrew Huberman',
+      author: 'Andrew Huberman, Neurostack Advisor',
       authorRole: 'Functional Medicine',
       authorAvatarUrl: 'https://i.pravatar.cc/100?img=12',
       readTime: '3 min read',

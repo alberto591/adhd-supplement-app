@@ -1021,7 +1021,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                   color: AppColors.primaryGold.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.science,
+                child: const Icon(Icons.auto_stories,
                     color: AppColors.primaryGold, size: 32),
               ),
               const SizedBox(width: 20),
@@ -1030,7 +1030,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Talk to Dr. Alchemist',
+                      'AI Optimization Analyst',
                       style: GoogleFonts.lexend(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -1039,7 +1039,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Our AI PhD Chemist is ready for your technical questions.',
+                      'Our AI Optimization Specialist is ready for your routine questions.',
                       style: GoogleFonts.lexend(
                         fontSize: 12,
                         color: isDark ? Colors.grey[400] : Colors.grey[700],

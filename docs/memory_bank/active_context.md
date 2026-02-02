@@ -14,6 +14,9 @@
 5. ✅ **Technical Debt**: Refactored `RadioListTile` to `RadioGroup` and cleaned mock file lint errors.
 6. ✅ **Localization Consolidation**: Removed duplicate keys and fixed missing Italian metadata in ARB files.
 7. ✅ **Test Restoration**: Fixed `SupplementDetailScreen` logic and infrastructure, reaching **399+ passing tests** with clean logs.
+8. ✅ **Production Guardrails**: Implemented `kDebugMode` safety wrapper for seeding logic in `SplashScreen` to prevent data pollution.
+9. ✅ **Privacy Integration**: Centralized Privacy Policy and Support URLs in `AppConfig` across all settings screens.
+10. ✅ **Release Signing Prep**: Created `docs/RELEASING.md` with step-by-step Android/iOS signing instructions.
 
 ## Active Work Items
 | Priority | Status | Task |

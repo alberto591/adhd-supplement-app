@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../../config/locator.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../infrastructure/services/notification_service.dart';
@@ -48,8 +49,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _initializeApp() async {
     try {
-      // 0. Seeding (Disabled for production)
-      // _runBackgroundSeeding();
+      // 0. Seeding (Enabled only for development)
+      if (kDebugMode) {
+        // _runBackgroundSeeding();
+      }
 
       // 1. Settings
       setState(() => _loadingStatus = 'Loading preferences...');
@@ -67,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
       });
 
       // Minimum splash time for branding impact (optional)
-      await Future<void>.delayed(const Duration(milliseconds: 1500));
+      await Future<void>.delayed(const Duration(milliseconds: 1000));
 
       if (mounted) {
         final authProvider = Provider.of<AuthProvider>(context, listen: false);

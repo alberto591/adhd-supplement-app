@@ -41,9 +41,9 @@ class SeedingService {
       },
       "dosageFrequency": "Take once daily with a fatty meal",
       "dosageWarnings": [
-        "Consult advisor if taking anti-coagulants (blood thinners)",
-        "Stop taking 2 weeks before scheduled surgeries",
-        "High doses (>3g) may increase bleeding risk in some individuals"
+        "Consult professional advisor if taking circulatory items",
+        "Stop taking 2 weeks before scheduled events",
+        "High amounts (>3g) may increase circulatory sensitivity in some individuals"
       ],
       "tldr":
           "Essential fatty acids that improve dopamine receptor density and reduce brain inflammation.",
@@ -64,9 +64,9 @@ class SeedingService {
               "I nutrienti liposolubili richiedono grassi alimentari per l'assorbimento. L'assunzione con il pasto più abbondante garantisce il massimo assorbimento.",
           "dosageFrequency": "Assumere una volta al giorno con un pasto grasso",
           "dosageWarnings": [
-            "Consultare un medico se si assumono anticoagulanti",
-            "Sospendere l'assunzione 2 settimane prima di interventi chirurgici",
-            "Dosi elevate (>3g) possono aumentare il rischio di sanguinamento"
+            "Consultare un consulente professionale se si assumono articoli circolatori",
+            "Sospendere l'assunzione 2 settimane prima di eventi programmati",
+            "Dosi elevate (>3g) possono aumentare la sensibilità circolatoria"
           ],
           "tldr":
               "Acidi grassi essenziali che migliorano la densità dei recettori della dopamina e riducono l'infiammazione cerebrale."
@@ -86,9 +86,9 @@ class SeedingService {
               "Los nutrientes liposolubles requieren grasa dietética para su absorción. Tomar con la comida más abundante garantiza la máxima absorción.",
           "dosageFrequency": "Tomar una vez al día con una comida grasa",
           "dosageWarnings": [
-            "Consulte a un médico si toma anticoagulantes",
-            "Deje de tomar 2 semanas antes de cirugías programadas",
-            "Dosis altas (>3g) pueden aumentar el riesgo de sangrado"
+            "Consulte a un asesor profesional si toma artículos circulatorios",
+            "Deje de tomar 2 semanas antes de eventos programados",
+            "Dosis altas (>3g) pueden aumentar la sensibilidad circulatoria"
           ],
           "tldr":
               "Ácidos grasos esenciales que mejoran la densidad de los receptores de dopamina y reducen la inflamación cerebral."
@@ -226,9 +226,9 @@ class SeedingService {
       "dosageFrequency": "Once daily, preferably 1-2 hours before bed",
       "dosageWarnings": [
         "Start with 100mg to assess tolerance",
-        "High doses (>400mg) may cause digestive discomfort",
-        "Consult advisor if you have kidney considerations or impaired renal function",
-        "Take 4+ hours after Type A element for optimal absorption"
+        "High amounts (>400mg) may cause digestive discomfort",
+        "Consult professional advisor if you have sensitivity considerations",
+        "Take 4+ hours after focal element for optimal absorption"
       ],
       "tldr":
           "Highly bioavailable magnesium that improves sleep quality and reduces anxiety without morning grogginess.",
@@ -342,8 +342,8 @@ class SeedingService {
       "dosageWarnings": [
         "Get blood levels tested before supplementing (test 25-OH Vitamin D)",
         "Do not exceed 10,000 IU daily without general supervision",
-        "High doses (>5000 IU) require monitoring for hypercalcemia",
-        "Always take with vitamin K2 if dosing above 4000 IU to prevent calcium dysregulation"
+        "High amounts (>5000 IU) require monitoring for calcium sensitivity",
+        "Always take with vitamin K2 if dosing above 4000 IU to prevent balance dysregulation"
       ],
       "tldr":
           "Essential neurosteroid that regulates dopamine and serotonin; deficiency strongly linked to focus challenges.",
@@ -443,9 +443,9 @@ class SeedingService {
       "dosageFrequency":
           "Once or twice daily with food (morning, or split AM/PM)",
       "dosageWarnings": [
-        "Takes 8-12 weeks for full effects - be patient",
+        "Takes 8-12 weeks for full effects - be persistent",
         "May cause mild GI upset initially (take with food)",
-        "Avoid if you have bradycardia (slow heart rate)",
+        "Avoid if you have slower heart rate (slow heart rate)",
         "May interact with thyroid elements - consult advisor"
       ],
       "tldr":
@@ -547,9 +547,9 @@ class SeedingService {
       "dosageFrequency": "Once daily with food (lunch or dinner)",
       "dosageWarnings": [
         "Do not exceed 40mg daily without general supervision",
-        "Long-term use (>50mg) can cause copper deficiency - supplement copper if needed",
+        "Long-term use (>50mg) can cause copper imbalance - supplement copper if needed",
         "Get serum zinc levels tested before supplementing (optimal: 80-120 μg/dL)",
-        "Take 2+ hours apart from calcium, iron, or antibiotics"
+        "Take 2+ hours apart from calcium, iron, or other routines"
       ],
       "tldr":
           "Essential cofactor for dopamine regulation and melatonin synthesis; deficiency is linked to focus challenges.",
@@ -651,10 +651,10 @@ class SeedingService {
       "dosageFrequency":
           "Once or twice daily with food (morning, or split AM/PM)",
       "dosageWarnings": [
-        "AVOID if taking blood thinners (warfarin, aspirin, etc.) - increases bleeding risk",
-        "Stop 2 weeks before surgery due to anticoagulant effects",
-        "May cause headaches at higher doses (>240mg)",
-        "Avoid if you have bleeding disorders or seizure history"
+        "AVOID if taking blood support items (warfarin, aspirin, etc.) - increases circulatory sensitivity",
+        "Stop 2 weeks before events due to circulatory effects",
+        "May cause headaches at higher amounts (>240mg)",
+        "Avoid if you have circulatory sensitivities or neurological considerations"
       ],
       "tldr":
           "Ancient herb that boosts cerebral blood flow and concentration; particularly effective for inattentive-type Focus.",
@@ -1987,7 +1987,7 @@ class SeedingService {
       "dosageWarnings": [
         "May be mildly stimulating - avoid evening dosing",
         "Start with lower dose to assess tolerance",
-        "Avoid with bipolar disorder (may trigger manic episodes)",
+        "Avoid with mood sensitivity (may trigger hyper-focus episodes)",
         "Generally well-tolerated with minimal side effects"
       ],
       "tldr":
@@ -4092,7 +4092,7 @@ class SeedingService {
         "⚠️ Limited scientific evidence for benefits",
         "⚠️ May cause overstimulation, insomnia, headaches, irritability",
         "⚠️ Can worsen challenges in some people with Focus",
-        "Avoid if you have bipolar disorder (may trigger mania)",
+        "Avoid if you have mood sensitivity (may trigger excessive focus states)",
         "May interact with cholinergic elements",
         "Not recommended during pregnancy or breastfeeding",
         "Better alternatives available (Alpha-GPC, CDP-Choline)"
@@ -4119,7 +4119,7 @@ class SeedingService {
             "⚠️ Evidenza scientifica limitata per i benefici",
             "⚠️ Può causare sovrastimolazione, insonnia, mal di testa, irritabilità",
             "⚠️ Può peggiorare le sfide in alcune persone con ADHD",
-            "Evitare in caso di disturbo bipolare (può scatenare mania)",
+            "Evitare in caso di sensibilità dell’umore (può scatenare excessive focus states)",
             "Non raccomandato in gravidanza o allattamento"
           ],
           "tldr":
@@ -4142,7 +4142,7 @@ class SeedingService {
             "⚠️ Evidencia científica limitada de los beneficios",
             "⚠️ Puede causar sobreestimulación, insomnio, dolores de cabeza, irritabilidad",
             "⚠️ Puede empeorar los desafíos en algunas personas con TDAH",
-            "Evite si tiene trastorno bipolar (puede desencadenar manía)",
+            "Evite si tiene sensibilidad de ánimo (puede desencadenar manía)",
             "No recomendado durante el embarazo o la lactancia"
           ],
           "tldr":
@@ -4590,7 +4590,7 @@ class SeedingService {
         "⚠️ AVOID exceeding 100mg/day from all sources combined",
         "⚠️ DISCONTINUE immediately if you experience numbness, tingling, or nerve pain",
         "⚠️ Long-term use of standalone high doses carries greater risk than B-complex",
-        "⚠️ May interfere with the metabolism of certain anti-seizure elements"
+        "⚠️ May interfere with the metabolism of certain neurological elements"
       ],
       "tldr":
           "Essential cofactor for dopamine and serotonin synthesis, but high standalone doses carry a risk of nerve damage; best used in balanced formulas.",

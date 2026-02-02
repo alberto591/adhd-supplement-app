@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../application/view_models/privacy_view_model.dart';
 import '../../config/locator.dart';
 import '../../infrastructure/services/url_service.dart';
+import '../../config/app_config.dart';
 
 class PrivacySettingsScreen extends StatefulWidget {
   const PrivacySettingsScreen({super.key});
@@ -271,8 +272,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                       iconColor: const Color(0xFFEE8C2B),
                       title: 'Request Data Removal (Manual)',
                       subtitle: 'Official web form for deletion requests',
-                      onTap: () => locator<UrlService>().launchUri(
-                          'https://neurostack-app.web.app/delete-data'),
+                      onTap: () => locator<UrlService>()
+                          .launchUri(AppConfig.dataDeletionUrl),
                     ),
                   ],
                 ),
@@ -321,8 +322,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => locator<UrlService>().launchUri(
-                                'https://neurostack-app.web.app/privacy'),
+                            ..onTap = () => locator<UrlService>()
+                                .launchUri(AppConfig.privacyPolicyUrl),
                         ),
                         const TextSpan(text: '\n\n'),
                         TextSpan(
@@ -333,8 +334,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                             fontSize: 12,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => locator<UrlService>().launchUri(
-                                'https://neurostack-app.web.app/delete-data'),
+                            ..onTap = () => locator<UrlService>()
+                                .launchUri(AppConfig.dataDeletionUrl),
                         ),
                       ],
                     ),

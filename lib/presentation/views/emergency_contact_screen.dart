@@ -25,7 +25,7 @@ class EmergencyContactScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Emergency Support'),
+        title: const Text('Critical Support'),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -49,7 +49,7 @@ class EmergencyContactScreen extends StatelessWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
-                      'If you are experiencing a life-threatening general emergency, please call emergency services immediately.',
+                      'If you are experiencing a life-threatening urgent situation, please call local emergency services immediately.',
                       style: TextStyle(
                         color: isDark ? Colors.red[200] : Colors.red[800],
                         fontSize: 14,
@@ -89,8 +89,8 @@ class EmergencyContactScreen extends StatelessWidget {
             // Poison Control / Crisis Line
             _buildContactCard(
               context,
-              title: 'Poison Control Center',
-              subtitle: 'For accidental excessive intakees or compatibilitys',
+              title: 'Safety Verification Center',
+              subtitle: 'For routine concerns or excessive intake',
               number: '1-800-222-1222', // US Poison Control
               icon: Icons.local_hospital,
               color: Colors.orange,
@@ -140,8 +140,8 @@ class EmergencyContactScreen extends StatelessWidget {
             // Advisor / Pharmacy Placeholders
             _buildContactCard(
               context,
-              title: 'Dr. Sarah Chen (Psychiatrist)',
-              subtitle: 'Primary Prescriber',
+              title: 'Sarah Chen (Primary Advisor)',
+              subtitle: 'Routine Advisor',
               number: '555-0123',
               icon: Icons.calendar_today, // Appointment/Advisor icon
               color: AppColors.primary,
@@ -150,8 +150,8 @@ class EmergencyContactScreen extends StatelessWidget {
             const SizedBox(height: 12),
             _buildContactCard(
               context,
-              title: 'CVS Pharmacy #4122',
-              subtitle: 'On Main St.',
+              title: 'Local Service Center #4122',
+              subtitle: 'Routine Support Location',
               number: '555-0199',
               icon: Icons.local_pharmacy,
               color: Colors.green,
