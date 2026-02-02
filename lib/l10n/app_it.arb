@@ -354,10 +354,6 @@
   "categoryVitamins": "Vitamine",
   "categoryNootropics": "Nootropi",
   "categoryHerbal": "Erbale",
-  "categoryEnergy": "Energia",
-  "categoryCalm": "Calma",
-  "categoryMood": "Umore",
-  "categoryLongevity": "Longevità",
   "insights": "Insights",
   "library": "Libreria",
   "comingSoon": "Prossimamente",
@@ -367,9 +363,7 @@
   "emailAdvisor": "Invia email al consulente",
   "shareCopy": "Condividi copia",
   "aiAnalysis": "Analisi IA",
-  "close": "Chiudi",
   "shareWeeklyProgress": "Condividi progresso settimanale",
-  "cancel": "Annulla",
   "progressShared": "Progresso condiviso!",
   "share": "Condividi",
   "restorePurchases": "Ripristina",
@@ -378,7 +372,6 @@
   "alreadyHaveAccount": "Hai già un account? Accedi",
   "encryptedStatus": "CRITTOGRAFATO",
   "systemSynchronized": "Stato sistema: Sincronizzato",
-  "tryAgain": "Riprova",
   "exportFullReport": "Esporta report completo",
   "focusSupplements": "Integratori Focus",
   "buyNow": "Acquista ora",
@@ -528,5 +521,21 @@
   },
   "continueButton": "Continua",
   "getStarted": "Inizia",
-  "loginAction": "Ho già un account"
+  "loginAction": "Ho già un account",
+  "progressToLevel": "Progresso al Livello {level}",
+  "@progressToLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "memberSince": "Membro dal {date}",
+  "@memberSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }
