@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../theme/app_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeWidgetsPreviewScreen extends StatefulWidget {
   const HomeWidgetsPreviewScreen({super.key});
@@ -19,16 +20,9 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
   String _selectedTheme = 'Glassmorphism';
 
   int _tutorialStep = 0;
-  late AnimationController _pulseController;
-
   @override
   void initState() {
     super.initState();
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat(reverse: true);
-
     _loadPreferences();
 
     // Auto-start tutorial if first time (could also be pref-based)
@@ -62,7 +56,6 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
 
   @override
   void dispose() {
-    _pulseController.dispose();
     super.dispose();
   }
 
@@ -249,7 +242,7 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
                                       Container(
                                         decoration: const BoxDecoration(
                                           image: DecorationImage(
-                                            image: NetworkImage(
+                                            image: CachedNetworkImageProvider(
                                                 'https://lh3.googleusercontent.com/aida-public/AB6AXuCAZKCVASRPep6HK8h-8b-3MiOxBYw4HZ6dIqouISEOOCIrfpgpsgJR6qMBMMTWlnMV8fE_GF_hM-t9L-NiZcJF5p6NLScE4VG_FO0IioP-sHRImbT6Q0QfjsoVBism-_yQ-z0vZoC5ig8u3IoV8K77c16rL6Hvk7Y46u4UhyHIcZobcZ2nPaVEmR7LyFyyjKYU7bs8DgI-wO1USCN1wwQTJAfb1knwjDo3i71OQl1DwCryGt3NfVt854NrkQMD9OsxYgQXR8K0J3w'),
                                             fit: BoxFit.cover,
                                           ),

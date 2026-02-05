@@ -363,6 +363,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.vibration,
+                      iconColor: AppColors.primary,
+                      title: AppLocalizations.of(context)!.hapticFeedback,
+                      subtitle: AppLocalizations.of(context)!.hapticFeedbackSub,
+                      trailing: Consumer<ThemeViewModel>(
+                        builder: (context, themeVM, _) => Switch(
+                          value: themeVM.hapticEnabled,
+                          activeThumbColor: AppColors.primary,
+                          onChanged: (value) =>
+                              themeVM.updateHapticEnabled(value),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
 

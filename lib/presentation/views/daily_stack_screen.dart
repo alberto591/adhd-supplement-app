@@ -15,6 +15,7 @@ import 'package:neurostack_app/application/providers/auth_provider.dart';
 import 'package:neurostack_app/application/view_models/routine_safety_view_model.dart';
 import 'package:neurostack_app/config/locator.dart';
 import 'package:neurostack_app/l10n/generated/app_localizations.dart';
+import 'package:neurostack_app/presentation/delegates/global_search_delegate.dart';
 
 class DailyStackScreen extends StatefulWidget {
   const DailyStackScreen({super.key});
@@ -275,6 +276,16 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                             auth.canAccess('stack_builder');
                                         return Row(
                                           children: [
+                                            // Global Search
+                                            IconButton(
+                                              icon: const Icon(Icons.search,
+                                                  color: AppColors.primaryGold,
+                                                  size: 24),
+                                              onPressed: () => showSearch(
+                                                  context: context,
+                                                  delegate:
+                                                      GlobalSearchDelegate()),
+                                            ),
                                             // Expand/Collapse All Toggle
                                             IconButton(
                                               icon: Icon(

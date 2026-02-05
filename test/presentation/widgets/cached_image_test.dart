@@ -3,18 +3,46 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:neurostack_app/presentation/widgets/cached_image.dart';
 import 'package:neurostack_app/presentation/widgets/skeleton_loader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
+import 'package:neurostack_app/application/view_models/theme_view_model.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+
+import 'package:neurostack_app/domain/entities/supplement.dart';
+
+class _FakeSettingsRepository extends Fake implements SettingsRepository {
+  @override
+  ThemeMode getThemeMode() => ThemeMode.light;
+  @override
+  bool getReducedMotionEnabled() => false;
+  @override
+  bool getHapticFeedbackEnabled() => true;
+  @override
+  double getFontSizeScale() => 1.0;
+}
 
 void main() {
   group('CachedImage', () {
+    final fakeSettings = _FakeSettingsRepository();
+    late ThemeViewModel themeViewModel;
+
+    setUp(() {
+      themeViewModel = ThemeViewModel(fakeSettings);
+    });
+
     testWidgets('renders SkeletonLoader when loading',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
-            body: CachedImage(
-              imageUrl: 'https://example.com/image.jpg',
-              width: 100,
-              height: 100,
+            body: ChangeNotifierProvider<ThemeViewModel>.value(
+              value: themeViewModel,
+              child: const CachedImage(
+                imageUrl: 'https://example.com/image.jpg',
+                width: 100,
+                height: 100,
+              ),
             ),
           ),
         ),
@@ -32,14 +60,17 @@ void main() {
     testWidgets('renders CachedNetworkImage with correct properties',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
-            body: CachedImage(
-              imageUrl: 'https://example.com/image.jpg',
-              width: 200,
-              height: 150,
-              fit: BoxFit.contain,
-              borderRadius: 15,
+            body: ChangeNotifierProvider<ThemeViewModel>.value(
+              value: themeViewModel,
+              child: const CachedImage(
+                imageUrl: 'https://example.com/image.jpg',
+                width: 200,
+                height: 150,
+                fit: BoxFit.contain,
+                borderRadius: 15,
+              ),
             ),
           ),
         ),
@@ -62,11 +93,14 @@ void main() {
     testWidgets('renders custom placeholder when provided',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
-            body: CachedImage(
-              imageUrl: 'https://example.com/image.jpg',
-              placeholder: Text('Loading...'),
+            body: ChangeNotifierProvider<ThemeViewModel>.value(
+              value: themeViewModel,
+              child: const CachedImage(
+                imageUrl: 'https://example.com/image.jpg',
+                placeholder: Text('Loading...'),
+              ),
             ),
           ),
         ),
@@ -79,10 +113,13 @@ void main() {
     testWidgets('shows error widget when imageUrl is empty',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
-            body: CachedImage(
-              imageUrl: '',
+            body: ChangeNotifierProvider<ThemeViewModel>.value(
+              value: themeViewModel,
+              child: const CachedImage(
+                imageUrl: '',
+              ),
             ),
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'dart:math' as math;
 import '../../config/locator.dart';
 import '../../application/view_models/insights_view_model.dart';
+import '../../application/view_models/theme_view_model.dart';
 import '../../application/providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
@@ -562,6 +563,16 @@ class _StreakEmberAnimationState extends State<_StreakEmberAnimation>
       vsync: this,
       duration: const Duration(seconds: 10), // Long loop
     )..repeat();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final reducedMotion =
+            Provider.of<ThemeViewModel>(context, listen: false).reducedMotion;
+        if (reducedMotion) {
+          _controller.stop();
+        }
+      }
+    });
 
     // Generate initial embers
     for (int i = 0; i < 20; i++) {

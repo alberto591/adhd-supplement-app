@@ -60,6 +60,11 @@ class _SplashScreenState extends State<SplashScreen>
           .init()
           .timeout(const Duration(seconds: 3));
 
+      if (locator<SettingsRepository>().getReducedMotionEnabled()) {
+        _controller.stop();
+        _controller.value = 1.0;
+      }
+
       // 2. Notifications
       setState(() => _loadingStatus = 'Setting up reminders...');
       await locator<NotificationService>()

@@ -38,6 +38,12 @@ class MockSupplementRepository extends _i1.Mock
   }
 
   @override
+  _i3.Stream<void> get onCacheInvalidated => (super.noSuchMethod(
+        Invocation.getter(#onCacheInvalidated),
+        returnValue: _i3.Stream<void>.empty(),
+      ) as _i3.Stream<void>);
+
+  @override
   _i3.Future<List<_i4.Supplement>> getAllSupplements({String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(

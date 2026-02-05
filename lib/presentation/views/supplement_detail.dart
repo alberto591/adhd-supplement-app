@@ -249,6 +249,7 @@ class SupplementDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
 
+                        /* 
                         // Scientific Evidence Badge
                         if (supplement.scientificEvidenceRank != null) ...[
                           _ScientificEvidenceBadge(
@@ -257,6 +258,7 @@ class SupplementDetail extends StatelessWidget {
                               isDark: isDark),
                           const SizedBox(height: 16),
                         ],
+                        */
 
                         // Routine Status Alert
                         if (safetyWarnings.isNotEmpty)
@@ -369,6 +371,7 @@ class SupplementDetail extends StatelessWidget {
                                   ),
                                 ),
                               const SizedBox(height: 16),
+                              /* 
                               if (supplement.studyLinks.isNotEmpty)
                                 _CollapsibleInfoCard(
                                   title: AppLocalizations.of(context)!
@@ -401,14 +404,14 @@ class SupplementDetail extends StatelessWidget {
                                                                 .underline,
                                                         fontSize: 14,
                                                       ),
-                                                    ),
-                                                  ),
+                                                   ),
                                                 ],
                                               ),
                                             ))
                                         .toList(),
                                   ),
                                 ),
+                              */
                             ],
                           ),
                       ],
@@ -1035,6 +1038,7 @@ class _CollapsibleInfoCard extends StatelessWidget {
   }
 }
 
+/*
 class _ScientificEvidenceBadge extends StatelessWidget {
   final int? rank;
   final int? participantCount;
@@ -1138,6 +1142,7 @@ class _ScientificEvidenceBadge extends StatelessWidget {
     );
   }
 }
+*/
 
 class _SafetyWarningCard extends StatelessWidget {
   final List<String> warnings;

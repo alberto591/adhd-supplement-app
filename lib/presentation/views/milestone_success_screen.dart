@@ -3,6 +3,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/particles_background.dart';
+import 'package:provider/provider.dart';
+import '../../application/view_models/theme_view_model.dart';
 
 class MilestoneSuccessScreen extends StatefulWidget {
   final int days;
@@ -35,6 +37,17 @@ class _MilestoneSuccessScreenState extends State<MilestoneSuccessScreen>
     );
 
     _scaleController.forward();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final reducedMotion =
+            Provider.of<ThemeViewModel>(context, listen: false).reducedMotion;
+        if (reducedMotion) {
+          _scaleController.stop();
+          _scaleController.value = 1.0;
+        }
+      }
+    });
   }
 
   @override

@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:mockito/mockito.dart';
+import 'package:neurostack_app/application/view_models/theme_view_model.dart';
+import 'package:neurostack_app/domain/repositories/settings_repository.dart';
 
 /// Standard wrapper for widget tests that provides localization, navigation,
 /// and common providers.
@@ -21,6 +23,10 @@ Widget createTestableWidget({
           // Default Mock AuthProvider if none provided
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => MockAuthProvider(),
+          ),
+          // Default Mock ThemeViewModel for accessibility/UI checks
+          ChangeNotifierProvider<ThemeViewModel>(
+            create: (_) => MockThemeViewModel(),
           ),
         ],
     child: MaterialApp(
@@ -53,4 +59,31 @@ class MockAuthProvider extends Mock implements AuthProvider {
   AuthStatus get status => AuthStatus.authenticated;
 
   // Add other common getters as needed
+}
+
+/// Common Mock for ThemeViewModel used across tests.
+class MockThemeViewModel extends Mock implements ThemeViewModel {
+  @override
+  bool get reducedMotion => false;
+
+  @override
+  double get fontScale => 1.0;
+
+  @override
+  ThemeMode get themeMode => ThemeMode.light;
+
+  @override
+  bool get isDarkMode => false;
+
+  @override
+  bool get hapticEnabled => true;
+
+  @override
+  bool get soundsEnabled => true;
+
+  @override
+  void addListener(VoidCallback listener) {}
+
+  @override
+  void removeListener(VoidCallback listener) {}
 }

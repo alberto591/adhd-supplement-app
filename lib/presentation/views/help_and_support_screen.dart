@@ -53,11 +53,6 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
           'No problem! You can tap the "..." menu on any item to "Skip for this Slot". This tracks your consistency accurately without penalty.',
     },
     {
-      'question': 'Can I export my data for my advisor?',
-      'answer':
-          'Yes! Go to Profile > Routine Report. You can generate a PDF report of your consistency and state logs.',
-    },
-    {
       'question': 'How does the "Grace Day" work?',
       'answer':
           'We believe in progress, not perfection. A Grace Day freezes your streak if you miss a day, keeping your momentum alive. You earn them by maintaining consistency.',

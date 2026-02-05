@@ -22,7 +22,11 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   double get fontScale => _settingsRepository.getFontSizeScale();
-  bool get reducedMotion => _settingsRepository.getReducedMotionEnabled();
+  bool get reducedMotion =>
+      _settingsRepository.getReducedMotionEnabled() ||
+      (WidgetsBinding.instance?.platformDispatcher.accessibilityFeatures
+              .disableAnimations ??
+          false);
   bool get hapticEnabled => _settingsRepository.getHapticFeedbackEnabled();
   bool get soundsEnabled => _settingsRepository.getSoundsEnabled();
 

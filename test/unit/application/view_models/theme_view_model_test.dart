@@ -9,6 +9,7 @@ import 'package:neurostack_app/domain/repositories/settings_repository.dart';
 import 'theme_view_model_test.mocks.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   late ThemeViewModel viewModel;
   late MockSettingsRepository mockSettingsRepository;
 

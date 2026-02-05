@@ -4,6 +4,7 @@ import '../../config/locator.dart';
 import '../../application/view_models/community_view_model.dart';
 import '../../domain/entities/community_post.dart';
 import '../navigation/app_router.dart';
+import '../widgets/skeleton_loader.dart';
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
@@ -34,7 +35,7 @@ class CommunityScreen extends StatelessWidget {
                   child: Consumer<CommunityViewModel>(
                     builder: (context, viewModel, child) {
                       if (viewModel.isLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return _buildSkeletonLoader(context, isDark);
                       }
                       if (viewModel.posts.isEmpty) {
                         return Center(
@@ -604,6 +605,51 @@ class CommunityScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSkeletonLoader(BuildContext context, bool isDark) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF2C221A) : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isDark ? const Color(0xFF4A3D32) : const Color(0xFFE0DDD8),
+            ),
+          ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  SkeletonLoader(width: 40, height: 40, borderRadius: 20),
+                  SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SkeletonLoader(width: 100, height: 14),
+                      SizedBox(height: 6),
+                      SkeletonLoader(width: 60, height: 12),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              SkeletonLoader(width: 80, height: 12),
+              SizedBox(height: 8),
+              SkeletonLoader(width: double.infinity, height: 20),
+              SizedBox(height: 8),
+              SkeletonLoader(width: double.infinity, height: 60),
+            ],
+          ),
+        );
+      },
     );
   }
 }

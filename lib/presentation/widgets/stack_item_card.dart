@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'package:provider/provider.dart';
+import '../../application/view_models/theme_view_model.dart';
 
 class StackItemCard extends StatefulWidget {
   final String name;
@@ -39,6 +41,17 @@ class _StackItemCardState extends State<StackItemCard>
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _controller.forward();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final reducedMotion =
+            Provider.of<ThemeViewModel>(context, listen: false).reducedMotion;
+        if (reducedMotion) {
+          _controller.stop();
+          _controller.value = 1.0;
+        }
+      }
+    });
   }
 
   @override
@@ -141,6 +154,7 @@ class _StackItemCardState extends State<StackItemCard>
                     style: IconButton.styleFrom(
                       hoverColor: Colors.red.withValues(alpha: 0.1),
                       highlightColor: Colors.red.withValues(alpha: 0.2),
+                      minimumSize: const Size(44, 44),
                     ),
                   ),
                 ],

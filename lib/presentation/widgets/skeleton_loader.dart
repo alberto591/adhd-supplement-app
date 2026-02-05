@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../application/view_models/theme_view_model.dart';
 
 class SkeletonLoader extends StatefulWidget {
   final double width;
@@ -47,6 +49,20 @@ class _SkeletonLoaderState extends State<SkeletonLoader>
         isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200]!;
     final highlightColor =
         isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[100]!;
+
+    final reducedMotion =
+        Provider.of<ThemeViewModel>(context, listen: false).reducedMotion;
+
+    if (reducedMotion) {
+      return Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          color: baseColor,
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+        ),
+      );
+    }
 
     return AnimatedBuilder(
       animation: _controller,

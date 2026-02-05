@@ -11,6 +11,7 @@ import '../navigation/app_router.dart';
 import '../widgets/stack_presets_modal.dart';
 import '../../utils/supplement_ui_helper.dart';
 import '../view_models/stack_builder_view_model.dart';
+import '../widgets/skeleton_loader.dart';
 
 class StackBuilderScreen extends StatefulWidget {
   const StackBuilderScreen({super.key});
@@ -104,7 +105,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
       backgroundColor: bgColor,
       body: SafeArea(
         child: viewModel.isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? _buildTopLevelSkeleton(context, isDark)
             : Stack(
                 children: [
                   Column(
@@ -895,6 +896,81 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildTopLevelSkeleton(BuildContext context, bool isDark) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // App Bar
+          const Row(
+            children: [
+              SkeletonLoader(width: 40, height: 40, borderRadius: 20),
+              SizedBox(width: 16),
+              SkeletonLoader(width: 120, height: 24),
+              Spacer(),
+              SkeletonLoader(width: 40, height: 40, borderRadius: 20),
+            ],
+          ),
+          const SizedBox(height: 24),
+
+          // Slot Selector
+          Row(
+            children: List.generate(
+                4,
+                (index) => const Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: SkeletonLoader(width: 80, height: 40),
+                    )),
+          ),
+          const SizedBox(height: 24),
+
+          // Library Header
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SkeletonLoader(width: 100, height: 20),
+              SkeletonLoader(width: 60, height: 16),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Search Bar
+          const SkeletonLoader(width: double.infinity, height: 44),
+          const SizedBox(height: 16),
+
+          // Library List
+          SizedBox(
+            height: 120,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: 4,
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              itemBuilder: (_, __) =>
+                  const SkeletonLoader(width: 100, height: 120),
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          // Drop Zone Header
+          const SkeletonLoader(width: 150, height: 24),
+          const SizedBox(height: 4),
+          const SkeletonLoader(width: 100, height: 16),
+          const SizedBox(height: 16),
+
+          // Drop Zone
+          const Expanded(
+            child: SkeletonLoader(
+              width: double.infinity,
+              height: double.infinity,
+              borderRadius: 24,
+            ),
+          ),
+        ],
       ),
     );
   }

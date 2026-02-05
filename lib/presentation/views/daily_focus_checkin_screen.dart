@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 import '../../application/view_models/focus_checkin_view_model.dart';
+import '../../application/view_models/theme_view_model.dart';
 import '../theme/app_theme.dart';
 
 class DailyFocusCheckinScreen extends StatefulWidget {
@@ -50,10 +51,18 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
     final viewModel =
         Provider.of<FocusCheckInViewModel>(context, listen: false);
     final navigator = Navigator.of(context);
+    final reducedMotion =
+        Provider.of<ThemeViewModel>(context, listen: false).reducedMotion;
+
     final success = await viewModel.submitCheckIn();
     if (success && mounted) {
-      _celebrationController.forward();
-      Future.delayed(const Duration(seconds: 1), () {
+      if (!reducedMotion) {
+        _celebrationController.forward();
+      }
+
+      final delay = reducedMotion ? Duration.zero : const Duration(seconds: 1);
+
+      Future.delayed(delay, () {
         if (mounted) {
           navigator.pop();
         }

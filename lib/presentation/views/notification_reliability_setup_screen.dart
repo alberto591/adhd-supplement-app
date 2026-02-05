@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import 'package:provider/provider.dart';
+import '../../application/view_models/theme_view_model.dart';
 
 class NotificationReliabilitySetupScreen extends StatefulWidget {
   const NotificationReliabilitySetupScreen({super.key});
@@ -29,6 +31,17 @@ class _NotificationReliabilitySetupScreenState
     _pulseAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final reducedMotion =
+            Provider.of<ThemeViewModel>(context, listen: false).reducedMotion;
+        if (reducedMotion) {
+          _pulseController.stop();
+          _pulseController.value = 1.0;
+        }
+      }
+    });
   }
 
   @override

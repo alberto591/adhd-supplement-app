@@ -74,9 +74,11 @@ class RoutineElementCard extends StatelessWidget {
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: onMoreOptions,
-                      child: const Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Icon(
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        alignment: Alignment.center,
+                        child: const Icon(
                           Icons.more_vert,
                           color: Colors.grey,
                           size: 20,
@@ -167,7 +169,7 @@ class RoutineElementCard extends StatelessWidget {
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
+                                horizontal: 16, vertical: 12),
                             decoration: BoxDecoration(
                               color: AppColors.primary,
                               borderRadius: BorderRadius.circular(12),

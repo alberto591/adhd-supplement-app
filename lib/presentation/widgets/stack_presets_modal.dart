@@ -80,6 +80,17 @@ class StackPresetsModal extends StatelessWidget {
             color: Colors.purple,
             isDark: isDark,
           ),
+          const SizedBox(height: 16),
+          _buildPresetOption(
+            context,
+            id: 'steady_focus',
+            title: 'The Steady Focus (ADHD Friendly)',
+            description:
+                'Balanced dopamine support and impulse control without the jitters.',
+            icon: Icons.spa,
+            color: Colors.teal,
+            isDark: isDark,
+          ),
           const SizedBox(height: 32),
           SizedBox(
             width: double.infinity,
