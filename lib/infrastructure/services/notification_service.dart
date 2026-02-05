@@ -1,5 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'dart:io';
@@ -67,7 +67,7 @@ class NotificationService {
 
   Future<void> init() async {
     // Initialize timezone data
-    tz.initializeTimeZones();
+    tz_data.initializeTimeZones();
     await configureLocalTimezone();
 
     const AndroidInitializationSettings initializationSettingsAndroid =

@@ -975,10 +975,15 @@ class DailyStackViewModel extends ChangeNotifier {
       AppLogger.d(
           'Smart Nudge: All items handled. Canceling all remaining nudges for today.');
 
-      // Cancel all global nudge notifications for today
-      await _notificationService.cancelNotification(1000);
-      await _notificationService.cancelNotification(1001);
-      await _notificationService.cancelNotification(1002);
+      // Cancel all global nudge notifications for today for all potential slots
+      // Morning (1000), Afternoon (2000), Evening (3000), Night (4000)
+      // Each range goes up to +15 to cover persistent mode
+      for (final slot in NotificationSlot.values) {
+        final baseId = slot.baseId;
+        for (int i = 0; i < 15; i++) {
+          await _notificationService.cancelNotification(baseId + i);
+        }
+      }
     }
   }
 
