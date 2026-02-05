@@ -315,7 +315,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   }
 
   Widget _buildLoadingSkeleton() {
-    return const Padding(
+    return const SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

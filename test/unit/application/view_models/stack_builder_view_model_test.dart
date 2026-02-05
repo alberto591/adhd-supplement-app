@@ -83,13 +83,13 @@ void main() {
       await viewModel.initialize();
 
       // Add items manually mimicking the behavior
-      final lTheanine = Supplement(
+      const lTheanine = Supplement(
           id: 'l-theanine',
           name: 'L-Theanine',
           category: 'Nootropic',
           defaultDosage: '200mg',
           benefits: []);
-      final caffeine = Supplement(
+      const caffeine = Supplement(
           id: 'caffeine',
           name: 'Caffeine',
           category: 'Stimulant',

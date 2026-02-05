@@ -5,7 +5,6 @@ import '../../domain/repositories/supplement_repository.dart';
 
 import '../navigation/app_router.dart';
 import '../theme/app_theme.dart';
-import '../../domain/entities/supplement.dart';
 
 class GlobalSearchDelegate extends SearchDelegate<dynamic> {
   final _supplementRepository = locator<SupplementRepository>();
@@ -82,7 +81,7 @@ class GlobalSearchDelegate extends SearchDelegate<dynamic> {
           );
         }
 
-        final supplements = snapshot.data as List<Supplement>? ?? [];
+        final supplements = snapshot.data ?? [];
 
         if (supplements.isEmpty) {
           return Center(

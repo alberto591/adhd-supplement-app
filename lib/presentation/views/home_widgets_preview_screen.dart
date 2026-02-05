@@ -55,11 +55,6 @@ class _HomeWidgetsPreviewScreenState extends State<HomeWidgetsPreviewScreen>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // Force dark theme colors based on design provided
     const bgDark = AppColors.backgroundPremiumDark;

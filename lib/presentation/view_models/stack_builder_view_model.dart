@@ -273,10 +273,11 @@ class StackBuilderViewModel extends ChangeNotifier {
         break;
       case 'steady_focus':
         presetItems = [
-          StackItem(
+          const StackItem(
               supplementId: 'l-theanine', customDosage: '200mg', order: 0),
-          StackItem(supplementId: 'omega-3', customDosage: '1000mg', order: 1),
-          StackItem(supplementId: 'zinc', customDosage: '15mg', order: 2),
+          const StackItem(
+              supplementId: 'omega-3', customDosage: '1000mg', order: 1),
+          const StackItem(supplementId: 'zinc', customDosage: '15mg', order: 2),
         ];
         break;
     }

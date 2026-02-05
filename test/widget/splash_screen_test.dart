@@ -9,7 +9,6 @@ import 'package:neurostack_app/infrastructure/services/seeding_service.dart';
 import 'package:neurostack_app/domain/repositories/supplement_repository.dart';
 import 'package:neurostack_app/domain/entities/supplement.dart';
 import 'package:neurostack_app/presentation/navigation/app_router.dart';
-import 'package:neurostack_app/presentation/navigation/app_router.dart';
 import '../test_helper.dart';
 
 // Mocks

@@ -6,10 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:neurostack_app/application/view_models/theme_view_model.dart';
 import 'package:neurostack_app/domain/repositories/settings_repository.dart';
-import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
-
-import 'package:neurostack_app/domain/entities/supplement.dart';
 
 class _FakeSettingsRepository extends Fake implements SettingsRepository {
   @override

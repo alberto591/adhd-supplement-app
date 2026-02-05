@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:mockito/mockito.dart';
 import 'package:neurostack_app/application/view_models/theme_view_model.dart';
-import 'package:neurostack_app/domain/repositories/settings_repository.dart';
 
 /// Standard wrapper for widget tests that provides localization, navigation,
 /// and common providers.
@@ -18,17 +17,20 @@ Widget createTestableWidget({
   String? initialRoute,
 }) {
   return MultiProvider(
-    providers: providers ??
-        [
-          // Default Mock AuthProvider if none provided
-          ChangeNotifierProvider<AuthProvider>(
-            create: (_) => MockAuthProvider(),
-          ),
-          // Default Mock ThemeViewModel for accessibility/UI checks
-          ChangeNotifierProvider<ThemeViewModel>(
-            create: (_) => MockThemeViewModel(),
-          ),
-        ],
+    providers: [
+      ChangeNotifierProvider<ThemeViewModel>(
+        create: (_) => locator.isRegistered<ThemeViewModel>()
+            ? locator<ThemeViewModel>()
+            : MockThemeViewModel(),
+      ),
+      if (providers != null)
+        ...providers
+      else ...[
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => MockAuthProvider(),
+        ),
+      ],
+    ],
     child: MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
