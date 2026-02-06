@@ -53,5 +53,10 @@
 	<string>NeuroStack needs access to your microphone for video capture features.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>mailto</string>
+	</array>
 </dict>
 </plist>

@@ -535,5 +535,11 @@
   },
   "continueButton": "Continuar",
   "getStarted": "Comenzar",
-  "loginAction": "Ya tengo una cuenta"
+  "loginAction": "Ya tengo una cuenta",
+  "citedLabel": "Citado",
+  "viewStudies": "Ver Estudios",
+  "citationDisclaimer": "Información proveniente de estudios revisados por pares",
+  "deleteAccount": "Eliminar Cuenta",
+  "deleteAccountConfirm": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer y todos tus datos serán eliminados permanentemente.",
+  "deleteAccountSub": "Eliminar permanentemente tu cuenta y datos"
 }

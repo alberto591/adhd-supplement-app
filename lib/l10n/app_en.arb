@@ -536,5 +536,11 @@
   },
   "continueButton": "Continue",
   "getStarted": "Get Started",
-  "loginAction": "I already have an account"
+  "loginAction": "I already have an account",
+  "citedLabel": "Cited",
+  "viewStudies": "View Studies",
+  "citationDisclaimer": "Information sourced from peer-reviewed studies",
+  "deleteAccount": "Delete Account",
+  "deleteAccountConfirm": "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.",
+  "deleteAccountSub": "Permanently remove your account and data"
 }

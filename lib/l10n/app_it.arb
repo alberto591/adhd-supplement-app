@@ -537,5 +537,11 @@
         "type": "String"
       }
     }
-  }
+  },
+  "citedLabel": "Citato",
+  "viewStudies": "Vedi Studi",
+  "citationDisclaimer": "Informazioni provenienti da studi sottoposti a revisione paritaria",
+  "deleteAccount": "Elimina Account",
+  "deleteAccountConfirm": "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e tutti i tuoi dati saranno rimossi permanentemente.",
+  "deleteAccountSub": "Rimuovi permanentemente il tuo account e i dati"
 }

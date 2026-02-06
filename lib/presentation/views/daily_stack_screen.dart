@@ -789,6 +789,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                 dosage:
                     stackItem.customDosage ?? supplement?.defaultDosage ?? '',
                 form: supplement?.form ?? 'Pill',
+                hasStudies: supplement?.studyLinks.isNotEmpty ?? false,
                 icon: SupplementUIHelper.getIconForSupplement(
                     supplement?.name ?? '', supplement?.category ?? ''),
                 iconColor: Color(int.parse((supplement?.colorHex ?? '#D4A411')

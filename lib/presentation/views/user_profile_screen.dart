@@ -378,6 +378,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.delete_forever,
+                      iconColor: Colors.red,
+                      title: AppLocalizations.of(context)!.deleteAccount,
+                      subtitle: AppLocalizations.of(context)!.deleteAccountSub,
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () => Navigator.pushNamed(
+                          context, AppRouter.privacySettings),
+                    ),
                   ],
                 ),
 

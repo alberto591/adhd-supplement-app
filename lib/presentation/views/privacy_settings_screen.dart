@@ -5,6 +5,7 @@ import '../../application/view_models/privacy_view_model.dart';
 import '../../config/locator.dart';
 import '../../infrastructure/services/url_service.dart';
 import '../../config/app_config.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class PrivacySettingsScreen extends StatefulWidget {
   const PrivacySettingsScreen({super.key});
@@ -221,9 +222,10 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                           showDialog<void>(
                               context: context,
                               builder: (ctx) => AlertDialog(
-                                    title: const Text('Delete Everything?'),
-                                    content: const Text(
-                                        'This action cannot be undone.'),
+                                    title: Text(AppLocalizations.of(context)!
+                                        .deleteAccount),
+                                    content: Text(AppLocalizations.of(context)!
+                                        .deleteAccountConfirm),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(ctx),
@@ -239,18 +241,21 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                                               '/login',
                                               (route) => false);
                                         },
-                                        child: const Text('DELETE',
-                                            style:
-                                                TextStyle(color: Colors.red)),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .deleteAccount
+                                                .toUpperCase(),
+                                            style: const TextStyle(
+                                                color: Colors.red)),
                                       ),
                                     ],
                                   ));
                         },
                         icon: const Icon(Icons.delete_forever,
                             color: Color(0xFFDC2626)),
-                        label: const Text(
-                          'Delete All My Data',
-                          style: TextStyle(
+                        label: Text(
+                          AppLocalizations.of(context)!.deleteAccount,
+                          style: const TextStyle(
                             color: Color(0xFFDC2626),
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

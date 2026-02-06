@@ -12,6 +12,7 @@ import 'package:neurostack_app/domain/entities/routine_element.dart';
 import 'package:neurostack_app/presentation/widgets/routine_status_alert.dart';
 import 'package:neurostack_app/utils/supplement_ui_helper.dart';
 import 'package:neurostack_app/l10n/generated/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Neurostack-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
@@ -392,14 +393,22 @@ class SupplementDetail extends StatelessWidget {
                                                       color: Colors.teal),
                                                   const SizedBox(width: 8),
                                                   Expanded(
-                                                    child: Text(
-                                                      entry.key,
-                                                      style: GoogleFonts.lexend(
-                                                        color: Colors.blue,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        fontSize: 14,
+                                                    child: InkWell(
+                                                      onTap: () => launchUrl(
+                                                          Uri.parse(
+                                                              entry.value),
+                                                          mode: LaunchMode
+                                                              .externalApplication),
+                                                      child: Text(
+                                                        entry.key,
+                                                        style:
+                                                            GoogleFonts.lexend(
+                                                          color: Colors.blue,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          fontSize: 14,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),

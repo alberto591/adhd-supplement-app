@@ -891,6 +891,33 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         const Icon(Icons.verified,
                             color: AppColors.primaryGold, size: 14),
                       ],
+                      if (supplement.studyLinks.isNotEmpty) ...[
+                        const SizedBox(width: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: Colors.teal.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.science,
+                                  size: 12, color: Colors.teal),
+                              const SizedBox(width: 3),
+                              Text(
+                                l10n.citedLabel,
+                                style: GoogleFonts.lexend(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                       if (supplement.isCustom) ...[
                         const SizedBox(width: 6),
                         Container(
