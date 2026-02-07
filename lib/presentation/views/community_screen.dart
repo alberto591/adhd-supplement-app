@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../../config/locator.dart';
 import '../../application/view_models/community_view_model.dart';
 import '../../domain/entities/community_post.dart';
@@ -29,7 +30,7 @@ class CommunityScreen extends StatelessWidget {
             child: Column(
               children: [
                 _buildHeader(context, isDark),
-                _buildSearchBar(isDark),
+                _buildSearchBar(context, isDark),
                 _buildFilterChips(isDark),
                 Expanded(
                   child: Consumer<CommunityViewModel>(
@@ -40,7 +41,7 @@ class CommunityScreen extends StatelessWidget {
                       if (viewModel.posts.isEmpty) {
                         return Center(
                           child: Text(
-                            'No posts found for this filter.',
+                            AppLocalizations.of(context)!.noPostsForFilter,
                             style: TextStyle(
                               color: isDark ? Colors.white70 : Colors.black54,
                             ),
@@ -85,7 +86,9 @@ class CommunityScreen extends StatelessWidget {
             child: FloatingActionButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Post creation coming soon!')),
+                  SnackBar(
+                      content:
+                          Text(AppLocalizations.of(context)!.postCreationSoon)),
                 );
               },
               backgroundColor: const Color(0xFFEE8C2B),
@@ -128,7 +131,7 @@ class CommunityScreen extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Text(
-                'Community Support',
+                AppLocalizations.of(context)!.communitySupport,
                 style: TextStyle(
                   color: isDark ? Colors.white : const Color(0xFF181411),
                   fontSize: 18,
@@ -144,8 +147,9 @@ class CommunityScreen extends StatelessWidget {
             ),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Notifications view coming soon!')),
+                SnackBar(
+                    content:
+                        Text(AppLocalizations.of(context)!.notificationsSoon)),
               );
             },
           ),
@@ -154,7 +158,7 @@ class CommunityScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar(bool isDark) {
+  Widget _buildSearchBar(BuildContext context, bool isDark) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Container(
@@ -183,7 +187,7 @@ class CommunityScreen extends StatelessWidget {
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search tips or supplements...',
+                  hintText: AppLocalizations.of(context)!.searchTipsHint,
                   hintStyle: TextStyle(
                     color: isDark
                         ? const Color(0xFFB0A090)
@@ -300,7 +304,8 @@ class CommunityScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${post.postedAt.minute}m ago', // Simplified time for now
+                    AppLocalizations.of(context)!.minutesAgoCount(
+                        post.postedAt.minute), // Simplified time for now
                     style: const TextStyle(
                       color: Color(0xFF897561),
                       fontSize: 12,
@@ -344,7 +349,7 @@ class CommunityScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${post.helpfulCount} people found this helpful',
+                AppLocalizations.of(context)!.peopleHelpful(post.helpfulCount),
                 style: const TextStyle(
                   color: Color(0xFF897561),
                   fontSize: 12,
@@ -372,7 +377,7 @@ class CommunityScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        'Insightful',
+                        AppLocalizations.of(context)!.insightful,
                         style: TextStyle(
                           color: post.isInsightful
                               ? Colors.white
@@ -455,7 +460,8 @@ class CommunityScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${post.postedAt.minute}m ago', // simplified
+                          AppLocalizations.of(context)!.minutesAgoCount(
+                              post.postedAt.minute), // simplified
                           style: const TextStyle(
                             color: Color(0xFF897561),
                             fontSize: 12,
@@ -492,7 +498,8 @@ class CommunityScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${post.helpfulCount} helpful',
+                      AppLocalizations.of(context)!
+                          .helpfulCount(post.helpfulCount),
                       style: const TextStyle(
                         color: Color(0xFF897561),
                         fontSize: 12,
@@ -520,7 +527,7 @@ class CommunityScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'Insightful',
+                              AppLocalizations.of(context)!.insightful,
                               style: TextStyle(
                                 color: post.isInsightful
                                     ? Colors.white
@@ -559,13 +566,14 @@ class CommunityScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildNavItem(
-              context, 0, Icons.dashboard_outlined, 'Today', false, isDark),
-          _buildNavItem(context, 1, Icons.forum, 'Community', true, isDark),
+          _buildNavItem(context, 0, Icons.dashboard_outlined,
+              AppLocalizations.of(context)!.navToday, false, isDark),
+          _buildNavItem(context, 1, Icons.forum,
+              AppLocalizations.of(context)!.navCommunity, true, isDark),
           _buildNavItem(context, 2, Icons.local_pharmacy_outlined,
-              'Supplements', false, isDark),
-          _buildNavItem(
-              context, 3, Icons.person_outline, 'Profile', false, isDark),
+              AppLocalizations.of(context)!.navSupplements, false, isDark),
+          _buildNavItem(context, 3, Icons.person_outline,
+              AppLocalizations.of(context)!.navProfile, false, isDark),
         ],
       ),
     );

@@ -130,8 +130,8 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               image: const DecorationImage(
-                                image: CachedNetworkImageProvider(
-                                  'https://lh3.googleusercontent.com/aida-public/AB6AXuCEKRevVdokOjFtFZvmgLdF8d_XggCSOWA8CgNp72pCfqV2jX6lj0_jbLWDth-3k1BnGNUfDRUeeAeFykEbYysmc9A13Np-e9ONWM9CenQ1GC24jycAAAO5-XUXbgBa-0XYdBSc9RiUUQ8Nq1w5Pt8BypRIx5aNyG0YdAueulirzo_SS9maP3ft_L8N9NbEujaoXx95tSu9QHJCY83pqpHW6ivG1APvJBPKJttkqNyhqG9TF0v3C8BB3GoSW28sOnf3HuA4OJCTRAQ',
+                                image: AssetImage(
+                                  'assets/images/grace_day_illustration.png',
                                 ),
                                 fit: BoxFit.contain,
                               ),

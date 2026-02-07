@@ -97,7 +97,9 @@
   "afternoon": "Afternoon",
   "evening": "Evening",
   "night": "Night",
-  "today": "TODAY",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "routineConsideration": "Routine Consideration",
   "snoozedMessage": "Snoozed for 5 minutes 💤",
   "detailsNotAvailable": "Details not available",
   "insightsTitle": "Insights",
@@ -542,5 +544,380 @@
   "citationDisclaimer": "Information sourced from peer-reviewed studies",
   "deleteAccount": "Delete Account",
   "deleteAccountConfirm": "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.",
-  "deleteAccountSub": "Permanently remove your account and data"
+  "deleteAccountSub": "Permanently remove your account and data",
+  "safetyDosageWarnings": "Safety & Dosage Warnings",
+  "evidenceClassA": "Class A Evidence",
+  "evidenceClassB": "Class B Evidence",
+  "evidenceClassC": "Class C Evidence",
+  "evidenceUserReported": "User Reported",
+  "withPrefix": "With {elementName}:",
+  "@withPrefix": {
+    "placeholders": {
+      "elementName": {
+        "type": "String"
+      }
+    }
+  },
+  "routineConsultAdvisor": "Always consult your advisors before adding new elements to your routine.",
+  "priorityConsideration": "PRIORITY CONSIDERATION",
+  "routineAlert": "ROUTINE ALERT",
+  "timingConsideration": "TIMING CONSIDERATION",
+  "routineOptimized": "ROUTINE OPTIMIZED",
+  "yourActivityData": "Your Activity Data",
+  "localStorageOnly": "Local Storage Only",
+  "localStorageOnlyDesc": "Keep all supplement logs on this device. Disables cloud sync to our servers.",
+  "shareAnalytics": "Share Analytics",
+  "shareAnalyticsDesc": "Help us improve by sharing anonymous usage stats.",
+  "crashReporting": "Crash Reporting",
+  "crashReportingDesc": "Send automatic reports when the app crashes.",
+  "downloadMyData": "Download My Data",
+  "downloadMyDataDesc": "Export history as CSV or PDF",
+  "dataExportGenerated": "Data export generated (Simulation)",
+  "dataControl": "Data Control",
+  "dataControlDesc": "Deleting your data is permanent. This will erase all your supplement tracking history, routine schedules, and profile information from both this device and any synced backups.",
+  "clearHistoryTitle": "Clear All History?",
+  "clearHistoryConfirm": "This will delete all your supplement logs but keep your account and stacks active.",
+  "clear": "Clear",
+  "healthHistoryCleared": "Health history cleared.",
+  "clearHistory": "Clear Supplement History",
+  "requestDataRemoval": "Request Data Removal (Manual)",
+  "requestDataRemovalDesc": "Official web form for deletion requests",
+  "privacyPriority": "Your privacy is our priority",
+  "encryptionNotice": "We use end-to-end encryption for all transmitted data.",
+  "tapToReadPrivacyPolicy": "Tap to read our Privacy Policy.",
+  "requestAccountDeletion": "Request Account & Data Deletion",
+  "policyCollectionTitle": "1. Data Collection",
+  "policyCollectionContent": "We collect only the data necessary to provide our services. This includes your supplement logs, state checks, and basic profile information. All health data is stored locally on your device unless you enable cloud sync.",
+  "policyUsageTitle": "2. Data Usage",
+  "policyUsageContent": "Your data is used solely to provide you with insights and track your progress. We do not sell your personal data to third parties.",
+  "policySecurityTitle": "3. Security",
+  "policySecurityContent": "We use industry-standard encryption to protect your data. If you choose to sync your data, it is encrypted in transit and at rest.",
+  "policyRightsTitle": "4. User Rights",
+  "policyRightsContent": "You have the right to access, correct, or delete your data at any time. You can delete your account and all associated data from the \"Data Control\" section of this screen.",
+  "policyUpdatesTitle": "5. Updates",
+  "policyUpdatesContent": "We may update this policy from time to time. We will notify you of any significant changes.",
+  "lastUpdated": "Last Updated: January 2026",
+  "reflectionSaved": "Reflection saved",
+  "savingReflection": "Saving your reflection...",
+  "nightlyReflection": "Nightly Reflection",
+  "timeToRest": "Time to rest, {name}",
+  "@timeToRest": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "windDownSubtitle": "Let's wind down for a peaceful night.",
+  "howWasFocus": "How did your focus feel today?",
+  "quiet": "QUIET",
+  "hyperfocused": "HYPERFOCUSED",
+  "focusLabel1": "\"I tried my best, but struggled\"",
+  "focusLabel2": "\"It was a bit shaky today\"",
+  "focusLabel3": "\"I felt mostly balanced today\"",
+  "focusLabel4": "\"I was really dialed in!\"",
+  "focusLabel5": "\"Hyperfocused machine mode!\"",
+  "proudOfOneThing": "One thing you're proud of?",
+  "journalHint": "A small win, a moment of clarity, or just showing up...",
+  "voiceRecordingSoon": "Voice recording coming soon!",
+  "sleepReady": "Sleep Ready",
+  "sleepReadyDesc": "Dim interface & mute alerts",
+  "takeEveningStack": "Take Evening Stack",
+  "reflectionSavedSleepWell": "Nightly reflection saved. Sleep well!",
+  "saveAndClose": "Save & Close",
+  "safetyOverrideLogged": "Safety override logged. Please consult your advisor.",
+  "errorWithPrefix": "Error: {error}",
+  "@errorWithPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "safetyNotice": "Safety Notice",
+  "recommendWait60": "We recommend waiting 60 minutes before logging this supplement.",
+  "rescheduleOneHour": "Reschedule for 1 hour later",
+  "logAnywayAdvisor": "Log anyway (Confirmed with Advisor)",
+  "healthConfigSettings": "Your health configurations can be updated in Settings.",
+  "communitySupport": "Community Support",
+  "noPostsForFilter": "No posts found for this filter.",
+  "postCreationSoon": "Post creation coming soon!",
+  "notificationsSoon": "Notifications view coming soon!",
+  "searchTipsHint": "Search tips or supplements...",
+  "insightful": "Insightful",
+  "peopleHelpful": "{count} people found this helpful",
+  "@peopleHelpful": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "helpfulCount": "{count} helpful",
+  "@helpfulCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesAgoCount": "{count}m ago",
+  "@minutesAgoCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "navToday": "Today",
+  "navCommunity": "Community",
+  "navSupplements": "Supplements",
+  "navProfile": "Profile",
+  "cancel": "Cancel",
+  "dynamicMixCombined": "Dynamic Mix (Combined)",
+  "flowSeekerInattentive": "Flow Seeker (Inattentive)",
+  "highEnergyHyperactive": "High Energy (Hyperactive)",
+  "failedToPickImage": "Failed to pick image: {error}",
+  "@failedToPickImage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "developerTools": "Developer Tools",
+  "systemHealth": "System Health",
+  "checkAppDiagnostics": "Check app diagnostics",
+  "scienceUpdate": "Science Update",
+  "previewUpdateScreen": "Preview update screen",
+  "logicTriggers": "Logic Triggers",
+  "backendSpecHandoff": "Backend spec handoff",
+  "logoutFailed": "Logout failed: {error}",
+  "@logoutFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "unknownDate": "Unknown date",
+  "educationalContent": "Educational Content",
+  "neuroscience": "Neuroscience",
+  "nutrition": "Nutrition",
+  "lifestyle": "Lifestyle",
+  "frequentlyAskedQuestions": "Frequently Asked Questions",
+  "general": "General",
+  "safety": "Safety",
+  "dosing": "Dosing",
+  "aiOptimizationAnalyst": "AI Optimization Analyst",
+  "aiSpecialistReady": "Our AI Optimization Specialist is ready for your routine questions.",
+  "readMore": "Read More",
+  "keyFindings": "Key Findings:",
+  "viewOnPubMed": "View on PubMed",
+  "byAuthor": "By {author}",
+  "@byAuthor": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  },
+  "all": "All",
+  "essentialFattyAcids": "Essential Fatty Acids",
+  "vitaminsAndMinerals": "Vitamins & Minerals",
+  "adaptogens": "Adaptogens",
+  "nootropics": "Nootropics",
+  "sarahJArchitect": "Sarah J., Architect",
+  "stackOmega3Mg": "Stack: Omega-3 + Mg",
+  "magnesiumTestimony": "\"Switching to a magnesium-rich stack completely changed my morning fog. I finally feel like my brain is firing on all cylinders.\"",
+  "aiAlchemistTitle": "AI ALCHEMIST",
+  "alchemist": "Alchemist",
+  "bioOptimizationSpecialist": "Bio-optimization Specialist",
+  "askRoutineOptimizationHint": "Ask about routine optimizations...",
+  "askAlchemist": "Ask Alchemist",
+  "chemistEmptyStateDesc": "Get technical deep-dives on supplement mechanisms, bioavailability, and neuro-chemistry.",
+  "exampleQuestion1": "How does Caffeine pass the BBB?",
+  "exampleQuestion2": "Magnesium Glycinate vs Citrate?",
+  "draftSaved": "Draft saved",
+  "stateOfBodyAndMind": "State of Body & Mind",
+  "howAreYouFeeling": "How are you feeling at this moment?",
+  "focusSliderLabel": "Focus: 😫 to 🤩",
+  "energySliderLabel": "Energy: 🥱 to ⚡",
+  "moodSliderLabel": "Mood: 😢 to 😊",
+  "notesOptional": "Notes (Optional)",
+  "howIsYourDayGoing": "How is your day going?",
+  "saveCheckin": "Save Check-in",
+  "skipForNow": "Skip for now",
+  "pill": "Pill",
+  "capsule": "Capsule",
+  "supplement": "Supplement",
+  "take": "Take",
+  "startYourDay": "Start your day",
+  "stayOnTrack": "Stay on track",
+  "beforeBed": "Before Bed",
+  "beforeTime": "Before {time}",
+  "@beforeTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "stacksCompleted": "{completed}/{total} Stacks Completed",
+  "@stacksCompleted": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "userNotAuthenticated": "User not authenticated",
+  "failedToLoadDailyStack": "Failed to load daily stack: {error}",
+  "@failedToLoadDailyStack": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "timeFor": "Time for {name}",
+  "@timeFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "snoozeNotificationBody": "Snoozed for 5 minutes. Don't forget your focus stack!",
+  "overdue": "Overdue",
+  "overdueBy": "Overdue by {minutes}m",
+  "@overdueBy": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "inTimeH": "in {hours}h {minutes}m",
+  "@inTimeH": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "inTimeM": "in {minutes}m",
+  "@inTimeM": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "itemCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@itemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryOmega3": "Omega-3",
+  "categoryMinerals": "Minerals",
+  "categoryVitamins": "Vitamins",
+  "categoryNootropics": "Nootropics",
+  "categoryHerbal": "Herbal",
+  "categoryEnergy": "Energy",
+  "categoryCalm": "Calm",
+  "categoryMood": "Mood",
+  "categoryLongevity": "Longevity",
+  "loading": "Loading...",
+  "failedToLoadSupplements": "Failed to load supplements: {error}",
+  "@failedToLoadSupplements": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToCreateSupplement": "Failed to create supplement: {error}",
+  "@failedToCreateSupplement": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToDeleteSupplement": "Failed to delete supplement: {error}",
+  "@failedToDeleteSupplement": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToAddToStackError": "Failed to add to stack: {error}",
+  "@failedToAddToStackError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisFailed": "Analysis failed. Please try again.",
+  "history": "History",
+  "resolveAll": "Resolve All",
+  "resolveAllTitle": "Resolve All?",
+  "resolveAllContent": "This will mark all missed reminders as acknowledged. You can still view them in your history.",
+  "allItemsResolved": "All items resolved",
+  "resolve": "Resolve",
+  "noHistory": "No history yet",
+  "missed": "Missed",
+  "taken": "Taken",
+  "dismissed": "Dismissed",
+  "supplementLog": "Supplement Log",
+  "supplementCheckin": "Supplement Check-in",
+  "weeklyReview": "Weekly Review",
+  "weeklyTip": "Weekly Tip",
+  "shareProgress": "Share Progress",
+  "dismiss": "Dismiss",
+  "improvementMessage": "Your consistency has improved by {improvement}% compared to last week. Great job maintaining your streak!",
+  "@improvementMessage": {
+    "placeholders": {
+      "improvement": {
+        "type": "String"
+      }
+    }
+  },
+  "tipMessage": "Taking your supplement with a high-protein breakfast improved your focus score by {improvement}% this week. Try to keep this habit!",
+  "@tipMessage": {
+    "placeholders": {
+      "improvement": {
+        "type": "String"
+      }
+    }
+  },
+  "shareWeeklyProgressContent": "Share your weekly supplement progress with your advisor, accountability partner, or social media.",
+  "todayCaps": "TODAY",
+  "yesterdayCaps": "YESTERDAY",
+  "mon": "Mon",
+  "tue": "Tue",
+  "wed": "Wed",
+  "thu": "Thu",
+  "fri": "Fri",
+  "sat": "Sat",
+  "sun": "Sun",
+  "consistencyTracker": "Consistency Tracker",
+  "graceDaysTip": "Grace Days help keep the streak alive when you need a break.",
+  "focusComparison": "Focus Comparison",
+  "lastWeekCaps": "LAST WEEK",
+  "thisWeekCaps": "THIS WEEK",
+  "peakProductivity": "Peak Productivity",
+  "weeklyScore": "Weekly Score"
 }

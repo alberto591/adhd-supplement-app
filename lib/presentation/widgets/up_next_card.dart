@@ -160,7 +160,7 @@ class UpNextCard extends StatelessWidget {
                             color: Color(0xFF9DB9A8), size: 14),
                         const SizedBox(width: 4),
                         Text(
-                          '$timeLabel • $itemCount Supplements',
+                          '$timeLabel • ${l10n.itemCount(itemCount)}',
                           style: const TextStyle(
                             color: Color(0xFF9DB9A8),
                             fontSize: 14,

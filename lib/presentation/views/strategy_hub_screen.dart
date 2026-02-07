@@ -666,7 +666,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
             child: Column(
               children: [
                 Text(
-                  '"Switching to a magnesium-rich stack completely changed my morning fog. I finally feel like my brain is firing on all cylinders."',
+                  AppLocalizations.of(context)!.magnesiumTestimony,
                   style: TextStyle(
                     color: isDark ? Colors.white : const Color(0xFF111418),
                     fontSize: 16,
@@ -692,7 +692,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Sarah J., Architect',
+                          AppLocalizations.of(context)!.sarahJArchitect,
                           style: TextStyle(
                             color:
                                 isDark ? Colors.white : const Color(0xFF111418),
@@ -701,7 +701,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                           ),
                         ),
                         Text(
-                          '${AppLocalizations.of(context)!.verifiedUser} • Stack: Omega-3 + Mg',
+                          '${AppLocalizations.of(context)!.verifiedUser} • ${AppLocalizations.of(context)!.stackOmega3Mg}',
                           style: TextStyle(
                             color: isDark
                                 ? const Color(0xFF94A3B8)
@@ -750,11 +750,11 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
   Widget _buildResearchLibrary(BuildContext context, bool isDark, Color primary,
       StrategyHubViewModel viewModel) {
     final categories = [
-      'All',
-      'Essential Fatty Acids',
-      'Vitamins & Minerals',
-      'Adaptogens',
-      'Nootropics'
+      AppLocalizations.of(context)!.all,
+      AppLocalizations.of(context)!.essentialFattyAcids,
+      AppLocalizations.of(context)!.vitaminsAndMinerals,
+      AppLocalizations.of(context)!.adaptogens,
+      AppLocalizations.of(context)!.nootropics
     ];
 
     return Padding(
@@ -832,7 +832,12 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
 
   Widget _buildEducationalContent(BuildContext context, bool isDark,
       Color primary, StrategyHubViewModel viewModel) {
-    final categories = ['All', 'Neuroscience', 'Nutrition', 'Lifestyle'];
+    final categories = [
+      AppLocalizations.of(context)!.all,
+      AppLocalizations.of(context)!.neuroscience,
+      AppLocalizations.of(context)!.nutrition,
+      AppLocalizations.of(context)!.lifestyle
+    ];
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -840,7 +845,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Educational Content',
+            AppLocalizations.of(context)!.educationalContent,
             style: TextStyle(
               color: isDark ? Colors.white : const Color(0xFF111418),
               fontSize: 20,
@@ -916,7 +921,12 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
 
   Widget _buildFaqSection(BuildContext context, bool isDark, Color primary,
       StrategyHubViewModel viewModel) {
-    final categories = ['All', 'General', 'Safety', 'Dosing'];
+    final categories = [
+      AppLocalizations.of(context)!.all,
+      AppLocalizations.of(context)!.general,
+      AppLocalizations.of(context)!.safety,
+      AppLocalizations.of(context)!.dosing
+    ];
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -924,7 +934,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Frequently Asked Questions',
+            AppLocalizations.of(context)!.frequentlyAskedQuestions,
             style: TextStyle(
               color: isDark ? Colors.white : const Color(0xFF111418),
               fontSize: 20,
@@ -1030,7 +1040,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'AI Optimization Analyst',
+                      AppLocalizations.of(context)!.aiOptimizationAnalyst,
                       style: GoogleFonts.lexend(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -1039,7 +1049,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Our AI Optimization Specialist is ready for your routine questions.',
+                      AppLocalizations.of(context)!.aiSpecialistReady,
                       style: GoogleFonts.lexend(
                         fontSize: 12,
                         color: isDark ? Colors.grey[400] : Colors.grey[700],
@@ -1201,7 +1211,7 @@ class _EducationCard extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        'By ${article.author}',
+                        AppLocalizations.of(context)!.byAuthor(article.author),
                         style: TextStyle(
                           color: isDark
                               ? const Color(0xFF94A3B8)
@@ -1239,7 +1249,7 @@ class _EducationCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Read More',
+                        AppLocalizations.of(context)!.readMore,
                         style: TextStyle(
                           color: primary,
                           fontSize: 14,
@@ -1403,7 +1413,7 @@ class _StudyCardState extends State<_StudyCard> {
                     const Divider(height: 1),
                     const SizedBox(height: 12),
                     Text(
-                      'Key Findings:',
+                      AppLocalizations.of(context)!.keyFindings,
                       style: TextStyle(
                         color: widget.isDark ? Colors.white : Colors.black,
                         fontSize: 14,
@@ -1430,7 +1440,7 @@ class _StudyCardState extends State<_StudyCard> {
                           Icon(Icons.launch, color: widget.primary, size: 16),
                           const SizedBox(width: 8),
                           Text(
-                            'View on PubMed',
+                            AppLocalizations.of(context)!.viewOnPubMed,
                             style: TextStyle(
                               color: widget.primary,
                               fontSize: 14,

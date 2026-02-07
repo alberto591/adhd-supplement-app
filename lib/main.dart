@@ -32,26 +32,22 @@ void main() async {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      // Explicitly enable persistence for offline-first experience
-      FirebaseFirestore.instance.settings = const Settings(
-        persistenceEnabled: true,
-        cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
-      );
+
+      // Explicitly enable persistence for offline-first experience on mobile
+      if (!kIsWeb) {
+        FirebaseFirestore.instance.settings = const Settings(
+          persistenceEnabled: true,
+          cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+        );
+      }
 
       final options = Firebase.app().options;
       AppLogger.i('Firebase initialized successfully.');
-      AppLogger.i('Project ID from Options: ${options.projectId}');
-      AppLogger.i('App ID from Options: ${options.appId}');
-      AppLogger.i('API Key from Options: ${options.apiKey}');
-      AppLogger.i('Messaging Sender ID: ${options.messagingSenderId}');
-      if (options.storageBucket != null) {
-        AppLogger.i('Storage Bucket: ${options.storageBucket}');
-      }
     }
     firebaseInitialized = true;
 
     // Initialize Crashlytics (disabled in debug mode)
-    if (!kDebugMode) {
+    if (!kDebugMode && !kIsWeb) {
       FlutterError.onError =
           FirebaseCrashlytics.instance.recordFlutterFatalError;
       // Pass all uncaught asynchronous errors to Crashlytics
@@ -116,6 +112,17 @@ class NeuroStackApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('es'),
+          Locale('it'),
+        ],
         home: _FirebaseErrorScreen(errorMessage: initError),
       );
     }
@@ -169,7 +176,8 @@ class NeuroStackApp extends StatelessWidget {
               data: MediaQuery.of(context).copyWith(
                 textScaler: TextScaler.linear(scale),
               ),
-              child: _AppLifecycleIntegration(child: child!),
+              child: _AppLifecycleIntegration(
+                  child: child ?? const SizedBox.shrink()),
             );
           },
         ),
@@ -246,7 +254,8 @@ class _FirebaseErrorScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                AppLocalizations.of(context)!.connectionIssue,
+                AppLocalizations.of(context)?.connectionIssue ??
+                    'Connection Issue',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -255,14 +264,15 @@ class _FirebaseErrorScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                AppLocalizations.of(context)!.connectionIssueMessage,
+                AppLocalizations.of(context)?.connectionIssueMessage ??
+                    'We couldn\'t connect to our services. This might be due to a poor connection or maintenance.',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 16,
                   color: Color(0xFF9094A6),
                 ),
               ),
-              if (errorMessage != null && kDebugMode) ...[
+              if (errorMessage != null) ...[
                 const SizedBox(height: 24),
                 Container(
                   padding: const EdgeInsets.all(12),
@@ -298,7 +308,7 @@ class _FirebaseErrorScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  AppLocalizations.of(context)!.tryAgain,
+                  AppLocalizations.of(context)?.tryAgain ?? 'Try Again',
                   style: const TextStyle(color: Colors.white),
                 ),
               ),

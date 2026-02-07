@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../../application/view_models/routine_safety_view_model.dart';
 import '../../domain/entities/supplement_compatibility.dart';
 import '../theme/app_theme.dart';
@@ -33,8 +34,8 @@ class _RoutineOverrideConfirmationScreenState
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Safety override logged. Please consult your advisor.'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.safetyOverrideLogged),
           backgroundColor: Colors.orange,
         ),
       );
@@ -43,7 +44,10 @@ class _RoutineOverrideConfirmationScreenState
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        SnackBar(
+            content: Text(
+                AppLocalizations.of(context)!.errorWithPrefix(e.toString())),
+            backgroundColor: Colors.red),
       );
     } finally {
       if (mounted) setState(() => _isOverrideLoading = false);
@@ -99,7 +103,8 @@ class _RoutineOverrideConfirmationScreenState
                               width: 64,
                               height: 64,
                               decoration: BoxDecoration(
-                                color: AppColors.warningAmber.withValues(alpha: 0.1),
+                                color: AppColors.warningAmber
+                                    .withValues(alpha: 0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(
@@ -110,7 +115,7 @@ class _RoutineOverrideConfirmationScreenState
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Safety Notice',
+                              AppLocalizations.of(context)!.safetyNotice,
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -129,10 +134,12 @@ class _RoutineOverrideConfirmationScreenState
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: AppColors.warningAmber.withValues(alpha: 0.05),
+                            color:
+                                AppColors.warningAmber.withValues(alpha: 0.05),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                                color: AppColors.warningAmber.withValues(alpha: 0.1)),
+                                color: AppColors.warningAmber
+                                    .withValues(alpha: 0.1)),
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,8 +147,7 @@ class _RoutineOverrideConfirmationScreenState
                               const Padding(
                                 padding: EdgeInsets.only(top: 2),
                                 child: Icon(
-                                  Icons
-                                      .auto_awesome, // Closest match to design
+                                  Icons.auto_awesome, // Closest match to design
                                   color: AppColors.warningAmber,
                                   size: 20,
                                 ),
@@ -152,7 +158,8 @@ class _RoutineOverrideConfirmationScreenState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Routine Consideration',
+                                      AppLocalizations.of(context)!
+                                          .routineConsideration,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -184,7 +191,7 @@ class _RoutineOverrideConfirmationScreenState
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
-                          "We recommend waiting 60 minutes before logging this supplement.",
+                          AppLocalizations.of(context)!.recommendWait60,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -219,14 +226,15 @@ class _RoutineOverrideConfirmationScreenState
                                   shadowColor:
                                       AppColors.primary.withValues(alpha: 0.3),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.schedule, size: 20),
-                                    SizedBox(width: 8),
+                                    const Icon(Icons.schedule, size: 20),
+                                    const SizedBox(width: 8),
                                     Text(
-                                      'Reschedule for 1 hour later',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context)!
+                                          .rescheduleOneHour,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -259,8 +267,9 @@ class _RoutineOverrideConfirmationScreenState
                                         child: CircularProgressIndicator(
                                             strokeWidth: 2),
                                       )
-                                    : const Text(
-                                        'Log anyway (Confirmed with Advisor)',
+                                    : Text(
+                                        AppLocalizations.of(context)!
+                                            .logAnywayAdvisor,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
@@ -276,7 +285,7 @@ class _RoutineOverrideConfirmationScreenState
                       Padding(
                         padding: const EdgeInsets.only(bottom: 24),
                         child: Text(
-                          'Your health configurations can be updated in Settings.',
+                          AppLocalizations.of(context)!.healthConfigSettings,
                           style: TextStyle(
                             fontSize: 12,
                             color: isDark ? Colors.grey[600] : Colors.grey[400],

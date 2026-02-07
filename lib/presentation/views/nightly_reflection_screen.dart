@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'dart:async';
 import '../../config/locator.dart';
 import '../../application/view_models/nightly_reflection_view_model.dart';
@@ -26,8 +27,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
       final success = await _viewModel!.saveReflection(isAutoSave: true);
       if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Reflection saved'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.reflectionSaved),
             backgroundColor: Color(0xFF7F06F9), // primaryPurple
             duration: Duration(milliseconds: 1000),
             behavior: SnackBarBehavior.floating,
@@ -102,7 +103,7 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                     const CircularProgressIndicator(color: primaryPurple),
                     const SizedBox(height: 16),
                     Text(
-                      'Saving your reflection...',
+                      AppLocalizations.of(context)!.savingReflection,
                       style: TextStyle(color: textColor),
                     ),
                   ],
@@ -180,7 +181,7 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                             ),
                             Expanded(
                               child: Text(
-                                'Nightly Reflection',
+                                AppLocalizations.of(context)!.nightlyReflection,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: textColor,
@@ -206,7 +207,9 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                               children: [
                                 const SizedBox(height: 16),
                                 Text(
-                                  'Time to rest, Alex',
+                                  AppLocalizations.of(context)!.timeToRest(
+                                      context.read<AuthProvider>().user?.name ??
+                                          'Alex'),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: textColor,
@@ -217,7 +220,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  "Let's wind down for a peaceful night.",
+                                  AppLocalizations.of(context)!
+                                      .windDownSubtitle,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: subTextColor,
@@ -229,7 +233,7 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
 
                                 // Focus Section
                                 Text(
-                                  'How did your focus feel today?',
+                                  AppLocalizations.of(context)!.howWasFocus,
                                   style: TextStyle(
                                     color: textColor,
                                     fontSize: 18,
@@ -253,7 +257,7 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'QUIET',
+                                            AppLocalizations.of(context)!.quiet,
                                             style: TextStyle(
                                               color: subTextColor,
                                               fontSize: 12,
@@ -261,8 +265,9 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                               letterSpacing: 1.0,
                                             ),
                                           ),
-                                          const Text(
-                                            'HYPERFOCUSED',
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .hyperfocused,
                                             style: TextStyle(
                                               color: primaryPurple,
                                               fontSize: 12,
@@ -297,7 +302,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                       ),
                                       const SizedBox(height: 16),
                                       Text(
-                                        _getFocusLabel(viewModel.focusValue),
+                                        _getFocusLabel(
+                                            context, viewModel.focusValue),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: subTextColor,
@@ -313,7 +319,7 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
 
                                 // Journal Section
                                 Text(
-                                  "One thing you're proud of?",
+                                  AppLocalizations.of(context)!.proudOfOneThing,
                                   style: TextStyle(
                                     color: textColor,
                                     fontSize: 18,
@@ -342,7 +348,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText:
-                                              'A small win, a moment of clarity, or just showing up...',
+                                              AppLocalizations.of(context)!
+                                                  .journalHint,
                                           hintStyle: TextStyle(
                                               color: subTextColor.withValues(
                                                   alpha: 0.5)),
@@ -357,9 +364,11 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                           onTap: () {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              const SnackBar(
+                                              SnackBar(
                                                   content: Text(
-                                                      'Voice recording coming soon!')),
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .voiceRecordingSoon)),
                                             );
                                           },
                                           child: Icon(Icons.mic,
@@ -402,7 +411,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Sleep Ready',
+                                              AppLocalizations.of(context)!
+                                                  .sleepReady,
                                               style: TextStyle(
                                                 color: textColor,
                                                 fontSize: 16,
@@ -410,7 +420,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                               ),
                                             ),
                                             Text(
-                                              'Dim interface & mute alerts',
+                                              AppLocalizations.of(context)!
+                                                  .sleepReadyDesc,
                                               style: TextStyle(
                                                 color: subTextColor,
                                                 fontSize: 12,
@@ -471,13 +482,14 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                     borderRadius: BorderRadius.circular(32),
                                   ),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(Icons.auto_awesome),
                                     SizedBox(width: 12),
                                     Text(
-                                      'Take Evening Stack',
+                                      AppLocalizations.of(context)!
+                                          .takeEveningStack,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -498,9 +510,10 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                   if (success && context.mounted) {
                                     Navigator.pop(context);
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
+                                      SnackBar(
                                         content: Text(
-                                            'Nightly reflection saved. Sleep well!'),
+                                            AppLocalizations.of(context)!
+                                                .reflectionSavedSleepWell),
                                         backgroundColor: primaryPurple,
                                         behavior: SnackBarBehavior.floating,
                                       ),
@@ -514,8 +527,8 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
                                     side: BorderSide(color: cardBorder),
                                   ),
                                 ),
-                                child: const Text(
-                                  'Save & Close',
+                                child: Text(
+                                  AppLocalizations.of(context)!.saveAndClose,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -537,11 +550,11 @@ class _NightlyReflectionScreenState extends State<NightlyReflectionScreen> {
     );
   }
 
-  String _getFocusLabel(double value) {
-    if (value < 0.2) return '"I tried my best, but struggled"';
-    if (value < 0.4) return '"It was a bit shaky today"';
-    if (value < 0.6) return '"I felt mostly balanced today"';
-    if (value < 0.8) return '"I was really dialed in!"';
-    return '"Hyperfocused machine mode!"';
+  String _getFocusLabel(BuildContext context, double value) {
+    if (value < 0.2) return AppLocalizations.of(context)!.focusLabel1;
+    if (value < 0.4) return AppLocalizations.of(context)!.focusLabel2;
+    if (value < 0.6) return AppLocalizations.of(context)!.focusLabel3;
+    if (value < 0.8) return AppLocalizations.of(context)!.focusLabel4;
+    return AppLocalizations.of(context)!.focusLabel5;
   }
 }

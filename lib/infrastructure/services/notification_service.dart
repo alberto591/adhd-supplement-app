@@ -2,7 +2,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show Platform;
 
 enum NotificationMode {
   persistent, // Aggressive: Every 5 mins for an hour
@@ -37,7 +38,7 @@ class NotificationService {
       : _notificationsPlugin = plugin ?? FlutterLocalNotificationsPlugin();
 
   Future<bool> checkExactAlarmPermission() async {
-    if (!Platform.isAndroid) return true;
+    if (kIsWeb || !Platform.isAndroid) return true;
 
     final androidImplementation =
         _notificationsPlugin.resolvePlatformSpecificImplementation<
@@ -51,7 +52,7 @@ class NotificationService {
   }
 
   Future<bool> requestExactAlarmPermission() async {
-    if (!Platform.isAndroid) return true;
+    if (kIsWeb || !Platform.isAndroid) return true;
 
     final androidImplementation =
         _notificationsPlugin.resolvePlatformSpecificImplementation<

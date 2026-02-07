@@ -97,7 +97,9 @@
   "afternoon": "Pomeriggio",
   "evening": "Sera",
   "night": "Notte",
-  "today": "OGGI",
+  "today": "Oggi",
+  "yesterday": "Ieri",
+  "routineConsideration": "Considerazione Routine",
   "snoozedMessage": "Posticipato di 5 minuti 💤",
   "detailsNotAvailable": "Dettagli non disponibili",
   "insightsTitle": "Approfondimenti",
@@ -543,5 +545,380 @@
   "citationDisclaimer": "Informazioni provenienti da studi sottoposti a revisione paritaria",
   "deleteAccount": "Elimina Account",
   "deleteAccountConfirm": "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e tutti i tuoi dati saranno rimossi permanentemente.",
-  "deleteAccountSub": "Rimuovi permanentemente il tuo account e i dati"
+  "deleteAccountSub": "Rimuovi permanentemente il tuo account e i dati",
+  "safetyDosageWarnings": "Avvisi di Sicurezza e Dosaggio",
+  "evidenceClassA": "Evidenza di Classe A",
+  "evidenceClassB": "Evidenza di Classe B",
+  "evidenceClassC": "Evidenza di Classe C",
+  "evidenceUserReported": "Segnalato dagli Utenti",
+  "withPrefix": "Con {elementName}:",
+  "@withPrefix": {
+    "placeholders": {
+      "elementName": {
+        "type": "String"
+      }
+    }
+  },
+  "routineConsultAdvisor": "Consulta sempre i tuoi consulenti prima di aggiungere nuovi elementi alla tua routine.",
+  "priorityConsideration": "CONSIDERAZIONE PRIORITARIA",
+  "routineAlert": "ALLERTA ROUTINE",
+  "timingConsideration": "CONSIDERAZIONE TEMPISTICA",
+  "routineOptimized": "ROUTINE OTTIMIZZATA",
+  "yourActivityData": "I Tuoi Dati di Attività",
+  "localStorageOnly": "Solo Archiviazione Locale",
+  "localStorageOnlyDesc": "Conserva tutti i log degli integratori su questo dispositivo. Disabilita la sincronizzazione cloud.",
+  "shareAnalytics": "Condividi Statistiche",
+  "shareAnalyticsDesc": "Aiutaci a migliorare condividendo statistiche d'uso anonime.",
+  "crashReporting": "Segnalazione Crash",
+  "crashReportingDesc": "Invia report automatici in caso di chiusura imprevista dell'app.",
+  "downloadMyData": "Scarica i Miei Dati",
+  "downloadMyDataDesc": "Esporta la cronologia come CSV o PDF",
+  "dataExportGenerated": "Esportazione dati generata (Simulazione)",
+  "dataControl": "Controllo Dati",
+  "dataControlDesc": "L'eliminazione dei dati è permanente. Questo cancellerà tutta la cronologia, i programmi delle routine e le informazioni del profilo sia da questo dispositivo che dai backup sincronizzati.",
+  "clearHistoryTitle": "Cancellare Tutta la Cronologia?",
+  "clearHistoryConfirm": "Questo eliminerà tutti i log degli integratori ma manterrà attivi il tuo account e i tuoi stack.",
+  "clear": "Cancella",
+  "healthHistoryCleared": "Cronologia cancellata.",
+  "clearHistory": "Cancella Cronologia Integratori",
+  "requestDataRemoval": "Richiedi Rimozione Dati (Manuale)",
+  "requestDataRemovalDesc": "Modulo web ufficiale per richieste di eliminazione",
+  "privacyPriority": "La tua privacy è la nostra priorità",
+  "encryptionNotice": "Utilizziamo la crittografia end-to-end per tutti i dati trasmessi.",
+  "tapToReadPrivacyPolicy": "Tocca per leggere la nostra Informativa sulla Privacy.",
+  "requestAccountDeletion": "Richiedi Eliminazione Account e Dati",
+  "policyCollectionTitle": "1. Raccolta Dati",
+  "policyCollectionContent": "Raccogliamo solo i dati necessari per fornire i nostri servizi. Questo include i log degli integratori, i controlli dello stato e le informazioni di base del profilo.",
+  "policyUsageTitle": "2. Utilizzo Dati",
+  "policyUsageContent": "I tuoi dati vengono utilizzati esclusivamente per fornirti approfondimenti. Non vendiamo i tuoi dati personali a terzi.",
+  "policySecurityTitle": "3. Sicurezza",
+  "policySecurityContent": "Utilizziamo la crittografia standard del settore per proteggere i tuoi dati.",
+  "policyRightsTitle": "4. Diritti dell'Utente",
+  "policyRightsContent": "Hai il diritto di accedere, correggere o eliminare i tuoi dati in qualsiasi momento.",
+  "policyUpdatesTitle": "5. Aggiornamenti",
+  "policyUpdatesContent": "Potremmo aggiornare questa informativa di tanto in tanto. Ti informeremo di eventuali modifiche significative.",
+  "lastUpdated": "Ultimo aggiornamento: Gennaio 2026",
+  "reflectionSaved": "Riflessione salvata",
+  "savingReflection": "Salvataggio riflessione...",
+  "nightlyReflection": "Riflessione Notturna",
+  "timeToRest": "È ora di riposare, {name}",
+  "@timeToRest": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "windDownSubtitle": "Rilassiamoci per una notte tranquilla.",
+  "howWasFocus": "Com'è stato il tuo focus oggi?",
+  "quiet": "CALMO",
+  "hyperfocused": "IPERFOCALIZZATO",
+  "focusLabel1": "\"Ho fatto del mio meglio, ma ho faticato\"",
+  "focusLabel2": "\"Oggi è andata un po' così\"",
+  "focusLabel3": "\"Mi sono sentito quasi sempre in equilibrio\"",
+  "focusLabel4": "\"Ero davvero concentrato!\"",
+  "focusLabel5": "\"Modalità macchina iperfocalizzata!\"",
+  "proudOfOneThing": "Una cosa di cui sei orgoglioso?",
+  "journalHint": "Una piccola vittoria, un momento di chiarezza, o semplicemente esserci...",
+  "voiceRecordingSoon": "Registrazione vocale in arrivo!",
+  "sleepReady": "Pronto per Dormire",
+  "sleepReadyDesc": "Scurisci interfaccia e disattiva avvisi",
+  "takeEveningStack": "Assumi Stack Serale",
+  "reflectionSavedSleepWell": "Riflessione notturna salvata. Dormi bene!",
+  "saveAndClose": "Salva e Chiudi",
+  "safetyOverrideLogged": "Override di sicurezza registrato. Consulta il tuo consulente.",
+  "errorWithPrefix": "Errore: {error}",
+  "@errorWithPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "safetyNotice": "Avviso di Sicurezza",
+  "recommendWait60": "Ti consigliamo di attendere 60 minuti prima di assumere questo integratore.",
+  "rescheduleOneHour": "Riprogramma tra 1 ora",
+  "logAnywayAdvisor": "Registra comunque (Confermato con Consulente)",
+  "healthConfigSettings": "Le tue configurazioni sulla salute possono essere aggiornate nelle Impostazioni.",
+  "communitySupport": "Supporto Community",
+  "noPostsForFilter": "Nessun post trovato per questo filtro.",
+  "postCreationSoon": "Creazione post in arrivo!",
+  "notificationsSoon": "Visualizzazione notifiche in arrivo!",
+  "searchTipsHint": "Cerca consigli o integratori...",
+  "insightful": "Interessante",
+  "peopleHelpful": "{count} persone hanno trovato questo utile",
+  "@peopleHelpful": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "helpfulCount": "{count} utile",
+  "@helpfulCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesAgoCount": "{count}m fa",
+  "@minutesAgoCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "navToday": "Oggi",
+  "navCommunity": "Community",
+  "navSupplements": "Integratori",
+  "navProfile": "Profilo",
+  "cancel": "Annulla",
+  "dynamicMixCombined": "Mix Dinamico (Combinato)",
+  "flowSeekerInattentive": "Cercatore di Flow (Disattento)",
+  "highEnergyHyperactive": "Alta Energia (Iperattivo)",
+  "failedToPickImage": "Impossibile selezionare l'immagine: {error}",
+  "@failedToPickImage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "developerTools": "Strumenti per Sviluppatori",
+  "systemHealth": "Salute del Sistema",
+  "checkAppDiagnostics": "Controlla diagnostica app",
+  "scienceUpdate": "Aggiornamento Scientifico",
+  "previewUpdateScreen": "Anteprima schermata aggiornamento",
+  "logicTriggers": "Trigger Logici",
+  "backendSpecHandoff": "Handoff specifiche backend",
+  "logoutFailed": "Logout fallito: {error}",
+  "@logoutFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "unknownDate": "Data sconosciuta",
+  "educationalContent": "Contenuto Educativo",
+  "neuroscience": "Neuroscienza",
+  "nutrition": "Nutrizione",
+  "lifestyle": "Stile di Vita",
+  "frequentlyAskedQuestions": "Domande Frequenti",
+  "general": "Generale",
+  "safety": "Sicurezza",
+  "dosing": "Dosaggio",
+  "aiOptimizationAnalyst": "Analista di Ottimizzazione AI",
+  "aiSpecialistReady": "Il nostro specialista di ottimizzazione AI è pronto per le tue domande sulla routine.",
+  "readMore": "Leggi di più",
+  "keyFindings": "Scoperte Chiave:",
+  "viewOnPubMed": "Visualizza su PubMed",
+  "byAuthor": "Di {author}",
+  "@byAuthor": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  },
+  "all": "Tutti",
+  "essentialFattyAcids": "Acidi Grassi Essenziali",
+  "vitaminsAndMinerals": "Vitamine e Minerali",
+  "adaptogens": "Adattogeni",
+  "nootropics": "Nootropi",
+  "sarahJArchitect": "Sarah J., Architetto",
+  "stackOmega3Mg": "Stack: Omega-3 + Mg",
+  "magnesiumTestimony": "\"Passare a uno stack ricco di magnesio ha cambiato completamente la mia nebbia mattutina. Finalmente mi sento come se il mio cervello funzionasse a pieno regime.\"",
+  "aiAlchemistTitle": "ALCHIMISTA AI",
+  "alchemist": "Alchimista",
+  "bioOptimizationSpecialist": "Specialista in Bio-ottimizzazione",
+  "askRoutineOptimizationHint": "Chiedi ottimizzazioni della routine...",
+  "askAlchemist": "Chiedi all'Alchimista",
+  "chemistEmptyStateDesc": "Ottieni approfondimenti tecnici sui meccanismi degli integratori, biodisponibilità e neurochimica.",
+  "exampleQuestion1": "Come fa la caffeina a superare la BBB?",
+  "exampleQuestion2": "Magnesio Glicinato vs Citrato?",
+  "draftSaved": "Bozza salvata",
+  "stateOfBodyAndMind": "Stato di Corpo e Mente",
+  "howAreYouFeeling": "Come ti senti in questo momento?",
+  "focusSliderLabel": "Focus: 😫 a 🤩",
+  "energySliderLabel": "Energia: 🥱 a ⚡",
+  "moodSliderLabel": "Umore: 😢 a 😊",
+  "notesOptional": "Note (Opzionale)",
+  "howIsYourDayGoing": "Come va la tua giornata?",
+  "saveCheckin": "Salva Check-in",
+  "skipForNow": "Salta per ora",
+  "pill": "Pillola",
+  "capsule": "Capsula",
+  "supplement": "Integratore",
+  "take": "Prendi",
+  "startYourDay": "Inizia la giornata",
+  "stayOnTrack": "Rimani in linea",
+  "beforeBed": "Prima di dormire",
+  "beforeTime": "Prima delle {time}",
+  "@beforeTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "stacksCompleted": "{completed}/{total} Stack completati",
+  "@stacksCompleted": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "userNotAuthenticated": "Utente non autenticato",
+  "failedToLoadDailyStack": "Errore nel caricamento dello stack giornaliero: {error}",
+  "@failedToLoadDailyStack": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "timeFor": "È ora di {name}",
+  "@timeFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "snoozeNotificationBody": "Posticipato di 5 minuti. Non dimenticare il tuo stack focus!",
+  "overdue": "In ritardo",
+  "overdueBy": "In ritardo di {minutes}m",
+  "@overdueBy": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "inTimeH": "tra {hours}h {minutes}m",
+  "@inTimeH": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "inTimeM": "tra {minutes}m",
+  "@inTimeM": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "itemCount": "{count, plural, =1{1 elemento} other{{count} elementi}}",
+  "@itemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryOmega3": "Omega-3",
+  "categoryMinerals": "Minerali",
+  "categoryVitamins": "Vitamine",
+  "categoryNootropics": "Nootropi",
+  "categoryHerbal": "Erbale",
+  "categoryEnergy": "Energia",
+  "categoryCalm": "Calma",
+  "categoryMood": "Umore",
+  "categoryLongevity": "Longevità",
+  "loading": "Caricamento...",
+  "failedToLoadSupplements": "Impossibile caricare gli integratori: {error}",
+  "@failedToLoadSupplements": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToCreateSupplement": "Impossibile creare l'integratore: {error}",
+  "@failedToCreateSupplement": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToDeleteSupplement": "Impossibile eliminare l'integratore: {error}",
+  "@failedToDeleteSupplement": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToAddToStackError": "Impossibile aggiungere allo stack: {error}",
+  "@failedToAddToStackError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "analysisFailed": "Analisi fallita. Riprova.",
+  "history": "Cronologia",
+  "resolveAll": "Risolvi Tutto",
+  "resolveAllTitle": "Risolvere tutto?",
+  "resolveAllContent": "Questo segnerà tutti i promemoria saltati come confermati. Potrai comunque visualizzarli nella cronologia.",
+  "allItemsResolved": "Tutti gli elementi risolti",
+  "resolve": "Risolvi",
+  "noHistory": "Ancora nessuna cronologia",
+  "missed": "Saltati",
+  "taken": "Presi",
+  "dismissed": "Ignorati",
+  "supplementLog": "Registro Integratori",
+  "supplementCheckin": "Check-in Integratori",
+  "weeklyReview": "Riepilogo Settimanale",
+  "weeklyTip": "Consiglio della Settimana",
+  "shareProgress": "Condividi Progressi",
+  "dismiss": "Chiudi",
+  "improvementMessage": "La tua costanza è migliorata del {improvement}% rispetto alla scorsa settimana. Ottimo lavoro mantenendo la tua serie!",
+  "@improvementMessage": {
+    "placeholders": {
+      "improvement": {
+        "type": "String"
+      }
+    }
+  },
+  "tipMessage": "Assumere il tuo integratore con una colazione ricca di proteine ha migliorato il tuo punteggio di concentrazione del {improvement}% questa settimana. Continua così!",
+  "@tipMessage": {
+    "placeholders": {
+      "improvement": {
+        "type": "String"
+      }
+    }
+  },
+  "shareWeeklyProgressContent": "Condividi i tuoi progressi settimanali con il tuo consulente, partner o sui social media.",
+  "todayCaps": "OGGI",
+  "yesterdayCaps": "IERI",
+  "mon": "Lun",
+  "tue": "Mar",
+  "wed": "Mer",
+  "thu": "Gio",
+  "fri": "Ven",
+  "sat": "Sab",
+  "sun": "Dom",
+  "consistencyTracker": "Monitor di Costanza",
+  "graceDaysTip": "I Giorni di Grazia aiutano a mantenere la striscia viva quando hai bisogno di una pausa.",
+  "focusComparison": "Confronto Concentrazione",
+  "lastWeekCaps": "SCORSA SETTIMANA",
+  "thisWeekCaps": "QUESTA SETTIMANA",
+  "peakProductivity": "Picco Produttività",
+  "weeklyScore": "Punteggio Settimanale"
 }

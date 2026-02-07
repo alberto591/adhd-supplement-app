@@ -32,7 +32,7 @@ class AppLogger {
       debugPrint(
           '⚠️ [WARN] ${DateTime.now().toIso8601String().split('T').last} | $message');
       if (error != null) debugPrint('   Error: $error');
-    } else {
+    } else if (!kIsWeb) {
       // Log to Crashlytics in production (if available)
       try {
         FirebaseCrashlytics.instance.log('WARN: $message ${error ?? ''}');
@@ -45,15 +45,13 @@ class AppLogger {
   /// Logs an error message.
   static void e(String message, [dynamic error, StackTrace? stackTrace]) {
     // Always print errors locally in debug
-    if (kDebugMode) {
-      debugPrint(
-          '❌ [ERROR] ${DateTime.now().toIso8601String().split('T').last} | $message');
-      if (error != null) debugPrint('   Error: $error');
-      if (stackTrace != null) debugPrint('   Stack: $stackTrace');
-    }
+    debugPrint(
+        '❌ [ERROR] ${DateTime.now().toIso8601String().split('T').last} | $message');
+    if (error != null) debugPrint('   Error: $error');
+    if (stackTrace != null) debugPrint('   Stack: $stackTrace');
 
     // Send errors to Crashlytics in production (if available)
-    if (!kDebugMode) {
+    if (!kDebugMode && !kIsWeb) {
       try {
         FirebaseCrashlytics.instance.recordError(
           error ?? message,

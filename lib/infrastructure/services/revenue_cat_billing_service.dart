@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
@@ -16,7 +17,7 @@ class RevenueCatBillingService implements BillingService {
     if (_isInitialized) return true;
 
     try {
-      if (Platform.isAndroid || Platform.isIOS) {
+      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
         await Purchases.setLogLevel(LogLevel.debug);
 
         PurchasesConfiguration configuration = PurchasesConfiguration(_apiKey);

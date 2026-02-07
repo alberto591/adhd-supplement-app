@@ -105,8 +105,8 @@ class LibraryViewModel extends ChangeNotifier {
 
       _applyFilters();
     } catch (e) {
-      _error = 'Failed to load supplements: $e';
-      AppLogger.e(_error ?? 'Failed to load supplements');
+      _error = e.toString();
+      AppLogger.e('Failed to load supplements: $e');
     } finally {
       _setLoading(false);
     }
@@ -143,8 +143,8 @@ class LibraryViewModel extends ChangeNotifier {
       await _supplementRepository.saveCustomSupplement(supplement);
       await initialize(); // Refresh list
     } catch (e) {
-      _error = 'Failed to create supplement: $e';
-      AppLogger.e(_error ?? 'Creation failed');
+      _error = e.toString();
+      AppLogger.e('Creation failed: $e');
     } finally {
       _setLoading(false);
     }
@@ -178,7 +178,7 @@ class LibraryViewModel extends ChangeNotifier {
       // Also refresh the library list to reflect the goals analyzed
       _applyFilters();
     } catch (e) {
-      _aiError = 'Analysis failed. Please try again.';
+      _aiError = 'analysisFailed';
       AppLogger.e('AI Recommendation Error: $e');
     } finally {
       _isAiLoading = false;
@@ -193,8 +193,8 @@ class LibraryViewModel extends ChangeNotifier {
       await _supplementRepository.deleteCustomSupplement(supplementId, _userId);
       await initialize(); // Refresh list
     } catch (e) {
-      _error = 'Failed to delete supplement: $e';
-      AppLogger.e(_error ?? 'Deletion failed');
+      _error = e.toString();
+      AppLogger.e('Deletion failed: $e');
     } finally {
       _setLoading(false);
     }
@@ -339,7 +339,7 @@ class LibraryViewModel extends ChangeNotifier {
       }
     } catch (e) {
       AppLogger.e('Error in addToStack', e);
-      _error = 'Failed to add to stack: $e';
+      _error = e.toString();
       rethrow;
     } finally {
       _setLoading(false);

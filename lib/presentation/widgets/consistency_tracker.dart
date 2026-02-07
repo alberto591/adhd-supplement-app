@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class ConsistencyTracker extends StatelessWidget {
   final Map<String, int>
@@ -14,7 +15,17 @@ class ConsistencyTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final l10n = AppLocalizations.of(context)!;
+    final days = [
+      l10n.mon,
+      l10n.tue,
+      l10n.wed,
+      l10n.thu,
+      l10n.fri,
+      l10n.sat,
+      l10n.sun
+    ];
+    final dayKeys = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +33,7 @@ class ConsistencyTracker extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            'Consistency Tracker',
+            AppLocalizations.of(context)!.consistencyTracker,
             style: GoogleFonts.lexend(
               color: isDark ? Colors.white : const Color(0xFF0F172A),
               fontSize: 18,
@@ -34,14 +45,18 @@ class ConsistencyTracker extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
-            children: days.map((day) {
-              final status = consistencyMap[day] ?? 0;
+            children: dayKeys.asMap().entries.map((entry) {
+              final index = entry.key;
+              final dayKey = entry.value;
+              final localizedDay = days[index];
+              final status = consistencyMap[dayKey] ?? 0;
               final isComplete = status == 1;
               final isGrace = status == 2;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 12),
-                child: _buildDayItem(context, day, isComplete, isGrace),
+                child:
+                    _buildDayItem(context, localizedDay, isComplete, isGrace),
               );
             }).toList(),
           ),
@@ -54,7 +69,7 @@ class ConsistencyTracker extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Grace Days help keep the streak alive when you need a break.',
+                  AppLocalizations.of(context)!.graceDaysTip,
                   style: GoogleFonts.lexend(
                     color: isDark ? Colors.grey[500] : const Color(0xFF94A3B8),
                     fontSize: 12,

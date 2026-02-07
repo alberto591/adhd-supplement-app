@@ -222,7 +222,7 @@ class FirebaseAuthRepository implements AuthRepository {
   User _mapFirebaseUser(firebase_auth.User firebaseUser) {
     return User(
       id: firebaseUser.uid,
-      email: firebaseUser.email!,
+      email: firebaseUser.email ?? '',
       displayName: firebaseUser.displayName,
       photoUrl: firebaseUser.photoURL,
       createdAt: firebaseUser.metadata.creationTime ?? DateTime.now(),

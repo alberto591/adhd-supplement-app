@@ -367,4 +367,15 @@ class Supplement {
     final localized = translations![locale]![fieldName] as List<dynamic>?;
     return localized?.map((e) => e as String).toList() ?? defaultList;
   }
+
+  /// Helper for Map fields (e.g., studyLinks)
+  Map<String, String> getLocalizedMapField(
+      String fieldName, Map<String, String> defaultMap, String locale) {
+    if (translations == null || !translations!.containsKey(locale)) {
+      return defaultMap;
+    }
+    final localized =
+        translations![locale]![fieldName] as Map<String, dynamic>?;
+    return localized?.map((k, v) => MapEntry(k, v as String)) ?? defaultMap;
+  }
 }

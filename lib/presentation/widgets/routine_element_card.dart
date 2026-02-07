@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/logger.dart';
 import '../theme/app_theme.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class RoutineElementCard extends StatelessWidget {
   final String title;
@@ -103,7 +104,7 @@ class RoutineElementCard extends StatelessWidget {
                           ? Icons.wb_sunny
                           : (isSkipped ? Icons.block : icon),
                       color: (isTaken || isSkipped) ? Colors.grey : iconColor,
-                      size: 20.0,
+                      size: 22.0,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -127,7 +128,10 @@ class RoutineElementCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Row(
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 8,
+                          runSpacing: 4,
                           children: [
                             Text(
                               '$dosage • $form',
@@ -136,33 +140,6 @@ class RoutineElementCard extends StatelessWidget {
                                 fontSize: 12,
                               ),
                             ),
-                            if (hasStudies) ...[
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: Colors.teal.withValues(alpha: 0.15),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.science,
-                                        size: 11, color: Colors.teal),
-                                    SizedBox(width: 3),
-                                    Text(
-                                      'Cited',
-                                      style: TextStyle(
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.teal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
                           ],
                         ),
                       ],
@@ -215,15 +192,15 @@ class RoutineElementCard extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.check,
+                                const Icon(Icons.check,
                                     color: Colors.white, size: 18),
-                                SizedBox(width: 6),
+                                const SizedBox(width: 6),
                                 Text(
-                                  'Take',
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.take,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,

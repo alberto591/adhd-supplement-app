@@ -872,57 +872,27 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 4,
+                    runSpacing: 4,
                     children: [
-                      Flexible(
-                        child: Text(
-                          supplement.name,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.lexend(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color:
-                                isDark ? Colors.white : const Color(0xFF0F172A),
-                          ),
+                      Text(
+                        supplement.name,
+                        style: GoogleFonts.lexend(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color:
+                              isDark ? Colors.white : const Color(0xFF0F172A),
                         ),
                       ),
-                      if (isGold) ...[
-                        const SizedBox(width: 6),
+                      if (isGold)
                         const Icon(Icons.verified,
                             color: AppColors.primaryGold, size: 14),
-                      ],
-                      if (supplement.studyLinks.isNotEmpty) ...[
-                        const SizedBox(width: 6),
+                      if (supplement.isCustom)
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Colors.teal.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.science,
-                                  size: 12, color: Colors.teal),
-                              const SizedBox(width: 3),
-                              Text(
-                                l10n.citedLabel,
-                                style: GoogleFonts.lexend(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                      if (supplement.isCustom) ...[
-                        const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
+                              horizontal: 4, vertical: 1),
                           decoration: BoxDecoration(
                             color: AppColors.primaryGold.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
@@ -930,13 +900,12 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           child: Text(
                             l10n.customTag,
                             style: GoogleFonts.lexend(
-                              fontSize: 8,
+                              fontSize: 7.5,
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryGold,
                             ),
                           ),
                         ),
-                      ],
                     ],
                   ),
                   Text(
@@ -1016,11 +985,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
-                child: Text(
-                  supplement.status == 'avoid' ? l10n.why : l10n.add,
-                  style: GoogleFonts.lexend(
-                      fontWeight: FontWeight.bold, fontSize: 11),
-                ),
+                child: supplement.status == 'avoid'
+                    ? Text(
+                        l10n.why,
+                        style: GoogleFonts.lexend(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11,
+                        ),
+                      )
+                    : const Icon(Icons.add_circle_outline, size: 20),
               ),
             ),
           ],
@@ -1040,7 +1013,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
       decoration: BoxDecoration(
         color: supplement.status == 'avoid'
             ? const Color(0xFFEF4444).withValues(alpha: 0.1)
-            : color.withValues(alpha: 0.8),
+            : color.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(isCapsule && !isSmall ? 20 : 8),
         boxShadow: [
           BoxShadow(
@@ -1058,10 +1031,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ? Icons.block
               : SupplementUIHelper.getIconForSupplement(
                   supplement.name, supplement.category),
-          color: supplement.status == 'avoid'
-              ? const Color(0xFFEF4444)
-              : Colors.white70,
-          size: isSmall ? 14 : 20,
+          color: supplement.status == 'avoid' ? const Color(0xFFEF4444) : color,
+          size: isSmall ? 18 : 26,
         ),
       ),
     );

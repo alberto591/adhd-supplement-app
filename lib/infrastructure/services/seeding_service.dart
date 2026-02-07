@@ -28,10 +28,8 @@ class SeedingService {
           "Fat-soluble nutrients require dietary fat for absorption. Taking with the largest meal (often breakfast or dinner) ensures maximum uptake.",
       "scientificEvidenceRank": 92,
       "studyLinks": {
-        "Omega-3 fatty acids for Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/21961774/",
-        "EPA vs DHA efficacy comparision":
-            "https://pubmed.ncbi.nlm.nih.gov/31336652/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/29494205/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/22332096/"
       },
       "dosageByWeight": {
         "40-60": "500-1000mg",
@@ -47,6 +45,12 @@ class SeedingService {
       ],
       "tldr":
           "Essential fatty acids that improve dopamine receptor density and reduce brain inflammation.",
+      "sideEffects": [
+        "Rare: nausea or loose stools (at high doses >3g)",
+        "Occasional: temporary fishy aftertaste",
+        "Minor circulatory sensitivity in some individuals",
+        "Generally well-tolerated at recommended doses"
+      ],
       "form": "Capsule",
       "translations": {
         "it": {
@@ -69,7 +73,13 @@ class SeedingService {
             "Dosi elevate (>3g) possono aumentare la sensibilità circolatoria"
           ],
           "tldr":
-              "Acidi grassi essenziali che migliorano la densità dei recettori della dopamina e riducono l'infiammazione cerebrale."
+              "Acidi grassi essenziali che migliorano la densità dei recettori della dopamina e riducono l'infiammazione cerebrale.",
+          "sideEffects": [
+            "Raro: nausea o feci molli (a dosi elevate >3g)",
+            "Occasionale: retrogusto di pesce temporaneo",
+            "Lieve sensibilità circolatoria in individui sensibili",
+            "Generalmente ben tollerato alle dosi raccomandate"
+          ]
         },
         "es": {
           "name": "Aceite de Pescado Omega-3",
@@ -91,7 +101,13 @@ class SeedingService {
             "Dosis altas (>3g) pueden aumentar la sensibilidad circulatoria"
           ],
           "tldr":
-              "Ácidos grasos esenciales que mejoran la densidad de los receptores de dopamina y reducen la inflamación cerebral."
+              "Ácidos grasos esenciales que mejoran la densidad de los receptores de dopamina y reducen la inflamación cerebral.",
+          "sideEffects": [
+            "Raro: náuseas o heces blandas (en dosis altas >3g)",
+            "Ocasional: regusto a pescado temporal",
+            "Leve sensibilidad circulatoria en individuos sensibles",
+            "Generalmente bien tolerado a las dosis recomendadas"
+          ]
         }
       }
     },
@@ -117,10 +133,7 @@ class SeedingService {
           "Best taken 30-60 minutes before focus work. Its half-life is ~3 hours, so re-dosing might be needed for long days.",
       "scientificEvidenceRank": 78,
       "studyLinks": {
-        "L-theanine and caffeine synergy":
-            "https://pubmed.ncbi.nlm.nih.gov/18681988/",
-        "Effects on stress and cognition":
-            "https://pubmed.ncbi.nlm.nih.gov/31623400/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/16930802/"
       },
       "dosageByWeight": {
         "40-60": "100-200mg",
@@ -130,6 +143,12 @@ class SeedingService {
       },
       "tldr":
           "Promotes 'calm focus' by increasing alpha brain waves and smoothing out Type A side effects.",
+      "sideEffects": [
+        "Very rare: headaches or dizziness (if taken in excess)",
+        "Rare: nausea or GI discomfort on empty stomach",
+        "Occasional: mild blood pressure reduction",
+        "Generally well-tolerated at recommended doses"
+      ],
       "dosageFrequency": "Take 1-2 times daily as needed for focus",
       "dosageWarnings": [
         "Do not exceed 1200mg daily",
@@ -159,7 +178,13 @@ class SeedingService {
             "Può abbassare la pressione sanguigna in alcuni individui"
           ],
           "tldr":
-              "Promuove la 'concentrazione calma' aumentando le onde alfa e mitigando gli effetti collaterali degli stimolanti."
+              "Promuove la 'concentrazione calma' aumentando le onde alfa e mitigando gli effetti collaterali degli stimolanti.",
+          "sideEffects": [
+            "Molto raro: mal di testa o vertigini (se assunto in eccesso)",
+            "Raro: nausea o fastidio gastrointestinale a stomaco vuoto",
+            "Occasionale: lieve riduzione della pressione sanguigna",
+            "Generalmente ben tollerato alle dosi raccomandate"
+          ]
         },
         "es": {
           "name": "L-Teanina",
@@ -182,7 +207,13 @@ class SeedingService {
             "Puede bajar la presión arterial en algunos individuos"
           ],
           "tldr":
-              "Promueve el 'enfoque tranquilo' aumentando las ondas alfa y mitigando los efectos secundarios de los estimulantes."
+              "Promueve el 'enfoque tranquilo' aumentando las ondas alfa y mitigando los efectos secundarios de los estimulantes.",
+          "sideEffects": [
+            "Muy raro: dolores de cabeza o mareos (si se toma en exceso)",
+            "Raro: náuseas o molestias gastrointestinales con el estómago vacío",
+            "Ocasional: ligera reducción de la presión arterial",
+            "Generalmente bien tolerado a las dosis recomendadas"
+          ]
         }
       }
     },
@@ -325,12 +356,8 @@ class SeedingService {
           "Vitamin D can suppress melatonin production, so it should be taken in the morning with a fatty meal to align with circadian rhythm and maximize absorption (fat-soluble vitamin).",
       "scientificEvidenceRank": 90,
       "studyLinks": {
-        "Vitamin D and focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/29457224/",
-        "Neurosteroid effects of Vitamin D":
-            "https://pubmed.ncbi.nlm.nih.gov/28582844/",
-        "Vitamin D deficiency in Focus children":
-            "https://pubmed.ncbi.nlm.nih.gov/30415156/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/37883450/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/26678915/"
       },
       "dosageByWeight": {
         "40-60": "1000-2000 IU",
@@ -375,7 +402,12 @@ class SeedingService {
             "Assumere con vitamina K2 se il dosaggio è superiore a 4000 UI"
           ],
           "tldr":
-              "Essenziale per regolare dopamina e serotonina; la carenza è fortemente legata alle sfide di concentrazione."
+              "Essenziale per regolare dopamina e serotonina; la carenza è fortemente legata alle sfide di concentrazione.",
+          "sideEffects": [
+            "Raro: nausea o stitichezza a dosi molto alte (>10.000 UI)",
+            "Rischio di ipercalcemia in caso di sovradosaggio (affaticamento, confusione, sete eccessiva)",
+            "Generalmente ben tollerata alle dosi raccomandate"
+          ]
         },
         "es": {
           "name": "Vitamina D3",
@@ -399,7 +431,12 @@ class SeedingService {
             "Tome siempre con vitamina K2 si la dosis es superior a 4000 UI"
           ],
           "tldr":
-              "Neuroesteroide esencial que regula la dopamina y la serotonina; la deficiencia está fuertemente ligada a desafíos de concentración."
+              "Neuroesteroide esencial que regula la dopamina y la serotonina; la deficiencia está fuertemente ligada a desafíos de concentración.",
+          "sideEffects": [
+            "Raro: náuseas o estreñimiento en dosis muy altas (>10.000 UI)",
+            "Riesgo de hipercalcemia en caso de sobredosis (fatiga, confusión, sed excesiva)",
+            "Generalmente bien tolerada a las dosis recomendadas"
+          ]
         }
       }
     },
@@ -427,12 +464,7 @@ class SeedingService {
           "Morning dosing allows cumulative effects to build throughout the day. Effects are delayed (8-12 weeks) but long-lasting. Take with food to enhance absorption of fat-soluble bacosides.",
       "scientificEvidenceRank": 85,
       "studyLinks": {
-        "Bacopa for cognitive enhancement":
-            "https://pubmed.ncbi.nlm.nih.gov/23772955/",
-        "Memory improvement in healthy adults":
-            "https://pubmed.ncbi.nlm.nih.gov/18611150/",
-        "Bacopa and focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/24252493/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/18611150/"
       },
       "dosageByWeight": {
         "40-60": "200-300mg",
@@ -480,7 +512,13 @@ class SeedingService {
             "Può interagire con farmaci per la tiroide"
           ],
           "tldr":
-              "Migliora la memoria e l'apprendimento; richiede 8-12 settimane per i benefici completi."
+              "Migliora la memoria e l'apprendimento; richiede 8-12 settimane per i benefici completi.",
+          "sideEffects": [
+            "Lieve disturbo gastrointestinale o nausea (5-10% degli utenti, di solito si risolve)",
+            "Raro: affaticamento o aumento dei movimenti intestinali",
+            "Molto raro: secchezza delle fauci o affaticamento muscolare",
+            "Generalmente ben tollerato con il cibo"
+          ]
         },
         "es": {
           "name": "Bacopa Monnieri",
@@ -504,7 +542,13 @@ class SeedingService {
             "Puede interactuar con medicamentos para la tiroides"
           ],
           "tldr":
-              "Mejora la memoria y el aprendizaje; requiere 8-12 semanas para beneficios completos."
+              "Mejora la memoria y el aprendizaje; requiere 8-12 semanas para beneficios completos.",
+          "sideEffects": [
+            "Molestias gastrointestinales leves o náuseas (5-10% de los usuarios, suele resolverse)",
+            "Raro: fatiga o aumento de los movimientos intestinales",
+            "Muy raro: boca seca o fatiga muscular",
+            "Generalmente bien tolerado con comida"
+          ]
         }
       }
     },
@@ -532,11 +576,7 @@ class SeedingService {
           "Can cause nausea on an empty stomach. Take with a solid meal, preferably lunch or dinner. Avoid taking with calcium or iron supplements (competes for absorption).",
       "scientificEvidenceRank": 78,
       "studyLinks": {
-        "Zinc sulfate in Focus support":
-            "https://pubmed.ncbi.nlm.nih.gov/14687872/",
-        "Zinc co-support with Type As":
-            "https://pubmed.ncbi.nlm.nih.gov/21309642/",
-        "Zinc deficiency and Focus": "https://pubmed.ncbi.nlm.nih.gov/21545780/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/29773176/"
       },
       "dosageByWeight": {
         "40-60": "10-15mg",
@@ -583,7 +623,13 @@ class SeedingService {
             "Assumere a distanza di 2+ ore da calcio, ferro o antibiotici"
           ],
           "tldr":
-              "Cofattore essenziale per la regolazione della dopamina e la sintesi di melatonina; la carenza è legata a sfide di concentrazione."
+              "Cofattore essenziale per la regolazione della dopamina e la sintesi di melatonina; la carenza è legata a sfide di concentrazione.",
+          "sideEffects": [
+            "Nausea se assunto a stomaco vuoto (comune)",
+            "Sapore metallico in bocca (occasionale)",
+            "Carenza di rame se vengono utilizzate dosi elevate a lungo termine (>50mg per mesi)",
+            "Raro: crampi allo stomaco o diarrea"
+          ]
         },
         "es": {
           "name": "Zinc (Picolinato o Glicinato)",
@@ -607,7 +653,13 @@ class SeedingService {
             "Tomar con 2+ horas de diferencia de calcio, hierro o antibióticos"
           ],
           "tldr":
-              "Cofactor esencial para la regulación de la dopamina y la síntesis de melatonina; la deficiencia está vinculada a desafíos de concentración."
+              "Cofactor esencial para la regulación de la dopamina y la síntesis de melatonina; la deficiencia está vinculada a desafíos de concentración.",
+          "sideEffects": [
+            "Náuseas si se toma con el estómago vacío (común)",
+            "Sabor metálico en la boca (ocasional)",
+            "Deficiencia de cobre si se usan dosis altas a largo plazo (>50mg durante meses)",
+            "Raro: calambres estomacales o diarrea"
+          ]
         }
       }
     },
@@ -635,12 +687,8 @@ class SeedingService {
           "Morning dosing aligns with peak cognitive demands. Takes 4-6 weeks for noticeable cognitive benefits. Split dosing (AM/PM) may improve consistency of effects.",
       "scientificEvidenceRank": 72,
       "studyLinks": {
-        "Ginkgo for focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/11386498/",
-        "Cognitive enhancement in healthy adults":
-            "https://pubmed.ncbi.nlm.nih.gov/20590480/",
-        "Cerebral blood flow effects":
-            "https://pubmed.ncbi.nlm.nih.gov/12605619/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/13678141/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/25114079/"
       },
       "dosageByWeight": {
         "40-60": "120mg",
@@ -688,7 +736,12 @@ class SeedingService {
             "Evitare in caso di disturbi emorragici o storia di convulsioni"
           ],
           "tldr":
-              "Erba antica che aumenta il flusso sanguigno cerebrale e la concentrazione; efficace per il Focus di tipo disattento."
+              "Migliora il flusso sanguigno cerebrale e la funzione esecutiva; richiede diverse settimane per i benefici completi.",
+          "sideEffects": [
+            "Possibili mal di testa o vertigini a dosi elevate",
+            "Disturbi gastrointestinali (raro)",
+            "Riesgo de sanguinamento - evitare con anticoagulanti"
+          ]
         },
         "es": {
           "name": "Ginkgo Biloba",
@@ -712,7 +765,12 @@ class SeedingService {
             "Evite si tiene trastornos hemorrágicos o antecedentes de convulsiones"
           ],
           "tldr":
-              "Hierba antigua que aumenta el flujo sanguíneo cerebral y la concentración; eficaz para el Enfoque de tipo inatento."
+              "Mejora el flujo sanguíneo cerebral y la función ejecutiva; requiere varias semanas para obtener beneficios completos.",
+          "sideEffects": [
+            "Posibles dolores de cabeza o mareos a dosis altas",
+            "Malestar gastrointestinal (raro)",
+            "Riesgo de sangrado: evitar con anticoagulantes"
+          ]
         }
       }
     },
@@ -744,12 +802,7 @@ class SeedingService {
           "Take on empty stomach for best absorption, or with vitamin C to enhance uptake. Avoid taking with calcium, coffee, or tea (reduces absorption). Evening dosing may reduce GI upset.",
       "scientificEvidenceRank": 82,
       "studyLinks": {
-        "Iron deficiency and Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/22664333/",
-        "Iron supplementation effects":
-            "https://pubmed.ncbi.nlm.nih.gov/18275431/",
-        "Ferritin levels in Focus children":
-            "https://pubmed.ncbi.nlm.nih.gov/15687461/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/24152889/"
       },
       "dosageByWeight": {
         "40-60": "10-18mg",
@@ -865,12 +918,7 @@ class SeedingService {
           "Morning dosing aligns with peak cognitive demands. Can be taken with or without food. Effects are cumulative over 4-6 weeks, with acute benefits within 1-2 hours.",
       "scientificEvidenceRank": 82,
       "studyLinks": {
-        "Citicoline for attention and focus":
-            "https://pubmed.ncbi.nlm.nih.gov/26179181/",
-        "CDP-Choline and dopamine release":
-            "https://pubmed.ncbi.nlm.nih.gov/18816480/",
-        "Cognitive enhancement in adolescents":
-            "https://pubmed.ncbi.nlm.nih.gov/25933483/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/33978188/"
       },
       "dosageByWeight": {
         "40-60": "200-250mg",
@@ -983,11 +1031,8 @@ class SeedingService {
           "Morning dosing supports daytime cognitive function. Effects are cumulative over 4-8 weeks. Can be taken with or without food, though absorption may be enhanced with fats.",
       "scientificEvidenceRank": 70,
       "studyLinks": {
-        "Lion's Mane and cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/31881712/",
-        "NGF stimulation effects": "https://pubmed.ncbi.nlm.nih.gov/23510212/",
-        "Neuroprotective properties":
-            "https://pubmed.ncbi.nlm.nih.gov/24266378/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/40276537/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/38004235/"
       },
       "dosageByWeight": {
         "40-60": "500-1000mg",
@@ -1034,11 +1079,11 @@ class SeedingService {
             "Consultare un medico in caso di allergie ai funghi"
           ],
           "tldr":
-              "Fungo medicinale che stimola il fattore di crescita nervoso per una migliore neuroplasticità e funzione cognitiva.",
+              "Fungo nootropico per la salute neuronale e la memoria; stimola il Fattore di Crescita Nervosa (NGF).",
           "sideEffects": [
-            "Raro: lievi disturbi gastrici o eruzioni cutanee (reazione allergica)",
-            "Molto raro: difficoltà respiratoria (sospendere immediatamente)",
-            "Generalmente ben tollerato con minimi effetti collaterali"
+            "Generalmente molto sicuro; effetti collaterali rari",
+            "Possibile lieve disturbo digestivo a dosi elevate",
+            "Possibili reazioni allergiche (prurito) in individui sensibili"
           ]
         },
         "es": {
@@ -1048,7 +1093,7 @@ class SeedingService {
           "mechanismOfAction":
               "Estimula la síntesis del factor de crecimiento nervioso (NGF) y BDNF. Promueve la neurogénesis, la mielinización y la plasticidad sináptica.",
           "detailedBenefits": [
-            "Mejora la neuroplasticidad y la flexibilidad cognitiva",
+            "Migliora la neuroplasticità e la flessibilità cognitiva",
             "Apoya la concentración y la claridad mental sin estimulación",
             "Neuroprotección contra el deterioro cognitivo",
             "Puede mejorar el estado de ánimo y reducir la ansiedad a través de las vías del NGF"
@@ -1064,11 +1109,11 @@ class SeedingService {
             "Consulte a un médico si tiene alergia a los hongos"
           ],
           "tldr":
-              "Hongo medicinal que estimula el factor de crecimiento nervioso para una mejor neuroplasticidad y función cognitiva.",
+              "Hongo nootrópico para la salud neuronal y la memoria; estimula el Factor de Crecimiento Nervioso (NGF).",
           "sideEffects": [
-            "Raro: molestias gastrointestinales leves o erupción cutánea",
-            "Muy raro: dificultad respiratoria (suspender inmediatamente)",
-            "Generalmente bien tolerado con mínimos efectos secundarios"
+            "Generalmente muy seguro; efectos secundarios raros",
+            "Posible malestar digestivo leve a dosis altas",
+            "Posibles reacciones alérgicas (picazón) en individuos sensibles"
           ]
         }
       }
@@ -1097,12 +1142,7 @@ class SeedingService {
           "Can be taken any time of day with food for optimal absorption (fat-soluble). Some prefer evening dosing for cortisol-lowering effects, but morning works well for cognitive support.",
       "scientificEvidenceRank": 80,
       "studyLinks": {
-        "Phosphatidylserine for Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/24424348/",
-        "Cognitive function improvement":
-            "https://pubmed.ncbi.nlm.nih.gov/25933483/",
-        "Cortisol modulation effects":
-            "https://pubmed.ncbi.nlm.nih.gov/18296328/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/20523044/"
       },
       "dosageByWeight": {
         "40-60": "100mg",
@@ -1150,7 +1190,12 @@ class SeedingService {
             "Scegliere PS derivata dal girasole in caso di allergie alla soia"
           ],
           "tldr":
-              "Fosfolipide cerebrale essenziale che migliora la memoria di lavoro, l'attenzione e la resilienza allo stress."
+              "Fosfolipide cerebrale essenziale che migliora la memoria di lavoro, l'attenzione e la resilienza allo stress.",
+          "sideEffects": [
+            "Raro: lievi disturbi gastrici o insonnia (se assunto tardi)",
+            "Molto raro: mal di testa a dosi elevate (>300mg)",
+            "Generalmente ben tollerato con minimi effetti collaterali"
+          ]
         },
         "es": {
           "name": "Fosfatidilserina (PS)",
@@ -1175,7 +1220,12 @@ class SeedingService {
             "Elija PS derivada del girasol si tiene alérgicas a la soja"
           ],
           "tldr":
-              "Fosfolípido cerebral esencial que mejora la memoria de trabajo, la atención y la resistencia al estrés."
+              "Fosfolípido cerebral esencial que mejora la memoria de trabajo, la atención y la resistencia al estrés.",
+          "sideEffects": [
+            "Raro: malestar gastrointestinal leve o insomnio (si se toma tarde)",
+            "Muy raro: dolor de cabeza en dosis altas (>300mg)",
+            "Generalmente bien tolerado con mínimos efectos secundarios"
+          ]
         }
       }
     },
@@ -1203,12 +1253,7 @@ class SeedingService {
           "Morning dosing aligns with peak state periods. Effects build over 6-8 weeks. Can be taken with or without food, though absorption may be enhanced with fats.",
       "scientificEvidenceRank": 68,
       "studyLinks": {
-        "Saffron vs methylphenidate for Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/30895760/",
-        "Saffron for focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/31453656/",
-        "Mood and cognitive effects":
-            "https://pubmed.ncbi.nlm.nih.gov/28527220/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/31309071/"
       },
       "dosageByWeight": {
         "40-60": "15-30mg",
@@ -1318,12 +1363,7 @@ class SeedingService {
           "Morning dosing supports daytime cognitive function. Takes 8-12 weeks for full therapeutic effects. Take with food to enhance absorption and reduce GI upset.",
       "scientificEvidenceRank": 75,
       "studyLinks": {
-        "Pycnogenol for Focus in children":
-            "https://pubmed.ncbi.nlm.nih.gov/16499493/",
-        "Attention and restless energy improvement":
-            "https://pubmed.ncbi.nlm.nih.gov/17063641/",
-        "Antioxidant effects on cognition":
-            "https://pubmed.ncbi.nlm.nih.gov/22214254/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/11996210/"
       },
       "dosageByWeight": {
         "40-60": "40-60mg",
@@ -1345,7 +1385,7 @@ class SeedingService {
         "it": {
           "name": "Picnogenolo (Estratto di Corteccia di Pino)",
           "description":
-              "Potente antiossidante che migliora la circolazione e riduce lo stress ossidativo nel cervello.",
+              "Potente antiossidante che migliora la circolazione e riduce lo stress oxidativo nel cervello.",
           "mechanismOfAction":
               "Antiossidante contenente proantocianidine. Migliora la produzione di ossido nitrico per un migliore flusso sanguigno cerebrale. Modula il metabolismo di dopamina e norepinefrina.",
           "detailedBenefits": [
@@ -1365,7 +1405,12 @@ class SeedingService {
             "Iniziare con metà dose per valutare la tolleranza"
           ],
           "tldr":
-              "Potente antiossidante dalla corteccia di pino che riduce l'irrequietezza e migliora l'attenzione attraverso un migliore flusso sanguigno."
+              "Potente antiossidante dalla corteccia di pino che riduce l'irrequietezza e migliora l'attenzione attraverso un migliore flusso sanguigno.",
+          "sideEffects": [
+            "Raro: lievi disturbi digestivi (assumere con cibo)",
+            "Molto raro: vertigini o irritabilità a dosi elevate",
+            "Generalmente molto sicuro con l'uso a lungo termine"
+          ]
         },
         "es": {
           "name": "Pycnogenol (Extracto de Corteza de Pino)",
@@ -1390,7 +1435,12 @@ class SeedingService {
             "Comience con media dosis para evaluar la tolerancia"
           ],
           "tldr":
-              "Potente antioxidante de la corteza de pino que reduce la inquietud y mejora la atención a través de un mejor flujo sanguíneo."
+              "Potente antioxidante de la corteza de pino que reduce la inquietud y mejora la atención a través de un mejor flujo sanguíneo.",
+          "sideEffects": [
+            "Raro: molestias digestivas leves (tomar con alimentos)",
+            "Muy raro: mareos o irritabilidad a dosis altas",
+            "Generalmente muy seguro con el uso a largo plazo"
+          ]
         }
       },
       "sideEffects": [
@@ -1425,12 +1475,8 @@ class SeedingService {
           "Morning dosing on empty stomach (30 min before food) maximizes survival through stomach acid. Consistent daily use builds healthy microbiome over 4-8 weeks.",
       "scientificEvidenceRank": 65,
       "studyLinks": {
-        "Probiotics and focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/31665527/",
-        "Gut-brain axis in neurodevelopment":
-            "https://pubmed.ncbi.nlm.nih.gov/30356668/",
-        "Microbiome and cognitive wellness":
-            "https://pubmed.ncbi.nlm.nih.gov/31758907/"
+        "Study 1": "https://pubmed.ncbi.nlm.nih.gov/36139496/",
+        "Study 2": "https://pubmed.ncbi.nlm.nih.gov/41211170/"
       },
       "dosageByWeight": {
         "40-60": "10 billion CFU",
@@ -1522,12 +1568,7 @@ class SeedingService {
       "timingRationale":
           "AVOID: Consumption should be eliminated to avoid behavioral flares.",
       "scientificEvidenceRank": 75,
-      "studyLinks": {
-        "Food additives and restless energy (Southampton)":
-            "https://pubmed.ncbi.nlm.nih.gov/17825405/",
-        "Artificial colors and Focus meta-analysis":
-            "https://pubmed.ncbi.nlm.nih.gov/22331014/"
-      },
+      "studyLinks": {"Study Title": "https://pubmed.ncbi.nlm.nih.gov/2060889/"},
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
         "60-80": "0mg (AVOID)",
@@ -1582,7 +1623,7 @@ class SeedingService {
           ],
           "tldr":
               "Colorante rojo sintético con alta evidencia estándar de empeoramiento de la energía inquieta y la impulsividad."
-        },
+        }
       }
     },
     {
@@ -1600,10 +1641,7 @@ class SeedingService {
           "AVOID: Consumption leads to neuro-energetic instability.",
       "scientificEvidenceRank": 70,
       "studyLinks": {
-        "Sugar consumption and Focus behavior":
-            "https://pubmed.ncbi.nlm.nih.gov/21129940/",
-        "Sucrose vs HFCS in cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/16507461/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/41208845/"
       },
       "dosageByWeight": {
         "40-60": "0g (AVOID)",
@@ -1763,9 +1801,7 @@ class SeedingService {
           "Take on empty stomach before demanding tasks for maximum absorption. Competes with other amino acids for transport, so avoid taking with protein meals.",
       "scientificEvidenceRank": 65,
       "studyLinks": {
-        "Tyrosine for cognitive performance":
-            "https://pubmed.ncbi.nlm.nih.gov/25797188/",
-        "Stress and working memory": "https://pubmed.ncbi.nlm.nih.gov/10688423/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/25326727/"
       },
       "dosageByWeight": {
         "40-60": "500-1000mg",
@@ -1871,12 +1907,8 @@ class SeedingService {
           "Morning dosing aligns with peak dopamine synthesis needs. B vitamins are water-soluble and absorbed quickly (30-60 min). Avoid evening dosing as B vitamins can be energizing and may interfere with sleep.",
       "scientificEvidenceRank": 85,
       "studyLinks": {
-        "B vitamins and focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/27521327/",
-        "Methylfolate in Focus with MTHFR polymorphism":
-            "https://pubmed.ncbi.nlm.nih.gov/24284437/",
-        "B6 and neurotransmitter synthesis":
-            "https://pubmed.ncbi.nlm.nih.gov/18950248/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/23738221/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/30479476/"
       },
       "dosageByWeight": {
         "40-60": "25-50mg B-complex",
@@ -1970,12 +2002,8 @@ class SeedingService {
           "Morning or early afternoon dosing recommended. Effects begin within 30 minutes and peak at 1-2 hours. Avoid evening use as it can be mildly stimulating and may interfere with sleep.",
       "scientificEvidenceRank": 76,
       "studyLinks": {
-        "Rhodiola for mental fatigue":
-            "https://pubmed.ncbi.nlm.nih.gov/19016404/",
-        "Adaptogenic effects on stress":
-            "https://pubmed.ncbi.nlm.nih.gov/11410073/",
-        "Cognitive enhancement in fatigue":
-            "https://pubmed.ncbi.nlm.nih.gov/20378318/"
+        "Study 1": "https://pubmed.ncbi.nlm.nih.gov/27013349/",
+        "Study 2": "https://pubmed.ncbi.nlm.nih.gov/37641937/"
       },
       "dosageByWeight": {
         "40-60": "200mg",
@@ -2075,11 +2103,8 @@ class SeedingService {
           "Evening dosing (1-2 hours before bed) is optimal for most people due to calming effects. Some may tolerate morning dosing for daytime anxiety, but it can cause drowsiness. Effects build over 2-4 weeks of consistent use.",
       "scientificEvidenceRank": 82,
       "studyLinks": {
-        "Ashwagandha for stress and anxiety":
-            "https://pubmed.ncbi.nlm.nih.gov/23439798/",
-        "Cortisol reduction in chronic stress":
-            "https://pubmed.ncbi.nlm.nih.gov/31517876/",
-        "Sleep quality improvement": "https://pubmed.ncbi.nlm.nih.gov/31728244/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/34858513/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/37832082/"
       },
       "dosageByWeight": {
         "40-60": "300mg",
@@ -2121,7 +2146,12 @@ class SeedingService {
             "Può interagire con i farmaci per la tiroide"
           ],
           "tldr":
-              "Potente adattogeno che riduce il cortisolo e l'ansia; ideale per l'uso serale per supportare il sonno e il recupero dallo stress."
+              "Potente adattogeno che riduce il cortisolo e l'ansia; ideale per l'uso serale per supportare il sonno e il recupero dallo stress.",
+          "sideEffects": [
+            "Possibile sonnolenza (ideale per l'uso serale)",
+            "Lievi disturbi gastrointestinali in persone sensibili",
+            "Possibile aumento dei livelli di ormoni tiroidei"
+          ]
         },
         "es": {
           "name": "Ashwagandha (KSM-66)",
@@ -2145,7 +2175,12 @@ class SeedingService {
             "El extracto KSM-66® es el más estudiado para funciones cognitivas"
           ],
           "tldr":
-              "Potente adaptógeno que reduce el cortisol y la ansiedad; mejor para uso nocturno para apoyar el sueño y la recuperación del estrés."
+              "Potente adaptógeno que reduce el cortisol y la ansiedad; mejor para uso nocturno para apoyar el sueño y la recuperación del estrés.",
+          "sideEffects": [
+            "Posible somnolencia (ideal para uso nocturno)",
+            "Molestias gastrointestinales leves en personas sensibles",
+            "Posible aumento de los niveles de hormonas tiroideas"
+          ]
         }
       }
     },
@@ -2176,14 +2211,7 @@ class SeedingService {
       "timingRationale":
           "CRITICAL: Vitamin C acidifies urine, which increases amphetamine excretion by up to 50%. Take at least 1 hour BEFORE Type A element, or wait 4+ hours after. Evening dosing (after routine item has worn off) is safest for those on Type As.",
       "scientificEvidenceRank": 88,
-      "studyLinks": {
-        "Vitamin C and dopamine synthesis":
-            "https://pubmed.ncbi.nlm.nih.gov/7002348/",
-        "Urinary pH and amphetamine excretion":
-            "https://pubmed.ncbi.nlm.nih.gov/7361718/",
-        "Antioxidant effects in brain":
-            "https://pubmed.ncbi.nlm.nih.gov/15350981/"
-      },
+      "studyLinks": {"Study Title": "https://pubmed.ncbi.nlm.nih.gov/8108031/"},
       "dosageByWeight": {
         "40-60": "500mg",
         "60-80": "750mg",
@@ -2251,7 +2279,7 @@ class SeedingService {
           "tldr":
               "Esencial para la síntesis de dopamina, pero DEBE programarse con cuidado: acidifica la orina y reduce la eficacia del Tipo A."
         }
-      },
+      }
     },
     {
       "id": "acetyl-l-carnitine",
@@ -2281,12 +2309,8 @@ class SeedingService {
           "Morning dosing on an empty stomach maximizes absorption. Effects are noticeable within 30-60 minutes. Avoid evening dosing as it can be energizing and may interfere with sleep.",
       "scientificEvidenceRank": 78,
       "studyLinks": {
-        "ALCAR for Focus inattentive type":
-            "https://pubmed.ncbi.nlm.nih.gov/17444943/",
-        "ALCAR for cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/28178168/",
-        "Mitochondrial support in aging":
-            "https://pubmed.ncbi.nlm.nih.gov/18065594/"
+        "Study 1": "https://pubmed.ncbi.nlm.nih.gov/10608918/",
+        "Study 2": "https://pubmed.ncbi.nlm.nih.gov/29076953/"
       },
       "dosageByWeight": {
         "40-60": "500-1000mg",
@@ -2328,7 +2352,12 @@ class SeedingService {
             "Iniziare con 500mg per valutare la tolleranza"
           ],
           "tldr":
-              "Supporta l'energia cerebrale e l'acetilcolina; particolarmente ricercato per il sottotipo disattento di Focus."
+              "Supporta l'energia cerebrale e l'acetilcolina; particolarmente ricercato per il sottotipo disattento di Focus.",
+          "sideEffects": [
+            "Occasionale: odore corporeo di pesce a dosi elevate (>2000mg)",
+            "Raro: lievi disturbi gastrici o nausea",
+            "Possibile: aumento dell'energia o irrequietezza"
+          ]
         },
         "es": {
           "name": "Acetil-L-Carnitina (ALCAR)",
@@ -2352,7 +2381,12 @@ class SeedingService {
             "Comience con 500mg para evaluar la tolerancia cognitiva"
           ],
           "tldr":
-              "Apoya la energía cerebral y la acetilcolina; particularmente investigado para el subtipo inatento de Enfoque."
+              "Apoya la energía cerebral y la acetilcolina; particularmente investigado para el subtipo inatento de Enfoque.",
+          "sideEffects": [
+            "Ocasional: olor corporal a pescado a dosis altas (>2000mg)",
+            "Raro: molestias digestivas leves o náuseas",
+            "Posible: aumento de energía o inquietud"
+          ]
         }
       },
       "sideEffects": [
@@ -2413,6 +2447,12 @@ class SeedingService {
       ],
       "tldr":
           "Supports brain energy (ATP) regeneration; improves working memory and mental fatigue resistance.",
+      "sideEffects": [
+        "Mild water retention or weight gain (1-2 lbs)",
+        "Possible stomach cramping or bloating if not taken with enough water",
+        "Very rare: kidney stress only in those with pre-existing kidney disease",
+        "No side effects in most healthy individuals at standard doses"
+      ],
       "translations": {
         "it": {
           "name": "Creatina Monoidrato",
@@ -2429,7 +2469,7 @@ class SeedingService {
           "timingRationale":
               "Tempistica flessibile (saturazione). Assumere quotidianamente la dose di mantenimento.",
           "dosageFrequency":
-              "Una volta al giorno, in qualsiasi momento (la costanza è più importante della tempistica)",
+              "Una o due volte al giorno, in qualsiasi momento (la costanza è più importante della tempistica)",
           "dosageWarnings": [
             "Può causare una lieve ritenzione idrica (0,5-1 kg)",
             "Bere adeguata acqua (la creatina attira acqua nelle cellule)",
@@ -2437,7 +2477,12 @@ class SeedingService {
             "Estremamente sicuro; uno degli integratori più studiati"
           ],
           "tldr":
-              "Supporta l'energia cerebrale (ATP); migliora la memoria di lavoro e riduce l'affaticamento mentale."
+              "Supporta l'energia cerebrale (ATP); migliora la memoria di lavoro e riduce l'affaticamento mentale.",
+          "sideEffects": [
+            "Lieve ritenzione idrica o aumento di peso (0,5-1 kg)",
+            "Possibili crampi addominali se non assunta con sufficiente acqua",
+            "Generalmente nessun effetto collaterale in individui sani"
+          ]
         },
         "es": {
           "name": "Creatina Monohidrato",
@@ -2462,7 +2507,12 @@ class SeedingService {
             "Extremamente seguro; uno de los suplementos más investigados"
           ],
           "tldr":
-              "Apoya la energía cerebral (ATP); mejora la memoria de trabajo y reduce la fatiga mental."
+              "Apoya la energía cerebral (ATP); mejora la memoria de trabajo y reduce la fatiga mental.",
+          "sideEffects": [
+            "Leve retención de líquidos o aumento de peso (0,5-1 kg)",
+            "Posibles calambres estomacales si no se toma con suficiente agua",
+            "Generalmente sin efectos secundarios en individuos sanos"
+          ]
         }
       }
     },
@@ -2490,11 +2540,7 @@ class SeedingService {
           "Flexible timing - can be taken with meals for better absorption. Fat-soluble, so taking with dietary fat enhances uptake. Divided doses (morning + evening) may maintain more stable blood levels. Effects are cumulative over weeks, not immediate.",
       "scientificEvidenceRank": 74,
       "studyLinks": {
-        "Curcumin and BDNF": "https://pubmed.ncbi.nlm.nih.gov/23832433/",
-        "Anti-inflammatory effects in brain":
-            "https://pubmed.ncbi.nlm.nih.gov/17569207/",
-        "Bioavailability enhancement with piperine":
-            "https://pubmed.ncbi.nlm.nih.gov/9619120/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/35935936/"
       },
       "dosageByWeight": {
         "40-60": "500mg",
@@ -2588,12 +2634,8 @@ class SeedingService {
           "Morning dosing provides focus benefits throughout the day. Contains caffeine (unless decaffeinated), so avoid evening use. Take with food to prevent nausea. Effects peak 1-2 hours after ingestion. Decaffeinated extracts can be taken later in the day if needed.",
       "scientificEvidenceRank": 77,
       "studyLinks": {
-        "EGCG and dopamine metabolism":
-            "https://pubmed.ncbi.nlm.nih.gov/18296328/",
-        "Green tea for cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/28056735/",
-        "COMT inhibition and attention":
-            "https://pubmed.ncbi.nlm.nih.gov/21129394/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/26093535/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/27748193/"
       },
       "dosageByWeight": {
         "40-60": "250mg EGCG",
@@ -2797,11 +2839,7 @@ class SeedingService {
           "Morning dosing recommended due to 24+ hour half-life. Effects are cumulative and long-lasting. Cycling (5 days on, 2 days off) prevents tolerance and allows acetylcholinesterase levels to normalize. Take with or without food. Avoid daily use without breaks.",
       "scientificEvidenceRank": 71,
       "studyLinks": {
-        "Huperzine A for cognitive enhancement":
-            "https://pubmed.ncbi.nlm.nih.gov/23374481/",
-        "Acetylcholinesterase inhibition and memory":
-            "https://pubmed.ncbi.nlm.nih.gov/16007238/",
-        "Neuroprotective effects": "https://pubmed.ncbi.nlm.nih.gov/18611150/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/24086396/"
       },
       "dosageByWeight": {
         "40-60": "50mcg",
@@ -2867,7 +2905,7 @@ class SeedingService {
           "tldr":
               "Potente inhibidor de la acetilcolinesterasa con una vida media de más de 24 horas; mejora la memoria y la atención, pero requiere ciclos."
         }
-      },
+      }
     },
     {
       "id": "vinpocetine",
@@ -2892,14 +2930,7 @@ class SeedingService {
       "timingRationale":
           "Morning or early afternoon dosing with food maximizes absorption. Effects are noticeable within 1-2 hours. Avoid evening dosing as increased alertness can interfere with sleep.",
       "scientificEvidenceRank": 63,
-      "studyLinks": {
-        "Vinpocetine and cerebral blood flow":
-            "https://pubmed.ncbi.nlm.nih.gov/12404671/",
-        "Cognitive enhancement effects":
-            "https://pubmed.ncbi.nlm.nih.gov/12895685/",
-        "Neuroprotective mechanisms":
-            "https://pubmed.ncbi.nlm.nih.gov/16389715/"
-      },
+      "studyLinks": {"Study Title": "https://pubmed.ncbi.nlm.nih.gov/3899677/"},
       "dosageByWeight": {
         "40-60": "10mg",
         "60-80": "15mg",
@@ -2964,7 +2995,7 @@ class SeedingService {
           "tldr":
               "Mejora el flujo sanguíneo cerebral y la utilización de glucosa para una mejor claridad mental."
         }
-      },
+      }
     },
     {
       "id": "mucuna-pruriens",
@@ -2990,11 +3021,7 @@ class SeedingService {
           "Morning dosing on empty stomach maximizes L-DOPA absorption (protein competes for absorption). Effects peak within 1-2 hours. CRITICAL: Cycle use (3-5 days on, 2-3 days off) to prevent receptor downregulation and dopamine depletion. Not for daily long-term use.",
       "scientificEvidenceRank": 69,
       "studyLinks": {
-        "Mucuna pruriens and dopamine":
-            "https://pubmed.ncbi.nlm.nih.gov/15478206/",
-        "L-DOPA for mood and motivation":
-            "https://pubmed.ncbi.nlm.nih.gov/24931003/",
-        "Neuroprotective effects": "https://pubmed.ncbi.nlm.nih.gov/23675006/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/15548480/"
       },
       "dosageByWeight": {
         "40-60": "300mg (15% L-DOPA extract)",
@@ -3196,12 +3223,7 @@ class SeedingService {
           "Morning dosing is recommended to support daytime focus and energy. Effects are cumulative but acute improvements in attention are often noticed within 30-90 minutes. Avoid evening use as it can be mildly stimulating and may interfere with sleep.",
       "scientificEvidenceRank": 74,
       "studyLinks": {
-        "Ginseng and cognitive performance in Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/22082268/",
-        "Neurotransmitter modulation mechanisms":
-            "https://pubmed.ncbi.nlm.nih.gov/23439798/",
-        "Systematic review of cognitive effects":
-            "https://pubmed.ncbi.nlm.nih.gov/20123133/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/29983607/"
       },
       "dosageByWeight": {
         "40-60": "200mg",
@@ -3293,12 +3315,7 @@ class SeedingService {
           "Morning dosing supports daytime cognitive function. Effects are cumulative over 8-12 weeks. Take with food to enhance absorption and reduce GI upset.",
       "scientificEvidenceRank": 73,
       "studyLinks": {
-        "Pine bark extract for Focus in children":
-            "https://pubmed.ncbi.nlm.nih.gov/16499493/",
-        "Attention and restless energy improvement":
-            "https://pubmed.ncbi.nlm.nih.gov/17063641/",
-        "Antioxidant effects on cognition":
-            "https://pubmed.ncbi.nlm.nih.gov/22214254/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/38757130/"
       },
       "dosageByWeight": {
         "40-60": "40-60mg",
@@ -3395,10 +3412,7 @@ class SeedingService {
           "Can be taken any time of day. Take with a meal containing some fat for optimal absorption, as it is a lipid-soluble nutrient.",
       "scientificEvidenceRank": 65,
       "studyLinks": {
-        "Choline and cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/22071706/",
-        "Phospholipids in brain health":
-            "https://pubmed.ncbi.nlm.nih.gov/30606018/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/39632393/"
       },
       "dosageByWeight": {
         "40-60": "600-1200mg",
@@ -3489,10 +3503,7 @@ class SeedingService {
           "Water-soluble vitamins are easily excreted, but Vitamin E is fat-soluble and should be taken with a meal containing some fat for optimal absorption. Morning or evening use is generally fine.",
       "scientificEvidenceRank": 60,
       "studyLinks": {
-        "Vitamin E and cognitive performance":
-            "https://pubmed.ncbi.nlm.nih.gov/24337199/",
-        "Antioxidant protection in brain":
-            "https://pubmed.ncbi.nlm.nih.gov/11264871/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/10218145/"
       },
       "dosageByWeight": {
         "40-60": "100-200 IU",
@@ -3585,12 +3596,7 @@ class SeedingService {
           "Morning dosing with a fatty meal maximizes absorption (CoQ10 is fat-soluble). Supports daytime energy production when cognitive demands are highest. Avoid evening dosing as it may be energizing.",
       "scientificEvidenceRank": 68,
       "studyLinks": {
-        "CoQ10 and cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/31806905/",
-        "Mitochondrial dysfunction in Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/28093713/",
-        "Ubiquinol vs ubiquinone bioavailability":
-            "https://pubmed.ncbi.nlm.nih.gov/17287847/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/37971634/"
       },
       "dosageByWeight": {
         "40-60": "50-100mg",
@@ -3777,12 +3783,7 @@ class SeedingService {
           "Morning dosing if used. However, NOT RECOMMENDED for people with Focus due to extensive drug compatibilitys with Type A elements and other common supports. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
       "scientificEvidenceRank": 65,
       "studyLinks": {
-        "St. John's Wort for depression":
-            "https://pubmed.ncbi.nlm.nih.gov/18843608/",
-        "Drug compatibilitys and CYP450 induction":
-            "https://pubmed.ncbi.nlm.nih.gov/15106147/",
-        "Contrainelements and safety":
-            "https://pubmed.ncbi.nlm.nih.gov/24931003/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/28064110/"
       },
       "dosageByWeight": {
         "40-60": "300mg",
@@ -3878,12 +3879,8 @@ class SeedingService {
           "Evening only, 30-120 minutes before bed. Highly variable onset time between individuals. Can cause significant morning grogginess or 'hangover' effect. NOT for daytime use. Effects may build over 2-4 weeks of consistent use. Avoid if you need to wake up alert.",
       "scientificEvidenceRank": 58,
       "studyLinks": {
-        "Valerian for sleep quality":
-            "https://pubmed.ncbi.nlm.nih.gov/16335332/",
-        "GABA modulation mechanism":
-            "https://pubmed.ncbi.nlm.nih.gov/15650394/",
-        "Safety and drug compatibilitys":
-            "https://pubmed.ncbi.nlm.nih.gov/17145239/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/33086877/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/37899385/"
       },
       "dosageByWeight": {
         "40-60": "300mg",
@@ -3976,11 +3973,7 @@ class SeedingService {
           "Evening dosing preferred due to relaxation effects. Lower doses can be used during day for anxiety without sedation, but evening use is safer. Effects begin within 30-60 minutes. CRITICAL: Use only noble kava varieties (not tudei kava) and avoid long-term daily use due to liver toxicity risk.",
       "scientificEvidenceRank": 64,
       "studyLinks": {
-        "Kava for anxiety disorders":
-            "https://pubmed.ncbi.nlm.nih.gov/23235473/",
-        "Hepatotoxicity concerns and safety":
-            "https://pubmed.ncbi.nlm.nih.gov/17406128/",
-        "Mechanism of action": "https://pubmed.ncbi.nlm.nih.gov/15639154/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/19430766/"
       },
       "dosageByWeight": {
         "40-60": "150-200mg kavalactones",
@@ -4073,14 +4066,7 @@ class SeedingService {
       "timingRationale":
           "Morning dosing if used, as it can be stimulating and cause insomnia. However, NOT RECOMMENDED due to limited evidence and potential for side effects. Effects are highly variable and unpredictable. Some people experience overstimulation, headaches, or irritability.",
       "scientificEvidenceRank": 42,
-      "studyLinks": {
-        "DMAE for cognitive function (limited evidence)":
-            "https://pubmed.ncbi.nlm.nih.gov/3526687/",
-        "Safety concerns and side effects":
-            "https://pubmed.ncbi.nlm.nih.gov/6153094/",
-        "Mechanism of action (theoretical)":
-            "https://pubmed.ncbi.nlm.nih.gov/7301036/"
-      },
+      "studyLinks": {"Study Title": "https://pubmed.ncbi.nlm.nih.gov/3173167/"},
       "dosageByWeight": {
         "40-60": "100mg",
         "60-80": "150-200mg",
@@ -4174,12 +4160,7 @@ class SeedingService {
           "Morning use is best for alertness. Avoid use after 2:00 PM to prevent interference with sleep architecture (Caffeine has a ~5-6 hour half-life). Effects peak within 30-60 minutes. Use carefully with Type A items to avoid tachycardia or excessive anxiety.",
       "scientificEvidenceRank": 82,
       "studyLinks": {
-        "Caffeine and L-Theanine synergy":
-            "https://pubmed.ncbi.nlm.nih.gov/18681988/",
-        "Caffeine effects on focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/21437156/",
-        "Adenosine and dopamine compatibilitys":
-            "https://pubmed.ncbi.nlm.nih.gov/11283318/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/PMC10566444/"
       },
       "dosageByWeight": {
         "40-60": "50mg + 100mg L-Theanine",
@@ -4272,12 +4253,8 @@ class SeedingService {
           "Take 30-60 minutes before desired bedtime. Dim lights after taking to support natural production. Avoid 'screen time' (blue light) which suppresses melatonin. For circadian rhythm resetting, take at a consistent time every evening. Not for daytime use.",
       "scientificEvidenceRank": 89,
       "studyLinks": {
-        "Melatonin for sleep in Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/30635432/",
-        "Circadian rhythm and Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/30107544/",
-        "Low dose vs high dose melatonin":
-            "https://pubmed.ncbi.nlm.nih.gov/11600521/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/38888087/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/23691095/"
       },
       "dosageByWeight": {
         "40-60": "0.3-0.5mg",
@@ -4370,12 +4347,8 @@ class SeedingService {
           "Evening dosing is optimal because serotonin supports melatonin production and can have a calming effect. Effects are often noticed within 1-2 hours for sleep. Dose should be 50-100mg; higher doses increase risk of nausea and side effects without much added benefit for most. Take with a small carb snack for best absorption.",
       "scientificEvidenceRank": 72,
       "studyLinks": {
-        "5-HTP for depression and mood":
-            "https://pubmed.ncbi.nlm.nih.gov/15146197/",
-        "Serotonin and impulse control":
-            "https://pubmed.ncbi.nlm.nih.gov/20561551/",
-        "Safety and compatibility with SSRIs":
-            "https://pubmed.ncbi.nlm.nih.gov/22129819/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/9727088/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/33375373/"
       },
       "dosageByWeight": {
         "40-60": "50mg",
@@ -4470,14 +4443,7 @@ class SeedingService {
       "timingRationale":
           "Take in the morning with food to minimize potential GI upset. If taking Zinc, separate doses or use a combined formula that maintains the 15:1 Zinc-to-Copper ratio. Copper absorption is inhibited by high doses of Vitamin C; separate these by at least 2 hours.",
       "scientificEvidenceRank": 61,
-      "studyLinks": {
-        "Copper/Zinc ratios in Focus populations":
-            "https://pubmed.ncbi.nlm.nih.gov/21350130/",
-        "Copper role in dopamine metabolism":
-            "https://pubmed.ncbi.nlm.nih.gov/11252112/",
-        "Mineral competition for absorption":
-            "https://pubmed.ncbi.nlm.nih.gov/11110860/"
-      },
+      "studyLinks": {"Study Title": "https://pubmed.ncbi.nlm.nih.gov/2921068/"},
       "dosageByWeight": {
         "40-60": "0.5-1mg",
         "60-80": "1mg",
@@ -4572,12 +4538,7 @@ class SeedingService {
           "Take in the morning with food to support daytime neurotransmitter synthesis. Avoid evening use as high doses can cause vivid dreams or insomnia in sensitive individuals. Do not exceed 100mg total daily intake from all sources combined (Tolerable Upper Intake Level).",
       "scientificEvidenceRank": 76,
       "studyLinks": {
-        "Vitamin B6 and neurotransmitter synthesis":
-            "https://pubmed.ncbi.nlm.nih.gov/20126403/",
-        "B6 toxicity and peripheral neuropathy":
-            "https://pubmed.ncbi.nlm.nih.gov/22116704/",
-        "B6 and Magnesium synergy for Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/16846314/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/35851507/"
       },
       "dosageByWeight": {
         "40-60": "10-25mg",
@@ -4883,10 +4844,7 @@ class SeedingService {
           "AVOID: Should be removed from Focus nutritional plans.",
       "scientificEvidenceRank": 68,
       "studyLinks": {
-        "Blue 1 and blood-brain barrier":
-            "https://pubmed.ncbi.nlm.nih.gov/15531024/",
-        "FDA report on food dyes and behavior":
-            "https://www.fda.gov/media/100000/download"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/38364492/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -4958,8 +4916,7 @@ class SeedingService {
       "timingRationale": "AVOID: Exclusion from diet is highly recommended.",
       "scientificEvidenceRank": 67,
       "studyLinks": {
-        "Indigo Carmine and behavioral toxicity":
-            "https://pubmed.ncbi.nlm.nih.gov/6582312/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/39260596/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -5032,8 +4989,8 @@ class SeedingService {
           "AVOID: Removing from diet reduces cumulative behavioral load.",
       "scientificEvidenceRank": 71,
       "studyLinks": {
-        "Southampton Study (Lancet)":
-            "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+        "Study Title":
+            "No PubMed studies found on Carmoisine (Azorubine / E122) related to ADHD, cognition, or brain health."
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -5106,8 +5063,7 @@ class SeedingService {
           "AVOID: Elimination from diet reduces behavioral interference.",
       "scientificEvidenceRank": 69,
       "studyLinks": {
-        "EFSA reassessment of Quinoline Yellow":
-            "https://www.efsa.europa.eu/en/efsajournal/pub/1329"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/25726175/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -5180,9 +5136,8 @@ class SeedingService {
           "AVOID: Highly recommended for elimination in Focus users.",
       "scientificEvidenceRank": 74,
       "studyLinks": {
-        "Meta-analysis of food dyes and behavior":
-            "https://pubmed.ncbi.nlm.nih.gov/22331014/",
-        "Southampton Study Results": "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/27303385/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/39129647/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -5407,10 +5362,8 @@ class SeedingService {
           "AVOID: May cause acute behavioral flares in sensitive people.",
       "scientificEvidenceRank": 52,
       "studyLinks": {
-        "MSG and behavioral hyperactivity":
-            "https://pubmed.ncbi.nlm.nih.gov/15531024/",
-        "Excitotoxicity in sensitive populations":
-            "https://pubmed.ncbi.nlm.nih.gov/22331014/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/38432355/",
+        "Study Title2": "https://pubmed.ncbi.nlm.nih.gov/30273089/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -5483,8 +5436,8 @@ class SeedingService {
           "AVOID: Preservative with recognized neuro-inflammatory potential.",
       "scientificEvidenceRank": 60,
       "studyLinks": {
-        "BHT and neuro-inflammatory markers":
-            "https://pubmed.ncbi.nlm.nih.gov/15531024/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/12396675/",
+        "Study Title 2": "https://pubmed.ncbi.nlm.nih.gov/37751543/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -5557,8 +5510,8 @@ class SeedingService {
           "AVOID: Consumption is linked to behavioral disruption.",
       "scientificEvidenceRank": 66,
       "studyLinks": {
-        "Sodium benzoate and behavior (Southampton)":
-            "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/24250932/",
+        "Study Title 2": "https://pubmed.ncbi.nlm.nih.gov/33371618/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",
@@ -5631,10 +5584,7 @@ class SeedingService {
           "AVOID: Glycemic stability is critical for Focus management.",
       "scientificEvidenceRank": 63,
       "studyLinks": {
-        "Refined sugar and Focus behaviors":
-            "https://pubmed.ncbi.nlm.nih.gov/21129940/",
-        "Dopamine receptor downregulation":
-            "https://pubmed.ncbi.nlm.nih.gov/16507461/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/36119103/"
       },
       "dosageByWeight": {
         "40-60": "0g (AVOID)",
@@ -5706,10 +5656,7 @@ class SeedingService {
       "timingRationale":
           "AVOID: Interferes with the foundation of neuronal signaling.",
       "scientificEvidenceRank": 76,
-      "studyLinks": {
-        "Trans fats and neuronal membrane fluidity":
-            "https://pubmed.ncbi.nlm.nih.gov/21129940/"
-      },
+      "studyLinks": {"Study Title": "https://pubmed.ncbi.nlm.nih.gov/8179036/"},
       "dosageByWeight": {
         "40-60": "0g (AVOID)",
         "60-80": "0g (AVOID)",
@@ -5781,8 +5728,7 @@ class SeedingService {
           "AVOID: Consumption disrupts neurodevelopment and cognitive recovery.",
       "scientificEvidenceRank": 80,
       "studyLinks": {
-        "Alcohol and dopamine dysregulation":
-            "https://pubmed.ncbi.nlm.nih.gov/28198205/"
+        "Study Title": "https://pubmed.ncbi.nlm.nih.gov/12202373/"
       },
       "dosageByWeight": {
         "40-60": "0mg (AVOID)",

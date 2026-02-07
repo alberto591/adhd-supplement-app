@@ -17,6 +17,9 @@ class User {
   final List<String>
       activeEntitlements; // IDs of purchased entitlements (e.g. 'stack_builder')
 
+  /// Convenience getter that returns displayName
+  String? get name => displayName;
+
   const User({
     required this.id,
     required this.email,

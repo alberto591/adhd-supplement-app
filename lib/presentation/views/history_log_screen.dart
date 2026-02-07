@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../application/view_models/history_log_view_model.dart';
@@ -36,8 +37,8 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
     return Scaffold(
       backgroundColor: isDark ? bgDark : bgLight,
       appBar: AppBar(
-        title: const Text('History',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        title: Text(AppLocalizations.of(context)!.history,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
         centerTitle: true,
         backgroundColor: isDark
             ? bgDark.withValues(alpha: 0.9)
@@ -70,14 +71,14 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                 showDialog<void>(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: const Text('Resolve All?'),
-                    content: const Text(
-                      'This will mark all missed reminders as acknowledged. You can still view them in your history.',
+                    title: Text(AppLocalizations.of(context)!.resolveAllTitle),
+                    content: Text(
+                      AppLocalizations.of(context)!.resolveAllContent,
                     ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(ctx),
-                        child: const Text('Cancel'),
+                        child: Text(AppLocalizations.of(context)!.cancel),
                       ),
                       TextButton(
                         onPressed: () async {
@@ -85,13 +86,14 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                           await viewModel.resolveAllMissed();
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('All items resolved'),
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)!
+                                  .allItemsResolved),
                               backgroundColor: AppColors.primaryGold,
                             ),
                           );
                         },
-                        child: const Text('Resolve'),
+                        child: Text(AppLocalizations.of(context)!.resolve),
                       ),
                     ],
                   ),
@@ -106,8 +108,9 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: const Text('Resolve All',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+              child: Text(AppLocalizations.of(context)!.resolveAll,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 12)),
             ),
           ),
         ],
@@ -118,22 +121,22 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: Row(
               children: [
-                _buildFilterChip('All',
+                _buildFilterChip(AppLocalizations.of(context)!.all,
                     isSelected: _selectedFilter == 'All',
                     primaryGreen: primaryGreen,
                     isDark: isDark),
                 const SizedBox(width: 8),
-                _buildFilterChip('Missed',
+                _buildFilterChip(AppLocalizations.of(context)!.missed,
                     isSelected: _selectedFilter == 'Missed',
                     primaryGreen: primaryGreen,
                     isDark: isDark),
                 const SizedBox(width: 8),
-                _buildFilterChip('Taken',
+                _buildFilterChip(AppLocalizations.of(context)!.taken,
                     isSelected: _selectedFilter == 'Taken',
                     primaryGreen: primaryGreen,
                     isDark: isDark),
                 const SizedBox(width: 8),
-                _buildFilterChip('Dismissed',
+                _buildFilterChip(AppLocalizations.of(context)!.dismissed,
                     isSelected: _selectedFilter == 'Dismissed',
                     primaryGreen: primaryGreen,
                     isDark: isDark),
@@ -153,7 +156,7 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
               if (viewModel.recentLogs.isEmpty && viewModel.error == null) {
                 return Center(
                   child: Text(
-                    'No history yet',
+                    AppLocalizations.of(context)!.noHistory,
                     style: TextStyle(
                       color: isDark ? Colors.grey[400] : Colors.grey[600],
                       fontSize: 16,
@@ -188,9 +191,9 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                           log.date.day == yesterday.day;
 
                       String header = isToday
-                          ? 'Today'
+                          ? AppLocalizations.of(context)!.today
                           : (isYesterday
-                              ? 'Yesterday'
+                              ? AppLocalizations.of(context)!.yesterday
                               : '${log.date.month}/${log.date.day}');
 
                       if (log.entries.isEmpty) return const SizedBox.shrink();
@@ -234,7 +237,8 @@ class _HistoryLogScreenState extends State<HistoryLogScreen> {
                             // Since LogEntry only has ID, we might need a way to look up name
                             // For now, we'll display the ID or generic text until we fetch Supplement details
                             // Optimization: ViewModel should probably join this data or we just show simplified view
-                            title = 'Supplement Check-in';
+                            title =
+                                AppLocalizations.of(context)!.supplementCheckin;
 
                             return _buildTimelineItem(
                               status: status,

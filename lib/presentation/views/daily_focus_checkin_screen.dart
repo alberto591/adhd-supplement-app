@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'dart:async';
 import '../../application/view_models/focus_checkin_view_model.dart';
 import '../../application/view_models/theme_view_model.dart';
@@ -38,8 +39,8 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
       final success = await viewModel.submitCheckIn(isAutoSave: true);
       if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Draft saved'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.draftSaved),
             backgroundColor: AppColors.primaryGold,
           ),
         );
@@ -104,7 +105,7 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
                 child: Column(
                   children: [
                     Text(
-                      'State of Body & Mind',
+                      AppLocalizations.of(context)!.stateOfBodyAndMind,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lexend(
                         color: isDark
@@ -117,7 +118,7 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'How are you feeling at this moment?',
+                      AppLocalizations.of(context)!.howAreYouFeeling,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lexend(
                         color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -137,19 +138,20 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
                       children: [
                         _buildSlider(
                           context,
-                          label: 'Focus: 😫 to 🤩',
+                          label: AppLocalizations.of(context)!.focusSliderLabel,
                           value: viewModel.focusLevel,
                           onChanged: (value) => viewModel.setFocusLevel(value),
                         ),
                         _buildSlider(
                           context,
-                          label: 'Energy: 🥱 to ⚡',
+                          label:
+                              AppLocalizations.of(context)!.energySliderLabel,
                           value: viewModel.energyLevel,
                           onChanged: (value) => viewModel.setEnergyLevel(value),
                         ),
                         _buildSlider(
                           context,
-                          label: 'Mood: 😢 to 😊',
+                          label: AppLocalizations.of(context)!.moodSliderLabel,
                           value: viewModel.moodLevel,
                           onChanged: (value) => viewModel.setMoodLevel(value),
                         ),
@@ -167,7 +169,7 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Notes (Optional)',
+                      AppLocalizations.of(context)!.notesOptional,
                       style: GoogleFonts.lexend(
                         color: isDark
                             ? Colors.white
@@ -193,7 +195,8 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
                         controller: _notesController,
                         maxLines: 3,
                         decoration: InputDecoration(
-                          hintText: 'How is your day going?',
+                          hintText:
+                              AppLocalizations.of(context)!.howIsYourDayGoing,
                           hintStyle: GoogleFonts.lexend(
                             color: isDark ? Colors.grey[500] : Colors.grey[400],
                             fontSize: 14,
@@ -244,7 +247,7 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
                                     color: Colors.white,
                                   )
                                 : Text(
-                                    'Save Check-in',
+                                    AppLocalizations.of(context)!.saveCheckin,
                                     style: GoogleFonts.lexend(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -257,7 +260,7 @@ class _DailyFocusCheckinScreenState extends State<DailyFocusCheckinScreen>
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: Text(
-                            'Skip for now',
+                            AppLocalizations.of(context)!.skipForNow,
                             style: GoogleFonts.lexend(
                               color:
                                   isDark ? Colors.grey[400] : Colors.grey[600],

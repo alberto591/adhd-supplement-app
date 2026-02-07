@@ -188,7 +188,8 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                                 color: iconColor, size: 48),
                             const SizedBox(height: 16),
                             Text(
-                              viewModel.error!,
+                              AppLocalizations.of(context)!
+                                  .failedToLoadDailyStack(viewModel.error!),
                               style: TextStyle(color: textColor),
                               textAlign: TextAlign.center,
                             ),
@@ -697,7 +698,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      '• ${items.length} ${items.length == 1 ? 'item' : 'items'}',
+                      '• ${l10n.itemCount(items.length)}',
                       style: TextStyle(
                         color: secondaryTextColor,
                         fontSize: 11,
@@ -788,7 +789,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                 title: supplement?.name ?? 'Loading...',
                 dosage:
                     stackItem.customDosage ?? supplement?.defaultDosage ?? '',
-                form: supplement?.form ?? 'Pill',
+                form: supplement?.form ?? AppLocalizations.of(context)!.pill,
                 hasStudies: supplement?.studyLinks.isNotEmpty ?? false,
                 icon: SupplementUIHelper.getIconForSupplement(
                     supplement?.name ?? '', supplement?.category ?? ''),
@@ -798,13 +799,15 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                 statusText: isTaken
                     ? AppLocalizations.of(context)!.taken
                     : stackItem.scheduledTime ??
-                        _viewModel.getItemTimeStatus(stackItem),
+                        _buildTimeStatus(context,
+                            _viewModel.getItemTimeStatusData(stackItem)),
                 onTake: () => _viewModel.markSupplementTaken(
                     stackItem.supplementId,
                     slot: slot.toLowerCase()),
                 onMoreOptions: () => _showItemOptions(
                     context,
-                    supplement?.name ?? 'Supplement',
+                    supplement?.name ??
+                        AppLocalizations.of(context)!.supplement,
                     stackItem.supplementId,
                     slot),
                 onTap: () {
@@ -828,10 +831,42 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
     final slot = upcoming['slot'] as String;
     final items = upcoming['items'] as List<StackItem>;
 
+    final timeLabelKey = viewModel.getSlotTimeLabelKey(slot);
+    final timeLabelValue = viewModel.getSlotTargetTime(slot);
+    final l10n = AppLocalizations.of(context)!;
+
+    String timeLabel;
+    if (timeLabelKey == 'beforeTime') {
+      timeLabel = l10n.beforeTime(timeLabelValue);
+    } else {
+      timeLabel = l10n.beforeBed;
+    }
+
+    String title;
+    switch (slot.toLowerCase()) {
+      case 'morning':
+        title = l10n.morning;
+        break;
+      case 'afternoon':
+        title = l10n.afternoon;
+        break;
+      case 'evening':
+        title = l10n.evening;
+        break;
+      case 'night':
+        title = l10n.night;
+        break;
+      default:
+        title = upcoming['title'] as String;
+    }
+
+    String subtitle =
+        slot.toLowerCase() == 'morning' ? l10n.startYourDay : l10n.stayOnTrack;
+
     return UpNextCard(
-      title: upcoming['title'] as String,
-      subtitle: upcoming['subtitle'] as String,
-      timeLabel: upcoming['timeLabel'] as String,
+      title: title,
+      subtitle: subtitle,
+      timeLabel: timeLabel,
       itemCount: items.length,
       imagePath: upcoming['imagePath'] as String,
       slot: slot,
@@ -841,5 +876,24 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
         setState(() => _showCelebration = true);
       },
     );
+  }
+
+  String? _buildTimeStatus(BuildContext context, Map<String, dynamic>? data) {
+    if (data == null) return null;
+    final l10n = AppLocalizations.of(context)!;
+    final key = data['key'] as String;
+
+    switch (key) {
+      case 'overdue':
+        return l10n.overdue;
+      case 'overdueBy':
+        return l10n.overdueBy(data['minutes'] as int);
+      case 'inTimeH':
+        return l10n.inTimeH(data['hours'] as int, data['minutes'] as int);
+      case 'inTimeM':
+        return l10n.inTimeM(data['minutes'] as int);
+      default:
+        return null;
+    }
   }
 }

@@ -196,4 +196,65 @@ Do not include markdown formatting like ```json.
       throw Exception('Perplexity Recommendations Error: $e');
     }
   }
+
+  Future<Map<String, String>> searchRelevantStudies({
+    required String supplementName,
+    int count = 2,
+  }) async {
+    final systemPrompt = '''
+You are a scientific research assistant specializing in neuro-chemistry and evidence-based supplements.
+Find exactly $count HIGH-QUALITY scientific studies or clinical trials from PubMed (NIH) or reputable journals for the supplement "$supplementName".
+The studies MUST be directly about "$supplementName" and its effects on cognition, ADHD, focus, or neuro-chemistry.
+
+Output strictly JSON in this format:
+{
+  "Short, Descriptive Study Title (e.g., L-Tyrosine Effects on Executive Function)": "https://pubmed.ncbi.nlm.nih.gov/STUDY_ID/"
+}
+Do not include markdown code blocks. Just the raw JSON.
+Ensure links are REAL and ACTIVE.
+''';
+
+    try {
+      final response = await _client.post(
+        Uri.parse(baseUrl),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'model': 'sonar-reasoning-pro',
+          'messages': [
+            {'role': 'system', 'content': systemPrompt},
+            {
+              'role': 'user',
+              'content':
+                  'Find $count studies for $supplementName with titles and links.'
+            }
+          ],
+          'max_tokens': 2000,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final content = data['choices'][0]['message']['content'] as String;
+        final cleanJson =
+            content.replaceAll('```json', '').replaceAll('```', '').trim();
+
+        try {
+          final Map<String, dynamic> parsed =
+              jsonDecode(cleanJson) as Map<String, dynamic>;
+          return parsed.map((k, v) => MapEntry(k, v.toString()));
+        } catch (e) {
+          throw Exception('Failed to parse studies JSON: $content');
+        }
+      } else {
+        throw Exception(
+            'Failed to load studies: ${response.statusCode} - ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Perplexity Studies Research Error: $e');
+    }
+  }
 }

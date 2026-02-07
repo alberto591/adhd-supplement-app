@@ -70,6 +70,8 @@ class SupplementDetail extends StatelessWidget {
         'sideEffects', supplement.sideEffects, locale);
     final localizedDosageWarnings = supplement.getLocalizedListField(
         'dosageWarnings', supplement.dosageWarnings ?? [], locale);
+    final localizedStudyLinks = supplement.getLocalizedMapField(
+        'studyLinks', supplement.studyLinks, locale);
 
     return ChangeNotifierProvider<LibraryViewModel>.value(
       value: libraryViewModel,
@@ -135,7 +137,10 @@ class SupplementDetail extends StatelessWidget {
                                 supplement.status == 'avoid'
                                     ? Icons.block
                                     : SupplementUIHelper.getIconForSupplement(
-                                        supplement.name, supplement.category),
+                                        supplement?.name ??
+                                            AppLocalizations.of(context)!
+                                                .supplement,
+                                        supplement.category),
                                 size: 48,
                                 color: supplement.status == 'avoid'
                                     ? const Color(0xFFEF4444)
@@ -190,7 +195,9 @@ class SupplementDetail extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    localizedName,
+                                    localizedName.isEmpty
+                                        ? AppLocalizations.of(context)!.loading
+                                        : localizedName,
                                     style: GoogleFonts.lexend(
                                       color:
                                           isDark ? Colors.white : Colors.black,
@@ -380,7 +387,7 @@ class SupplementDetail extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: supplement.studyLinks.entries
+                                    children: localizedStudyLinks.entries
                                         .map((entry) => Padding(
                                               padding: const EdgeInsets.only(
                                                   bottom: 12),
@@ -1063,25 +1070,25 @@ class _ScientificEvidenceBadge extends StatelessWidget {
     Color color;
     IconData icon;
 
+    final l10n = AppLocalizations.of(context)!;
+
     if (rank! >= 90) {
-      label = 'Class A Evidence';
+      label = l10n.evidenceClassA;
       color = AppColors.primaryGold;
       icon = Icons.verified;
     } else if (rank! >= 70) {
-      label = 'Class B Evidence';
+      label = l10n.evidenceClassB;
       color = Colors.lightBlueAccent;
       icon = Icons.science;
     } else if (rank! >= 40) {
-      label = 'Class C Evidence';
+      label = l10n.evidenceClassC;
       color = Colors.orangeAccent;
       icon = Icons.biotech;
     } else {
-      label = 'User Reported';
+      label = l10n.evidenceUserReported;
       color = Colors.grey;
       icon = Icons.person_outline;
     }
-
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1172,7 +1179,7 @@ class _SafetyWarningCard extends StatelessWidget {
               const Icon(Icons.medical_information, color: Color(0xFFEF4444)),
               const SizedBox(width: 12),
               Text(
-                'Safety & Dosage Warnings', // Could be localized later if needed or passed in
+                AppLocalizations.of(context)!.safetyDosageWarnings,
                 style: GoogleFonts.lexend(
                   color: const Color(0xFFEF4444),
                   fontSize: 16,

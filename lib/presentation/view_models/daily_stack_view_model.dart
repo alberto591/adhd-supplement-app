@@ -58,9 +58,9 @@ class DailyStackViewModel extends ChangeNotifier {
     return {
       'slot': slot,
       'title': _getSlotTitle(slot),
-      'subtitle': getSlotSubtitle(slot),
+      'subtitleKey': getSlotSubtitleKey(slot),
       'imagePath': getSlotImagePath(slot),
-      'timeLabel': getSlotTimeLabel(slot),
+      'timeLabelKey': getSlotTimeLabelKey(slot),
       'items': items,
     };
   }
@@ -137,8 +137,8 @@ class DailyStackViewModel extends ChangeNotifier {
     }
   }
 
-  String getSlotSubtitle(String slot) {
-    return slot.toLowerCase() == 'morning' ? 'Start your day' : 'Stay on track';
+  String getSlotSubtitleKey(String slot) {
+    return slot.toLowerCase() == 'morning' ? 'startYourDay' : 'stayOnTrack';
   }
 
   String getSlotImagePath(String slot) {
@@ -156,16 +156,19 @@ class DailyStackViewModel extends ChangeNotifier {
     }
   }
 
-  String getSlotTimeLabel(String slot) {
-    if (slot.toLowerCase() == 'night') return 'Before Bed';
+  String getSlotTimeLabelKey(String slot) {
+    if (slot.toLowerCase() == 'night') return 'beforeBed';
+    return 'beforeTime';
+  }
 
+  String getSlotTargetTime(String slot) {
     try {
       final time = _settingsRepository.getSlotTime(slot.toLowerCase());
       final hour =
           time.hour == 0 ? 12 : (time.hour > 12 ? time.hour - 12 : time.hour);
       final amPm = time.hour >= 12 ? 'PM' : 'AM';
       final minute = time.minute.toString().padLeft(2, '0');
-      return 'Before $hour:$minute $amPm';
+      return '$hour:$minute $amPm';
     } catch (_) {
       return '';
     }
@@ -251,8 +254,14 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   /// Get count of completed stacks vs total
+  String get progressTextKey {
+    if (_stacks.isEmpty) return 'noStacksConfigured';
+    return 'stacksCompleted';
+  }
+
+  /// Numeric progress text (e.g., "2/4")
   String get progressText {
-    if (_stacks.isEmpty) return 'No stacks configured';
+    if (_stacks.isEmpty) return '0/0';
 
     int completedStacks = 0;
     for (final stack in _stacks) {
@@ -270,7 +279,7 @@ class DailyStackViewModel extends ChangeNotifier {
       }
     }
 
-    return '$completedStacks/${_stacks.length} Stacks Completed';
+    return '$completedStacks/${_stacks.length}';
   }
 
   /// Get the target time for a specific slot
@@ -311,7 +320,7 @@ class DailyStackViewModel extends ChangeNotifier {
     _error = null;
 
     if (_userId.isEmpty) {
-      _error = 'User not authenticated';
+      _error = 'userNotAuthenticated';
       _setLoading(false);
       return;
     }
@@ -713,11 +722,10 @@ class DailyStackViewModel extends ChangeNotifier {
   }
 
   /// Get formatted time status string for a given item
-  String? getItemTimeStatus(StackItem item) {
+  Map<String, dynamic>? getItemTimeStatusData(StackItem item) {
     final supplement = _supplementCache[item.supplementId];
     String? timeStr = item.scheduledTime;
 
-    // If no specific scheduled time, use the slot default
     if (timeStr == null && supplement?.timeOfDay != null) {
       final slot = supplement!.timeOfDay!.toLowerCase();
       String? normalizedSlot;
@@ -749,14 +757,18 @@ class DailyStackViewModel extends ChangeNotifier {
 
       if (diff.isNegative) {
         if (diff.abs().inHours > 4) {
-          return 'Overdue';
+          return {'key': 'overdue'};
         }
-        return 'Overdue by ${diff.abs().inMinutes}m';
+        return {'key': 'overdueBy', 'minutes': diff.abs().inMinutes};
       } else {
         if (diff.inHours > 0) {
-          return 'in ${diff.inHours}h ${diff.inMinutes % 60}m';
+          return {
+            'key': 'inTimeH',
+            'hours': diff.inHours,
+            'minutes': diff.inMinutes % 60
+          };
         }
-        return 'in ${diff.inMinutes}m';
+        return {'key': 'inTimeM', 'minutes': diff.inMinutes};
       }
     } catch (_) {
       return null;

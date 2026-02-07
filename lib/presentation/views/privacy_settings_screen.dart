@@ -43,7 +43,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Privacy & Security',
+          AppLocalizations.of(context)!.privacySecurity,
           style: TextStyle(
             color: isDark ? Colors.white : const Color(0xFF111318),
             fontSize: 18,
@@ -67,15 +67,16 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
         return SingleChildScrollView(
           child: Column(
             children: [
-              _buildSectionHeader('Your Activity Data', isDark),
+              _buildSectionHeader(
+                  AppLocalizations.of(context)!.yourActivityData, isDark),
               _buildSettingsContainer(
                 context,
                 children: [
                   _buildToggleTile(
                     context,
-                    title: 'Local Storage Only',
+                    title: AppLocalizations.of(context)!.localStorageOnly,
                     subtitle:
-                        'Keep all supplement logs on this device. Disables cloud sync to our servers.',
+                        AppLocalizations.of(context)!.localStorageOnlyDesc,
                     value: viewModel.localStorageOnly,
                     showInfoIcon: true,
                     onChanged: (val) => viewModel.setLocalStorageOnly(val),
@@ -83,16 +84,15 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                   ),
                   _buildToggleTile(
                     context,
-                    title: 'Share Analytics',
-                    subtitle:
-                        'Help us improve by sharing anonymous usage stats.',
+                    title: AppLocalizations.of(context)!.shareAnalytics,
+                    subtitle: AppLocalizations.of(context)!.shareAnalyticsDesc,
                     value: viewModel.analyticsEnabled,
                     onChanged: (val) => viewModel.setAnalyticsEnabled(val),
                   ),
                   _buildToggleTile(
                     context,
-                    title: 'Crash Reporting',
-                    subtitle: 'Send automatic reports when the app crashes.',
+                    title: AppLocalizations.of(context)!.crashReporting,
+                    subtitle: AppLocalizations.of(context)!.crashReportingDesc,
                     value: viewModel.crashReportingEnabled,
                     onChanged: (val) => viewModel.setCrashReportingEnabled(val),
                   ),
@@ -100,14 +100,15 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                     context,
                     icon: Icons.download,
                     iconColor: primaryBlue,
-                    title: 'Download My Data',
-                    subtitle: 'Export history as CSV or PDF',
+                    title: AppLocalizations.of(context)!.downloadMyData,
+                    subtitle: AppLocalizations.of(context)!.downloadMyDataDesc,
                     onTap: () async {
                       await viewModel.downloadData();
                       if (!context.mounted) return;
                       // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Data export generated (Simulation)')));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)!
+                              .dataExportGenerated)));
                     },
                     isLast: true,
                   ),
@@ -134,7 +135,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
               // ),
 
               // Data Control Section
-              _buildSectionHeader('Data Control', isDark),
+              _buildSectionHeader(
+                  AppLocalizations.of(context)!.dataControl, isDark),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 padding: const EdgeInsets.all(16),
@@ -152,7 +154,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Deleting your data is permanent. This will erase all your supplement tracking history, routine schedules, and profile information from both this device and any synced backups.',
+                      AppLocalizations.of(context)!.dataControlDesc,
                       style: TextStyle(
                         color: isDark
                             ? const Color(0xFF94A3B8)
@@ -169,13 +171,16 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                           showDialog<void>(
                               context: context,
                               builder: (ctx) => AlertDialog(
-                                    title: const Text('Clear All History?'),
-                                    content: const Text(
-                                        'This will delete all your supplement logs but keep your account and stacks active.'),
+                                    title: Text(AppLocalizations.of(context)!
+                                        .clearHistoryTitle),
+                                    content: Text(AppLocalizations.of(context)!
+                                        .clearHistoryConfirm),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(ctx),
-                                        child: const Text('Cancel'),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .cancel),
                                       ),
                                       TextButton(
                                         onPressed: () async {
@@ -183,22 +188,26 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                                           await viewModel.clearAllHealthData();
                                           if (!context.mounted) return;
                                           ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      'Health history cleared.')));
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(AppLocalizations
+                                                          .of(context)!
+                                                      .healthHistoryCleared)));
                                         },
-                                        child: const Text('CLEAR',
-                                            style:
-                                                TextStyle(color: Colors.red)),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .clear
+                                                .toUpperCase(),
+                                            style: const TextStyle(
+                                                color: Colors.red)),
                                       ),
                                     ],
                                   ));
                         },
                         icon: const Icon(Icons.history_toggle_off,
                             color: Color(0xFFDC2626)),
-                        label: const Text(
-                          'Clear Supplement History',
-                          style: TextStyle(
+                        label: Text(
+                          AppLocalizations.of(context)!.clearHistory,
+                          style: const TextStyle(
                             color: Color(0xFFDC2626),
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -229,7 +238,9 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(ctx),
-                                        child: const Text('Cancel'),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .cancel),
                                       ),
                                       TextButton(
                                         onPressed: () async {
@@ -275,8 +286,9 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                       context,
                       icon: Icons.alternate_email,
                       iconColor: const Color(0xFFEE8C2B),
-                      title: 'Request Data Removal (Manual)',
-                      subtitle: 'Official web form for deletion requests',
+                      title: AppLocalizations.of(context)!.requestDataRemoval,
+                      subtitle:
+                          AppLocalizations.of(context)!.requestDataRemovalDesc,
                       onTap: () => locator<UrlService>()
                           .launchUri(AppConfig.dataDeletionUrl),
                     ),
@@ -292,7 +304,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                   const Icon(Icons.verified_user, color: primaryBlue, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    'Your privacy is our priority',
+                    AppLocalizations.of(context)!.privacyPriority,
                     style: TextStyle(
                       color: isDark
                           ? const Color(0xFF94A3B8)
@@ -311,7 +323,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                   child: Text.rich(
                     TextSpan(
                       text:
-                          'We use end-to-end encryption for all transmitted data. ',
+                          '${AppLocalizations.of(context)!.encryptionNotice} ',
                       style: TextStyle(
                         color: isDark
                             ? const Color(0xFF94A3B8)
@@ -320,7 +332,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                       ),
                       children: [
                         TextSpan(
-                          text: 'Tap to read our Privacy Policy.',
+                          text: AppLocalizations.of(context)!
+                              .tapToReadPrivacyPolicy,
                           style: const TextStyle(
                             color: primaryBlue,
                             decoration: TextDecoration.underline,
@@ -332,7 +345,8 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                         ),
                         const TextSpan(text: '\n\n'),
                         TextSpan(
-                          text: 'Request Account & Data Deletion',
+                          text: AppLocalizations.of(context)!
+                              .requestAccountDeletion,
                           style: const TextStyle(
                             color: primaryBlue,
                             decoration: TextDecoration.underline,
@@ -562,26 +576,31 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Privacy Policy'),
+        title: Text(AppLocalizations.of(context)!.privacyPolicy),
         content: SizedBox(
           width: double.maxFinite,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildPolicySection('1. Data Collection',
-                    'We collect only the data necessary to provide our services. This includes your supplement logs, state checks, and basic profile information. All health data is stored locally on your device unless you enable cloud sync.'),
-                _buildPolicySection('2. Data Usage',
-                    'Your data is used solely to provide you with insights and track your progress. We do not sell your personal data to third parties.'),
-                _buildPolicySection('3. Security',
-                    'We use industry-standard encryption to protect your data. If you choose to sync your data, it is encrypted in transit and at rest.'),
-                _buildPolicySection('4. User Rights',
-                    'You have the right to access, correct, or delete your data at any time. You can delete your account and all associated data from the "Data Control" section of this screen.'),
-                _buildPolicySection('5. Updates',
-                    'We may update this policy from time to time. We will notify you of any significant changes.'),
+                _buildPolicySection(
+                    AppLocalizations.of(context)!.policyCollectionTitle,
+                    AppLocalizations.of(context)!.policyCollectionContent),
+                _buildPolicySection(
+                    AppLocalizations.of(context)!.policyUsageTitle,
+                    AppLocalizations.of(context)!.policyUsageContent),
+                _buildPolicySection(
+                    AppLocalizations.of(context)!.policySecurityTitle,
+                    AppLocalizations.of(context)!.policySecurityContent),
+                _buildPolicySection(
+                    AppLocalizations.of(context)!.policyRightsTitle,
+                    AppLocalizations.of(context)!.policyRightsContent),
+                _buildPolicySection(
+                    AppLocalizations.of(context)!.policyUpdatesTitle,
+                    AppLocalizations.of(context)!.policyUpdatesContent),
                 const SizedBox(height: 16),
-                const Text('Last Updated: January 2026',
-                    style: TextStyle(color: Colors.grey, fontSize: 12)),
+                Text(AppLocalizations.of(context)!.lastUpdated,
+                    style: const TextStyle(color: Colors.grey, fontSize: 12)),
               ],
             ),
           ),
@@ -589,7 +608,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(AppLocalizations.of(context)!.close),
           ),
         ],
       ),

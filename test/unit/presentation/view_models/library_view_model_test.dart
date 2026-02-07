@@ -235,6 +235,16 @@ class FakePerplexityService implements PerplexityService {
       [
         {'name': 'AI Choice 1', 'reason': 'Reason 1'}
       ];
+
+  @override
+  Future<Map<String, String>> searchRelevantStudies({
+    required String supplementName,
+    int count = 2,
+  }) async =>
+      {
+        'Test Study 1': 'https://pubmed.ncbi.nlm.nih.gov/12345678/',
+        'Test Study 2': 'https://pubmed.ncbi.nlm.nih.gov/87654321/',
+      };
 }
 
 // FakeAuthProvider removed - utilizing StubAuthProvider

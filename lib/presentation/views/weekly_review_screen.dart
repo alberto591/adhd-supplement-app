@@ -74,7 +74,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            'Weekly Review',
+                            AppLocalizations.of(context)!.weeklyReview,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lexend(
                               color: isDark ? Colors.white : Colors.black,
@@ -93,8 +93,10 @@ class WeeklyReviewScreen extends StatelessWidget {
                               builder: (context) => AlertDialog(
                                 title: Text(
                                     AppLocalizations.of(context)!.aiAnalysis),
-                                content: Text(
-                                    'Your consistency has improved by ${viewModel.focusImprovement.toStringAsFixed(1)}% compared to last week. Great job maintaining your streak!'),
+                                content: Text(AppLocalizations.of(context)!
+                                    .improvementMessage(viewModel
+                                        .focusImprovement
+                                        .toStringAsFixed(1))),
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
@@ -153,7 +155,8 @@ class WeeklyReviewScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Weekly Tip',
+                                          AppLocalizations.of(context)!
+                                              .weeklyTip,
                                           style: GoogleFonts.lexend(
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.bold,
@@ -162,7 +165,10 @@ class WeeklyReviewScreen extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          'Taking your supplement with a high-protein breakfast improved your focus score by ${viewModel.focusImprovement.toStringAsFixed(0)}% this week. Try to keep this habit!',
+                                          AppLocalizations.of(context)!
+                                              .tipMessage(viewModel
+                                                  .focusImprovement
+                                                  .toStringAsFixed(0)),
                                           style: GoogleFonts.lexend(
                                             color: isDark
                                                 ? Colors.grey[400]
@@ -217,8 +223,9 @@ class WeeklyReviewScreen extends StatelessWidget {
                               builder: (context) => AlertDialog(
                                 title: Text(AppLocalizations.of(context)!
                                     .shareWeeklyProgress),
-                                content: const Text(
-                                  'Share your weekly supplement progress with your advisor, accountability partner, or social media.',
+                                content: Text(
+                                  AppLocalizations.of(context)!
+                                      .shareWeeklyProgressContent,
                                 ),
                                 actions: [
                                   TextButton(
@@ -262,7 +269,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                               const SizedBox(width: 8),
                               Text(
                                 // Removed const due to google_fonts usage check if needed
-                                'Share Progress',
+                                AppLocalizations.of(context)!.shareProgress,
                                 style: GoogleFonts.lexend(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -276,7 +283,7 @@ class WeeklyReviewScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () => Navigator.pop(context),
                         child: Text(
-                          'Dismiss',
+                          AppLocalizations.of(context)!.dismiss,
                           style: GoogleFonts.lexend(
                             color: isDark ? Colors.grey[500] : Colors.grey[500],
                             fontSize: 14,

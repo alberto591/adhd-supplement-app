@@ -13,7 +13,8 @@ import '../../domain/entities/user.dart';
 import '../view_models/daily_stack_view_model.dart';
 import '../../config/locator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show File;
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../application/view_models/supplement_view_model.dart';
 import '../../infrastructure/services/url_service.dart';
@@ -63,7 +64,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -74,7 +75,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 if (context.mounted) Navigator.pop(context);
               }
             },
-            child: const Text('Save'),
+            child: Text(AppLocalizations.of(context)!.save),
           ),
         ],
       ),
@@ -85,9 +86,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     if (user == null) return;
 
     final types = [
-      'Dynamic Mix (Combined)',
-      'Flow Seeker (Inattentive)',
-      'High Energy (Hyperactive)',
+      AppLocalizations.of(context)!.dynamicMixCombined,
+      AppLocalizations.of(context)!.flowSeekerInattentive,
+      AppLocalizations.of(context)!.highEnergyHyperactive,
     ];
 
     String? selectedType = user.focusStyle ?? types[0];
@@ -115,7 +116,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -179,7 +180,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to pick image: $e')),
+          SnackBar(
+              content: Text(AppLocalizations.of(context)!
+                  .failedToPickImage(e.toString()))),
         );
       }
     }
@@ -320,7 +323,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     final lastDate = suppVM.lastDownloadTime;
                                     final dateStr = lastDate != null
                                         ? DateFormat.yMMMd().format(lastDate)
-                                        : 'Unknown date';
+                                        : AppLocalizations.of(context)!
+                                            .unknownDate;
 
                                     final scaffoldMessenger =
                                         ScaffoldMessenger.of(context);
@@ -377,17 +381,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               themeVM.updateHapticEnabled(value),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 2),
-                    _SettingsTile(
-                      icon: Icons.delete_forever,
-                      iconColor: Colors.red,
-                      title: AppLocalizations.of(context)!.deleteAccount,
-                      subtitle: AppLocalizations.of(context)!.deleteAccountSub,
-                      trailing:
-                          const Icon(Icons.chevron_right, color: Colors.grey),
-                      onTap: () => Navigator.pushNamed(
-                          context, AppRouter.privacySettings),
                     ),
                   ],
                 ),
@@ -459,18 +452,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           size: 18, color: Colors.grey),
                       onTap: () => _showDisclaimer(context),
                     ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
+                      icon: Icons.delete_forever,
+                      iconColor: Colors.red,
+                      title: AppLocalizations.of(context)!.deleteAccount,
+                      subtitle: AppLocalizations.of(context)!.deleteAccountSub,
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () => Navigator.pushNamed(
+                          context, AppRouter.privacySettings),
+                    ),
                   ],
                 ),
 
                 // Developer Tools Section (Always visible for testing)
-                const _SectionHeader(title: 'Developer Tools'),
+                _SectionHeader(
+                    title: AppLocalizations.of(context)!.developerTools),
                 _SettingsGroup(
                   children: [
                     _SettingsTile(
                       icon: Icons.monitor_heart,
                       iconColor: AppColors.primaryGold,
-                      title: 'System Health',
-                      subtitle: 'Check app diagnostics',
+                      title: AppLocalizations.of(context)!.systemHealth,
+                      subtitle:
+                          AppLocalizations.of(context)!.checkAppDiagnostics,
                       trailing:
                           const Icon(Icons.chevron_right, color: Colors.grey),
                       onTap: () =>
@@ -480,8 +486,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.science,
                       iconColor: AppColors.primaryGold,
-                      title: 'Science Update',
-                      subtitle: 'Preview update screen',
+                      title: AppLocalizations.of(context)!.scienceUpdate,
+                      subtitle:
+                          AppLocalizations.of(context)!.previewUpdateScreen,
                       trailing:
                           const Icon(Icons.chevron_right, color: Colors.grey),
                       onTap: () =>
@@ -491,8 +498,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     _SettingsTile(
                       icon: Icons.code,
                       iconColor: AppColors.primaryGold,
-                      title: 'Logic Triggers',
-                      subtitle: 'Backend spec handoff',
+                      title: AppLocalizations.of(context)!.logicTriggers,
+                      subtitle:
+                          AppLocalizations.of(context)!.backendSpecHandoff,
                       trailing:
                           const Icon(Icons.chevron_right, color: Colors.grey),
                       onTap: () => Navigator.pushNamed(
@@ -516,7 +524,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context, false),
-                                child: const Text('Cancel'),
+                                child:
+                                    Text(AppLocalizations.of(context)!.cancel),
                               ),
                               TextButton(
                                 onPressed: () => Navigator.pop(context, true),
@@ -542,7 +551,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Logout failed: $e')),
+                                SnackBar(
+                                    content: Text(AppLocalizations.of(context)!
+                                        .logoutFailed(e.toString()))),
                               );
                             }
                           }
@@ -652,10 +663,14 @@ class _ProfileHeader extends StatelessWidget {
 
     ImageProvider imageProvider;
     if (user?.photoUrl != null && user!.photoUrl!.isNotEmpty) {
-      if (user!.photoUrl!.startsWith('http')) {
+      if (!kIsWeb && !user!.photoUrl!.startsWith('http')) {
+        imageProvider = FileImage(File(user!.photoUrl!));
+      } else if (user!.photoUrl!.startsWith('http')) {
         imageProvider = CachedNetworkImageProvider(user!.photoUrl!);
       } else {
-        imageProvider = FileImage(File(user!.photoUrl!));
+        // Fallback for web if it's a local path string that can't be used as a File
+        imageProvider = const CachedNetworkImageProvider(
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuB5gYlym23jgk2a_v5Fh5rRkrkydUuieWk7SGwkOayy1tukLNjnNpYc60TsDJH-QRDfkGs_sqjxJn3RKm9qLDXlrzZ8YQgZyae2Nq3piImh4cnCFAjiO8tA19NnNTy3esINBJWaRHwNBsBheE1rfec1HXmgCuB0lPDXik60RTBUDe1k0bAyMEObi_cFZvZqpMIiETZPU_8Y7LSm8qmh5Co2-6bJXFhUfbUmwO9T8OpG-6M7hj-inN6dyrN2ZVcQY49JvsafSotJ6jw');
       }
     } else {
       imageProvider = const CachedNetworkImageProvider(

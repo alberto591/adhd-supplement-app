@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class FocusComparisonChart extends StatelessWidget {
   const FocusComparisonChart({super.key});
@@ -15,7 +16,7 @@ class FocusComparisonChart extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            'Focus Comparison',
+            AppLocalizations.of(context)!.focusComparison,
             style: GoogleFonts.lexend(
               color: isDark ? Colors.white : const Color(0xFF0F172A),
               fontSize: 18,
@@ -51,7 +52,7 @@ class FocusComparisonChart extends StatelessWidget {
                     children: [
                       // Last Week Bar
                       _buildBar(context,
-                          label: 'LAST WEEK',
+                          label: AppLocalizations.of(context)!.lastWeekCaps,
                           score: 72,
                           heightFactor: 0.65,
                           isCurrent: false,
@@ -59,7 +60,7 @@ class FocusComparisonChart extends StatelessWidget {
 
                       // This Week Bar
                       _buildBar(context,
-                          label: 'THIS WEEK',
+                          label: AppLocalizations.of(context)!.thisWeekCaps,
                           score: 83,
                           heightFactor: 0.85,
                           isCurrent: true,
@@ -83,7 +84,7 @@ class FocusComparisonChart extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Peak Productivity',
+                          AppLocalizations.of(context)!.peakProductivity,
                           style: GoogleFonts.lexend(
                             color: isDark ? Colors.grey[400] : Colors.grey[500],
                             fontSize: 12,
@@ -105,7 +106,7 @@ class FocusComparisonChart extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Weekly Score',
+                          AppLocalizations.of(context)!.weeklyScore,
                           style: GoogleFonts.lexend(
                             color: isDark ? Colors.grey[400] : Colors.grey[500],
                             fontSize: 12,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../../domain/services/routine_compatibility_service.dart';
 import '../../domain/entities/routine_element.dart';
 
@@ -18,7 +19,8 @@ class RoutineStatusAlert extends StatelessWidget {
     if (warnings.isEmpty) return const SizedBox.shrink();
 
     // Determine highest severity for overall styling
-    final highestSeverity = RoutineCompatibilityService.getHighestSeverity(warnings);
+    final highestSeverity =
+        RoutineCompatibilityService.getHighestSeverity(warnings);
     final alertColor = _getSeverityColor(highestSeverity);
 
     return Container(
@@ -47,7 +49,7 @@ class RoutineStatusAlert extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  _getSeverityLabel(highestSeverity),
+                  _getSeverityLabel(context, highestSeverity),
                   style: GoogleFonts.lexend(
                     color: alertColor,
                     fontSize: 14,
@@ -71,7 +73,8 @@ class RoutineStatusAlert extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'With ${warning.elementName}:',
+                            AppLocalizations.of(context)!
+                                .withPrefix(warning.elementName),
                             style: GoogleFonts.lexend(
                               color: isDark ? Colors.white : Colors.black,
                               fontSize: 16,
@@ -119,7 +122,7 @@ class RoutineStatusAlert extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Always consult your advisors before adding new elements to your routine.',
+                        AppLocalizations.of(context)!.routineConsultAdvisor,
                         style: GoogleFonts.lexend(
                           color: Colors.grey,
                           fontSize: 11,
@@ -163,16 +166,17 @@ class RoutineStatusAlert extends StatelessWidget {
     }
   }
 
-  String _getSeverityLabel(GuidanceLevel? severity) {
+  String _getSeverityLabel(BuildContext context, GuidanceLevel? severity) {
+    final l10n = AppLocalizations.of(context)!;
     switch (severity) {
       case GuidanceLevel.danger:
-        return 'PRIORITY CONSIDERATION';
+        return l10n.priorityConsideration;
       case GuidanceLevel.warning:
-        return 'ROUTINE ALERT';
+        return l10n.routineAlert;
       case GuidanceLevel.caution:
-        return 'TIMING CONSIDERATION';
+        return l10n.timingConsideration;
       default:
-        return 'ROUTINE OPTIMIZED';
+        return l10n.routineOptimized;
     }
   }
 }

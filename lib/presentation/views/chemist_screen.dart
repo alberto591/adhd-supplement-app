@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../../application/view_models/chemist_view_model.dart';
 import '../../config/locator.dart';
 import '../theme/app_theme.dart';
@@ -34,7 +35,7 @@ class _ChemistScreenState extends State<ChemistScreen> {
           isDark ? const Color(0xFF0A0E14) : const Color(0xFFF8FAFC),
       appBar: AppBar(
         title: Text(
-          'AI CHEMIST',
+          AppLocalizations.of(context)!.aiAlchemistTitle,
           style: GoogleFonts.lexend(
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
@@ -81,14 +82,14 @@ class _ChemistScreenState extends State<ChemistScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Alchemist',
+                        AppLocalizations.of(context)!.alchemist,
                         style: GoogleFonts.lexend(
                           fontWeight: FontWeight.bold,
                           color: isDark ? Colors.white : Colors.black,
                         ),
                       ),
                       Text(
-                        'Bio-optimization Specialist',
+                        AppLocalizations.of(context)!.bioOptimizationSpecialist,
                         style: GoogleFonts.lexend(
                           fontSize: 11,
                           color: isDark ? Colors.grey : Colors.grey[700],
@@ -188,7 +189,8 @@ class _ChemistScreenState extends State<ChemistScreen> {
               style: GoogleFonts.lexend(
                   color: isDark ? Colors.white : Colors.black),
               decoration: InputDecoration(
-                hintText: 'Ask about routine optimizations...',
+                hintText:
+                    AppLocalizations.of(context)!.askRoutineOptimizationHint,
                 hintStyle: GoogleFonts.lexend(color: Colors.grey, fontSize: 13),
                 filled: true,
                 fillColor:
@@ -226,7 +228,7 @@ class _ChemistScreenState extends State<ChemistScreen> {
               size: 64, color: AppColors.primaryGold.withValues(alpha: 0.5)),
           const SizedBox(height: 24),
           Text(
-            'Ask Alchemist',
+            AppLocalizations.of(context)!.askAlchemist,
             style: GoogleFonts.lexend(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -237,7 +239,7 @@ class _ChemistScreenState extends State<ChemistScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Text(
-              'Get technical deep-dives on supplement mechanisms, bioavailability, and neuro-chemistry.',
+              AppLocalizations.of(context)!.chemistEmptyStateDesc,
               textAlign: TextAlign.center,
               style: GoogleFonts.lexend(
                 fontSize: 13,
@@ -246,8 +248,8 @@ class _ChemistScreenState extends State<ChemistScreen> {
             ),
           ),
           const SizedBox(height: 32),
-          _buildQuickAction('How does Caffeine pass the BBB?'),
-          _buildQuickAction('Magnesium Glycinate vs Citrate?'),
+          _buildQuickAction(AppLocalizations.of(context)!.exampleQuestion1),
+          _buildQuickAction(AppLocalizations.of(context)!.exampleQuestion2),
         ],
       ),
     );

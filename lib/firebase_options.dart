@@ -44,12 +44,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'dummy-api-key',
-    appId: '1:123456789:web:dummy-app-id',
-    messagingSenderId: '123456789',
+    apiKey: 'AIzaSyBSt8F583o14dEh_tnoHLXRmQm51NIylsg',
+    appId: '1:93466359350:web:d0b7ae656bae8ceef20a97',
+    messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
     authDomain: 'adhd-supplement-app.firebaseapp.com',
     storageBucket: 'adhd-supplement-app.firebasestorage.app',
+    measurementId: 'G-6JKJP43S09',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
