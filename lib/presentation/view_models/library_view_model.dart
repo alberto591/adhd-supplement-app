@@ -170,11 +170,40 @@ class LibraryViewModel extends ChangeNotifier {
           await _perplexityService.getPersonalizedRecommendations(
         goals: effectiveGoals,
       );
-      AppLogger.d('Fetched ${recommendations.length} AI Recommendations');
-      _aiRecommendations = recommendations;
+      AppLogger.d('Fetched ${recommendations.length} AI Recommendations (Raw)');
+
+      // Filter recommendations against our database to ensure we have citations
+      final validatedRecommendations = <Map<String, String>>[];
+      for (final rec in recommendations) {
+        final recName = rec['name']?.toLowerCase() ?? '';
+
+        try {
+          // Find matching supplement
+          final match = _allSupplements.firstWhere(
+            (s) =>
+                s.name.toLowerCase().contains(recName) ||
+                recName.contains(s.name.toLowerCase()),
+          );
+
+          validatedRecommendations.add({
+            'name': rec['name']!,
+            'reason': rec['reason']!,
+            'id': match.id, // Add ID for navigation
+          });
+        } catch (_) {
+          // No match found in our database - skip this recommendation
+          // This prevents showing claims for supplements we don't have citations for
+          AppLogger.w(
+              'Skipping AI recommendation "${rec['name']}" - not found in database');
+        }
+      }
+
+      _aiRecommendations = validatedRecommendations;
+      AppLogger.d(
+          'Validated ${validatedRecommendations.length} AI Recommendations');
 
       // Save to cache
-      await _settingsRepository.setAiRecommendations(recommendations);
+      await _settingsRepository.setAiRecommendations(validatedRecommendations);
 
       // Also refresh the library list to reflect the goals analyzed
       _applyFilters();

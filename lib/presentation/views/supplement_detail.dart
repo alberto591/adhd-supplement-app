@@ -338,6 +338,7 @@ class SupplementDetail extends StatelessWidget {
                                   icon: Icons.menu_book_outlined,
                                   color: Colors.teal,
                                   isDark: isDark,
+                                  initiallyExpanded: true,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -913,6 +914,7 @@ class _CollapsibleInfoCard extends StatelessWidget {
   final Color color;
   final Widget child;
   final bool isDark;
+  final bool initiallyExpanded;
 
   const _CollapsibleInfoCard({
     required this.title,
@@ -920,6 +922,7 @@ class _CollapsibleInfoCard extends StatelessWidget {
     required this.color,
     required this.child,
     required this.isDark,
+    this.initiallyExpanded = false,
   });
 
   @override
@@ -935,6 +938,7 @@ class _CollapsibleInfoCard extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          initiallyExpanded: initiallyExpanded,
           tilePadding: const EdgeInsets.all(20),
           childrenPadding:
               const EdgeInsets.only(left: 20, right: 20, bottom: 20),

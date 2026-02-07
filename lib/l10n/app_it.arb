@@ -57,7 +57,7 @@
   "tldrBanner": "PER MENTI IMPEGNATE (TL;DR)",
   "mechanismOfAction": "Meccanismo d'Azione",
   "timingStrategy": "Strategia di Tempistica",
-  "scientificEvidence": "Fonti di Ricerca Verificate"
+  "scientificEvidence": "Fonti di Ricerca Verificate",
   "neurostackBenefits": "Benefici Specifici Neurostack",
   "optimalDosage": "Dosaggio Ottimale",
   "dosageCalculator": "Calcolatore Dosaggio",
@@ -374,7 +374,7 @@
     }
   },
   "dosageInstructions": "Istruzioni di Dosaggio",
-  "dosageHint": "es., 500mg una volta al giorno",
+  "dosageHint": "es. 500mg",
   "updateReward": "Aggiorna Ricompensa",
   "editRoutineDetails": "Modifica Dettagli Routine",
   "routineName": "Nome Routine",
@@ -492,7 +492,6 @@
   "required": "Obbligatorio",
   "category": "Categoria",
   "dosageOptional": "Dosaggio (Opzionale)",
-  "dosageHint": "es. 500mg",
   "saveSupplement": "Salva Integratore",
   "catVitamin": "Vitamina",
   "catMineral": "Minerale",
@@ -567,7 +566,6 @@
   "continueButton": "Continua",
   "getStarted": "Inizia",
   "loginAction": "Ho già un account",
-  "progressToLevel": "Progresso al Livello {level}",
   "@progressToLevel": {
     "placeholders": {
       "level": {
@@ -575,7 +573,6 @@
       }
     }
   },
-  "memberSince": "Membro dal {date}",
   "@memberSince": {
     "placeholders": {
       "date": {
@@ -583,7 +580,6 @@
       }
     }
   },
-
   "viewStudies": "Vedi Studi",
   "citationDisclaimer": "Informazioni provenienti da studi sottoposti a revisione paritaria",
   "deleteAccount": "Elimina Account",

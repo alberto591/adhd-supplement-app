@@ -85,7 +85,7 @@ void main() {
     expect(find.text('Benefit B'), findsOneWidget);
 
     // Verify Scientific Evidence (Expand first)
-    final evidenceHeader = find.text('Expert Verification');
+    final evidenceHeader = find.text('Verified Research Sources');
     expect(evidenceHeader, findsOneWidget);
     await tester.tap(evidenceHeader);
     await tester.pumpAndSettle();

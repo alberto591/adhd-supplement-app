@@ -1324,40 +1324,56 @@ class _LibraryScreenState extends State<LibraryScreen> {
               return Container(
                 width: 260,
                 margin: const EdgeInsets.only(right: 12),
-                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: AppColors.cardBackground(isDark),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                       color: AppColors.primaryGold.withValues(alpha: 0.3)),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      rec['name'] ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.lexend(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: isDark ? Colors.white : Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Expanded(
-                      child: Text(
-                        rec['reason'] ?? '',
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.lexend(
-                          fontSize: 12,
-                          height: 1.4,
-                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                child: InkWell(
+                  onTap: () {
+                    final id = rec['id'];
+                    if (id != null) {
+                      final supplement = viewModel.getSupplement(id);
+                      if (supplement != null) {
+                        Navigator.pushNamed(context, AppRouter.supplementDetail,
+                            arguments: supplement);
+                      }
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          rec['name'] ?? '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.lexend(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: isDark ? Colors.white : Colors.black87,
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: Text(
+                            rec['reason'] ?? '',
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.lexend(
+                              fontSize: 12,
+                              height: 1.4,
+                              color:
+                                  isDark ? Colors.grey[400] : Colors.grey[600],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             },

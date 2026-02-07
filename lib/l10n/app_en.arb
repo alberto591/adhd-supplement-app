@@ -57,7 +57,7 @@
   "tldrBanner": "FOR BUSY MINDS (TL;DR)",
   "mechanismOfAction": "Mechanism of Action",
   "timingStrategy": "Timing Strategy",
-  "scientificEvidence": "Verified Research Sources"
+  "scientificEvidence": "Verified Research Sources",
   "neurostackBenefits": "Neurostack Specific Benefits",
   "optimalDosage": "Optimal Dosage",
   "dosageCalculator": "Dosage Calculator",
@@ -374,7 +374,7 @@
     }
   },
   "dosageInstructions": "Dosage Instructions",
-  "dosageHint": "e.g., 500mg once daily",
+  "dosageHint": "e.g. 500mg",
   "updateReward": "Update Reward",
   "editRoutineDetails": "Edit Routine Details",
   "routineName": "Routine Name",
@@ -417,7 +417,6 @@
   "alreadyHaveAccount": "Already have an account? Login",
   "encryptedStatus": "ENCRYPTED",
   "systemSynchronized": "System State: Synchronized",
-  "tryAgain": "Try Again",
   "exportFullReport": "Export Full Report",
   "focusSupplements": "Focus Supplements",
   "buyNow": "Buy Now",
@@ -493,7 +492,6 @@
   "required": "Required",
   "category": "Category",
   "dosageOptional": "Dosage (Optional)",
-  "dosageHint": "e.g. 500mg",
   "saveSupplement": "Save Supplement",
   "catVitamin": "Vitamin",
   "catMineral": "Mineral",
