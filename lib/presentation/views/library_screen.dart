@@ -30,11 +30,23 @@ class _LibraryScreenState extends State<LibraryScreen> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final userId = authProvider.user?.id ?? '';
     _viewModel = locator.get<LibraryViewModel>(param1: userId);
-    _viewModel.initialize();
 
     _searchController.addListener(() {
-      _viewModel.search(_searchController.text);
+      final locale = AppLocalizations.of(context)!.localeName;
+      _viewModel.search(_searchController.text, locale: locale);
     });
+  }
+
+  bool _isInitialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+      final locale = AppLocalizations.of(context)!.localeName;
+      _viewModel.initialize(locale: locale);
+      _isInitialized = true;
+    }
   }
 
   @override
@@ -58,6 +70,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
         body: SafeArea(
           child: Consumer<LibraryViewModel>(
             builder: (context, viewModel, child) {
+              final l10n = AppLocalizations.of(context)!;
               return Column(
                 children: [
                   // Header
@@ -153,8 +166,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             // 1. Browse Tab
                             Expanded(
                               child: GestureDetector(
-                                onTap: () =>
-                                    viewModel.filterByStatus('beneficial'),
+                                onTap: () => viewModel.filterByStatus(
+                                    'beneficial',
+                                    locale: l10n.localeName),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color:
@@ -199,8 +213,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             // 2. For You Tab
                             Expanded(
                               child: GestureDetector(
-                                onTap: () =>
-                                    viewModel.filterByStatus('recommended'),
+                                onTap: () => viewModel.filterByStatus(
+                                    'recommended',
+                                    locale: l10n.localeName),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color:
@@ -245,7 +260,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             // 3. Avoid Tab
                             Expanded(
                               child: GestureDetector(
-                                onTap: () => viewModel.filterByStatus('avoid'),
+                                onTap: () => viewModel.filterByStatus('avoid',
+                                    locale: l10n.localeName),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: viewModel.currentStatus == 'avoid'
@@ -323,7 +339,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                       AppLocalizations.of(context)!.all,
                                       viewModel.selectedCategories.isEmpty,
                                       primaryGold,
-                                      () => viewModel.filterByCategory(null),
+                                      () => viewModel.filterByCategory(null,
+                                          locale: l10n.localeName),
                                     ),
                                     const SizedBox(width: 8),
                                     ...viewModel.categories.map((category) {
@@ -340,8 +357,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                           viewModel.selectedCategories
                                               .contains(category),
                                           primaryGold,
-                                          () => viewModel
-                                              .filterByCategory(category),
+                                          () => viewModel.filterByCategory(
+                                              category,
+                                              locale: l10n.localeName),
                                         ),
                                       );
                                     }),
@@ -409,7 +427,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                                   color: Color(0xFF9DA8B9)),
                                               onPressed: () {
                                                 _searchController.clear();
-                                                viewModel.clearFilters();
+                                                viewModel.clearFilters(
+                                                    locale: l10n.localeName);
                                               },
                                             ),
                                           Padding(
@@ -1091,7 +1110,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           l10n.categories,
                           viewModel.categories,
                           viewModel.selectedCategories,
-                          (val) => viewModel.filterByCategory(val),
+                          (val) => viewModel.filterByCategory(val,
+                              locale: l10n.localeName),
                           isDark,
                         ),
                         const SizedBox(height: 24),
@@ -1110,7 +1130,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             Expanded(
                               child: TextButton(
                                 onPressed: () {
-                                  viewModel.clearFilters();
+                                  viewModel.clearFilters(
+                                      locale: l10n.localeName);
                                 },
                                 child: Text(
                                   l10n.clearAll,

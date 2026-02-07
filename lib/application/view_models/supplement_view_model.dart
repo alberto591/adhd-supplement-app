@@ -49,6 +49,15 @@ class SupplementViewModel extends ChangeNotifier {
     }
   }
 
+  void sortSupplements(String locale) {
+    _supplements.sort((a, b) {
+      final nameA = a.getLocalizedField('name', a.name, locale).toLowerCase();
+      final nameB = b.getLocalizedField('name', b.name, locale).toLowerCase();
+      return nameA.compareTo(nameB);
+    });
+    notifyListeners();
+  }
+
   Future<void> downloadLibraryForOffline() async {
     if (_isDownloadingLibrary) return;
 

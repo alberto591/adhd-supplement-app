@@ -7,8 +7,30 @@ import 'package:neurostack_app/domain/entities/supplement.dart';
 import 'package:neurostack_app/presentation/views/supplement_detail.dart';
 
 /// Neurostack-Friendly Home Screen with high-contrast cards and Focus Level badges
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String? _lastLocale;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final locale = AppLocalizations.of(context)!.localeName;
+    if (_lastLocale != locale) {
+      _lastLocale = locale;
+      // Sort supplements when locale changes
+      Future.microtask(() {
+        if (mounted) {
+          context.read<SupplementViewModel>().sortSupplements(locale);
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -35,6 +35,7 @@ class LibraryViewModel extends ChangeNotifier {
 // _selectedClassAStatus removed
   List<String> _selectedForms = [];
   late String _currentStatus;
+  String _lastLocale = 'en';
   bool _isLoading = false;
   String? _error = '';
   bool _isDisposed = false;
@@ -86,7 +87,7 @@ class LibraryViewModel extends ChangeNotifier {
   }
 
   /// Initialize - load all supplements
-  Future<void> initialize() async {
+  Future<void> initialize({String? locale}) async {
     _setLoading(true);
     _error = null;
 
@@ -103,7 +104,7 @@ class LibraryViewModel extends ChangeNotifier {
         _currentStatus = 'recommended';
       }
 
-      _applyFilters();
+      _applyFilters(locale: locale);
     } catch (e) {
       _error = 'Failed to load supplements: $e';
       AppLogger.e(_error ?? 'Failed to load supplements');
@@ -201,13 +202,13 @@ class LibraryViewModel extends ChangeNotifier {
   }
 
   /// Search supplements by query
-  Future<void> search(String query) async {
+  Future<void> search(String query, {String? locale}) async {
     _searchQuery = query;
-    _applyFilters();
+    _applyFilters(locale: locale);
   }
 
   /// Filter by category (toggles selection)
-  void filterByCategory(String? category) {
+  void filterByCategory(String? category, {String? locale}) {
     if (category == null) {
       _selectedCategories = [];
     } else {
@@ -217,11 +218,11 @@ class LibraryViewModel extends ChangeNotifier {
         _selectedCategories.add(category);
       }
     }
-    _applyFilters();
+    _applyFilters(locale: locale);
   }
 
   /// Filter by evidence strength (Multi-select)
-  void filterByEvidence(String? strength) {
+  void filterByEvidence(String? strength, {String? locale}) {
     if (strength == null) {
       _selectedEvidenceLevels = [];
     } else {
@@ -231,13 +232,13 @@ class LibraryViewModel extends ChangeNotifier {
         _selectedEvidenceLevels.add(strength);
       }
     }
-    _applyFilters();
+    _applyFilters(locale: locale);
   }
 
   // filterByClassA removed
 
   /// Filter by form (Multi-select)
-  void filterByForm(String? form) {
+  void filterByForm(String? form, {String? locale}) {
     if (form == null) {
       _selectedForms = [];
     } else {
@@ -247,24 +248,24 @@ class LibraryViewModel extends ChangeNotifier {
         _selectedForms.add(form);
       }
     }
-    _applyFilters();
+    _applyFilters(locale: locale);
   }
 
   /// Filter by status (beneficial vs avoid)
-  void filterByStatus(String status) {
+  void filterByStatus(String status, {String? locale}) {
     _currentStatus = status;
-    _applyFilters();
+    _applyFilters(locale: locale);
   }
 
   /// Clear all filters
-  void clearFilters() {
+  void clearFilters({String? locale}) {
     _searchQuery = '';
     _selectedCategories = [];
     _selectedEvidenceLevels = [];
     // _selectedClassAStatus reset removed
     _selectedForms = [];
     _currentStatus = 'beneficial';
-    _applyFilters();
+    _applyFilters(locale: locale);
   }
 
   /// Get supplement by ID
@@ -392,8 +393,10 @@ class LibraryViewModel extends ChangeNotifier {
   }
 
   // Private helpers
+  void _applyFilters({String? locale}) {
+    if (locale != null) _lastLocale = locale;
+    final activeLocale = locale ?? _lastLocale;
 
-  void _applyFilters() {
     final stopwatch = Stopwatch()..start();
     final userGoals = _authProvider.user?.goals ?? [];
 
@@ -468,6 +471,15 @@ class LibraryViewModel extends ChangeNotifier {
 
       return true;
     }).toList();
+
+    // Alphabetical sort based on current locale
+    _filteredSupplements.sort((a, b) {
+      final nameA =
+          a.getLocalizedField('name', a.name, activeLocale).toLowerCase();
+      final nameB =
+          b.getLocalizedField('name', b.name, activeLocale).toLowerCase();
+      return nameA.compareTo(nameB);
+    });
 
     AppLogger.d(
         'Applied filters: status=$_currentStatus, goals=${userGoals.length}, results=${_filteredSupplements.length}, time=${stopwatch.elapsedMilliseconds}ms');
