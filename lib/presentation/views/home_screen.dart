@@ -79,40 +79,8 @@ class _SupplementCard extends StatelessWidget {
 
   const _SupplementCard({required this.supplement});
 
-  Color _getFocusColor(int level) {
-    switch (level) {
-      case 5:
-        return const Color(0xFF00E676); // Bright Green
-      case 4:
-        return const Color(0xFF69F0AE); // Light Green
-      case 3:
-        return const Color(0xFFFFD740); // Amber
-      case 2:
-        return const Color(0xFFFFAB40); // Orange
-      default:
-        return const Color(0xFFFF5252); // Red
-    }
-  }
-
-  String _getFocusLabel(BuildContext context, int level) {
-    switch (level) {
-      case 5:
-        return AppLocalizations.of(context)!.focusLevelExcellent;
-      case 4:
-        return AppLocalizations.of(context)!.focusLevelVeryGood;
-      case 3:
-        return AppLocalizations.of(context)!.focusLevelGood;
-      case 2:
-        return AppLocalizations.of(context)!.focusLevelModerate;
-      default:
-        return AppLocalizations.of(context)!.focusLevelLow;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final focusColor = _getFocusColor(supplement.focusLevel);
-
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -126,12 +94,12 @@ class _SupplementCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: focusColor.withValues(alpha: 0.3),
+          color: Colors.white.withValues(alpha: 0.1),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: focusColor.withValues(alpha: 0.1),
+            color: Colors.white.withValues(alpha: 0.05),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -154,26 +122,14 @@ class _SupplementCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header with Focus Badge
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        supplement.name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    _FocusBadge(
-                      level: supplement.focusLevel,
-                      color: focusColor,
-                      label: _getFocusLabel(context, supplement.focusLevel),
-                    ),
-                  ],
+                // Header - Focus Badge removed as per user request
+                Text(
+                  supplement.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
 
@@ -201,16 +157,16 @@ class _SupplementCard extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: focusColor.withValues(alpha: 0.15),
+                        color: Colors.white.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: focusColor.withValues(alpha: 0.3),
+                          color: Colors.white.withValues(alpha: 0.2),
                         ),
                       ),
                       child: Text(
                         benefit,
-                        style: TextStyle(
-                          color: focusColor,
+                        style: const TextStyle(
+                          color: Colors.white70,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
@@ -230,8 +186,9 @@ class _SupplementCard extends StatelessWidget {
                           .onReferralClicked(supplement);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: focusColor,
-                      foregroundColor: Colors.black,
+                      backgroundColor: const Color(
+                          0xFF22C55E), // Brighter green for call to action
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -258,49 +215,6 @@ class _SupplementCard extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _FocusBadge extends StatelessWidget {
-  final int level;
-  final Color color;
-  final String label;
-
-  const _FocusBadge({
-    required this.level,
-    required this.color,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color, width: 1.5),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.psychology,
-            color: color,
-            size: 16,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: color,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -71,7 +71,7 @@ You have the right to:
 ### How to Exercise Your Rights
 - **Delete Account**: Settings → Privacy & Security → Delete All My Data
 - **Web Request**: [neurostack-app.web.app/delete-data](https://neurostack-app.web.app/delete-data)
-- **Email**: Send a request to [your-email@example.com]
+- **Email**: Send a request to support@neurostack.app
 - **Disable Analytics**: Settings → Privacy & Security → Share Analytics (toggle off)
 
 ## Data Retention
@@ -120,7 +120,7 @@ NeuroStack is for informational and tracking purposes only. It is not a substitu
 
 If you have questions about this Privacy Policy or your data:
 
-**Email**: [your-email@example.com]  
+**Email**: support@neurostack.app  
 **In-App**: Settings → Help Center → Contact Support
 
 ---

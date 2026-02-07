@@ -886,53 +886,28 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           ),
                         ),
                       ),
-                      if (isGold) ...[
-                        const SizedBox(width: 6),
-                        const Icon(Icons.verified,
-                            color: AppColors.primaryGold, size: 14),
-                      ],
-                      if (supplement.studyLinks.isNotEmpty) ...[
-                        const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Colors.teal.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.science,
-                                  size: 12, color: Colors.teal),
-                              const SizedBox(width: 3),
-                              Text(
-                                l10n.citedLabel,
-                                style: GoogleFonts.lexend(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.teal,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      // Removed Icons.verified gold badge as per user request
+
                       if (supplement.isCustom) ...[
                         const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryGold.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            l10n.customTag,
-                            style: GoogleFonts.lexend(
-                              fontSize: 8,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryGold,
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color:
+                                  AppColors.primaryGold.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              l10n.customTag,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.lexend(
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryGold,
+                              ),
                             ),
                           ),
                         ),
@@ -974,23 +949,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 },
               ),
 
-            // Focus Level (Stars)
-            if (supplement.status != 'avoid')
-              Row(
-                children: List.generate(
-                  5,
-                  (index) => Icon(
-                    index < supplement.focusLevel
-                        ? Icons.star
-                        : Icons.star_border,
-                    color: AppColors.primaryGold,
-                    size: 10, // Slightly smaller to fit 5 stars
-                  ),
-                ),
-              )
-            else
-              const Icon(Icons.warning_amber_rounded,
-                  color: Color(0xFFEF4444), size: 16),
+            // Focus Level Stars removed as per user request
             const SizedBox(width: 12),
 
             // Action Button
@@ -1016,11 +975,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
-                child: Text(
-                  supplement.status == 'avoid' ? l10n.why : l10n.add,
-                  style: GoogleFonts.lexend(
-                      fontWeight: FontWeight.bold, fontSize: 11),
-                ),
+                child: supplement.status == 'avoid'
+                    ? Text(
+                        l10n.why,
+                        style: GoogleFonts.lexend(
+                            fontWeight: FontWeight.bold, fontSize: 11),
+                      )
+                    : const Icon(Icons.add_circle_outline, size: 20),
               ),
             ),
           ],

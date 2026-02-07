@@ -136,33 +136,6 @@ class RoutineElementCard extends StatelessWidget {
                                 fontSize: 12,
                               ),
                             ),
-                            if (hasStudies) ...[
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: Colors.teal.withValues(alpha: 0.15),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.science,
-                                        size: 11, color: Colors.teal),
-                                    SizedBox(width: 3),
-                                    Text(
-                                      'Cited',
-                                      style: TextStyle(
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.teal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
                           ],
                         ),
                       ],

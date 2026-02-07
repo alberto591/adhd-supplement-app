@@ -21,7 +21,7 @@
     "recommendedDosageTitle": "DOSIS RECOMENDADA",
     "outsideStandardRange": "Fuera del rango estándar*",
     "dosageDisclaimer": "*Los cálculos se basan en datos de investigación representativos. Consulte a su asesor para obtener consejos generales personales.",
-    "criticalCautions": "Precaucioni Críticas",
+    "criticalCautions": "Precauciones Críticas",
     "addToStack": "Añadir al Stack",
     "riskProfile": "Perfil de Riesgo",
     "riskProfileMessage": "Alto riesgo de rutina para Neurostack",
@@ -536,7 +536,7 @@
   "continueButton": "Continuar",
   "getStarted": "Comenzar",
   "loginAction": "Ya tengo una cuenta",
-  "citedLabel": "Citado",
+
   "viewStudies": "Ver Estudios",
   "citationDisclaimer": "Información proveniente de estudios revisados por pares",
   "deleteAccount": "Eliminar Cuenta",

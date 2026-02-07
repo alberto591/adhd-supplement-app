@@ -143,12 +143,9 @@ class SupplementDetail extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            if (supplement.status != 'avoid')
-                              _FocusLevelIndicator(
-                                level: supplement.focusLevel,
-                                color: primaryGold,
-                              )
-                            else
+                            // Focus Level Indicator removed as per user request
+
+                            if (supplement.status == 'avoid')
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 8),
@@ -380,7 +377,9 @@ class SupplementDetail extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: supplement.studyLinks.entries
+                                    children: supplement
+                                        .getLocalizedStudyLinks(locale)
+                                        .entries
                                         .map((entry) => Padding(
                                               padding: const EdgeInsets.only(
                                                   bottom: 12),
@@ -735,90 +734,6 @@ class SupplementDetail extends StatelessWidget {
   }
 }
 
-class _FocusLevelIndicator extends StatelessWidget {
-  final int level;
-  final Color color;
-
-  const _FocusLevelIndicator({
-    required this.level,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    String labelText;
-    final l10n = AppLocalizations.of(context)!;
-
-    switch (level) {
-      case 5:
-        labelText = l10n.focusLevelExcellent;
-        break;
-      case 4:
-        labelText = l10n.focusLevelVeryGood;
-        break;
-      case 3:
-        labelText = l10n.focusLevelGood;
-        break;
-      case 2:
-        labelText = l10n.focusLevelModerate;
-        break;
-      case 1:
-        labelText = l10n.focusLevelLow;
-        break;
-      default:
-        labelText = l10n.focusLevelGood;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ...List.generate(5, (index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1),
-              child: Icon(
-                index < level ? Icons.star : Icons.star_border,
-                color: color,
-                size: 14,
-              ),
-            );
-          }),
-          const SizedBox(width: 8),
-          Text(
-            labelText.toUpperCase(),
-            style: GoogleFonts.lexend(
-              color: Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.5,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            width: 1,
-            height: 10,
-            color: Colors.white24,
-          ),
-          Text(
-            l10n.focusRating,
-            style: GoogleFonts.lexend(
-              color: Colors.white70,
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _SectionCard extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -1066,7 +981,7 @@ class _ScientificEvidenceBadge extends StatelessWidget {
     if (rank! >= 90) {
       label = 'Class A Evidence';
       color = AppColors.primaryGold;
-      icon = Icons.verified;
+      icon = Icons.star;
     } else if (rank! >= 70) {
       label = 'Class B Evidence';
       color = Colors.lightBlueAccent;

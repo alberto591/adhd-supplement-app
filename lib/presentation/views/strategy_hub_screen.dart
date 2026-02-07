@@ -269,7 +269,7 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                           const TextStyle(color: Colors.white70, fontSize: 12),
                     ),
                     const SizedBox(width: 16),
-                    const Icon(Icons.verified, color: Colors.yellow, size: 16),
+                    const Icon(Icons.star, color: Colors.yellow, size: 16),
                     const SizedBox(width: 4),
                     Text(
                       AppLocalizations.of(context)!.highImpact,

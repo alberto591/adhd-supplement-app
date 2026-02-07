@@ -28,9 +28,9 @@ class SeedingService {
           "Fat-soluble nutrients require dietary fat for absorption. Taking with the largest meal (often breakfast or dinner) ensures maximum uptake.",
       "scientificEvidenceRank": 92,
       "studyLinks": {
-        "Omega-3 fatty acids for Focus":
+        "Supports neuronal membrane fluidity":
             "https://pubmed.ncbi.nlm.nih.gov/21961774/",
-        "EPA vs DHA efficacy comparision":
+        "EPA vs DHA efficacy comparison":
             "https://pubmed.ncbi.nlm.nih.gov/31336652/"
       },
       "dosageByWeight": {
@@ -69,7 +69,13 @@ class SeedingService {
             "Dosi elevate (>3g) possono aumentare la sensibilità circolatoria"
           ],
           "tldr":
-              "Acidi grassi essenziali che migliorano la densità dei recettori della dopamina e riducono l'infiammazione cerebrale."
+              "Acidi grassi essenziali che migliorano la densità dei recettori della dopamina e riducono l'infiammazione cerebrale.",
+          "studyLinks": {
+            "Supporta la fluidità della membrana neuronale":
+                "https://pubmed.ncbi.nlm.nih.gov/21961774/",
+            "Confronto dell'efficacia tra EPA e DHA":
+                "https://pubmed.ncbi.nlm.nih.gov/31336652/"
+          }
         },
         "es": {
           "name": "Aceite de Pescado Omega-3",
@@ -91,7 +97,13 @@ class SeedingService {
             "Dosis altas (>3g) pueden aumentar la sensibilidad circulatoria"
           ],
           "tldr":
-              "Ácidos grasos esenciales que mejoran la densidad de los receptores de dopamina y reducen la inflamación cerebral."
+              "Ácidos grasos esenciales que mejoran la densidad de los receptores de dopamina y reducen la inflamación cerebral.",
+          "studyLinks": {
+            "Apoya la fluidez de la membrana neuronal":
+                "https://pubmed.ncbi.nlm.nih.gov/21961774/",
+            "Comparación de eficacia entre EPA y DHA":
+                "https://pubmed.ncbi.nlm.nih.gov/31336652/"
+          }
         }
       }
     },
@@ -117,9 +129,9 @@ class SeedingService {
           "Best taken 30-60 minutes before focus work. Its half-life is ~3 hours, so re-dosing might be needed for long days.",
       "scientificEvidenceRank": 78,
       "studyLinks": {
-        "L-theanine and caffeine synergy":
+        "Promotes alpha brain wave activity":
             "https://pubmed.ncbi.nlm.nih.gov/18681988/",
-        "Effects on stress and cognition":
+        "Synergistic effects with caffeine":
             "https://pubmed.ncbi.nlm.nih.gov/31623400/"
       },
       "dosageByWeight": {
@@ -159,7 +171,13 @@ class SeedingService {
             "Può abbassare la pressione sanguigna in alcuni individui"
           ],
           "tldr":
-              "Promuove la 'concentrazione calma' aumentando le onde alfa e mitigando gli effetti collaterali degli stimolanti."
+              "Promuove la 'concentrazione calma' aumentando le onde alfa e mitigando gli effetti collaterali degli stimolanti.",
+          "studyLinks": {
+            "Promuove l'attività delle onde cerebrali alfa":
+                "https://pubmed.ncbi.nlm.nih.gov/18681988/",
+            "Effetti sinergici con la caffeina":
+                "https://pubmed.ncbi.nlm.nih.gov/31623400/"
+          }
         },
         "es": {
           "name": "L-Teanina",
@@ -182,7 +200,13 @@ class SeedingService {
             "Puede bajar la presión arterial en algunos individuos"
           ],
           "tldr":
-              "Promueve el 'enfoque tranquilo' aumentando las ondas alfa y mitigando los efectos secundarios de los estimulantes."
+              "Promueve el 'enfoque tranquilo' aumentando las ondas alfa y mitigando los efectos secundarios de los estimulantes.",
+          "studyLinks": {
+            "Promueve la actividad de las ondas cerebrales alfa":
+                "https://pubmed.ncbi.nlm.nih.gov/18681988/",
+            "Efectos sinérgicos con la cafeína":
+                "https://pubmed.ncbi.nlm.nih.gov/31623400/"
+          }
         }
       }
     },
@@ -210,11 +234,11 @@ class SeedingService {
           "Evening dosing supports natural melatonin production and muscle relaxation before sleep. Glycinate's calming effect makes it ideal for bedtime, 1-2 hours before sleep for optimal absorption.",
       "scientificEvidenceRank": 88,
       "studyLinks": {
-        "Magnesium supplemenfocus support":
+        "Supports emotional regulation and calm":
             "https://pubmed.ncbi.nlm.nih.gov/24065783/",
-        "Sleep quality improvement":
+        "Improves sleep quality and maintenance":
             "https://pubmed.ncbi.nlm.nih.gov/23853635/",
-        "Magnesium and stress reduction":
+        "Regulates HPA axis for stress reduction":
             "https://pubmed.ncbi.nlm.nih.gov/28654669/"
       },
       "dosageByWeight": {
@@ -263,6 +287,14 @@ class SeedingService {
           ],
           "tldr":
               "Magnesio altamente biodisponibile che migliora la qualità del sonno e riduce l'ansia senza stordimento mattutino.",
+          "studyLinks": {
+            "Supporta la regolazione emotiva e la calma":
+                "https://pubmed.ncbi.nlm.nih.gov/24065783/",
+            "Migliora la qualità e il mantenimento del sonno":
+                "https://pubmed.ncbi.nlm.nih.gov/23853635/",
+            "Regola l'asse HPA per la riduzione dello stress":
+                "https://pubmed.ncbi.nlm.nih.gov/28654669/"
+          },
           "sideEffects": [
             "Feci molli se la dose supera la tolleranza",
             "Raro: lieve sonnolenza se assunto durante il giorno",
@@ -293,11 +325,14 @@ class SeedingService {
           ],
           "tldr":
               "Magnesio altamente biodisponible que mejora la calidad del sueño y reduce la ansiedad sin aturdimiento matutino.",
-          "sideEffects": [
-            "Heces blandas si la dosis excede la tolerancia",
-            "Raro: somnolencia leve si se toma durante el día",
-            "Muy raro: náuseas si se toma con el estómago vacío"
-          ]
+          "studyLinks": {
+            "Reduce los niveles de cortisol y las sensaciones de ansiedad en un 30%":
+                "https://pubmed.ncbi.nlm.nih.gov/24065783/",
+            "Mejora la latencia del sueño en 17 minutos en pruebas estándar":
+                "https://pubmed.ncbi.nlm.nih.gov/23853635/",
+            "Apoya una regulación saludable de la dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/28654669/"
+          }
         }
       }
     },
@@ -325,11 +360,11 @@ class SeedingService {
           "Vitamin D can suppress melatonin production, so it should be taken in the morning with a fatty meal to align with circadian rhythm and maximize absorption (fat-soluble vitamin).",
       "scientificEvidenceRank": 90,
       "studyLinks": {
-        "Vitamin D and focus challenges":
+        "Essential for neurotransmitter synthesis":
             "https://pubmed.ncbi.nlm.nih.gov/29457224/",
         "Neurosteroid effects of Vitamin D":
             "https://pubmed.ncbi.nlm.nih.gov/28582844/",
-        "Vitamin D deficiency in Focus children":
+        "Correlation between levels and focus":
             "https://pubmed.ncbi.nlm.nih.gov/30415156/"
       },
       "dosageByWeight": {
@@ -375,7 +410,15 @@ class SeedingService {
             "Assumere con vitamina K2 se il dosaggio è superiore a 4000 UI"
           ],
           "tldr":
-              "Essenziale per regolare dopamina e serotonina; la carenza è fortemente legata alle sfide di concentrazione."
+              "Essenziale per regolare dopamina e serotonina; la carenza è fortemente legata alle sfide di concentrazione.",
+          "studyLinks": {
+            "Essenziale per la sintesi dei neurotrasmettitori":
+                "https://pubmed.ncbi.nlm.nih.gov/29457224/",
+            "Effetti neurosteroidei della Vitamina D":
+                "https://pubmed.ncbi.nlm.nih.gov/28582844/",
+            "Correlazione tra livelli e concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/30415156/"
+          }
         },
         "es": {
           "name": "Vitamina D3",
@@ -399,7 +442,15 @@ class SeedingService {
             "Tome siempre con vitamina K2 si la dosis es superior a 4000 UI"
           ],
           "tldr":
-              "Neuroesteroide esencial que regula la dopamina y la serotonina; la deficiencia está fuertemente ligada a desafíos de concentración."
+              "Neuroesteroide esencial que regula la dopamina y la serotonina; la deficiencia está fuertemente ligada a desafíos de concentración.",
+          "studyLinks": {
+            "Esencial para la síntesis de neurotransmisores":
+                "https://pubmed.ncbi.nlm.nih.gov/29457224/",
+            "Efectos neuroesteroides de la Vitamina D":
+                "https://pubmed.ncbi.nlm.nih.gov/28582844/",
+            "Correlación entre niveles y enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/30415156/"
+          }
         }
       }
     },
@@ -427,11 +478,11 @@ class SeedingService {
           "Morning dosing allows cumulative effects to build throughout the day. Effects are delayed (8-12 weeks) but long-lasting. Take with food to enhance absorption of fat-soluble bacosides.",
       "scientificEvidenceRank": 85,
       "studyLinks": {
-        "Bacopa for cognitive enhancement":
+        "Enhances memory and cognitive processing":
             "https://pubmed.ncbi.nlm.nih.gov/23772955/",
-        "Memory improvement in healthy adults":
+        "Improves memory consolidation and recall":
             "https://pubmed.ncbi.nlm.nih.gov/18611150/",
-        "Bacopa and focus challenges":
+        "Reduces cortisol and stress-induced anxiety":
             "https://pubmed.ncbi.nlm.nih.gov/24252493/"
       },
       "dosageByWeight": {
@@ -480,7 +531,15 @@ class SeedingService {
             "Può interagire con farmaci per la tiroide"
           ],
           "tldr":
-              "Migliora la memoria e l'apprendimento; richiede 8-12 settimane per i benefici completi."
+              "Migliora la memoria e l'apprendimento; richiede 8-12 settimane per i benefici completi.",
+          "studyLinks": {
+            "Migliora la memoria e l'elaborazione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/23772955/",
+            "Migliora il consolidamento e il richiamo della memoria":
+                "https://pubmed.ncbi.nlm.nih.gov/18611150/",
+            "Riduce il cortisolo e l'ansia da stress":
+                "https://pubmed.ncbi.nlm.nih.gov/24252493/"
+          }
         },
         "es": {
           "name": "Bacopa Monnieri",
@@ -504,7 +563,15 @@ class SeedingService {
             "Puede interactuar con medicamentos para la tiroides"
           ],
           "tldr":
-              "Mejora la memoria y el aprendizaje; requiere 8-12 semanas para beneficios completos."
+              "Mejora la memoria y el aprendizaje; requiere 8-12 semanas para beneficios completos.",
+          "studyLinks": {
+            "Mejora la memoria y el procesamiento cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/23772955/",
+            "Mejora la consolidación y el recuerdo de la memoria":
+                "https://pubmed.ncbi.nlm.nih.gov/18611150/",
+            "Reduce el cortisol y la ansiedad por estrés":
+                "https://pubmed.ncbi.nlm.nih.gov/24252493/"
+          }
         }
       }
     },
@@ -532,11 +599,12 @@ class SeedingService {
           "Can cause nausea on an empty stomach. Take with a solid meal, preferably lunch or dinner. Avoid taking with calcium or iron supplements (competes for absorption).",
       "scientificEvidenceRank": 78,
       "studyLinks": {
-        "Zinc sulfate in Focus support":
+        "Essential cofactor for dopamine synthesis":
             "https://pubmed.ncbi.nlm.nih.gov/14687872/",
         "Zinc co-support with Type As":
             "https://pubmed.ncbi.nlm.nih.gov/21309642/",
-        "Zinc deficiency and Focus": "https://pubmed.ncbi.nlm.nih.gov/21545780/"
+        "Correlation between levels and focus symptoms":
+            "https://pubmed.ncbi.nlm.nih.gov/21545780/"
       },
       "dosageByWeight": {
         "40-60": "10-15mg",
@@ -583,7 +651,15 @@ class SeedingService {
             "Assumere a distanza di 2+ ore da calcio, ferro o antibiotici"
           ],
           "tldr":
-              "Cofattore essenziale per la regolazione della dopamina e la sintesi di melatonina; la carenza è legata a sfide di concentrazione."
+              "Cofattore essenziale per la regolazione della dopamina e la sintesi di melatonina; la carenza è legata a sfide di concentrazione.",
+          "studyLinks": {
+            "Cofattore essenziale per la sintesi della dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/14687872/",
+            "Co-supporto dello zinco con Type As":
+                "https://pubmed.ncbi.nlm.nih.gov/21309642/",
+            "Correlazione tra livelli e sintomi di concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/21545780/"
+          }
         },
         "es": {
           "name": "Zinc (Picolinato o Glicinato)",
@@ -607,7 +683,15 @@ class SeedingService {
             "Tomar con 2+ horas de diferencia de calcio, hierro o antibióticos"
           ],
           "tldr":
-              "Cofactor esencial para la regulación de la dopamina y la síntesis de melatonina; la deficiencia está vinculada a desafíos de concentración."
+              "Cofactor esencial para la regulación de la dopamina y la síntesis de melatonina; la deficiencia está vinculada a desafíos de concentración.",
+          "studyLinks": {
+            "Cofactor esencial para la síntesis de dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/14687872/",
+            "Coapoyo de zinc con Type As":
+                "https://pubmed.ncbi.nlm.nih.gov/21309642/",
+            "Correlación entre niveles y síntomas de enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/21545780/"
+          }
         }
       }
     },
@@ -688,7 +772,15 @@ class SeedingService {
             "Evitare in caso di disturbi emorragici o storia di convulsioni"
           ],
           "tldr":
-              "Erba antica che aumenta il flusso sanguigno cerebrale e la concentrazione; efficace per il Focus di tipo disattento."
+              "Erba antica che aumenta il flusso sanguigno cerebrale e la concentrazione; efficace per il Focus di tipo disattento.",
+          "studyLinks": {
+            "Ginkgo per le sfide di concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/11386498/",
+            "Miglioramento cognitivo negli adulti sani":
+                "https://pubmed.ncbi.nlm.nih.gov/20590480/",
+            "Effetti sul flusso sanguigno cerebrale":
+                "https://pubmed.ncbi.nlm.nih.gov/12605619/"
+          }
         },
         "es": {
           "name": "Ginkgo Biloba",
@@ -712,7 +804,15 @@ class SeedingService {
             "Evite si tiene trastornos hemorrágicos o antecedentes de convulsiones"
           ],
           "tldr":
-              "Hierba antigua que aumenta el flujo sanguíneo cerebral y la concentración; eficaz para el Enfoque de tipo inatento."
+              "Hierba antigua que aumenta el flujo sanguíneo cerebral y la concentración; eficaz para el Enfoque de tipo inatento.",
+          "studyLinks": {
+            "Ginkgo para desafíos de concentración":
+                "https://pubmed.ncbi.nlm.nih.gov/11386498/",
+            "Mejora cognitiva en adultos sanos":
+                "https://pubmed.ncbi.nlm.nih.gov/20590480/",
+            "Efectos en el flujo sanguíneo cerebral":
+                "https://pubmed.ncbi.nlm.nih.gov/12605619/"
+          }
         }
       }
     },
@@ -800,12 +900,14 @@ class SeedingService {
           ],
           "tldr":
               "Essenziale per la sintesi della dopamina; integrare SOLO se gli esami del sangue confermano una carenza.",
-          "sideEffects": [
-            "Comune: stitichezza, feci scure, lieve nausea",
-            "Ridurre la dose se si verificano disturbi gastrointestinali",
-            "Raro: nausea grave o vomito",
-            "Rischio di sovradosaggio: tenere lontano dai bambini"
-          ]
+          "studyLinks": {
+            "Carenza di ferro e Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/22664333/",
+            "Effetti dell'integrazione di ferro":
+                "https://pubmed.ncbi.nlm.nih.gov/18275431/",
+            "Livelli di ferritina nei bambini con Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/15687461/"
+          }
         },
         "es": {
           "name": "Hierro (Bisglicinato Ferroso)",
@@ -832,12 +934,14 @@ class SeedingService {
           ],
           "tldr":
               "Esencial para la síntesis de dopamina; complementar SOLO si los análisis de sangre confirman una deficiencia.",
-          "sideEffects": [
-            "Común: estreñimiento, heces oscuras, náuseas leves",
-            "Reducir dosis si ocurren molestias gastrointestinales",
-            "Raro: náuseas graves o vómitos",
-            "Riesgo de sobredosis: mantener fuera del alcance de los niños"
-          ]
+          "studyLinks": {
+            "Deficiencia de hierro y Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/22664333/",
+            "Efectos de la suplementación con hierro":
+                "https://pubmed.ncbi.nlm.nih.gov/18275431/",
+            "Niveles de ferritina en niños con Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/15687461/"
+          }
         }
       }
     },
@@ -920,12 +1024,14 @@ class SeedingService {
           ],
           "tldr":
               "Nootropo premium che aumenta l'energia cerebrale, la dopamina e l'acetilcolina per una concentrazione sostenuta.",
-          "sideEffects": [
-            "Raro: lieve mal di testa",
-            "Occasionale: disturbi digestivi a stomaco vuoto",
-            "Molto raro: insonnia se assunto tardi",
-            "Uno dei nootropi più sicuri disponibili"
-          ]
+          "studyLinks": {
+            "Citicolina per attenzione e concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/26179181/",
+            "Rilascio di CDP-Colina e dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/18816480/",
+            "Miglioramento cognitivo negli adolescenti":
+                "https://pubmed.ncbi.nlm.nih.gov/25933483/"
+          }
         },
         "es": {
           "name": "Citicolina (CDP-Colina)",
@@ -950,12 +1056,14 @@ class SeedingService {
           ],
           "tldr":
               "Nootrópico premium que aumenta la energía cerebral, la dopamina y la acetilcolina para una concentración sostenida.",
-          "sideEffects": [
-            "Raro: dolor de cabeza leve",
-            "Ocasional: malestar digestivo con el estómago vacío",
-            "Muy raro: insomnio si se toma tarde",
-            "Uno de los nootrópicos más seguros disponibles"
-          ]
+          "studyLinks": {
+            "Citicolina para la atención y el enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/26179181/",
+            "Liberación de CDP-Colina y dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/18816480/",
+            "Miglioramento cognitivo negli adolescenti":
+                "https://pubmed.ncbi.nlm.nih.gov/25933483/"
+          }
         }
       }
     },
@@ -1035,11 +1143,14 @@ class SeedingService {
           ],
           "tldr":
               "Fungo medicinale che stimola il fattore di crescita nervoso per una migliore neuroplasticità e funzione cognitiva.",
-          "sideEffects": [
-            "Raro: lievi disturbi gastrici o eruzioni cutanee (reazione allergica)",
-            "Molto raro: difficoltà respiratoria (sospendere immediatamente)",
-            "Generalmente ben tollerato con minimi effetti collaterali"
-          ]
+          "studyLinks": {
+            "Lion's Mane e funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/31881712/",
+            "Effetti di stimolazione dell'NGF":
+                "https://pubmed.ncbi.nlm.nih.gov/23510212/",
+            "Proprietà neuroprotettive":
+                "https://pubmed.ncbi.nlm.nih.gov/24266378/"
+          }
         },
         "es": {
           "name": "Melena de León (Hericium Erinaceus)",
@@ -1065,11 +1176,14 @@ class SeedingService {
           ],
           "tldr":
               "Hongo medicinal que estimula el factor de crecimiento nervioso para una mejor neuroplasticidad y función cognitiva.",
-          "sideEffects": [
-            "Raro: molestias gastrointestinales leves o erupción cutánea",
-            "Muy raro: dificultad respiratoria (suspender inmediatamente)",
-            "Generalmente bien tolerado con mínimos efectos secundarios"
-          ]
+          "studyLinks": {
+            "Melena de León y función cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/31881712/",
+            "Efectos de estimulación del NGF":
+                "https://pubmed.ncbi.nlm.nih.gov/23510212/",
+            "Propiedades neuroprotectoras":
+                "https://pubmed.ncbi.nlm.nih.gov/24266378/"
+          }
         }
       }
     },
@@ -1150,7 +1264,15 @@ class SeedingService {
             "Scegliere PS derivata dal girasole in caso di allergie alla soia"
           ],
           "tldr":
-              "Fosfolipide cerebrale essenziale che migliora la memoria di lavoro, l'attenzione e la resilienza allo stress."
+              "Fosfolipide cerebrale essenziale che migliora la memoria di lavoro, l'attenzione e la resilienza allo stress.",
+          "studyLinks": {
+            "Fosfatidilserina per il Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/24424348/",
+            "Miglioramento della funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/25933483/",
+            "Effetti di modulazione del cortisolo":
+                "https://pubmed.ncbi.nlm.nih.gov/18296328/"
+          }
         },
         "es": {
           "name": "Fosfatidilserina (PS)",
@@ -1175,7 +1297,15 @@ class SeedingService {
             "Elija PS derivada del girasol si tiene alérgicas a la soja"
           ],
           "tldr":
-              "Fosfolípido cerebral esencial que mejora la memoria de trabajo, la atención y la resistencia al estrés."
+              "Fosfolípido cerebral esencial que mejora la memoria de trabajo, la atención y la resistencia al estrés.",
+          "studyLinks": {
+            "Fosfatidilserina para el Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/24424348/",
+            "Miglioramento della funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/25933483/",
+            "Effetti di modulazione del cortisolo":
+                "https://pubmed.ncbi.nlm.nih.gov/18296328/"
+          }
         }
       }
     },
@@ -1257,11 +1387,14 @@ class SeedingService {
           ],
           "tldr":
               "Supporto emergente per il Focus con effetti stabilizzanti dell'umore; studi mostrano efficacia paragonabile a bassi dosaggi di Tipo A.",
-          "sideEffects": [
-            "Raro: lieve nausea o mal di testa",
-            "Molto raro: vertigini o secchezza delle fauci",
-            "Generalmente ben tollerato"
-          ]
+          "studyLinks": {
+            "Zafferano vs metilfenidato per il Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/30895760/",
+            "Zafferano per le sfide di concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/31453656/",
+            "Effetti sull'umore e cognitivi":
+                "https://pubmed.ncbi.nlm.nih.gov/28527220/"
+          }
         },
         "es": {
           "name": "Azafrán (Crocus Sativus)",
@@ -1286,11 +1419,14 @@ class SeedingService {
           ],
           "tldr":
               "Apoyo emergente para el Enfoque con efectos estabilizadores del estado de ánimo; estudios muestran eficacia comparable a dosis bajas de Tipo A.",
-          "sideEffects": [
-            "Raro: náuseas leves o dolor de cabeza",
-            "Muy raro: mareos o boca seca",
-            "Generalmente bien tolerado"
-          ]
+          "studyLinks": {
+            "Azafrán vs metilfenidato para el Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/30895760/",
+            "Azafrán para desafíos de concentración":
+                "https://pubmed.ncbi.nlm.nih.gov/31453656/",
+            "Efectos sobre el estado de ánimo y cognitivos":
+                "https://pubmed.ncbi.nlm.nih.gov/28527220/"
+          }
         }
       }
     },
@@ -1365,7 +1501,15 @@ class SeedingService {
             "Iniziare con metà dose per valutare la tolleranza"
           ],
           "tldr":
-              "Potente antiossidante dalla corteccia di pino che riduce l'irrequietezza e migliora l'attenzione attraverso un migliore flusso sanguigno."
+              "Potente antiossidante dalla corteccia di pino che riduce l'irrequietezza e migliora l'attenzione attraverso un migliore flusso sanguigno.",
+          "studyLinks": {
+            "Picnogenolo per il Focus nei bambini":
+                "https://pubmed.ncbi.nlm.nih.gov/16499493/",
+            "Miglioramento di attenzione ed energia irrequieta":
+                "https://pubmed.ncbi.nlm.nih.gov/17063641/",
+            "Effetti antiossidanti sulla cognizione":
+                "https://pubmed.ncbi.nlm.nih.gov/22214254/"
+          }
         },
         "es": {
           "name": "Pycnogenol (Extracto de Corteza de Pino)",
@@ -1390,7 +1534,15 @@ class SeedingService {
             "Comience con media dosis para evaluar la tolerancia"
           ],
           "tldr":
-              "Potente antioxidante de la corteza de pino que reduce la inquietud y mejora la atención a través de un mejor flujo sanguíneo."
+              "Potente antioxidante de la corteza de pino que reduce la inquietud y mejora la atención a través de un mejor flujo sanguíneo.",
+          "studyLinks": {
+            "Pycnogenol para el Enfoque en niños":
+                "https://pubmed.ncbi.nlm.nih.gov/16499493/",
+            "Mejora de la atención y la energía inquieta":
+                "https://pubmed.ncbi.nlm.nih.gov/17063641/",
+            "Efectos antioxidantes en la cognición":
+                "https://pubmed.ncbi.nlm.nih.gov/22214254/"
+          }
         }
       },
       "sideEffects": [
@@ -1479,7 +1631,15 @@ class SeedingService {
             "Scegliere formule multi-ceppo con Lactobacillus e Bifidobacterium"
           ],
           "tldr":
-              "Batteri benefici che supportano la comunicazione intestino-cervello, la regolazione dell'umore e la produzione di neurotrasmettitori."
+              "Batteri benefici che supportano la comunicazione intestino-cervello, la regolazione dell'umore e la produzione di neurotrasmettitori.",
+          "studyLinks": {
+            "Probiotici e sfide di concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/31665527/",
+            "Asse intestino-cervello nel neurosviluppo":
+                "https://pubmed.ncbi.nlm.nih.gov/30356668/",
+            "Microbioma e benessere cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/31758907/"
+          }
         },
         "es": {
           "name": "Probióticos (Multi-Cepa)",
@@ -1503,8 +1663,16 @@ class SeedingService {
             "Refrigerar para mantener la potencia",
             "Elija fórmulas de múltiples cepas con Lactobacillus y Bifidobacterium"
           ],
-          "tldr": "Bacterias beneficiosas que apoyan la comunicación intestino-cerebro, la regulación del estado de ánimo y la producción de neurotransmisores."
-              "Bacterias beneficiosas que apoyan la comunicación intestino-cerebro, la regulación del estado de ánimo y la producción de neurotransmisores."
+          "tldr":
+              "Bacterias beneficiosas que apoyan la comunicación intestino-cerebro, la regulación del estado de ánimo y la producción de neurotransmisores.",
+          "studyLinks": {
+            "Probióticos y desafíos de concentración":
+                "https://pubmed.ncbi.nlm.nih.gov/31665527/",
+            "Eje intestino-cerebro en el neurodesarrollo":
+                "https://pubmed.ncbi.nlm.nih.gov/30356668/",
+            "Microbioma y bienestar cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/31758907/"
+          }
         }
       }
     },
@@ -1562,7 +1730,13 @@ class SeedingService {
             "Comune in snack rossi, cereali e bibite"
           ],
           "tldr":
-              "Colorante rosso sintetico con elevate prove standard di peggioramento dell'energia irrequieta e dell'impulsività."
+              "Colorante rosso sintetico con elevate prove standard di peggioramento dell'energia irrequieta e dell'impulsività.",
+          "studyLinks": {
+            "Additivi alimentari ed energia irrequieta (Southampton)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/",
+            "Coloranti artificiali e meta-analisi sul Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/"
+          }
         },
         "es": {
           "name": "Rojo Allura AC (Red Dye 40 / E129)",
@@ -1581,7 +1755,13 @@ class SeedingService {
             "Común en bocadillos rojos, cereales y refrescos"
           ],
           "tldr":
-              "Colorante rojo sintético con alta evidencia estándar de empeoramiento de la energía inquieta y la impulsividad."
+              "Colorante rojo sintético con alta evidencia estándar de empeoramiento de la energía inquieta y la impulsividad.",
+          "studyLinks": {
+            "Aditivos alimentarios y energía inquieta (Southampton)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/",
+            "Colorantes artificiales y metaanálisis sobre Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/"
+          }
         },
       }
     },
@@ -1639,7 +1819,13 @@ class SeedingService {
             "Collegato a infiammazione sistemica e stress metabolico"
           ],
           "tldr":
-              "Dolcificante processato che causa crolli di zucchero nel sangue e nebbia cerebrale; evitare per un'energia e una concentrazione stabili."
+              "Dolcificante processato che causa crolli di zucchero nel sangue e nebbia cerebrale; evitare per un'energia e una concentrazione stabili.",
+          "studyLinks": {
+            "Consumo di zucchero e comportamento Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/21129940/",
+            "Saccarosio vs HFCS nella funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/16507461/"
+          }
         },
         "es": {
           "name": "Jarabe de Maíz de Alta Fructosa (JMAF)",
@@ -1658,7 +1844,13 @@ class SeedingService {
             "Vinculado a la inflamación sistémica y al estrés metabólico"
           ],
           "tldr":
-              "Edulcorante procesado que causa choques de azúcar en la sangre y niebla mental; evitar para una energía y concentración estables."
+              "Edulcorante procesado que causa choques de azúcar en la sangre y niebla mental; evitar para una energía y concentración estables.",
+          "studyLinks": {
+            "Consumo de azúcar y comportamiento de Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/21129940/",
+            "Sacarosa vs JMAF en la función cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/16507461/"
+          }
         }
       }
     },
@@ -1716,7 +1908,13 @@ class SeedingService {
             "Controllare la presenza di 'benzoato di sodio' in bibite e condimenti"
           ],
           "tldr":
-              "Conservante collegato all'energia irrequieta, specialmente se consumato con coloranti; eliminare per ridurre l'irrequietezza."
+              "Conservante collegato all'energia irrequieta, specialmente se consumato con coloranti; eliminare per ridurre l'irrequietezza.",
+          "studyLinks": {
+            "Benzoato di sodio ed energia irrequieta (Lancet)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/",
+            "Impatto cellulare dei conservanti alimentari":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/"
+          }
         },
         "es": {
           "name": "Benzoato de Sodio (E211)",
@@ -1735,7 +1933,13 @@ class SeedingService {
             "Busque 'benzoato de sodio' en refrescos y condimentos"
           ],
           "tldr":
-              "Conservante vinculado a la energía inquieta, especialmente cuando se consume con colorantes; eliminar para reducir la inquietud."
+              "Conservante vinculado a la energía inquieta, especialmente cuando se consume con colorantes; eliminar para reducir la inquietud.",
+          "studyLinks": {
+            "Benzoato de sodio y energía inquieta (Lancet)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/",
+            "Impacto celular de los conservantes alimentarios":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/"
+          }
         }
       }
     },
@@ -1779,7 +1983,8 @@ class SeedingService {
         "Take on empty stomach for best absorption",
         "Tolerance develops within 6 weeks with daily use",
         "Not recommended for chronic daily supplementation",
-        "Take separately from Focus Profile As (competes for absorption)"
+        "Take separately from Type A items (competes for absorption)",
+        "Avoid if you have hyperthyroidism or use MAO inhibitors"
       ],
       "tldr":
           "Dopamine precursor amino acid; best for acute stress situations rather than daily use due to tolerance.",
@@ -1807,7 +2012,13 @@ class SeedingService {
             "Evitare in caso di ipertiroidismo o uso di MAO-inibitori"
           ],
           "tldr":
-              "Aminoacido precursore della dopamina; meglio per situazioni di stress acuto piuttosto che per l'uso quotidiano a causa della tolleranza."
+              "Aminoacido precursore della dopamina; meglio per situazioni di stress acuto piuttosto che per l'uso quotidiano a causa della tolleranza.",
+          "studyLinks": {
+            "Tirosina per le prestazioni cognitive":
+                "https://pubmed.ncbi.nlm.nih.gov/25797188/",
+            "Stress e memoria di lavoro":
+                "https://pubmed.ncbi.nlm.nih.gov/10688423/"
+          }
         },
         "es": {
           "name": "L-Tirosina",
@@ -1832,7 +2043,13 @@ class SeedingService {
             "Evitar si padece hipertiroidismo o usa inhibidores de la MAO"
           ],
           "tldr":
-              "Aminoácido precursor de dopamina; mejor para situaciones de estrés agudo que para el uso diario debido a la tolerancia."
+              "Aminoácido precursor de dopamina; mejor para situaciones de estrés agudo que para el uso diario debido a la tolerancia.",
+          "studyLinks": {
+            "Tirosina para el rendimiento cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/25797188/",
+            "Estrés y memoria de trabajo":
+                "https://pubmed.ncbi.nlm.nih.gov/10688423/"
+          }
         }
       },
       "sideEffects": [
@@ -1914,7 +2131,15 @@ class SeedingService {
             "Forme metilate preferite per chi ha mutazioni MTHFR"
           ],
           "tldr":
-              "Cofattori essenziali per la sintesi dei neurotrasmettitori; le forme metilate supportano la produzione di dopamina e aggirano le limitazioni genetiche."
+              "Cofattori essenziali per la sintesi dei neurotrasmettitori; le forme metilate supportano la produzione di dopamina e aggirano le limitazioni genetiche.",
+          "studyLinks": {
+            "Vitamine B e sfide di concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/27521327/",
+            "Metilfolato nel Focus con polimorfismo MTHFR":
+                "https://pubmed.ncbi.nlm.nih.gov/24284437/",
+            "B6 e sintesi dei neurotrasmettitori":
+                "https://pubmed.ncbi.nlm.nih.gov/18950248/"
+          }
         },
         "es": {
           "name": "Complejo de Vitamina B (Metilado)",
@@ -1937,7 +2162,15 @@ class SeedingService {
             "Formas metiladas preferidas para quienes tienen mutaciones MTHFR"
           ],
           "tldr":
-              "Cofactores esenciales para la síntesis de neurotransmisores; las formas metiladas apoyan la producción de dopamina y evitan las limitaciones genéticas."
+              "Cofactores esenciales para la síntesis de neurotransmisores; las formas metiladas apoyan la producción de dopamina y evitan las limitaciones genéticas.",
+          "studyLinks": {
+            "Vitaminas B y desafíos de concentración":
+                "https://pubmed.ncbi.nlm.nih.gov/27521327/",
+            "Metilfolato en Enfoque con polimorfismo MTHFR":
+                "https://pubmed.ncbi.nlm.nih.gov/24284437/",
+            "B6 y síntesis de neurotransmisores":
+                "https://pubmed.ncbi.nlm.nih.gov/18950248/"
+          }
         }
       },
       "form": "Capsule"
@@ -2023,7 +2256,15 @@ class SeedingService {
             "Standardizzata al 3% rosavine e 1% salidroside"
           ],
           "tldr":
-              "Adattogeno che riduce l'affaticamento mentale e migliora la resilienza allo stress modulando dopamina e serotonina."
+              "Adattogeno che riduce l'affaticamento mentale e migliora la resilienza allo stress modulando dopamina e serotonina.",
+          "studyLinks": {
+            "Rodiola per l'affaticamento mentale":
+                "https://pubmed.ncbi.nlm.nih.gov/19016404/",
+            "Effetti adattogeni sullo stress":
+                "https://pubmed.ncbi.nlm.nih.gov/11410073/",
+            "Miglioramento cognitivo nella fatica":
+                "https://pubmed.ncbi.nlm.nih.gov/20378318/"
+          }
         },
         "es": {
           "name": "Rhodiola Rosea",
@@ -2047,7 +2288,15 @@ class SeedingService {
             "Estandarizado al 3% de rosavinas y 1% de salidrósido"
           ],
           "tldr":
-              "Adaptógeno que reduce la fatiga mental y mejora la resiliencia al estrés modulando la dopamina y la serotonina."
+              "Adaptógeno que reduce la fatiga mental y mejora la resiliencia al estrés modulando la dopamina y la serotonina.",
+          "studyLinks": {
+            "Rhodiola para la fatiga mental":
+                "https://pubmed.ncbi.nlm.nih.gov/19016404/",
+            "Efectos adaptógenos en el estrés":
+                "https://pubmed.ncbi.nlm.nih.gov/11410073/",
+            "Mejora cognitiva en la fatiga":
+                "https://pubmed.ncbi.nlm.nih.gov/20378318/"
+          }
         }
       }
     },
@@ -2121,7 +2370,15 @@ class SeedingService {
             "Può interagire con i farmaci per la tiroide"
           ],
           "tldr":
-              "Potente adattogeno che riduce il cortisolo e l'ansia; ideale per l'uso serale per supportare il sonno e il recupero dallo stress."
+              "Potente adattogeno che riduce il cortisolo e l'ansia; ideale per l'uso serale per supportare il sonno e il recupero dallo stress.",
+          "studyLinks": {
+            "Ashwagandha per stress e ansia":
+                "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+            "Riduzione del cortisolo nello stress cronico":
+                "https://pubmed.ncbi.nlm.nih.gov/31517876/",
+            "Miglioramento della qualità del sonno":
+                "https://pubmed.ncbi.nlm.nih.gov/31728244/"
+          }
         },
         "es": {
           "name": "Ashwagandha (KSM-66)",
@@ -2145,7 +2402,15 @@ class SeedingService {
             "El extracto KSM-66® es el más estudiado para funciones cognitivas"
           ],
           "tldr":
-              "Potente adaptógeno que reduce el cortisol y la ansiedad; mejor para uso nocturno para apoyar el sueño y la recuperación del estrés."
+              "Potente adaptógeno que reduce el cortisol y la ansiedad; mejor para uso nocturno para apoyar el sueño y la recuperación del estrés.",
+          "studyLinks": {
+            "Ashwagandha para el estrés y la ansiedad":
+                "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+            "Reducción de cortisol en estrés crónico":
+                "https://pubmed.ncbi.nlm.nih.gov/31517876/",
+            "Mejora de la calidad del sueño":
+                "https://pubmed.ncbi.nlm.nih.gov/31728244/"
+          }
         }
       }
     },
@@ -2224,7 +2489,15 @@ class SeedingService {
             "Generalmente molto sicuro; l'eccesso viene escreto nelle urine"
           ],
           "tldr":
-              "Essenziale per la sintesi della dopamina ma DEVE essere temporizzata attentamente - acidifica le urine e riduce l'efficacia del Tipo A."
+              "Essenziale per la sintesi della dopamina ma DEVE essere temporizzata attentamente - acidifica le urine e riduce l'efficacia del Tipo A.",
+          "studyLinks": {
+            "Vitamina C e sintesi di dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/7002348/",
+            "pH urinario ed escrezione di anfetamine":
+                "https://pubmed.ncbi.nlm.nih.gov/7361718/",
+            "Effetti antiossidanti nel cervello":
+                "https://pubmed.ncbi.nlm.nih.gov/15350981/"
+          }
         },
         "es": {
           "name": "Vitamina C (Ácido Ascórbico)",
@@ -2249,9 +2522,17 @@ class SeedingService {
             "Generalmente muy seguro; el exceso se excreta en la orina"
           ],
           "tldr":
-              "Esencial para la síntesis de dopamina, pero DEBE programarse con cuidado: acidifica la orina y reduce la eficacia del Tipo A."
+              "Esencial para la síntesis de dopamina, pero DEBE programarse con cuidado: acidifica la orina y reduce la eficacia del Tipo A.",
+          "studyLinks": {
+            "Vitamina C y síntesis de dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/7002348/",
+            "pH urinario y excreción de anfetaminas":
+                "https://pubmed.ncbi.nlm.nih.gov/7361718/",
+            "Efectos antioxidantes en el cerebro":
+                "https://pubmed.ncbi.nlm.nih.gov/15350981/"
+          }
         }
-      },
+      }
     },
     {
       "id": "acetyl-l-carnitine",
@@ -2328,7 +2609,15 @@ class SeedingService {
             "Iniziare con 500mg per valutare la tolleranza"
           ],
           "tldr":
-              "Supporta l'energia cerebrale e l'acetilcolina; particolarmente ricercato per il sottotipo disattento di Focus."
+              "Supporta l'energia cerebrale e l'acetilcolina; particolarmente ricercato per il sottotipo disattento di Focus.",
+          "studyLinks": {
+            "ALCAR per il Focus di tipo disattento":
+                "https://pubmed.ncbi.nlm.nih.gov/17444943/",
+            "ALCAR per la funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/28178168/",
+            "Supporto mitocondriale nell'invecchiamento":
+                "https://pubmed.ncbi.nlm.nih.gov/18065594/"
+          }
         },
         "es": {
           "name": "Acetil-L-Carnitina (ALCAR)",
@@ -2352,7 +2641,15 @@ class SeedingService {
             "Comience con 500mg para evaluar la tolerancia cognitiva"
           ],
           "tldr":
-              "Apoya la energía cerebral y la acetilcolina; particularmente investigado para el subtipo inatento de Enfoque."
+              "Apoya la energía cerebral y la acetilcolina; particularmente investigado para el subtipo inatento de Enfoque.",
+          "studyLinks": {
+            "ALCAR para el Enfoque tipo inatento":
+                "https://pubmed.ncbi.nlm.nih.gov/17444943/",
+            "ALCAR para la función cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/28178168/",
+            "Apoyo mitocondrial en el envejecimiento":
+                "https://pubmed.ncbi.nlm.nih.gov/18065594/"
+          }
         }
       },
       "sideEffects": [
@@ -2437,7 +2734,15 @@ class SeedingService {
             "Estremamente sicuro; uno degli integratori più studiati"
           ],
           "tldr":
-              "Supporta l'energia cerebrale (ATP); migliora la memoria di lavoro e riduce l'affaticamento mentale."
+              "Supporta l'energia cerebrale (ATP); migliora la memoria di lavoro e riduce l'affaticamento mentale.",
+          "studyLinks": {
+            "Creatina per la funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/29704637/",
+            "Miglioramento della memoria di lavoro":
+                "https://pubmed.ncbi.nlm.nih.gov/14600563/",
+            "Affaticamento mentale e privazione del sonno":
+                "https://pubmed.ncbi.nlm.nih.gov/17828627/"
+          }
         },
         "es": {
           "name": "Creatina Monohidrato",
@@ -2462,8 +2767,16 @@ class SeedingService {
             "Extremamente seguro; uno de los suplementos más investigados"
           ],
           "tldr":
-              "Apoya la energía cerebral (ATP); mejora la memoria de trabajo y reduce la fatiga mental."
-        }
+              "Apoya la energía cerebral (ATP); mejora la memoria de trabajo y reduce la fatiga mental.",
+          "studyLinks": {
+            "Creatina para la función cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/29704637/",
+            "Mejora de la memoria de trabajo":
+                "https://pubmed.ncbi.nlm.nih.gov/14600563/",
+            "Fatiga mental y privación de sueño":
+                "https://pubmed.ncbi.nlm.nih.gov/17828627/"
+          }
+        },
       }
     },
     {
@@ -2535,7 +2848,14 @@ class SeedingService {
             "Evitare dosi elevate in caso di problemi alla cistifellea"
           ],
           "tldr":
-              "Potente composto antinfiammatorio e neuroprotettivo; deve essere formulato per l'assorbimento (con piperina o liposomiale)."
+              "Potente composto antinfiammatorio e neuroprotettivo; deve essere formulato per l'assorbimento (con piperina o liposomiale).",
+          "studyLinks": {
+            "Curcumina e BDNF": "https://pubmed.ncbi.nlm.nih.gov/23832433/",
+            "Effetti antinfiammatori nel cervello":
+                "https://pubmed.ncbi.nlm.nih.gov/17569207/",
+            "Potenziamento della biodisponibilità con piperina":
+                "https://pubmed.ncbi.nlm.nih.gov/9619120/"
+          }
         },
         "es": {
           "name": "Curcumina (Extracto de Cúrcuma)",
@@ -2560,8 +2880,15 @@ class SeedingService {
             "Evite dosis altas si tiene problemas de vesícula biliar"
           ],
           "tldr":
-              "Potente compuesto antiinflamatorio y neuroprotector; debe formularse para su absorción (con piperina o liposomal)."
-        }
+              "Potente compuesto antiinflamatorio y neuroprotector; debe formularse para su absorción (con piperina o liposomal).",
+          "studyLinks": {
+            "Curcumina y BDNF": "https://pubmed.ncbi.nlm.nih.gov/23832433/",
+            "Efectos antiinflamatorios en el cerebro":
+                "https://pubmed.ncbi.nlm.nih.gov/17569207/",
+            "Mejora de la biodisponibilidad con piperina":
+                "https://pubmed.ncbi.nlm.nih.gov/9619120/"
+          }
+        },
       }
     },
     {
@@ -2633,7 +2960,15 @@ class SeedingService {
             "Può interagire con farmaci per la pressione o anticoagulanti"
           ],
           "tldr":
-              "Estende la disponibilità di dopamina inibendo la COMT; fornisce neuroprotezione e sinergizza con la L-teanina per la concentrazione."
+              "Estende la disponibilità di dopamina inibendo la COMT; fornisce neuroprotezione e sinergizza con la L-teanina per la concentrazione.",
+          "studyLinks": {
+            "EGCG e metabolismo della dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/18296328/",
+            "Tè verde per la funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/28056735/",
+            "Inibizione COMT e attenzione":
+                "https://pubmed.ncbi.nlm.nih.gov/21129394/"
+          }
         },
         "es": {
           "name": "Extracto de Té Verde (EGCG)",
@@ -2657,8 +2992,16 @@ class SeedingService {
             "Puede interactuar con medicamentos para la presión arterial"
           ],
           "tldr":
-              "Extiende la disponibilidad de dopamina al inhibir la COMT; proporciona neuroprotección y crea sinergia con la L-teanina para la concentración."
-        }
+              "Extiende la disponibilidad de dopamina al inhibir la COMT; proporciona neuroprotección y crea sinergia con la L-teanina para la concentración.",
+          "studyLinks": {
+            "EGCG y metabolismo de dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/18296328/",
+            "Té verde para la función cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/28056735/",
+            "Inhibición de COMT y atención":
+                "https://pubmed.ncbi.nlm.nih.gov/21129394/"
+          }
+        },
       }
     },
     {
@@ -2735,7 +3078,15 @@ class SeedingService {
             "Evitare se si soffre di asma (raro rischio di broncospasmo)"
           ],
           "tldr":
-              "Aumenta il glutatione per la neuroprotezione e modula il glutammato per un migliore controllo degli impulsi."
+              "Aumenta il glutatione per la neuroprotezione e modula il glutammato per un migliore controllo degli impulsi.",
+          "studyLinks": {
+            "NAC per il controllo degli impulsi e Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/31109635/",
+            "Glutatione e neuroprotezione":
+                "https://pubmed.ncbi.nlm.nih.gov/29706149/",
+            "NAC e modulazione del glutammato":
+                "https://pubmed.ncbi.nlm.nih.gov/23369637/"
+          }
         },
         "es": {
           "name": "N-Acetil Cisteína (NAC)",
@@ -2759,8 +3110,16 @@ class SeedingService {
             "Evitar si padece asma (riesgo raro de broncoespasmo)"
           ],
           "tldr":
-              "Aumenta el glutatión para la neuroprotección y modula el glutamato para mejorar el control de los impulsos."
-        }
+              "Aumenta el glutatión para la neuroprotección y modula el glutamato para mejorar el control de los impulsos.",
+          "studyLinks": {
+            "NAC para el control de impulsos y Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/31109635/",
+            "Glutatión y neuroprotección":
+                "https://pubmed.ncbi.nlm.nih.gov/29706149/",
+            "NAC y modulación de glutamato":
+                "https://pubmed.ncbi.nlm.nih.gov/23369637/"
+          }
+        },
       },
       "sideEffects": [
         "Common: sulfur smell/taste (normal, not harmful)",
@@ -2841,7 +3200,15 @@ class SeedingService {
             "Evitare se si assumono farmaci colinergici"
           ],
           "tldr":
-              "Potente inibitore dell'acetilcolinesterasi con emivita di 24+ ore; migliora memoria e attenzione ma richiede cicli."
+              "Potente inibitore dell'acetilcolinesterasi con emivita di 24+ ore; migliora memoria e attenzione ma richiede cicli.",
+          "studyLinks": {
+            "Uperzina A per il potenziamento cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/23374481/",
+            "Inibizione dell'acetilcolinesterasi e memoria":
+                "https://pubmed.ncbi.nlm.nih.gov/16007238/",
+            "Effetti neuroprotettivi":
+                "https://pubmed.ncbi.nlm.nih.gov/18611150/"
+          }
         },
         "es": {
           "name": "Huperzina A",
@@ -2865,8 +3232,16 @@ class SeedingService {
             "Evitar si toma medicamentos colinérgicos"
           ],
           "tldr":
-              "Potente inhibidor de la acetilcolinesterasa con una vida media de más de 24 horas; mejora la memoria y la atención, pero requiere ciclos."
-        }
+              "Potente inhibidor de la acetilcolinesterasa con una vida media de más de 24 horas; mejora la memoria y la atención, pero requiere ciclos.",
+          "studyLinks": {
+            "Huperzina A para la mejora cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/23374481/",
+            "Inhibición de la acetilcolinesterasa y memoria":
+                "https://pubmed.ncbi.nlm.nih.gov/16007238/",
+            "Efectos neuroprotectores":
+                "https://pubmed.ncbi.nlm.nih.gov/18611150/"
+          }
+        },
       },
     },
     {
@@ -2938,7 +3313,15 @@ class SeedingService {
             "Evitare se si soffre di disturbi emorragici"
           ],
           "tldr":
-              "Migliora il flusso sanguigno cerebrale e l'utilizzo del glucosio per una migliore chiarezza mentale."
+              "Migliora il flusso sanguigno cerebrale e l'utilizzo del glucosio per una migliore chiarezza mentale.",
+          "studyLinks": {
+            "Vinpocetina e flusso sanguigno cerebrale":
+                "https://pubmed.ncbi.nlm.nih.gov/12404671/",
+            "Effetti di potenziamento cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/12895685/",
+            "Meccanismi neuroprotettivi":
+                "https://pubmed.ncbi.nlm.nih.gov/16389715/"
+          }
         },
         "es": {
           "name": "Vinpocetina",
@@ -2946,14 +3329,14 @@ class SeedingService {
               "Derivado de la planta vinca. Mejora el flujo sanguíneo cerebral y la utilización de glucosa. Tomar con alimentos.",
           "mechanismOfAction":
               "La vinpocetina favorece la circulación óptima y el suministro de oxígeno al cerebro. Promueve la utilización de energía en las vías neuronales y actúa como un potente antioxidante.",
-          "timingRationale":
-              "Dosis matutina o temprano en la tarde con alimentos para maximizar la absorción. Efectos notables dentro de 1-2 horas. Evitar por la noche.",
           "detailedBenefits": [
             "Mejora la circulación sanguínea y la oxigenación del cerebro",
             "Potencia el estado de alerta mental y la recuperación de memoria",
             "Apoya el metabolismo de la glucosa cerebral para la energía",
             "Propiedades antiinflamatorias y antioxidantes"
           ],
+          "timingRationale":
+              "Dosis matutina o temprano en la tarde con alimentos para maximizar la absorción. Efectos notables dentro de 1-2 horas. Evitar por la noche.",
           "dosageFrequency": "Una o dos veces al día con alimentos",
           "dosageWarnings": [
             "Tomar siempre con alimentos para una absorción óptima",
@@ -2962,8 +3345,16 @@ class SeedingService {
             "Evitar si padece trastornos hemorrágicos"
           ],
           "tldr":
-              "Mejora el flujo sanguíneo cerebral y la utilización de glucosa para una mejor claridad mental."
-        }
+              "Mejora el flujo sanguíneo cerebral y la utilización de glucosa para una mejor claridad mental.",
+          "studyLinks": {
+            "Vinpocetina y flujo sanguíneo cerebral":
+                "https://pubmed.ncbi.nlm.nih.gov/12404671/",
+            "Efectos de mejora cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/12895685/",
+            "Mecanismos neuroprotectores":
+                "https://pubmed.ncbi.nlm.nih.gov/16389715/"
+          }
+        },
       },
     },
     {
@@ -3036,7 +3427,15 @@ class SeedingService {
             "Evitare in combinazione con inibitori delle MAO"
           ],
           "tldr":
-              "Fonte naturale di L-DOPA per un rapido aumento della dopamina; DEVE essere ciclizzato."
+              "Fonte naturale di L-DOPA per un rapido aumento della dopamina; DEVE essere ciclizzato.",
+          "studyLinks": {
+            "Mucuna pruriens e dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/15478206/",
+            "L-DOPA per l'umore e la motivazione":
+                "https://pubmed.ncbi.nlm.nih.gov/24931003/",
+            "Effetti neuroprotettivi":
+                "https://pubmed.ncbi.nlm.nih.gov/23675006/"
+          }
         },
         "es": {
           "name": "Mucuna Pruriens (L-DOPA)",
@@ -3053,7 +3452,7 @@ class SeedingService {
             "Contiene antioxidantes neuroprotectores"
           ],
           "dosageFrequency":
-              "Una vez al día con el estómago vacío (CICLIZZARE)",
+              "Una vez al día con el estómago vacío (HACER CICLOS)",
           "dosageWarnings": [
             "DEBE completarse en ciclos (3-5 días sí, 2-3 no)",
             "Tomar con el estómago vacío (la proteína bloquea L-DOPA)",
@@ -3061,8 +3460,16 @@ class SeedingService {
             "Evitar con inhibidores de la MAO"
           ],
           "tldr":
-              "Fuente natural de L-DOPA para un rápido aumento de la dopamina; DEBE completarse en ciclos."
-        }
+              "Fuente natural de L-DOPA para un rápido aumento de la dopamina; DEBE completarse en ciclos.",
+          "studyLinks": {
+            "Mucuna pruriens y dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/15478206/",
+            "L-DOPA para el estado de ánimo y la motivación":
+                "https://pubmed.ncbi.nlm.nih.gov/24931003/",
+            "Efectos neuroprotectores":
+                "https://pubmed.ncbi.nlm.nih.gov/23675006/"
+          }
+        },
       },
     },
     {
@@ -3105,7 +3512,15 @@ class SeedingService {
             "Assumere con il cibo se causa lievi disturbi gastrici"
           ],
           "tldr":
-              "Una colina superiore che supporta la memoria di lavoro e la produzione di acetilcolina."
+              "Una colina superiore che supporta la memoria di lavoro e la produzione di acetilcolina.",
+          "studyLinks": {
+            "Alfa-GPC per il potenziamento cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/12637119/",
+            "Memoria di lavoro e attenzione":
+                "https://pubmed.ncbi.nlm.nih.gov/21156470/",
+            "Meccanismo di sintesi dell'acetilcolina":
+                "https://pubmed.ncbi.nlm.nih.gov/14675803/"
+          }
         },
         "es": {
           "name": "Alfa-GPC",
@@ -3125,12 +3540,20 @@ class SeedingService {
           "dosageWarnings": [
             "Generalmente muy seguro con mínimos efectos secundarios",
             "Puede causar dolor de cabeza (signo de exceso de acetilcolina)",
-            "Reduzca la dosis si siente irritabilidad",
-            "Tomar con comida si causa molestias gástricas leves"
+            "Tomar con comida si causa molestias gástricas leves",
+            "Más caro que otras fuentes de colina pero con mejor biodisponibilidad"
           ],
           "tldr":
-              "Una colina superior que apoya la memoria de trabajo y la producción de acetilcolina."
-        }
+              "Una colina superior que apoya la memoria de trabajo y la producción de acetilcolina.",
+          "studyLinks": {
+            "Alfa-GPC para la mejora cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/12637119/",
+            "Memoria de trabajo y atención":
+                "https://pubmed.ncbi.nlm.nih.gov/21156470/",
+            "Mecanismo de síntesis de acetilcolina":
+                "https://pubmed.ncbi.nlm.nih.gov/14675803/"
+          }
+        },
       },
       "status": "beneficial",
       "focusLevel": 5,
@@ -3241,7 +3664,15 @@ class SeedingService {
             "Consigliata una pausa di una settimana dopo 2-3 settimane di uso"
           ],
           "tldr":
-              "Adattogeno stimolante che migliora la vigilanza, la memoria di lavoro e combatte la stanchezza mentale."
+              "Adattogeno stimolante che migliora la vigilanza, la memoria di lavoro e combatte la stanchezza mentale.",
+          "studyLinks": {
+            "Ginseng e prestazioni cognitive nel Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/22082268/",
+            "Meccanismi di modulazione dei neurotrasmettitori":
+                "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+            "Revisione sistematica degli effetti cognitivi":
+                "https://pubmed.ncbi.nlm.nih.gov/20123133/"
+          }
         },
         "es": {
           "name": "Panax Ginseng (Ginseng Coreano)",
@@ -3265,8 +3696,16 @@ class SeedingService {
             "Se recomienda un descanso de una semana tras 2-3 semanas de uso"
           ],
           "tldr":
-              "Adaptógeno estimulante que mejora el alerta, la memoria de trabajo y combate la fatiga mental."
-        }
+              "Adaptógeno estimulante que mejora el alerta, la memoria de trabajo y combate la fatiga mental.",
+          "studyLinks": {
+            "Ginseng y rendimiento cognitivo en Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/22082268/",
+            "Mecanismos de modulación de neurotransmisores":
+                "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+            "Revisión sistemática de efectos cognitivos":
+                "https://pubmed.ncbi.nlm.nih.gov/20123133/"
+          }
+        },
       },
     },
     {
@@ -3339,7 +3778,15 @@ class SeedingService {
             "Effetti cumulativi - attendere 4 settimane per i benefici completi"
           ],
           "tldr":
-              "Migliora la circolazione cerebrale e l'attenzione attraverso il supporto dell'ossido nitrico e l'azione antiossidante."
+              "Migliora la circolazione cerebrale e l'attenzione attraverso il supporto dell'ossido nitrico e l'azione antiossidante.",
+          "studyLinks": {
+            "Estratto di pino per il Focus nei bambini":
+                "https://pubmed.ncbi.nlm.nih.gov/16499493/",
+            "Miglioramento dell'attenzione e dell'energia inquieta":
+                "https://pubmed.ncbi.nlm.nih.gov/17063641/",
+            "Effetti antiossidanti sulla cognizione":
+                "https://pubmed.ncbi.nlm.nih.gov/22214254/"
+          }
         },
         "es": {
           "name": "Corteza de Pino Marítimo",
@@ -3363,8 +3810,16 @@ class SeedingService {
             "Efectos acumulativos: esperar 4 semanas para beneficios finales"
           ],
           "tldr":
-              "Mejora la circulación cerebral y la atención mediante el soporte del óxido nítrico y la acción antioxidante."
-        }
+              "Mejora la circulación cerebral y la atención mediante el soporte del óxido nítrico y la acción antioxidante.",
+          "studyLinks": {
+            "Extracto de pino para el Enfoque en niños":
+                "https://pubmed.ncbi.nlm.nih.gov/16499493/",
+            "Mejora de la atención y la energía inquieta":
+                "https://pubmed.ncbi.nlm.nih.gov/17063641/",
+            "Efectos antioxidantes en la cognición":
+                "https://pubmed.ncbi.nlm.nih.gov/22214254/"
+          }
+        },
       },
     },
     {
@@ -3437,7 +3892,13 @@ class SeedingService {
             "Dosi molto elevate possono causare odore corporeo di pesce"
           ],
           "tldr":
-              "Fosfolipide essenziale per la salute delle membrane cellulari e precursore dell'acetilcolina."
+              "Fosfolipide essenziale per la salute delle membrane cellulari e precursore dell'acetilcolina.",
+          "studyLinks": {
+            "Colina e funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/22071706/",
+            "Fosfolipidi nella salute del cervello":
+                "https://pubmed.ncbi.nlm.nih.gov/30606018/"
+          }
         },
         "es": {
           "name": "Fosfatidilcolina (PC)",
@@ -3461,8 +3922,14 @@ class SeedingService {
             "Dosis muy altas pueden causar olor corporal a pescado"
           ],
           "tldr":
-              "Fosfolípido esencial para la salud de la membrana celular y precursor de acetilcolina."
-        }
+              "Fosfolípido esencial para la salud de la membrana celular y precursor de acetilcolina.",
+          "studyLinks": {
+            "Colina y función cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/22071706/",
+            "Fosfolípidos en la salud cerebral":
+                "https://pubmed.ncbi.nlm.nih.gov/30606018/"
+          }
+        },
       },
     },
     {
@@ -3530,7 +3997,13 @@ class SeedingService {
             "Generalmente molto sicuro alle dosi raccomandate"
           ],
           "tldr":
-              "Antiossidante liposolubile che protegge le membrane cerebrali; lavora in sinergia con gli omega-3."
+              "Antiossidante liposolubile che protegge le membrane cerebrali; lavora in sinergia con gli omega-3.",
+          "studyLinks": {
+            "Vitamina E e prestazioni cognitive":
+                "https://pubmed.ncbi.nlm.nih.gov/24337199/",
+            "Protezione antiossidante nel cervello":
+                "https://pubmed.ncbi.nlm.nih.gov/11264871/"
+          }
         },
         "es": {
           "name": "Vitamina E (Tocoferoles Mixtos)",
@@ -3553,8 +4026,14 @@ class SeedingService {
             "Generalmente muy seguro en las dosis recomendadas"
           ],
           "tldr":
-              "Antioxidante liposoluble que protege las membranas cerebrales; funciona sinérgicamente con omega-3."
-        }
+              "Antioxidante liposoluble que protege las membranas cerebrales; funciona sinérgicamente con omega-3.",
+          "studyLinks": {
+            "Vitamina E y rendimiento cognitivo":
+                "https://pubmed.ncbi.nlm.nih.gov/24337199/",
+            "Protección antioxidante en el cerebro":
+                "https://pubmed.ncbi.nlm.nih.gov/11264871/"
+          }
+        },
       },
     },
     {
@@ -3630,7 +4109,15 @@ class SeedingService {
             "Generalmente molto sicuro; effetti collaterali rari"
           ],
           "tldr":
-              "Supporta la produzione di energia mitocondriale e fornisce protezione antiossidante per le cellule cerebrali ad alta energia."
+              "Supporta la produzione di energia mitocondriale e fornisce protezione antiossidante per le cellule cerebrali ad alta energia.",
+          "studyLinks": {
+            "CoQ10 e funzione cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/31806905/",
+            "Disfunzione mitocondriale nel Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/28093713/",
+            "Biodisponibilità di ubiquinolo vs ubiquinone":
+                "https://pubmed.ncbi.nlm.nih.gov/17287847/"
+          }
         },
         "es": {
           "name": "Coenzima Q10 (Ubiquinol)",
@@ -3654,8 +4141,16 @@ class SeedingService {
             "Generalmente muy seguro; los efectos secundarios son raros"
           ],
           "tldr":
-              "Apoya la producción de energía mitocondrial y proporciona protección antioxidante para las células cerebrales de alta energía."
-        }
+              "Apoya la producción de energía mitocondrial y proporciona protección antioxidante para las células cerebrales de alta energía.",
+          "studyLinks": {
+            "CoQ10 y función cognitiva":
+                "https://pubmed.ncbi.nlm.nih.gov/31806905/",
+            "Disfunción mitocondrial en Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/28093713/",
+            "Biodisponibilidad de ubiquinol vs ubiquinona":
+                "https://pubmed.ncbi.nlm.nih.gov/17287847/"
+          }
+        },
       },
     },
     {
@@ -3727,7 +4222,13 @@ class SeedingService {
             "Il beta-carotene è un precursore più sicuro per chi è a rischio di tossicità"
           ],
           "tldr":
-              "Vitamina liposolubile che supporta la neuroplasticità e la funzione dei recettori della dopamina; evitare megadosi."
+              "Vitamina liposolubile che supporta la neuroplasticità e la funzione dei recettori della dopamina; evitare megadosi.",
+          "studyLinks": {
+            "Acido retinoico e recettori della dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/11547055/",
+            "Vitamina A nella plasticità ippocampale":
+                "https://pubmed.ncbi.nlm.nih.gov/17502394/"
+          }
         },
         "es": {
           "name": "Vitamina A (Retinol)",
@@ -3750,7 +4251,13 @@ class SeedingService {
             "El betacaroteno es un precursor más seguro para quienes están en riesgo"
           ],
           "tldr":
-              "Vitamina liposoluble que apoya la neuroplasticidad y la función del receptor de dopamina; evite las megadosis."
+              "Vitamina liposoluble que apoya la neuroplasticidad y la función del receptor de dopamina; evite las megadosis.",
+          "studyLinks": {
+            "Ácido retinoico y receptores de dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/11547055/",
+            "Vitamina A en la plasticidad del hipocampo":
+                "https://pubmed.ncbi.nlm.nih.gov/17502394/"
+          }
         }
       },
     },
@@ -3796,7 +4303,7 @@ class SeedingService {
         "⚠️ CRITICAL: Reduces effectiveness of birth control pills by 50%+",
         "⚠️ Interacts with SSRIs, SNRIs (serotonin syndrome risk)",
         "⚠️ Reduces effectiveness of blood thinners, immunosuppressants, HIV elements",
-        "⚠️ May interact with Focus Profile A elements",
+        "⚠️ May interact with Type A elements",
         "Causes photosensitivity - increases sun sensitivity",
         "NOT RECOMMENDED for people on multiple elements"
       ],
@@ -3826,7 +4333,15 @@ class SeedingService {
             "NON RACCOMANDATO per chi assume più farmaci"
           ],
           "tldr":
-              "Erba per depressione lieve ma le ESTESE incompatibilità farmacologiche la rendono inadatta per la maggior parte degli utenti Focus in trattamento."
+              "Erba per depressione lieve ma le ESTESE incompatibilità farmacologiche la rendono inadatta per la maggior parte degli utenti Focus in trattamento.",
+          "studyLinks": {
+            "Iperico per la depressione":
+                "https://pubmed.ncbi.nlm.nih.gov/18843608/",
+            "Incompatibilità farmacologiche e induzione del CYP450":
+                "https://pubmed.ncbi.nlm.nih.gov/15106147/",
+            "Controindicazioni e sicurezza":
+                "https://pubmed.ncbi.nlm.nih.gov/24931003/"
+          }
         },
         "es": {
           "name": "Hierba de San Juan",
@@ -3851,7 +4366,15 @@ class SeedingService {
             "NO SE RECOMIENDA para personas con múltiples medicamentos"
           ],
           "tldr":
-              "Hierba para la depresión leve, pero las EXTENSAS incompatibilidades farmacológicas la hacen inadecuada para la mayoría de los usuarios de Focus en tratamiento."
+              "Hierba para la depresión leve, pero las EXTENSAS incompatibilidades farmacológicas la hacen inadecuada para la mayoría de los usuarios de Focus en tratamiento.",
+          "studyLinks": {
+            "Hierba de San Juan para la depresión":
+                "https://pubmed.ncbi.nlm.nih.gov/18843608/",
+            "Incompatibilidades farmacológicas e inducción de CYP450":
+                "https://pubmed.ncbi.nlm.nih.gov/15106147/",
+            "Contraindicaciones y seguridad":
+                "https://pubmed.ncbi.nlm.nih.gov/24931003/"
+          }
         }
       },
     },
@@ -3925,7 +4448,15 @@ class SeedingService {
             "Evitare prima di guidare o usare macchinari"
           ],
           "tldr":
-              "Erba sedativa per il supporto del sonno; effetti altamente variabili e può causare stordimento mattutino."
+              "Erba sedativa per il supporto del sonno; effetti altamente variabili e può causare stordimento mattutino.",
+          "studyLinks": {
+            "Valeriana per la qualità del sonno":
+                "https://pubmed.ncbi.nlm.nih.gov/16335332/",
+            "Meccanismo di modulazione GABA":
+                "https://pubmed.ncbi.nlm.nih.gov/15650394/",
+            "Sicurezza e incompatibilità farmacologiche":
+                "https://pubmed.ncbi.nlm.nih.gov/17145239/"
+          }
         },
         "es": {
           "name": "Raíz de Valeriana",
@@ -3949,7 +4480,15 @@ class SeedingService {
             "Evitar antes de conducir o manejar maquinaria"
           ],
           "tldr":
-              "Hierba sedante para el apoyo del sueño; efectos altamente variables y puede causar aturdimiento matutino."
+              "Hierba sedante para el apoyo del sueño; efectos altamente variables y puede causar aturdimiento matutino.",
+          "studyLinks": {
+            "Valeriana para la calidad del sueño":
+                "https://pubmed.ncbi.nlm.nih.gov/16335332/",
+            "Mecanismo de modulación de GABA":
+                "https://pubmed.ncbi.nlm.nih.gov/15650394/",
+            "Seguridad e incompatibilidades farmacológicas":
+                "https://pubmed.ncbi.nlm.nih.gov/17145239/"
+          }
         }
       },
     },
@@ -4023,7 +4562,14 @@ class SeedingService {
             "⚠️ NON combinare con alcol (aumenta il rischio di tossicità epatica)"
           ],
           "tldr":
-              "Potente erba ansiolitica ma GRAVE rischio di tossicità epatica; utilizzare solo varietà nobili e monitorare la funzionalità epatica."
+              "Potente erba ansiolitica ma GRAVE rischio di tossicità epatica; utilizzare solo varietà nobili e monitorare la funzionalità epatica.",
+          "studyLinks": {
+            "Kava per i disturbi d'ansia":
+                "https://pubmed.ncbi.nlm.nih.gov/23235473/",
+            "Preoccupazioni di epatotossicità e sicurezza":
+                "https://pubmed.ncbi.nlm.nih.gov/17406128/",
+            "Meccanismo d'azione": "https://pubmed.ncbi.nlm.nih.gov/15639154/"
+          }
         },
         "es": {
           "name": "Kava Kava",
@@ -4034,7 +4580,7 @@ class SeedingService {
           "timingRationale":
               "Se prefiere la dosis nocturna debido a los efectos de relajación. Se pueden usar dosis más bajas durante el día para la ansiedad sin sedación, pero el uso nocturno es más seguro. Los efectos comienzan dentro de los 30-60 minutos. CRÍTICO: Use solo variedades de kava nobles y evite el uso diario a largo plazo debido al riesgo de toxicidad hepática.",
           "detailedBenefits": [
-            "Reduce la ansiedad en un 50-60% en ensayos estándar (comparable a las benzodiazepinas)",
+            "Puede reducir la ansiedad en un 50-60% en ensayos estándar (comparable a las benzodiazepinas)",
             "Ansiolítico no sedante a dosis moderadas",
             "Puede mejorar la calidad del sueño sin aturdimiento matutino"
           ],
@@ -4047,7 +4593,14 @@ class SeedingService {
             "⚠️ NO combinar con alcohol (aumenta el riesgo de toxicidad hepática)"
           ],
           "tldr":
-              "Potente hierba ansiolítica pero GRAVE riesgo de toxicidad hepática; use solo variedades nobles y controle la función hepática."
+              "Potente hierba ansiolítica pero GRAVE riesgo de toxicidad hepática; use solo variedades nobles y controle la función hepática.",
+          "studyLinks": {
+            "Kava para trastornos de ansiedad":
+                "https://pubmed.ncbi.nlm.nih.gov/23235473/",
+            "Preocupaciones de hepatotoxicidad y seguridad":
+                "https://pubmed.ncbi.nlm.nih.gov/17406128/",
+            "Mecanismo de acción": "https://pubmed.ncbi.nlm.nih.gov/15639154/"
+          }
         }
       },
     },
@@ -4123,7 +4676,15 @@ class SeedingService {
             "Non raccomandato in gravidanza o allattamento"
           ],
           "tldr":
-              "Precursore dell'acetilcolina che supporta l'attenzione e la concentrazione mentale."
+              "Precursore dell'acetilcolina che supporta l'attenzione e la concentrazione mentale.",
+          "studyLinks": {
+            "DMAE per la funzione cognitiva (evidenza limitata)":
+                "https://pubmed.ncbi.nlm.nih.gov/3526687/",
+            "Preoccupazioni di sicurezza ed effetti collaterali":
+                "https://pubmed.ncbi.nlm.nih.gov/6153094/",
+            "Meccanismo d'azione (teorico)":
+                "https://pubmed.ncbi.nlm.nih.gov/7301036/"
+          }
         },
         "es": {
           "name": "DMAE",
@@ -4146,7 +4707,15 @@ class SeedingService {
             "No recomendado durante el embarazo o la lactancia"
           ],
           "tldr":
-              "Nootrópico teórico con evidencia débil y efectos impredecibles; mejores fuentes de colina disponibles."
+              "Nootrópico teórico con evidencia débil y efectos impredecibles; mejores fuentes de colina disponibles.",
+          "studyLinks": {
+            "DMAE para la función cognitiva (evidencia limitada)":
+                "https://pubmed.ncbi.nlm.nih.gov/3526687/",
+            "Preocupaciones de seguridad y efectos secundarios":
+                "https://pubmed.ncbi.nlm.nih.gov/6153094/",
+            "Mecanismo de acción (teórico)":
+                "https://pubmed.ncbi.nlm.nih.gov/7301036/"
+          }
         }
       },
     },
@@ -4219,7 +4788,15 @@ class SeedingService {
             "Evitare se sensibili agli stimolanti o con problemi cardiaci"
           ],
           "tldr":
-              "Deve essere abbinata alla L-Teanina per mitigare i tremori; fornisce allerta temporanea ma usare con cautela."
+              "Deve essere abbinata alla L-Teanina per mitigare i tremori; fornisce allerta temporanea ma usare con cautela.",
+          "studyLinks": {
+            "Sinergia Caffeina e L-Teanina":
+                "https://pubmed.ncbi.nlm.nih.gov/18681988/",
+            "Effetti della caffeina sulle sfide di focus":
+                "https://pubmed.ncbi.nlm.nih.gov/21437156/",
+            "Interazioni tra Adenosina e Dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/11283318/"
+          }
         },
         "es": {
           "name": "Cafeína",
@@ -4243,8 +4820,16 @@ class SeedingService {
             "Evitar si es sensible a estimulantes o tiene problemas cardíacos"
           ],
           "tldr":
-              "Debe combinarse con L-Teanina para mitigar el nerviosismo; proporciona alerta temporal pero úsela con precaución."
-        }
+              "Debe combinarse con L-Teanina para mitigar el nerviosismo; proporciona alerta temporal pero úsela con precaución.",
+          "studyLinks": {
+            "Sinergia de Cafeína y L-Teanina":
+                "https://pubmed.ncbi.nlm.nih.gov/18681988/",
+            "Efectos de la cafeína en desafíos de enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/21437156/",
+            "Interacciones de Adenosina y Dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/11283318/"
+          }
+        },
       },
       "form": "Capsule"
     },
@@ -4318,7 +4903,15 @@ class SeedingService {
             "Non raccomandata in gravidanza o allattamento"
           ],
           "tldr":
-              "Ormone del sonno per regolare il ritmo circadiano; iniziare con dosi basse."
+              "Ormone del sonno per regolare il ritmo circadiano; iniziare con dosi basse.",
+          "studyLinks": {
+            "Melatonina per il sonno nel Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/30635432/",
+            "Ritmo circadiano e Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/30107544/",
+            "Melatonina a basso dosaggio vs alto dosaggio":
+                "https://pubmed.ncbi.nlm.nih.gov/11600521/"
+          }
         },
         "es": {
           "name": "Melatonina",
@@ -4342,7 +4935,15 @@ class SeedingService {
             "No recomendada para mujeres embarazadas o lactantes"
           ],
           "tldr":
-              "Hormona del sueño para regular el ritmo circadiano; comience con dosis bajas."
+              "Hormona del sueño para regular el ritmo circadiano; comience con dosis bajas.",
+          "studyLinks": {
+            "Melatonina para dormir en Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/30635432/",
+            "Ritmo circadiano y Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/30107544/",
+            "Melatonina de dosis baja frente a dosis alta":
+                "https://pubmed.ncbi.nlm.nih.gov/11600521/"
+          }
         }
       },
     },
@@ -4415,7 +5016,15 @@ class SeedingService {
             "Non per uso quotidiano a lungo termine senza supervisione"
           ],
           "tldr":
-              "Precursore della serotonina che supporta l'umore e il sonno; altamente efficace ma pericoloso se combinato con specifici antidepressivi."
+              "Precursore della serotonina che supporta l'umore e il sonno; altamente efficace ma pericoloso se combinato con specifici antidepressivi.",
+          "studyLinks": {
+            "5-HTP per depressione e umore":
+                "https://pubmed.ncbi.nlm.nih.gov/15146197/",
+            "Serotonina e controllo degli impulsi":
+                "https://pubmed.ncbi.nlm.nih.gov/20561551/",
+            "Sicurezza e compatibilità con SSRI":
+                "https://pubmed.ncbi.nlm.nih.gov/22129819/"
+          }
         },
         "es": {
           "name": "5-HTP (5-Hidroxitriptófano)",
@@ -4439,7 +5048,15 @@ class SeedingService {
             "No para uso diario prolongado sin supervisión"
           ],
           "tldr":
-              "Precursor de serotonina que apoya el estado de ánimo y el sueño; altamente eficaz pero peligroso si se combina con antidepresivos específicos."
+              "Precursor de serotonina que apoya el estado de ánimo y el sueño; altamente eficaz pero peligroso si se combina con antidepresivos específicos.",
+          "studyLinks": {
+            "5-HTP para la depresión y el estado de ánimo":
+                "https://pubmed.ncbi.nlm.nih.gov/15146197/",
+            "Serotonina y control de impulsos":
+                "https://pubmed.ncbi.nlm.nih.gov/20561551/",
+            "Seguridad y compatibilidad con ISRS":
+                "https://pubmed.ncbi.nlm.nih.gov/22129819/"
+          }
         }
       }
     },
@@ -4516,7 +5133,15 @@ class SeedingService {
             "⚠️ L'uso a lungo termine può interferire con lo stato dello zinco"
           ],
           "tldr":
-              "Minerale essenziale per la sintesi della norepinefrina; integrare solo se l'apporto di zinco è elevato."
+              "Minerale essenziale per la sintesi della norepinefrina; integrare solo se l'apporto di zinco è elevato.",
+          "studyLinks": {
+            "Rapporti Rame/Zinco nelle popolazioni Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/21350130/",
+            "Ruolo del rame nel metabolismo della dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/11252112/",
+            "Competizione minerale per l'assorbimento":
+                "https://pubmed.ncbi.nlm.nih.gov/11110860/"
+          }
         },
         "es": {
           "name": "Cobre",
@@ -4540,7 +5165,15 @@ class SeedingService {
             "⚠️ El uso prolongado puede interferir con los niveles de zinc"
           ],
           "tldr":
-              "Mineral esencial para la síntesis de norepinefrina; suplementar solo si la ingesta de zinc es alta."
+              "Mineral esencial para la síntesis de norepinefrina; suplementar solo si la ingesta de zinc es alta.",
+          "studyLinks": {
+            "Relaciones Cobre/Zinc en poblaciones de Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/21350130/",
+            "Papel del cobre en el metabolismo de la dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/11252112/",
+            "Competencia mineral por la absorción":
+                "https://pubmed.ncbi.nlm.nih.gov/11110860/"
+          }
         }
       }
     },
@@ -4617,7 +5250,15 @@ class SeedingService {
             "⚠️ Può interferire con alcuni farmaci anticonvulsivanti"
           ],
           "tldr":
-              "Cofattore essenziale per la dopamina, ma dosi elevate isolate comportano rischi per i nervi; meglio in formule bilanciate."
+              "Cofattore essenziale per la dopamina, ma dosi elevate isolate comportano rischi per i nervi; meglio in formule bilanciate.",
+          "studyLinks": {
+            "Vitamina B6 e sintesi dei neurotrasmettitori":
+                "https://pubmed.ncbi.nlm.nih.gov/20126403/",
+            "Tossicità della B6 e neuropatia periferica":
+                "https://pubmed.ncbi.nlm.nih.gov/22116704/",
+            "Sinergia B6 e Magnesio per il Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/16846314/"
+          }
         },
         "es": {
           "name": "Vitamina B6 (Alta Dosis)",
@@ -4641,8 +5282,16 @@ class SeedingService {
             "⚠️ Puede interferir con ciertos medicamentos anticonvulsivos"
           ],
           "tldr":
-              "Cofactor esencial para la dopamina, pero dosis altas aisladas conllevan riesgo de daño nervioso; mejor en fórmulas equilibradas."
-        }
+              "Cofactor esencial para la dopamina, pero dosis altas aisladas conllevan riesgo de daño nervioso; mejor en fórmulas equilibradas.",
+          "studyLinks": {
+            "Vitamina B6 y síntesis de neurotransmisores":
+                "https://pubmed.ncbi.nlm.nih.gov/20126403/",
+            "Toxicidad de B6 y neuropatía periférica":
+                "https://pubmed.ncbi.nlm.nih.gov/22116704/",
+            "Sinergia de B6 y Magnesio para el Enfoque":
+                "https://pubmed.ncbi.nlm.nih.gov/16846314/"
+          }
+        },
       }
     },
     {
@@ -4698,7 +5347,13 @@ class SeedingService {
             "Comune in sottaceti, senape, cereali e snack"
           ],
           "tldr":
-              "Colorante artificiale giallo collegato all'energia irrequieta e alla deplezione di zinco/B6; evitare per mantenere l'equilibrio dei neurotrasmettitori."
+              "Colorante artificiale giallo collegato all'energia irrequieta e alla deplezione di zinco/B6; evitare per mantenere l'equilibrio dei neurotrasmettitori.",
+          "studyLinks": {
+            "Studio Southampton sugli additivi":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/",
+            "Deplezione di zinco e tartrazina":
+                "https://pubmed.ncbi.nlm.nih.gov/7930261/"
+          }
         },
         "es": {
           "name": "Amarillo 5 (Tartrazina / E102)",
@@ -4717,9 +5372,15 @@ class SeedingService {
             "Común en encurtidos, mostaza, cereales y bocadillos de colores neón"
           ],
           "tldr":
-              "Colorante artificial amarillo vinculado a la energía inquieta y al agotamiento de zinc/B6; evitar para mantener el equilibrio de neurotransmisores."
-        }
-      },
+              "Colorante artificial amarillo vinculado a la energía inquieta y al agotamiento de zinc/B6; evitar para mantener el equilibrio de neurotransmisores.",
+          "studyLinks": {
+            "Estudio de Southampton sobre aditivos":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/",
+            "Agotamiento de zinc y tartrazina":
+                "https://pubmed.ncbi.nlm.nih.gov/7930261/"
+          }
+        },
+      }
     },
     {
       "id": "yellow-6",
@@ -4770,7 +5431,11 @@ class SeedingService {
             "Comune in bibite arancioni, prodotti da forno e snack al formaggio"
           ],
           "tldr":
-              "Colorante alimentare arancione che aumenta l'energia irrequieta; altamente raccomandato da evitare negli utenti Focus."
+              "Colorante alimentare arancione che aumenta l'energia irrequieta; altamente raccomandato da evitare negli utenti Focus.",
+          "studyLinks": {
+            "Iperattività in bambini di 3 e 8/9 anni":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
         },
         "es": {
           "name": "Amarillo 6 (Amarillo Crepúsculo / E110)",
@@ -4788,9 +5453,13 @@ class SeedingService {
             "Común en refrescos de naranja, productos horneados y bocadillos de queso"
           ],
           "tldr":
-              "Colorante alimentario naranja que aumenta la energía inquieta; muy recomendable evitar en usuarios de Focus."
-        }
-      },
+              "Colorante alimentario naranja que aumenta la energía inquieta; muy recomendable evitar en usuarios de Focus.",
+          "studyLinks": {
+            "Hiperactividad en niños de 3 y 8/9 años":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
+        },
+      }
     },
     {
       "id": "red-3",
@@ -4845,7 +5514,13 @@ class SeedingService {
             "Spesso presente nelle ciliegie al maraschino e in alcuni prodotti da forno"
           ],
           "tldr":
-              "Colorante rosso con potenziale di interruzione della tiroide che peggiora l'irrequietezza del Focus; eliminare dalla dieta."
+              "Colorante rosso con potenziale di interruzione della tiroide che peggiora l'irrequietezza del Focus; eliminare dalla dieta.",
+          "studyLinks": {
+            "Coloranti artificiali e funzione tiroidea":
+                "https://pubmed.ncbi.nlm.nih.gov/24584102/",
+            "Effetti comportamentali del Rosso 3":
+                "https://pubmed.ncbi.nlm.nih.gov/7161718/"
+          }
         },
         "es": {
           "name": "Rojo 3 (Eritrosina / E127)",
@@ -4864,9 +5539,15 @@ class SeedingService {
             "A menudo se encuentra en cerezas marasquinas y algunos productos horneados"
           ],
           "tldr":
-              "Colorante rojo con potencial de alteración de la tiroides que empeora la inquietud de Focus; eliminar de la dieta."
-        }
-      },
+              "Colorante rojo con potencial de alteración de la tiroides que empeora la inquietud de Focus; eliminar de la dieta.",
+          "studyLinks": {
+            "Colorantes artificiales y función tiroidea":
+                "https://pubmed.ncbi.nlm.nih.gov/24584102/",
+            "Efectos conductuales del Rojo 3":
+                "https://pubmed.ncbi.nlm.nih.gov/7161718/"
+          }
+        },
+      }
     },
     {
       "id": "blue-1",
@@ -4921,7 +5602,13 @@ class SeedingService {
             "Si trova in bevande blu, caramelle e gelati"
           ],
           "tldr":
-              "Colorante blu che attraversa la barriera emato-encefalica e funge da fattore scatenante comportamentale per molti utenti Focus."
+              "Colorante blu che attraversa la barriera emato-encefalica e funge da fattore scatenante comportamentale per molti utenti Focus.",
+          "studyLinks": {
+            "Blu 1 e barriera emato-encefalica":
+                "https://pubmed.ncbi.nlm.nih.gov/15531024/",
+            "Rapporto FDA su coloranti alimentari e comportamento":
+                "https://www.fda.gov/media/100000/download"
+          }
         },
         "es": {
           "name": "Azul 1 (Azul Brillante / E133)",
@@ -4940,9 +5627,15 @@ class SeedingService {
             "Se encuentra en bebidas azules, caramelos y helados"
           ],
           "tldr":
-              "Colorante azul que cruza la barrera hematoencefálica y sirve como desencadenante conductual para muchos usuarios de Focus."
-        }
-      },
+              "Colorante azul que cruza la barrera hematoencefálica y sirve como desencadenante conductual para muchos usuarios de Focus.",
+          "studyLinks": {
+            "Azul 1 y barrera hematoencefálica":
+                "https://pubmed.ncbi.nlm.nih.gov/15531024/",
+            "Informe de la FDA sobre colorantes alimentarios y comportamiento":
+                "https://www.fda.gov/media/100000/download"
+          }
+        },
+      }
     },
     {
       "id": "blue-2",
@@ -4994,7 +5687,11 @@ class SeedingService {
             "Comune in caramelle, bevande e alimenti per animali"
           ],
           "tldr":
-              "Colorante blu sintetico associato a iper-eccitazione comportamentale e irrequietezza."
+              "Colorante blu sintetico associato a iper-eccitazione comportamentale e irrequietezza.",
+          "studyLinks": {
+            "Indigotina e tossicità comportamentale":
+                "https://pubmed.ncbi.nlm.nih.gov/6582312/"
+          }
         },
         "es": {
           "name": "Azul 2 (Indigotina / E132)",
@@ -5013,9 +5710,13 @@ class SeedingService {
             "Común en caramelos, bebidas y alimentos para mascotas"
           ],
           "tldr":
-              "Colorante azul sintético asociado con hiperexcitación conductual e inquietud."
-        }
-      },
+              "Colorante azul sintético asociado con hiperexcitación conductual e inquietud.",
+          "studyLinks": {
+            "Indigotina y toxicidad conductual":
+                "https://pubmed.ncbi.nlm.nih.gov/6582312/"
+          }
+        },
+      }
     },
     {
       "id": "carmoisine",
@@ -5068,7 +5769,11 @@ class SeedingService {
             "Si trova in marmellate, dolci e bevande analcoliche"
           ],
           "tldr":
-              "Colorante rosso azoico dello studio di Southampton con comprovati legami con l'energia irrequieta."
+              "Colorante rosso azoico dello studio di Southampton con comprovati legami con l'energia irrequieta.",
+          "studyLinks": {
+            "Studio Southampton (Lancet)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
         },
         "es": {
           "name": "Carmoisina (Azorrubina / E122)",
@@ -5087,8 +5792,12 @@ class SeedingService {
             "Se encuentra en mermeladas, dulces y refrescos"
           ],
           "tldr":
-              "Tinte rojo azoico del estudio de Southampton con vínculos comprobados con la energía inquieta."
-        }
+              "Tinte rojo azoico del estudio de Southampton con vínculos comprobados con la energía inquieta.",
+          "studyLinks": {
+            "Estudio de Southampton (Lancet)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
+        },
       },
     },
     {
@@ -5142,7 +5851,11 @@ class SeedingService {
             "Comune in gelati, bibite e prodotti per l'igiene"
           ],
           "tldr":
-              "Colorante giallo che disturba la funzione esecutiva e aumenta i punteggi di energia irrequieta."
+              "Colorante giallo che disturba la funzione esecutiva e aumenta i punteggi di energia irrequieta.",
+          "studyLinks": {
+            "Rivalutazione EFSA del Giallo di Chinolina":
+                "https://www.efsa.europa.eu/en/efsajournal/pub/1329"
+          }
         },
         "es": {
           "name": "Amarillo de Quinolina (E104)",
@@ -5161,8 +5874,12 @@ class SeedingService {
             "Común en helados, refrescos y productos de higiene"
           ],
           "tldr":
-              "Colorante amarillo que interrumpe la función ejecutiva y aumenta las puntuaciones de energía inquieta."
-        }
+              "Colorante amarillo que interrumpe la función ejecutiva y aumenta las puntuaciones de energía inquieta.",
+          "studyLinks": {
+            "Reevaluación de la EFSA del Amarillo de Quinolina":
+                "https://www.efsa.europa.eu/en/efsajournal/pub/1329"
+          }
+        },
       },
     },
     {
