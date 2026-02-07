@@ -65,6 +65,7 @@ class HomeScreen extends StatelessWidget {
             itemCount: viewModel.supplements.length,
             itemBuilder: (context, index) {
               final supplement = viewModel.supplements[index];
+
               return _SupplementCard(supplement: supplement);
             },
           );
@@ -81,6 +82,9 @@ class _SupplementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = l10n.localeName;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -124,7 +128,7 @@ class _SupplementCard extends StatelessWidget {
               children: [
                 // Header - Focus Badge removed as per user request
                 Text(
-                  supplement.name,
+                  supplement.getLocalizedField('name', supplement.name, locale),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -135,7 +139,8 @@ class _SupplementCard extends StatelessWidget {
 
                 // Description
                 Text(
-                  supplement.description,
+                  supplement.getLocalizedField(
+                      'description', supplement.description, locale),
                   style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 14,

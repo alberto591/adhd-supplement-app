@@ -606,8 +606,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                AppLocalizations.of(context)!
-                    .addToStackSubtitle(supplement.name),
+                AppLocalizations.of(context)!.addToStackSubtitle(
+                    supplement.getLocalizedField(
+                        'name', supplement.name, l10n.localeName)),
                 style: GoogleFonts.lexend(
                   fontSize: 14,
                   color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -625,7 +626,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     SnackBar(
                       backgroundColor: AppColors.primaryGold,
                       content: Text(
-                          l10n.addedToStack(supplement.name, l10n.morning),
+                          l10n.addedToStack(
+                              supplement.getLocalizedField(
+                                  'name', supplement.name, l10n.localeName),
+                              l10n.morning),
                           style: const TextStyle(color: Colors.black)),
                     ),
                   );
@@ -650,7 +654,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     SnackBar(
                       backgroundColor: AppColors.primaryGold,
                       content: Text(
-                          l10n.addedToStack(supplement.name, l10n.afternoon),
+                          l10n.addedToStack(
+                              supplement.getLocalizedField(
+                                  'name', supplement.name, l10n.localeName),
+                              l10n.afternoon),
                           style: const TextStyle(color: Colors.black)),
                     ),
                   );
@@ -675,7 +682,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     SnackBar(
                       backgroundColor: AppColors.primaryGold,
                       content: Text(
-                          l10n.addedToStack(supplement.name, l10n.evening),
+                          l10n.addedToStack(
+                              supplement.getLocalizedField(
+                                  'name', supplement.name, l10n.localeName),
+                              l10n.evening),
                           style: const TextStyle(color: Colors.black)),
                     ),
                   );
@@ -700,7 +710,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     SnackBar(
                       backgroundColor: AppColors.primaryGold,
                       content: Text(
-                          l10n.addedToStack(supplement.name, l10n.night),
+                          l10n.addedToStack(
+                              supplement.getLocalizedField(
+                                  'name', supplement.name, l10n.localeName),
+                              l10n.night),
                           style: const TextStyle(color: Colors.black)),
                     ),
                   );
@@ -876,7 +889,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     children: [
                       Flexible(
                         child: Text(
-                          supplement.name,
+                          supplement.getLocalizedField(
+                              'name', supplement.name, l10n.localeName),
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.lexend(
                             fontWeight: FontWeight.bold,
@@ -991,6 +1005,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 
   Widget _buildPillIllustration(Supplement supplement, {bool isSmall = false}) {
+    final l10n = AppLocalizations.of(context)!;
     final color = Color(int.parse(
         (supplement.colorHex ?? '#D4A411').replaceFirst('#', '0xFF')));
     final isCapsule = supplement.shapeIcon == 'capsule';
@@ -1018,7 +1033,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
           supplement.status == 'avoid'
               ? Icons.block
               : SupplementUIHelper.getIconForSupplement(
-                  supplement.name, supplement.category),
+                  supplement.getLocalizedField(
+                      'name', supplement.name, l10n.localeName),
+                  supplement.category),
           color: supplement.status == 'avoid'
               ? const Color(0xFFEF4444)
               : Colors.white70,
