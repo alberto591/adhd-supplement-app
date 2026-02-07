@@ -326,48 +326,12 @@ class SupplementDetail extends StatelessWidget {
                         const SizedBox(height: 16),
 
                         // Intelligence Grid (Mechanism & Timing)
-                        if (localizedMoa != null || localizedTiming != null)
+                        if (localizedMoa != null ||
+                            localizedTiming != null ||
+                            supplement.studyLinks.isNotEmpty)
                           Column(
                             children: [
-                              if (localizedMoa != null)
-                                _CollapsibleInfoCard(
-                                  title: AppLocalizations.of(context)!
-                                      .mechanismOfAction,
-                                  icon: Icons.science_outlined,
-                                  color: Colors.blue,
-                                  isDark: isDark,
-                                  child: Text(
-                                    localizedMoa,
-                                    style: GoogleFonts.lexend(
-                                      color: isDark
-                                          ? Colors.grey[300]
-                                          : Colors.grey[800],
-                                      fontSize: 15,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(height: 16),
-                              if (localizedTiming != null)
-                                _CollapsibleInfoCard(
-                                  title: AppLocalizations.of(context)!
-                                      .timingStrategy,
-                                  icon: Icons.access_time_filled,
-                                  color: Colors.purple,
-                                  isDark: isDark,
-                                  child: Text(
-                                    localizedTiming,
-                                    style: GoogleFonts.lexend(
-                                      color: isDark
-                                          ? Colors.grey[300]
-                                          : Colors.grey[800],
-                                      fontSize: 15,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(height: 16),
-                              if (supplement.studyLinks.isNotEmpty)
+                              if (supplement.studyLinks.isNotEmpty) ...[
                                 _CollapsibleInfoCard(
                                   title: AppLocalizations.of(context)!
                                       .scientificEvidence,
@@ -417,6 +381,47 @@ class SupplementDetail extends StatelessWidget {
                                         .toList(),
                                   ),
                                 ),
+                                const SizedBox(height: 16),
+                              ],
+                              if (localizedMoa != null) ...[
+                                _CollapsibleInfoCard(
+                                  title: AppLocalizations.of(context)!
+                                      .mechanismOfAction,
+                                  icon: Icons.science_outlined,
+                                  color: Colors.blue,
+                                  isDark: isDark,
+                                  child: Text(
+                                    localizedMoa,
+                                    style: GoogleFonts.lexend(
+                                      color: isDark
+                                          ? Colors.grey[300]
+                                          : Colors.grey[800],
+                                      fontSize: 15,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                              ],
+                              if (localizedTiming != null)
+                                _CollapsibleInfoCard(
+                                  title: AppLocalizations.of(context)!
+                                      .timingStrategy,
+                                  icon: Icons.access_time_filled,
+                                  color: Colors.purple,
+                                  isDark: isDark,
+                                  child: Text(
+                                    localizedTiming,
+                                    style: GoogleFonts.lexend(
+                                      color: isDark
+                                          ? Colors.grey[300]
+                                          : Colors.grey[800],
+                                      fontSize: 15,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ),
+                              const SizedBox(height: 16),
                             ],
                           ),
                       ],
@@ -1086,12 +1091,14 @@ class _SafetyWarningCard extends StatelessWidget {
             children: [
               const Icon(Icons.medical_information, color: Color(0xFFEF4444)),
               const SizedBox(width: 12),
-              Text(
-                'Safety & Dosage Warnings', // Could be localized later if needed or passed in
-                style: GoogleFonts.lexend(
-                  color: const Color(0xFFEF4444),
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  AppLocalizations.of(context)!.safetyDosageWarning,
+                  style: GoogleFonts.lexend(
+                    color: const Color(0xFFEF4444),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

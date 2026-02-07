@@ -80,6 +80,11 @@ class CompatibilityGuidance {
   final String description;
   final String recommendation;
 
+  // Localization keys
+  final String? titleKey;
+  final String? descriptionKey;
+  final String? recommendationKey;
+
   final List<String> scientificReferences;
 
   const CompatibilityGuidance({
@@ -89,6 +94,9 @@ class CompatibilityGuidance {
     required this.title,
     required this.description,
     required this.recommendation,
+    this.titleKey,
+    this.descriptionKey,
+    this.recommendationKey,
     this.scientificReferences = const [],
   });
 }

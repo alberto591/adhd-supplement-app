@@ -3,6 +3,7 @@ import '../../domain/entities/routine_element.dart';
 import '../../domain/entities/supplement_compatibility.dart';
 import '../theme/app_theme.dart';
 import '../navigation/app_router.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class CompatibilityDetailScreen extends StatelessWidget {
   final CompatibilityGuidance? guidance;
@@ -17,12 +18,18 @@ class CompatibilityDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
-    final title = guidance?.title ?? 'Routine Consideration';
-    final description =
-        guidance?.description ?? compatibility?.description ?? '';
-    final recommendation =
-        guidance?.recommendation ?? compatibility?.recommendation ?? '';
+    final title = guidance != null
+        ? _translateRule(l10n, guidance!.titleKey, guidance!.title)
+        : l10n.routineConsideration;
+    final description = guidance != null
+        ? _translateRule(l10n, guidance!.descriptionKey, guidance!.description)
+        : compatibility?.description ?? '';
+    final recommendation = guidance != null
+        ? _translateRule(
+            l10n, guidance!.recommendationKey, guidance!.recommendation)
+        : compatibility?.recommendation ?? '';
     final scientificReferences = guidance?.scientificReferences ??
         compatibility?.scientificReferences ??
         [];
@@ -47,14 +54,15 @@ class CompatibilityDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (severity != null) _buildMedSeverityHeader(severity),
-            if (compSeverity != null) _buildCompSeverityHeader(compSeverity),
+            if (severity != null) _buildMedSeverityHeader(l10n, severity),
+            if (compSeverity != null)
+              _buildCompSeverityHeader(l10n, compSeverity),
 
             const SizedBox(height: 32),
 
             // Compatibility Description
             Text(
-              'Compatibility Details',
+              l10n.compatibilityDetails,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -96,7 +104,7 @@ class CompatibilityDetailScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'Recommendation',
+                        l10n.recommendationLabel,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -123,7 +131,7 @@ class CompatibilityDetailScreen extends StatelessWidget {
             // Scientific References
             if (scientificReferences.isNotEmpty) ...[
               Text(
-                'Scientific Context',
+                l10n.scientificContext,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -173,7 +181,7 @@ class CompatibilityDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text('Acknowledged'),
+                child: Text(l10n.acknowledged),
               ),
             ),
             const SizedBox(height: 16),
@@ -187,7 +195,7 @@ class CompatibilityDetailScreen extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Confirm advisor consultation',
+                  l10n.confirmAdvisorConsultation,
                   style: TextStyle(
                     color: isDark ? Colors.grey[400] : Colors.grey[600],
                     decoration: TextDecoration.underline,
@@ -202,23 +210,76 @@ class CompatibilityDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMedSeverityHeader(GuidanceLevel severity) {
+  String _translateRule(AppLocalizations l10n, String? key, String fallback) {
+    if (key == null) return fallback;
+    switch (key) {
+      case 'ruleVitaminCTypeATitle':
+        return l10n.ruleVitaminCTypeATitle;
+      case 'ruleVitaminCTypeADesc':
+        return l10n.ruleVitaminCTypeADesc;
+      case 'ruleVitaminCTypeARec':
+        return l10n.ruleVitaminCTypeARec;
+      case 'ruleAscorbicAcidTypeATitle':
+        return l10n.ruleAscorbicAcidTypeATitle;
+      case 'ruleAscorbicAcidTypeADesc':
+        return l10n.ruleAscorbicAcidTypeADesc;
+      case 'ruleAscorbicAcidTypeARec':
+        return l10n.ruleAscorbicAcidTypeARec;
+      case 'ruleCitrusTypeATitle':
+        return l10n.ruleCitrusTypeATitle;
+      case 'ruleCitrusTypeADesc':
+        return l10n.ruleCitrusTypeADesc;
+      case 'ruleCitrusTypeARec':
+        return l10n.ruleCitrusTypeARec;
+      case 'ruleTyrosineTypeATitle':
+        return l10n.ruleTyrosineTypeATitle;
+      case 'ruleTyrosineTypeADesc':
+        return l10n.ruleTyrosineTypeADesc;
+      case 'ruleTyrosineTypeARec':
+        return l10n.ruleTyrosineTypeARec;
+      case 'rule5HtpTypeCTitle':
+        return l10n.rule5HtpTypeCTitle;
+      case 'rule5HtpTypeCDesc':
+        return l10n.rule5HtpTypeCDesc;
+      case 'rule5HtpTypeCRec':
+        return l10n.rule5HtpTypeCRec;
+      case 'ruleJohnsWortTypeATitle':
+        return l10n.ruleJohnsWortTypeATitle;
+      case 'ruleJohnsWortTypeADesc':
+        return l10n.ruleJohnsWortTypeADesc;
+      case 'ruleJohnsWortTypeARec':
+        return l10n.ruleJohnsWortTypeARec;
+      case 'ruleGinkgoTypeATitle':
+        return l10n.ruleGinkgoTypeATitle;
+      case 'ruleGinkgoTypeADesc':
+        return l10n.ruleGinkgoTypeADesc;
+      case 'ruleGinkgoTypeARec':
+        return l10n.ruleGinkgoTypeARec;
+      default:
+        return fallback;
+    }
+  }
+
+  Widget _buildMedSeverityHeader(
+      AppLocalizations l10n, GuidanceLevel severity) {
     final color = _getMedColor(severity);
     final icon = _getMedIcon(severity);
-    final label = _getMedLabel(severity);
+    final label = _getMedLabel(l10n, severity);
 
-    return _buildBaseHeader(color, icon, label);
+    return _buildBaseHeader(l10n, color, icon, label);
   }
 
-  Widget _buildCompSeverityHeader(CompatibilityLevel severity) {
+  Widget _buildCompSeverityHeader(
+      AppLocalizations l10n, CompatibilityLevel severity) {
     final color = _getCompColor(severity);
     final icon = _getCompIcon(severity);
-    final label = _getCompLabel(severity);
+    final label = _getCompLabel(l10n, severity);
 
-    return _buildBaseHeader(color, icon, label);
+    return _buildBaseHeader(l10n, color, icon, label);
   }
 
-  Widget _buildBaseHeader(Color color, IconData icon, String label) {
+  Widget _buildBaseHeader(
+      AppLocalizations l10n, Color color, IconData icon, String label) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
@@ -249,9 +310,9 @@ class CompatibilityDetailScreen extends StatelessWidget {
                     color: color,
                   ),
                 ),
-                const Text(
-                  'Routine Analysis Status',
-                  style: TextStyle(
+                Text(
+                  l10n.routineAnalysisStatus,
+                  style: const TextStyle(
                     fontSize: 13,
                     color: Colors.grey,
                   ),
@@ -296,16 +357,16 @@ class CompatibilityDetailScreen extends StatelessWidget {
     }
   }
 
-  String _getMedLabel(GuidanceLevel severity) {
+  String _getMedLabel(AppLocalizations l10n, GuidanceLevel severity) {
     switch (severity) {
       case GuidanceLevel.danger:
-        return 'PRIORITY CONSIDERATION';
+        return l10n.priorityConsideration;
       case GuidanceLevel.warning:
-        return 'ROUTINE ALERT';
+        return l10n.routineAlertLabel;
       case GuidanceLevel.caution:
-        return 'TIMING CONSIDERATION';
+        return l10n.timingConsiderationLabel;
       case GuidanceLevel.info:
-        return 'ROUTINE OPTIMIZED';
+        return l10n.routineOptimizedLabel;
     }
   }
 
@@ -331,14 +392,14 @@ class CompatibilityDetailScreen extends StatelessWidget {
     }
   }
 
-  String _getCompLabel(CompatibilityLevel severity) {
+  String _getCompLabel(AppLocalizations l10n, CompatibilityLevel severity) {
     switch (severity) {
       case CompatibilityLevel.critical:
-        return 'NOT OPTIMAL';
+        return l10n.notOptimal;
       case CompatibilityLevel.caution:
-        return 'TIMING CONSIDERATION';
+        return l10n.timingConsiderationLabel;
       case CompatibilityLevel.stable:
-        return 'OPTIMIZED';
+        return l10n.optimized;
     }
   }
 }

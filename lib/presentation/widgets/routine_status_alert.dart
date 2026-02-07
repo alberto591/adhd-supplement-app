@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../domain/services/routine_compatibility_service.dart';
 import '../../domain/entities/routine_element.dart';
+import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 
 class RoutineStatusAlert extends StatelessWidget {
   final List<CompatibilityGuidance> warnings;
@@ -15,10 +16,12 @@ class RoutineStatusAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (warnings.isEmpty) return const SizedBox.shrink();
 
     // Determine highest severity for overall styling
-    final highestSeverity = RoutineCompatibilityService.getHighestSeverity(warnings);
+    final highestSeverity =
+        RoutineCompatibilityService.getHighestSeverity(warnings);
     final alertColor = _getSeverityColor(highestSeverity);
 
     return Container(
@@ -47,7 +50,7 @@ class RoutineStatusAlert extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  _getSeverityLabel(highestSeverity),
+                  _getSeverityLabel(l10n, highestSeverity),
                   style: GoogleFonts.lexend(
                     color: alertColor,
                     fontSize: 14,
@@ -71,7 +74,7 @@ class RoutineStatusAlert extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'With ${warning.elementName}:',
+                            l10n.withElementLabel(warning.elementName),
                             style: GoogleFonts.lexend(
                               color: isDark ? Colors.white : Colors.black,
                               fontSize: 16,
@@ -80,7 +83,8 @@ class RoutineStatusAlert extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            warning.description,
+                            _translateRule(l10n, warning.descriptionKey,
+                                warning.description),
                             style: GoogleFonts.lexend(
                               color:
                                   isDark ? Colors.grey[300] : Colors.grey[700],
@@ -97,7 +101,10 @@ class RoutineStatusAlert extends StatelessWidget {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
-                                  warning.recommendation,
+                                  _translateRule(
+                                      l10n,
+                                      warning.recommendationKey,
+                                      warning.recommendation),
                                   style: GoogleFonts.lexend(
                                     color: alertColor,
                                     fontSize: 13,
@@ -119,7 +126,7 @@ class RoutineStatusAlert extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Always consult your advisors before adding new elements to your routine.',
+                        l10n.consultAdvisorRoutineNote,
                         style: GoogleFonts.lexend(
                           color: Colors.grey,
                           fontSize: 11,
@@ -135,6 +142,56 @@ class RoutineStatusAlert extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _translateRule(AppLocalizations l10n, String? key, String fallback) {
+    if (key == null) return fallback;
+    switch (key) {
+      case 'ruleVitaminCTypeATitle':
+        return l10n.ruleVitaminCTypeATitle;
+      case 'ruleVitaminCTypeADesc':
+        return l10n.ruleVitaminCTypeADesc;
+      case 'ruleVitaminCTypeARec':
+        return l10n.ruleVitaminCTypeARec;
+      case 'ruleAscorbicAcidTypeATitle':
+        return l10n.ruleAscorbicAcidTypeATitle;
+      case 'ruleAscorbicAcidTypeADesc':
+        return l10n.ruleAscorbicAcidTypeADesc;
+      case 'ruleAscorbicAcidTypeARec':
+        return l10n.ruleAscorbicAcidTypeARec;
+      case 'ruleCitrusTypeATitle':
+        return l10n.ruleCitrusTypeATitle;
+      case 'ruleCitrusTypeADesc':
+        return l10n.ruleCitrusTypeADesc;
+      case 'ruleCitrusTypeARec':
+        return l10n.ruleCitrusTypeARec;
+      case 'ruleTyrosineTypeATitle':
+        return l10n.ruleTyrosineTypeATitle;
+      case 'ruleTyrosineTypeADesc':
+        return l10n.ruleTyrosineTypeADesc;
+      case 'ruleTyrosineTypeARec':
+        return l10n.ruleTyrosineTypeARec;
+      case 'rule5HtpTypeCTitle':
+        return l10n.rule5HtpTypeCTitle;
+      case 'rule5HtpTypeCDesc':
+        return l10n.rule5HtpTypeCDesc;
+      case 'rule5HtpTypeCRec':
+        return l10n.rule5HtpTypeCRec;
+      case 'ruleJohnsWortTypeATitle':
+        return l10n.ruleJohnsWortTypeATitle;
+      case 'ruleJohnsWortTypeADesc':
+        return l10n.ruleJohnsWortTypeADesc;
+      case 'ruleJohnsWortTypeARec':
+        return l10n.ruleJohnsWortTypeARec;
+      case 'ruleGinkgoTypeATitle':
+        return l10n.ruleGinkgoTypeATitle;
+      case 'ruleGinkgoTypeADesc':
+        return l10n.ruleGinkgoTypeADesc;
+      case 'ruleGinkgoTypeARec':
+        return l10n.ruleGinkgoTypeARec;
+      default:
+        return fallback;
+    }
   }
 
   Color _getSeverityColor(GuidanceLevel? severity) {
@@ -163,16 +220,16 @@ class RoutineStatusAlert extends StatelessWidget {
     }
   }
 
-  String _getSeverityLabel(GuidanceLevel? severity) {
+  String _getSeverityLabel(AppLocalizations l10n, GuidanceLevel? severity) {
     switch (severity) {
       case GuidanceLevel.danger:
-        return 'PRIORITY CONSIDERATION';
+        return l10n.priorityConsideration;
       case GuidanceLevel.warning:
-        return 'ROUTINE ALERT';
+        return l10n.routineAlertLabel;
       case GuidanceLevel.caution:
-        return 'TIMING CONSIDERATION';
+        return l10n.timingConsiderationLabel;
       default:
-        return 'ROUTINE OPTIMIZED';
+        return l10n.routineOptimizedLabel;
     }
   }
 }

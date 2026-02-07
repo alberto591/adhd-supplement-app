@@ -28,6 +28,9 @@ class RoutineCompatibilityService {
           'This may change the duration of their effects.',
       recommendation: 'Consider separating usage by 1-2 hours for '
           'consistent results.',
+      titleKey: 'ruleVitaminCTypeATitle',
+      descriptionKey: 'ruleVitaminCTypeADesc',
+      recommendationKey: 'ruleVitaminCTypeARec',
     ),
 
     // ASCORBIC ACID (pure form)
@@ -40,6 +43,9 @@ class RoutineCompatibilityService {
           'of Type A elements, potentially shortening their window of activity.',
       recommendation: 'Consider separating usage by 1-2 hours for '
           'consistent results.',
+      titleKey: 'ruleAscorbicAcidTypeATitle',
+      descriptionKey: 'ruleAscorbicAcidTypeADesc',
+      recommendationKey: 'ruleAscorbicAcidTypeARec',
     ),
 
     // CITRUS-BASED SUPPLEMENTS
@@ -51,6 +57,9 @@ class RoutineCompatibilityService {
       description: 'Citrus supplements often contain acidic compounds '
           'that can influence the absorption rate of routine elements.',
       recommendation: 'Use at least 1 hour apart from Type A items.',
+      titleKey: 'ruleCitrusTypeATitle',
+      descriptionKey: 'ruleCitrusTypeADesc',
+      recommendationKey: 'ruleCitrusTypeARec',
     ),
 
     // TYPE A + L-TYROSINE
@@ -63,6 +72,9 @@ class RoutineCompatibilityService {
           'Using it with Type A items may impact sensitivity.',
       recommendation:
           'Start with low doses and monitor for changes in sensitivity.',
+      titleKey: 'ruleTyrosineTypeATitle',
+      descriptionKey: 'ruleTyrosineTypeADesc',
+      recommendationKey: 'ruleTyrosineTypeARec',
     ),
 
     // TYPE C + 5-HTP
@@ -75,6 +87,9 @@ class RoutineCompatibilityService {
           'unintended intensity in your routine.',
       recommendation: 'Consult your wellness advisor before combining '
           'these items.',
+      titleKey: 'rule5HtpTypeCTitle',
+      descriptionKey: 'rule5HtpTypeCDesc',
+      recommendationKey: 'rule5HtpTypeCRec',
     ),
 
     // ST. JOHN'S WORT
@@ -86,6 +101,9 @@ class RoutineCompatibilityService {
       description: "St. John's Wort can accelerate how your body "
           'processes routine elements, potentially ensuring a shorter duration of effect.',
       recommendation: 'Discuss optimization strategies with your advisor.',
+      titleKey: 'ruleJohnsWortTypeATitle',
+      descriptionKey: 'ruleJohnsWortTypeADesc',
+      recommendationKey: 'ruleJohnsWortTypeARec',
     ),
 
     // GINKGO
@@ -99,6 +117,9 @@ class RoutineCompatibilityService {
       recommendation:
           'Monitor your focus levels if combining. Check with an advisor '
           'for personalized guidance.',
+      titleKey: 'ruleGinkgoTypeATitle',
+      descriptionKey: 'ruleGinkgoTypeADesc',
+      recommendationKey: 'ruleGinkgoTypeARec',
     ),
   ];
 
@@ -117,6 +138,9 @@ class RoutineCompatibilityService {
             title: rule.title,
             description: rule.description,
             recommendation: rule.recommendation,
+            titleKey: rule.titleKey,
+            descriptionKey: rule.descriptionKey,
+            recommendationKey: rule.recommendationKey,
           ));
         }
       }
@@ -177,6 +201,9 @@ class _OptimizationRule {
   final String title;
   final String description;
   final String recommendation;
+  final String titleKey;
+  final String descriptionKey;
+  final String recommendationKey;
 
   const _OptimizationRule({
     required this.supplementPattern,
@@ -187,5 +214,8 @@ class _OptimizationRule {
     required this.title,
     required this.description,
     required this.recommendation,
+    required this.titleKey,
+    required this.descriptionKey,
+    required this.recommendationKey,
   });
 }
