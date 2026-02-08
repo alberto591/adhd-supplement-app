@@ -58,11 +58,13 @@ class LibraryViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  /// Get unique categories from supplements
+  /// Get unique categories from supplements matching the current status/tab
   List<String> get categories {
     final cats = <String>{};
     for (final s in _allSupplements) {
-      cats.add(s.category);
+      if (_isSupplementEligibleForStatus(s, _currentStatus)) {
+        cats.add(s.category);
+      }
     }
     return cats.toList()..sort();
   }
@@ -282,8 +284,11 @@ class LibraryViewModel extends ChangeNotifier {
 
   /// Filter by status (beneficial vs avoid)
   void filterByStatus(String status, {String? locale}) {
-    _currentStatus = status;
-    _applyFilters(locale: locale);
+    if (_currentStatus != status) {
+      _currentStatus = status;
+      _selectedCategories = []; // Reset category filter on major tab switch
+      _applyFilters(locale: locale);
+    }
   }
 
   /// Clear all filters
@@ -431,35 +436,7 @@ class LibraryViewModel extends ChangeNotifier {
 
     _filteredSupplements = _allSupplements.where((s) {
       // 1. Status/Eligibility Filter (The "Foundation")
-      bool matchesStatus = false;
-
-      if (_currentStatus == 'recommended') {
-        final goals = _authProvider.user?.goals ?? [];
-        if (goals.isEmpty) {
-          // Fallback: Show high evidence beneficial items
-          matchesStatus = s.status == 'beneficial' &&
-              s.evidenceLevel?.toLowerCase() == 'high';
-        } else {
-          final keywords = goals.expand(_getKeywordsForGoal).toSet();
-          if (keywords.isEmpty) {
-            matchesStatus = s.status == 'beneficial' &&
-                s.evidenceLevel?.toLowerCase() == 'high';
-          } else {
-            // Check benefits matching
-            final hasMatchingBenefit = s.benefits.any((benefit) {
-              final lowerBenefit = benefit.toLowerCase();
-              return keywords.any((k) => lowerBenefit.contains(k));
-            });
-
-            // Matches if benefit matches OR high evidence
-            matchesStatus =
-                hasMatchingBenefit || s.evidenceLevel?.toLowerCase() == 'high';
-          }
-        }
-      } else {
-        // Simple status match for 'beneficial' or 'avoid'
-        matchesStatus = s.status == _currentStatus;
-      }
+      bool matchesStatus = _isSupplementEligibleForStatus(s, _currentStatus);
 
       // If it doesn't even match the basic status/recommendation tab, drop it
       if (!matchesStatus) return false;
@@ -513,6 +490,36 @@ class LibraryViewModel extends ChangeNotifier {
     AppLogger.d(
         'Applied filters: status=$_currentStatus, goals=${userGoals.length}, results=${_filteredSupplements.length}, time=${stopwatch.elapsedMilliseconds}ms');
     notifyListeners();
+  }
+
+  /// Helper to determine if a supplement belongs in the current tab/status
+  bool _isSupplementEligibleForStatus(Supplement s, String status) {
+    if (status == 'recommended') {
+      final goals = _authProvider.user?.goals ?? [];
+      if (goals.isEmpty) {
+        // Fallback: Show high evidence beneficial items
+        return s.status == 'beneficial' &&
+            s.evidenceLevel?.toLowerCase() == 'high';
+      } else {
+        final keywords = goals.expand(_getKeywordsForGoal).toSet();
+        if (keywords.isEmpty) {
+          return s.status == 'beneficial' &&
+              s.evidenceLevel?.toLowerCase() == 'high';
+        } else {
+          // Check benefits matching
+          final hasMatchingBenefit = s.benefits.any((benefit) {
+            final lowerBenefit = benefit.toLowerCase();
+            return keywords.any((k) => lowerBenefit.contains(k));
+          });
+
+          // Matches if benefit matches OR high evidence (Class A)
+          return hasMatchingBenefit || s.evidenceLevel?.toLowerCase() == 'high';
+        }
+      }
+    } else {
+      // Simple status match for 'beneficial' or 'avoid'
+      return s.status == status;
+    }
   }
 
   @override

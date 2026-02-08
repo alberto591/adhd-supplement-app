@@ -4,6 +4,7 @@ import '../theme/app_theme.dart';
 import '../widgets/goal_selection_card.dart';
 import '../navigation/app_router.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../application/providers/auth_provider.dart';
 import '../../utils/logger.dart';
 
@@ -19,9 +20,12 @@ class _OnboardingGoalSelectionScreenState
     extends State<OnboardingGoalSelectionScreen> {
   // Using a Set to allow multiple selections
   final Set<String> _selectedGoals = {'Better Sleep'};
+  List<Map<String, dynamic>>? _cachedGoals;
 
   List<Map<String, dynamic>> _getGoals(BuildContext context) {
-    return [
+    if (_cachedGoals != null) return _cachedGoals!;
+
+    _cachedGoals = [
       {
         'id': 'Mental Clarity',
         'title': AppLocalizations.of(context)!.goalMentalClarity,
@@ -47,6 +51,7 @@ class _OnboardingGoalSelectionScreenState
         'icon': Icons.bolt,
       },
     ];
+    return _cachedGoals!;
   }
 
   void _toggleGoal(String title) {
@@ -57,6 +62,18 @@ class _OnboardingGoalSelectionScreenState
         _selectedGoals.add(title);
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Pre-cache the hero image for the next onboarding screen
+    precacheImage(
+      const CachedNetworkImageProvider(
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuCEKRevVdokOjFtFZvmgLdF8d_XggCSOWA8CgNp72pCfqV2jX6lj0_jbLWDth-3k1BnGNUfDRUeeAeFykEbYysmc9A13Np-e9ONWM9CenQ1GC24jycAAAO5-XUXbgBa-0XYdBSc9RiUUQ8Nq1w5Pt8BypRIx5aNyG0YdAueulirzo_SS9maP3ft_L8N9NbEujaoXx95tSu9QHJCY83pqpHW6ivG1APvJBPKJttkqNyhqG9TF0v3C8BB3GoSW28sOnf3HuA4OJCTRAQ',
+      ),
+      context,
+    );
   }
 
   @override
@@ -166,7 +183,8 @@ class _OnboardingGoalSelectionScreenState
                               ),
                               itemCount: _getGoals(context).length,
                               itemBuilder: (context, index) {
-                                final goal = _getGoals(context)[index];
+                                final goals = _getGoals(context);
+                                final goal = goals[index];
                                 final id = goal['id'] as String;
                                 final title = goal['title'] as String;
                                 return GoalSelectionCard(
@@ -225,19 +243,18 @@ class _OnboardingGoalSelectionScreenState
                           final user = auth.user;
 
                           if (user != null) {
-                            try {
-                              // Persist the selected goals to Firestore
-                              await auth
-                                  .updateProfile(
-                                    user.copyWith(
-                                        goals: _selectedGoals.toList()),
-                                  )
-                                  .timeout(const Duration(seconds: 3));
-                            } catch (e) {
-                              AppLogger.w(
-                                  'Failed to save onboarding goals: $e');
-                              // We proceed anyway to not block the user
-                            }
+                            // Fire-and-forget update to prevent blocking navigation
+                            auth
+                                .updateProfile(
+                                  user.copyWith(goals: _selectedGoals.toList()),
+                                )
+                                .timeout(
+                                  const Duration(seconds: 10),
+                                  onTimeout: () => AppLogger.w(
+                                      'Onboarding goals sync timed out in background'),
+                                )
+                                .catchError((e) => AppLogger.e(
+                                    'Failed to sync goals in background', e));
                           }
 
                           if (!context.mounted) return;
@@ -265,24 +282,25 @@ class _OnboardingGoalSelectionScreenState
                     ),
                     const SizedBox(height: 16),
                     TextButton(
-                      onPressed: () async {
+                      onPressed: () {
                         final auth = context.read<AuthProvider>();
                         final user = auth.user;
 
                         if (user != null) {
-                          try {
-                            // If they skip, we clear any previous selections
-                            await auth
-                                .updateProfile(
-                                  user.copyWith(goals: []),
-                                )
-                                .timeout(const Duration(seconds: 2));
-                          } catch (e) {
-                            AppLogger.w('Failed to clear onboarding goals: $e');
-                          }
+                          // Fire-and-forget clear goals to prevent blocking navigation
+                          auth
+                              .updateProfile(
+                                user.copyWith(goals: []),
+                              )
+                              .timeout(
+                                const Duration(seconds: 10),
+                                onTimeout: () => AppLogger.w(
+                                    'Skipping goals sync timed out in background'),
+                              )
+                              .catchError((e) => AppLogger.e(
+                                  'Failed to clear goals in background', e));
                         }
 
-                        if (!context.mounted) return;
                         Navigator.pushNamed(
                             context, AppRouter.onboardingGracePeriod);
                       },

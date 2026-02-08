@@ -435,15 +435,6 @@ class SupplementDetail extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        // Safety Warning Card (New Intelligence)
-                        if (localizedDosageWarnings.isNotEmpty) ...[
-                          _SafetyWarningCard(
-                            warnings: localizedDosageWarnings,
-                            isDark: isDark,
-                          ),
-                          const SizedBox(height: 24),
-                        ],
-
                         // Enhanced Benefits Section
                         _SectionCard(
                           title:
@@ -473,6 +464,15 @@ class SupplementDetail extends StatelessWidget {
                             content: supplement.dosage ??
                                 supplement.defaultDosage ??
                                 '',
+                            isDark: isDark,
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+
+                        // Safety Warning Card (Avvertenze) moved below Dosage
+                        if (localizedDosageWarnings.isNotEmpty) ...[
+                          _SafetyWarningCard(
+                            warnings: localizedDosageWarnings,
                             isDark: isDark,
                           ),
                           const SizedBox(height: 24),

@@ -7,39 +7,37 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:93466359350:android:624499d319cae893f20a97",
-        "android_client_info": {
-          "package_name": "com.neurostack2.app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCZEeSLJjifIBpCtkOEhcFwSy74_fxcsx8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:93466359350:android:1aa4eb1af7506870f20a97",
         "android_client_info": {
-          "package_name": "com.neurostack2.app"
+          "package_name": "com.neurostack.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "93466359350-2jlg08sgdoqb5ibuindrs6lpdf6u4mi3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCZEeSLJjifIBpCtkOEhcFwSy74_fxcsx8"
+          "current_key": "AIzaSyBo9QF3oAS-F4GbBEkEIOY6o230_jZRBlg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93466359350-2jlg08sgdoqb5ibuindrs6lpdf6u4mi3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "93466359350-dnb8kvg8ujot4nk6gsu24o88ssa42rsq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.neurostack.app"
+              }
+            }
+          ]
         }
       }
     }

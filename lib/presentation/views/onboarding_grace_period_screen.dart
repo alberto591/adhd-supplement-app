@@ -240,27 +240,25 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () async {
+                      onPressed: () {
                         final auth = context.read<AuthProvider>();
                         final user = auth.user;
 
-                        // Start the update but don't let it block navigation indefinitely
-                        // if Firestore is having connectivity/permission issues.
+                        // Start the update in the background; do NOT await it here
+                        // to ensure the user moves to the dashboard instantly.
                         if (user != null) {
-                          try {
-                            await auth
-                                .updateProfile(
-                                    user.copyWith(hasCompletedOnboarding: true))
-                                .timeout(const Duration(seconds: 2));
-                          } catch (e) {
-                            AppLogger.w(
-                                'Onboarding completion update failed/timed out: $e');
-                            // We still proceed to dashboard; the flag will be synced
-                            // eventually or handles by AuthWrapper retry logic.
-                          }
+                          auth
+                              .updateProfile(
+                                  user.copyWith(hasCompletedOnboarding: true))
+                              .timeout(
+                                const Duration(seconds: 10),
+                                onTimeout: () => AppLogger.w(
+                                    'Onboarding completion sync timed out in background'),
+                              )
+                              .catchError((e) => AppLogger.e(
+                                  'Onboarding completion sync failed', e));
                         }
 
-                        if (!context.mounted) return;
                         Navigator.pushNamedAndRemoveUntil(
                             context, AppRouter.dashboard, (route) => false);
                       },

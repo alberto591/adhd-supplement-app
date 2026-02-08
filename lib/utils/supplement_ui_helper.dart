@@ -8,17 +8,35 @@ class SupplementUIHelper {
       case 'omega-3':
         return Icons.water_drop;
       case 'mineral':
-        return Icons.layers;
+      case 'minerals':
+        return Icons.diamond;
       case 'vitamin':
+      case 'vitamins':
         return Icons.wb_sunny;
       case 'nootropic':
+      case 'nootropics':
         return Icons.psychology;
       case 'herbal':
-        return Icons.spa;
+        return Icons.local_florist;
       case 'protocol':
-        return Icons.auto_awesome;
+        return Icons.format_list_bulleted;
       case 'focus_agent':
+      case 'focus':
+        return Icons.center_focus_strong;
+      case 'energy':
         return Icons.bolt;
+      case 'calm':
+        return Icons.self_improvement;
+      case 'mood':
+        return Icons.mood;
+      case 'longevity':
+        return Icons.hourglass_empty;
+      case 'memory':
+        return Icons.memory;
+      case 'amino acid':
+        return Icons.polymer;
+      case 'antioxidant':
+        return Icons.shield;
       default:
         return Icons.local_pharmacy;
     }
@@ -94,17 +112,38 @@ class SupplementUIHelper {
   static Color getColorForCategory(String category) {
     switch (category.toLowerCase()) {
       case 'essential fatty acids':
+      case 'omega-3':
         return Colors.blue[400]!;
       case 'mineral':
+      case 'minerals':
         return Colors.purple[400]!;
       case 'vitamin':
+      case 'vitamins':
         return Colors.amber[400]!;
       case 'nootropic':
+      case 'nootropics':
         return Colors.green[400]!;
       case 'herbal':
         return Colors.teal[400]!;
       case 'protocol':
+        return Colors.deepPurple[400]!;
+      case 'focus_agent':
+      case 'focus':
+        return Colors.orange[400]!;
+      case 'energy':
         return Colors.red[400]!;
+      case 'calm':
+        return Colors.cyan[400]!;
+      case 'mood':
+        return Colors.pink[400]!;
+      case 'longevity':
+        return Colors.indigo[400]!;
+      case 'memory':
+        return Colors.lightBlue[400]!;
+      case 'amino acid':
+        return Colors.lime[700]!;
+      case 'antioxidant':
+        return Colors.green[700]!;
       default:
         return Colors.blueGrey;
     }
