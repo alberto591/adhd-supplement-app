@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../utils/logger.dart';
 import '../theme/app_theme.dart';
 
@@ -194,7 +195,7 @@ class RoutineElementCard extends StatelessWidget {
                               boxShadow: [
                                 BoxShadow(
                                   color: (isFocused ? AppColors.primaryGold : AppColors.primary)
-                                      .withOpacity(0.3),
+                                      .withValues(alpha: 0.3),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
                                 ),
