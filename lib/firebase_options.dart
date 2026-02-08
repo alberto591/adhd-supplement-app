@@ -53,7 +53,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCZEeSLJjifIBpCtkOEhcFwSy74_fxcsx8',
+    apiKey: 'AIzaSyBo9QF3oAS-F4GbBEkEIOY6o230_jZRBlg',
     appId: '1:93466359350:android:1aa4eb1af7506870f20a97',
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCZEeSLJjifIBpCtkOEhcFwSy74_fxcsx8',
+    apiKey: 'AIzaSyBo9QF3oAS-F4GbBEkEIOY6o230_jZRBlg',
     appId: '1:93466359350:ios:acafee8b05086757f20a97',
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
@@ -70,7 +70,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCZEeSLJjifIBpCtkOEhcFwSy74_fxcsx8',
+    apiKey: 'AIzaSyBo9QF3oAS-F4GbBEkEIOY6o230_jZRBlg',
     appId: '1:93466359350:ios:ea28d62154476bd3f20a97',
     messagingSenderId: '93466359350',
     projectId: 'adhd-supplement-app',
