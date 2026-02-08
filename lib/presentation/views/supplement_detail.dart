@@ -335,7 +335,7 @@ class SupplementDetail extends StatelessWidget {
                                 _CollapsibleInfoCard(
                                   title: AppLocalizations.of(context)!
                                       .scientificEvidence,
-                                  icon: Icons.menu_book_outlined,
+                                  icon: Icons.verified_user_outlined,
                                   color: Colors.teal,
                                   isDark: isDark,
                                   initiallyExpanded: true,
@@ -988,21 +988,21 @@ class _ScientificEvidenceBadge extends StatelessWidget {
     IconData icon;
 
     if (rank! >= 90) {
-      label = 'Class A Evidence';
+      label = 'Verified Research: Class A';
       color = AppColors.primaryGold;
-      icon = Icons.star;
+      icon = Icons.verified;
     } else if (rank! >= 70) {
-      label = 'Class B Evidence';
+      label = 'Verified Research: Class B';
       color = Colors.lightBlueAccent;
       icon = Icons.science;
     } else if (rank! >= 40) {
-      label = 'Class C Evidence';
+      label = 'Verified Research: Class C';
       color = Colors.orangeAccent;
       icon = Icons.biotech;
     } else {
-      label = 'User Reported';
+      label = 'Anecdotal Evidence';
       color = Colors.grey;
-      icon = Icons.person_outline;
+      icon = Icons.person_search;
     }
 
     final l10n = AppLocalizations.of(context)!;
