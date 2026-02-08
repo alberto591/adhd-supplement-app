@@ -253,7 +253,7 @@ class _OnboardingGoalSelectionScreenState
                                   onTimeout: () => AppLogger.w(
                                       'Onboarding goals sync timed out in background'),
                                 )
-                                .catchError((e) => AppLogger.e(
+                                .catchError((Object e) => AppLogger.e(
                                     'Failed to sync goals in background', e));
                           }
 
@@ -297,7 +297,7 @@ class _OnboardingGoalSelectionScreenState
                                 onTimeout: () => AppLogger.w(
                                     'Skipping goals sync timed out in background'),
                               )
-                              .catchError((e) => AppLogger.e(
+                              .catchError((Object e) => AppLogger.e(
                                   'Failed to clear goals in background', e));
                         }
 

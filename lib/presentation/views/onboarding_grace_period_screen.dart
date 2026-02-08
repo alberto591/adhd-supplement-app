@@ -255,7 +255,7 @@ class OnboardingGracePeriodScreen extends StatelessWidget {
                                 onTimeout: () => AppLogger.w(
                                     'Onboarding completion sync timed out in background'),
                               )
-                              .catchError((e) => AppLogger.e(
+                              .catchError((Object e) => AppLogger.e(
                                   'Onboarding completion sync failed', e));
                         }
 
