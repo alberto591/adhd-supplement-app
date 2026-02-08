@@ -14,6 +14,7 @@ class RoutineElementCard extends StatelessWidget {
   final bool isTaken;
   final bool isSkipped;
   final bool isUpcoming;
+  final bool isFocused;
   final bool hasStudies;
   final VoidCallback? onTake;
   final VoidCallback? onMoreOptions;
@@ -31,6 +32,7 @@ class RoutineElementCard extends StatelessWidget {
     this.isTaken = false,
     this.isSkipped = false,
     this.isUpcoming = false,
+    this.isFocused = false,
     this.hasStudies = false,
     this.onTake,
     this.onMoreOptions,
@@ -59,14 +61,20 @@ class RoutineElementCard extends StatelessWidget {
           border: Border.all(color: borderColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: isFocused
+                  ? AppColors.primaryGold.withValues(alpha: 0.2)
+                  : Colors.black.withValues(alpha: 0.05),
+              blurRadius: isFocused ? 12 : 10,
+              spreadRadius: isFocused ? 1 : 0,
+              offset: isFocused ? const Offset(0, 0) : const Offset(0, 4),
             ),
           ],
         ),
-        child: Column(
-          children: [
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 300),
+          opacity: (isTaken || isSkipped || isFocused) ? 1.0 : 0.6,
+          child: Column(
+            children: [
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Row(
@@ -171,33 +179,38 @@ class RoutineElementCard extends StatelessWidget {
                           behavior: HitTestBehavior.opaque,
                           onTap: () {
                             AppLogger.d('Take button HIT for $title');
+                            // ADR-014: Dopamine hit - Haptic feedback
+                            HapticFeedback.mediumImpact();
                             onTake?.call();
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: isFocused ? 20 : 16, 
+                                vertical: isFocused ? 14 : 12),
                             decoration: BoxDecoration(
-                              color: AppColors.primary,
+                              color: isFocused ? AppColors.primaryGold : AppColors.primary,
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color:
-                                      AppColors.primary.withValues(alpha: 0.3),
+                                  color: (isFocused ? AppColors.primaryGold : AppColors.primary)
+                                      .withOpacity(0.3),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
                                 ),
                               ],
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(Icons.check,
-                                    color: Colors.white, size: 18),
-                                SizedBox(width: 6),
+                                    color: isFocused ? Colors.black : Colors.white, 
+                                    size: 18),
+                                const SizedBox(width: 6),
                                 Text(
                                   'Take',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: isFocused ? Colors.black : Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
                                   ),

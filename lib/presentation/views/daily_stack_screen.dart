@@ -743,10 +743,35 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
           ),
         ),
         if (!isCollapsed)
-          ...items.map((stackItem) {
+          ...items.asMap().entries.map((entry) {
+            final index = entry.key;
+            final stackItem = entry.value;
             final supplement = _viewModel.getSupplement(stackItem.supplementId);
             final isTaken = _viewModel.isSupplementTaken(stackItem.supplementId,
                 slot: slot.toLowerCase());
+            final isSkipped = _viewModel.isSupplementSkipped(
+                stackItem.supplementId,
+                slot: slot.toLowerCase());
+
+            // Determine if this is the "Focused" item
+            // Logic: The first pending item in the current/upcoming slot
+            final isUpcomingSlot =
+                _viewModel.upcomingStack?['slot']?.toLowerCase() ==
+                    slot.toLowerCase();
+
+            // Find the index of the first pending item in this list
+            int firstPendingIndex = -1;
+            for (int i = 0; i < items.length; i++) {
+              final id = items[i].supplementId;
+              if (!_viewModel.isSupplementTaken(id, slot: slot.toLowerCase()) &&
+                  !_viewModel.isSupplementSkipped(id,
+                      slot: slot.toLowerCase())) {
+                firstPendingIndex = i;
+                break;
+              }
+            }
+
+            final isFocused = isUpcomingSlot && index == firstPendingIndex;
 
             return Dismissible(
               key: Key('dismiss_${title}_${stackItem.supplementId}'),
@@ -795,6 +820,8 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                 iconColor: Color(int.parse((supplement?.colorHex ?? '#D4A411')
                     .replaceFirst('#', '0xFF'))),
                 isTaken: isTaken,
+                isSkipped: isSkipped,
+                isFocused: isFocused,
                 statusText: isTaken
                     ? AppLocalizations.of(context)!.taken
                     : stackItem.scheduledTime ??
