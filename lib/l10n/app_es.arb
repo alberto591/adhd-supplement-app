@@ -584,5 +584,15 @@
   "citationDisclaimer": "Información proveniente de estudios revisados por pares",
   "deleteAccount": "Eliminar Cuenta",
   "deleteAccountConfirm": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer y todos tus datos serán eliminados permanentemente.",
-  "deleteAccountSub": "Eliminar permanentemente tu cuenta y datos"
+  "deleteAccountSub": "Eliminar permanentemente tu cuenta y datos",
+  "scientificMethodologyTitle": "Nuestra Ciencia e Investigación",
+  "scientificMethodologySub": "Cómo verificamos la información",
+  "dataIntegrity": "Fuentes Confiables",
+  "scientificMethodologyContent": "Toda la información sobre nuestros suplementos proviene de investigaciones médicas confiables. Usamos la Biblioteca Nacional de Medicina (PubMed) como nuestra fuente principal, enfocándonos en estudios de alta calidad.",
+  "methodologySelection": "Cómo Elegimos los Suplementos",
+  "methodologySelectionContent": "Revisamos cuidadosamente cada suplemento para ver cómo afecta la concentración, el sueño y la salud cerebral, específicamente para personas con TDAH.",
+  "methodologyVerification": "Verificación y Transparencia",
+  "methodologyVerificationContent": "Nos aseguramos de que cada afirmación esté respaldada por la ciencia. Puedes encontrar enlaces directos a los estudios de investigación originales en cada página de suplementos.",
+  "methodologyGovernance": "Información Segura",
+  "methodologyGovernanceContent": "Nuestra información se gestiona de forma segura y es revisada por expertos. Esto garantiza que lo que lees sea preciso y no generado por errores de IA."
 }

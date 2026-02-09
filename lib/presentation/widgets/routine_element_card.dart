@@ -76,211 +76,223 @@ class RoutineElementCard extends StatelessWidget {
           opacity: (isTaken || isSkipped || isFocused) ? 1.0 : 0.6,
           child: Column(
             children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  // Options button in Far Left
-                  if (!isTaken)
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: onMoreOptions,
-                      child: Container(
-                        width: 44,
-                        height: 44,
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.more_vert,
-                          color: Colors.grey,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-
-                  // Icon
-                  Container(
-                    width: 40.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: (isTaken || isSkipped)
-                          ? Colors.grey.withValues(alpha: 0.2)
-                          : iconColor.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      isTaken
-                          ? Icons.wb_sunny
-                          : (isSkipped ? Icons.block : icon),
-                      color: (isTaken || isSkipped) ? Colors.grey : iconColor,
-                      size: 20.0,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-
-                  // Details
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color: (isTaken || isSkipped)
-                                ? Colors.grey
-                                : (isDark ? Colors.white : Colors.black87),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            decoration: (isTaken || isSkipped)
-                                ? TextDecoration.lineThrough
-                                : null,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Text(
-                              '$dosage • $form',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // Status Indicator or Action Button
-                  if (isTaken) ...[
-                    const Icon(Icons.check_circle,
-                        color: Color(0xFF4ADE80), size: 24),
-                  ] else if (isSkipped) ...[
-                    const Icon(Icons.block, color: Colors.grey, size: 24),
-                  ] else if (isUpcoming) ...[
-                    if (statusText != null)
-                      Text(
-                        statusText!,
-                        style: TextStyle(
-                          color: statusColor ?? Colors.grey,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                  ] else ...[
-                    // Primary Action: Mark as Taken
-                    Builder(
-                      builder: (context) {
-                        final isWide = MediaQuery.of(context).size.width > 600;
-                        final hasStatus =
-                            statusText != null && !isTaken && !isSkipped;
-
-                        // Shared Button Widget
-                        final takeButton = GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            AppLogger.d('Take button HIT for $title');
-                            // ADR-014: Dopamine hit - Haptic feedback
-                            HapticFeedback.mediumImpact();
-                            onTake?.call();
-                          },
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: isFocused ? 20 : 16, 
-                                vertical: isFocused ? 14 : 12),
-                            decoration: BoxDecoration(
-                              color: isFocused ? AppColors.primaryGold : AppColors.primary,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: (isFocused ? AppColors.primaryGold : AppColors.primary)
-                                      .withValues(alpha: 0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.check,
-                                    color: isFocused ? Colors.black : Colors.white, 
-                                    size: 18),
-                                const SizedBox(width: 6),
-                                Text(
-                                  'Take',
-                                  style: TextStyle(
-                                    color: isFocused ? Colors.black : Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-
-                        if (isWide && hasStatus) {
-                          // iPad/Wide: Row Layout [Status] -- [Button]
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                statusText!,
-                                style: TextStyle(
-                                  color: statusColor ?? Colors.grey,
-                                  fontSize: 13, // Slightly larger for iPad
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              takeButton,
-                            ],
-                          );
-                        } else {
-                          // Mobile: Column Layout
-                          // [Status]
-                          // [Button]
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              if (hasStatus)
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Text(
-                                    statusText!,
-                                    style: TextStyle(
-                                      color: statusColor ?? Colors.grey,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              takeButton,
-                            ],
-                          );
-                        }
-                      },
-                    ),
-                  ],
-                ],
-              ),
-            ),
-
-            // Timestamp if taken or skipped
-            if ((isTaken || isSkipped) && statusText != null)
               Padding(
-                padding: const EdgeInsets.only(bottom: 8, left: 12, right: 12),
+                padding: const EdgeInsets.all(12.0),
                 child: Row(
                   children: [
-                    Text(
-                      statusText!,
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    // Options button in Far Left
+                    if (!isTaken)
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: onMoreOptions,
+                        child: Container(
+                          width: 44,
+                          height: 44,
+                          alignment: Alignment.center,
+                          child: const Icon(
+                            Icons.more_vert,
+                            color: Colors.grey,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+
+                    // Icon
+                    Container(
+                      width: 40.0,
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        color: (isTaken || isSkipped)
+                            ? Colors.grey.withValues(alpha: 0.2)
+                            : iconColor.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        isTaken
+                            ? Icons.wb_sunny
+                            : (isSkipped ? Icons.block : icon),
+                        color: (isTaken || isSkipped) ? Colors.grey : iconColor,
+                        size: 20.0,
+                      ),
                     ),
-                    const Spacer(),
+                    const SizedBox(width: 10),
+
+                    // Details
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: TextStyle(
+                              color: (isTaken || isSkipped)
+                                  ? Colors.grey
+                                  : (isDark ? Colors.white : Colors.black87),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              decoration: (isTaken || isSkipped)
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Text(
+                                '$dosage • $form',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Status Indicator or Action Button
+                    if (isTaken) ...[
+                      const Icon(Icons.check_circle,
+                          color: Color(0xFF4ADE80), size: 24),
+                    ] else if (isSkipped) ...[
+                      const Icon(Icons.block, color: Colors.grey, size: 24),
+                    ] else if (isUpcoming) ...[
+                      if (statusText != null)
+                        Text(
+                          statusText!,
+                          style: TextStyle(
+                            color: statusColor ?? Colors.grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                    ] else ...[
+                      // Primary Action: Mark as Taken
+                      Builder(
+                        builder: (context) {
+                          final isWide =
+                              MediaQuery.of(context).size.width > 600;
+                          final hasStatus =
+                              statusText != null && !isTaken && !isSkipped;
+
+                          // Shared Button Widget
+                          final takeButton = GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              AppLogger.d('Take button HIT for $title');
+                              // ADR-014: Dopamine hit - Haptic feedback
+                              HapticFeedback.mediumImpact();
+                              onTake?.call();
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: isFocused ? 20 : 16,
+                                  vertical: isFocused ? 14 : 12),
+                              decoration: BoxDecoration(
+                                color: isFocused
+                                    ? AppColors.primaryGold
+                                    : AppColors.primary,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: (isFocused
+                                            ? AppColors.primaryGold
+                                            : AppColors.primary)
+                                        .withValues(alpha: 0.3),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.check,
+                                      color: isFocused
+                                          ? Colors.black
+                                          : Colors.white,
+                                      size: 18),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    'Take',
+                                    style: TextStyle(
+                                      color: isFocused
+                                          ? Colors.black
+                                          : Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+
+                          if (isWide && hasStatus) {
+                            // iPad/Wide: Row Layout [Status] -- [Button]
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  statusText!,
+                                  style: TextStyle(
+                                    color: statusColor ?? Colors.grey,
+                                    fontSize: 13, // Slightly larger for iPad
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                takeButton,
+                              ],
+                            );
+                          } else {
+                            // Mobile: Column Layout
+                            // [Status]
+                            // [Button]
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                if (hasStatus)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      statusText!,
+                                      style: TextStyle(
+                                        color: statusColor ?? Colors.grey,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                takeButton,
+                              ],
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ],
                 ),
               ),
+
+              // Timestamp if taken or skipped
+              if ((isTaken || isSkipped) && statusText != null)
+                Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 8, left: 12, right: 12),
+                  child: Row(
+                    children: [
+                      Text(
+                        statusText!,
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),

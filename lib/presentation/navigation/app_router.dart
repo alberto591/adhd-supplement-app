@@ -62,6 +62,7 @@ import '../views/article_detail_screen.dart';
 import '../views/disclaimer_screen.dart';
 import '../views/supplement_detail.dart';
 import '../views/global_search_screen.dart';
+import '../views/scientific_methodology_screen.dart';
 import '../views/paywall_screen.dart';
 import '../../domain/entities/supplement.dart';
 import '../../domain/entities/supplement_compatibility.dart';
@@ -130,6 +131,7 @@ class AppRouter {
   static const String supplementDetail = '/supplement-detail';
   static const String globalSearch = '/global-search';
   static const String eduArticleDetail = '/edu-article-detail';
+  static const String scientificMethodology = '/scientific-methodology';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -427,6 +429,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => EducationalArticleDetailScreen(article: article),
         );
+
+      case scientificMethodology:
+        return MaterialPageRoute(
+            builder: (_) => const ScientificMethodologyScreen());
 
       default:
         return MaterialPageRoute(

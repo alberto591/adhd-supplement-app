@@ -584,5 +584,15 @@
   "citationDisclaimer": "Informazioni provenienti da studi sottoposti a revisione paritaria",
   "deleteAccount": "Elimina Account",
   "deleteAccountConfirm": "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e tutti i tuoi dati saranno rimossi permanentemente.",
-  "deleteAccountSub": "Rimuovi permanentemente il tuo account e i dati"
+  "deleteAccountSub": "Rimuovi permanentemente il tuo account e i dati",
+  "scientificMethodologyTitle": "La Nostra Scienza e Ricerca",
+  "scientificMethodologySub": "Come verifichiamo le informazioni",
+  "dataIntegrity": "Fonti Affidabili",
+  "scientificMethodologyContent": "Tutte le informazioni sui nostri integratori provengono da ricerche mediche affidabili e certificate. Utilizziamo la National Library of Medicine (PubMed) come fonte principale, concentrandoci su studi di alta qualità.",
+  "methodologySelection": "Come Scegliamo gli Integratori",
+  "methodologySelectionContent": "Controlliamo attentamente ogni integratore per vedere come influisce su concentrazione, sonno e salute del cervello, specificamente per chi ha l'ADHD.",
+  "methodologyVerification": "Verifica e Trasparenza",
+  "methodologyVerificationContent": "Ogni nostra affermazione è supportata dalla scienza. Puoi trovare i link diretti agli studi di ricerca originali in ogni pagina degli integratori.",
+  "methodologyGovernance": "Informazioni Sicure",
+  "methodologyGovernanceContent": "Le nostre informazioni sono gestite in modo sicuro e ricontrollate da esperti. Questo assicura che ciò che leggi sia accurato e non generato da errori dell'IA."
 }

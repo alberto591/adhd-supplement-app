@@ -440,6 +440,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     const SizedBox(height: 2),
                     _SettingsTile(
+                      icon: Icons.info_outline,
+                      iconColor: AppColors.primaryGold,
+                      title: AppLocalizations.of(context)!
+                          .scientificMethodologyTitle,
+                      subtitle: AppLocalizations.of(context)!
+                          .scientificMethodologySub,
+                      trailing:
+                          const Icon(Icons.chevron_right, color: Colors.grey),
+                      onTap: () => Navigator.pushNamed(
+                          context, AppRouter.scientificMethodology),
+                    ),
+                    const SizedBox(height: 2),
+                    _SettingsTile(
                       icon: Icons.description_outlined,
                       iconColor: Colors.grey,
                       title: AppLocalizations.of(context)!.generalDisclaimer,

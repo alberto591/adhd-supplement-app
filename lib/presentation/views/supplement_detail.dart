@@ -13,6 +13,7 @@ import 'package:neurostack_app/presentation/widgets/routine_status_alert.dart';
 import 'package:neurostack_app/utils/supplement_ui_helper.dart';
 import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:neurostack_app/presentation/navigation/app_router.dart';
 
 /// Neurostack-Friendly Detail Screen with high contrast and clear sections
 class SupplementDetail extends StatelessWidget {
@@ -99,6 +100,25 @@ class SupplementDetail extends StatelessWidget {
                       ),
                     ),
                   ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: primaryGold.withValues(alpha: 0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.info_outline, size: 20),
+                          color: primaryGold,
+                          tooltip: AppLocalizations.of(context)!
+                              .scientificMethodologyTitle,
+                          onPressed: () => Navigator.pushNamed(
+                              context, AppRouter.scientificMethodology),
+                        ),
+                      ),
+                    ),
+                  ],
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                       decoration: BoxDecoration(

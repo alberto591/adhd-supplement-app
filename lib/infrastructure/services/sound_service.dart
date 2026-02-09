@@ -30,7 +30,11 @@ class SoundService {
   Future<void> playSuccess() async {
     if (!_settingsRepository.getSoundsEnabled()) return;
     try {
-      await _player.play(AssetSource('sounds/take_success.mp3'));
+      // Play the chime sound
+      await _player.setPlaybackRate(1.0);
+      await _player.play(
+          AssetSource('sounds/freesound_community-chime-sound-7143.mp3'),
+          volume: 1.0);
     } catch (e) {
       AppLogger.e('Failed to play success sound', e);
     }
@@ -39,12 +43,19 @@ class SoundService {
   Future<void> playTriumphant() async {
     if (!_settingsRepository.getSoundsEnabled()) return;
     try {
-      // Play a rhythmic sequence for a more "celebratory" feel
-      await _player.play(AssetSource('sounds/take_success.mp3'), volume: 1.0);
+      // Play a sequence of chimes for a more "celebratory" feel
+      await _player.setPlaybackRate(1.0);
+      await _player.play(
+          AssetSource('sounds/freesound_community-chime-sound-7143.mp3'),
+          volume: 1.0);
       await Future<void>.delayed(const Duration(milliseconds: 150));
-      await _player.play(AssetSource('sounds/take_success.mp3'), volume: 0.8);
+      await _player.play(
+          AssetSource('sounds/freesound_community-chime-sound-7143.mp3'),
+          volume: 0.8);
       await Future<void>.delayed(const Duration(milliseconds: 120));
-      await _player.play(AssetSource('sounds/take_success.mp3'), volume: 1.0);
+      await _player.play(
+          AssetSource('sounds/freesound_community-chime-sound-7143.mp3'),
+          volume: 1.0);
     } catch (e) {
       AppLogger.e('Failed to play triumphant sound', e);
     }

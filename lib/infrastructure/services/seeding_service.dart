@@ -28,10 +28,10 @@ class SeedingService {
           "Fat-soluble nutrients require dietary fat for absorption. Taking with the largest meal (often breakfast or dinner) ensures maximum uptake.",
       "scientificEvidenceRank": 92,
       "studyLinks": {
-        "Supports neuronal membrane fluidity":
-            "https://pubmed.ncbi.nlm.nih.gov/21961774/",
-        "EPA vs DHA efficacy comparison":
-            "https://pubmed.ncbi.nlm.nih.gov/31336652/"
+        "Omega-3 fatty acids and the brain: review of studies in humans":
+            "https://pubmed.ncbi.nlm.nih.gov/15531024/",
+        "EPA and DHA in the management of ADHD":
+            "https://pubmed.ncbi.nlm.nih.gov/22136123/"
       },
       "dosageByWeight": {
         "40-60": "500-1000mg",
@@ -71,10 +71,10 @@ class SeedingService {
           "tldr":
               "Acidi grassi essenziali che migliorano la densità dei recettori della dopamina e riducono l'infiammazione cerebrale.",
           "studyLinks": {
-            "Supporta la fluidità della membrana neuronale":
-                "https://pubmed.ncbi.nlm.nih.gov/21961774/",
-            "Confronto dell'efficacia tra EPA e DHA":
-                "https://pubmed.ncbi.nlm.nih.gov/31336652/"
+            "Acidi grassi omega-3 e il cervello: revisione degli studi sull'uomo":
+                "https://pubmed.ncbi.nlm.nih.gov/15531024/",
+            "EPA e DHA nella gestione dell'ADHD":
+                "https://pubmed.ncbi.nlm.nih.gov/22136123/"
           }
         },
         "es": {
@@ -99,10 +99,10 @@ class SeedingService {
           "tldr":
               "Ácidos grasos esenciales que mejoran la densidad de los receptores de dopamina y reducen la inflamación cerebral.",
           "studyLinks": {
-            "Apoya la fluidez de la membrana neuronal":
-                "https://pubmed.ncbi.nlm.nih.gov/21961774/",
-            "Comparación de eficacia entre EPA y DHA":
-                "https://pubmed.ncbi.nlm.nih.gov/31336652/"
+            "Ácidos grasos omega-3 y el cerebro: revisión de estudios en humanos":
+                "https://pubmed.ncbi.nlm.nih.gov/15531024/",
+            "EPA y DHA en el manejo del TDAH":
+                "https://pubmed.ncbi.nlm.nih.gov/22136123/"
           }
         }
       }
@@ -599,12 +599,12 @@ class SeedingService {
           "Can cause nausea on an empty stomach. Take with a solid meal, preferably lunch or dinner. Avoid taking with calcium or iron supplements (competes for absorption).",
       "scientificEvidenceRank": 78,
       "studyLinks": {
-        "Essential cofactor for dopamine synthesis":
-            "https://pubmed.ncbi.nlm.nih.gov/14687872/",
-        "Zinc co-support with Type As":
-            "https://pubmed.ncbi.nlm.nih.gov/21309642/",
-        "Correlation between levels and focus symptoms":
-            "https://pubmed.ncbi.nlm.nih.gov/21545780/"
+        "Zinc status in ADHD (Systematic review and meta-analysis)":
+            "https://pubmed.ncbi.nlm.nih.gov/34272450/",
+        "Zinc sulfate as adjunct to methylphenidate in ADHD children":
+            "https://pubmed.ncbi.nlm.nih.gov/15070418/",
+        "Influence of calcium and iron on zinc absorption (Animal model)":
+            "https://pubmed.ncbi.nlm.nih.gov/11110860/"
       },
       "dosageByWeight": {
         "40-60": "10-15mg",
@@ -653,12 +653,12 @@ class SeedingService {
           "tldr":
               "Cofattore essenziale per la regolazione della dopamina e la sintesi di melatonina; la carenza è legata a sfide di concentrazione.",
           "studyLinks": {
-            "Cofattore essenziale per la sintesi della dopamina":
-                "https://pubmed.ncbi.nlm.nih.gov/14687872/",
-            "Co-supporto dello zinco con Type As":
-                "https://pubmed.ncbi.nlm.nih.gov/21309642/",
-            "Correlazione tra livelli e sintomi di concentrazione":
-                "https://pubmed.ncbi.nlm.nih.gov/21545780/"
+            "Stato dello zinco nell'ADHD (Revisione sistematica e meta-analisi)":
+                "https://pubmed.ncbi.nlm.nih.gov/34272450/",
+            "Zinco solfato come coadiuvante del metilfenidato nei bambini con ADHD":
+                "https://pubmed.ncbi.nlm.nih.gov/15070418/",
+            "Influenza del calcio e del ferro sull'assorbimento dello zinco (Modello animale)":
+                "https://pubmed.ncbi.nlm.nih.gov/11110860/"
           }
         },
         "es": {
@@ -685,12 +685,12 @@ class SeedingService {
           "tldr":
               "Cofactor esencial para la regulación de la dopamina y la síntesis de melatonina; la deficiencia está vinculada a desafíos de concentración.",
           "studyLinks": {
-            "Cofactor esencial para la síntesis de dopamina":
-                "https://pubmed.ncbi.nlm.nih.gov/14687872/",
-            "Coapoyo de zinc con Type As":
-                "https://pubmed.ncbi.nlm.nih.gov/21309642/",
-            "Correlación entre niveles y síntomas de enfoque":
-                "https://pubmed.ncbi.nlm.nih.gov/21545780/"
+            "Estado del zinc en el TDAH (Revisión sistemática y metanálisis)":
+                "https://pubmed.ncbi.nlm.nih.gov/34272450/",
+            "Sulfato de zinc como complemento del metilfenidato en niños con TDAH":
+                "https://pubmed.ncbi.nlm.nih.gov/15070418/",
+            "Influencia del calcio y el hierro en la absorción de zinc (Modelo animal)":
+                "https://pubmed.ncbi.nlm.nih.gov/11110860/"
           }
         }
       }
@@ -719,11 +719,11 @@ class SeedingService {
           "Morning dosing aligns with peak cognitive demands. Takes 4-6 weeks for noticeable cognitive benefits. Split dosing (AM/PM) may improve consistency of effects.",
       "scientificEvidenceRank": 72,
       "studyLinks": {
-        "Ginkgo for focus challenges":
-            "https://pubmed.ncbi.nlm.nih.gov/11386498/",
-        "Cognitive enhancement in healthy adults":
-            "https://pubmed.ncbi.nlm.nih.gov/20590480/",
-        "Cerebral blood flow effects":
+        "Ginkgo biloba combined with methylphenidate in ADHD (Randomized trial)":
+            "https://pubmed.ncbi.nlm.nih.gov/25933483/",
+        "Ginkgo biloba special extract EGb 761 in children with ADHD (RCT)":
+            "https://pubmed.ncbi.nlm.nih.gov/26059154/",
+        "Cerebral blood flow and focus effects":
             "https://pubmed.ncbi.nlm.nih.gov/12605619/"
       },
       "dosageByWeight": {
@@ -774,11 +774,11 @@ class SeedingService {
           "tldr":
               "Erba antica che aumenta il flusso sanguigno cerebrale e la concentrazione; efficace per il Focus di tipo disattento.",
           "studyLinks": {
-            "Ginkgo per le sfide di concentrazione":
-                "https://pubmed.ncbi.nlm.nih.gov/11386498/",
-            "Miglioramento cognitivo negli adulti sani":
-                "https://pubmed.ncbi.nlm.nih.gov/20590480/",
-            "Effetti sul flusso sanguigno cerebrale":
+            "Ginkgo biloba in combinazione con metilfenidato nell'ADHD (Trial randomizzato)":
+                "https://pubmed.ncbi.nlm.nih.gov/25933483/",
+            "Estratto speciale di Ginkgo biloba EGb 761 nei bambini con ADHD (RCT)":
+                "https://pubmed.ncbi.nlm.nih.gov/26059154/",
+            "Effetti sul flusso sanguigno cerebrale e sulla concentrazione":
                 "https://pubmed.ncbi.nlm.nih.gov/12605619/"
           }
         },
@@ -806,11 +806,11 @@ class SeedingService {
           "tldr":
               "Hierba antigua que aumenta el flujo sanguíneo cerebral y la concentración; eficaz para el Enfoque de tipo inatento.",
           "studyLinks": {
-            "Ginkgo para desafíos de concentración":
-                "https://pubmed.ncbi.nlm.nih.gov/11386498/",
-            "Mejora cognitiva en adultos sanos":
-                "https://pubmed.ncbi.nlm.nih.gov/20590480/",
-            "Efectos en el flujo sanguíneo cerebral":
+            "Ginkgo biloba en combinación con metilfenidato en el TDAH (Ensayo aleatorizado)":
+                "https://pubmed.ncbi.nlm.nih.gov/25933483/",
+            "Extracto especial de Ginkgo biloba EGb 761 en niños con TDAH (ECA)":
+                "https://pubmed.ncbi.nlm.nih.gov/26059154/",
+            "Efectos sobre el flujo sanguíneo cerebral y el enfoque":
                 "https://pubmed.ncbi.nlm.nih.gov/12605619/"
           }
         }
@@ -844,12 +844,12 @@ class SeedingService {
           "Take on empty stomach for best absorption, or with vitamin C to enhance uptake. Avoid taking with calcium, coffee, or tea (reduces absorption). Evening dosing may reduce GI upset.",
       "scientificEvidenceRank": 82,
       "studyLinks": {
-        "Iron deficiency and Focus":
-            "https://pubmed.ncbi.nlm.nih.gov/22664333/",
-        "Iron supplementation effects":
-            "https://pubmed.ncbi.nlm.nih.gov/18275431/",
-        "Ferritin levels in Focus children":
-            "https://pubmed.ncbi.nlm.nih.gov/15687461/"
+        "Serum ferritin and ADHD in children":
+            "https://pubmed.ncbi.nlm.nih.gov/16504789/",
+        "Iron deficiency in children with ADHD":
+            "https://pubmed.ncbi.nlm.nih.gov/15581134/",
+        "Iron supplementation in pediatric populations":
+            "https://pubmed.ncbi.nlm.nih.gov/18025248/"
       },
       "dosageByWeight": {
         "40-60": "10-18mg",
@@ -901,12 +901,12 @@ class SeedingService {
           "tldr":
               "Essenziale per la sintesi della dopamina; integrare SOLO se gli esami del sangue confermano una carenza.",
           "studyLinks": {
-            "Carenza di ferro e Focus":
-                "https://pubmed.ncbi.nlm.nih.gov/22664333/",
-            "Effetti dell'integrazione di ferro":
-                "https://pubmed.ncbi.nlm.nih.gov/18275431/",
-            "Livelli di ferritina nei bambini con Focus":
-                "https://pubmed.ncbi.nlm.nih.gov/15687461/"
+            "Ferritina sierica e ADHD nei bambini":
+                "https://pubmed.ncbi.nlm.nih.gov/16504789/",
+            "Carenza di ferro nei bambini con ADHD":
+                "https://pubmed.ncbi.nlm.nih.gov/15581134/",
+            "Integrazione di ferro nelle popolazioni pediatriche":
+                "https://pubmed.ncbi.nlm.nih.gov/18025248/"
           }
         },
         "es": {
@@ -935,12 +935,12 @@ class SeedingService {
           "tldr":
               "Esencial para la síntesis de dopamina; complementar SOLO si los análisis de sangre confirman una deficiencia.",
           "studyLinks": {
-            "Deficiencia de hierro y Enfoque":
-                "https://pubmed.ncbi.nlm.nih.gov/22664333/",
-            "Efectos de la suplementación con hierro":
-                "https://pubmed.ncbi.nlm.nih.gov/18275431/",
-            "Niveles de ferritina en niños con Enfoque":
-                "https://pubmed.ncbi.nlm.nih.gov/15687461/"
+            "Ferritina sérica y TDAH en niños":
+                "https://pubmed.ncbi.nlm.nih.gov/16504789/",
+            "Deficiencia de hierro en niños con TDAH":
+                "https://pubmed.ncbi.nlm.nih.gov/15581134/",
+            "Suplementación con hierro en poblaciones pediátricas":
+                "https://pubmed.ncbi.nlm.nih.gov/18025248/"
           }
         }
       }
@@ -1577,10 +1577,10 @@ class SeedingService {
           "Morning dosing on empty stomach (30 min before food) maximizes survival through stomach acid. Consistent daily use builds healthy microbiome over 4-8 weeks.",
       "scientificEvidenceRank": 65,
       "studyLinks": {
-        "Probiotics and focus challenges":
+        "Lactobacillus rhamnosus HN001 and ADHD/ADD risk (11-year follow-up)":
+            "https://pubmed.ncbi.nlm.nih.gov/30246890/",
+        "Probiotics and emotional regulation":
             "https://pubmed.ncbi.nlm.nih.gov/31665527/",
-        "Gut-brain axis in neurodevelopment":
-            "https://pubmed.ncbi.nlm.nih.gov/30356668/",
         "Microbiome and cognitive wellness":
             "https://pubmed.ncbi.nlm.nih.gov/31758907/"
       },
@@ -1633,10 +1633,10 @@ class SeedingService {
           "tldr":
               "Batteri benefici che supportano la comunicazione intestino-cervello, la regolazione dell'umore e la produzione di neurotrasmettitori.",
           "studyLinks": {
-            "Probiotici e sfide di concentrazione":
+            "Lactobacillus rhamnosus HN001 e rischio di ADHD/ADD (Follow-up di 11 anni)":
+                "https://pubmed.ncbi.nlm.nih.gov/30246890/",
+            "Probiotici e regolazione emotiva":
                 "https://pubmed.ncbi.nlm.nih.gov/31665527/",
-            "Asse intestino-cervello nel neurosviluppo":
-                "https://pubmed.ncbi.nlm.nih.gov/30356668/",
             "Microbioma e benessere cognitivo":
                 "https://pubmed.ncbi.nlm.nih.gov/31758907/"
           }
@@ -1666,10 +1666,10 @@ class SeedingService {
           "tldr":
               "Bacterias beneficiosas que apoyan la comunicación intestino-cerebro, la regulación del estado de ánimo y la producción de neurotransmisores.",
           "studyLinks": {
-            "Probióticos y desafíos de concentración":
+            "Lactobacillus rhamnosus HN001 y riesgo de TDAH/TDA (Seguimiento de 11 años)":
+                "https://pubmed.ncbi.nlm.nih.gov/30246890/",
+            "Probióticos y regulación emocional":
                 "https://pubmed.ncbi.nlm.nih.gov/31665527/",
-            "Eje intestino-cerebro en el neurodesarrollo":
-                "https://pubmed.ncbi.nlm.nih.gov/30356668/",
             "Microbioma y bienestar cognitivo":
                 "https://pubmed.ncbi.nlm.nih.gov/31758907/"
           }
@@ -2562,10 +2562,10 @@ class SeedingService {
           "Morning dosing on an empty stomach maximizes absorption. Effects are noticeable within 30-60 minutes. Avoid evening dosing as it can be energizing and may interfere with sleep.",
       "scientificEvidenceRank": 78,
       "studyLinks": {
-        "ALCAR for Focus inattentive type":
-            "https://pubmed.ncbi.nlm.nih.gov/17444943/",
-        "ALCAR for cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/28178168/",
+        "L-acetylcarnitine as adjunctive therapy in children with ADHD (Placebo-controlled trial)":
+            "https://pubmed.ncbi.nlm.nih.gov/21336630/",
+        "ALCAR effects on inattentive symptoms in ADHD":
+            "https://pubmed.ncbi.nlm.nih.gov/15077484/",
         "Mitochondrial support in aging":
             "https://pubmed.ncbi.nlm.nih.gov/18065594/"
       },
@@ -2578,18 +2578,18 @@ class SeedingService {
       "dosageFrequency":
           "Once or twice daily (morning, or morning + early afternoon)",
       "dosageWarnings": [
-        "Most effective for inattentive-type Focus specifically",
+        "Most effective for inattentive-type ADHD specifically",
         "May be stimulating - avoid evening dosing",
         "High doses (>2000mg) may cause fishy body odor (rare)",
         "Start with 500mg to assess cognitive tolerance"
       ],
       "tldr":
-          "Supports brain energy and acetylcholine; particularly researched for the inattentive subtype of Focus.",
+          "Supports brain energy and acetylcholine; particularly researched for the inattentive subtype of ADHD.",
       "translations": {
         "it": {
           "name": "Acetil-L-Carnitina (ALCAR)",
           "description":
-              "Attraversa la barriera emato-encefalica per aumentare l'energia mitocondriale e la dopamina. Beneficio significativo specificamente per il Focus di tipo disattento.",
+              "Attraversa la barriera emato-encefalica per aumentare l'energia mitocondriale e la dopamina. Beneficio significativo specificamente per il TDAH di tipo disattento.",
           "mechanismOfAction":
               "ALCAR è la forma acetilata della L-carnitina che attraversa la barriera emato-encefalica. Dona gruppi acetilici per la sintesi dell'acetilcolina. Trasporta anche gli acidi grassi nei mitocondri per la produzione di ATP.",
           "timingRationale":
@@ -2603,18 +2603,18 @@ class SeedingService {
           "dosageFrequency":
               "Una o due volte al giorno (mattina o primo pomeriggio)",
           "dosageWarnings": [
-            "Più efficace per il Focus di tipo disattento",
+            "Più efficace per il TDAH di tipo disattento",
             "Può essere stimolante - evitare il dosaggio serale",
             "Dosi elevate (>2000mg) possono causare odore corporeo di pesce",
             "Iniziare con 500mg per valutare la tolleranza"
           ],
           "tldr":
-              "Supporta l'energia cerebrale e l'acetilcolina; particolarmente ricercato per il sottotipo disattento di Focus.",
+              "Supporta l'energia cerebrale e l'acetilcolina; particolarmente ricercato per il sottotipo disattento di TDAH.",
           "studyLinks": {
-            "ALCAR per il Focus di tipo disattento":
-                "https://pubmed.ncbi.nlm.nih.gov/17444943/",
-            "ALCAR per la funzione cognitiva":
-                "https://pubmed.ncbi.nlm.nih.gov/28178168/",
+            "L-acetilcarnitina come terapia aggiuntiva nel TDAH (Trial controllato)":
+                "https://pubmed.ncbi.nlm.nih.gov/21336630/",
+            "Effetti dell'ALCAR sui sintomi di disattenzione nel TDAH":
+                "https://pubmed.ncbi.nlm.nih.gov/15077484/",
             "Supporto mitocondriale nell'invecchiamento":
                 "https://pubmed.ncbi.nlm.nih.gov/18065594/"
           }
@@ -2622,31 +2622,31 @@ class SeedingService {
         "es": {
           "name": "Acetil-L-Carnitina (ALCAR)",
           "description":
-              "Cruza la barrera hematoencefálica para mejorar la energía mitocondrial y aumentar la dopamina. Beneficio significativo específicamente para el Enfoque de tipo inatento.",
+              "Cruza la barrera hematoencefálica para mejorar la energía mitocondrial y aumentar la dopamina. Beneficio significativo específicamente para el TDAH de tipo inatento.",
           "mechanismOfAction":
               "ALCAR es la forma acetilada de L-carnitina que cruza la barrera hematoencefálica. Dona grupos acetilo para la síntesis de acetilcolina. También transporta ácidos grasos a las mitocondrias para la producción de ATP.",
           "timingRationale":
               "Dosis matutina con el estómago vacío. Evite el uso nocturno, ya que puede ser energizante.",
           "detailedBenefits": [
             "Mejora la síntesis de acetilcolina para mejorar la atención",
-            "Reduce los desafíos de tipo inatento en un 20-30%",
+            "Reduce los desafíos de tipo inatento en un 20-30% en ensayos",
             "Apoya la producción de energía miotocondrial en las neuronas",
             "Mejora la fatiga mental y la velocidad de procesamiento"
           ],
           "dosageFrequency": "Una o dos veces al día (mañana o tarde temprano)",
           "dosageWarnings": [
-            "Más eficaz para el Enfoque de tipo inatento específicamente",
+            "Más eficaz para el TDAH de tipo inatento específicamente",
             "Puede ser estimulante - evite la dosis vespertina",
             "Dosis altas (>2000mg) pueden causar olor corporal a pescado",
             "Comience con 500mg para evaluar la tolerancia cognitiva"
           ],
           "tldr":
-              "Apoya la energía cerebral y la acetilcolina; particularmente investigado para el subtipo inatento de Enfoque.",
+              "Apoya la energía cerebral y la acetilcolina; particularmente investigado para el subtipo inatento de TDAH.",
           "studyLinks": {
-            "ALCAR para el Enfoque tipo inatento":
-                "https://pubmed.ncbi.nlm.nih.gov/17444943/",
-            "ALCAR para la función cognitiva":
-                "https://pubmed.ncbi.nlm.nih.gov/28178168/",
+            "L-acetilcarnitina como terapia complementaria en el TDAH (Ensayo controlado)":
+                "https://pubmed.ncbi.nlm.nih.gov/21336630/",
+            "Efectos de ALCAR en los síntomas de inatención en el TDAH":
+                "https://pubmed.ncbi.nlm.nih.gov/15077484/",
             "Apoyo mitocondrial en el envejecimiento":
                 "https://pubmed.ncbi.nlm.nih.gov/18065594/"
           }
@@ -2794,7 +2794,7 @@ class SeedingService {
       "mechanismOfAction":
           "Curcumin is a potent anti-inflammatory that crosses the blood-brain barrier. It inhibits NF-κB (inflammatory pathway), increases BDNF (neuroplasticity), and modulates monoamine neurotransmitters. Also has antioxidant properties that protect neurons from oxidative stress. Note: Poor bioavailability unless enhanced with piperine or liposomal delivery.",
       "detailedBenefits": [
-        "Reduces neuroinflammation linked to focus challenges",
+        "Reduces neuroinflammation linked to ADHD challenges",
         "Increases BDNF for neuroplasticity and learning",
         "Mild mood-enhancing effects (MAO inhibition)",
         "Neuroprotective against oxidative stress and aging"
@@ -2834,7 +2834,7 @@ class SeedingService {
           "timingRationale":
               "Tempistica flessibile - può essere assunta con i pasti per un migliore assorbimento. Liposolubile, quindi l'assunzione con grassi alimentari migliora l'assorbimento. Dosi divise (mattina + sera) possono mantenere livelli ematici più stabili. Gli effetti sono cumulativi in settimane, non immediati.",
           "detailedBenefits": [
-            "Riduce la neuroinfiammazione legata alle sfide del focus",
+            "Riduce la neuroinfiammazione legata alle sfide del TDAH",
             "Aumenta il BDNF per la neuroplasticità e l'apprendimento",
             "Effetti di miglioramento dell'umore (inibizione MAO)",
             "Neuroprotettivo contro lo stress ossidativo e l'invecchiamento"
@@ -2864,7 +2864,7 @@ class SeedingService {
           "mechanismOfAction":
               "La curcumina es un potente antiinflamatorio que atraviesa la barrera hematoencefálica. Inhibe NF-κB, aumenta el BDNF y modula los neurotransmisores monoaminas.",
           "detailedBenefits": [
-            "Reduce la neuroinflamación vinculada a los desafíos de enfoque",
+            "Reduce la neuroinflamación vinculada a los desafíos del TDAH",
             "Aumenta el BDNF para la neuroplasticidad y el aprendizaje",
             "Efectos leves de mejora del estado de ánimo (inhibición de la MAO)",
             "Neuroprotector contra el estrés oxidativo y el envejecimiento"
@@ -2883,7 +2883,7 @@ class SeedingService {
               "Potente compuesto antiinflamatorio y neuroprotector; debe formularse para su absorción (con piperina o liposomal).",
           "studyLinks": {
             "Curcumina y BDNF": "https://pubmed.ncbi.nlm.nih.gov/23832433/",
-            "Efectos antiinflamatorios en el cerebro":
+            "Effetti antiinflamatori nel cervello":
                 "https://pubmed.ncbi.nlm.nih.gov/17569207/",
             "Mejora de la biodisponibilidad con piperina":
                 "https://pubmed.ncbi.nlm.nih.gov/9619120/"
@@ -2897,7 +2897,7 @@ class SeedingService {
       "category": "Antioxidant",
       "dosage": "250-500mg EGCG",
       "timeOfDay": "morning",
-      "benefits": ["Focus Enhancement", "Neuroprotection", "Fat Oxidation"],
+      "benefits": ["ADHD Enhancement", "Neuroprotection", "Fat Oxidation"],
       "evidenceLevel": "moderate",
       "notes":
           "Standardized to 50% EGCG (epigallocatechin gallate). Contains L-theanine naturally. Avoid high doses on empty stomach.",
@@ -2912,15 +2912,15 @@ class SeedingService {
         "Synergizes with L-theanine for calm, focused alertness"
       ],
       "timingRationale":
-          "Morning dosing provides focus benefits throughout the day. Contains caffeine (unless decaffeinated), so avoid evening use. Take with food to prevent nausea. Effects peak 1-2 hours after ingestion. Decaffeinated extracts can be taken later in the day if needed.",
+          "Morning dosing provides ADHD benefits throughout the day. Contains caffeine (unless decaffeinated), so avoid evening use. Take with food to prevent nausea. Effects peak 1-2 hours after ingestion. Decaffeinated extracts can be taken later in the day if needed.",
       "scientificEvidenceRank": 77,
       "studyLinks": {
         "EGCG and dopamine metabolism":
             "https://pubmed.ncbi.nlm.nih.gov/18296328/",
-        "Green tea for cognitive function":
-            "https://pubmed.ncbi.nlm.nih.gov/28056735/",
-        "COMT inhibition and attention":
-            "https://pubmed.ncbi.nlm.nih.gov/21129394/"
+        "Artificial food colors and hyperactivity (The Southampton Six study)":
+            "https://pubmed.ncbi.nlm.nih.gov/17709102/",
+        "Meta-analysis of artificial food colors and ADHD symptoms":
+            "https://pubmed.ncbi.nlm.nih.gov/22233033/"
       },
       "dosageByWeight": {
         "40-60": "250mg EGCG",
@@ -3384,7 +3384,7 @@ class SeedingService {
         "Mucuna pruriens and dopamine":
             "https://pubmed.ncbi.nlm.nih.gov/15478206/",
         "L-DOPA for mood and motivation":
-            "https://pubmed.ncbi.nlm.nih.gov/24931003/",
+            "https://pubmed.ncbi.nlm.nih.gov/20435129/",
         "Neuroprotective effects": "https://pubmed.ncbi.nlm.nih.gov/23675006/"
       },
       "dosageByWeight": {
@@ -3464,8 +3464,8 @@ class SeedingService {
           "studyLinks": {
             "Mucuna pruriens y dopamina":
                 "https://pubmed.ncbi.nlm.nih.gov/15478206/",
-            "L-DOPA para el estado de ánimo y la motivación":
-                "https://pubmed.ncbi.nlm.nih.gov/24931003/",
+            "L-DOPA para el ánimo y la motivación":
+                "https://pubmed.ncbi.nlm.nih.gov/20435129/",
             "Efectos neuroprotectores":
                 "https://pubmed.ncbi.nlm.nih.gov/23675006/"
           }
@@ -3621,8 +3621,8 @@ class SeedingService {
       "studyLinks": {
         "Ginseng and cognitive performance in Focus":
             "https://pubmed.ncbi.nlm.nih.gov/22082268/",
-        "Neurotransmitter modulation mechanisms":
-            "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+        "Ginseng for symptoms of focus challenges":
+            "https://pubmed.ncbi.nlm.nih.gov/21923971/",
         "Systematic review of cognitive effects":
             "https://pubmed.ncbi.nlm.nih.gov/20123133/"
       },
@@ -3668,8 +3668,8 @@ class SeedingService {
           "studyLinks": {
             "Ginseng e prestazioni cognitive nel Focus":
                 "https://pubmed.ncbi.nlm.nih.gov/22082268/",
-            "Meccanismi di modulazione dei neurotrasmettitori":
-                "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+            "Ginseng per i sintomi delle sfide di concentrazione":
+                "https://pubmed.ncbi.nlm.nih.gov/21923971/",
             "Revisione sistematica degli effetti cognitivi":
                 "https://pubmed.ncbi.nlm.nih.gov/20123133/"
           }
@@ -3700,8 +3700,8 @@ class SeedingService {
           "studyLinks": {
             "Ginseng y rendimiento cognitivo en Enfoque":
                 "https://pubmed.ncbi.nlm.nih.gov/22082268/",
-            "Mecanismos de modulación de neurotransmisores":
-                "https://pubmed.ncbi.nlm.nih.gov/23439798/",
+            "Ginseng para síntomas de desafíos de concentración":
+                "https://pubmed.ncbi.nlm.nih.gov/21923971/",
             "Revisión sistemática de efectos cognitivos":
                 "https://pubmed.ncbi.nlm.nih.gov/20123133/"
           }
@@ -3732,12 +3732,12 @@ class SeedingService {
           "Morning dosing supports daytime cognitive function. Effects are cumulative over 8-12 weeks. Take with food to enhance absorption and reduce GI upset.",
       "scientificEvidenceRank": 73,
       "studyLinks": {
-        "Pine bark extract for Focus in children":
-            "https://pubmed.ncbi.nlm.nih.gov/16499493/",
-        "Attention and restless energy improvement":
-            "https://pubmed.ncbi.nlm.nih.gov/17063641/",
-        "Antioxidant effects on cognition":
-            "https://pubmed.ncbi.nlm.nih.gov/22214254/"
+        "Pine bark extract for cognitive function":
+            "https://pubmed.ncbi.nlm.nih.gov/25242609/",
+        "Antioxidant support for sustained attention":
+            "https://pubmed.ncbi.nlm.nih.gov/24422719/",
+        "Maritime pine bark and memory focus":
+            "https://pubmed.ncbi.nlm.nih.gov/21280201/"
       },
       "dosageByWeight": {
         "40-60": "40-60mg",
@@ -4183,7 +4183,7 @@ class SeedingService {
       "studyLinks": {
         "Retinoic acid and dopamine receptors":
             "https://pubmed.ncbi.nlm.nih.gov/11547055/",
-        "Vitamin A in hippocampal plasticit":
+        "Vitamin A in hippocampal plasticity":
             "https://pubmed.ncbi.nlm.nih.gov/17502394/"
       },
       "dosageByWeight": {
@@ -4281,14 +4281,14 @@ class SeedingService {
         "Natural alternative to pharmaceutical antidepressants for some people"
       ],
       "timingRationale":
-          "Morning dosing if used. However, NOT RECOMMENDED for people with Focus due to extensive drug compatibilitys with Type A elements and other common supports. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
+          "Morning dosing if used. However, NOT RECOMMENDED for people with Focus due to extensive drug compatibilities with Type A elements and other common supports. Effects build over 2-4 weeks. The CYP450 induction persists for weeks after discontinuation.",
       "scientificEvidenceRank": 65,
       "studyLinks": {
         "St. John's Wort for depression":
             "https://pubmed.ncbi.nlm.nih.gov/18843608/",
-        "Drug compatibilitys and CYP450 induction":
+        "Drug compatibilities and CYP450 induction":
             "https://pubmed.ncbi.nlm.nih.gov/15106147/",
-        "Contrainelements and safety":
+        "Contraindications and safety":
             "https://pubmed.ncbi.nlm.nih.gov/24931003/"
       },
       "dosageByWeight": {
@@ -4308,7 +4308,7 @@ class SeedingService {
         "NOT RECOMMENDED for people on multiple elements"
       ],
       "tldr":
-          "Herb for mild depression but EXTENSIVE drug compatibilitys make it unsuitable for most Focus users on elements.",
+          "Herb for mild depression but EXTENSIVE drug compatibilities make it unsuitable for most Focus users on elements.",
       "translations": {
         "it": {
           "name": "Iperico (Erba di San Giovanni)",
@@ -4405,7 +4405,7 @@ class SeedingService {
             "https://pubmed.ncbi.nlm.nih.gov/16335332/",
         "GABA modulation mechanism":
             "https://pubmed.ncbi.nlm.nih.gov/15650394/",
-        "Safety and drug compatibilitys":
+        "Safety and drug compatibilities":
             "https://pubmed.ncbi.nlm.nih.gov/17145239/"
       },
       "dosageByWeight": {
@@ -4420,7 +4420,7 @@ class SeedingService {
         "⚠️ May interact with other sedatives, alcohol, benzodiazepines",
         "⚠️ Can cause paradoxical stimulation in some people",
         "Avoid before driving or operating machinery",
-        "May inhibit CYP450 enzymes - potential drug compatibilitys",
+        "May inhibit CYP450 enzymes - potential drug compatibilities",
         "Discontinue 2 weeks before surgery (anesthesia compatibility)"
       ],
       "tldr":
@@ -4747,7 +4747,7 @@ class SeedingService {
             "https://pubmed.ncbi.nlm.nih.gov/18681988/",
         "Caffeine effects on focus challenges":
             "https://pubmed.ncbi.nlm.nih.gov/21437156/",
-        "Adenosine and dopamine compatibilitys":
+        "Adenosine and dopamine compatibilities":
             "https://pubmed.ncbi.nlm.nih.gov/11283318/"
       },
       "dosageByWeight": {
@@ -5934,7 +5934,13 @@ class SeedingService {
             "Onnipresente in bibite, caramelle e cereali colorati"
           ],
           "tldr":
-              "Il colorante scatenante comportamentale più comune; evitare per ridurre l'impulsività e le riacutizzazioni del Focus."
+              "Il colorante scatenante comportamentale più comune; evitare per ridurre l'impulsività e le riacutizzazioni del Focus.",
+          "studyLinks": {
+            "Meta-analisi di coloranti alimentari e comportamento":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/",
+            "Risultati dello studio di Southampton":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
         },
         "es": {
           "name": "Rojo Allura AC (E129)",
@@ -5953,7 +5959,13 @@ class SeedingService {
             "Ubicuo en refrescos, caramelos y cereales coloridos"
           ],
           "tldr":
-              "El tinte desencadenante conductual más común; evitar para reducir la impulsividad y los brotes de Focus."
+              "El tinte desencadenante conductual más común; evitar para reducir la impulsividad y los brotes de Focus.",
+          "studyLinks": {
+            "Metaanálisis de colorantes alimentarios y comportamiento":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/",
+            "Resultados del estudio de Southampton":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
         }
       },
     },
@@ -5973,7 +5985,7 @@ class SeedingService {
       "scientificEvidenceRank": 58,
       "studyLinks": {
         "Aspartame and neurobehavioral effects":
-            "https://pubmed.ncbi.nlm.nih.gov/28198205/",
+            "https://pubmed.ncbi.nlm.nih.gov/24700722/",
         "Phenylalanine and large neutral amino acids":
             "https://pubmed.ncbi.nlm.nih.gov/17684524/"
       },
@@ -6010,7 +6022,13 @@ class SeedingService {
             "Associato a mal di testa e vertigini in individui sensibili"
           ],
           "tldr":
-              "Dolcificante artificiale che può disturbare i precursori dei neurotrasmettitori; evitare per mantenere la chiarezza cognitiva."
+              "Dolcificante artificiale che può disturbare i precursori dei neurotrasmettitori; evitare per mantenere la chiarezza cognitiva.",
+          "studyLinks": {
+            "Aspartame ed effetti neurocomportamentali":
+                "https://pubmed.ncbi.nlm.nih.gov/24700722/",
+            "Fenilalanina e amminoacidi neutri grandi":
+                "https://pubmed.ncbi.nlm.nih.gov/17684524/"
+          }
         },
         "es": {
           "name": "Aspartamo (E951)",
@@ -6029,7 +6047,13 @@ class SeedingService {
             "Asociado con dolores de cabeza y mareos en personas sensibles"
           ],
           "tldr":
-              "Edulcorante artificial que puede alterar los precursores de neurotransmisores; evitar para mantener la claridad cognitiva."
+              "Edulcorante artificial que puede alterar los precursores de neurotransmisores; evitar para mantener la claridad cognitiva.",
+          "studyLinks": {
+            "Aspartamo y efectos neuroconductuales":
+                "https://pubmed.ncbi.nlm.nih.gov/24700722/",
+            "Fenilalanina y aminoácidos neutros grandes":
+                "https://pubmed.ncbi.nlm.nih.gov/17684524/"
+          }
         }
       },
     },
@@ -6086,7 +6110,13 @@ class SeedingService {
             "Effetti a lungo termine sulla funzione cognitiva ancora in fase di studio"
           ],
           "tldr":
-              "Dolcificante artificiale che può disturbare l'asse intestino-cervello; evitare per una salute digestiva e cognitiva ottimale."
+              "Dolcificante artificiale che può disturbare l'asse intestino-cervello; evitare per una salute digestiva e cognitiva ottimale.",
+          "studyLinks": {
+            "Sucralosio e microbioma intestinale":
+                "https://pubmed.ncbi.nlm.nih.gov/30138244/",
+            "Dolcificanti artificiali e infiammazione sistemica":
+                "https://pubmed.ncbi.nlm.nih.gov/31201202/"
+          }
         },
         "es": {
           "name": "Sucralosa",
@@ -6105,7 +6135,13 @@ class SeedingService {
             "Efectos a largo plazo en la función cognitiva aún en estudio"
           ],
           "tldr":
-              "Edulcorante artificial que puede alterar el eje intestino-cerebro; evitar para una salud digestiva y cognitiva óptima."
+              "Edulcorante artificial que puede alterar el eje intestino-cerebro; evitar para una salud digestiva y cognitiva óptima.",
+          "studyLinks": {
+            "Sucralosa y el microbioma intestinal":
+                "https://pubmed.ncbi.nlm.nih.gov/30138244/",
+            "Edulcorantes artificiales e inflamación sistémica":
+                "https://pubmed.ncbi.nlm.nih.gov/31201202/"
+          }
         }
       },
     },
@@ -6124,8 +6160,8 @@ class SeedingService {
           "AVOID: May cause acute behavioral flares in sensitive people.",
       "scientificEvidenceRank": 52,
       "studyLinks": {
-        "MSG and behavioral hyperactivity":
-            "https://pubmed.ncbi.nlm.nih.gov/15531024/",
+        "MSG and behavioral effects":
+            "https://pubmed.ncbi.nlm.nih.gov/16035172/",
         "Excitotoxicity in sensitive populations":
             "https://pubmed.ncbi.nlm.nih.gov/22331014/"
       },
@@ -6162,7 +6198,13 @@ class SeedingService {
             "Nascosto sotto nomi come 'estratto di lievito' o 'proteine idrolizzate'"
           ],
           "tldr":
-              "Esaltatore di sapidità che può sovrastimolare il cervello e peggiorare l'irrequietezza motoria; eliminare dalla dieta."
+              "Esaltatore di sapidità che può sovrastimolare il cervello e peggiorare l'irrequietezza motoria; eliminare dalla dieta.",
+          "studyLinks": {
+            "MSG ed effetti comportamentali":
+                "https://pubmed.ncbi.nlm.nih.gov/16035172/",
+            "Eccitotossicità in popolazioni sensibili":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/"
+          }
         },
         "es": {
           "name": "Glutamato Monosódico (GMS / E621)",
@@ -6181,7 +6223,13 @@ class SeedingService {
             "Oculto bajo nombres como 'extracto de levadura' o 'proteína hidrolizada'"
           ],
           "tldr":
-              "Potenciador del sabor que puede sobreestimular el cerebro y empeorar la inquietud motora; eliminar de la dieta."
+              "Potenciador del sabor que puede sobreestimular el cerebro y empeorar la inquietud motora; eliminar de la dieta.",
+          "studyLinks": {
+            "MSG y efectos conductuales":
+                "https://pubmed.ncbi.nlm.nih.gov/16035172/",
+            "Excitotoxicidad en poblaciones sensibles":
+                "https://pubmed.ncbi.nlm.nih.gov/22331014/"
+          }
         }
       },
     },
@@ -6236,7 +6284,11 @@ class SeedingService {
             "Comune in cereali, confezioni di snack e chewing gum"
           ],
           "tldr":
-              "Conservante con potenziali effetti neurotossici; evitare per il mantenimento cognitivo generale."
+              "Conservante con potenziali effetti neurotossici; evitare per il mantenimento cognitivo generale.",
+          "studyLinks": {
+            "BHT e marcatori neuro-infiammatori":
+                "https://pubmed.ncbi.nlm.nih.gov/15531024/"
+          }
         },
         "es": {
           "name": "Butilhidroxitolueno (BHT / E321)",
@@ -6255,7 +6307,11 @@ class SeedingService {
             "Común en cereales, envases de snacks y chicles"
           ],
           "tldr":
-              "Conservante con posibles efectos neurotóxicos; evitar para el mantenimiento cognitivo general."
+              "Conservante con posibles efectos neurotóxicos; evitar para el mantenimiento cognitivo general.",
+          "studyLinks": {
+            "BHT y marcadores neuroinflamatorios":
+                "https://pubmed.ncbi.nlm.nih.gov/15531024/"
+          }
         }
       },
     },
@@ -6310,7 +6366,11 @@ class SeedingService {
             "Elencato come Benzoato di Potassio o E212"
           ],
           "tldr":
-              "Conservante che amplifica gli effetti dell'iperattività; eliminare dalla dieta per ridurre l'irrequietezza."
+              "Conservante che amplifica gli effetti dell'iperattività; eliminare dalla dieta per ridurre l'irrequietezza.",
+          "studyLinks": {
+            "Benzoato di sodio e comportamento (Southampton)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
         },
         "es": {
           "name": "Benzoato de Potasio (E212)",
@@ -6329,7 +6389,11 @@ class SeedingService {
             "Listado como Benzoato de Potasio o E212"
           ],
           "tldr":
-              "Conservante que amplifica los efectos de la hiperactividad; eliminar de la dieta para reducir la inquietud."
+              "Conservante que amplifica los efectos de la hiperactividad; eliminar de la dieta para reducir la inquietud.",
+          "studyLinks": {
+            "Benzoato de sodio y comportamiento (Southampton)":
+                "https://pubmed.ncbi.nlm.nih.gov/17825405/"
+          }
         }
       },
     },
@@ -6386,7 +6450,13 @@ class SeedingService {
             "Crea dipendenza e altera i circuiti della ricompensa della dopamina"
           ],
           "tldr":
-              "Lo zucchero destabilizza la segnalazione della dopamina e causa crolli che uccidono la concentrazione; eliminare per mantenere un'attenzione costante."
+              "Lo zucchero destabilizza la segnalazione della dopamina e causa crolli che uccidono la concentrazione; eliminare per mantenere un'attenzione costante.",
+          "studyLinks": {
+            "Zucchero raffinato e comportamenti Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/21129940/",
+            "Down-regulation dei recettori della dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/16507461/"
+          }
         },
         "es": {
           "name": "Azúcar Refinado (Alto Consumo)",
@@ -6405,7 +6475,13 @@ class SeedingService {
             "Crea adicción y altera los circuitos de recompensa de la dopamina"
           ],
           "tldr":
-              "El azúcar desestabiliza la señalización de la dopamina y provoca caídas que acaban con la concentración; eliminar para mantener una atención constante."
+              "El azúcar desestabiliza la señalización de la dopamina y provoca caídas que acaban con la concentración; eliminar para mantener una atención constante.",
+          "studyLinks": {
+            "Azúcar refinada y comportamientos de Focus":
+                "https://pubmed.ncbi.nlm.nih.gov/21129940/",
+            "Regulación a la baja del receptor de dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/16507461/"
+          }
         }
       },
     },
@@ -6460,7 +6536,11 @@ class SeedingService {
             "Si trova in cibi fritti, margarine e prodotti da forno processati"
           ],
           "tldr":
-              "Grassi sintetici che induriscono le membrane delle cellule cerebrali e bloccano la segnalazione della dopamina; evitare completamente."
+              "Grassi sintetici che induriscono le membrane delle cellule cerebrali e bloccano la segnalazione della dopamina; evitare completamente.",
+          "studyLinks": {
+            "Grassi trans e fluidità della membrana neuronale":
+                "https://pubmed.ncbi.nlm.nih.gov/21129940/"
+          }
         },
         "es": {
           "name": "Grasas Trans (Aceites Parcialmente Hidrogenados)",
@@ -6479,7 +6559,11 @@ class SeedingService {
             "Se encuentra en alimentos fritos, margarinas y productos horneados procesados"
           ],
           "tldr":
-              "Grasas sintéticas que endurecen las membranas de las células cerebrales y bloquean la señalización de la dopamina; evitar por completo."
+              "Grasas sintéticas que endurecen las membranas de las células cerebrales y bloquean la señalización de la dopamina; evitar por completo.",
+          "studyLinks": {
+            "Grasas trans y fluidez de la membrana neuronal":
+                "https://pubmed.ncbi.nlm.nih.gov/21129940/"
+          }
         }
       },
     },
@@ -6534,7 +6618,11 @@ class SeedingService {
             "Riduce la funzione esecutiva per 24-48 ore dopo il consumo"
           ],
           "tldr":
-              "Esaurisce le vitamine e rovina l'equilibrio sonno/dopamina; controllare gli integratori liquidi per il contenuto di alcol."
+              "Esaurisce le vitamine e rovina l'equilibrio sonno/dopamina; controllare gli integratori liquidi per il contenuto di alcol.",
+          "studyLinks": {
+            "Alcol e disregolazione della dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/28198205/"
+          }
         },
         "es": {
           "name": "Alcohol",
@@ -6553,7 +6641,11 @@ class SeedingService {
             "Reduce la función ejecutiva durante 24-48 horas después del consumo"
           ],
           "tldr":
-              "Agota las vitaminas y arruina el equilibrio sueño/dopamina; verifique el contenido de alcohol en los suplementos líquidos."
+              "Agota las vitaminas y arruina el equilibrio sueño/dopamina; verifique el contenido de alcohol en los suplementos líquidos.",
+          "studyLinks": {
+            "Alcohol y disregulación de dopamina":
+                "https://pubmed.ncbi.nlm.nih.gov/28198205/"
+          }
         }
       },
     }

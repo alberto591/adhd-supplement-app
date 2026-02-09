@@ -80,6 +80,8 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
                               context, isDark, primaryBlue, viewModel.articles),
                         _buildResearchLibrary(
                             context, isDark, primaryBlue, viewModel),
+                        _buildScientificMethodologyCard(
+                            context, isDark, primaryBlue),
                         _buildEducationalContent(
                             context, isDark, primaryBlue, viewModel),
                         _buildFaqSection(
@@ -1096,6 +1098,83 @@ class _StrategyHubScreenState extends State<StrategyHubScreen> {
               const SkeletonLoader(height: 140, borderRadius: 16),
               const SizedBox(height: 16),
               const SkeletonLoader(height: 140, borderRadius: 16),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildScientificMethodologyCard(
+      BuildContext context, bool isDark, Color primary) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: GestureDetector(
+        onTap: () =>
+            Navigator.pushNamed(context, AppRouter.scientificMethodology),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: isDark
+                  ? [
+                      AppColors.primaryGold.withValues(alpha: 0.15),
+                      Colors.transparent
+                    ]
+                  : [
+                      AppColors.primaryGold.withValues(alpha: 0.1),
+                      Colors.white
+                    ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: AppColors.primaryGold.withValues(alpha: 0.3),
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryGold.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.info_outline,
+                  color: AppColors.primaryGold,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.scientificMethodologyTitle,
+                      style: GoogleFonts.lexend(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      AppLocalizations.of(context)!.scientificMethodologySub,
+                      style: GoogleFonts.lexend(
+                        fontSize: 14,
+                        color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.chevron_right,
+                color: AppColors.primaryGold,
+              ),
             ],
           ),
         ),
