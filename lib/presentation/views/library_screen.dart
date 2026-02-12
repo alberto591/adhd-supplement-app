@@ -343,7 +343,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                           locale: l10n.localeName),
                                     ),
                                     const SizedBox(width: 8),
-                                    ...viewModel.categories.map((category) {
+                                    ...SupplementUIHelper.getSortedCategories(
+                                            context, viewModel.categories)
+                                        .map((category) {
                                       return Padding(
                                         padding:
                                             const EdgeInsets.only(right: 8),
@@ -1108,7 +1110,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         const SizedBox(height: 32),
                         _buildFilterSectionMulti(
                           l10n.categories,
-                          viewModel.categories,
+                          SupplementUIHelper.getSortedCategories(
+                              context, viewModel.categories),
                           viewModel.selectedCategories,
                           (val) => viewModel.filterByCategory(val,
                               locale: l10n.localeName),

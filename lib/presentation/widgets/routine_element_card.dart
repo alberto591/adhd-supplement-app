@@ -139,7 +139,7 @@ class RoutineElementCard extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                '$dosage • $form',
+                                form,
                                 style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12,

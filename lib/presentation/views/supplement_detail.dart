@@ -466,15 +466,19 @@ class SupplementDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 24),
 
-                        // Dosage Section
+                        /* 
+                        // Dosage Section hidden for App Store Compliance (Guideline 1.4.2)
                         if (supplement.dosageByWeight != null) ...[
                           DosageCalculatorCard(
                             supplement: supplement,
                             isDark: isDark,
                           ),
                           const SizedBox(height: 24),
-                        ] else if ((supplement.dosage ??
-                                    supplement.defaultDosage)
+                        ] else 
+                        */
+                        /*
+                        // Static Dosage Section hidden for App Store Compliance (Guideline 1.4.2)
+                        if ((supplement.dosage ?? supplement.defaultDosage)
                                 ?.isNotEmpty ==
                             true) ...[
                           _InfoCard(
@@ -488,6 +492,7 @@ class SupplementDetail extends StatelessWidget {
                           ),
                           const SizedBox(height: 24),
                         ],
+                        */
 
                         // Safety Warning Card (Avvertenze) moved below Dosage
                         if (localizedDosageWarnings.isNotEmpty) ...[

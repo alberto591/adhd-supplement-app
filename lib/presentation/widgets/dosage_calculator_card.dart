@@ -4,6 +4,12 @@ import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import '../../domain/entities/supplement.dart';
 import '../theme/app_theme.dart';
 
+/// Widget for calculating supplement dosage based on user weight.
+///
+/// NOTE: This widget is currently hidden from the primary UI to comply with
+/// App Store Guideline 1.4.2 (Physical Harm - Dosage Calculators).
+/// Individual developers are generally not permitted to provide medical
+/// dosage calculation features.
 class DosageCalculatorCard extends StatefulWidget {
   final Supplement supplement;
   final bool isDark;

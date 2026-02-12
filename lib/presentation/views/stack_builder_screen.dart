@@ -676,8 +676,7 @@ class _StackBuilderScreenState extends State<StackBuilderScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context)!
-                  .customizeSupplement(supplement.name),
+              'Customize Usage Notes',
               style: GoogleFonts.lexend(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

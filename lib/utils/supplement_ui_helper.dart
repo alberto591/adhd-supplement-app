@@ -6,7 +6,9 @@ class SupplementUIHelper {
     switch (category.toLowerCase()) {
       case 'essential fatty acids':
       case 'omega-3':
-        return Icons.water_drop;
+      case 'lipid':
+      case 'dietary fat':
+        return Icons.opacity;
       case 'mineral':
       case 'minerals':
         return Icons.diamond;
@@ -16,8 +18,33 @@ class SupplementUIHelper {
       case 'nootropic':
       case 'nootropics':
         return Icons.psychology;
+      case 'herb':
       case 'herbal':
         return Icons.local_florist;
+      case 'mushroom':
+        return Icons.grass;
+      case 'adaptogen':
+        return Icons.eco;
+      case 'amino acid':
+        return Icons.reorder;
+      case 'antioxidant':
+        return Icons.shield;
+      case 'probiotic':
+        return Icons.biotech;
+      case 'hormone':
+        return Icons.bloodtype;
+      case 'substance':
+        return Icons.science;
+      case 'dietary factor':
+        return Icons.fact_check;
+      case 'type a':
+        return Icons.warning_amber;
+      case 'artificial color':
+      case 'artificial sweetener':
+      case 'flavor enhancer':
+      case 'preservative':
+      case 'sweetener':
+        return Icons.block;
       case 'protocol':
         return Icons.format_list_bulleted;
       case 'focus_agent':
@@ -33,10 +60,6 @@ class SupplementUIHelper {
         return Icons.hourglass_empty;
       case 'memory':
         return Icons.memory;
-      case 'amino acid':
-        return Icons.polymer;
-      case 'antioxidant':
-        return Icons.shield;
       default:
         return Icons.local_pharmacy;
     }
@@ -91,7 +114,48 @@ class SupplementUIHelper {
         return l10n.categoryNootropics;
       case 'herbal':
       case 'erbale':
+      case 'herb':
         return l10n.categoryHerbal;
+      case 'lipid':
+      case 'lipide':
+      case 'lípido':
+        return l10n.categoryLipid;
+      case 'mushroom':
+      case 'fungo':
+      case 'hongo':
+        return l10n.categoryMushroom;
+      case 'adaptogen':
+      case 'adattogeno':
+      case 'adaptógeno':
+        return l10n.categoryAdaptogen;
+      case 'amino acid':
+      case 'aminoacido':
+      case 'aminoácido':
+        return l10n.categoryAminoAcid;
+      case 'antioxidant':
+      case 'antiossidante':
+      case 'antioxidante':
+        return l10n.categoryAntioxidant;
+      case 'probiotic':
+      case 'probiotico':
+      case 'probiótico':
+        return l10n.categoryProbiotic;
+      case 'hormone':
+      case 'ormone':
+      case 'hormona':
+        return l10n.categoryHormone;
+      case 'substance':
+      case 'sostanza':
+      case 'sustancia':
+        return l10n.categorySubstance;
+      case 'type a':
+        return l10n.categoryTypeA;
+      case 'artificial color':
+      case 'artificial sweetener':
+      case 'flavor enhancer':
+      case 'preservative':
+      case 'sweetener':
+        return l10n.categoryAvoid;
       case 'energy':
       case 'energia':
         return l10n.categoryEnergy;
@@ -109,10 +173,23 @@ class SupplementUIHelper {
     }
   }
 
+  static List<String> getSortedCategories(
+      BuildContext context, List<String> categories) {
+    final list = List<String>.from(categories);
+    list.sort((a, b) {
+      final nameA = getLocalizedCategory(context, a).toLowerCase();
+      final nameB = getLocalizedCategory(context, b).toLowerCase();
+      return nameA.compareTo(nameB);
+    });
+    return list;
+  }
+
   static Color getColorForCategory(String category) {
     switch (category.toLowerCase()) {
       case 'essential fatty acids':
       case 'omega-3':
+      case 'lipid':
+      case 'dietary fat':
         return Colors.blue[400]!;
       case 'mineral':
       case 'minerals':
@@ -123,8 +200,33 @@ class SupplementUIHelper {
       case 'nootropic':
       case 'nootropics':
         return Colors.green[400]!;
+      case 'herb':
       case 'herbal':
         return Colors.teal[400]!;
+      case 'mushroom':
+        return Colors.brown[400]!;
+      case 'adaptogen':
+        return Colors.lightGreen[400]!;
+      case 'amino acid':
+        return Colors.lime[700]!;
+      case 'antioxidant':
+        return Colors.green[700]!;
+      case 'probiotic':
+        return Colors.lightBlue[300]!;
+      case 'hormone':
+        return Colors.orange[300]!;
+      case 'substance':
+        return Colors.blueGrey[400]!;
+      case 'dietary factor':
+        return Colors.indigo[300]!;
+      case 'type a':
+        return Colors.deepOrange[600]!;
+      case 'artificial color':
+      case 'artificial sweetener':
+      case 'flavor enhancer':
+      case 'preservative':
+      case 'sweetener':
+        return Colors.grey[600]!;
       case 'protocol':
         return Colors.deepPurple[400]!;
       case 'focus_agent':
@@ -140,10 +242,6 @@ class SupplementUIHelper {
         return Colors.indigo[400]!;
       case 'memory':
         return Colors.lightBlue[400]!;
-      case 'amino acid':
-        return Colors.lime[700]!;
-      case 'antioxidant':
-        return Colors.green[700]!;
       default:
         return Colors.blueGrey;
     }

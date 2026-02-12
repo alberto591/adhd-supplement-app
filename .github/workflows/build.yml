@@ -40,15 +40,22 @@ jobs:
         run: flutter build ios --release --no-codesign --extra-gen-snapshot-options="--no-precompiled-ios" IPHONEOS_DEPLOYMENT_TARGET=26.0
 
       - name: Upload symbols to Firebase Crashlytics
-        # Use a more robust way to find and upload all dSYMs including frameworks
+        # Improved robustness for dSYM discovery and upload tracking
         run: |
-          find build/ios/iphoneos -name "*.dSYM" -type d | xargs -I {} ./ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios {}
+          echo "Scanning for dSYMs..."
+          find build/ios/iphoneos -name "*.dSYM" -type d | while read -r dsym; do
+            echo "Uploading: $dsym"
+            ./ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios "$dsym"
+          done
+          echo "dSYM upload process completed."
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ios-build
-          path: build/ios/iphoneos/*.app
+          path: |
+            build/ios/iphoneos/*.app
+            build/ios/iphoneos/*.dSYM
 
   build-android:
     name: Build Android

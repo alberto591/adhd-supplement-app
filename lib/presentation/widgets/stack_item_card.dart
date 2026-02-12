@@ -121,19 +121,7 @@ class _StackItemCardState extends State<StackItemCard>
                               ),
                               Row(
                                 children: [
-                                  Flexible(
-                                    child: Text(
-                                      widget.dosage.isEmpty
-                                          ? 'No dosage set'
-                                          : widget.dosage,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        color: AppColors.textSecondaryDark,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
+                                  const SizedBox.shrink(),
                                   if (widget.onTap != null) ...[
                                     const SizedBox(width: 4),
                                     const Icon(Icons.edit_outlined,

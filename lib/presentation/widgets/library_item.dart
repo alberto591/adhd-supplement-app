@@ -90,16 +90,7 @@ class LibraryItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            dosage,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppColors.textSecondaryDark,
-              fontSize: 9,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
+          const SizedBox.shrink(), // dosage hidden for compliance
         ],
       ),
     );

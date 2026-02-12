@@ -200,6 +200,8 @@ class SupplementCard extends StatelessWidget {
                 Divider(color: AppColors.dividerColor(isDark)),
                 const SizedBox(height: 16),
 
+                /*
+                // Dosage Section hidden for App Store Compliance (Guideline 1.4.2)
                 // Footer
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -247,6 +249,7 @@ class SupplementCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                */
               ],
             ),
           ),
