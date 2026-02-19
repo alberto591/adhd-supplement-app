@@ -6,7 +6,6 @@ import 'package:neurostack_app/domain/entities/supplement.dart';
 import 'package:neurostack_app/presentation/view_models/library_view_model.dart';
 import 'package:neurostack_app/config/locator.dart';
 import 'package:neurostack_app/application/providers/auth_provider.dart';
-import 'package:neurostack_app/presentation/widgets/dosage_calculator_card.dart';
 import 'package:neurostack_app/domain/services/routine_compatibility_service.dart';
 import 'package:neurostack_app/domain/entities/routine_element.dart';
 import 'package:neurostack_app/presentation/widgets/routine_status_alert.dart';
