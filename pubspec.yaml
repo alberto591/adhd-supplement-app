@@ -1,6 +1,6 @@
 name: neurostack_app
 description: A daily routine and cognitive focus tracking app.
-version: 1.0.1+22
+version: 1.0.1+23
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
