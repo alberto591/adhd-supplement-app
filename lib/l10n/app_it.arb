@@ -562,6 +562,8 @@
   "featurePrivacyDesc": "Il tuo percorso è crittografato e memorizzato in modo sicuro sul tuo dispositivo.",
   "featureIntelligenceTitle": "Intelligence Supplementi",
   "featureIntelligenceDesc": "Accedi a classifiche basate sull'evidenza e dati della community da framework verificati.",
+  "featureNeuroScienceTitle": "Logica Neuro-Scientifica",
+  "featureNeuroScienceDesc": "Algoritmi ottimizzati per ADHD per l'ancoraggio temporale e sequenze di sollecito.",
   "researchParticipants": "{count} partecipanti tra gli studi",
   "@researchParticipants": {
     "placeholders": {

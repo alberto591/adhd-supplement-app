@@ -576,6 +576,8 @@
   "featurePrivacyDesc": "Tu viaje de enfoque está encriptado y almacenado de forma segura en tu dispositivo.",
   "featureIntelligenceTitle": "Inteligencia de Suplementos",
   "featureIntelligenceDesc": "Accede a clasificaciones basadas en evidencia y datos de la comunidad de marcos validados.",
+  "featureNeuroScienceTitle": "Lógica Neuro-Científica",
+  "featureNeuroScienceDesc": "Algoritmos optimizados para TDAH para el anclaje temporal y secuencias de recordatorios.",
   "researchParticipants": "{count} participantes en los estudios",
   "@researchParticipants": {
     "placeholders": {

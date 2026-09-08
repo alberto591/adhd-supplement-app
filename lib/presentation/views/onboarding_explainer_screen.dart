@@ -106,6 +106,16 @@ class OnboardingExplainerScreen extends StatelessWidget {
 
                     const SizedBox(height: 24),
 
+                    // Feature 4b: Neuro-Science Logic
+                    _FeatureRow(
+                      icon: Icons.biotech_outlined,
+                      title: l10n.featureNeuroScienceTitle,
+                      description: l10n.featureNeuroScienceDesc,
+                      isDark: isDark,
+                    ),
+
+                    const SizedBox(height: 24),
+
                     // Feature 5: Privacy
                     _FeatureRow(
                       icon: Icons.lock_outline_rounded,

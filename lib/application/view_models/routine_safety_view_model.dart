@@ -19,6 +19,7 @@ class RoutineSafetyViewModel extends ChangeNotifier {
   bool _isDisposed = false;
 
   List<SupplementCompatibility> get currentCompatibilitys => _currentCompatibilitys;
+  List<SupplementCompatibility> get activeRisks => _currentCompatibilitys;
   bool get isLoading => _isLoading;
   String? get error => _error;
 

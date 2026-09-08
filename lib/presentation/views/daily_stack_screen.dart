@@ -14,6 +14,7 @@ import 'package:neurostack_app/domain/entities/supplement_stack.dart';
 import 'package:neurostack_app/application/providers/auth_provider.dart';
 import 'package:neurostack_app/application/view_models/routine_safety_view_model.dart';
 import 'package:neurostack_app/config/locator.dart';
+import 'package:neurostack_app/presentation/widgets/particles_background.dart';
 import 'package:neurostack_app/l10n/generated/app_localizations.dart';
 import 'package:neurostack_app/presentation/delegates/global_search_delegate.dart';
 
@@ -206,6 +207,7 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                   // Main content
                   return Stack(
                     children: [
+                      const ParticlesBackground(),
                       Column(
                         children: [
                           // Dashboard-style Header
@@ -365,115 +367,86 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
                           ),
 
                           Expanded(
-                            child: SingleChildScrollView(
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 0, 16, 100),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // 2. Daily Progress Section
-                                  DailyProgressCard(
-                                    streakCount: viewModel.streakCount,
-                                    progress: viewModel.todayProgress,
-                                    isDark: isDark,
-                                  ),
-                                  const SizedBox(height: 32),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final isWide = constraints.maxWidth > 800;
 
-                                  // 3. Up Next Section (Dynamic)
-                                  _buildUpNextSection(viewModel, isDark),
-                                  const SizedBox(height: 32),
-
-                                  // 4. Slots Section
-                                  // Morning Slot
-                                  if (viewModel.morningItems.isNotEmpty)
-                                    _buildSlotSection(
-                                        context,
-                                        'morning',
-                                        viewModel.morningItems,
-                                        isDark,
-                                        textColor,
-                                        secondaryTextColor),
-
-                                  // Afternoon Slot
-                                  if (viewModel.afternoonItems.isNotEmpty)
-                                    _buildSlotSection(
-                                        context,
-                                        'afternoon',
-                                        viewModel.afternoonItems,
-                                        isDark,
-                                        textColor,
-                                        secondaryTextColor),
-
-                                  // Evening Slot
-                                  if (viewModel.eveningItems.isNotEmpty)
-                                    _buildSlotSection(
-                                        context,
-                                        'evening',
-                                        viewModel.eveningItems,
-                                        isDark,
-                                        textColor,
-                                        secondaryTextColor),
-
-                                  // Night Slot
-                                  if (viewModel.nightItems.isNotEmpty)
-                                    _buildSlotSection(
-                                        context,
-                                        'night',
-                                        viewModel.nightItems,
-                                        isDark,
-                                        textColor,
-                                        secondaryTextColor),
-
-                                  if (viewModel.morningItems.isEmpty &&
-                                      viewModel.afternoonItems.isEmpty &&
-                                      viewModel.eveningItems.isEmpty &&
-                                      viewModel.nightItems.isEmpty) ...[
-                                    if (viewModel.stacks.isEmpty)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 32),
-                                        child: Center(
+                                if (isWide) {
+                                  return Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // Left Column: Progress & Slots
+                                      Expanded(
+                                        flex: 6,
+                                        child: SingleChildScrollView(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              16, 0, 16, 100),
                                           child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Icon(Icons.add_circle_outline,
-                                                  color: secondaryTextColor,
-                                                  size: 48),
-                                              const SizedBox(height: 16),
-                                              Text(
-                                                AppLocalizations.of(context)!
-                                                    .noStacksConfigured,
-                                                style: TextStyle(
-                                                    color: secondaryTextColor),
+                                              DailyProgressCard(
+                                                streakCount:
+                                                    viewModel.streakCount,
+                                                progress:
+                                                    viewModel.todayProgress,
+                                                isDark: isDark,
                                               ),
-                                              const SizedBox(height: 24),
-                                              ElevatedButton(
-                                                onPressed: () =>
-                                                    Navigator.pushNamed(context,
-                                                        AppRouter.library),
-                                                child: Text(AppLocalizations.of(
-                                                        context)!
-                                                    .goToLibrary),
-                                              ),
+                                              const SizedBox(height: 32),
+                                              _buildAllSlots(
+                                                  context,
+                                                  viewModel,
+                                                  isDark,
+                                                  textColor,
+                                                  secondaryTextColor),
                                             ],
                                           ),
                                         ),
-                                      )
-                                    else
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 32),
-                                        child: Center(
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .allCompleted,
-                                            style: TextStyle(
-                                                color: secondaryTextColor),
+                                      ),
+                                      // Right Column: Up Next & Safety Context
+                                      Expanded(
+                                        flex: 4,
+                                        child: SingleChildScrollView(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 0, 16, 100),
+                                          child: Column(
+                                            children: [
+                                              _buildUpNextSection(
+                                                  viewModel, isDark),
+                                              const SizedBox(height: 24),
+                                              _buildiPadSafetyOverview(
+                                                  safetyViewModel, isDark),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                  ],
-                                ],
-                              ),
+                                    ],
+                                  );
+                                }
+
+                                // Standard Mobile Layout
+                                return SingleChildScrollView(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(16, 0, 16, 100),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      DailyProgressCard(
+                                        streakCount: viewModel.streakCount,
+                                        progress: viewModel.todayProgress,
+                                        isDark: isDark,
+                                      ),
+                                      const SizedBox(height: 32),
+                                      _buildUpNextSection(viewModel, isDark),
+                                      const SizedBox(height: 32),
+                                      _buildAllSlots(context, viewModel, isDark,
+                                          textColor, secondaryTextColor),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],
@@ -867,6 +840,138 @@ class _DailyStackScreenState extends State<DailyStackScreen> {
         await viewModel.markBatchTaken(ids, slot: slot);
         setState(() => _showCelebration = true);
       },
+    );
+  }
+
+  Widget _buildAllSlots(
+    BuildContext context,
+    DailyStackViewModel viewModel,
+    bool isDark,
+    Color textColor,
+    Color secondaryTextColor,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 4. Slots Section
+        // Morning Slot
+        if (viewModel.morningItems.isNotEmpty)
+          _buildSlotSection(context, 'morning', viewModel.morningItems, isDark,
+              textColor, secondaryTextColor),
+
+        // Afternoon Slot
+        if (viewModel.afternoonItems.isNotEmpty)
+          _buildSlotSection(context, 'afternoon', viewModel.afternoonItems,
+              isDark, textColor, secondaryTextColor),
+
+        // Evening Slot
+        if (viewModel.eveningItems.isNotEmpty)
+          _buildSlotSection(context, 'evening', viewModel.eveningItems, isDark,
+              textColor, secondaryTextColor),
+
+        // Night Slot
+        if (viewModel.nightItems.isNotEmpty)
+          _buildSlotSection(context, 'night', viewModel.nightItems, isDark,
+              textColor, secondaryTextColor),
+
+        if (viewModel.morningItems.isEmpty &&
+            viewModel.afternoonItems.isEmpty &&
+            viewModel.eveningItems.isEmpty &&
+            viewModel.nightItems.isEmpty) ...[
+          if (viewModel.stacks.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.add_circle_outline,
+                        color: secondaryTextColor, size: 48),
+                    const SizedBox(height: 16),
+                    Text(
+                      AppLocalizations.of(context)!.noStacksConfigured,
+                      style: TextStyle(color: secondaryTextColor),
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, AppRouter.library),
+                      child: Text(AppLocalizations.of(context)!.goToLibrary),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.allCompleted,
+                  style: TextStyle(color: secondaryTextColor),
+                ),
+              ),
+            ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildiPadSafetyOverview(
+      RoutineSafetyViewModel safetyViewModel, bool isDark) {
+    final risks = safetyViewModel.activeRisks;
+    final hasRisks = risks.isNotEmpty;
+
+    return Card(
+      color: isDark ? const Color(0xFF1E1B10) : const Color(0xFFFFFBEB),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  hasRisks
+                      ? Icons.shield_outlined
+                      : Icons.verified_user_outlined,
+                  color:
+                      hasRisks ? AppColors.warningAmber : AppColors.accentGreen,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Safety Shield',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              hasRisks
+                  ? 'We detected ${risks.length} potential optimizations for your current stack.'
+                  : 'Your current stack has no detected interaction risks. NeuroStack logic is active.',
+              style: TextStyle(
+                color: isDark ? Colors.white70 : AppColors.textSecondaryLight,
+              ),
+            ),
+            if (hasRisks) ...[
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, AppRouter.insights),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryGold,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('Review Optimizations'),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

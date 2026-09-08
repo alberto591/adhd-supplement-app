@@ -576,6 +576,8 @@
   "featurePrivacyDesc": "Your focus journey is encrypted and stored securely on your device.",
   "featureIntelligenceTitle": "Supplement Intelligence",
   "featureIntelligenceDesc": "Access evidence-based rankings and community data from vetted frameworks.",
+  "featureNeuroScienceTitle": "Neuro-Science Logic",
+  "featureNeuroScienceDesc": "ADHD-optimized algorithms for Time Anchoring and Nudge Sequences.",
   "researchParticipants": "{count} participants across studies",
   "@researchParticipants": {
     "placeholders": {

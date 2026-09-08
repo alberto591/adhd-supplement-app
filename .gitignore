@@ -50,3 +50,7 @@ ios/Runner/GeneratedPluginRegistrant.*
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 lib/l10n/generated/
+
+# Private Keys and Secrets
+*.p8
+AuthKey_*.p8

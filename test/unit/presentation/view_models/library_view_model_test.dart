@@ -553,6 +553,22 @@ void main() {
       });
     });
     group('AI Recommendations', () {
+      setUp(() async {
+        fakeSupplementRepo.supplements = [
+          beneficialSupp,
+          const Supplement(
+            id: 'ai1',
+            name: 'AI Choice 1',
+            category: 'Nootropic',
+            dosage: '100mg',
+            benefits: ['Focus'],
+            description: 'AI rec',
+            status: 'beneficial',
+          ),
+        ];
+        await viewModel.initialize();
+      });
+
       test('fetchAiRecommendations updates state correctly on success',
           () async {
         // Since we already have a viewModel in setUp, we use its mocked service
